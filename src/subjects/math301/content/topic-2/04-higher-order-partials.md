@@ -1,3 +1,9 @@
+---
+id: math301-topic-2-4
+title: "Higher-Order Partial Derivatives"
+order: 4
+---
+
 # Higher-Order Partial Derivatives
 
 ## Introduction

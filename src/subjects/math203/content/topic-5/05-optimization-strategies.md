@@ -1,3 +1,9 @@
+---
+id: math203-t5-strategies
+title: "Optimization Strategies"
+order: 5
+---
+
 # Optimization Strategies and Special Cases
 
 Some optimization problems require special techniques beyond the standard approach. This section covers strategies for handling unusual domains, implicit constraints, and verification methods.

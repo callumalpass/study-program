@@ -1,3 +1,9 @@
+---
+id: cs205-t2-dml
+title: "Data Manipulation"
+order: 3
+---
+
 # Data Manipulation: INSERT, UPDATE, DELETE
 
 DML commands modify data in database tables. Understanding these operations is essential for maintaining and updating database content.

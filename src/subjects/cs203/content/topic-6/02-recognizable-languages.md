@@ -1,3 +1,9 @@
+---
+id: cs203-t6-recognizable
+title: "Recognizable Languages"
+order: 2
+---
+
 # Turing-Recognizable Languages
 
 A language is **Turing-recognizable** (recursively enumerable, r.e.) if some TM accepts exactly the strings in the language, though it may not halt on strings outside the language. Recognizability represents a weaker notion than decidability—we can confirm membership, but we may not be able to confirm non-membership.

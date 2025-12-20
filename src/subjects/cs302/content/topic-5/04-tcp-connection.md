@@ -1,3 +1,9 @@
+---
+id: cs302-t5-tcp-conn
+title: "TCP Connection Management"
+order: 4
+---
+
 # TCP Connection Management
 
 ## The Three-Way Handshake

@@ -1,3 +1,9 @@
+---
+id: cs201-t3-order
+title: "Order Statistics and Selection"
+order: 7
+---
+
 # Order Statistics and Selection
 
 The selection problem asks: find the k-th smallest element in an unsorted array without fully sorting it. This problem has fundamental importance—finding the median, identifying outliers, computing percentiles, and implementing database queries all reduce to selection. The surprising depth comes from the gap between the obvious O(n log n) solution (sort and index) and the optimal O(n) solution that requires clever algorithm design.

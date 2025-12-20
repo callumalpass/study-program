@@ -1,3 +1,9 @@
+---
+id: math102-t1-pigeon
+title: "Pigeonhole Principle"
+order: 4
+---
+
 # The Pigeonhole Principle
 
 The pigeonhole principle is one of the simplest yet most powerful tools in combinatorics. Despite its elementary nature, it proves surprisingly deep results about existence.

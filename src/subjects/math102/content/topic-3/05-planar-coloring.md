@@ -1,3 +1,9 @@
+---
+id: math102-t3-planar
+title: "Planar Graphs and Coloring"
+order: 5
+---
+
 # Planar Graphs and Graph Coloring
 
 Planar graphs can be drawn without edge crossings, while graph coloring assigns labels to vertices under adjacency constraints. Both concepts have profound theoretical and practical significance.

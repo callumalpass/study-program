@@ -1,3 +1,9 @@
+---
+id: math401-topic-4-1
+title: "Cauchy\"
+order: 1
+---
+
 # Cauchy's Integral Formula
 
 Cauchy's integral formula is one of the most remarkable theorems in mathematics. It states that the value of an analytic function at any point inside a closed contour can be computed by an integral around that contour. This seemingly magical result has profound consequences: it shows that analytic functions are completely determined by their boundary values, establishes that they are infinitely differentiable, and leads directly to power series representations.

@@ -1,3 +1,9 @@
+---
+id: math202-t4-ci
+title: "Confidence Intervals"
+order: 5
+---
+
 # Confidence Intervals for Mean and Proportion
 
 Point estimates give us a single best guess for a parameter, but they don't convey uncertainty. A confidence interval provides a range of plausible values with a specified level of confidence. This is arguably the most important tool in statistical inference, bridging the gap between sample data and population parameters.

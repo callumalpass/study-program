@@ -1,3 +1,9 @@
+---
+id: math201-t4-dimension
+title: "Dimension"
+order: 4
+---
+
 # Dimension
 
 ## Introduction

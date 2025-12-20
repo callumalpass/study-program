@@ -1,3 +1,9 @@
+---
+id: cs203-t1-minimize
+title: "DFA Minimization"
+order: 4
+---
+
 # DFA Minimization
 
 Every regular language has a unique **minimal DFA**—a DFA with the fewest possible states. DFA minimization reduces a DFA to this canonical form, which is useful for efficient implementation and testing language equivalence.

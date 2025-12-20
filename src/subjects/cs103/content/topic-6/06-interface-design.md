@@ -1,3 +1,9 @@
+---
+id: cs103-t6-interface
+title: "Interface Design Principles"
+order: 6
+---
+
 ## Interface Design Principles
 
 Good interfaces are the foundation of maintainable code. They define how components interact and determine how easy your code is to use, test, and change.

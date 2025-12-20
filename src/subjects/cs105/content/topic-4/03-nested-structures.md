@@ -1,3 +1,9 @@
+---
+id: cs105-t4-nested
+title: "Nested and Self-Referential Structures"
+order: 3
+---
+
 # Nested and Self-Referential Structures
 
 Structures can contain other structures, enabling hierarchical data modeling. Self-referential structures, where a structure contains a pointer to its own type, are the foundation of linked data structures.

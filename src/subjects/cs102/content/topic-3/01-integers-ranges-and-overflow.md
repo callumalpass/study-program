@@ -1,3 +1,9 @@
+---
+id: cs102-t3-integers-ranges-and-overflow
+title: "Integers: Ranges and Overflow"
+order: 1
+---
+
 # Integers: Ranges, Signedness, and Overflow
 
 An integer in a computer is fundamentally different from a mathematical integer. In mathematics, integers extend infinitely in both directions. In a computer, an integer is a **fixed-width bit pattern** with a finite range of representable values. Understanding this distinction is essential for writing correct code, debugging unexpected behavior, and avoiding security vulnerabilities.

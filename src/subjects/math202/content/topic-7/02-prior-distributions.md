@@ -1,3 +1,9 @@
+---
+id: math202-t7-priors
+title: "Prior Distributions"
+order: 2
+---
+
 ## Prior Distributions
 
 In Bayesian inference, the prior distribution encodes what we know (or don't know) about a parameter before observing data. Choosing appropriate priors is both an art and a science—it requires statistical knowledge, domain expertise, and careful consideration of how prior beliefs should influence posterior inference. This subtopic explores different types of priors and how to select them effectively.

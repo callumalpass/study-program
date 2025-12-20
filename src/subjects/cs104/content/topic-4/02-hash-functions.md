@@ -1,3 +1,9 @@
+---
+id: cs104-t4-functions
+title: "Hash Functions"
+order: 2
+---
+
 # Hash Functions
 
 The hash function is the heart of a hash table. A good hash function distributes keys uniformly across buckets, minimizing collisions and ensuring O(1) performance. Understanding hash function design helps you choose or implement appropriate hashing for your needs.

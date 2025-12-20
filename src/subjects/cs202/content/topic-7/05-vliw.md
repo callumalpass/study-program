@@ -1,3 +1,9 @@
+---
+id: cs202-t7-vliw
+title: "VLIW Architecture"
+order: 5
+---
+
 # VLIW and Static Scheduling
 
 **Very Long Instruction Word (VLIW)** processors take a fundamentally different approach to ILP: instead of hardware discovering parallelism at runtime, the compiler explicitly specifies which operations execute in parallel. This shifts complexity from hardware to software.

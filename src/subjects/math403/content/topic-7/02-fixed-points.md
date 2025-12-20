@@ -1,3 +1,9 @@
+---
+id: math403-topic-7-2
+title: "Fixed Point Theorems"
+order: 2
+---
+
 # Fixed Point Theorems
 
 Fixed point theorems guarantee the existence of points x where f(x) = x, with profound applications throughout mathematics and its applications. These theorems are remarkable because they prove existence without providing explicit construction methods. From game theory to differential equations, from economics to dynamical systems, fixed point theorems provide the foundation for existence results across mathematics. The variety of fixed point theorems—from the constructive Banach theorem to the topological Brouwer theorem to generalizations in infinite dimensions—illustrates the depth and breadth of this fundamental concept.

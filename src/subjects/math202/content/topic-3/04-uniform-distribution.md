@@ -1,3 +1,9 @@
+---
+id: math202-t3-uniform
+title: "Uniform Distribution"
+order: 4
+---
+
 # Uniform Distribution
 
 ## Introduction

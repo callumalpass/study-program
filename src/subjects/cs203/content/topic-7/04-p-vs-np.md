@@ -1,3 +1,9 @@
+---
+id: cs203-t7-pvsnp
+title: "P vs NP Problem"
+order: 4
+---
+
 # P vs NP Problem
 
 The **P vs NP problem** asks whether every problem whose solution can be quickly verified can also be quickly solved. It's the most important open question in computer science and one of the seven Millennium Prize Problems.

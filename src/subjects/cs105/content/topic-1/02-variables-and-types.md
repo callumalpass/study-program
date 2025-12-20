@@ -1,3 +1,9 @@
+---
+id: cs105-t1-variables
+title: "Variables and Data Types"
+order: 2
+---
+
 # Variables and Data Types
 
 Variables are the fundamental building blocks of any program. In C, understanding data types is especially important because C gives you direct control over memory—and with that control comes responsibility.

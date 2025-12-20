@@ -1,3 +1,9 @@
+---
+id: cs301-t3-multiprocessor
+title: "Multiprocessor Scheduling"
+order: 6
+---
+
 # Multiprocessor Scheduling
 
 Scheduling for systems with multiple processors presents unique challenges. This subtopic covers symmetric multiprocessing, load balancing, and processor affinity.

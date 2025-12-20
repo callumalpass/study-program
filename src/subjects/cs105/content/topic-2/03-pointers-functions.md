@@ -1,3 +1,9 @@
+---
+id: cs105-t2-functions
+title: "Pointers and Functions"
+order: 3
+---
+
 # Pointers and Functions
 
 Pointers enable powerful function capabilities in C: modifying caller variables, returning multiple values, and passing large data structures efficiently. Understanding pass-by-reference is essential for effective C programming.

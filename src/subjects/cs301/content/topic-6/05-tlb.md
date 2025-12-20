@@ -1,3 +1,9 @@
+---
+id: cs301-t6-tlb
+title: "Translation Lookaside Buffer"
+order: 5
+---
+
 # Translation Lookaside Buffer (TLB)
 
 The TLB is a hardware cache for page table entries. This subtopic covers TLB operation, management, and performance implications.

@@ -1,3 +1,9 @@
+---
+id: cs202-t4-forwarding
+title: "Data Forwarding"
+order: 3
+---
+
 # Data Forwarding (Bypassing)
 
 **Data forwarding**, also called **bypassing**, is a technique that eliminates most data hazard stalls by routing results directly from where they're produced to where they're needed, without waiting for the register file write.

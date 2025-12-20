@@ -1,3 +1,9 @@
+---
+id: math201-t6-applications
+title: "Applications of Eigenvalues"
+order: 7
+---
+
 # Applications of Eigenvalues and Eigenvectors
 
 ## Introduction

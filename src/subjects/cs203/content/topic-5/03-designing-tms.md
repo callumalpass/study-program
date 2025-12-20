@@ -1,3 +1,9 @@
+---
+id: cs203-t5-designing
+title: "Designing TMs"
+order: 3
+---
+
 # Designing Turing Machines
 
 Designing TMs requires understanding how to use the tape for storage and the finite control for decision-making. Systematic approaches help construct correct machines.

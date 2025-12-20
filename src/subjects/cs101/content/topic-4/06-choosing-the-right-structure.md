@@ -1,3 +1,9 @@
+---
+id: cs101-t4-choosing
+title: "Choosing the Right Structure"
+order: 6
+---
+
 ## Choosing Between List and Dictionary
 
 Knowing when to use a list versus a dictionary is a fundamental skill. Each data structure has strengths, and choosing the right one makes your code clearer and more efficient.

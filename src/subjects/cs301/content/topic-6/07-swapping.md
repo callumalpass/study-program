@@ -1,3 +1,9 @@
+---
+id: cs301-t6-swapping
+title: "Swapping"
+order: 7
+---
+
 # Swapping
 
 Swapping moves entire processes between main memory and disk. This subtopic covers swapping concepts, implementation, and modern swap systems.

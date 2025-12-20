@@ -1,3 +1,9 @@
+---
+id: cs101-t7-memo
+title: "Performance and Memoization"
+order: 6
+---
+
 ## Performance and Memoization
 
 Not all recursive solutions are efficient. Some recalculate the same values many times, leading to exponential slowdown. **Memoization** is a technique that caches results to avoid redundant computation, often transforming slow recursive solutions into fast ones.

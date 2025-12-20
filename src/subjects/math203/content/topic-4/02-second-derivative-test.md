@@ -1,3 +1,9 @@
+---
+id: math203-t4-second-test
+title: "The Second Derivative Test"
+order: 2
+---
+
 # The Second Derivative Test
 
 The first derivative test requires checking signs on intervals around a critical point. The second derivative test provides a sometimes simpler alternative using concavity information.

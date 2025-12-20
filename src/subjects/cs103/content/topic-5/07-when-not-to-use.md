@@ -1,3 +1,9 @@
+---
+id: cs103-t5-when-not
+title: "When Not to Use Patterns"
+order: 7
+---
+
 ## When NOT to Use Patterns
 
 Design patterns are powerful tools, but overusing them creates unnecessarily complex code. The best solution is often the simplest one.

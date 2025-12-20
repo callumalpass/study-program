@@ -1,3 +1,9 @@
+---
+id: cs105-t1-functions
+title: "Functions"
+order: 6
+---
+
 # Functions
 
 Functions are the building blocks of modular C programs. They allow you to break complex problems into smaller, manageable pieces that can be developed, tested, and reused independently.

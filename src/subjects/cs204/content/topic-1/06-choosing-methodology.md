@@ -1,3 +1,9 @@
+---
+id: cs204-t1-choosing
+title: "Choosing Methodology"
+order: 6
+---
+
 # Choosing the Right Software Development Methodology
 
 Selecting an appropriate development methodology is one of the most important decisions for a software project. No single methodology works for all situations—the key is matching methodology characteristics to project context.

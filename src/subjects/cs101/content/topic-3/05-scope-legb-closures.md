@@ -1,3 +1,9 @@
+---
+id: cs101-t3-scope
+title: "Scope, LEGB, Closures"
+order: 5
+---
+
 ## Scope (Where Variables Live)
 
 Scope determines where a variable can be accessed in your program. Understanding scope helps you avoid bugs where variables have unexpected values or don't exist when you expect them to.

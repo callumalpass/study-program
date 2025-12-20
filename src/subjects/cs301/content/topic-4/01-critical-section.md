@@ -1,3 +1,9 @@
+---
+id: cs301-t4-critical
+title: "Critical Section Problem"
+order: 1
+---
+
 # The Critical Section Problem
 
 The critical section problem is fundamental to concurrent programming. This subtopic covers the problem definition, requirements for solutions, and basic approaches.

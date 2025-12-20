@@ -1,3 +1,9 @@
+---
+id: cs102-t5-registers-alu-and-buses
+title: "Registers, ALU, and Buses"
+order: 3
+---
+
 # Registers, the ALU, and Buses
 
 The CPU's datapath consists of components that store, move, and transform data. **Registers** provide fast, temporary storage inside the CPU. The **ALU** performs arithmetic and logic operations. **Buses** carry data between components. Understanding these building blocks reveals how the CPU actually executes instructions.

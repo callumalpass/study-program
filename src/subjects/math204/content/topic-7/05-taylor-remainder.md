@@ -1,3 +1,9 @@
+---
+id: math204-t7-remainder
+title: "Taylor Remainder"
+order: 5
+---
+
 # Taylor's Remainder and Error Estimation
 
 When we approximate a function $f(x)$ with its Taylor polynomial $T_n(x)$, we introduce an error. Taylor's Remainder Theorem quantifies this error precisely, allowing us to determine how many terms we need for a desired accuracy and to verify that a Taylor series actually converges to its generating function.

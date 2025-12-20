@@ -1,3 +1,9 @@
+---
+id: cs103-t1-defining
+title: "Defining Classes"
+order: 2
+---
+
 ## Defining Classes: The Blueprint
 
 A **class** is a template that defines the structure and behavior of objects. Think of it as a cookie cutter—the class defines the shape, and each cookie (object) is made from that template.

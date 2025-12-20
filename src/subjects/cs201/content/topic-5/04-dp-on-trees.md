@@ -1,3 +1,9 @@
+---
+id: cs201-t5-trees
+title: "DP on Trees"
+order: 4
+---
+
 # Dynamic Programming on Trees
 
 Tree structures provide an ideal setting for dynamic programming because their hierarchical nature creates a natural decomposition into subproblems. Each subtree is an independent subproblem, and solutions for subtrees combine predictably to solve problems on the full tree. These techniques are essential for graph algorithms, compiler optimization, network analysis, and processing any hierarchical data structure.

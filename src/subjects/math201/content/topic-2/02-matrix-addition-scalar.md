@@ -1,3 +1,9 @@
+---
+id: math201-t2-addition-scalar
+title: "Matrix Addition and Scalar Multiplication"
+order: 2
+---
+
 # Matrix Addition and Scalar Multiplication
 
 Matrix addition and scalar multiplication are the fundamental arithmetic operations on matrices. They form the foundation of vector space structure and enable us to combine and scale matrices in meaningful ways. These operations are intuitive, computationally simple, and preserve important algebraic properties.

@@ -1,3 +1,9 @@
+---
+id: cs301-t3-priority
+title: "Priority Scheduling"
+order: 4
+---
+
 # Priority Scheduling
 
 Priority scheduling assigns a priority to each process and schedules based on priority. This subtopic covers priority assignment, starvation, and aging.

@@ -1,3 +1,9 @@
+---
+id: cs105-t6-make
+title: "Make and Build Tools"
+order: 6
+---
+
 # Make and Build Tools
 
 Make is the classic build automation tool for C projects. It tracks dependencies, determines what needs rebuilding, and executes compilation commands efficiently.

@@ -1,3 +1,9 @@
+---
+id: cs101-t2-for
+title: "For Loops and range()"
+order: 4
+---
+
 ## `for` Loops and `range()`
 
 `for` loops are for iterating over sequences (iterables). They are ideal when you want to process each item in a collection - a list, a string, a range of numbers, a file, or any other iterable object.

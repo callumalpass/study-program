@@ -1,3 +1,9 @@
+---
+id: math101-t7-intro
+title: "Introduction to Sequences and Summations"
+order: 1
+---
+
 # Introduction to Sequences and Summations
 
 ## What Are Sequences?

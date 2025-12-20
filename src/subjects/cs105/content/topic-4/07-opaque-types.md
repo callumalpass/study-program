@@ -1,3 +1,9 @@
+---
+id: cs105-t4-opaque
+title: "Opaque Types"
+order: 7
+---
+
 # Opaque Types
 
 Opaque types hide implementation details from users, providing encapsulation in C. This pattern is essential for creating maintainable libraries and APIs.

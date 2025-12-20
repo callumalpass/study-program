@@ -1,3 +1,9 @@
+---
+id: cs202-t7-intro
+title: "Introduction to ILP"
+order: 1
+---
+
 # Introduction to Instruction-Level Parallelism
 
 **Instruction-Level Parallelism (ILP)** refers to executing multiple instructions simultaneously within a single processor. Modern CPUs achieve performance not just through faster clocks, but by finding and exploiting parallelism among instructions. Understanding ILP is fundamental to comprehending how modern processors achieve high performance.

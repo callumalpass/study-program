@@ -1,3 +1,9 @@
+---
+id: cs202-t6-design
+title: "Hierarchy Design"
+order: 7
+---
+
 # Memory Hierarchy Design Principles
 
 Designing an effective memory hierarchy requires balancing many competing constraints: performance, cost, power, and complexity. This section explores the principles and trade-offs that guide memory hierarchy design in real systems.

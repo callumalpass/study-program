@@ -1,3 +1,9 @@
+---
+id: math201-t5-cramers
+title: "Cramer"
+order: 5
+---
+
 # Cramer's Rule
 
 Cramer's Rule provides an explicit formula for solving systems of linear equations using determinants. While not the most computationally efficient method for large systems, it offers theoretical insight and is practical for small systems with symbolic coefficients.

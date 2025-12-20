@@ -1,3 +1,9 @@
+---
+id: math401-topic-6-7
+title: "Argument Principle and Rouche\"
+order: 7
+---
+
 # Applications of Residue Theory
 
 Residue theory extends far beyond evaluating integrals. It provides powerful methods for summing series, inverting transforms, solving differential equations, and analyzing physical systems. This section surveys key applications demonstrating the versatility and power of residues.

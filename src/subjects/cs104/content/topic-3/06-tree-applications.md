@@ -1,3 +1,9 @@
+---
+id: cs104-t3-applications
+title: "Tree Applications"
+order: 6
+---
+
 # Tree Applications
 
 Trees are ubiquitous in computer science, appearing in file systems, databases, compilers, and many algorithms. Understanding practical applications helps you recognize when to use tree structures and how to apply them effectively.

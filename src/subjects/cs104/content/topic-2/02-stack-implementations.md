@@ -1,3 +1,9 @@
+---
+id: cs104-t2-stack-impl
+title: "Stack Implementations"
+order: 2
+---
+
 # Stack Implementations
 
 Stacks can be implemented using different underlying data structures, each with its own tradeoffs. The two primary approaches are array-based and linked list-based implementations.

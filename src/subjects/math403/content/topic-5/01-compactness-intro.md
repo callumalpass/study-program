@@ -1,3 +1,9 @@
+---
+id: math403-topic-5-1
+title: "Introduction to Compactness"
+order: 1
+---
+
 # Introduction to Compactness
 
 Compactness is one of the most important concepts in topology, generalizing the notion of closed and bounded sets in Euclidean space to arbitrary topological spaces. This fundamental property captures the essence of "finiteness" in an infinite setting and enables many powerful theorems about continuous functions and convergence.

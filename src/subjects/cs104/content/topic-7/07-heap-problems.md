@@ -1,3 +1,9 @@
+---
+id: cs104-t7-problems
+title: "Heap Problems"
+order: 7
+---
+
 # Common Heap Problems
 
 Heap problems appear frequently in coding interviews and competitions. This section covers essential problems and patterns that leverage heap properties.

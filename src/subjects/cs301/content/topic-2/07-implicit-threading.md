@@ -1,3 +1,9 @@
+---
+id: cs301-t2-implicit
+title: "Implicit Threading"
+order: 7
+---
+
 # Implicit Threading
 
 Implicit threading transfers thread management from programmers to compilers and runtime systems. This subtopic covers OpenMP, Grand Central Dispatch, and other implicit threading approaches.

@@ -1,3 +1,9 @@
+---
+id: cs101-t3-docs
+title: "Docstrings and Type Hints"
+order: 6
+---
+
 ## Docstrings (Function Documentation)
 
 A **docstring** is a string that documents what a function does. It appears as the first statement in a function and is accessible via `help()` and IDE tooltips. Well-documented functions are easier to use and maintain.

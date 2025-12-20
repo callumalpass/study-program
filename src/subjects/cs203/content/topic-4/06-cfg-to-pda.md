@@ -1,3 +1,9 @@
+---
+id: cs203-t4-cfgtopda
+title: "CFG to PDA Conversion"
+order: 6
+---
+
 # CFG to PDA Conversion
 
 Every context-free language is accepted by some PDA. The conversion simulates leftmost derivations on the stack.

@@ -1,3 +1,9 @@
+---
+id: cs204-t6-concepts
+title: "Version Control Concepts"
+order: 1
+---
+
 # Version Control Concepts
 
 Version control systems (VCS) are essential tools in modern software development that track changes to files over time, enable collaboration among developers, and provide the ability to revert to previous states when needed.

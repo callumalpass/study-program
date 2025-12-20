@@ -1,3 +1,9 @@
+---
+id: cs205-t4-nf
+title: "Normal Forms"
+order: 2
+---
+
 # Normal Forms
 
 Normal forms define levels of database schema quality. Each form eliminates specific types of redundancy and anomalies.

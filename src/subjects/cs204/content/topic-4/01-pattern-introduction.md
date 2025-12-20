@@ -1,3 +1,9 @@
+---
+id: cs204-t4-intro
+title: "Introduction to Patterns"
+order: 1
+---
+
 # Introduction to Design Patterns
 
 Design patterns emerged from the recognition that certain design problems recur across different software projects. Understanding their origins, structure, and purpose is essential for applying them effectively.

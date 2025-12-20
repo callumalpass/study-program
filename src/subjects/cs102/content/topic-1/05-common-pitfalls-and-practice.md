@@ -1,3 +1,9 @@
+---
+id: cs102-t1-common-pitfalls-and-practice
+title: "Common Pitfalls and Practice"
+order: 5
+---
+
 # Common Pitfalls and Practice
 
 Converting between bases is mechanically straightforward, but it's also easy to make small mistakes that lead to completely wrong answers. This subtopic identifies the most common errors and provides practice problems with detailed solutions. Learning to avoid these pitfalls will save you time and frustration on exams and in real debugging sessions.

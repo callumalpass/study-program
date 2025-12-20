@@ -1,3 +1,9 @@
+---
+id: cs105-t6-conditional
+title: "Conditional Compilation"
+order: 2
+---
+
 # Conditional Compilation
 
 Conditional compilation allows different code to be compiled based on preprocessor conditions. This enables platform-specific code, debug builds, feature toggles, and configurable software.

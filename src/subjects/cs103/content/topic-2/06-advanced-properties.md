@@ -1,3 +1,9 @@
+---
+id: cs103-t2-advanced
+title: "Advanced Properties"
+order: 6
+---
+
 ## Advanced Property Patterns
 
 Beyond basic getters and setters, properties enable powerful patterns: lazy initialization, caching, defensive copying, and more.

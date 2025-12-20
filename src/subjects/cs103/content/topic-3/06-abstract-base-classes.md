@@ -1,3 +1,9 @@
+---
+id: cs103-t3-abc
+title: "Abstract Base Classes"
+order: 6
+---
+
 ## Abstract Base Classes
 
 Abstract Base Classes (ABCs) define interfaces—contracts that subclasses must fulfill. They prevent instantiation of incomplete classes and make requirements explicit.

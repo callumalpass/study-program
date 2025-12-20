@@ -1,3 +1,9 @@
+---
+id: math101-t5-injective
+title: "Injective Functions (One-to-One)"
+order: 3
+---
+
 # Injective Functions (One-to-One)
 
 ## Definition

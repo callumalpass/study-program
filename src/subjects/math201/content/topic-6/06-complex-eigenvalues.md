@@ -1,3 +1,9 @@
+---
+id: math201-t6-complex
+title: "Complex Eigenvalues"
+order: 6
+---
+
 # Complex Eigenvalues of Real Matrices
 
 ## When Real Matrices Have Complex Eigenvalues

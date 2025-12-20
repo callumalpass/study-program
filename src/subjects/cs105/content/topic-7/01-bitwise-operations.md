@@ -1,3 +1,9 @@
+---
+id: cs105-t7-bitwise
+title: "Bitwise Operations"
+order: 1
+---
+
 # Bitwise Operations
 
 Bitwise operators manipulate individual bits within integer values. These operations are fundamental for low-level programming, embedded systems, graphics, cryptography, and performance optimization.

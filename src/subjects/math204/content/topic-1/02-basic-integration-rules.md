@@ -1,3 +1,9 @@
+---
+id: math204-t1-basic-rules
+title: "Basic Integration Rules"
+order: 2
+---
+
 # Basic Integration Rules
 
 Just as differentiation has rules (product rule, chain rule, etc.), integration has corresponding rules that let us find antiderivatives systematically. This section develops the fundamental integration formulas that parallel the basic derivative rules, giving you the tools to integrate polynomials, exponentials, logarithmic functions, and trigonometric functions.

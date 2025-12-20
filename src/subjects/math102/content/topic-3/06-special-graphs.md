@@ -1,3 +1,9 @@
+---
+id: math102-t3-special
+title: "Special Graphs"
+order: 6
+---
+
 # Special Graphs and Graph Families
 
 Certain graph families have special properties that make them important in theory and applications. Understanding these families helps recognize structure and apply known results.

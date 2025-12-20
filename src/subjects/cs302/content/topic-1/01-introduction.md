@@ -1,3 +1,9 @@
+---
+id: cs302-t1-intro
+title: "Introduction to Computer Networks"
+order: 1
+---
+
 # Introduction to Computer Networks
 
 Computer networks form the backbone of modern digital communication, connecting billions of devices worldwide and enabling everything from email to streaming video. Understanding how networks operate is essential for any computer scientist, as virtually every modern application relies on network communication in some form.

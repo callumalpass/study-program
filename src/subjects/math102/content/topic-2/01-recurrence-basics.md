@@ -1,3 +1,9 @@
+---
+id: math102-t2-basics
+title: "Recurrence Basics"
+order: 1
+---
+
 # Introduction to Recurrence Relations
 
 A recurrence relation defines a sequence where each term is expressed in terms of previous terms. They appear throughout computer science in algorithm analysis, combinatorics, and modeling recursive processes.

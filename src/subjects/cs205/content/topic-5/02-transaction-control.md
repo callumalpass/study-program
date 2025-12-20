@@ -1,3 +1,9 @@
+---
+id: cs205-t5-control
+title: "Transaction Control"
+order: 2
+---
+
 # Transaction Control
 
 Transaction control statements allow explicit management of transaction boundaries and behavior. Mastering these commands is essential for database programming.

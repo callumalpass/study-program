@@ -1,3 +1,9 @@
+---
+id: math203-t4-critical
+title: "Critical Points"
+order: 1
+---
+
 # Critical Points and Extrema
 
 Understanding where functions reach their highest and lowest values is fundamental to calculus. Critical points are the key to finding these extrema.

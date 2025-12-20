@@ -1,3 +1,9 @@
+---
+id: cs105-t6-multifile
+title: "Multi-file Projects"
+order: 7
+---
+
 # Multi-file Projects
 
 Organizing C code across multiple files is essential for maintainable, scalable projects. This section covers best practices for project structure, module design, and code organization.

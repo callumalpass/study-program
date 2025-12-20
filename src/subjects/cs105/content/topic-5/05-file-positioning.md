@@ -1,3 +1,9 @@
+---
+id: cs105-t5-positioning
+title: "File Positioning"
+order: 5
+---
+
 # File Positioning
 
 File positioning functions allow random access within files. Understanding these functions is essential for database implementations, file editors, and binary file formats.

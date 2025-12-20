@@ -1,3 +1,9 @@
+---
+id: cs203-t1-subset
+title: "Subset Construction"
+order: 3
+---
+
 # Subset Construction
 
 The **subset construction** (also called powerset construction) converts any NFA to an equivalent DFA. This algorithm proves that DFAs and NFAs recognize the same class of languages—the regular languages.

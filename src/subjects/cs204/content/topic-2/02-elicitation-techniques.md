@@ -1,3 +1,9 @@
+---
+id: cs204-t2-elicitation
+title: "Elicitation Techniques"
+order: 2
+---
+
 # Requirements Elicitation Techniques
 
 Requirements elicitation is the process of discovering, extracting, and gathering requirements from stakeholders and other sources. It is one of the most challenging aspects of requirements engineering because stakeholders often have difficulty articulating their needs, may have conflicting requirements, or may not know what they want until they see it. Successful elicitation requires using multiple techniques and carefully selecting the right approach for each situation.

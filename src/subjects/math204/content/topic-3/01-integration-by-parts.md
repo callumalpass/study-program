@@ -1,3 +1,9 @@
+---
+id: math204-t3-by-parts
+title: "Integration by Parts"
+order: 1
+---
+
 # Integration by Parts
 
 Integration by parts is one of the most powerful and versatile techniques in calculus. It transforms the integral of a product of two functions into a potentially simpler form. While the formula itself is straightforward, mastering integration by parts requires developing intuition for when to use it and how to choose the components effectively.

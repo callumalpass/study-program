@@ -1,3 +1,9 @@
+---
+id: cs201-t1-space
+title: "Space Complexity"
+order: 2
+---
+
 # Space Complexity
 
 While time complexity captures how long algorithms take, space complexity captures how much memory they consume. In an era of vast RAM and cheap storage, space might seem less critical than time—but this view misses crucial realities. Memory hierarchies mean that algorithms fitting in cache run orders of magnitude faster than those that spill to disk. Embedded systems have hard memory limits. Cloud computing charges by memory usage. And sometimes the data simply won't fit, no matter how much hardware you throw at it.

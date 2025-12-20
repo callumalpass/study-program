@@ -1,3 +1,9 @@
+---
+id: math301-topic-4-4
+title: "Lagrange Multipliers"
+order: 4
+---
+
 # Lagrange Multipliers
 
 ## Introduction

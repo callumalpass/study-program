@@ -1,3 +1,9 @@
+---
+id: cs301-t2-safety
+title: "Thread Safety"
+order: 5
+---
+
 # Thread Safety
 
 Thread safety ensures correct behavior when multiple threads access shared resources. This subtopic covers thread-safe programming techniques and common patterns.

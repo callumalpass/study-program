@@ -1,3 +1,9 @@
+---
+id: cs302-t6-tcp
+title: "TCP Socket Programming"
+order: 2
+---
+
 # TCP Socket Programming
 
 ## TCP Server Steps

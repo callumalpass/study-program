@@ -1,3 +1,9 @@
+---
+id: cs103-t7-mocks
+title: "Mocks and Fakes"
+order: 6
+---
+
 ## Mocks, Fakes, and Test Doubles
 
 Test doubles are stand-in objects used during testing to replace real dependencies. Understanding the different types helps you choose the right approach for each testing scenario.

@@ -1,3 +1,9 @@
+---
+id: cs301-t1-shared
+title: "IPC: Shared Memory"
+order: 6
+---
+
 # Interprocess Communication: Shared Memory
 
 Shared memory allows multiple processes to access the same memory region, enabling fast data exchange. This subtopic covers shared memory mechanisms and their implementation.

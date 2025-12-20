@@ -1,3 +1,9 @@
+---
+id: math204-t4-hydrostatic
+title: "Hydrostatic Force"
+order: 6
+---
+
 # Hydrostatic Force and Pressure
 
 When a surface is submerged in a fluid, it experiences force due to the fluid's pressure. This **hydrostatic force** varies with depth, requiring integration to compute. Applications range from dam design to submarine engineering, where understanding pressure distribution is critical for structural integrity.

@@ -1,3 +1,9 @@
+---
+id: cs202-t7-dynamic
+title: "Dynamic Scheduling"
+order: 3
+---
+
 # Dynamic Scheduling and Tomasulo's Algorithm
 
 **Dynamic scheduling** allows instructions to execute out of program order when their operands are ready. This hardware technique, pioneered by Robert Tomasulo at IBM, is the foundation of all modern high-performance processors.

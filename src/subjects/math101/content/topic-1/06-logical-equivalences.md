@@ -1,3 +1,9 @@
+---
+id: math101-t1-equivalences
+title: "Logical Equivalences"
+order: 6
+---
+
 # Logical Equivalences and Laws
 
 ## What is Logical Equivalence?

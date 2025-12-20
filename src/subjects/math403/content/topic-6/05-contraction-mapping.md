@@ -1,3 +1,9 @@
+---
+id: math403-topic-6-5
+title: "Contraction Mapping Theorem"
+order: 5
+---
+
 # The Contraction Mapping Theorem
 
 The Contraction Mapping Theorem (also called the Banach Fixed Point Theorem) is one of the most important results in analysis, with applications throughout mathematics, from solving differential equations to proving convergence of numerical algorithms. Named after Polish mathematician Stefan Banach who proved it in 1922, this theorem provides both an existence and uniqueness result for fixed points, along with a constructive method for finding them through iteration.

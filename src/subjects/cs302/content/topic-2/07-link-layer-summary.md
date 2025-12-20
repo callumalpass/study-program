@@ -1,3 +1,9 @@
+---
+id: cs302-t2-summary
+title: "Link Layer Summary"
+order: 7
+---
+
 # Link Layer: Summary and Best Practices
 
 The Data Link layer provides the foundation for all higher-layer communication, handling the nitty-gritty details of getting frames from one node to another on the same network segment. This summary consolidates key concepts and provides practical guidance for working with link-layer technologies.

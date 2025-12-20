@@ -1,3 +1,9 @@
+---
+id: math202-t2-discrete
+title: "Discrete Random Variables"
+order: 1
+---
+
 # Discrete Random Variables
 
 Random variables form the bridge between probability theory and real-world numerical outcomes. While probability spaces deal with abstract events, random variables let us assign numerical values to those events, enabling quantitative analysis of uncertain phenomena.

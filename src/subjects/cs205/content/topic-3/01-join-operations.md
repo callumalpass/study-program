@@ -1,3 +1,9 @@
+---
+id: cs205-t3-joins
+title: "Join Operations"
+order: 1
+---
+
 # Join Operations in Depth
 
 Joins combine rows from multiple tables based on related columns. Mastering joins is essential for working with normalized databases.

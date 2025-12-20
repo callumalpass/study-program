@@ -1,3 +1,9 @@
+---
+id: math301-topic-7-7
+title: "Generalizations and Connections"
+order: 7
+---
+
 # Generalizations and Further Topics
 
 ## Introduction

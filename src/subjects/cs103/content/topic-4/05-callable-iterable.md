@@ -1,3 +1,9 @@
+---
+id: cs103-t4-callable
+title: "Callable and Iterable"
+order: 5
+---
+
 ## Making Objects Callable and Iterable
 
 Two powerful special methods let objects behave like functions (`__call__`) and work with loops (`__iter__`). These enable elegant, Pythonic APIs.

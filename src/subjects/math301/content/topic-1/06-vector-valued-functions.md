@@ -1,3 +1,9 @@
+---
+id: math301-topic-1-6
+title: "Vector-Valued Functions"
+order: 6
+---
+
 # Vector-Valued Functions
 
 ## Introduction

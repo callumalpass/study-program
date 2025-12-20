@@ -1,3 +1,9 @@
+---
+id: cs105-t4-bitfields
+title: "Bit Fields"
+order: 6
+---
+
 # Bit Fields
 
 Bit fields allow you to specify the exact number of bits for structure members, enabling compact data storage and hardware register access.

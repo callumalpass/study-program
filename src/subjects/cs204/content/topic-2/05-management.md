@@ -1,3 +1,9 @@
+---
+id: cs204-t2-management
+title: "Requirements Management"
+order: 5
+---
+
 # Requirements Management
 
 Requirements management encompasses the activities needed to maintain requirements throughout the project lifecycle. Even the best initial requirements will change as stakeholders gain understanding, business conditions evolve, and technical constraints become clear. Effective requirements management ensures these changes are handled systematically, maintaining project coherence while accommodating necessary evolution.

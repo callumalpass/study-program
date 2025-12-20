@@ -1,3 +1,9 @@
+---
+id: cs203-t3-normalforms
+title: "Normal Forms"
+order: 5
+---
+
 # Normal Forms
 
 **Normal forms** are restricted grammar formats that simplify analysis and parsing while preserving expressive power. Every CFG can be converted to normal form.

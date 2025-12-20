@@ -1,3 +1,9 @@
+---
+id: cs302-t4-dv
+title: "Distance Vector Routing"
+order: 2
+---
+
 # Distance Vector Routing
 
 ## The Distance Vector Approach

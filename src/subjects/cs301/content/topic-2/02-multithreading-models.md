@@ -1,3 +1,9 @@
+---
+id: cs301-t2-models
+title: "Multithreading Models"
+order: 2
+---
+
 # Multithreading Models
 
 The relationship between user threads and kernel threads defines a multithreading model. This subtopic examines the three primary models and their tradeoffs.

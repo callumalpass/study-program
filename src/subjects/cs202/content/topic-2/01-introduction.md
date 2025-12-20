@@ -1,3 +1,9 @@
+---
+id: cs202-t2-intro
+title: "Introduction to Assembly"
+order: 1
+---
+
 # Introduction to Assembly Language
 
 **Assembly language** is a low-level programming language that provides a human-readable representation of machine code. Each assembly instruction corresponds directly to a machine instruction, giving programmers precise control over hardware while being more readable than raw binary.

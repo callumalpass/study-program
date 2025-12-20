@@ -1,3 +1,9 @@
+---
+id: math401-topic-3-7
+title: "Deformation of Contours"
+order: 7
+---
+
 # Computing Real Integrals Using Complex Methods
 
 One of the most spectacular applications of complex analysis is the evaluation of definite real integrals that are difficult or impossible to compute using standard real-variable techniques. By extending the integral to the complex plane, choosing appropriate contours, and applying Cauchy's theorem and residue calculus, we can evaluate integrals that appear intractable. This section presents the fundamental techniques with detailed examples.

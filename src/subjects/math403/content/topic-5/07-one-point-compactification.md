@@ -1,3 +1,9 @@
+---
+id: math403-topic-5-7
+title: "One-Point Compactification"
+order: 7
+---
+
 # One-Point Compactification
 
 The one-point compactification, also called the Alexandroff compactification, provides a canonical way to compactify locally compact spaces by adding a single "point at infinity." This elegant construction creates the smallest possible compactification and has beautiful geometric interpretations.

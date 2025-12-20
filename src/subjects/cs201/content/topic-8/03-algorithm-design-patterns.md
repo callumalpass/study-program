@@ -1,3 +1,9 @@
+---
+id: cs201-t8-patterns
+title: "Algorithm Design Patterns"
+order: 3
+---
+
 # Algorithm Design Patterns and Strategies
 
 Algorithm design is pattern recognition. Experienced algorithm designers don't invent solutions from scratch—they recognize problem structures that match known patterns and apply appropriate techniques. Two pointers for array problems, binary search the answer for optimization, meet in the middle for exponential search spaces, reduce to sorting when order matters. Building this pattern library accelerates problem solving dramatically.

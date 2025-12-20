@@ -1,3 +1,9 @@
+---
+id: cs204-t1-overview
+title: "SDLC Overview"
+order: 1
+---
+
 # SDLC Overview and Importance
 
 The Software Development Lifecycle (SDLC) is a systematic process for building software that ensures quality and correctness while meeting customer expectations. Understanding the SDLC is fundamental to professional software development.

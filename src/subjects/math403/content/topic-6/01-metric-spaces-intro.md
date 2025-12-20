@@ -1,3 +1,9 @@
+---
+id: math403-topic-6-1
+title: "Introduction to Metric Spaces"
+order: 1
+---
+
 # Introduction to Metric Spaces
 
 Metric spaces provide a framework where the concept of "distance" is precisely defined, allowing for rigorous treatment of limits, continuity, and convergence. The abstraction of distance through the metric function has proven to be one of the most fruitful ideas in modern mathematics, unifying concepts from geometry, analysis, and topology while providing the foundation for functional analysis and many applications in physics, computer science, and engineering.

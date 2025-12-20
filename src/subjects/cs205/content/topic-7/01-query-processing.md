@@ -1,3 +1,9 @@
+---
+id: cs205-t7-processing
+title: "Query Processing"
+order: 1
+---
+
 # Query Processing
 
 Query processing transforms SQL statements into efficient execution plans. Understanding this pipeline is fundamental to query optimization.

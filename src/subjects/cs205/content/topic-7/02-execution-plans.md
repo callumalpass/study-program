@@ -1,3 +1,9 @@
+---
+id: cs205-t7-plans
+title: "Execution Plans"
+order: 2
+---
+
 # Execution Plans
 
 Execution plans reveal how the database executes queries. Reading and understanding plans is essential for performance troubleshooting.

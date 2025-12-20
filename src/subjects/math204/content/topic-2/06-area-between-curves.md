@@ -1,3 +1,9 @@
+---
+id: math204-t2-area
+title: "Area Between Curves"
+order: 6
+---
+
 # Area Between Curves
 
 One of the most practical applications of definite integrals is finding the area of regions bounded by curves. While the basic definite integral gives the area between a curve and the $x$-axis, we often need to find areas between two curves, or areas bounded by multiple curves. This requires careful setup of integrals and strategic choices about integration direction.

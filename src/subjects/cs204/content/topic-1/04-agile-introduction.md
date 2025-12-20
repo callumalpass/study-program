@@ -1,3 +1,9 @@
+---
+id: cs204-t1-agile-intro
+title: "Introduction to Agile"
+order: 4
+---
+
 # Introduction to Agile Development
 
 Agile development represents a paradigm shift from traditional plan-driven approaches, emphasizing adaptability, collaboration, and delivering value early and often. This introduction covers Agile principles and their origins.

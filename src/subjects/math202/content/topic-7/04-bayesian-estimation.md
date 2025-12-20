@@ -1,3 +1,9 @@
+---
+id: math202-t7-estimation
+title: "Bayesian Estimation"
+order: 4
+---
+
 ## Bayesian Estimation
 
 Estimation is one of the most fundamental tasks in statistics: given observed data, what can we say about unknown parameters? Bayesian estimation provides a complete probabilistic framework for this task, yielding not just point estimates but full posterior distributions that quantify our uncertainty. This subtopic explores Bayesian approaches to common estimation problems.

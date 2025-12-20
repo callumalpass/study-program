@@ -1,3 +1,9 @@
+---
+id: math202-t2-moments
+title: "Moments and MGF"
+order: 5
+---
+
 # Moments and Moment Generating Functions
 
 Beyond mean and variance, we can characterize distributions using higher-order moments and a powerful tool called the moment generating function. These concepts provide deeper insight into the shape and properties of probability distributions.

@@ -1,3 +1,9 @@
+---
+id: math101-t2-strategies
+title: "Proof Strategies and Best Practices"
+order: 7
+---
+
 # Proof Strategies and Best Practices
 
 ## Choosing the Right Technique

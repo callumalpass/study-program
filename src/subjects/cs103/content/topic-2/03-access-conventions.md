@@ -1,3 +1,9 @@
+---
+id: cs103-t2-conventions
+title: "Access Conventions"
+order: 3
+---
+
 ## Python's Access Control Conventions
 
 Python doesn't enforce access control like Java or C++. Instead, it uses naming conventions that signal intent to other developers. Understanding these conventions is essential for writing idiomatic Python.

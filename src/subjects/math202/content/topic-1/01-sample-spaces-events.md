@@ -1,3 +1,9 @@
+---
+id: math202-t1-sample-spaces
+title: "Sample Spaces and Events"
+order: 1
+---
+
 # Sample Spaces and Events
 
 ## Introduction

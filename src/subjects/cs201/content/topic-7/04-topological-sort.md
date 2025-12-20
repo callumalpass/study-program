@@ -1,3 +1,9 @@
+---
+id: cs201-t7-topo
+title: "Topological Sort and DAGs"
+order: 4
+---
+
 # Topological Sort and DAGs
 
 Topological sorting addresses a fundamental question in dependency management: given a set of tasks with dependencies, in what order should we execute them? This problem appears constantly in software engineering—compiling source files in the right order, scheduling database migrations, resolving package dependencies, and planning project tasks. The elegant solution relies on directed acyclic graphs (DAGs) and their special properties.

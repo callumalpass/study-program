@@ -1,3 +1,9 @@
+---
+id: math201-t5-2x2-3x3
+title: "Determinants of 2x2 and 3x3 Matrices"
+order: 1
+---
+
 # Determinants of 2×2 and 3×3 Matrices
 
 The determinant is a special scalar value computed from a square matrix that encodes important information about the matrix. It tells us whether a matrix is invertible, provides information about linear transformations, and has rich geometric interpretations.

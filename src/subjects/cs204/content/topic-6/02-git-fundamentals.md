@@ -1,3 +1,9 @@
+---
+id: cs204-t6-git
+title: "Git Fundamentals"
+order: 2
+---
+
 # Git Fundamentals
 
 Git is the dominant distributed version control system in modern software development. Created by Linus Torvalds in 2005 for Linux kernel development, Git has become the de facto standard for version control across all types of projects.

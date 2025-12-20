@@ -1,3 +1,9 @@
+---
+id: math403-topic-5-6
+title: "Local Compactness"
+order: 6
+---
+
 # Local Compactness
 
 Local compactness weakens the notion of compactness while preserving many useful properties. A space is locally compact if compactness holds "in small regions" around each point, even if the whole space is not compact. This concept is essential for the study of locally compact groups, functional analysis, and the theory of compactifications.

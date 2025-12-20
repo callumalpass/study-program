@@ -1,3 +1,9 @@
+---
+id: math301-topic-6-2
+title: "Line Integrals of Vector Fields"
+order: 2
+---
+
 # Line Integrals of Vector Fields
 
 ## Introduction

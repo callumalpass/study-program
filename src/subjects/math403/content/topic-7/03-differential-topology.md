@@ -1,3 +1,9 @@
+---
+id: math403-topic-7-3
+title: "Introduction to Differential Topology"
+order: 3
+---
+
 # Introduction to Differential Topology
 
 Differential topology studies smooth manifolds and smooth maps between them, combining techniques from topology and differential calculus. While topology studies properties preserved by continuous deformations, differential topology adds the requirement of smoothness, allowing us to use calculus tools like derivatives, tangent spaces, and differential forms. This additional structure enables powerful theorems and techniques unavailable in pure topology, yet the underlying topological intuition remains essential. Differential topology provides the mathematical foundation for modern geometry, theoretical physics, and many applications where smooth structure matters.

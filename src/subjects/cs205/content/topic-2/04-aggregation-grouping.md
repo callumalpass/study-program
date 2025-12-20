@@ -1,3 +1,9 @@
+---
+id: cs205-t2-aggregation
+title: "Aggregation and Grouping"
+order: 4
+---
+
 # Aggregation and Grouping
 
 Aggregate functions compute summary values across rows. Combined with GROUP BY, they enable powerful analytical queries.

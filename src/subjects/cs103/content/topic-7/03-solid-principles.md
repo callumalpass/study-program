@@ -1,3 +1,9 @@
+---
+id: cs103-t7-solid
+title: "SOLID Principles"
+order: 3
+---
+
 ## SOLID Principles
 
 SOLID is an acronym for five design principles that help create maintainable, flexible code. They're guidelines for spotting and fixing design problems, not rigid rules to follow blindly.

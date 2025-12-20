@@ -1,3 +1,9 @@
+---
+id: math102-t3-defs
+title: "Graph Definitions"
+order: 1
+---
+
 # Graph Definitions and Terminology
 
 Graphs model relationships between objects and appear throughout computer science—from social networks to circuit design. This foundation covers essential vocabulary and concepts.

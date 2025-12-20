@@ -1,3 +1,9 @@
+---
+id: math202-t5-z-tests
+title: "Z-Tests"
+order: 3
+---
+
 # Z-Tests for Means
 
 Z-tests are among the most fundamental hypothesis tests in statistics. They allow us to make inferences about population means when the population standard deviation is known or when sample sizes are large enough to invoke the Central Limit Theorem. Understanding z-tests provides the foundation for more complex inference procedures.

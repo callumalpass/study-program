@@ -1,3 +1,9 @@
+---
+id: cs205-t3-sets
+title: "Set Operations"
+order: 3
+---
+
 # Set Operations
 
 Set operations combine results from multiple queries. Understanding UNION, INTERSECT, and EXCEPT enables powerful data comparisons and combinations.

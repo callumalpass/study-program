@@ -1,3 +1,9 @@
+---
+id: math101-t1-propositions
+title: "Propositions and Truth Values"
+order: 2
+---
+
 # Propositions and Truth Values
 
 ## What is a Proposition?

@@ -1,3 +1,9 @@
+---
+id: math201-t1-gaussian
+title: "Gaussian Elimination"
+order: 2
+---
+
 # Gaussian Elimination
 
 ## Introduction

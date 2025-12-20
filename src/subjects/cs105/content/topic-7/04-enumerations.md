@@ -1,3 +1,9 @@
+---
+id: cs105-t7-enums
+title: "Enumerations"
+order: 4
+---
+
 # Enumerations
 
 Enumerations (enums) define named integer constants, improving code readability and type safety. They're essential for representing fixed sets of related values like states, options, and error codes.

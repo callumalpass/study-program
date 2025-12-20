@@ -1,3 +1,9 @@
+---
+id: cs101-t1-conversion
+title: "Type Conversion"
+order: 6
+---
+
 ## Type Conversion (Casting)
 
 Often you need to convert values from one type to another. Python provides built-in functions for this purpose.

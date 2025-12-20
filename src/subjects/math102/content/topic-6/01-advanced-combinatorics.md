@@ -1,3 +1,9 @@
+---
+id: math102-t6-advcomb
+title: "Advanced Combinatorics"
+order: 1
+---
+
 # Advanced Combinatorics
 
 Beyond basic counting, advanced techniques handle complex structures like partitions, lattice paths with restrictions, and asymptotic enumeration.

@@ -1,3 +1,9 @@
+---
+id: cs204-t1-iterative
+title: "Iterative Models"
+order: 3
+---
+
 # Iterative and Incremental Models
 
 Iterative and incremental development addresses many limitations of the Waterfall model by building software through repeated cycles (iterations) and delivering it in small pieces (increments). This approach allows for feedback and adaptation throughout the project.

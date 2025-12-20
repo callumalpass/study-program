@@ -1,3 +1,9 @@
+---
+id: cs103-t3-multiple
+title: "Multiple Inheritance"
+order: 5
+---
+
 ## Multiple Inheritance and MRO
 
 Python supports inheriting from multiple parent classes. This is powerful but requires understanding the Method Resolution Order (MRO) to avoid confusion.

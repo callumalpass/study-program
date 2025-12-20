@@ -1,3 +1,9 @@
+---
+id: math301-topic-4-2
+title: "Second Derivative Test"
+order: 2
+---
+
 # Second Derivative Test
 
 ## Introduction

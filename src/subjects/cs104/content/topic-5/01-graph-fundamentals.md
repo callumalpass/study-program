@@ -1,3 +1,9 @@
+---
+id: cs104-t5-fundamentals
+title: "Graph Fundamentals"
+order: 1
+---
+
 # Graph Fundamentals
 
 Graphs are one of the most versatile data structures in computer science, modeling relationships between objects. From social networks to road maps, from web pages to molecular structures, graphs appear everywhere. Understanding graphs is essential for solving complex real-world problems.

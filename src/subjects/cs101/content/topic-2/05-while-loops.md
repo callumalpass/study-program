@@ -1,3 +1,9 @@
+---
+id: cs101-t2-while
+title: "While Loops"
+order: 5
+---
+
 ## `while` Loops (Repeat Until Something Changes)
 
 `while` loops repeat as long as a condition stays `True`. They're ideal when you don't know in advance how many iterations you need - you keep going "until something happens."

@@ -1,3 +1,9 @@
+---
+id: cs105-t2-const
+title: "Const and Pointers"
+order: 7
+---
+
 # Const and Pointers
 
 The `const` keyword with pointers creates different types of immutability. Understanding these distinctions is crucial for writing correct, safe C code and for reading library APIs.

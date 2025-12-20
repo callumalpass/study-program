@@ -1,3 +1,9 @@
+---
+id: cs104-t3-traversals
+title: "Tree Traversals"
+order: 2
+---
+
 # Tree Traversals
 
 Tree traversal is the process of visiting every node in a tree exactly once. Different traversal orders serve different purposes and produce different output sequences.

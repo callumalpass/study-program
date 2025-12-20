@@ -1,3 +1,9 @@
+---
+id: math201-t6-characteristic
+title: "Characteristic Equation"
+order: 2
+---
+
 # The Characteristic Equation and Finding Eigenvalues
 
 ## The Characteristic Polynomial

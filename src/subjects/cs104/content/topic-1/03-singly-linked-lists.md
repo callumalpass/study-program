@@ -1,3 +1,9 @@
+---
+id: cs104-t1-singly
+title: "Singly Linked Lists"
+order: 3
+---
+
 # Singly Linked Lists
 
 A singly linked list is a linear data structure where elements are stored in nodes, and each node contains data and a reference (pointer) to the next node. Unlike arrays, linked lists don't require contiguous memory allocation.

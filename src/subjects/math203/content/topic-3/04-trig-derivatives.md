@@ -1,3 +1,9 @@
+---
+id: math203-t3-trig
+title: "Trigonometric Derivatives"
+order: 4
+---
+
 # Derivatives of Trigonometric Functions
 
 Trigonometric functions appear throughout calculus, physics, and engineering. Their derivatives have elegant patterns that are worth memorizing.

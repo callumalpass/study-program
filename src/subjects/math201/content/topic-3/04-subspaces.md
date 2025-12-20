@@ -1,3 +1,9 @@
+---
+id: math201-t3-subspaces
+title: "Subspaces"
+order: 4
+---
+
 # Subspaces
 
 Subspaces are the "sub-structures" within vector spaces—they are subsets that are themselves vector spaces. Just as lines and planes through the origin are natural geometric objects in $\mathbb{R}^3$, subspaces are the natural algebraic objects within any vector space. Understanding subspaces is essential for decomposing complex spaces into simpler components and for analyzing solutions to linear systems.

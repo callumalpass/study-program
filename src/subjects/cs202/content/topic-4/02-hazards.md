@@ -1,3 +1,9 @@
+---
+id: cs202-t4-hazards
+title: "Pipeline Hazards"
+order: 2
+---
+
 # Pipeline Hazards
 
 **Hazards** are situations that prevent the next instruction from executing in its designated clock cycle. They can cause the pipeline to stall, reducing performance. Understanding hazards is crucial for designing efficient pipelines.

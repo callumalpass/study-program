@@ -1,3 +1,9 @@
+---
+id: math102-t1-strat
+title: "Counting Strategies"
+order: 6
+---
+
 # Counting Strategies and Problem Types
 
 Mastering combinatorics requires recognizing problem patterns and selecting appropriate techniques. This section covers systematic approaches to common counting scenarios.

@@ -1,3 +1,9 @@
+---
+id: math102-t2-solve
+title: "Solving Techniques"
+order: 6
+---
+
 # Solving Techniques for Recurrences
 
 Beyond the standard methods, several advanced techniques help solve complex recurrence relations. This section explores substitution methods, domain transformations, and asymptotic analysis.

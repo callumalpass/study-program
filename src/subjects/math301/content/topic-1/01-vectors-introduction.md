@@ -1,3 +1,9 @@
+---
+id: math301-topic-1-1
+title: "Introduction to Vectors"
+order: 1
+---
+
 # Vectors in 2D and 3D
 
 ## Introduction

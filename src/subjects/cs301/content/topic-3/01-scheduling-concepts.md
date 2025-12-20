@@ -1,3 +1,9 @@
+---
+id: cs301-t3-concepts
+title: "Scheduling Concepts"
+order: 1
+---
+
 # CPU Scheduling Concepts
 
 CPU scheduling determines which process runs when multiple processes are ready. This subtopic introduces scheduling criteria, objectives, and fundamental concepts.

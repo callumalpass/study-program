@@ -1,3 +1,9 @@
+---
+id: math202-t3-clt
+title: "Central Limit Theorem"
+order: 7
+---
+
 # Central Limit Theorem
 
 ## Introduction

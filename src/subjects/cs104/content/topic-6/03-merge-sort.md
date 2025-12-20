@@ -1,3 +1,9 @@
+---
+id: cs104-t6-merge
+title: "Merge Sort"
+order: 3
+---
+
 # Merge Sort
 
 Merge sort is a divide-and-conquer algorithm that guarantees O(n log n) time complexity in all cases. It's the algorithm of choice when stability is required and memory is not a constraint.

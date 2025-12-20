@@ -1,3 +1,9 @@
+---
+id: math301-topic-1-5
+title: "Lines and Planes"
+order: 5
+---
+
 # Lines and Planes in Space
 
 ## Introduction

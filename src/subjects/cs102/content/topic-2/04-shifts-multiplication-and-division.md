@@ -1,3 +1,9 @@
+---
+id: cs102-t2-shifts-multiplication-and-division
+title: "Shifts, Multiplication, and Division"
+order: 4
+---
+
 # Shifts, Multiplication, and Division
 
 Many binary operations become surprisingly simple when you understand the relationship between bit positions and powers of 2. Shifting bits left or right corresponds directly to multiplying or dividing by powers of 2—operations that CPUs can perform in a single clock cycle, much faster than general multiplication or division.

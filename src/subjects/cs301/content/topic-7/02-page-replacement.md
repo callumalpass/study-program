@@ -1,3 +1,9 @@
+---
+id: cs301-t7-replacement
+title: "Page Replacement Algorithms"
+order: 2
+---
+
 # Page Replacement Algorithms
 
 When memory is full, page replacement algorithms decide which page to evict. This subtopic covers FIFO, Optimal, LRU, and approximation algorithms.

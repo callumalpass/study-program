@@ -1,3 +1,9 @@
+---
+id: cs302-t6-io
+title: "I/O Multiplexing"
+order: 5
+---
+
 # I/O Multiplexing
 
 ## The Concurrency Problem

@@ -1,3 +1,9 @@
+---
+id: cs205-t3-subqueries
+title: "Subqueries"
+order: 2
+---
+
 # Subqueries
 
 Subqueries (nested queries) are queries within queries. They enable complex data retrieval by breaking problems into logical steps.

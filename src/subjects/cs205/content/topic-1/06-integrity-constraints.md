@@ -1,3 +1,9 @@
+---
+id: cs205-t1-integrity
+title: "Integrity Constraints"
+order: 6
+---
+
 # Integrity Constraints in Relational Databases
 
 Integrity constraints are rules that ensure the accuracy, consistency, and reliability of data stored in a relational database. These constraints form a critical part of database design and are enforced by the database management system (DBMS) to prevent invalid data from being entered into the database. Understanding and properly implementing integrity constraints is essential for maintaining data quality and preventing anomalies that could compromise the integrity of your data.

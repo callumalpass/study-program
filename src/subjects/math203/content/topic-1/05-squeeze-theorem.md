@@ -1,3 +1,9 @@
+---
+id: math203-t1-squeeze
+title: "The Squeeze Theorem"
+order: 5
+---
+
 # The Squeeze Theorem
 
 Some limits are difficult to evaluate directly because the function oscillates or has complicated behavior. The Squeeze Theorem (also called the Sandwich Theorem or Pinching Theorem) provides a powerful technique for these cases by "trapping" a function between two simpler functions.

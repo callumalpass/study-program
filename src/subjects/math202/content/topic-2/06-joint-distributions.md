@@ -1,3 +1,9 @@
+---
+id: math202-t2-joint
+title: "Joint Distributions"
+order: 6
+---
+
 # Joint Distributions
 
 So far we've studied single random variables in isolation. In practice, we often deal with multiple random variables simultaneously—stock prices and interest rates, height and weight, temperature and humidity. Joint distributions provide the framework for analyzing relationships between random variables.

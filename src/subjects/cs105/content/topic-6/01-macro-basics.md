@@ -1,3 +1,9 @@
+---
+id: cs105-t6-macros
+title: "Macro Basics"
+order: 1
+---
+
 # Macro Basics
 
 Macros are text substitution rules processed by the C preprocessor before compilation. They provide a powerful mechanism for code reuse, configuration, and abstraction without runtime overhead.

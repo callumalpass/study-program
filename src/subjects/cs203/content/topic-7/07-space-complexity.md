@@ -1,3 +1,9 @@
+---
+id: cs203-t7-space
+title: "Space Complexity"
+order: 7
+---
+
 # Space Complexity
 
 **Space complexity** measures memory usage of computation, providing a different but equally important perspective on computational resources. In many practical scenarios, memory constraints are more limiting than time constraints, making space complexity critical for algorithm design.

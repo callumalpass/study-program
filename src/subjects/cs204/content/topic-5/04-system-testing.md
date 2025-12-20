@@ -1,3 +1,9 @@
+---
+id: cs204-t5-system
+title: "System Testing"
+order: 4
+---
+
 # System Testing
 
 System testing validates complete, integrated software systems against specified requirements. Unlike unit and integration testing that focus on individual components and their interactions, system testing evaluates the entire application in an environment that closely mirrors production.

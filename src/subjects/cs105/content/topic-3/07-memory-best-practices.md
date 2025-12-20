@@ -1,3 +1,9 @@
+---
+id: cs105-t3-best-practices
+title: "Memory Best Practices"
+order: 7
+---
+
 # Memory Management Best Practices
 
 Writing safe, efficient memory management code requires discipline and good practices. This guide covers patterns and techniques used by professional C programmers.

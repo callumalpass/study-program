@@ -1,3 +1,9 @@
+---
+id: math102-t4-bfsdfs
+title: "BFS and DFS"
+order: 1
+---
+
 # Breadth-First and Depth-First Search
 
 BFS and DFS are fundamental graph traversal algorithms. They explore graphs systematically, forming the basis for many advanced algorithms.

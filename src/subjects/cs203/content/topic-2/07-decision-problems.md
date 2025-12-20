@@ -1,3 +1,9 @@
+---
+id: cs203-t2-decision
+title: "Decision Problems"
+order: 7
+---
+
 # Decision Problems for Regular Languages
 
 **Decision problems** ask yes/no questions about languages or automata. For regular languages, many important problems are decidable with efficient algorithms.

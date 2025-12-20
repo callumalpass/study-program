@@ -1,3 +1,9 @@
+---
+id: math203-t2-higher
+title: "Higher Derivatives"
+order: 6
+---
+
 # Higher-Order Derivatives
 
 Just as we can differentiate a function to get its derivative, we can differentiate the derivative to get the second derivative, and continue this process. Higher-order derivatives reveal deeper information about a function's behavior.

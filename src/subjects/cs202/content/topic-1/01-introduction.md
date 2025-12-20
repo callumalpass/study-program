@@ -1,3 +1,9 @@
+---
+id: cs202-t1-intro
+title: "Introduction to ISA"
+order: 1
+---
+
 # Introduction to Instruction Set Architecture
 
 The **Instruction Set Architecture (ISA)** is one of the most fundamental concepts in computer architecture. It serves as the interface between software and hardware, defining how a processor understands and executes instructions. Understanding ISA is essential for anyone who wants to comprehend how computers actually work at a low level.

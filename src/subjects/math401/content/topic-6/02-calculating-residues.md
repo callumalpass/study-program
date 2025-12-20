@@ -1,3 +1,9 @@
+---
+id: math401-topic-6-2
+title: "Classification of Singularities"
+order: 2
+---
+
 # Calculating Residues
 
 Computing residues efficiently is essential for applying the residue theorem. Different types of singularities require different techniques. This section presents systematic methods for finding residues at simple poles, higher-order poles, and essential singularities.

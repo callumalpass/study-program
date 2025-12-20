@@ -1,3 +1,9 @@
+---
+id: math401-topic-2-2
+title: "Limits and Continuity"
+order: 2
+---
+
 # Limits and Continuity in the Complex Plane
 
 The concepts of limits and continuity extend from real analysis to complex analysis, but with important differences. Since complex numbers approach a point from infinitely many directions in the plane, complex limits are more restrictive and powerful than their real counterparts.

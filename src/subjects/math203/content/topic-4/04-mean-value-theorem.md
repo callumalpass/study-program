@@ -1,3 +1,9 @@
+---
+id: math203-t4-mvt
+title: "The Mean Value Theorem"
+order: 4
+---
+
 # The Mean Value Theorem
 
 The Mean Value Theorem (MVT) is one of the most important theoretical results in calculus. It connects the average rate of change of a function over an interval to the instantaneous rate of change at some point within that interval.

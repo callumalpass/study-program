@@ -1,3 +1,9 @@
+---
+id: cs105-t6-headers
+title: "Header Files"
+order: 3
+---
+
 # Header Files
 
 Header files are the foundation of modular C programming. They declare interfaces that allow separate source files to communicate while keeping implementations hidden.

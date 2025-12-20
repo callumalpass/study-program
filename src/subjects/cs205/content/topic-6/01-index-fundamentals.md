@@ -1,3 +1,9 @@
+---
+id: cs205-t6-fundamentals
+title: "Index Fundamentals"
+order: 1
+---
+
 # Index Fundamentals
 
 Indexes are auxiliary data structures that dramatically speed up data retrieval operations. Understanding when and how to use indexes is crucial for database performance.

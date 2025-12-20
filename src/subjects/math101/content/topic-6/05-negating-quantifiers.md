@@ -1,3 +1,9 @@
+---
+id: math101-t6-negation
+title: "Negating Quantified Statements"
+order: 5
+---
+
 # Negating Quantified Statements
 
 ## The Fundamental Rules

@@ -1,3 +1,9 @@
+---
+id: math203-t1-evaluating
+title: "Evaluating Limits"
+order: 2
+---
+
 # Evaluating Limits
 
 Once we understand what limits mean, we need techniques to compute them. This section covers the fundamental methods for evaluating limits, from simple substitution to algebraic manipulation.

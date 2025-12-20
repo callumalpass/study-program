@@ -1,3 +1,9 @@
+---
+id: math202-t4-ci-variance
+title: "Confidence Intervals for Variance"
+order: 6
+---
+
 # Confidence Intervals for Variance
 
 While confidence intervals for means and proportions are more commonly discussed, intervals for variance and standard deviation are equally important in applications requiring precision control, quality assurance, and risk assessment. These intervals rely on the chi-squared distribution and have somewhat different properties than intervals for location parameters.

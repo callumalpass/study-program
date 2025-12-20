@@ -1,3 +1,9 @@
+---
+id: cs202-t2-memory
+title: "Memory Addressing"
+order: 4
+---
+
 # Memory Addressing in Assembly
 
 Understanding how to access memory is fundamental to assembly programming. This section covers the various ways x86-64 assembly addresses memory, from simple register indirect access to complex multi-component addressing.

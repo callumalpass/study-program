@@ -1,3 +1,9 @@
+---
+id: math203-t1-onesided
+title: "One-Sided Limits"
+order: 3
+---
+
 # One-Sided Limits
 
 Sometimes a function behaves differently when approached from the left versus the right. One-sided limits capture this asymmetry and are essential for understanding piecewise functions, absolute values, and discontinuities.

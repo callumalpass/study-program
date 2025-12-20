@@ -1,3 +1,9 @@
+---
+id: cs301-t4-mutex
+title: "Mutex Locks"
+order: 2
+---
+
 # Mutex Locks
 
 Mutex (mutual exclusion) locks are the simplest synchronization tools. This subtopic covers mutex concepts, implementation, and usage patterns.

@@ -1,3 +1,9 @@
+---
+id: math301-topic-2-1
+title: "Functions of Several Variables"
+order: 1
+---
+
 # Functions of Several Variables
 
 ## Introduction

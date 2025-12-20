@@ -1,3 +1,9 @@
+---
+id: cs205-t6-maintenance
+title: "Index Maintenance"
+order: 5
+---
+
 # Index Maintenance
 
 Indexes require ongoing maintenance to remain effective. Understanding maintenance operations and their impact is essential for database administration.

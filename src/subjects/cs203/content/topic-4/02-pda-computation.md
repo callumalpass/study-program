@@ -1,3 +1,9 @@
+---
+id: cs203-t4-computation
+title: "PDA Computation"
+order: 2
+---
+
 # PDA Computation
 
 Understanding PDA computation involves tracking configurations and exploring computation paths. PDAs process input while manipulating their stack.

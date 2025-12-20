@@ -1,3 +1,9 @@
+---
+id: math204-t1-applications
+title: "Antiderivative Applications"
+order: 7
+---
+
 # Applications of Antiderivatives
 
 Antiderivatives aren't just abstract mathematical operations—they're essential tools for solving real-world problems. By reversing differentiation, we can recover original functions from their rates of change. This section explores practical applications, focusing on motion problems where we find position from velocity and velocity from acceleration, along with other important applications in physics and beyond.

@@ -1,3 +1,9 @@
+---
+id: math301-topic-2-2
+title: "Limits and Continuity"
+order: 2
+---
+
 # Limits and Continuity in Multiple Variables
 
 ## Introduction

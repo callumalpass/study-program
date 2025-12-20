@@ -1,3 +1,9 @@
+---
+id: cs201-t1-analyzing
+title: "Analyzing Code"
+order: 4
+---
+
 # Analyzing Code Complexity
 
 Theory means nothing if you can't apply it. Analyzing real code—with nested loops, recursive calls, hidden data structure costs, and subtle control flow—requires systematic techniques and practiced intuition. A single loop is easy: O(n). But what about a loop where the iteration count depends on an outer variable? A recursion that branches multiple ways? An innocent-looking library call that hides O(n) complexity?

@@ -1,3 +1,9 @@
+---
+id: cs102-t3-endianness-and-memory-layout
+title: "Endianness and Memory Layout"
+order: 3
+---
+
 # Endianness and Memory Layout
 
 When values larger than one byte are stored in memory, a choice must be made: which byte goes at the lowest address? This choice is called **endianness**, and it's one of the fundamental concepts that trips up programmers working with binary data, network protocols, and cross-platform code.

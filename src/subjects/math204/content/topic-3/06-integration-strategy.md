@@ -1,3 +1,9 @@
+---
+id: math204-t3-strategy
+title: "Integration Strategy"
+order: 6
+---
+
 # Integration Strategy
 
 Integration is fundamentally different from differentiation. While differentiation follows algorithmic rules that always work, integration is an art that requires pattern recognition, creativity, and strategic thinking. Given an integral, there's no guaranteed procedure that will solve it. Success depends on recognizing which technique applies, when to simplify first, and how to combine methods. This section develops the strategic mindset needed to approach integrals systematically and efficiently.

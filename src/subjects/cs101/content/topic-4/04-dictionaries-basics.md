@@ -1,3 +1,9 @@
+---
+id: cs101-t4-dicts
+title: "Dictionaries Basics"
+order: 4
+---
+
 ## Dictionaries (Key → Value Lookups)
 
 A **dictionary** (or "dict") maps unique **keys** to **values**. Unlike lists, which use numeric indices, dictionaries let you look up values using meaningful keys like names, IDs, or any immutable object.

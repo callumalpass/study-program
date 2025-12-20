@@ -1,3 +1,9 @@
+---
+id: cs203-t4-designing
+title: "Designing PDAs"
+order: 4
+---
+
 # Designing PDAs
 
 Designing PDAs requires understanding how the stack can track structural information. Common patterns and techniques help construct correct automata.

@@ -1,3 +1,9 @@
+---
+id: math201-t4-independence
+title: "Linear Independence"
+order: 1
+---
+
 # Linear Independence
 
 ## Introduction

@@ -1,3 +1,9 @@
+---
+id: cs101-t4-practice
+title: "Common Mistakes and Practice"
+order: 7
+---
+
 ## Common Mistakes with Lists and Dictionaries
 
 Understanding common pitfalls helps you avoid bugs and write more robust code. This section covers frequent mistakes with lists and dictionaries, plus how to fix them.

@@ -1,3 +1,9 @@
+---
+id: math101-t6-nested
+title: "Nested Quantifiers"
+order: 6
+---
+
 # Nested Quantifiers
 
 ## When One Quantifier Isn't Enough

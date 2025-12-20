@@ -1,3 +1,9 @@
+---
+id: cs104-t1-comparison
+title: "Arrays vs Linked Lists"
+order: 6
+---
+
 # Arrays vs Linked Lists: Making the Right Choice
 
 Understanding when to use arrays versus linked lists is a fundamental skill in data structure selection. Each structure has distinct characteristics that make it optimal for specific use cases.

@@ -1,3 +1,9 @@
+---
+id: cs203-t2-syntax
+title: "Regex Syntax"
+order: 1
+---
+
 # Regular Expression Syntax
 
 Regular expressions provide a concise algebraic notation for describing regular languages. They are fundamental to pattern matching, text processing, and lexical analysis.

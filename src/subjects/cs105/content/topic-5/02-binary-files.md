@@ -1,3 +1,9 @@
+---
+id: cs105-t5-binary
+title: "Binary File I/O"
+order: 2
+---
+
 # Binary File I/O
 
 Binary files store data in its raw memory representation, unlike text files which store human-readable characters. Binary I/O is essential for efficiency and for storing complex data structures.

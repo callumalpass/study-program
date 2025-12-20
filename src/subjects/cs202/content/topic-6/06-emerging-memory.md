@@ -1,3 +1,9 @@
+---
+id: cs202-t6-emerging
+title: "Emerging Memory Technologies"
+order: 6
+---
+
 # Emerging Memory Technologies
 
 Traditional DRAM and SRAM face fundamental scaling challenges. New memory technologies promise to bridge the gap between memory and storage, offering unique combinations of speed, density, non-volatility, and endurance. This section explores emerging memory technologies reshaping the memory hierarchy.

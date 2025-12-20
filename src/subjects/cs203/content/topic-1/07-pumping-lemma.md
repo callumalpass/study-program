@@ -1,3 +1,9 @@
+---
+id: cs203-t1-pumping
+title: "Pumping Lemma"
+order: 7
+---
+
 # Pumping Lemma for Regular Languages
 
 The **Pumping Lemma** is a necessary condition for regularity. It provides a powerful technique for proving that certain languages are **not** regular.

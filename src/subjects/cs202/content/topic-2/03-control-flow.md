@@ -1,3 +1,9 @@
+---
+id: cs202-t2-control
+title: "Control Flow"
+order: 3
+---
+
 # Control Flow in Assembly
 
 High-level control structures like if/else, loops, and switch statements must be implemented using jumps and conditional branches at the assembly level. Understanding these translations helps you read compiler output and write efficient low-level code.

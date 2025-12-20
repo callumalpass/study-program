@@ -1,3 +1,9 @@
+---
+id: cs301-t4-semaphores
+title: "Semaphores"
+order: 3
+---
+
 # Semaphores
 
 Semaphores are powerful synchronization primitives that generalize mutex locks. This subtopic covers semaphore concepts, types, implementation, and classic usage patterns.

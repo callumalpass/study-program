@@ -1,3 +1,9 @@
+---
+id: cs204-t5-unit
+title: "Unit Testing"
+order: 2
+---
+
 # Unit Testing
 
 Unit testing is the foundation of automated testing, focusing on verifying individual components or units of code in isolation. Effective unit testing catches bugs early, facilitates refactoring, and serves as living documentation of how code should behave.

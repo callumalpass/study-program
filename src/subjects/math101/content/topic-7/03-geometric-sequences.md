@@ -1,3 +1,9 @@
+---
+id: math101-t7-geometric
+title: "Geometric Sequences"
+order: 3
+---
+
 # Geometric Sequences
 
 ## Definition

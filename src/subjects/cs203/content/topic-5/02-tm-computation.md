@@ -1,3 +1,9 @@
+---
+id: cs203-t5-computation
+title: "TM Computation"
+order: 2
+---
+
 # TM Computation
 
 Turing machine computation involves sequences of configurations connected by the transition function. Understanding computation is key to analyzing TM behavior.

@@ -1,3 +1,9 @@
+---
+id: cs201-t2-stability
+title: "Sorting Stability"
+order: 5
+---
+
 # Sorting Stability and Practical Considerations
 
 The theoretical analysis of sorting algorithms—comparing asymptotic complexities and proving lower bounds—provides essential foundation, but practical sorting requires understanding subtle properties that theory alone doesn't capture. Stability, adaptiveness, cache behavior, and memory usage all influence algorithm choice in ways that big-O notation cannot express. A theoretically optimal O(n log n) algorithm may perform worse than a theoretically inferior O(n²) algorithm on small inputs or nearly-sorted data.

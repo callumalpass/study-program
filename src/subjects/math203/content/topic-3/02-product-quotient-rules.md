@@ -1,3 +1,9 @@
+---
+id: math203-t3-product-quotient
+title: "Product and Quotient Rules"
+order: 2
+---
+
 # The Product and Quotient Rules
 
 When functions are multiplied or divided, we need special rules. Contrary to what you might hope, the derivative of a product is NOT the product of the derivatives.

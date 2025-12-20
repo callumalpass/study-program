@@ -1,3 +1,9 @@
+---
+id: math102-t6-incexc
+title: "Inclusion-Exclusion Principle"
+order: 3
+---
+
 # Principle of Inclusion-Exclusion
 
 The Principle of Inclusion-Exclusion (PIE) provides a systematic way to count elements in unions of sets. It corrects for overcounting by alternating between addition and subtraction.

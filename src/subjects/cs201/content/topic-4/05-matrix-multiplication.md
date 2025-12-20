@@ -1,3 +1,9 @@
+---
+id: cs201-t4-matrix
+title: "Matrix Multiplication"
+order: 5
+---
+
 # Matrix Multiplication Algorithms
 
 Matrix multiplication lies at the heart of modern computing. Every neural network forward pass, every 3D graphics transformation, every scientific simulation involves multiplying matrices. The naive O(n³) algorithm—three nested loops—is simple but slow for large matrices. The quest to improve this bound reveals fascinating algorithmic territory where theory and practice diverge dramatically.

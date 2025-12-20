@@ -1,3 +1,9 @@
+---
+id: cs201-t6-dijkstra
+title: "Dijkstra"
+order: 6
+---
+
 # Dijkstra's Algorithm
 
 Dijkstra's algorithm is perhaps the most famous greedy graph algorithm, finding shortest paths from a source to all other vertices. Every GPS navigation system, every network routing protocol, every game pathfinding system uses variations of Dijkstra. The algorithm's greedy strategy—always process the unvisited vertex with smallest known distance—produces correct results when all edge weights are non-negative.

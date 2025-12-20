@@ -1,3 +1,9 @@
+---
+id: cs202-t3-single
+title: "Single-Cycle Datapath"
+order: 2
+---
+
 # Single-Cycle Datapath Implementation
 
 A **single-cycle datapath** executes each instruction in exactly one clock cycle. While not used in modern high-performance processors, this design is fundamental for understanding processor architecture and serves as the foundation for more advanced designs.

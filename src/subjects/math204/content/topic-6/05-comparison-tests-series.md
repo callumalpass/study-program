@@ -1,3 +1,9 @@
+---
+id: math204-t6-comparison
+title: "Comparison Tests for Series"
+order: 5
+---
+
 # Comparison Tests for Series
 
 ## Introduction

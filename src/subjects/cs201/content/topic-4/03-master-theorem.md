@@ -1,3 +1,9 @@
+---
+id: cs201-t4-master
+title: "Master Theorem"
+order: 3
+---
+
 # The Master Theorem
 
 The Master Theorem is a powerful tool that instantly solves most divide-and-conquer recurrences. Instead of drawing recursion trees or grinding through substitution proofs, you compare the recurrence's parameters to determine which of three cases applies, then read off the solution. For the vast majority of divide-and-conquer algorithms, the Master Theorem provides the answer in seconds.

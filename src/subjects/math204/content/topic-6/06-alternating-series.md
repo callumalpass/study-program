@@ -1,3 +1,9 @@
+---
+id: math204-t6-alternating
+title: "Alternating Series"
+order: 6
+---
+
 # Alternating Series
 
 ## Introduction to Alternating Series

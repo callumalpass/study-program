@@ -1,3 +1,9 @@
+---
+id: cs204-t4-practice
+title: "Patterns in Practice"
+order: 5
+---
+
 # Design Patterns in Practice
 
 Understanding when and how to apply design patterns is as important as understanding the patterns themselves. This section explores practical considerations, common pitfalls, and anti-patterns to avoid.

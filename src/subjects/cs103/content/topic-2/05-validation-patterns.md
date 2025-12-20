@@ -1,3 +1,9 @@
+---
+id: cs103-t2-validation
+title: "Validation Patterns"
+order: 5
+---
+
 ## Validation in Setters
 
 One of the most powerful uses of properties is data validation. By validating in setters, you ensure your objects always maintain a valid state.

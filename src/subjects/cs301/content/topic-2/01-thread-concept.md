@@ -1,3 +1,9 @@
+---
+id: cs301-t2-concept
+title: "Thread Concept"
+order: 1
+---
+
 # Thread Concept
 
 Threads are the basic unit of CPU utilization within a process. This subtopic introduces threads, their benefits, and comparison with processes.

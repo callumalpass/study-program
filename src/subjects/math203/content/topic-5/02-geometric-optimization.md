@@ -1,3 +1,9 @@
+---
+id: math203-t5-geometric
+title: "Geometric Optimization Problems"
+order: 2
+---
+
 # Geometric Optimization Problems
 
 Many classic optimization problems involve finding optimal dimensions for geometric shapes—maximizing area, minimizing surface area, or optimizing volume. These problems develop the core optimization skills.

@@ -1,3 +1,9 @@
+---
+id: math204-t5-probability
+title: "Probability Applications"
+order: 6
+---
+
 # Probability Applications of Improper Integrals
 
 Probability theory relies heavily on improper integrals. Many probability distributions have infinite support (domains extending to infinity), and computing probabilities, expected values, and variances requires evaluating improper integrals. Understanding these applications bridges abstract calculus with statistical practice.

@@ -1,3 +1,9 @@
+---
+id: math202-t5-t-tests
+title: "t-Tests"
+order: 4
+---
+
 # T-Tests for Means
 
 The t-test is one of the most widely used statistical tests in practice. Unlike the z-test, which requires knowing the population standard deviation, the t-test uses the sample standard deviation, making it applicable to the vast majority of real-world scenarios. Understanding the different types of t-tests and when to use each is essential for practical data analysis.

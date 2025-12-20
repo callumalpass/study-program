@@ -1,3 +1,9 @@
+---
+id: math203-t2-tangent
+title: "Tangent Lines"
+order: 5
+---
+
 # Tangent Lines and Linear Approximation
 
 The derivative at a point gives the slope of the tangent line. This tangent line provides the best linear approximation to the function near that point, making it a powerful tool for estimation and analysis.

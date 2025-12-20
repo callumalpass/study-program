@@ -1,3 +1,9 @@
+---
+id: cs302-t4-dijkstra
+title: "Dijkstra"
+order: 4
+---
+
 # Dijkstra's Algorithm
 
 ## Algorithm Overview

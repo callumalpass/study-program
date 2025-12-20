@@ -1,3 +1,9 @@
+---
+id: cs101-t4-slicing
+title: "Slicing and Copying"
+order: 2
+---
+
 ## Slicing (Extracting Parts of a List)
 
 Slicing lets you extract a portion of a list (or any sequence) into a new list. It's one of Python's most powerful and commonly used features for working with sequences.

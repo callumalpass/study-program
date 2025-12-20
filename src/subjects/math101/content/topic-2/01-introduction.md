@@ -1,3 +1,9 @@
+---
+id: math101-t2-intro
+title: "Introduction to Proof Techniques"
+order: 1
+---
+
 # Introduction to Proof Techniques
 
 ## What is a Mathematical Proof?

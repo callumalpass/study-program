@@ -1,3 +1,9 @@
+---
+id: cs204-t4-behavioral
+title: "Behavioral Patterns"
+order: 4
+---
+
 # Behavioral Design Patterns
 
 Behavioral patterns are concerned with algorithms and the assignment of responsibilities between objects. They describe not just patterns of objects or classes but also the patterns of communication between them, characterizing complex control flow.

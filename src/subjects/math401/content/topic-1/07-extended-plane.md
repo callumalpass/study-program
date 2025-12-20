@@ -1,3 +1,9 @@
+---
+id: math401-topic-1-7
+title: "Riemann Sphere and Stereographic Projection"
+order: 7
+---
+
 # The Extended Complex Plane and Riemann Sphere
 
 The extended complex plane, obtained by adjoining a single "point at infinity" to $\mathbb{C}$, provides a natural compactification of the complex plane. This construction, visualized as the Riemann sphere, unifies many concepts in complex analysis and has profound applications in geometry, complex dynamics, and mathematical physics.

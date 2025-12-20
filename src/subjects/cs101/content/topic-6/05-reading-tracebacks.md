@@ -1,3 +1,9 @@
+---
+id: cs101-t6-tracebacks
+title: "Reading Tracebacks"
+order: 5
+---
+
 ## Reading Tracebacks: Your Best Debugging Tool
 
 When an unhandled exception crashes your program, Python prints a **traceback** - a detailed record of what went wrong and where. Learning to read tracebacks is one of the most important debugging skills you can develop. A traceback tells you exactly where the error occurred and the chain of function calls that led there.

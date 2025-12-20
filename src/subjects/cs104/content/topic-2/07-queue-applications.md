@@ -1,3 +1,9 @@
+---
+id: cs104-t2-queue-apps
+title: "Queue Applications"
+order: 7
+---
+
 # Queue Applications
 
 Queues are essential in computing for managing ordered processing, scheduling, and communication. Their FIFO nature ensures fairness and maintains order in many critical systems.

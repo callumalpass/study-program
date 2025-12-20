@@ -1,3 +1,9 @@
+---
+id: cs201-t7-traversal
+title: "Graph Traversal Algorithms"
+order: 1
+---
+
 # Graph Algorithms Overview
 
 Graphs are among the most versatile data structures in computer science, capable of modeling an extraordinary range of real-world systems: social networks connect people, road networks connect cities, the internet connects computers, dependency graphs connect software modules, and neural networks connect neurons. The power of graphs lies in their ability to capture relationships and connections in a way that enables efficient algorithmic solutions.

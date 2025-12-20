@@ -1,3 +1,9 @@
+---
+id: cs201-t8-hardness
+title: "Computational Hardness"
+order: 6
+---
+
 # Computational Hardness
 
 Understanding hardness is about knowing what you cannot do as much as what you can. When a problem is proven NP-hard, you stop looking for polynomial-time exact algorithms and start exploring alternatives: approximation, parameterized algorithms, heuristics, or special cases. This reframing—from seeking optimality to seeking tractability—is essential practical wisdom.

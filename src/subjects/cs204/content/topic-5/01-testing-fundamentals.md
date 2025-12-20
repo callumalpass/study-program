@@ -1,3 +1,9 @@
+---
+id: cs204-t5-fundamentals
+title: "Testing Fundamentals"
+order: 1
+---
+
 # Testing Fundamentals
 
 Understanding the fundamental concepts of software testing is essential for developing high-quality software. Testing fundamentals provide the theoretical foundation and core principles that underpin all testing activities, from simple unit tests to complex system validation.

@@ -1,3 +1,9 @@
+---
+id: math101-t5-special
+title: "Special Functions and Applications"
+order: 7
+---
+
 # Special Functions and Applications
 
 ## Floor and Ceiling Functions

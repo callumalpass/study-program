@@ -1,3 +1,9 @@
+---
+id: cs102-t3-characters-strings-and-encoding
+title: "Characters and Encoding"
+order: 2
+---
+
 # Characters, Strings, and Text Encoding
 
 At the hardware level, computers only understand numbers—specifically, binary patterns. Text is stored as numbers, with agreed-upon mappings between numeric values and characters. Understanding these encodings is essential for working with files, network protocols, internationalization, and debugging text-related issues.

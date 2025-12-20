@@ -1,3 +1,9 @@
+---
+id: cs202-t1-datatypes
+title: "Data Types and Operations"
+order: 4
+---
+
 # Data Types and Representation in ISA
 
 The **data types** supported by an ISA determine what kinds of values the processor can manipulate directly in hardware. Understanding these types and how they're represented in binary is essential for writing efficient low-level code and understanding compiler behavior.

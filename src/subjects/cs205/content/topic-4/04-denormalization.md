@@ -1,3 +1,9 @@
+---
+id: cs205-t4-denorm
+title: "Denormalization"
+order: 4
+---
+
 # Denormalization
 
 Denormalization is the deliberate introduction of redundancy into a database design to improve read performance. Understanding when and how to denormalize is crucial for practical database design.

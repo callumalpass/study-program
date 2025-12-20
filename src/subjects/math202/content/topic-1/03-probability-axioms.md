@@ -1,3 +1,9 @@
+---
+id: math202-t1-axioms
+title: "Probability Axioms"
+order: 3
+---
+
 # Probability Axioms and Basic Rules
 
 ## Introduction

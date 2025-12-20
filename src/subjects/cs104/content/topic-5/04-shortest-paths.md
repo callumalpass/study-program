@@ -1,3 +1,9 @@
+---
+id: cs104-t5-shortest
+title: "Shortest Paths"
+order: 4
+---
+
 # Shortest Path Algorithms
 
 Finding the shortest path between vertices is one of the most important graph problems. Different algorithms handle different scenarios: unweighted graphs, weighted graphs, and graphs with negative edges.

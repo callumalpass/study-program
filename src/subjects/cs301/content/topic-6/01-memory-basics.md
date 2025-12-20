@@ -1,3 +1,9 @@
+---
+id: cs301-t6-basics
+title: "Memory Management Basics"
+order: 1
+---
+
 # Memory Management Basics
 
 Memory management is a critical operating system function. This subtopic covers memory hierarchy, address binding, and logical vs physical addresses.

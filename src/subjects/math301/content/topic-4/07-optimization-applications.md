@@ -1,3 +1,9 @@
+---
+id: math301-topic-4-7
+title: "Optimization Applications"
+order: 7
+---
+
 # Applications of Optimization in Economics, Physics, and Geometry
 
 ## Introduction

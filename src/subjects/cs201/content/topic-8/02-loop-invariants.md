@@ -1,3 +1,9 @@
+---
+id: cs201-t8-invariants
+title: "Loop Invariants"
+order: 2
+---
+
 # Loop Invariants in Practice
 
 Loop invariants transform the challenge of proving loop correctness into three simpler tasks: proving the invariant holds initially, proving each iteration preserves it, and proving that when the loop terminates, the invariant implies correctness. This decomposition mirrors mathematical induction and provides a systematic framework for reasoning about iterative algorithms.

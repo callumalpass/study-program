@@ -1,3 +1,9 @@
+---
+id: math101-t1-tables
+title: "Truth Tables"
+order: 5
+---
+
 # Truth Tables and Evaluation
 
 ## What is a Truth Table?

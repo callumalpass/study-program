@@ -1,3 +1,9 @@
+---
+id: cs301-t5-avoidance
+title: "Deadlock Avoidance"
+order: 3
+---
+
 # Deadlock Avoidance
 
 Deadlock avoidance uses additional information about resource usage to make safe allocation decisions. This subtopic covers safe states, the Banker's Algorithm, and resource allocation strategies.

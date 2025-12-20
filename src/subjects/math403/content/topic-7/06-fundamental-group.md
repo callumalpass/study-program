@@ -1,3 +1,9 @@
+---
+id: math403-topic-7-6
+title: "The Fundamental Group"
+order: 6
+---
+
 # The Fundamental Group
 
 The fundamental group captures information about loops in a space and is the most important invariant in algebraic topology. Introduced by Henri Poincaré in 1895, the fundamental group $\pi_1(X, x_0)$ measures the different ways loops based at a point $x_0$ can wind through a space X. This algebraic invariant translates geometric intuition about "1-dimensional holes" into group theory, providing a computable tool for distinguishing topological spaces. The fundamental group is particularly powerful because it combines topological information (loops and their deformations) with algebraic structure (group operations), enabling both geometric insight and rigorous calculation. Understanding the fundamental group is essential for studying covering spaces, knot theory, and the topology of manifolds.

@@ -1,3 +1,9 @@
+---
+id: math202-t1-applications
+title: "Applications of Probability"
+order: 7
+---
+
 # Applications of Probability
 
 ## Introduction

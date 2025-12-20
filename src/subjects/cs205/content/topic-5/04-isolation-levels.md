@@ -1,3 +1,9 @@
+---
+id: cs205-t5-isolation
+title: "Isolation Levels"
+order: 4
+---
+
 # Isolation Levels
 
 SQL defines four standard isolation levels that balance concurrency with consistency. Each level provides different guarantees about transaction visibility.

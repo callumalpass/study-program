@@ -1,3 +1,9 @@
+---
+id: math102-t3-reps
+title: "Graph Representations"
+order: 2
+---
+
 # Graph Representations
 
 Choosing how to store a graph affects algorithm efficiency. The two primary representations—adjacency matrices and adjacency lists—offer different trade-offs.

@@ -1,3 +1,9 @@
+---
+id: cs203-t1-nfa
+title: "NFA and ε-Transitions"
+order: 2
+---
+
 # NFA and ε-Transitions
 
 A **Nondeterministic Finite Automaton (NFA)** extends the DFA model by allowing multiple simultaneous computation paths. Despite this added flexibility, NFAs recognize exactly the same class of languages as DFAs.

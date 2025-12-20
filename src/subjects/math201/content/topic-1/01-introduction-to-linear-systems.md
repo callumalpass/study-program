@@ -1,3 +1,9 @@
+---
+id: math201-t1-intro
+title: "Introduction to Linear Systems"
+order: 1
+---
+
 # Introduction to Linear Systems
 
 ## Definition of Linear Systems

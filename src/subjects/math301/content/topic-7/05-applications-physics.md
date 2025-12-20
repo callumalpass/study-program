@@ -1,3 +1,9 @@
+---
+id: math301-topic-7-5
+title: "Applications in Physics"
+order: 5
+---
+
 # Applications to Physics
 
 ## Introduction

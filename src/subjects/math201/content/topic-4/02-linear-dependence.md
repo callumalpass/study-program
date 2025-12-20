@@ -1,3 +1,9 @@
+---
+id: math201-t4-dependence
+title: "Linear Dependence"
+order: 2
+---
+
 # Linear Dependence
 
 ## Introduction

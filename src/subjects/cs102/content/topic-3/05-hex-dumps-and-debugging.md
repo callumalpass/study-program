@@ -1,3 +1,9 @@
+---
+id: cs102-t3-hex-dumps-and-debugging
+title: "Hex Dumps and Debugging"
+order: 5
+---
+
 # Interpreting Hex Dumps and Debugging Memory
 
 Hex dumps are a fundamental tool for understanding what's actually in memory. Whether you're debugging a crash, reverse-engineering a file format, or analyzing network traffic, the ability to read raw bytes and interpret them correctly is essential. This subtopic combines everything from earlier—number systems, endianness, data types—into a practical debugging workflow.

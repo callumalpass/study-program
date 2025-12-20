@@ -1,3 +1,9 @@
+---
+id: math201-t4-rank
+title: "Rank"
+order: 5
+---
+
 # Rank
 
 ## Introduction

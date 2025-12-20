@@ -1,3 +1,9 @@
+---
+id: cs202-t3-alu
+title: "ALU Design"
+order: 5
+---
+
 # ALU Design
 
 The **Arithmetic Logic Unit (ALU)** is the computational heart of the processor, performing all arithmetic and logical operations. Understanding ALU design reveals how basic operations are implemented in hardware.

@@ -1,3 +1,9 @@
+---
+id: math202-t5-errors
+title: "Type Errors and Power"
+order: 2
+---
+
 # Type I and Type II Errors and Statistical Power
 
 In hypothesis testing, we make decisions under uncertainty. Even with perfect methodology, there's always a chance our conclusion will be wrong. Understanding the types of errors that can occur, their probabilities, and how to control them is essential for designing effective studies and interpreting results correctly.

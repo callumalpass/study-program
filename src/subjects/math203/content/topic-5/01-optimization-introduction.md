@@ -1,3 +1,9 @@
+---
+id: math203-t5-intro
+title: "Introduction to Optimization"
+order: 1
+---
+
 # Introduction to Optimization
 
 Optimization is one of the most practical applications of calculus. Given constraints, how do we find the best solution—the maximum profit, minimum cost, shortest path, or largest volume? Calculus provides systematic methods to solve these problems.

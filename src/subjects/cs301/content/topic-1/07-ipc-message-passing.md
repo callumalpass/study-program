@@ -1,3 +1,9 @@
+---
+id: cs301-t1-message
+title: "IPC: Message Passing"
+order: 7
+---
+
 # Interprocess Communication: Message Passing
 
 Message passing enables processes to communicate by sending and receiving messages without sharing memory. This subtopic covers pipes, message queues, and sockets.

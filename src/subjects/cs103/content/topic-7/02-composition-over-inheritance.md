@@ -1,3 +1,9 @@
+---
+id: cs103-t7-composition
+title: "Composition Over Inheritance"
+order: 2
+---
+
 ## Composition Over Inheritance
 
 Inheritance is a powerful tool, but it's often overused. Composition—building objects from other objects—frequently leads to more flexible, maintainable designs.

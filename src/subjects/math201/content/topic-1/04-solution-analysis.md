@@ -1,3 +1,9 @@
+---
+id: math201-t1-solution-analysis
+title: "Solution Analysis"
+order: 4
+---
+
 # Solution Analysis
 
 ## Introduction

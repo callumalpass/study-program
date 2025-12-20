@@ -1,3 +1,9 @@
+---
+id: cs202-t5-vm
+title: "Virtual Memory Integration"
+order: 7
+---
+
 # Virtual Memory and Caches
 
 Caches must work together with virtual memory—a system that provides each process with its own address space and enables memory protection. The interaction between virtual addresses, physical addresses, and caching creates important design decisions that affect performance.

@@ -1,3 +1,9 @@
+---
+id: math401-topic-3-1
+title: "Complex Paths and Curves"
+order: 1
+---
+
 # Contour Integrals in the Complex Plane
 
 Complex integration, or contour integration, extends the concept of integration from real analysis to complex-valued functions along curves in the complex plane. This powerful tool is fundamental to complex analysis and leads to remarkable theorems like Cauchy's theorem and the residue theorem, which have profound applications in mathematics, physics, and engineering.

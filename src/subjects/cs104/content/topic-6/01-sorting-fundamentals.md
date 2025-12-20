@@ -1,3 +1,9 @@
+---
+id: cs104-t6-fundamentals
+title: "Sorting Fundamentals"
+order: 1
+---
+
 # Sorting Fundamentals
 
 Sorting is one of the most fundamental operations in computer science. Understanding different sorting algorithms, their trade-offs, and when to use each is essential for every programmer.

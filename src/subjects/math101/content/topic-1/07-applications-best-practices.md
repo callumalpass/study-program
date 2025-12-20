@@ -1,3 +1,9 @@
+---
+id: math101-t1-applications
+title: "Applications and Best Practices"
+order: 7
+---
+
 # Applications and Best Practices
 
 ## Propositional Logic in Programming

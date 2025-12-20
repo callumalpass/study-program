@@ -1,3 +1,9 @@
+---
+id: math301-topic-4-3
+title: "Absolute Extrema"
+order: 3
+---
+
 # Absolute Extrema on Closed Bounded Regions
 
 ## Introduction

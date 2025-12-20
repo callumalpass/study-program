@@ -1,3 +1,9 @@
+---
+id: cs105-t4-defining
+title: "Defining Structures"
+order: 1
+---
+
 # Defining Structures
 
 Structures (structs) allow you to group related data of different types under a single name. They're C's primary mechanism for creating custom data types and are fundamental to organizing complex programs.

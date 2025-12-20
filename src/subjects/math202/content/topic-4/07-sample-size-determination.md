@@ -1,3 +1,9 @@
+---
+id: math202-t4-sample-size
+title: "Sample Size Determination"
+order: 7
+---
+
 # Sample Size Determination
 
 One of the most common questions in study design is "How large should my sample be?" Sample size determination balances statistical precision against practical constraints like time, cost, and resources. Too small a sample gives unreliable results; too large wastes resources. This topic provides the tools to make this decision rigorously.

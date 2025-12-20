@@ -1,3 +1,9 @@
+---
+id: math204-t5-comparison
+title: "Comparison Tests"
+order: 3
+---
+
 # Comparison Tests for Improper Integrals
 
 Not every improper integral can be evaluated explicitly using elementary antiderivatives. Comparison tests allow us to determine convergence or divergence by comparing a difficult integral with a simpler one whose behavior is known. These tests are essential tools in analysis, probability, and applied mathematics.

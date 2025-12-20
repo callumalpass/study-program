@@ -1,3 +1,9 @@
+---
+id: math101-t5-composition
+title: "Function Composition"
+order: 6
+---
+
 # Function Composition
 
 ## Definition

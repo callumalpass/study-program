@@ -1,3 +1,9 @@
+---
+id: cs204-t6-workflows
+title: "Git Workflows"
+order: 3
+---
+
 # Git Workflows
 
 Git workflows are branching strategies and collaboration patterns that teams adopt to organize their development process. The right workflow depends on team size, project complexity, release cadence, and organizational culture.

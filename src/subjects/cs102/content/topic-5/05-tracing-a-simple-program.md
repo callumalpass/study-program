@@ -1,3 +1,9 @@
+---
+id: cs102-t5-tracing-a-simple-program
+title: "Tracing a Simple Program"
+order: 5
+---
+
 # Tracing a Simple Program (Putting Architecture Together)
 
 Tracing means following the execution of a program step by step, tracking how registers, memory, and flags change with each instruction. It's an essential skill for understanding how code actually runs, for debugging low-level problems, and for exam preparation. Tracing bridges the gap between reading assembly and understanding what the CPU does.

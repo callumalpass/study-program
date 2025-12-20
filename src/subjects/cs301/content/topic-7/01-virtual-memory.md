@@ -1,3 +1,9 @@
+---
+id: cs301-t7-vm
+title: "Virtual Memory Concepts"
+order: 1
+---
+
 # Virtual Memory Concepts
 
 Virtual memory separates logical memory from physical memory, allowing programs larger than physical memory to run. This subtopic covers virtual memory concepts, benefits, and implementation overview.

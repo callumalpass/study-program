@@ -1,3 +1,9 @@
+---
+id: cs102-t6-the-stack-and-calls
+title: "The Stack and Calls"
+order: 4
+---
+
 # The Stack: Calls, Returns, and Frames
 
 The **stack** is a region of memory that plays a central role in program execution. It stores return addresses for function calls, local variables, and saved register values. Understanding the stack is essential for reading assembly code, debugging crashes, and understanding security vulnerabilities like buffer overflows.

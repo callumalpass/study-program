@@ -1,3 +1,9 @@
+---
+id: cs301-t1-scheduling
+title: "Process Scheduling"
+order: 3
+---
+
 # Process Scheduling Queues
 
 Process scheduling involves managing multiple queues that hold processes in various states. This subtopic explores scheduling queues, schedulers, and their interactions.

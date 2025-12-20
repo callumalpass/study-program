@@ -1,3 +1,9 @@
+---
+id: math202-t3-exponential
+title: "Exponential and Gamma Distributions"
+order: 6
+---
+
 # Exponential and Gamma Distributions
 
 ## Introduction

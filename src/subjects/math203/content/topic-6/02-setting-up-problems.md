@@ -1,3 +1,9 @@
+---
+id: math203-t6-setup
+title: "Setting Up Related Rates Problems"
+order: 2
+---
+
 # Setting Up Related Rates Problems
 
 The most challenging part of related rates is translating a word problem into mathematical equations. This section focuses on systematic problem setup.

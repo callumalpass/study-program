@@ -1,3 +1,9 @@
+---
+id: cs202-t4-perf
+title: "Pipeline Performance"
+order: 7
+---
+
 # Pipeline Performance Analysis
 
 Understanding pipeline performance requires analyzing how various factors—hazards, prediction accuracy, cache behavior—combine to determine actual throughput. This section covers performance metrics, analysis techniques, and optimization strategies.

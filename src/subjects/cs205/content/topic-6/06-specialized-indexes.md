@@ -1,3 +1,9 @@
+---
+id: cs205-t6-specialized
+title: "Specialized Index Types"
+order: 6
+---
+
 # Specialized Index Types
 
 While B-tree indexes handle most indexing needs, specialized index types offer superior performance for specific data types and query patterns. Understanding when to use these alternatives enables you to optimize databases for diverse workloads including full-text search, geospatial queries, and JSON document access.

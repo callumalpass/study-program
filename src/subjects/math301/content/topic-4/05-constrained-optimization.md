@@ -1,3 +1,9 @@
+---
+id: math301-topic-4-5
+title: "Constrained Optimization"
+order: 5
+---
+
 # Constrained Optimization with Single Constraint
 
 ## Introduction

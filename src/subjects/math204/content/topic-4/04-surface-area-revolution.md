@@ -1,3 +1,9 @@
+---
+id: math204-t4-surface
+title: "Surface Area of Revolution"
+order: 4
+---
+
 # Surface Area of Solids of Revolution
 
 When a curve is rotated about an axis, it sweeps out a surface. Computing the area of this surface combines the concepts of arc length and solids of revolution. Surface area formulas are essential in engineering applications involving containers, pipes, and structural design.

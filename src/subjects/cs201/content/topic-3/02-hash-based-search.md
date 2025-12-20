@@ -1,3 +1,9 @@
+---
+id: cs201-t3-hash
+title: "Hash-Based Search"
+order: 2
+---
+
 # Hash-Based Search
 
 Hash tables provide O(1) average-case search, insert, and delete operations—a remarkable achievement that underpins countless applications from databases and caches to compilers and network routers. While arrays offer O(1) access by index, hash tables extend this efficiency to arbitrary keys: strings, objects, or any hashable data.

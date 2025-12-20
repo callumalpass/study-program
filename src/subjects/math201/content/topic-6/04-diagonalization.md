@@ -1,3 +1,9 @@
+---
+id: math201-t6-diagonalization
+title: "Diagonalization"
+order: 4
+---
+
 # Matrix Diagonalization
 
 ## What Is Diagonalization?

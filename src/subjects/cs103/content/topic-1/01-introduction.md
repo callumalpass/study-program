@@ -1,3 +1,9 @@
+---
+id: cs103-t1-intro
+title: "Introduction to Classes and Objects"
+order: 1
+---
+
 ## Introduction to Object-Oriented Programming
 
 Everything in the real world can be thought of as an "object": a car has properties (color, speed, model) and behaviors (accelerate, brake, turn). Object-Oriented Programming (OOP) brings this natural way of thinking into code. Instead of writing procedures that operate on data, we create objects that contain both data and the methods to manipulate it.

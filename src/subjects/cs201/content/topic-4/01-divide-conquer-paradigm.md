@@ -1,3 +1,9 @@
+---
+id: cs201-t4-paradigm
+title: "Divide and Conquer Paradigm"
+order: 1
+---
+
 # The Divide and Conquer Paradigm
 
 Divide and conquer is one of the most powerful and elegant algorithmic paradigms in computer science. The strategy is beautifully simple: break a large problem into smaller subproblems, solve them recursively, and combine the results. This recursive decomposition often yields algorithms whose efficiency seems almost magical—merge sort's O(n log n) time complexity emerges naturally from halving the problem at each level and doing linear work to merge.

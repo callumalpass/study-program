@@ -1,3 +1,9 @@
+---
+id: cs204-t4-structural
+title: "Structural Patterns"
+order: 3
+---
+
 # Structural Design Patterns
 
 Structural patterns deal with object composition, creating relationships between entities to form larger, more complex structures. These patterns help ensure that when one part of a system changes, the entire structure doesn't need to change.

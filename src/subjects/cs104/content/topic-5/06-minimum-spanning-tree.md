@@ -1,3 +1,9 @@
+---
+id: cs104-t5-mst
+title: "Minimum Spanning Tree"
+order: 6
+---
+
 # Minimum Spanning Trees
 
 A Minimum Spanning Tree (MST) of a weighted, connected, undirected graph is a subset of edges that connects all vertices with minimum total edge weight and no cycles. MST algorithms are essential for network design and clustering.

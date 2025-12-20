@@ -1,3 +1,9 @@
+---
+id: cs301-t1-pcb
+title: "Process Control Block"
+order: 2
+---
+
 # Process Control Block
 
 The Process Control Block (PCB) is the data structure the operating system uses to store all information about a process. This subtopic examines PCB structure and its role in process management.

@@ -1,3 +1,9 @@
+---
+id: math102-t5-gcd
+title: "GCD and Euclidean Algorithm"
+order: 3
+---
+
 # GCD and the Euclidean Algorithm
 
 The greatest common divisor (GCD) is fundamental to number theory. The Euclidean algorithm provides an efficient method to compute GCDs, with extensions that solve linear Diophantine equations.

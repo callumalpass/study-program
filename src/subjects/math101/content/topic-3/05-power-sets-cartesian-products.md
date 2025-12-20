@@ -1,3 +1,9 @@
+---
+id: math101-t3-power
+title: "Power Sets and Cartesian Products"
+order: 5
+---
+
 # Power Sets and Cartesian Products
 
 ## Subsets Review

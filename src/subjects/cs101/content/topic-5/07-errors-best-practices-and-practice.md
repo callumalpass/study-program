@@ -1,3 +1,9 @@
+---
+id: cs101-t5-errors
+title: "Errors, Best Practices, Practice"
+order: 7
+---
+
 ## Handling File Errors
 
 File operations often fail. Files go missing, permissions get denied, disks fill up, and data gets corrupted. Robust programs anticipate these failures and handle them gracefully.

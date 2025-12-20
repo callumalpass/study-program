@@ -1,3 +1,9 @@
+---
+id: math301-topic-3-7
+title: "Applications of the Gradient"
+order: 7
+---
+
 # Applications of the Gradient
 
 ## Introduction

@@ -1,3 +1,9 @@
+---
+id: cs205-t6-design
+title: "Index Design Strategies"
+order: 7
+---
+
 # Index Design Strategies
 
 Effective index design balances query performance against maintenance overhead. This guide provides systematic approaches for analyzing query workloads, designing optimal index configurations, and managing indexes throughout the application lifecycle.

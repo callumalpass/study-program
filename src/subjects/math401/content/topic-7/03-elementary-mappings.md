@@ -1,3 +1,9 @@
+---
+id: math401-topic-7-3
+title: "Mobius Transformations"
+order: 3
+---
+
 # Elementary Conformal Mappings
 
 Beyond Möbius transformations, several elementary complex functions provide powerful conformal mappings for geometric transformations. Understanding these basic mappings allows constructing solutions to boundary value problems by composing simple transformations.

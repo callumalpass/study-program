@@ -1,3 +1,9 @@
+---
+id: math101-t4-applications
+title: "Applications"
+order: 7
+---
+
 # Applications and Best Practices
 
 ## Relations in Databases

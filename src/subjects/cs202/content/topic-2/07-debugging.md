@@ -1,3 +1,9 @@
+---
+id: cs202-t2-debug
+title: "Debugging Assembly"
+order: 7
+---
+
 # Debugging Assembly Programs
 
 Debugging assembly code requires different tools and techniques than high-level languages. This section covers essential debugging strategies, tools like GDB, and common issues you'll encounter when working with assembly.

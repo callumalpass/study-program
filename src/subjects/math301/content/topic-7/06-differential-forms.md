@@ -1,3 +1,9 @@
+---
+id: math301-topic-7-6
+title: "Introduction to Differential Forms"
+order: 6
+---
+
 # Introduction to Differential Forms
 
 ## Introduction

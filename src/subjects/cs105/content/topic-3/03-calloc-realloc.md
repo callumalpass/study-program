@@ -1,3 +1,9 @@
+---
+id: cs105-t3-calloc-realloc
+title: "calloc and realloc"
+order: 3
+---
+
 # calloc and realloc
 
 Beyond `malloc`, C provides `calloc` for zero-initialized allocation and `realloc` for resizing existing allocations. These functions solve common memory management needs.

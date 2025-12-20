@@ -1,3 +1,9 @@
+---
+id: math101-t3-complement
+title: "Complement and Symmetric Difference"
+order: 4
+---
+
 # Complement and Symmetric Difference
 
 ## The Universal Set

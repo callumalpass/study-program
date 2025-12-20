@@ -1,3 +1,9 @@
+---
+id: cs302-t7-email
+title: "Email Protocols"
+order: 4
+---
+
 # Email Protocols
 
 ## Email System Overview

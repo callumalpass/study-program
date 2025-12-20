@@ -1,3 +1,9 @@
+---
+id: cs301-t7-impl
+title: "File System Implementation"
+order: 6
+---
+
 # File System Implementation
 
 File system implementation involves on-disk structures and algorithms. This subtopic covers block allocation, inodes, directory implementation, and free space management.

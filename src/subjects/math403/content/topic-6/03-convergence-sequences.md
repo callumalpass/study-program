@@ -1,3 +1,9 @@
+---
+id: math403-topic-6-3
+title: "Convergence of Sequences"
+order: 3
+---
+
 # Convergence of Sequences
 
 In metric spaces, convergence can be characterized entirely in terms of the metric, making sequences a powerful tool for studying topology. The ability to use sequences rather than the more general notion of nets is one of the key advantages of working in metric spaces, providing both intuition and computational power.

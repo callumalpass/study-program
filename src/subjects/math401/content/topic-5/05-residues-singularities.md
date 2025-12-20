@@ -1,3 +1,9 @@
+---
+id: math401-topic-5-5
+title: "Uniqueness Theorem"
+order: 5
+---
+
 # Residues at Singularities
 
 The residue of a function at a singularity is the coefficient $a_{-1}$ in its Laurent series—the coefficient of the $(z - z_0)^{-1}$ term. This single complex number contains remarkable information about the function's behavior near the singularity and is the key to evaluating contour integrals via the residue theorem.

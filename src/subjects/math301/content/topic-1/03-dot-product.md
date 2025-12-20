@@ -1,3 +1,9 @@
+---
+id: math301-topic-1-3
+title: "The Dot Product"
+order: 3
+---
+
 # Dot Product
 
 ## Introduction

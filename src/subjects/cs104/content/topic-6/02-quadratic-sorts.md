@@ -1,3 +1,9 @@
+---
+id: cs104-t6-quadratic
+title: "Quadratic Sorts"
+order: 2
+---
+
 # Quadratic Sorting Algorithms
 
 The "simple" sorting algorithms - Bubble Sort, Selection Sort, and Insertion Sort - all have O(n²) worst-case complexity. While not efficient for large datasets, they're important to understand and have practical uses for small arrays.

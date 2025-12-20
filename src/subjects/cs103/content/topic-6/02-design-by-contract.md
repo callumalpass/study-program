@@ -1,3 +1,9 @@
+---
+id: cs103-t6-contract
+title: "Design by Contract"
+order: 2
+---
+
 ## Design by Contract
 
 Design by Contract is a methodology where classes define clear **contracts**: promises about what they require (preconditions), what they guarantee (postconditions), and what's always true (invariants).

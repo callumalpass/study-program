@@ -1,3 +1,9 @@
+---
+id: math301-topic-5-4
+title: "Double Integrals in Polar Coordinates"
+order: 4
+---
+
 # Double Integrals in Polar Coordinates
 
 ## Introduction

@@ -1,3 +1,9 @@
+---
+id: cs201-t6-scheduling
+title: "Greedy Scheduling"
+order: 3
+---
+
 # Greedy Scheduling Algorithms
 
 Scheduling is among the most practically important algorithmic domains. Operating systems schedule processes, project managers schedule tasks, airlines schedule crews, and factories schedule production. Many scheduling problems have elegant greedy solutions: shortest job first minimizes average completion time, earliest deadline first minimizes maximum lateness, and earliest finish time maximizes throughput. Understanding which greedy rule applies to which objective is essential algorithmic knowledge.

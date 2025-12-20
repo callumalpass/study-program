@@ -1,3 +1,9 @@
+---
+id: cs102-t4-canonical-forms-and-kmaps
+title: "Canonical Forms and K-Maps"
+order: 4
+---
+
 # Canonical Forms and Karnaugh Maps
 
 When designing logic circuits, we need systematic ways to derive expressions from truth tables and simplify them. **Canonical forms** provide standard representations that directly correspond to truth tables, while **Karnaugh maps** (K-maps) offer a visual simplification technique that's faster than algebraic manipulation for small functions.

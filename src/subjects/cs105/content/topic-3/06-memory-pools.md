@@ -1,3 +1,9 @@
+---
+id: cs105-t3-pools
+title: "Memory Pools and Arenas"
+order: 6
+---
+
 # Memory Pools and Arenas
 
 Memory pools and arenas are custom allocation strategies that can dramatically improve performance over general-purpose allocators like `malloc`. They're essential in game engines, embedded systems, and performance-critical applications.

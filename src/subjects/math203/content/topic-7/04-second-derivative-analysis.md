@@ -1,3 +1,9 @@
+---
+id: math203-t7-second
+title: "Second Derivative Analysis"
+order: 4
+---
+
 # Second Derivative Analysis
 
 The second derivative reveals concavity—whether the graph curves upward or downward. Combined with first derivative analysis, it provides a complete picture of a function's shape.

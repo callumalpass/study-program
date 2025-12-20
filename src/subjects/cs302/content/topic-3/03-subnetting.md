@@ -1,3 +1,9 @@
+---
+id: cs302-t3-subnet
+title: "Subnetting"
+order: 3
+---
+
 # Subnetting
 
 ## What is Subnetting?

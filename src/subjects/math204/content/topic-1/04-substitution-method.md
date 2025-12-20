@@ -1,3 +1,9 @@
+---
+id: math204-t1-substitution
+title: "Substitution Method"
+order: 4
+---
+
 # The Substitution Method
 
 Basic integration rules handle simple functions, but what about $\int 2x\cos(x^2) \, dx$ or $\int \frac{x}{\sqrt{x^2+1}} \, dx$? These don't fit standard formulas. The substitution method—also called $u$-substitution—is integration's version of the chain rule. It transforms complicated integrals into simpler ones by recognizing hidden patterns.

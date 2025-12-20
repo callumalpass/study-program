@@ -1,3 +1,9 @@
+---
+id: cs102-t4-truth-tables-and-basic-gates
+title: "Truth Tables and Basic Gates"
+order: 1
+---
+
 # Truth Tables and Basic Logic Gates
 
 Digital circuits operate on binary values—0s and 1s—using operations defined by Boolean logic. A **logic gate** is the physical implementation of a Boolean function: it accepts one or more binary inputs and produces a binary output according to a specific rule. Understanding truth tables and basic gates is essential for everything from reading circuit diagrams to understanding how processors compute.

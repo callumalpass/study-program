@@ -1,3 +1,9 @@
+---
+id: cs202-t7-superscalar
+title: "Superscalar Processors"
+order: 2
+---
+
 # Superscalar Processors
 
 **Superscalar processors** fetch, decode, and execute multiple instructions per clock cycle. This is the primary hardware mechanism for exploiting instruction-level parallelism, enabling IPC greater than one.

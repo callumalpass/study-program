@@ -1,3 +1,9 @@
+---
+id: cs103-t5-singleton
+title: "Singleton Pattern"
+order: 2
+---
+
 ## The Singleton Pattern
 
 **Problem:** You need exactly one instance of a class, accessible globally. Common examples: database connections, configuration managers, logging systems.

@@ -1,3 +1,9 @@
+---
+id: cs203-t2-fatoregex
+title: "FA to Regex Conversion"
+order: 3
+---
+
 # Automata to Regex Conversion
 
 Converting finite automata to regular expressions proves that every regular language has a regex description. The state elimination method provides a systematic algorithm.

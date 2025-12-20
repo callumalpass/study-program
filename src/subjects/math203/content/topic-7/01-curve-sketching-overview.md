@@ -1,3 +1,9 @@
+---
+id: math203-t7-overview
+title: "Curve Sketching Overview"
+order: 1
+---
+
 # Curve Sketching Overview
 
 Curve sketching combines all the tools of differential calculus to produce accurate graphs of functions. By analyzing derivatives systematically, we can sketch curves without plotting hundreds of points.

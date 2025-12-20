@@ -1,3 +1,9 @@
+---
+id: math201-t5-geometric
+title: "Geometric Applications"
+order: 7
+---
+
 # Geometric Applications of Determinants
 
 Determinants have profound geometric interpretations that connect linear algebra with geometry. They measure volumes, compute cross products, determine orientations, and solve geometric problems elegantly.

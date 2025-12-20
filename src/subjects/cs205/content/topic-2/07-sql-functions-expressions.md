@@ -1,3 +1,9 @@
+---
+id: cs205-t2-functions
+title: "SQL Functions and Expressions"
+order: 7
+---
+
 # SQL Functions and Expressions
 
 SQL provides a rich set of built-in functions and expression capabilities for transforming, calculating, and manipulating data within queries. Mastering these functions enables you to perform complex data operations directly in the database, often more efficiently than processing data in application code. This guide covers the major categories of SQL functions and how to use them effectively.

@@ -1,3 +1,9 @@
+---
+id: math401-topic-2-6
+title: "Elementary Functions"
+order: 6
+---
+
 # Harmonic Functions
 
 Harmonic functions are solutions to Laplace's equation, one of the most important partial differential equations in mathematics and physics. In complex analysis, harmonic functions are intimately connected to analytic functions: the real and imaginary parts of any analytic function are harmonic. This connection provides powerful tools for solving boundary value problems and understanding physical phenomena.

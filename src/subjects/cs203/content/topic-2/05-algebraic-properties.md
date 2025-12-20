@@ -1,3 +1,9 @@
+---
+id: cs203-t2-algebraic
+title: "Algebraic Properties"
+order: 5
+---
+
 # Algebraic Properties
 
 Regular expressions form an algebra with laws that allow manipulation and simplification. Understanding these properties enables proving equivalences and optimizing patterns.

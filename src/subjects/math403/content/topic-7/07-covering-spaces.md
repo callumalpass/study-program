@@ -1,3 +1,9 @@
+---
+id: math403-topic-7-7
+title: "Covering Spaces"
+order: 7
+---
+
 # Covering Spaces
 
 Covering spaces provide a powerful tool for studying the fundamental group and classifying spaces with the same local structure but different global topology. A covering space is a topological space that "wraps around" a base space multiple times in a locally homeomorphic way, like how the real line $\mathbb{R}$ wraps infinitely around the circle $S^1$ via the exponential map. Covering space theory reveals the deep connection between topology and algebra, showing how the fundamental group controls which spaces can cover a given space. This theory has profound applications in complex analysis (Riemann surfaces), algebraic geometry, differential geometry, and group theory. Understanding covering spaces is essential for computing fundamental groups and studying the global structure of topological spaces.

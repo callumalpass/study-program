@@ -1,3 +1,9 @@
+---
+id: math202-t5-chi-tests
+title: "Chi-Squared Tests"
+order: 6
+---
+
 # Chi-Squared Tests for Categorical Data
 
 While z-tests and t-tests analyze quantitative data (means), chi-squared tests analyze categorical data (counts and proportions). These tests answer questions about how observed frequencies compare to expected frequencies, whether categorical variables are independent, and whether different populations have the same distribution. Chi-squared tests are essential tools for analyzing surveys, medical diagnoses, genetics, quality control, and countless other applications involving categorical data.

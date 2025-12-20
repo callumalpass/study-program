@@ -1,3 +1,9 @@
+---
+id: cs205-t2-select
+title: "SELECT Queries"
+order: 2
+---
+
 # SELECT Query Fundamentals
 
 The SELECT statement retrieves data from database tables. Mastering SELECT is essential for working with relational databases.

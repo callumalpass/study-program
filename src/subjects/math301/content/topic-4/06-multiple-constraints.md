@@ -1,3 +1,9 @@
+---
+id: math301-topic-4-6
+title: "Multiple Constraints"
+order: 6
+---
+
 # Optimization with Multiple Constraints
 
 ## Introduction

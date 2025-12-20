@@ -1,3 +1,9 @@
+---
+id: cs202-t3-regfile
+title: "Register File Design"
+order: 6
+---
+
 # Register File Design
 
 The **register file** is a small, fast memory structure that holds the processor's general-purpose registers. It's a critical component that must support simultaneous read and write operations with minimal delay.

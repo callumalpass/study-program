@@ -1,3 +1,9 @@
+---
+id: cs104-t3-bst
+title: "Binary Search Trees"
+order: 3
+---
+
 # Binary Search Trees
 
 Binary Search Trees (BSTs) are a fundamental data structure that combines the flexibility of linked structures with the efficiency of binary search. Understanding BSTs is essential for any programmer, as they form the basis for many more advanced data structures.

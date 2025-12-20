@@ -1,3 +1,9 @@
+---
+id: cs204-t3-architecture
+title: "Architectural Patterns"
+order: 2
+---
+
 # Architectural Patterns
 
 Architectural patterns provide proven solutions to common software design challenges. These high-level patterns define the overall structure of a system, guiding how components interact and how responsibilities are distributed. Choosing the right architectural pattern significantly impacts system quality, maintainability, and scalability.

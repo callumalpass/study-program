@@ -1,3 +1,9 @@
+---
+id: cs201-t5-optimization
+title: "DP Optimization Techniques"
+order: 3
+---
+
 # Dynamic Programming Optimization Techniques
 
 Standard dynamic programming provides elegant solutions to many problems, but the resulting algorithms can be slow or memory-intensive for large inputs. Advanced optimization techniques reduce complexity and make challenging problems tractable, often transforming algorithms that would require hours or days into ones that complete in seconds.

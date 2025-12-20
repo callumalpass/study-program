@@ -1,3 +1,9 @@
+---
+id: cs105-t4-memory
+title: "Memory Layout and Padding"
+order: 4
+---
+
 # Structure Memory Layout and Padding
 
 Understanding how structures are arranged in memory is crucial for writing efficient code, interfacing with hardware, and working with binary file formats. Compilers add padding for alignment, which affects structure size.

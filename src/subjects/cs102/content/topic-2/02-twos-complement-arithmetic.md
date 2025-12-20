@@ -1,3 +1,9 @@
+---
+id: cs102-t2-twos-complement-arithmetic
+title: "Two’s Complement Arithmetic"
+order: 2
+---
+
 # Two's Complement Arithmetic
 
 Computers need to represent negative numbers, but binary digits are inherently unsigned—they're just 0s and 1s. Several schemes have been invented to encode sign information, but **two's complement** has become the universal standard for signed integers. Its key advantage is elegant: the same binary addition hardware works correctly for both positive and negative numbers, with no special cases.

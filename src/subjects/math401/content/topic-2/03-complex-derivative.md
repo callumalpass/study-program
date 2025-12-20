@@ -1,3 +1,9 @@
+---
+id: math401-topic-2-3
+title: "Complex Derivative"
+order: 3
+---
+
 # Complex Differentiation
 
 The complex derivative extends the notion of differentiation from real functions to complex functions. While the definition mirrors that of real calculus, complex differentiability is far more restrictive and powerful. Functions that are complex differentiable possess remarkable properties not shared by their real counterparts.

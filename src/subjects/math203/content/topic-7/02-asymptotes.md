@@ -1,3 +1,9 @@
+---
+id: math203-t7-asymptotes
+title: "Asymptotes"
+order: 2
+---
+
 # Asymptotes
 
 Asymptotes describe the behavior of a function near boundaries of its domain or as $x \to \pm\infty$. They are essential for understanding rational functions and many transcendental functions.

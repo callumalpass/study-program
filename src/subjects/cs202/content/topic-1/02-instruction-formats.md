@@ -1,3 +1,9 @@
+---
+id: cs202-t1-formats
+title: "Instruction Formats"
+order: 2
+---
+
 # Instruction Formats and Encoding
 
 Every machine instruction must be encoded as a sequence of bits that the processor can decode and execute. The **instruction format** defines how these bits are organized—which bits represent the operation, which represent the operands, and how different types of instructions are distinguished.

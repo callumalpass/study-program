@@ -1,3 +1,9 @@
+---
+id: cs201-t7-scc
+title: "Strongly Connected Components"
+order: 5
+---
+
 # Strongly Connected Components
 
 Strongly connected components (SCCs) reveal the fundamental structure of directed graphs. Within each SCC, every vertex can reach every other vertex—they form tightly connected clusters of mutual reachability. Between SCCs, edges go only one direction, creating a DAG structure that simplifies analysis. This decomposition is a powerful tool for understanding complex directed graphs.

@@ -1,3 +1,9 @@
+---
+id: math301-topic-3-4
+title: "Linear Approximation"
+order: 4
+---
+
 # Linear Approximation and Total Differential
 
 ## Introduction

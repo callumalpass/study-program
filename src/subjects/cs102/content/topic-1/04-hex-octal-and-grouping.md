@@ -1,3 +1,9 @@
+---
+id: cs102-t1-hex-octal-and-grouping
+title: "Hex, Octal, and Bit Grouping"
+order: 4
+---
+
 # Hex, Octal, and Bit Grouping
 
 Hex and octal are compact ways to write binary. Their power lies in the mathematical relationship between their bases and base 2: they map to fixed-size bit groups, making conversion trivial and mental arithmetic practical.

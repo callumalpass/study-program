@@ -1,3 +1,9 @@
+---
+id: math201-t3-examples
+title: "Examples of Vector Spaces"
+order: 3
+---
+
 # Examples of Vector Spaces
 
 The power of the vector space abstraction becomes clear when we see how many different mathematical structures satisfy the ten axioms. From polynomials to matrices to continuous functions, vector spaces appear throughout mathematics. Understanding these examples builds intuition for the general theory and reveals deep connections between seemingly unrelated topics.

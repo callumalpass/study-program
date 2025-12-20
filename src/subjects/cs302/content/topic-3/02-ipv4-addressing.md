@@ -1,3 +1,9 @@
+---
+id: cs302-t3-ipv4
+title: "IPv4 Addressing"
+order: 2
+---
+
 # IPv4 Addressing
 
 ## IP Address Fundamentals

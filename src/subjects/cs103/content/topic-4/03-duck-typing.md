@@ -1,3 +1,9 @@
+---
+id: cs103-t4-duck-typing
+title: "Duck Typing"
+order: 3
+---
+
 ## Duck Typing
 
 Python doesn't require explicit interfaces or inheritance for polymorphism. If an object has the right methods, it works. This is called duck typing: "If it walks like a duck and quacks like a duck, then it must be a duck."

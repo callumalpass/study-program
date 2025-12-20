@@ -1,3 +1,9 @@
+---
+id: math401-topic-6-5
+title: "Computing Residues"
+order: 5
+---
+
 # Trigonometric Integrals
 
 Integrals involving trigonometric functions over $[0, 2\pi]$ or $(-\infty, \infty)$ can be evaluated elegantly using residue theory. The key techniques are the $z = e^{i\theta}$ substitution for periodic integrals and Fourier methods for infinite intervals.

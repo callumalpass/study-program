@@ -1,3 +1,9 @@
+---
+id: math101-t4-properties
+title: "Properties of Relations"
+order: 2
+---
+
 # Properties of Relations
 
 ## Overview

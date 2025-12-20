@@ -1,3 +1,9 @@
+---
+id: cs103-t1-self-init
+title: "self and __init__"
+order: 4
+---
+
 ## The `self` Parameter and `__init__` Constructor
 
 Two concepts are fundamental to understanding Python classes: the `self` parameter and the `__init__` constructor. Together, they explain how Python tracks instance identity and initializes object state.

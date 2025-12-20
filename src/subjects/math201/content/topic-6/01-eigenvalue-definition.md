@@ -1,3 +1,9 @@
+---
+id: math201-t6-definition
+title: "Eigenvalue Definition"
+order: 1
+---
+
 # Eigenvalues and Eigenvectors: Definition and Geometric Meaning
 
 ## What Are Eigenvalues and Eigenvectors?

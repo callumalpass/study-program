@@ -1,3 +1,9 @@
+---
+id: cs205-t6-types
+title: "Index Types"
+order: 3
+---
+
 # Index Types
 
 Different index types optimize for different query patterns. Choosing the right index type is crucial for database performance.

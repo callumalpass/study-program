@@ -1,3 +1,9 @@
+---
+id: math201-t5-computation
+title: "Determinant Computation"
+order: 4
+---
+
 # Efficient Determinant Computation
 
 While cofactor expansion works for any matrix, it becomes computationally expensive for large matrices. The number of operations grows factorially with matrix size. For practical computation, we use row reduction to transform the matrix into triangular form, where the determinant is simply the product of diagonal entries.

@@ -1,3 +1,9 @@
+---
+id: math202-t6-correlation
+title: "Correlation and Determination"
+order: 4
+---
+
 # Correlation and Coefficient of Determination
 
 ## Introduction

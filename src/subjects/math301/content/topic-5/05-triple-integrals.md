@@ -1,3 +1,9 @@
+---
+id: math301-topic-5-5
+title: "Triple Integrals"
+order: 5
+---
+
 # Triple Integrals
 
 ## Introduction

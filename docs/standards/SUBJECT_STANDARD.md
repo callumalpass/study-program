@@ -79,6 +79,30 @@ src/subjects/{subject}/content/topic-{N}/
 └── 07-{summary-or-best-practices}.md
 ```
 
+### Frontmatter Requirements
+
+Each subtopic markdown file **must** include YAML frontmatter at the top:
+
+```yaml
+---
+id: cs101-t1-intro
+title: "Introduction to Variables"
+order: 1
+---
+
+# Introduction to Variables
+
+[Content starts here...]
+```
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique subtopic ID (format: `{subject}-t{N}-{slug}`) |
+| `title` | Yes | Display title for the subtopic |
+| `order` | Yes | Sort order within the topic (1-7) |
+
+The frontmatter is automatically parsed by the shared loader to build subtopic metadata.
+
 ### ID Format
 - Pattern: `{subject}-t{topic}-{slug}`
 - Example: `cs101-t1-intro`, `math201-t3-eigenvalues`
@@ -401,19 +425,32 @@ Each subject is fully self-contained in a single directory with all content and 
 
 ```
 src/subjects/{subject}/
-├── content/              # Markdown lesson content
+├── content/              # Markdown lesson content (with frontmatter)
 │   ├── topic-1/          # Subtopic markdown files
-│   │   ├── 01-intro.md
+│   │   ├── 01-intro.md   # Each file has frontmatter (id, title, order)
 │   │   └── ...
-│   ├── topic-1.md        # Topic overview (optional)
+│   ├── topic-1.md        # Topic overview (optional, legacy)
 │   └── ...
 ├── index.ts              # TypeScript exports (imports from JSON)
-├── topics.ts             # Topic definitions (handles markdown imports)
+├── topics.ts             # Topic definitions (uses glob imports)
 ├── quizzes.json          # All quizzes for the subject
 ├── exams.json            # Midterm and final exams
 ├── exercises.json        # All exercises for the subject
 └── projects.json         # Projects (CS subjects only)
 ```
+
+### Shared Loader
+
+The shared loader at `src/subjects/loader.ts` provides utilities for all subjects:
+
+```typescript
+import { buildTopicsFromGlob } from '../loader';
+```
+
+Key functions:
+- `parseFrontmatter(markdown)` - Extracts YAML frontmatter from markdown
+- `buildTopicsFromGlob(subjectId, globResult, topicConfigs)` - Builds Topic[] from glob imports
+- `slugFromFilename(filename)` - Generates slug from filename (e.g., "01-intro.md" → "intro")
 
 ### Why Colocated?
 
@@ -421,6 +458,7 @@ src/subjects/{subject}/
 2. **Easier navigation** - No jumping between directories
 3. **Simpler imports** - Relative paths like `./content/topic-1/`
 4. **Self-contained** - Each subject can be worked on independently
+5. **Automatic discovery** - Glob imports find all markdown files automatically
 
 ### TypeScript Exports
 
@@ -437,6 +475,41 @@ export const {subject}Exams = examsData as Exam[];
 export const {subject}Exercises = exercisesData as Exercise[];
 export { {subject}Topics } from './topics';
 ```
+
+### Topics with Glob Imports
+
+The `topics.ts` file uses Vite's glob imports for automatic content discovery:
+
+```typescript
+import type { Topic } from '../../core/types';
+import { buildTopicsFromGlob } from '../loader';
+
+// Glob import all markdown content
+const content = import.meta.glob('./content/**/*.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+}) as Record<string, string>;
+
+// Topic configuration (titles and quiz/exercise IDs)
+const topicConfigs = [
+  {
+    number: 1,
+    title: "Variables and Data Types",
+    quizIds: ['cs101-quiz-1', 'cs101-quiz-1b', 'cs101-quiz-1c'],
+    exerciseIds: ['cs101-t1-ex01', 'cs101-t1-ex02', /* ... */],
+  },
+  // ... 7 topics total
+];
+
+export const cs101Topics: Topic[] = buildTopicsFromGlob('cs101', content, topicConfigs);
+```
+
+The loader automatically:
+1. Finds all markdown files in `./content/topic-N/`
+2. Parses frontmatter to extract `id`, `title`, and `order`
+3. Builds subtopic arrays sorted by `order`
+4. Constructs the full Topic[] array
 
 ---
 
@@ -474,6 +547,7 @@ npm run quality
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.3 | 2025-12-20 | Added glob imports, frontmatter, and shared loader for simplified topics.ts |
 | 1.2 | 2025-12-20 | Colocated content and data into unified src/subjects/ structure |
 | 1.1 | 2025-12-20 | Migrated assessment data from TypeScript to JSON format |
 | 1.0 | 2025-12-17 | Initial standard based on curriculum review |

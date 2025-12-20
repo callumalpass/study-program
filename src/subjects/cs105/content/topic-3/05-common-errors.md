@@ -1,3 +1,9 @@
+---
+id: cs105-t3-errors
+title: "Common Memory Errors"
+order: 5
+---
+
 # Common Memory Management Errors
 
 Memory errors are among the most challenging bugs to diagnose and fix. Understanding common patterns helps you avoid them and recognize them when they occur.

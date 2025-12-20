@@ -1,3 +1,9 @@
+---
+id: cs203-t3-ambiguity
+title: "Ambiguity"
+order: 4
+---
+
 # Ambiguity
 
 A grammar is **ambiguous** if some string has multiple parse trees. Ambiguity causes problems in parsing and interpretation.

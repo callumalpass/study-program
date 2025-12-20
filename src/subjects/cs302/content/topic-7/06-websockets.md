@@ -1,3 +1,9 @@
+---
+id: cs302-t7-websockets
+title: "WebSockets"
+order: 6
+---
+
 # WebSockets and Real-Time Communication
 
 ## The Real-Time Challenge

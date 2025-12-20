@@ -1,3 +1,9 @@
+---
+id: math202-t4-point
+title: "Point Estimation"
+order: 2
+---
+
 # Point Estimation
 
 Point estimation is the process of using sample data to calculate a single value (a point estimate) that serves as our best guess for an unknown population parameter. While we know this single value won't be exactly correct, good point estimators have desirable properties that make them reliable tools for inference.

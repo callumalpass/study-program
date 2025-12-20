@@ -1,3 +1,9 @@
+---
+id: cs103-t7-unit-testing
+title: "Unit Testing OOP Code"
+order: 5
+---
+
 ## Unit Testing OOP Code
 
 Unit tests verify that individual classes and methods work correctly. In OOP, effective testing focuses on behavior and public interfaces, not implementation details.

@@ -1,3 +1,9 @@
+---
+id: cs102-t6-addressing-modes
+title: "Addressing Modes"
+order: 2
+---
+
 # Addressing Modes (How Assembly Finds Data)
 
 When an instruction needs data, it must specify where to find it. An **addressing mode** is the method an instruction uses to locate its operand—whether that's a constant value, a register, or a memory location. Understanding addressing modes is essential for reading assembly code and understanding how high-level constructs like arrays, pointers, and structures translate to machine operations.

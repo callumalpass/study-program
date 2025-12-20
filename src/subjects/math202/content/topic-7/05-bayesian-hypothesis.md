@@ -1,3 +1,9 @@
+---
+id: math202-t7-hypothesis
+title: "Bayesian Hypothesis Testing"
+order: 5
+---
+
 ## Bayesian Hypothesis Testing
 
 Traditional hypothesis testing relies on p-values and null hypothesis significance testing (NHST), which has well-documented limitations and is often misinterpreted. Bayesian hypothesis testing offers an alternative that directly quantifies evidence for competing hypotheses, allowing us to compare models and accumulate evidence in either direction.

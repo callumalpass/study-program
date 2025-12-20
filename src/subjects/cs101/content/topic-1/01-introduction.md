@@ -1,3 +1,9 @@
+---
+id: cs101-t1-intro
+title: "Introduction"
+order: 1
+---
+
 ## Introduction
 
 Welcome to your first step in learning Python programming! In this topic, you'll learn how computers store and manipulate information through variables and data types. By the end, you'll be able to create variables, understand Python's core data types, and convert between them confidently. This foundational knowledge forms the basis of virtually everything else you'll learn in programming.

@@ -1,3 +1,9 @@
+---
+id: cs101-t2-intro
+title: "Control Flow: Big Picture"
+order: 1
+---
+
 ## Control Flow: The Big Picture
 
 Control flow is how a program decides *what to do next*. Without control flow, your code runs top-to-bottom exactly once - every line executes in order, and then the program ends. With control flow, your program becomes dynamic and responsive. It can:

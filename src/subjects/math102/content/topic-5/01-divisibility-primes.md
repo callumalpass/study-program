@@ -1,3 +1,9 @@
+---
+id: math102-t5-div
+title: "Divisibility and Primes"
+order: 1
+---
+
 # Divisibility and Prime Numbers
 
 Number theory studies properties of integers. Divisibility and primes form the foundation, with applications in cryptography, hashing, and algorithm design.

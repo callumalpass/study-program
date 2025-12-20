@@ -1,3 +1,9 @@
+---
+id: cs205-t6-btree
+title: "B-Tree Structure"
+order: 2
+---
+
 # B-Tree Structure
 
 B-trees are the most important data structure in database systems. Understanding their structure and operations is fundamental to database performance tuning.

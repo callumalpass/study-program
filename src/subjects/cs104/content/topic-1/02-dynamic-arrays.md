@@ -1,3 +1,9 @@
+---
+id: cs104-t1-dynamic
+title: "Dynamic Arrays"
+order: 2
+---
+
 # Dynamic Arrays and Amortized Analysis
 
 Dynamic arrays solve one of static arrays' biggest limitations: fixed size. They automatically grow (and sometimes shrink) to accommodate varying amounts of data while still providing O(1) random access.

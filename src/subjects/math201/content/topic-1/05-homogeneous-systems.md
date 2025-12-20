@@ -1,3 +1,9 @@
+---
+id: math201-t1-homogeneous
+title: "Homogeneous Systems"
+order: 5
+---
+
 # Homogeneous Systems
 
 ## Definition and Basic Properties

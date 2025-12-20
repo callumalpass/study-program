@@ -1,3 +1,9 @@
+---
+id: math101-t3-operations
+title: "Basic Operations (Union, Intersection, Difference)"
+order: 3
+---
+
 # Basic Set Operations
 
 ## Overview

@@ -1,3 +1,9 @@
+---
+id: math203-t7-special
+title: "Sketching Special Functions"
+order: 6
+---
+
 # Sketching Special Functions
 
 Beyond polynomials and rational functions, curve sketching applies to exponential, logarithmic, trigonometric, and other special functions. Each type has characteristic features.

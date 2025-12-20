@@ -1,3 +1,9 @@
+---
+id: cs101-t7-classic
+title: "Classic Recursive Problems"
+order: 4
+---
+
 ## Classic Recursive Problems
 
 Learning recursion is best done through practice. This subtopic presents classic recursive problems that help you internalize the "base case + recursive case" pattern. Each example demonstrates a different way that problems can have self-similar structure.

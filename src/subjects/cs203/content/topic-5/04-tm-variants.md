@@ -1,3 +1,9 @@
+---
+id: cs203-t5-variants
+title: "TM Variants"
+order: 4
+---
+
 # TM Variants
 
 Various Turing machine variants have been proposed. Despite their differences, all are equivalent in computational power to the standard TM.

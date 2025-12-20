@@ -1,3 +1,9 @@
+---
+id: math403-topic-5-2
+title: "Open Covers and Subcovers"
+order: 2
+---
+
 # Open Covers and Subcovers
 
 Understanding open covers and their finite subcovers is fundamental to working with compact spaces. This subtopic explores the technical details of covers, refinements, and the key lemmas that make compactness proofs work.

@@ -1,3 +1,9 @@
+---
+id: cs104-t4-load-factor
+title: "Load Factor and Resizing"
+order: 5
+---
+
 # Load Factor and Dynamic Resizing
 
 A hash table's performance depends critically on how full it is. The **load factor** measures this fullness, and **dynamic resizing** maintains performance as the table grows. Understanding these concepts is essential for implementing efficient hash tables.

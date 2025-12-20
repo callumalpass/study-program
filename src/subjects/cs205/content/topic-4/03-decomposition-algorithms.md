@@ -1,3 +1,9 @@
+---
+id: cs205-t4-decomp
+title: "Decomposition Algorithms"
+order: 3
+---
+
 # Decomposition Algorithms
 
 Decomposition transforms a relation into multiple smaller relations to achieve desired normal forms. Understanding decomposition properties ensures data integrity is preserved.

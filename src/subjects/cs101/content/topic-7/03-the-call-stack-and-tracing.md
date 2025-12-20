@@ -1,3 +1,9 @@
+---
+id: cs101-t7-stack
+title: "Call Stack and Tracing"
+order: 3
+---
+
 ## The Call Stack: What Recursion Really Does
 
 To truly understand recursion, you need to understand what happens behind the scenes when functions call themselves. Every function call creates a new **stack frame**, and recursive functions create many frames stacked on top of each other. Understanding this mechanism helps you trace recursive execution, debug problems, and recognize when recursion might not be the best choice.

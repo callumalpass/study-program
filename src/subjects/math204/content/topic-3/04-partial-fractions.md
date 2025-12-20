@@ -1,3 +1,9 @@
+---
+id: math204-t3-partial
+title: "Partial Fractions"
+order: 4
+---
+
 # Partial Fraction Decomposition
 
 Partial fraction decomposition is an algebraic technique that breaks down a complex rational function into a sum of simpler fractions. Each simpler fraction can be integrated using basic techniques, making this method essential for integrating rational functions. The process reverses the addition of fractions: instead of combining fractions over a common denominator, we decompose a single fraction into components.

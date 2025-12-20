@@ -1,3 +1,9 @@
+---
+id: math301-topic-5-1
+title: "Double Integrals over Rectangles"
+order: 1
+---
+
 # Double Integrals over Rectangles
 
 ## Introduction

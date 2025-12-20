@@ -1,3 +1,9 @@
+---
+id: math401-topic-6-1
+title: "Laurent Series Introduction"
+order: 1
+---
+
 # The Residue Theorem
 
 The residue theorem is the crown jewel of complex integration. It states that the integral of a function around a closed contour equals $2\pi i$ times the sum of residues at singularities inside the contour. This remarkable result transforms difficult integration problems into simple algebraic calculations and has countless applications in mathematics, physics, and engineering.

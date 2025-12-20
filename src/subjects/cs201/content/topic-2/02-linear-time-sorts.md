@@ -1,3 +1,9 @@
+---
+id: cs201-t2-linear
+title: "Linear-Time Sorting"
+order: 2
+---
+
 # Linear-Time Sorting Algorithms
 
 The Ω(n log n) lower bound for comparison-based sorting might seem like an insurmountable barrier, but it applies only when the algorithm learns about element order exclusively through pairwise comparisons. By exploiting additional information about the data—its range, digit structure, or distribution—we can achieve linear time sorting. These non-comparison sorts represent a fundamental insight: more information enables faster algorithms.

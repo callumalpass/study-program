@@ -6,14 +6,14 @@
  * which handles the markdown content imports.
  */
 
-import type { Quiz, Exam, Exercise, Topic } from '../../core/types';
+import type { Quiz, Exam, Exercise } from '../../core/types';
 
 import quizzesData from './quizzes.json';
 import examsData from './exams.json';
 import exercisesData from './exercises.json';
-import { topics } from './topics';
+import { math404Topics } from './topics';
 
 export const math404Quizzes = quizzesData as Quiz[];
 export const math404Exams = examsData as Exam[];
 export const math404Exercises = exercisesData as Exercise[];
-export const math404Topics: Topic[] = topics;
+export { math404Topics };

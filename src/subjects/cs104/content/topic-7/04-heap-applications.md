@@ -1,3 +1,9 @@
+---
+id: cs104-t7-applications
+title: "Heap Applications"
+order: 4
+---
+
 # Heap Applications
 
 Heaps and priority queues solve many practical problems efficiently. This section covers common applications that leverage the heap's ability to quickly access extreme elements.

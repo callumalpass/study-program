@@ -1,3 +1,9 @@
+---
+id: cs103-t1-instance-class
+title: "Instance vs Class Variables"
+order: 5
+---
+
 ## Instance vs Class Variables
 
 Python classes have two types of variables: **instance variables** (unique to each object) and **class variables** (shared by all objects). Understanding the difference is crucial for avoiding subtle bugs.

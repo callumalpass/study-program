@@ -1,3 +1,9 @@
+---
+id: math101-t6-universal
+title: "The Universal Quantifier (∀)"
+order: 3
+---
+
 # The Universal Quantifier (∀)
 
 ## Definition

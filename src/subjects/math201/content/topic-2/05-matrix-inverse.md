@@ -1,3 +1,9 @@
+---
+id: math201-t2-inverse
+title: "Matrix Inverse"
+order: 5
+---
+
 # Matrix Inverse
 
 The matrix inverse is the multiplicative analog of division for matrices. Just as dividing by a number $a$ means multiplying by $a^{-1}$, solving matrix equations often requires finding an inverse matrix. Not all matrices have inverses—only square matrices with certain properties are invertible. Understanding when and how to compute inverses is fundamental to solving linear systems and analyzing linear transformations.

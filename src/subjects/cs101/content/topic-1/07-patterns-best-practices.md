@@ -1,3 +1,9 @@
+---
+id: cs101-t1-patterns
+title: "Patterns & Best Practices"
+order: 7
+---
+
 ## Common Patterns and Idioms
 
 Python has elegant ways to solve common programming tasks. Learning these patterns will make your code more concise and readable.

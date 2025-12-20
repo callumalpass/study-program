@@ -1,3 +1,9 @@
+---
+id: cs105-t4-unions
+title: "Unions in Structures"
+order: 5
+---
+
 # Unions in Structures
 
 Combining unions with structures enables powerful data modeling patterns including variant types, memory-efficient storage, and type-safe discriminated unions.

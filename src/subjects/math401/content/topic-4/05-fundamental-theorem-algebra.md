@@ -1,3 +1,9 @@
+---
+id: math401-topic-4-5
+title: "Maximum Modulus Principle"
+order: 5
+---
+
 # Fundamental Theorem of Algebra
 
 The Fundamental Theorem of Algebra states that every non-constant polynomial with complex coefficients has at least one complex root. This remarkable result, despite its name involving "algebra," has no purely algebraic proof—all known proofs use analysis, topology, or algebra combined with analysis. Complex analysis provides one of the most elegant proofs via Liouville's theorem.

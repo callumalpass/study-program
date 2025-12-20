@@ -1,3 +1,9 @@
+---
+id: cs104-t3-bst-ops
+title: "BST Operations"
+order: 4
+---
+
 # Advanced BST Operations
 
 Beyond basic search, insert, and delete, Binary Search Trees support many useful operations that leverage the ordering property. Mastering these operations builds the foundation for understanding more complex tree-based algorithms.

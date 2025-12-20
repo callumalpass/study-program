@@ -1,3 +1,9 @@
+---
+id: cs302-t1-standards
+title: "Network Standards and Organizations"
+order: 7
+---
+
 # Network Standards and Organizations
 
 Network standards ensure interoperability between devices from different manufacturers. Without standards, networks would be fragmented ecosystems unable to communicate with each other. Understanding who creates these standards and how they work is important for any networking professional.

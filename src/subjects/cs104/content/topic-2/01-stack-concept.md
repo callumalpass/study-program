@@ -1,3 +1,9 @@
+---
+id: cs104-t2-stack-concept
+title: "Stack Concept"
+order: 1
+---
+
 # The Stack Concept: LIFO Principle
 
 A stack is an abstract data type that follows the Last-In-First-Out (LIFO) principle. The last element added is the first one to be removed, like a stack of plates where you can only add or remove from the top.

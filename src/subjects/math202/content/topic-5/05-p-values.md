@@ -1,3 +1,9 @@
+---
+id: math202-t5-p-values
+title: "P-Values"
+order: 5
+---
+
 # P-Values: Definition, Interpretation, and Relation to Significance
 
 The p-value is one of the most reported yet frequently misunderstood concepts in statistics. It appears in virtually every published research study, yet its interpretation is often confused with other concepts like the probability that the null hypothesis is true or the probability of replication. Understanding what p-values actually mean—and what they don't—is crucial for both conducting and critically evaluating statistical analyses.

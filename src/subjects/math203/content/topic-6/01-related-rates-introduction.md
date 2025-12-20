@@ -1,3 +1,9 @@
+---
+id: math203-t6-intro
+title: "Introduction to Related Rates"
+order: 1
+---
+
 # Introduction to Related Rates
 
 Related rates problems involve quantities that change with time and are connected by an equation. When one quantity changes, the others change too—at rates that are *related* through calculus.

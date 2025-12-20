@@ -1,3 +1,9 @@
+---
+id: cs104-t7-fundamentals
+title: "Heap Fundamentals"
+order: 1
+---
+
 # Heap Fundamentals
 
 A heap is a specialized tree-based data structure that satisfies the heap property. Heaps are the foundation for priority queues and enable efficient access to the minimum or maximum element. Understanding heaps is essential for algorithms like Dijkstra's shortest path and heap sort.

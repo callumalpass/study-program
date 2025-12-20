@@ -1,3 +1,9 @@
+---
+id: cs202-t5-miss
+title: "Miss Classification"
+order: 4
+---
+
 # Cache Miss Classification
 
 Understanding why cache misses occur helps in designing better caches and writing cache-friendly software. The "Three Cs" model categorizes all misses into three types: Compulsory, Capacity, and Conflict.

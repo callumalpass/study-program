@@ -1,3 +1,9 @@
+---
+id: math201-t1-applications
+title: "Applications of Linear Systems"
+order: 7
+---
+
 # Applications of Linear Systems
 
 ## Introduction

@@ -1,3 +1,9 @@
+---
+id: math101-t3-applications
+title: "Applications and Best Practices"
+order: 7
+---
+
 # Applications and Best Practices
 
 ## Sets in Computer Science

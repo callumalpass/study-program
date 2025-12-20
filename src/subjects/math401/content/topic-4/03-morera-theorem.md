@@ -1,3 +1,9 @@
+---
+id: math401-topic-4-3
+title: "Liouville\"
+order: 3
+---
+
 # Morera's Theorem
 
 Morera's theorem is the converse of Cauchy's theorem: while Cauchy's theorem states that integrals of analytic functions around closed curves vanish, Morera's theorem states that if all closed curve integrals vanish, then the function is analytic. This provides a powerful alternative method for proving analyticity without checking the Cauchy-Riemann equations.

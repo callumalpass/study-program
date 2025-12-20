@@ -1,3 +1,9 @@
+---
+id: cs102-t7-cache-mapping-and-misses
+title: "Cache Mapping and Misses"
+order: 2
+---
+
 # Cache Mapping and Miss Types
 
 A cache must answer a fundamental question: given a memory address, where should that data be stored in the cache? The answer to this question—the **mapping strategy**—profoundly affects cache performance. Different mapping strategies trade off between hardware complexity, lookup speed, and the ability to avoid conflicts. Understanding these tradeoffs, along with the different types of cache misses, is essential for understanding why caches behave the way they do.

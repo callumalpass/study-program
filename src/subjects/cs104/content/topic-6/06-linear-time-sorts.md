@@ -1,3 +1,9 @@
+---
+id: cs104-t6-linear
+title: "Linear Time Sorts"
+order: 6
+---
+
 # Linear Time Sorting Algorithms
 
 Comparison-based sorting has a lower bound of O(n log n). However, when data has special properties, we can sort in O(n) time using non-comparison sorts: Counting Sort, Radix Sort, and Bucket Sort.

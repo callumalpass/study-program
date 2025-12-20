@@ -1,3 +1,9 @@
+---
+id: cs301-t5-prevention
+title: "Deadlock Prevention"
+order: 2
+---
+
 # Deadlock Prevention
 
 Deadlock prevention ensures that at least one of the four necessary conditions cannot hold. This subtopic covers methods to prevent each condition.

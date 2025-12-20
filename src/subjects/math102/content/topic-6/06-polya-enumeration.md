@@ -1,3 +1,9 @@
+---
+id: math102-t6-polya
+title: "Pólya Enumeration"
+order: 6
+---
+
 # Pólya Enumeration Theorem
 
 The Pólya Enumeration Theorem counts distinct colorings or arrangements under symmetry. It elegantly handles problems where objects are "the same" if one can be transformed into another by a symmetry operation.

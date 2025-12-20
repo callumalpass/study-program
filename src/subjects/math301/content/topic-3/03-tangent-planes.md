@@ -1,3 +1,9 @@
+---
+id: math301-topic-3-3
+title: "Tangent Planes"
+order: 3
+---
+
 # Tangent Planes and Normal Lines
 
 ## Introduction

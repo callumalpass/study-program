@@ -1,3 +1,9 @@
+---
+id: math101-t6-predicates
+title: "Predicates and Domains"
+order: 2
+---
+
 # Predicates and Domains
 
 ## What is a Predicate?

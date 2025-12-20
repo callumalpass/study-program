@@ -1,3 +1,9 @@
+---
+id: cs104-t4-open-addr
+title: "Collision Resolution: Open Addressing"
+order: 4
+---
+
 # Collision Resolution: Open Addressing
 
 Open addressing is an alternative to chaining where all entries are stored directly in the bucket array. When a collision occurs, we probe for an empty slot using a deterministic sequence. This approach can be more cache-efficient than chaining.

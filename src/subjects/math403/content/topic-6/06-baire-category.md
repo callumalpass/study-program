@@ -1,3 +1,9 @@
+---
+id: math403-topic-6-6
+title: "Baire Category Theorem"
+order: 6
+---
+
 # The Baire Category Theorem
 
 The Baire Category Theorem is a fundamental result about complete metric spaces and locally compact Hausdorff spaces, with important applications in functional analysis, real analysis, and topology. Named after René-Louis Baire who proved it in his 1899 doctoral thesis, the theorem provides a powerful tool for proving existence results by showing that certain "large" sets cannot be decomposed into countably many "small" pieces. The terminology of "category" here is unrelated to category theory—it refers to a classification of sets by "size" in a topological sense.

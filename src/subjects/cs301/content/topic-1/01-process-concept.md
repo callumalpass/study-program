@@ -1,3 +1,9 @@
+---
+id: cs301-t1-concept
+title: "Process Concept"
+order: 1
+---
+
 # The Process Concept
 
 Understanding what a process is and how it differs from a program is fundamental to operating systems. This subtopic explores the process abstraction and its lifecycle.

@@ -1,3 +1,9 @@
+---
+id: cs104-t5-problems
+title: "Graph Problems"
+order: 7
+---
+
 # Common Graph Problems
 
 Graph problems are frequently asked in coding interviews and competitive programming. This section covers essential problems and patterns that build on the fundamentals covered earlier.

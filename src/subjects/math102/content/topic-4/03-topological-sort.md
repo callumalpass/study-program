@@ -1,3 +1,9 @@
+---
+id: math102-t4-topo
+title: "Topological Sort"
+order: 3
+---
+
 # Topological Sorting
 
 Topological sorting orders vertices of a directed acyclic graph (DAG) so that for every edge (u,v), vertex u appears before v. This ordering is essential for scheduling tasks with dependencies.

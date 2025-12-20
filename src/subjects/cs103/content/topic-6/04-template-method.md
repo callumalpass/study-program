@@ -1,3 +1,9 @@
+---
+id: cs103-t6-template
+title: "Template Method Pattern"
+order: 4
+---
+
 ## The Template Method Pattern
 
 The Template Method pattern defines the skeleton of an algorithm in a parent class, letting subclasses fill in specific steps without changing the overall structure.

@@ -1,3 +1,9 @@
+---
+id: cs204-t7-scrum
+title: "Scrum Framework"
+order: 1
+---
+
 # Scrum Framework
 
 Scrum is one of the most widely adopted Agile frameworks, providing a structured yet flexible approach to managing complex software development projects. Originally formalized in the 1990s by Ken Schwaber and Jeff Sutherland, Scrum has become synonymous with Agile development in many organizations.

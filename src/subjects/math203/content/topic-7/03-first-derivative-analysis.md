@@ -1,3 +1,9 @@
+---
+id: math203-t7-first
+title: "First Derivative Analysis"
+order: 3
+---
+
 # First Derivative Analysis
 
 The first derivative reveals where a function increases, decreases, and has critical points. This analysis is fundamental to understanding the function's shape.

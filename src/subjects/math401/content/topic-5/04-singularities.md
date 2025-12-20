@@ -1,3 +1,9 @@
+---
+id: math401-topic-5-4
+title: "Analytic Continuation"
+order: 4
+---
+
 # Classification of Singularities
 
 Singularities are points where a function fails to be analytic. Understanding the nature of these points is crucial for complex analysis. Laurent series provide the tool for classifying singularities into three fundamental types: removable, poles, and essential.

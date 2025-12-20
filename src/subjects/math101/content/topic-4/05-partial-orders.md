@@ -1,3 +1,9 @@
+---
+id: math101-t4-orders
+title: "Partial Orders"
+order: 5
+---
+
 # Partial Orders
 
 ## Definition

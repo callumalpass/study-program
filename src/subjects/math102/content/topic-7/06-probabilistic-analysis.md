@@ -1,3 +1,9 @@
+---
+id: math102-t7-analysis
+title: "Probabilistic Analysis"
+order: 6
+---
+
 # Probabilistic Analysis of Algorithms
 
 Probabilistic analysis uses probability theory to analyze algorithm performance. This approach handles average-case complexity, randomized algorithms, and randomized data structures.

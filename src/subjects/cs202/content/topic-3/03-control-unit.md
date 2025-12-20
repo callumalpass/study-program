@@ -1,3 +1,9 @@
+---
+id: cs202-t3-control
+title: "Control Unit Design"
+order: 3
+---
+
 # Control Unit Design
 
 The **control unit** is the brain of the processor, responsible for generating the signals that orchestrate the datapath's operation. It decodes instructions and produces control signals that tell each component what to do during each clock cycle.

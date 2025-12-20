@@ -1,3 +1,9 @@
+---
+id: cs302-t1-addressing
+title: "Network Addressing Fundamentals"
+order: 6
+---
+
 # Network Addressing Fundamentals
 
 Addressing is how devices locate and communicate with each other across networks. Different layers use different addressing schemes—MAC addresses at Layer 2 and IP addresses at Layer 3. Understanding addressing is fundamental to network troubleshooting and design.

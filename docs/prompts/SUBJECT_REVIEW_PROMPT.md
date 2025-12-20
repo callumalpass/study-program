@@ -13,12 +13,12 @@ All subject content is colocated in a single directory:
 - Subject directory: `/home/calluma/projects/comp_sci_degree/src/subjects/{SUBJECT_ID}/`
 
 ## Files to Review
-1. **topics.ts** - Topic definitions and subtopic structure
+1. **topics.ts** - Topic definitions (uses glob imports and buildTopicsFromGlob)
 2. **quizzes.json** - Quiz questions for each topic
 3. **exams.json** - Midterm and final exam questions
 4. **exercises.json** - Coding or written exercises for each topic
 5. **projects.json** - Project definitions (CS subjects only)
-6. **content/** - Markdown lesson files (content/topic-N/*.md)
+6. **content/** - Markdown lesson files with frontmatter (content/topic-N/*.md)
 
 ## Required Quantities
 - **16 exercises per topic** (minimum)
@@ -138,10 +138,11 @@ Write a markdown file with this exact structure:
 ## Process
 
 1. First, read the subject's index.ts to understand the structure
-2. Read topics.ts to get the list of topics and subtopics
+2. Read topics.ts to get the list of topics (uses glob imports via buildTopicsFromGlob)
 3. For each topic:
-   - Count and list subtopics
-   - Estimate word count for each subtopic content in content/topic-N/*.md
+   - Count and list subtopics from content/topic-N/*.md files
+   - Verify each markdown file has frontmatter (id, title, order)
+   - Estimate word count for each subtopic content
    - Count exercises in exercises.json
    - Count quiz questions in quizzes.json
 4. Check exams.json for midterm and final
@@ -150,3 +151,17 @@ Write a markdown file with this exact structure:
 7. **Write the report to the specified file path**
 
 Be thorough and accurate in your counts. The goal is to identify exactly what work remains to complete each subject.
+
+### Frontmatter Check
+
+Each subtopic markdown file should have YAML frontmatter at the top:
+
+```yaml
+---
+id: cs101-t1-intro
+title: "Introduction to Variables"
+order: 1
+---
+```
+
+Report any files missing frontmatter as a technical issue.

@@ -1,3 +1,9 @@
+---
+id: math101-t1-intro
+title: "Introduction to Propositional Logic"
+order: 1
+---
+
 # Introduction to Propositional Logic
 
 ## What is Propositional Logic?

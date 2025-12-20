@@ -1,3 +1,9 @@
+---
+id: math401-topic-1-1
+title: "Introduction to Complex Numbers"
+order: 1
+---
+
 # Introduction to Complex Numbers
 
 Complex numbers extend the real number system to include solutions to equations that have no real solutions, such as $x^2 + 1 = 0$. This extension is not merely a mathematical curiosity—complex numbers are fundamental to modern mathematics, physics, and engineering.

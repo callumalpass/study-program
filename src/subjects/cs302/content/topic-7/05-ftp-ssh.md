@@ -1,3 +1,9 @@
+---
+id: cs302-t7-ftp
+title: "FTP and SSH"
+order: 5
+---
+
 # FTP and SSH
 
 ## FTP: File Transfer Protocol

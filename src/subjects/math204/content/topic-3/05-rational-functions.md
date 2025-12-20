@@ -1,3 +1,9 @@
+---
+id: math204-t3-rational
+title: "Rational Functions"
+order: 5
+---
+
 # Integrating Rational Functions
 
 Rational functions—quotients of polynomials—appear everywhere in calculus, from rates of change to probability distributions. While some rational integrals can be solved with simple substitution, many require sophisticated algebraic manipulation before integration techniques can be applied. This section explores the complete toolkit for handling rational functions: determining whether they're proper or improper, performing polynomial long division, and using techniques like completing the square to expose standard integral forms.

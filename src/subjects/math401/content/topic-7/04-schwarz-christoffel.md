@@ -1,3 +1,9 @@
+---
+id: math401-topic-7-4
+title: "Exponential and Logarithmic Mappings"
+order: 4
+---
+
 # Schwarz-Christoffel Transformation
 
 The Schwarz-Christoffel transformation provides an explicit formula for conformal mappings from the upper half-plane to polygonal regions. This powerful technique has applications in electrostatics, fluid dynamics, and other areas requiring solutions to Laplace's equation in polygonal domains.

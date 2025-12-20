@@ -1,3 +1,9 @@
+---
+id: cs202-t6-controllers
+title: "Memory Controllers"
+order: 4
+---
+
 # Memory Controllers and Interfaces
 
 The memory controller is the critical interface between the processor and DRAM. Its design significantly impacts memory bandwidth, latency, and power consumption. Understanding memory controller architecture helps explain system performance characteristics.

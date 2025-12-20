@@ -1,3 +1,9 @@
+---
+id: math102-t2-master
+title: "Master Theorem"
+order: 4
+---
+
 # The Master Theorem
 
 The Master Theorem provides quick solutions to divide-and-conquer recurrences without solving them from scratch. It's essential for algorithm analysis.

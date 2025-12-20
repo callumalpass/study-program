@@ -1,3 +1,9 @@
+---
+id: cs101-t2-conditionals
+title: "Conditionals (if/elif/else)"
+order: 3
+---
+
 ## `if`, `elif`, `else` (Branching)
 
 Conditionals let your program choose one path out of many. The `if/elif/else` structure is the primary way to implement branching logic in Python - deciding what code to execute based on conditions.

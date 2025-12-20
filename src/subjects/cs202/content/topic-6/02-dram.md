@@ -1,3 +1,9 @@
+---
+id: cs202-t6-dram
+title: "DRAM Organization"
+order: 2
+---
+
 # DRAM Organization and Operation
 
 Dynamic Random Access Memory (DRAM) serves as main memory in virtually all computing systems. Understanding DRAM's internal organization and timing characteristics is essential for optimizing memory performance and designing memory controllers.

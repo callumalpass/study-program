@@ -1,3 +1,9 @@
+---
+id: cs105-t2-function-ptrs
+title: "Function Pointers"
+order: 6
+---
+
 # Function Pointers
 
 Function pointers store addresses of functions, enabling dynamic function calls, callbacks, and polymorphism-like behavior. They're essential for event handling, sorting algorithms, and plugin architectures.

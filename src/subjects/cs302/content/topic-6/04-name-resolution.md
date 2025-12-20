@@ -1,3 +1,9 @@
+---
+id: cs302-t6-dns
+title: "Name Resolution"
+order: 4
+---
+
 # Name Resolution and Address Handling
 
 ## The Need for Name Resolution

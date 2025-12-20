@@ -1,3 +1,9 @@
+---
+id: cs302-t3-intro
+title: "Network Layer Introduction"
+order: 1
+---
+
 # Network Layer Introduction
 
 The Network layer is responsible for getting packets from source to destination across multiple interconnected networks. While the Data Link layer handles communication within a single network segment, the Network layer enables communication across the entire Internet—routing packets through many intermediate networks to reach their final destination.

@@ -1,3 +1,9 @@
+---
+id: cs301-t7-examples
+title: "File System Examples"
+order: 7
+---
+
 # File System Examples
 
 Modern file systems implement advanced features for performance and reliability. This subtopic covers ext4, XFS, Btrfs, ZFS, and other file systems.

@@ -1,3 +1,9 @@
+---
+id: math403-topic-5-3
+title: "Heine-Borel Theorem"
+order: 3
+---
+
 # The Heine-Borel Theorem
 
 The Heine-Borel theorem characterizes compact subsets of Euclidean space and is one of the most important results in real analysis and topology. It provides a concrete, easily verifiable criterion for compactness in the most commonly encountered setting.

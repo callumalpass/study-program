@@ -1,3 +1,9 @@
+---
+id: math201-t3-span
+title: "Span and Spanning Sets"
+order: 5
+---
+
 # Span and Spanning Sets
 
 The span of a set of vectors is one of the most important concepts in linear algebra. It describes all the vectors you can create using linear combinations, and it provides a way to build subspaces from simple building blocks. Understanding span is essential for solving systems of equations, finding bases, and working with coordinates.

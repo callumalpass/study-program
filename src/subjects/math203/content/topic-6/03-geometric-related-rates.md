@@ -1,3 +1,9 @@
+---
+id: math203-t6-geometric
+title: "Geometric Related Rates"
+order: 3
+---
+
 # Geometric Related Rates
 
 Many related rates problems involve geometric shapes—circles, spheres, cylinders, and cones—where dimensions change over time. These problems rely on standard geometry formulas.

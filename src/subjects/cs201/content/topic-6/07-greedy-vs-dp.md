@@ -1,3 +1,9 @@
+---
+id: cs201-t6-vs-dp
+title: "Greedy vs Dynamic Programming"
+order: 7
+---
+
 # Greedy vs Dynamic Programming
 
 Greedy and dynamic programming represent two fundamental approaches to optimization problems. Greedy algorithms make locally optimal choices without reconsidering, hoping local optimality yields global optimality. Dynamic programming systematically considers all options, building optimal solutions from optimal subproblems. Knowing when each approach applies—and why—is essential for algorithm design.

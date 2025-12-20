@@ -1,3 +1,9 @@
+---
+id: math101-t5-intro
+title: "Introduction to Functions"
+order: 1
+---
+
 # Introduction to Functions
 
 ## What is a Function?

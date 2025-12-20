@@ -1,3 +1,9 @@
+---
+id: cs101-t5-open
+title: "Opening Files and Modes"
+order: 2
+---
+
 ## Opening Files Safely
 
 Before you can read or write a file, you need to **open** it. Python's `open()` function creates a connection between your program and a file on disk. But there's a critical rule: **always close files when you're done**.

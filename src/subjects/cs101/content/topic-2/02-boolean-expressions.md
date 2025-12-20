@@ -1,3 +1,9 @@
+---
+id: cs101-t2-booleans
+title: "Boolean Expressions"
+order: 2
+---
+
 ## Boolean Expressions (Making True/False Decisions)
 
 Every `if` statement and every `while` loop relies on a **boolean expression**: something that evaluates to `True` or `False`. Understanding how to construct and combine boolean expressions is fundamental to writing effective control flow.

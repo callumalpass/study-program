@@ -1,3 +1,9 @@
+---
+id: cs103-t1-creating
+title: "Creating Objects"
+order: 3
+---
+
 ## Creating Objects: Instances in Action
 
 An **object** (or **instance**) is a specific realization of a class. While the class defines the structure, each object has its own identity and state. Creating an object is called **instantiation**.

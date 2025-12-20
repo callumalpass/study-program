@@ -1,3 +1,9 @@
+---
+id: cs202-t3-overview
+title: "Datapath Overview"
+order: 1
+---
+
 # CPU Datapath Overview
 
 The **datapath** is the hardware component of a processor responsible for performing operations on data. It contains the functional units that execute instructions: registers, ALUs, multiplexers, and the interconnections between them. Understanding the datapath is key to understanding how processors actually execute programs.

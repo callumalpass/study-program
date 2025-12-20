@@ -1,3 +1,9 @@
+---
+id: cs301-t3-rr
+title: "Round Robin"
+order: 3
+---
+
 # Round Robin Scheduling
 
 Round Robin (RR) is a preemptive scheduling algorithm designed for time-sharing systems. This subtopic covers RR implementation, time quantum selection, and performance analysis.

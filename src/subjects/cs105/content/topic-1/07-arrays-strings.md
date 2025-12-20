@@ -1,3 +1,9 @@
+---
+id: cs105-t1-arrays-strings
+title: "Arrays and Strings"
+order: 7
+---
+
 # Arrays and Strings
 
 Arrays are collections of elements of the same type stored in contiguous memory. Strings in C are simply arrays of characters with a special terminator. Understanding these data structures is fundamental to C programming.

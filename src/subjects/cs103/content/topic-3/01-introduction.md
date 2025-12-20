@@ -1,3 +1,9 @@
+---
+id: cs103-t3-intro
+title: "Introduction to Inheritance"
+order: 1
+---
+
 ## Introduction to Inheritance
 
 Nature is full of hierarchies: all dogs are mammals, all mammals are animals. Inheritance brings this natural organization into programming. When you create a new class based on an existing one, the new class automatically gets all the attributes and methods of the parent—and can add or modify them.

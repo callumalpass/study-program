@@ -1,3 +1,9 @@
+---
+id: cs204-t4-creational
+title: "Creational Patterns"
+order: 2
+---
+
 # Creational Design Patterns
 
 Creational patterns provide various object creation mechanisms, increasing flexibility and reuse of existing code. These patterns abstract the instantiation process, making systems independent of how objects are created, composed, and represented.

@@ -1,3 +1,9 @@
+---
+id: cs204-t3-principles
+title: "Design Principles"
+order: 1
+---
+
 # Design Principles
 
 Software design principles provide guidelines for creating maintainable, flexible, and robust systems. These principles, particularly the SOLID principles, form the foundation of good object-oriented design and help developers avoid common pitfalls that lead to rigid, fragile code.

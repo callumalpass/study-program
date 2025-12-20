@@ -1,3 +1,9 @@
+---
+id: cs201-t5-knapsack
+title: "Knapsack Variants"
+order: 6
+---
+
 # Knapsack Problem Variants
 
 The knapsack problem is a cornerstone of combinatorial optimization with profound practical importance. From cargo loading and resource allocation to financial portfolio optimization and cryptography, knapsack variants appear throughout computer science and operations research. Understanding the landscape of knapsack variants—each with different constraints and solution strategies—helps recognize when a new problem fits an established pattern.

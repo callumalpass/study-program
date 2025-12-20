@@ -1,3 +1,9 @@
+---
+id: math101-t4-representations
+title: "Representing Relations"
+order: 3
+---
+
 # Representing Relations
 
 ## Why Representations Matter

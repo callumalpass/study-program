@@ -1,3 +1,9 @@
+---
+id: cs201-t1-lower
+title: "Lower Bounds and Optimality"
+order: 7
+---
+
 # Lower Bounds and Optimality
 
 Algorithm design is a game against nature: we try to solve problems as efficiently as possible while mathematics constrains what's achievable. Lower bounds establish these fundamental limits—they prove that no algorithm, no matter how clever, can beat a certain complexity for a given problem. When an algorithm's complexity matches a lower bound, we've achieved optimality: further improvement is mathematically impossible.

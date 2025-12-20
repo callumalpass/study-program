@@ -1,3 +1,9 @@
+---
+id: cs301-t4-classic
+title: "Classic Synchronization Problems"
+order: 4
+---
+
 # Classic Synchronization Problems
 
 Classic synchronization problems illustrate common concurrency challenges and their solutions. This subtopic covers the producer-consumer, readers-writers, and dining philosophers problems.

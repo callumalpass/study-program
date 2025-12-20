@@ -1,3 +1,9 @@
+---
+id: cs204-t6-ci
+title: "CI Fundamentals"
+order: 5
+---
+
 # Continuous Integration Fundamentals
 
 Continuous Integration (CI) is a development practice where developers integrate code into a shared repository frequently, with each integration automatically verified by building the project and running automated tests. CI catches integration issues early and improves software quality.

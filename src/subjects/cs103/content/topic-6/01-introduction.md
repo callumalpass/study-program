@@ -1,3 +1,9 @@
+---
+id: cs103-t6-intro
+title: "Introduction to Abstraction"
+order: 1
+---
+
 ## Introduction to Abstraction
 
 As programs grow, classes often need to work together without knowing the exact concrete types involved. **Abstraction** helps you design around *what something can do* (its interface/contract) rather than *what it is* (its concrete class).

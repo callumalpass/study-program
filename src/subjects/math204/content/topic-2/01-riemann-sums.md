@@ -1,3 +1,9 @@
+---
+id: math204-t2-riemann
+title: "Riemann Sums"
+order: 1
+---
+
 # Riemann Sums and the Definite Integral
 
 The definite integral represents the total accumulation of a quantity over an interval, such as distance traveled given velocity, or area under a curve. Unlike indefinite integrals (which produce antiderivatives), definite integrals yield numerical values. The foundation of definite integration lies in the concept of approximating areas using rectangles, formalized through Riemann sums.

@@ -1,3 +1,9 @@
+---
+id: cs102-t2-addition-and-subtraction
+title: "Binary Addition and Subtraction"
+order: 1
+---
+
 # Binary Addition and Subtraction
 
 Binary arithmetic is the foundation for understanding how computers perform all mathematical operations. Every addition, subtraction, multiplication, or division that occurs in your programs ultimately breaks down to binary operations in the CPU's arithmetic logic unit (ALU). The rules are simpler than decimal arithmetic—there are only four cases for single-bit addition—but you need to practice carrying and borrowing accurately to avoid errors.

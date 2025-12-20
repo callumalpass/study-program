@@ -1,3 +1,9 @@
+---
+id: cs105-t2-basics
+title: "Understanding Pointers"
+order: 1
+---
+
 # Understanding Pointers
 
 Pointers are perhaps the most powerful—and initially confusing—feature of C. A pointer is simply a variable that stores a memory address. Understanding pointers unlocks C's true potential for systems programming, efficient data manipulation, and hardware interaction.

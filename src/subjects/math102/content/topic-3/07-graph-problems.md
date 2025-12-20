@@ -1,3 +1,9 @@
+---
+id: math102-t3-probs
+title: "Graph Problems"
+order: 7
+---
+
 # Graph Theory Problems
 
 This section presents classic problems and proof techniques in graph theory. Working through these problems builds intuition and problem-solving skills.

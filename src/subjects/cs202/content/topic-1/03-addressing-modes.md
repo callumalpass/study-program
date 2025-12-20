@@ -1,3 +1,9 @@
+---
+id: cs202-t1-addressing
+title: "Addressing Modes"
+order: 3
+---
+
 # Addressing Modes
 
 **Addressing modes** determine how the processor calculates the effective address of an operand. They provide flexibility in how data is accessed, enabling efficient implementation of various programming constructs like arrays, pointers, and data structures.

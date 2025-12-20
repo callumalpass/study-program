@@ -1,3 +1,9 @@
+---
+id: math201-t5-cofactor
+title: "Cofactor Expansion"
+order: 2
+---
+
 # Cofactor Expansion
 
 While 2×2 determinants have a simple formula and 3×3 determinants can use Sarrus' Rule, larger matrices require a systematic method. Cofactor expansion (also called Laplace expansion) provides a recursive technique for computing determinants of any size.

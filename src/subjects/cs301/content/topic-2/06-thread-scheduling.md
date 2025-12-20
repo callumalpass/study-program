@@ -1,3 +1,9 @@
+---
+id: cs301-t2-scheduling
+title: "Thread Scheduling"
+order: 6
+---
+
 # Thread Scheduling
 
 Operating systems schedule threads for execution on available CPUs. This subtopic covers thread scheduling policies, priorities, and affinity.

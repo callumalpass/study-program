@@ -1,3 +1,9 @@
+---
+id: math301-topic-7-3
+title: "Stokes\"
+order: 3
+---
+
 # Stokes' Theorem
 
 ## Introduction

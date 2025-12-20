@@ -1,3 +1,9 @@
+---
+id: cs301-t5-recovery
+title: "Deadlock Recovery"
+order: 5
+---
+
 # Deadlock Recovery
 
 Once deadlock is detected, the system must recover. This subtopic covers process termination, resource preemption, and checkpoint/rollback recovery strategies.

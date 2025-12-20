@@ -1,3 +1,9 @@
+---
+id: cs205-t3-patterns
+title: "Query Patterns"
+order: 7
+---
+
 # Common SQL Query Patterns
 
 Every database developer encounters recurring query challenges that follow predictable patterns. Mastering these common patterns provides a toolkit for solving typical data retrieval problems efficiently. This guide covers essential query patterns that appear frequently in real-world database applications.

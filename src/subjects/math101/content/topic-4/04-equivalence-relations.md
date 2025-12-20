@@ -1,3 +1,9 @@
+---
+id: math101-t4-equivalence
+title: "Equivalence Relations"
+order: 4
+---
+
 # Equivalence Relations
 
 ## Definition

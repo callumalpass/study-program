@@ -1,3 +1,9 @@
+---
+id: cs203-t1-eliminate
+title: "State Elimination"
+order: 5
+---
+
 # State Elimination
 
 **State elimination** is an algorithm that converts a finite automaton to an equivalent regular expression. This establishes that regular expressions and finite automata describe exactly the same class of languages.

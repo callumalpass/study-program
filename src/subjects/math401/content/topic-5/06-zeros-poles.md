@@ -1,3 +1,9 @@
+---
+id: math401-topic-5-6
+title: "Zeros of Analytic Functions"
+order: 6
+---
+
 # Zeros and Poles of Analytic Functions
 
 Zeros and poles are fundamental features of analytic and meromorphic functions. Understanding their properties, distribution, and relationship is essential for complex analysis. The argument principle and Rouché's theorem provide powerful tools for counting and locating these critical points.

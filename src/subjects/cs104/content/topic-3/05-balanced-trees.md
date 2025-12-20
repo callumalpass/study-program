@@ -1,3 +1,9 @@
+---
+id: cs104-t3-balanced
+title: "Balanced Trees"
+order: 5
+---
+
 # Balanced Trees
 
 Standard Binary Search Trees can become skewed, degrading operations from O(log n) to O(n). Balanced trees maintain height constraints to guarantee efficient operations. Understanding balanced trees is crucial for building high-performance applications.

@@ -1,3 +1,9 @@
+---
+id: math101-t7-arithmetic
+title: "Arithmetic Sequences"
+order: 2
+---
+
 # Arithmetic Sequences
 
 ## Definition

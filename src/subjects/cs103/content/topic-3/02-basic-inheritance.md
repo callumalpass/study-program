@@ -1,3 +1,9 @@
+---
+id: cs103-t3-basic
+title: "Basic Inheritance"
+order: 2
+---
+
 ## Basic Inheritance: Parent and Child Classes
 
 Creating a child class that inherits from a parent is straightforward. The child automatically receives all of the parent's attributes and methods.

@@ -1,3 +1,9 @@
+---
+id: cs103-t4-best-practices
+title: "Best Practices"
+order: 7
+---
+
 ## Best Practices and Common Mistakes
 
 Polymorphism is powerful, but misuse leads to confusing code. Follow these practices to write clean, predictable polymorphic code.

@@ -1,3 +1,9 @@
+---
+id: math403-topic-5-4
+title: "Sequential Compactness"
+order: 4
+---
+
 # Sequential Compactness
 
 Sequential compactness provides an alternative characterization of compactness using sequences, which is often more intuitive and easier to work with in metric spaces. While the open cover definition of compactness is more general, sequential compactness captures the same idea in settings where sequences determine the topology.

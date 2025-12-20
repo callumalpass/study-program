@@ -1,3 +1,9 @@
+---
+id: cs105-t3-stack-heap
+title: "Stack vs Heap Memory"
+order: 1
+---
+
 # Stack vs Heap Memory
 
 Understanding memory organization is fundamental to C programming. C provides two main regions for storing data: the stack and the heap. Each has different characteristics that affect how you write programs.

@@ -1,3 +1,9 @@
+---
+id: math202-t6-simple
+title: "Simple Linear Regression"
+order: 1
+---
+
 # Simple Linear Regression
 
 ## Introduction

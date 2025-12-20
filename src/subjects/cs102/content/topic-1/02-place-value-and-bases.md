@@ -1,3 +1,9 @@
+---
+id: cs102-t1-place-value-and-bases
+title: "Place Value and Bases"
+order: 2
+---
+
 # Place Value and Bases
 
 Before you convert numbers, you need to be fluent in **place value**: the idea that digits have different weights depending on their position. This concept is so fundamental to our number system that we often take it for granted, but understanding it deeply is essential for working with any base.

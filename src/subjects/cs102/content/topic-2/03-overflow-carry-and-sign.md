@@ -1,3 +1,9 @@
+---
+id: cs102-t2-overflow-carry-and-sign
+title: "Overflow, Carry, and Signedness"
+order: 3
+---
+
 # Overflow, Carry, and Signed vs Unsigned
 
 One of the most important skills in CS102 is distinguishing **carry** from **overflow** and knowing when each matters. Both relate to arithmetic results that don't fit in the available bits, but they apply to different interpretations of those bits.

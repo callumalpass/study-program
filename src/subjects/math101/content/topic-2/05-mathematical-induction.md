@@ -1,3 +1,9 @@
+---
+id: math101-t2-induction
+title: "Mathematical Induction"
+order: 5
+---
+
 # Mathematical Induction
 
 ## The Domino Effect

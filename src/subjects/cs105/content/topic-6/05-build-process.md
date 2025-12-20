@@ -1,3 +1,9 @@
+---
+id: cs105-t6-build
+title: "Build Process"
+order: 5
+---
+
 # Build Process
 
 Understanding the C build process is essential for debugging compilation errors, optimizing builds, and managing complex projects. The process transforms source code into executable programs through several distinct phases.

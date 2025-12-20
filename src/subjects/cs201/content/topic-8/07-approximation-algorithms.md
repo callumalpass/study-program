@@ -1,3 +1,9 @@
+---
+id: cs201-t8-approx
+title: "Approximation Algorithms"
+order: 7
+---
+
 # Approximation Algorithms
 
 When NP-hardness blocks the path to exact solutions, approximation algorithms offer a practical compromise: guaranteed bounds on solution quality in polynomial time. A 2-approximation for vertex cover means your solution is at most twice optimal size—not perfect, but far better than arbitrary. A PTAS for knapsack means you can get arbitrarily close to optimal by spending more computation time. These guarantees transform intractable problems into tractable ones.

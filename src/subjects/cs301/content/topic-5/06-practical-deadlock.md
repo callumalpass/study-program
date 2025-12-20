@@ -1,3 +1,9 @@
+---
+id: cs301-t5-practical
+title: "Practical Deadlock Handling"
+order: 6
+---
+
 # Practical Deadlock Handling
 
 Real systems use combined strategies for deadlock handling. This subtopic covers practical approaches in operating systems, databases, and applications.

@@ -1,3 +1,9 @@
+---
+id: math204-t7-power-series
+title: "Power Series"
+order: 1
+---
+
 # Power Series
 
 Power series are infinite polynomials that extend the familiar concept of polynomials to infinitely many terms. They form the foundation for Taylor and Maclaurin series, providing a bridge between discrete polynomials and continuous functions. Understanding power series is essential for approximation theory, numerical analysis, and solving differential equations.

@@ -1,3 +1,9 @@
+---
+id: cs204-t7-retro
+title: "Retrospectives"
+order: 5
+---
+
 # Refactoring
 
 Refactoring is the practice of improving the internal structure of code without changing its external behavior. This disciplined technique for restructuring code makes systems more maintainable, understandable, and extensible while preserving functionality. Martin Fowler's seminal work on refactoring established it as a fundamental practice in modern software development.

@@ -1,3 +1,9 @@
+---
+id: math401-topic-7-6
+title: "Schwarz-Christoffel Transformation"
+order: 6
+---
+
 # Physical Applications of Conformal Mapping
 
 Conformal mappings transform physical problems from complicated domains to simpler ones while preserving the governing equations. This technique is invaluable in electrostatics, fluid dynamics, heat transfer, and other areas governed by Laplace's equation. The angle-preserving property ensures physical relationships remain intact under transformation.

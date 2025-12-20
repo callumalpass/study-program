@@ -1,3 +1,9 @@
+---
+id: math401-topic-3-5
+title: "Independence of Path"
+order: 5
+---
+
 # The Cauchy-Goursat Theorem
 
 The Cauchy-Goursat theorem is one of the most fundamental and powerful results in complex analysis. It states that the integral of an analytic function around a closed curve is zero—a result with no direct analog in real analysis. This theorem leads to profound consequences including Cauchy's integral formula, the residue theorem, and ultimately explains why analytic functions have such remarkable properties.

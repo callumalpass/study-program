@@ -1,3 +1,9 @@
+---
+id: math201-t7-kernel-range
+title: "Kernel and Range"
+order: 3
+---
+
 # Kernel and Range of Linear Transformations
 
 ## Introduction

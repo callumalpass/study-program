@@ -1,3 +1,9 @@
+---
+id: cs201-t3-binary
+title: "Binary Search"
+order: 1
+---
+
 # Binary Search
 
 Binary search is the quintessential divide-and-conquer algorithm, efficiently finding elements in sorted data by repeatedly halving the search space. Despite its conceptual simplicity, binary search is notoriously tricky to implement correctly—Jon Bentley famously noted that only about 10% of professional programmers can write a correct binary search on their first attempt. Mastering its variations and understanding its subtleties is essential for algorithm design.

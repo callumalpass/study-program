@@ -1,3 +1,9 @@
+---
+id: math101-t6-translation
+title: "Translation and Applications"
+order: 7
+---
+
 # Translation and Applications
 
 ## Translating English to Predicate Logic

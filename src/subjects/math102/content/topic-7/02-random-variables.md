@@ -1,3 +1,9 @@
+---
+id: math102-t7-rv
+title: "Random Variables"
+order: 2
+---
+
 # Discrete Random Variables
 
 Random variables transform probability problems into algebraic ones. Understanding common distributions and their properties is essential for algorithm analysis.

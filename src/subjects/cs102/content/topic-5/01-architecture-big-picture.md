@@ -1,3 +1,9 @@
+---
+id: cs102-t5-architecture-big-picture
+title: "Architecture: Big Picture"
+order: 1
+---
+
 # Computer Architecture: The Big Picture
 
 Computer architecture describes how a computer is organized and how it executes programs. It's the layer that connects the software you write to the physical hardware that runs it. Understanding architecture explains why programs behave the way they do—why some operations are fast and others slow, why certain bugs are possible, and how the CPU actually carries out your instructions.

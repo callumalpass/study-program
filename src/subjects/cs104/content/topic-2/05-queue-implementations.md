@@ -1,3 +1,9 @@
+---
+id: cs104-t2-queue-impl
+title: "Queue Implementations"
+order: 5
+---
+
 # Queue Implementations
 
 Like stacks, queues can be implemented using arrays or linked lists. However, array-based queues require special handling to achieve O(1) operations at both ends.

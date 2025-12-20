@@ -1,3 +1,9 @@
+---
+id: cs102-t4-common-building-blocks
+title: "Common Building Blocks"
+order: 5
+---
+
 # Common Circuit Building Blocks
 
 Digital systems aren't built gate-by-gate from scratch. Instead, designers use standardized building blocks—reusable combinational circuits that perform common operations. Understanding these blocks is essential for reading CPU datapaths, understanding how data moves through processors, and appreciating how Boolean logic becomes computing machinery.

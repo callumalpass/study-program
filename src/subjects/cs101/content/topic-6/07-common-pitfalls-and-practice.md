@@ -1,3 +1,9 @@
+---
+id: cs101-t6-pitfalls
+title: "Common Pitfalls and Practice"
+order: 7
+---
+
 ## Common Pitfalls in Exception Handling
 
 Exception handling is powerful, but it's easy to misuse. Poor exception handling can hide bugs, make debugging impossible, and create security vulnerabilities. This subtopic covers the most common mistakes and how to avoid them.

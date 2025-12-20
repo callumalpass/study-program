@@ -1,3 +1,9 @@
+---
+id: cs105-t7-varargs
+title: "Variable Arguments"
+order: 6
+---
+
 # Variable Arguments
 
 Variadic functions accept a variable number of arguments, like `printf`. This section covers how to create and use variadic functions safely.

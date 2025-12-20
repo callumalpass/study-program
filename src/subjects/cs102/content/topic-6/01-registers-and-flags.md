@@ -1,3 +1,9 @@
+---
+id: cs102-t6-registers-and-flags
+title: "Registers and Flags"
+order: 1
+---
+
 # Assembly Basics: Registers and Flags
 
 Assembly language is the human-readable form of machine code. While high-level languages abstract away hardware details, assembly exposes them directly—you see exactly which registers are used, which operations are performed, and how data moves through the system. Understanding registers and flags is the foundation for reading and writing assembly code.

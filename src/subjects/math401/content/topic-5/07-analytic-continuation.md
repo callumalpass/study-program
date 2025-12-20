@@ -1,3 +1,9 @@
+---
+id: math401-topic-5-7
+title: "Identity Theorem"
+order: 7
+---
+
 # Analytic Continuation
 
 Analytic continuation is the process of extending the domain of an analytic function beyond its original region of definition. This powerful technique shows that analytic functions defined on small regions can often be uniquely extended to much larger domains, revealing deep connections between seemingly different function representations.

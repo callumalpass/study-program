@@ -1,3 +1,9 @@
+---
+id: math201-t6-powers
+title: "Powers of Matrices"
+order: 5
+---
+
 # Computing Matrix Powers Using Diagonalization
 
 ## The Power of Diagonalization

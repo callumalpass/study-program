@@ -1,3 +1,9 @@
+---
+id: cs103-t2-unprotected
+title: "The Problem with Unprotected Data"
+order: 2
+---
+
 ## The Problem with Unprotected Data
 
 Before learning how to protect data, let's understand why it matters. Unprotected data leads to bugs, invalid states, and maintenance nightmares.

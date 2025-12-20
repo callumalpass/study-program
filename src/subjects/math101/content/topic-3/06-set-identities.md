@@ -1,3 +1,9 @@
+---
+id: math101-t3-identities
+title: "Set Identities"
+order: 6
+---
+
 # Set Identities and Laws
 
 ## Why Set Identities Matter

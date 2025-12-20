@@ -1,3 +1,9 @@
+---
+id: cs102-t6-tracing-and-debugging
+title: "Tracing and Debugging"
+order: 5
+---
+
 # Tracing and Debugging Assembly-Like Code
 
 Assembly code can look intimidating—long sequences of cryptic mnemonics operating on registers and memory. But assembly is fundamentally systematic: each instruction does exactly one thing. With a consistent debugging workflow and good note-taking habits, you can trace through any assembly code methodically.

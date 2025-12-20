@@ -1,3 +1,9 @@
+---
+id: math201-t2-fundamentals
+title: "Matrix Fundamentals"
+order: 1
+---
+
 # Matrix Fundamentals
 
 Matrices are rectangular arrays of numbers that form the language of linear algebra. They appear everywhere in modern mathematics, science, and engineering—from solving systems of equations to representing data in machine learning, from computer graphics to quantum mechanics. Understanding matrices is essential for anyone working with linear transformations, data science, or computational mathematics.

@@ -1,3 +1,9 @@
+---
+id: cs205-t4-advanced
+title: "Advanced Normal Forms"
+order: 6
+---
+
 # Advanced Normal Forms: 4NF, 5NF, and Beyond
 
 While Third Normal Form (3NF) and Boyce-Codd Normal Form (BCNF) handle most practical normalization needs, certain data patterns require higher normal forms to eliminate all redundancy. This guide explores Fourth Normal Form (4NF), Fifth Normal Form (5NF), and related concepts for handling multi-valued dependencies and join dependencies.

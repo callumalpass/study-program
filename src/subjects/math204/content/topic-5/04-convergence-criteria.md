@@ -1,3 +1,9 @@
+---
+id: math204-t5-convergence
+title: "Convergence Criteria"
+order: 4
+---
+
 # Convergence Criteria for Improper Integrals
 
 Beyond comparison tests, several powerful criteria help determine convergence of improper integrals. These criteria include p-integrals as universal benchmarks, absolute convergence techniques, and specialized tests. Understanding these tools enables sophisticated analysis of convergence without explicit evaluation.

@@ -1,3 +1,9 @@
+---
+id: cs302-t7-http
+title: "HTTP Protocol"
+order: 2
+---
+
 # HTTP: HyperText Transfer Protocol
 
 ## HTTP Overview

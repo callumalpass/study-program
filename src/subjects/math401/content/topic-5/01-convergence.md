@@ -1,3 +1,9 @@
+---
+id: math401-topic-5-1
+title: "Power Series Basics"
+order: 1
+---
+
 # Convergence of Power Series
 
 Power series are infinite series of the form $\sum_{n=0}^{\infty} a_n(z - z_0)^n$, generalizing polynomials to infinitely many terms. These series are fundamental to complex analysis because every analytic function can be represented by a power series (at least locally). Understanding when and where power series converge is essential for working with analytic functions and their applications.

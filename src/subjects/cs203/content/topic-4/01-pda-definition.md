@@ -1,3 +1,9 @@
+---
+id: cs203-t4-definition
+title: "PDA Definition"
+order: 1
+---
+
 # PDA Definition
 
 A **Pushdown Automaton (PDA)** extends finite automata with a stack, enabling recognition of context-free languages. The stack provides unlimited memory with last-in-first-out access, giving PDAs the power to track nested structures like matching parentheses or balanced brackets.

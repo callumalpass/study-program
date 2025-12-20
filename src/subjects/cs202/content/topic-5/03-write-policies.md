@@ -1,3 +1,9 @@
+---
+id: cs202-t5-write
+title: "Write Policies"
+order: 3
+---
+
 # Cache Write Policies
 
 Handling writes in a cache is more complex than reads because we must maintain consistency between the cache and main memory. Different write policies offer trade-offs between performance, complexity, and consistency.

@@ -1,3 +1,9 @@
+---
+id: math202-t3-poisson
+title: "Poisson Distribution"
+order: 2
+---
+
 # Poisson Distribution
 
 ## Introduction

@@ -1,3 +1,9 @@
+---
+id: math102-t1-counting
+title: "Counting Principles"
+order: 1
+---
+
 # Fundamental Counting Principles
 
 The foundation of combinatorics rests on two fundamental principles that govern how we count arrangements and selections. These principles are deceptively simple yet form the basis for solving complex counting problems.

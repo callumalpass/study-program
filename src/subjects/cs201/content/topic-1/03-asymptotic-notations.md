@@ -1,3 +1,9 @@
+---
+id: cs201-t1-asymptotic
+title: "Asymptotic Notations"
+order: 3
+---
+
 # Asymptotic Notations
 
 Asymptotic notation is the formal language of algorithm analysis. While "O(n²)" has entered everyday programmer vocabulary, the full family of notations—Big-O, Big-Ω, Big-Θ, little-o, and little-ω—enables precise statements about algorithm behavior. Using the wrong notation leads to imprecise or incorrect claims; using the right notation communicates exactly what you mean.

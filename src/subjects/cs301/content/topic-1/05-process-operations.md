@@ -1,3 +1,9 @@
+---
+id: cs301-t1-operations
+title: "Process Operations"
+order: 5
+---
+
 # Process Operations
 
 Processes are created, terminated, and managed through specific operations. This subtopic covers the system calls and mechanisms for process lifecycle management.

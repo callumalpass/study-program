@@ -1,3 +1,9 @@
+---
+id: cs201-t7-flow
+title: "Network Flow"
+order: 6
+---
+
 # Network Flow Algorithms
 
 Network flow is one of the most powerful modeling tools in combinatorial optimization. The elegant abstraction—pushing flow from source to sink through a network of capacitated edges—captures an astonishing variety of problems: maximum bipartite matching, edge-disjoint paths, project selection, image segmentation, airline scheduling, and baseball elimination. Learning to recognize when a problem can be modeled as network flow unlocks polynomial-time solutions to problems that might otherwise seem intractable.

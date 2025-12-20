@@ -1,3 +1,9 @@
+---
+id: cs301-t2-pthreads
+title: "Pthreads Library"
+order: 3
+---
+
 # POSIX Threads (Pthreads)
 
 Pthreads is the standard threading API for Unix-like systems. This subtopic covers thread creation, management, and synchronization using the pthreads library.

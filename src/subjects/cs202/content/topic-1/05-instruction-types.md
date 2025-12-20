@@ -1,3 +1,9 @@
+---
+id: cs202-t1-instrtypes
+title: "Instruction Types"
+order: 5
+---
+
 # Instruction Types and Categories
 
 Instructions in any ISA can be categorized by their function. Understanding these categories helps in comprehending what operations a processor can perform and how programs are translated from high-level code to machine instructions.

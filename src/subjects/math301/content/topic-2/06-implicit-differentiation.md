@@ -1,3 +1,9 @@
+---
+id: math301-topic-2-6
+title: "Implicit Differentiation"
+order: 6
+---
+
 # Implicit Differentiation for Multivariable Functions
 
 ## Introduction

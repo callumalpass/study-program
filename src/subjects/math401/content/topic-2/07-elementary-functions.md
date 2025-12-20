@@ -1,3 +1,9 @@
+---
+id: math401-topic-2-7
+title: "Branches and Logarithms"
+order: 7
+---
+
 # Elementary Complex Functions
 
 The elementary functions—exponential, logarithmic, trigonometric, hyperbolic, and power functions—extend from real analysis to complex analysis. While maintaining many familiar properties, these functions exhibit fascinating new behaviors in the complex domain, including periodicity, multi-valuedness, and branch points. Understanding these functions is essential for applications throughout complex analysis.

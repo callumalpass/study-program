@@ -1,3 +1,9 @@
+---
+id: cs203-t7-time
+title: "Time Complexity"
+order: 1
+---
+
 # Time Complexity
 
 **Time complexity** measures the computational resources—specifically running time—required to solve problems. It provides a framework for classifying problems by how quickly they can be solved, independent of specific hardware or implementation details.

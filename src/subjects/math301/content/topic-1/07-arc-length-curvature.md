@@ -1,3 +1,9 @@
+---
+id: math301-topic-1-7
+title: "Arc Length and Curvature"
+order: 7
+---
+
 # Arc Length and Curvature
 
 ## Introduction

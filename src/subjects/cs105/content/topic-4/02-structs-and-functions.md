@@ -1,3 +1,9 @@
+---
+id: cs105-t4-functions
+title: "Structures and Functions"
+order: 2
+---
+
 # Structures and Functions
 
 Structures and functions work together to create modular, organized code. Understanding how to pass structures to functions and return them is essential for effective C programming.

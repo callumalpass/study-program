@@ -1,3 +1,9 @@
+---
+id: math202-t3-binomial
+title: "Bernoulli and Binomial Distributions"
+order: 1
+---
+
 # Bernoulli Trials and Binomial Distribution
 
 ## Introduction

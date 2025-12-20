@@ -1,3 +1,9 @@
+---
+id: math102-t4-adv
+title: "Advanced Graph Algorithms"
+order: 7
+---
+
 # Advanced Graph Algorithms
 
 This section covers sophisticated graph algorithms including strongly connected components, articulation points, and advanced traversal techniques.

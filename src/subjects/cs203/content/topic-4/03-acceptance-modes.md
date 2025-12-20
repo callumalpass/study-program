@@ -1,3 +1,9 @@
+---
+id: cs203-t4-acceptance
+title: "Acceptance Modes"
+order: 3
+---
+
 # Acceptance Modes
 
 PDAs have two natural acceptance criteria: **final state** and **empty stack**. These are equivalent in power but suited to different applications.

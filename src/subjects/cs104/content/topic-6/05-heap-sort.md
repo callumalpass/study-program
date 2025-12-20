@@ -1,3 +1,9 @@
+---
+id: cs104-t6-heap
+title: "Heap Sort"
+order: 5
+---
+
 # Heap Sort
 
 Heap sort combines the space efficiency of selection sort with the time efficiency of merge sort. It guarantees O(n log n) time while using only O(1) extra space, making it valuable when memory is constrained.

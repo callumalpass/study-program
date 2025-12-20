@@ -1,3 +1,9 @@
+---
+id: cs301-t1-context
+title: "Context Switching"
+order: 4
+---
+
 # Context Switching
 
 Context switching is the mechanism by which the CPU switches from executing one process to another. This subtopic examines the context switch mechanism, its overhead, and optimization strategies.

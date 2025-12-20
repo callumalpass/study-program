@@ -1,3 +1,9 @@
+---
+id: cs104-t7-advanced
+title: "Advanced Heap Techniques"
+order: 6
+---
+
 # Advanced Heap Techniques
 
 Beyond basic operations, heaps support sophisticated techniques for solving complex problems. This section covers advanced patterns and optimizations.

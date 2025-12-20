@@ -1,3 +1,9 @@
+---
+id: math204-t1-trig
+title: "Trigonometric Integration"
+order: 5
+---
+
 # Integration of Trigonometric Functions
 
 Trigonometric functions appear throughout physics, engineering, and applied mathematics—modeling oscillations, waves, and periodic phenomena. While we know basic integrals like $\int \sin(x) \, dx = -\cos(x) + C$, integrating products and powers of trigonometric functions requires sophisticated techniques. This section develops strategies for handling these integrals systematically.

@@ -1,3 +1,9 @@
+---
+id: math203-t7-complete
+title: "Complete Curve Sketching"
+order: 5
+---
+
 # Complete Curve Sketching
 
 This section demonstrates the full curve sketching process through detailed examples, bringing together all the techniques.

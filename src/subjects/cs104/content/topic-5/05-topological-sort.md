@@ -1,3 +1,9 @@
+---
+id: cs104-t5-topological
+title: "Topological Sort"
+order: 5
+---
+
 # Topological Sort
 
 Topological sort orders vertices of a Directed Acyclic Graph (DAG) so that for every edge u → v, u comes before v in the ordering. This is essential for dependency resolution, task scheduling, and build systems.

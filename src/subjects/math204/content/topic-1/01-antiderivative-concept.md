@@ -1,3 +1,9 @@
+---
+id: math204-t1-concept
+title: "Antiderivative Concept"
+order: 1
+---
+
 # The Antiderivative Concept
 
 The derivative tells us how a function changes. The antiderivative reverses this process: given information about how a function changes, can we recover the original function? This fundamental question leads to the concept of antiderivatives, which forms the foundation for integration and its countless applications in mathematics, physics, engineering, and beyond.

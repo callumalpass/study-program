@@ -1,3 +1,9 @@
+---
+id: cs201-t3-string
+title: "String Search Algorithms"
+order: 4
+---
+
 # String Searching Algorithms
 
 String searching—finding all occurrences of a pattern within a larger text—is one of the most frequently performed operations in computing. Every text editor, word processor, and IDE performs string searches. Search engines match query terms against documents. Bioinformatics tools find gene sequences within genomes containing billions of base pairs. The efficiency of these operations directly impacts user experience and computational feasibility.

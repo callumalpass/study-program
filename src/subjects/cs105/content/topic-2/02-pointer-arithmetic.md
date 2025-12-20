@@ -1,3 +1,9 @@
+---
+id: cs105-t2-arithmetic
+title: "Pointer Arithmetic"
+order: 2
+---
+
 # Pointer Arithmetic
 
 Pointer arithmetic is one of C's most powerful features, enabling efficient traversal of arrays and memory regions. Unlike regular arithmetic, pointer arithmetic takes into account the size of the pointed-to type.

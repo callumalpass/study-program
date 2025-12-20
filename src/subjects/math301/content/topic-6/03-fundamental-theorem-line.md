@@ -1,3 +1,9 @@
+---
+id: math301-topic-6-3
+title: "Fundamental Theorem for Line Integrals"
+order: 3
+---
+
 # Fundamental Theorem for Line Integrals
 
 ## Introduction

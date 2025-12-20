@@ -1,3 +1,9 @@
+---
+id: cs203-t3-closure
+title: "Closure Properties"
+order: 7
+---
+
 # Closure Properties of CFLs
 
 Context-free languages have important closure properties, though they're less robust than regular languages. Understanding these helps in language analysis.

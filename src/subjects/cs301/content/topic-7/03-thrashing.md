@@ -1,3 +1,9 @@
+---
+id: cs301-t7-thrashing
+title: "Thrashing and Working Sets"
+order: 3
+---
+
 # Thrashing and Working Sets
 
 Thrashing occurs when a system spends more time paging than executing. This subtopic covers thrashing causes, detection, and prevention through working set management.

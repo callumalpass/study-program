@@ -1,3 +1,9 @@
+---
+id: cs105-t1-loops
+title: "Loops"
+order: 5
+---
+
 # Loops
 
 Loops enable repetitive execution of code blocks. C provides three loop constructs, each suited to different situations.

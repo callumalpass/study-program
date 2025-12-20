@@ -1,3 +1,9 @@
+---
+id: cs101-t4-lists
+title: "Lists Basics"
+order: 1
+---
+
 ## Lists (Ordered, Mutable Collections)
 
 A **list** is one of Python's most versatile data structures. It stores multiple items in a specific order and allows you to modify both the items and the order. Lists are your go-to choice when you need to work with collections of data.

@@ -1,3 +1,9 @@
+---
+id: cs105-t7-bitmanip
+title: "Bit Manipulation Techniques"
+order: 2
+---
+
 # Bit Manipulation Techniques
 
 This section covers advanced bit manipulation techniques and algorithms commonly used in systems programming, competitive programming, and optimization.

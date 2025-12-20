@@ -1,3 +1,9 @@
+---
+id: cs202-t5-multi
+title: "Multi-Level Caches"
+order: 5
+---
+
 # Multi-Level Cache Hierarchy
 
 Modern processors use multiple levels of cache to balance speed, capacity, and cost. Each level trades off latency against size, creating a hierarchy that delivers both fast common-case access and large effective capacity.

@@ -1,3 +1,9 @@
+---
+id: cs301-t4-monitors
+title: "Monitors"
+order: 5
+---
+
 # Monitors
 
 Monitors are high-level synchronization constructs that encapsulate shared data and operations. This subtopic covers monitor concepts, condition variables, and implementation.

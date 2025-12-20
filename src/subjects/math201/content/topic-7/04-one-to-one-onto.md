@@ -1,3 +1,9 @@
+---
+id: math201-t7-one-to-one
+title: "One-to-One and Onto"
+order: 4
+---
+
 # One-to-One and Onto Transformations
 
 ## Introduction

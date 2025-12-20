@@ -1,3 +1,9 @@
+---
+id: cs102-t4-boolean-algebra-identities
+title: "Boolean Algebra Identities"
+order: 2
+---
+
 # Boolean Algebra Identities (Simplification)
 
 Boolean algebra provides a mathematical framework for manipulating logic expressions. Just as regular algebra has identities like a + 0 = a and a × 1 = a, Boolean algebra has its own set of rules. These identities allow you to simplify complex expressions, reduce gate count in circuits, and prove that two expressions are equivalent without building truth tables.

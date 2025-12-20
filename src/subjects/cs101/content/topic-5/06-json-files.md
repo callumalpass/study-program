@@ -1,3 +1,9 @@
+---
+id: cs101-t5-json
+title: "JSON Files"
+order: 6
+---
+
 ## JSON Files (Structured Data)
 
 **JSON** (JavaScript Object Notation) is a popular format for storing and exchanging structured data. Unlike CSV (which is best for flat tables), JSON excels at nested, hierarchical data - configurations, API responses, and complex records.

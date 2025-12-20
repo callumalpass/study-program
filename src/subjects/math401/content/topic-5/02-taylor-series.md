@@ -1,3 +1,9 @@
+---
+id: math401-topic-5-2
+title: "Radius of Convergence"
+order: 2
+---
+
 # Taylor Series Expansion
 
 Taylor series provide a way to represent analytic functions as power series. Every function that is analytic at a point can be expressed as a power series centered at that point, with coefficients determined by the function's derivatives. This representation is fundamental to complex analysis and has no direct analog in real analysis of the same power.

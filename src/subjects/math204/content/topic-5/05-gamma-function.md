@@ -1,3 +1,9 @@
+---
+id: math204-t5-gamma
+title: "Gamma Function"
+order: 5
+---
+
 # The Gamma Function
 
 The gamma function is one of the most important special functions in mathematics, extending the factorial function to all real (and complex) numbers. It appears throughout pure and applied mathematics, from probability theory and statistics to quantum mechanics and complex analysis.

@@ -1,3 +1,9 @@
+---
+id: math201-t7-change-basis
+title: "Change of Basis"
+order: 6
+---
+
 # Change of Basis and Similarity
 
 ## Introduction

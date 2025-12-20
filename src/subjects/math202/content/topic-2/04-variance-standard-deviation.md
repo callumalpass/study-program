@@ -1,3 +1,9 @@
+---
+id: math202-t2-variance
+title: "Variance and Standard Deviation"
+order: 4
+---
+
 # Variance and Standard Deviation
 
 While the expected value tells us the center of a distribution, it says nothing about spread or variability. Two random variables can have the same mean but vastly different behaviors. Variance and standard deviation quantify this spread, measuring how far values typically deviate from the mean.

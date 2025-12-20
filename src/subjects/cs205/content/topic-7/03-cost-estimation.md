@@ -1,3 +1,9 @@
+---
+id: cs205-t7-cost
+title: "Cost Estimation"
+order: 3
+---
+
 # Cost Estimation
 
 Query optimizers use cost models to choose between execution plans. Understanding cost estimation helps predict optimizer behavior and diagnose plan issues.

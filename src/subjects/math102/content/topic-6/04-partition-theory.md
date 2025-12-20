@@ -1,3 +1,9 @@
+---
+id: math102-t6-partition
+title: "Partition Theory"
+order: 4
+---
+
 # Partition Theory
 
 Partition theory studies ways to write integers as sums. This elegant branch of combinatorics connects to number theory, algebra, and physics.

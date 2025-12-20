@@ -1,3 +1,9 @@
+---
+id: math401-topic-5-3
+title: "Taylor Series Expansion"
+order: 3
+---
+
 # Laurent Series and Annular Regions
 
 Laurent series extend power series to functions with singularities by allowing negative powers. While Taylor series require analyticity at the center, Laurent series work in annular regions (rings) around singularities. This generalization is crucial for studying functions near poles and essential singularities.

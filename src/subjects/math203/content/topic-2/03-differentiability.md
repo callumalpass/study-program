@@ -1,3 +1,9 @@
+---
+id: math203-t2-differentiability
+title: "Differentiability"
+order: 3
+---
+
 # Differentiability
 
 A function is differentiable at a point if its derivative exists there. But not all functions have derivatives everywhere. Understanding when and why derivatives fail to exist is crucial for applying calculus correctly.

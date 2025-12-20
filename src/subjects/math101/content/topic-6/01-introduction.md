@@ -1,3 +1,9 @@
+---
+id: math101-t6-intro
+title: "Introduction to Predicate Logic"
+order: 1
+---
+
 # Introduction to Predicate Logic
 
 ## Beyond Propositional Logic

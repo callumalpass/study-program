@@ -1,3 +1,9 @@
+---
+id: math101-t7-techniques
+title: "Summation Techniques"
+order: 6
+---
+
 # Summation Techniques
 
 ## Telescoping Sums

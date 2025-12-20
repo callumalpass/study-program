@@ -1,3 +1,9 @@
+---
+id: cs201-t2-comparison
+title: "Comparison-Based Sorting"
+order: 1
+---
+
 # Comparison-Based Sorting Algorithms
 
 Sorting is one of the most fundamental operations in computer science. Databases sort records for efficient queries, search engines sort results by relevance, graphics systems sort objects by depth for rendering, and operating systems sort processes by priority for scheduling. The ubiquity of sorting has driven decades of algorithm development, producing a rich landscape of techniques with different trade-offs.

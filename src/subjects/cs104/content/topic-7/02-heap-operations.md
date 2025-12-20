@@ -1,3 +1,9 @@
+---
+id: cs104-t7-operations
+title: "Heap Operations"
+order: 2
+---
+
 # Heap Operations
 
 Heaps support several key operations that maintain the heap property while providing efficient access to the extreme element. Understanding these operations in detail is crucial for implementing and using heaps effectively.

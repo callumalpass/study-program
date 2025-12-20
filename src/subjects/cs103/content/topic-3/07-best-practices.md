@@ -1,3 +1,9 @@
+---
+id: cs103-t3-best-practices
+title: "Best Practices"
+order: 7
+---
+
 ## Best Practices and Common Mistakes
 
 Inheritance is powerful but easy to misuse. Understanding when to use it—and when not to—separates good OOP design from tangled hierarchies.

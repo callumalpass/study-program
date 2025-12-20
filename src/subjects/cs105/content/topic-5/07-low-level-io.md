@@ -1,3 +1,9 @@
+---
+id: cs105-t5-lowlevel
+title: "Low-Level I/O"
+order: 7
+---
+
 # Low-Level I/O
 
 Beyond stdio buffered I/O, POSIX provides low-level file operations using file descriptors. These functions offer more control and are used in systems programming.

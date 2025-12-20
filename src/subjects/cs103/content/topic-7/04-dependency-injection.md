@@ -1,3 +1,9 @@
+---
+id: cs103-t7-di
+title: "Dependency Injection"
+order: 4
+---
+
 ## Dependency Injection
 
 Dependency Injection (DI) is a technique where a class receives its dependencies from the outside rather than creating them internally. This simple change dramatically improves testability and flexibility.

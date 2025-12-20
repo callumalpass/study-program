@@ -1,3 +1,9 @@
+---
+id: math204-t6-seq-properties
+title: "Sequence Properties"
+order: 2
+---
+
 # Sequence Properties and Limit Theorems
 
 ## Bounded Sequences

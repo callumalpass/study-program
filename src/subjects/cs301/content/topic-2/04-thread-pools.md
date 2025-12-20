@@ -1,3 +1,9 @@
+---
+id: cs301-t2-pools
+title: "Thread Pools"
+order: 4
+---
+
 # Thread Pools
 
 Thread pools manage a collection of reusable worker threads to efficiently handle many tasks. This subtopic covers thread pool design, implementation, and benefits.

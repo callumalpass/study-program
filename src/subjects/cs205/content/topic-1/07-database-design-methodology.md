@@ -1,3 +1,9 @@
+---
+id: cs205-t1-methodology
+title: "Database Design Methodology"
+order: 7
+---
+
 # Database Design Methodology
 
 Database design is a systematic process of creating a logical and physical structure for storing and managing data. A well-designed database ensures data integrity, minimizes redundancy, supports efficient queries, and adapts to changing business requirements. This comprehensive guide covers the complete database design lifecycle from requirements gathering through implementation.

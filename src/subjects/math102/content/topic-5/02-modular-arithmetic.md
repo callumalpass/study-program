@@ -1,3 +1,9 @@
+---
+id: math102-t5-mod
+title: "Modular Arithmetic"
+order: 2
+---
+
 # Modular Arithmetic
 
 Modular arithmetic works with remainders rather than absolute values. It's fundamental to computer science, appearing in hashing, cryptography, and cyclic structures.

@@ -1,3 +1,9 @@
+---
+id: cs101-t4-dict-iter
+title: "Dict Methods and Iteration"
+order: 5
+---
+
 ## Iterating Over Dictionaries
 
 Dictionaries offer several ways to iterate over their contents. Understanding these patterns is essential for working with dictionary data effectively.

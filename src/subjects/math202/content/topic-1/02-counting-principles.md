@@ -1,3 +1,9 @@
+---
+id: math202-t1-counting
+title: "Counting Principles"
+order: 2
+---
+
 # Counting Principles
 
 ## Introduction

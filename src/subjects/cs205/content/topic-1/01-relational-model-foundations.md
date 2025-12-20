@@ -1,3 +1,9 @@
+---
+id: cs205-t1-foundations
+title: "Relational Model Foundations"
+order: 1
+---
+
 # Relational Model Foundations
 
 The relational model is the theoretical foundation upon which modern database systems are built. Understanding its mathematical underpinnings helps you design better databases and write more efficient queries.

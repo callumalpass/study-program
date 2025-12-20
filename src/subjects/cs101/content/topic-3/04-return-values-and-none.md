@@ -1,3 +1,9 @@
+---
+id: cs101-t3-returns
+title: "Return Values and None"
+order: 4
+---
+
 ## Return Values
 
 The `return` statement is how functions send values back to the code that called them. Understanding return values is essential for writing useful, reusable functions.

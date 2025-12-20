@@ -1,3 +1,9 @@
+---
+id: cs202-t3-perf
+title: "Performance Analysis"
+order: 7
+---
+
 # Performance Metrics and Analysis
 
 Understanding processor performance requires analyzing multiple factors: clock speed, cycles per instruction, instruction count, and their interactions. This section covers the fundamental metrics used to evaluate and compare processor designs.

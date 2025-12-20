@@ -1,3 +1,9 @@
+---
+id: math202-t6-applications
+title: "Regression Applications"
+order: 7
+---
+
 # Regression Applications
 
 ## Introduction

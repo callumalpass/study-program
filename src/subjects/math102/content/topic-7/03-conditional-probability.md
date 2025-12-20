@@ -1,3 +1,9 @@
+---
+id: math102-t7-cond
+title: "Conditional Probability"
+order: 3
+---
+
 # Conditional Probability
 
 Conditional probability quantifies how the probability of an event changes when we have additional information. This concept is fundamental to probabilistic reasoning and Bayesian inference.

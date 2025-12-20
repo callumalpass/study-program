@@ -1,3 +1,9 @@
+---
+id: math204-t4-disk-washer
+title: "Volumes: Disk and Washer Methods"
+order: 1
+---
+
 # Volumes of Solids of Revolution: Disk and Washer Methods
 
 When a region in the plane is rotated about a line (axis of revolution), it sweeps out a three-dimensional solid. Computing the volume of such solids is one of the most elegant applications of integration. The disk and washer methods provide systematic techniques for finding these volumes by slicing the solid perpendicular to the axis of revolution.

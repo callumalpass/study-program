@@ -1,3 +1,9 @@
+---
+id: cs101-t5-csv
+title: "CSV Files"
+order: 5
+---
+
 ## CSV Files (Comma-Separated Values)
 
 **CSV** is one of the most common formats for tabular data - data organized in rows and columns like a spreadsheet. Each line is a row, and values are separated by commas. Python's built-in `csv` module handles the complexities that make manual parsing error-prone.

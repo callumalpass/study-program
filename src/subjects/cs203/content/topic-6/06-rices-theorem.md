@@ -1,3 +1,9 @@
+---
+id: cs203-t6-rice
+title: "Rice"
+order: 6
+---
+
 # Rice's Theorem
 
 **Rice's Theorem** is a sweeping undecidability result: any non-trivial semantic property of Turing machines is undecidable. This single theorem eliminates entire categories of problems from the realm of decidability, showing that essentially any interesting question about what a program computes (as opposed to how it's structured) cannot be algorithmically decided.

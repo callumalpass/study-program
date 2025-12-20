@@ -1,3 +1,9 @@
+---
+id: cs202-t7-speculation
+title: "Speculative Execution"
+order: 4
+---
+
 # Speculative Execution
 
 **Speculative execution** is the technique of executing instructions before knowing whether they should execute. The processor "speculates" on the outcome of branches, memory operations, and other conditions, then recovers if the speculation was wrong. This is essential for maintaining high throughput in the face of control flow uncertainty.

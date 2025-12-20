@@ -1,3 +1,9 @@
+---
+id: cs203-t3-derivations
+title: "Derivations"
+order: 2
+---
+
 # Derivations
 
 Derivations show how strings are generated from a grammar's start symbol. Understanding derivations is essential for parsing and language analysis.

@@ -1,3 +1,9 @@
+---
+id: math204-t7-binomial
+title: "Binomial Series"
+order: 7
+---
+
 # The Binomial Series
 
 The binomial series generalizes the binomial theorem from integer exponents to arbitrary real (and even complex) exponents. It provides power series representations for functions like $\sqrt{1+x}$, $\frac{1}{1+x}$, and $(1+x)^{2/3}$, which are essential in approximation theory, numerical analysis, and applied mathematics.

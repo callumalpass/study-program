@@ -1,3 +1,9 @@
+---
+id: cs203-t7-reductions
+title: "Polynomial Reductions"
+order: 6
+---
+
 # Polynomial Reductions
 
 **Polynomial-time reductions** are the fundamental tool for proving NP-completeness and comparing the relative difficulty of computational problems. They transform instances of one problem into instances of another while preserving answers, allowing us to transfer algorithms and hardness results between problems.

@@ -1,3 +1,9 @@
+---
+id: cs204-t1-waterfall
+title: "Waterfall Model"
+order: 2
+---
+
 # The Waterfall Model
 
 The Waterfall model is the oldest and most straightforward SDLC model, featuring a linear sequential approach where each phase must be completed before the next begins. Despite criticisms, it remains relevant for certain project types.

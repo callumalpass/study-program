@@ -1,3 +1,9 @@
+---
+id: math102-t5-fermat
+title: "Fermat"
+order: 5
+---
+
 # Fermat's and Euler's Theorems
 
 These fundamental theorems of number theory describe the behavior of exponentiation in modular arithmetic. They have crucial applications in cryptography and computational number theory.

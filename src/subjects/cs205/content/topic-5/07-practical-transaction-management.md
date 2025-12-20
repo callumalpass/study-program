@@ -1,3 +1,9 @@
+---
+id: cs205-t5-practical
+title: "Practical Transaction Management"
+order: 7
+---
+
 # Practical Transaction Management
 
 Understanding transaction theory is essential, but applying it effectively in real applications requires practical knowledge of implementation patterns, common pitfalls, and performance optimization. This guide covers hands-on transaction management techniques for building robust database applications.

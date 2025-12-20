@@ -1,3 +1,9 @@
+---
+id: math204-t2-mvt
+title: "Mean Value Theorem for Integrals"
+order: 5
+---
+
 # Mean Value Theorem for Integrals
 
 The Mean Value Theorem for Integrals is a fundamental result that connects average values of functions to specific function values. It guarantees that for continuous functions, there exists at least one point where the function equals its average value over an interval. This theorem has important applications in physics, probability, and numerical analysis.

@@ -1,3 +1,9 @@
+---
+id: cs302-t2-physical
+title: "Physical Layer Overview"
+order: 1
+---
+
 # Physical Layer Overview
 
 The Physical layer is the foundation of all network communication—it handles the actual transmission of raw bits over a communication channel. Without the Physical layer, digital data would have no way to travel between devices. Understanding this layer helps you troubleshoot connectivity issues, select appropriate cabling, and optimize network performance.

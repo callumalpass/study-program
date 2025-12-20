@@ -1,3 +1,9 @@
+---
+id: cs101-t5-paths
+title: "Introduction and Paths"
+order: 1
+---
+
 ## File I/O: Persisting Data
 
 When your program ends, all variables disappear. Every number calculated, every list built, every piece of data processed - gone. **File Input/Output (I/O)** solves this problem by letting your programs read data from files and write data back to them.

@@ -1,3 +1,9 @@
+---
+id: math204-t5-discontinuous
+title: "Discontinuous Integrands (Type 2)"
+order: 2
+---
+
 # Type 2 Improper Integrals: Discontinuous Integrands
 
 Type 2 improper integrals occur when the integrand has a vertical asymptote (infinite discontinuity) within or at the endpoints of the interval of integration. These integrals are crucial in physics (gravitational and electric potentials), geometry (surface area calculations), and probability (certain distributions with unbounded densities).

@@ -1,3 +1,9 @@
+---
+id: cs301-t3-fcfs
+title: "FCFS and SJF"
+order: 2
+---
+
 # First-Come First-Served and Shortest Job First
 
 FCFS and SJF are fundamental scheduling algorithms. This subtopic covers their implementation, characteristics, and analysis.

@@ -1,3 +1,9 @@
+---
+id: cs104-t5-traversals
+title: "Graph Traversals"
+order: 3
+---
+
 # Graph Traversals: DFS and BFS
 
 Graph traversals are fundamental algorithms that visit all vertices in a graph. The two main traversal strategies - Depth-First Search (DFS) and Breadth-First Search (BFS) - form the basis for many graph algorithms.

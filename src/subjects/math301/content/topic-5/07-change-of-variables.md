@@ -1,3 +1,9 @@
+---
+id: math301-topic-5-7
+title: "Change of Variables"
+order: 7
+---
+
 # Change of Variables for Multiple Integrals
 
 ## Introduction

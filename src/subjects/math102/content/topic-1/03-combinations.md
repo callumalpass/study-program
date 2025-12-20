@@ -1,3 +1,9 @@
+---
+id: math102-t1-combs
+title: "Combinations"
+order: 3
+---
+
 # Combinations
 
 A combination is a selection of objects where order does not matter. While permutations count arrangements, combinations count groups or subsets.

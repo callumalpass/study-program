@@ -1,3 +1,9 @@
+---
+id: cs103-t6-abc-vs-protocol
+title: "ABCs vs Protocols"
+order: 7
+---
+
 ## When to Use ABCs vs Protocols
 
 Both ABCs and Protocols define interfaces, but they serve different purposes. Understanding when to use each helps you design better code.

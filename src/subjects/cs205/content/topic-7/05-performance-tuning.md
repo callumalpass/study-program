@@ -1,3 +1,9 @@
+---
+id: cs205-t7-tuning
+title: "Performance Tuning"
+order: 5
+---
+
 # Performance Tuning
 
 Database performance tuning combines query optimization, schema design, and system configuration. A systematic approach identifies and resolves bottlenecks effectively.

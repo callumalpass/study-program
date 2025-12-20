@@ -1,3 +1,9 @@
+---
+id: cs201-t4-fft
+title: "FFT and Polynomial Multiplication"
+order: 7
+---
+
 # Fast Fourier Transform and Polynomial Multiplication
 
 The Fast Fourier Transform (FFT) is arguably the most important algorithm of the twentieth century. Its applications span signal processing, image compression, cryptography, scientific computing, and telecommunications. At its core, FFT solves polynomial multiplication in O(n log n) time instead of O(n²)—an asymptotic improvement that enables real-time audio processing, efficient multiplication of large integers, and countless other applications.

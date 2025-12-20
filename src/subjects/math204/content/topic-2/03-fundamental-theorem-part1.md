@@ -1,3 +1,9 @@
+---
+id: math204-t2-ftc1
+title: "Fundamental Theorem of Calculus (Part 1)"
+order: 3
+---
+
 # Fundamental Theorem of Calculus, Part 1
 
 The Fundamental Theorem of Calculus (FTC) is one of the most important results in mathematics. It establishes the profound connection between differentiation and integration—two operations that initially seem unrelated. Part 1 of the FTC tells us that integration and differentiation are inverse operations, and it gives us a powerful tool for working with accumulation functions.

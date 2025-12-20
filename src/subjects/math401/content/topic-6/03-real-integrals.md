@@ -1,3 +1,9 @@
+---
+id: math401-topic-6-3
+title: "Residue Definition"
+order: 3
+---
+
 # Evaluation of Real Integrals
 
 One of the most spectacular applications of residue theory is evaluating real definite integrals that are difficult or impossible by standard real-variable methods. By extending to complex functions and applying the residue theorem, we can compute integrals over infinite intervals, improper integrals, and integrals involving trigonometric functions.

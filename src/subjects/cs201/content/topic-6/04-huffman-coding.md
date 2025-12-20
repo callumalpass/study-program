@@ -1,3 +1,9 @@
+---
+id: cs201-t6-huffman
+title: "Huffman Coding"
+order: 4
+---
+
 # Huffman Coding
 
 Huffman coding is perhaps the most elegant application of greedy algorithms, producing provably optimal prefix-free codes for data compression. The algorithm is simple: repeatedly merge the two lowest-frequency symbols until one tree remains. This greedy approach produces codes where frequent symbols get short codewords and rare symbols get longer ones—exactly what minimizes expected encoding length.

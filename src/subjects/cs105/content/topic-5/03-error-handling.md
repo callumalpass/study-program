@@ -1,3 +1,9 @@
+---
+id: cs105-t5-errors
+title: "File I/O Error Handling"
+order: 3
+---
+
 # File I/O Error Handling
 
 Robust programs must handle file operations that can fail. Network drives disconnect, permissions change, disks fill up. Proper error handling prevents crashes and data loss.

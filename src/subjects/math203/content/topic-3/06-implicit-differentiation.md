@@ -1,3 +1,9 @@
+---
+id: math203-t3-implicit
+title: "Implicit Differentiation"
+order: 6
+---
+
 # Implicit Differentiation
 
 Not every relationship between $x$ and $y$ can be written as $y = f(x)$. When the relationship is given implicitly (both variables mixed together in an equation), we need a technique called implicit differentiation.

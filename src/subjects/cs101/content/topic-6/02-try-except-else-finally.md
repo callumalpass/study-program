@@ -1,3 +1,9 @@
+---
+id: cs101-t6-try
+title: "try/except/else/finally"
+order: 2
+---
+
 ## `try` / `except`: Catching Exceptions
 
 The `try/except` statement is Python's primary mechanism for handling exceptions. It lets you attempt risky operations and specify what to do if they fail. Mastering this construct is essential for writing robust programs that handle errors gracefully instead of crashing.

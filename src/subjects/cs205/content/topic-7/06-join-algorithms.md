@@ -1,3 +1,9 @@
+---
+id: cs205-t7-joins
+title: "Join Algorithms and Optimization"
+order: 6
+---
+
 # Join Algorithms and Optimization
 
 Join operations are often the most expensive component of SQL queries. Understanding how databases implement joins enables you to write queries that leverage efficient algorithms and avoid performance pitfalls. This guide covers the major join algorithms, when each is used, and how to influence join strategy selection.

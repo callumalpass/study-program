@@ -1,3 +1,9 @@
+---
+id: cs201-t5-sequence
+title: "Sequence DP"
+order: 5
+---
+
 # Dynamic Programming on Sequences
 
 Sequence problems form a core category of DP applications, with elegant solutions for string matching, subsequences, and alignment tasks. These problems arise constantly in text processing, bioinformatics, natural language processing, and data comparison tools. The techniques developed for sequence DP provide a foundation for understanding how to compare, transform, and analyze ordered data.

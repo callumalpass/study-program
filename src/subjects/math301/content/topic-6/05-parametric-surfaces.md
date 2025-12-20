@@ -1,3 +1,9 @@
+---
+id: math301-topic-6-5
+title: "Parametric Surfaces"
+order: 5
+---
+
 # Parametric Surfaces
 
 ## Introduction

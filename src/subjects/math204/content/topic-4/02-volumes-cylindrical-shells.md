@@ -1,3 +1,9 @@
+---
+id: math204-t4-shells
+title: "Volumes: Cylindrical Shells"
+order: 2
+---
+
 # Volumes by Cylindrical Shells
 
 The **shell method** provides an alternative approach to finding volumes of solids of revolution. Instead of slicing perpendicular to the axis of revolution (as in the disk/washer method), we slice parallel to the axis, creating thin cylindrical shells. This method is often easier when the disk/washer method would require solving for the inverse function or splitting the region.

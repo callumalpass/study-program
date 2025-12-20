@@ -1,3 +1,9 @@
+---
+id: math203-t4-evt
+title: "The Extreme Value Theorem"
+order: 6
+---
+
 # The Extreme Value Theorem
 
 The Extreme Value Theorem guarantees that continuous functions on closed intervals achieve their maximum and minimum values. This theorem is fundamental for optimization and ensures that our search for extrema is not in vain.

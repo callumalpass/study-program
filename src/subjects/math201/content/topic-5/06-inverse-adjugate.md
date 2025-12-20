@@ -1,3 +1,9 @@
+---
+id: math201-t5-inverse-adjugate
+title: "Inverse via Adjugate"
+order: 6
+---
+
 # Computing Inverses Using the Adjugate Matrix
 
 The adjugate (or classical adjoint) matrix provides an explicit formula for computing matrix inverses using determinants and cofactors. While not the most efficient computational method, it offers deep theoretical insight and works well for small matrices and symbolic computation.

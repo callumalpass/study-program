@@ -1,3 +1,9 @@
+---
+id: cs302-t6-concepts
+title: "Socket Programming Concepts"
+order: 1
+---
+
 # Socket Programming Concepts
 
 ## What is a Socket?

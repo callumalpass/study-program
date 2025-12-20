@@ -1,3 +1,9 @@
+---
+id: math401-topic-4-7
+title: "Morera\"
+order: 7
+---
+
 # Applications of Cauchy's Theorem and Formula
 
 Cauchy's theorem and integral formula are not merely theoretical results—they have profound practical applications across mathematics, physics, and engineering. This section explores how these powerful tools are used to solve real problems, from evaluating difficult integrals to proving deep theorems and modeling physical phenomena.

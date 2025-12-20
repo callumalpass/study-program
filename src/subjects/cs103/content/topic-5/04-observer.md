@@ -1,3 +1,9 @@
+---
+id: cs103-t5-observer
+title: "Observer Pattern"
+order: 4
+---
+
 ## The Observer Pattern
 
 **Problem:** Multiple objects need to react when another object's state changes. You don't want tight coupling between the object being watched and those reacting.

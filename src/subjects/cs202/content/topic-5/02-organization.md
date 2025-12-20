@@ -1,3 +1,9 @@
+---
+id: cs202-t5-org
+title: "Cache Organization"
+order: 2
+---
+
 # Cache Organization
 
 The way a cache is organized—how it maps memory addresses to cache locations—significantly impacts hit rate and hardware complexity. This section covers the three main cache organizations: direct-mapped, fully associative, and set-associative.

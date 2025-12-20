@@ -1,3 +1,9 @@
+---
+id: cs105-t1-intro
+title: "Introduction to C Programming"
+order: 1
+---
+
 # Introduction to C Programming
 
 C is one of the most influential programming languages ever created. Developed in 1972 by Dennis Ritchie at Bell Labs, C has shaped the computing world in ways that few other technologies have. Understanding C gives you insight into how computers actually work and provides a foundation for learning virtually any other programming language.

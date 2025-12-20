@@ -1,3 +1,9 @@
+---
+id: cs202-t7-limits
+title: "Limits of ILP"
+order: 7
+---
+
 # Limits of ILP and Future Directions
 
 Despite decades of architectural advances, extracting more ILP from programs has become increasingly difficult. Understanding these limits helps explain why the industry has shifted toward other forms of parallelism and guides future processor design.

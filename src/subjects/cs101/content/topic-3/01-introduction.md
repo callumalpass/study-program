@@ -1,3 +1,9 @@
+---
+id: cs101-t3-intro
+title: "Why Functions Matter"
+order: 1
+---
+
 ## Functions: Why They Matter
 
 Functions are one of the most fundamental concepts in programming. At their core, a function is a named block of code that performs a specific task and can be reused throughout your program. Instead of writing the same code over and over, you write it once as a function and call it whenever you need that functionality.

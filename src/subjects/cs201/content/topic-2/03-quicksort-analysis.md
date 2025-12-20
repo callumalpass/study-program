@@ -1,3 +1,9 @@
+---
+id: cs201-t2-quicksort
+title: "QuickSort Analysis"
+order: 3
+---
+
 # QuickSort Deep Dive
 
 QuickSort is arguably the most influential sorting algorithm ever invented. Despite its O(n²) worst case, it dominates practical sorting applications because its average-case behavior combines excellent theoretical performance with outstanding cache efficiency. The algorithm's elegance lies in its simplicity: choose a pivot element, partition the array so smaller elements precede larger ones, then recursively sort the partitions.

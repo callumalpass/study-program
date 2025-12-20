@@ -1,3 +1,9 @@
+---
+id: cs103-t5-decorator
+title: "Decorator Pattern"
+order: 6
+---
+
 ## The Decorator Pattern
 
 **Problem:** You want to add behavior to objects dynamically, without modifying their class or using inheritance for every combination of features.

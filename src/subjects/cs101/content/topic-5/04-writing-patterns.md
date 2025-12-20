@@ -1,3 +1,9 @@
+---
+id: cs101-t5-write
+title: "Writing Patterns"
+order: 4
+---
+
 ## Writing Files
 
 Writing files is how your program saves results, creates reports, logs activity, and exports data. The principles are similar to reading, but you must be careful about **which mode you use** and **how you format your output**.

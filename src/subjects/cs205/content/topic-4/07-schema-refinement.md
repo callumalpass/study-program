@@ -1,3 +1,9 @@
+---
+id: cs205-t4-refinement
+title: "Schema Refinement"
+order: 7
+---
+
 # Schema Refinement and Database Design Quality
 
 Schema refinement is the iterative process of improving database designs to enhance data integrity, reduce redundancy, and improve maintainability. While normalization provides systematic decomposition rules, schema refinement encompasses broader design quality considerations including naming conventions, constraint specification, and practical trade-offs.

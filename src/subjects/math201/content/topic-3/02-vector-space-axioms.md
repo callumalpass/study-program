@@ -1,3 +1,9 @@
+---
+id: math201-t3-axioms
+title: "Vector Space Axioms"
+order: 2
+---
+
 # Vector Space Axioms
 
 The concept of a vector space abstracts the essential properties of $\mathbb{R}^n$ to create a general framework that applies to many different mathematical objects. By identifying the fundamental rules that vectors obey, we can recognize "vector-like" structures in unexpected places: polynomials, matrices, functions, and even sequences. This abstraction is one of the most powerful ideas in mathematics.

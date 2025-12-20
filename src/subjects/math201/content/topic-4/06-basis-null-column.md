@@ -1,3 +1,9 @@
+---
+id: math201-t4-basis-null-column
+title: "Basis for Null and Column Space"
+order: 6
+---
+
 # Basis for Null Space, Column Space, and Row Space
 
 ## Introduction

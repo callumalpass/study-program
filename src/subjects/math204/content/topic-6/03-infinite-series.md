@@ -1,3 +1,9 @@
+---
+id: math204-t6-infinite-series
+title: "Infinite Series"
+order: 3
+---
+
 # Infinite Series
 
 ## Introduction to Series

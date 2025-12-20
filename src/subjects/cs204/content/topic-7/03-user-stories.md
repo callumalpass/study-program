@@ -1,3 +1,9 @@
+---
+id: cs204-t7-stories
+title: "User Stories"
+order: 3
+---
+
 # User Stories
 
 User stories are a fundamental practice in Agile software development for capturing requirements from an end-user perspective. Rather than lengthy specification documents, user stories provide lightweight, conversational descriptions of functionality that promote collaboration and flexibility.

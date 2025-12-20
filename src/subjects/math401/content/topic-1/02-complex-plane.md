@@ -1,3 +1,9 @@
+---
+id: math401-topic-1-2
+title: "Arithmetic Operations"
+order: 2
+---
+
 # The Complex Plane
 
 The complex plane provides a geometric interpretation of complex numbers that reveals deep connections between algebra and geometry. This visualization transforms abstract algebraic operations into intuitive geometric transformations.

@@ -1,3 +1,9 @@
+---
+id: cs301-t6-tables
+title: "Page Table Structures"
+order: 4
+---
+
 # Page Table Structures
 
 Page tables can become very large. This subtopic covers hierarchical page tables, hashed page tables, and inverted page tables.

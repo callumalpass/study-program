@@ -1,3 +1,9 @@
+---
+id: cs201-t7-shortest
+title: "Shortest Path Algorithms"
+order: 3
+---
+
 # Shortest Path Algorithms
 
 Shortest path computation is perhaps the most practically important graph algorithm. Every time you use a navigation app, your device computes shortest paths through road networks. Every packet on the internet follows paths determined by routing algorithms. Every game AI that moves toward a goal uses pathfinding. Understanding shortest path algorithms—their capabilities, limitations, and appropriate use cases—is essential for any software engineer.

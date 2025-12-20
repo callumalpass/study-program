@@ -1,3 +1,9 @@
+---
+id: math203-t3-chain
+title: "The Chain Rule"
+order: 3
+---
+
 # The Chain Rule
 
 The chain rule handles composite functions—functions inside other functions. It's perhaps the most important differentiation technique because nested functions appear everywhere in applications.

@@ -1,3 +1,9 @@
+---
+id: cs204-t6-collab
+title: "Collaboration"
+order: 4
+---
+
 # Collaboration with Git
 
 Effective collaboration is essential in modern software development. Git provides powerful tools for working together, but success requires understanding pull requests, code reviews, conflict resolution, and team communication practices.

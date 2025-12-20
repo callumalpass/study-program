@@ -1,3 +1,9 @@
+---
+id: cs203-t3-parsetrees
+title: "Parse Trees"
+order: 3
+---
+
 # Parse Trees
 
 A **parse tree** (or derivation tree) is a graphical representation of how a string is derived from a grammar. Parse trees are fundamental to syntax analysis in compilers.

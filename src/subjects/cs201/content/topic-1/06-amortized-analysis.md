@@ -1,3 +1,9 @@
+---
+id: cs201-t1-amortized
+title: "Amortized Analysis"
+order: 6
+---
+
 # Amortized Analysis
 
 Some operations are occasionally expensive but rarely so. Python's list append usually takes O(1) time, but occasionally triggers an O(n) resize when the underlying array fills. Analyzing each operation independently—claiming append is O(n)—paints a misleading picture. Over many operations, the occasional expensive ones are rare enough that the average cost remains O(1). Amortized analysis formalizes this intuition.

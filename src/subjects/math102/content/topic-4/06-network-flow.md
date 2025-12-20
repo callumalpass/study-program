@@ -1,3 +1,9 @@
+---
+id: math102-t4-flow
+title: "Network Flow"
+order: 6
+---
+
 # Network Flow
 
 Network flow problems model transportation, communication, and resource allocation. The max-flow min-cut theorem connects flows to cuts, enabling efficient algorithms.

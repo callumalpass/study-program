@@ -1,3 +1,9 @@
+---
+id: cs302-t1-types
+title: "Types of Networks"
+order: 4
+---
+
 # Types of Networks
 
 Networks are classified by their geographic scope, ownership, and topology. Understanding these classifications helps you choose appropriate technologies and design effective network solutions for different scenarios.

@@ -1,3 +1,9 @@
+---
+id: cs204-t2-validation
+title: "Requirements Validation"
+order: 4
+---
+
 # Requirements Validation and Verification
 
 Requirements validation and verification are critical quality assurance activities that ensure requirements are correct, complete, and suitable for guiding development. Despite their similar-sounding names, these are distinct processes: verification asks "Are we building the requirements right?" while validation asks "Are we building the right requirements?" Both are essential for project success.

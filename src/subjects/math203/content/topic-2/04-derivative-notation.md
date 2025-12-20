@@ -1,3 +1,9 @@
+---
+id: math203-t2-notation
+title: "Derivative Notation"
+order: 4
+---
+
 # Derivative Notation
 
 Different notation systems for derivatives have evolved over centuries, each with advantages in different contexts. Understanding all notations is essential for reading mathematics and physics literature.

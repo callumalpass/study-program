@@ -1,3 +1,9 @@
+---
+id: math102-t7-expect
+title: "Expectation and Variance"
+order: 5
+---
+
 # Expectation and Variance
 
 Expectation and variance are the fundamental summary statistics for random variables. They quantify the center and spread of probability distributions.

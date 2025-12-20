@@ -1,3 +1,9 @@
+---
+id: math202-t3-geometric
+title: "Geometric and Negative Binomial"
+order: 3
+---
+
 # Geometric and Negative Binomial Distributions
 
 ## Introduction

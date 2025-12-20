@@ -1,3 +1,9 @@
+---
+id: cs104-t1-applications
+title: "Practical Applications"
+order: 7
+---
+
 # Practical Applications and Classic Problems
 
 Arrays and linked lists form the foundation of countless algorithms and data structures. This section explores practical applications and classic problems that demonstrate their real-world utility.

@@ -1,3 +1,9 @@
+---
+id: cs203-t1-closure
+title: "Closure Properties"
+order: 6
+---
+
 # Closure Properties of Regular Languages
 
 **Closure properties** describe operations under which a class of languages is closed. Regular languages are remarkably robust—they are closed under many natural operations.

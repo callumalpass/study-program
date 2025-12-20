@@ -1,3 +1,9 @@
+---
+id: cs302-t2-ethernet
+title: "Ethernet Technology"
+order: 4
+---
+
 # Ethernet Technology
 
 **Ethernet** is the dominant Local Area Network (LAN) technology, carrying the vast majority of wired network traffic worldwide. From its origins at Xerox PARC in the 1970s to today's 400 Gbps data center networks, Ethernet has continuously evolved while maintaining backward compatibility.

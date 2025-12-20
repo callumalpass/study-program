@@ -1,3 +1,9 @@
+---
+id: cs301-t7-mmap
+title: "Memory-Mapped Files"
+order: 4
+---
+
 # Memory-Mapped Files
 
 Memory-mapped files allow file I/O through memory operations. This subtopic covers mmap concepts, implementation, and use cases.

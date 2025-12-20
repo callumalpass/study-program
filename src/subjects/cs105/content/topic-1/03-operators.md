@@ -1,3 +1,9 @@
+---
+id: cs105-t1-operators
+title: "Operators and Expressions"
+order: 3
+---
+
 # Operators and Expressions
 
 Operators are symbols that tell the compiler to perform specific mathematical, logical, or other operations. C provides a rich set of operators that give you fine-grained control over computations.

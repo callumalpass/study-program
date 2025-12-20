@@ -1,3 +1,9 @@
+---
+id: math102-t6-probs
+title: "Advanced Counting Problems"
+order: 7
+---
+
 # Advanced Counting Problems
 
 This section presents challenging counting problems that synthesize multiple techniques. Working through these builds problem-solving mastery.

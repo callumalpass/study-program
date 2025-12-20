@@ -1,3 +1,9 @@
+---
+id: math102-t7-probs
+title: "Probability Problems"
+order: 7
+---
+
 # Probability Problems
 
 This section presents classic probability problems and techniques. These problems develop intuition and problem-solving skills essential for probabilistic reasoning.

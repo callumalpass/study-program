@@ -1,3 +1,9 @@
+---
+id: cs205-t1-mapping
+title: "ER to Relational Mapping"
+order: 4
+---
+
 # ER to Relational Mapping
 
 Converting an ER diagram to a relational schema requires systematic rules. Each ER construct maps to specific relational structures while preserving semantics and constraints.

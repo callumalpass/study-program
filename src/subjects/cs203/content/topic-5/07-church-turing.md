@@ -1,3 +1,9 @@
+---
+id: cs203-t5-churchturing
+title: "Church-Turing Thesis"
+order: 7
+---
+
 # Church-Turing Thesis
 
 The **Church-Turing Thesis** asserts that Turing machines capture the intuitive notion of "algorithm" or "effective computation." It connects the mathematical model to the real world.

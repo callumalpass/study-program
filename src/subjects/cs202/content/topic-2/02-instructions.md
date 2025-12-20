@@ -1,3 +1,9 @@
+---
+id: cs202-t2-instr
+title: "Basic Instructions"
+order: 2
+---
+
 # Assembly Instructions and Operations
 
 The core of assembly programming is understanding the instructions available. This section covers the fundamental x86-64 instructions grouped by category, with examples showing their practical use.

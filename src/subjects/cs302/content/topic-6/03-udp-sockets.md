@@ -1,3 +1,9 @@
+---
+id: cs302-t6-udp
+title: "UDP Socket Programming"
+order: 3
+---
+
 # UDP Socket Programming
 
 ## UDP vs TCP Sockets

@@ -1,3 +1,9 @@
+---
+id: math102-t1-proofs
+title: "Combinatorial Proofs"
+order: 7
+---
+
 # Combinatorial Proofs
 
 Combinatorial proofs demonstrate mathematical identities by counting the same set in two different ways. This elegant technique provides intuitive understanding and often simpler arguments than algebraic manipulation.

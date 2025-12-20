@@ -1,3 +1,9 @@
+---
+id: math401-topic-1-3
+title: "Polar Form and Modulus-Argument"
+order: 3
+---
+
 # Polar Form of Complex Numbers
 
 The polar representation of complex numbers leverages the geometry of the complex plane, expressing numbers in terms of their distance from the origin and angle. This form makes multiplication, division, and powers remarkably simple and reveals deep connections between algebra and trigonometry.

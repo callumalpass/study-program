@@ -1,3 +1,9 @@
+---
+id: math204-t6-sequences-def
+title: "Sequences Definition"
+order: 1
+---
+
 # Sequences: Definition and Convergence
 
 ## Introduction to Sequences

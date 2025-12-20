@@ -1,3 +1,9 @@
+---
+id: cs205-t5-recovery
+title: "Transaction Recovery"
+order: 6
+---
+
 # Transaction Recovery and Logging
 
 Database recovery mechanisms ensure durability and consistency even when systems fail. Understanding how databases use logging and checkpointing to recover from crashes is essential for database administrators and developers who need to ensure data reliability. This guide covers the principles and techniques that make transaction recovery possible.

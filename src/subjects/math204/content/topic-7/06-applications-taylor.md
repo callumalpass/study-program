@@ -1,3 +1,9 @@
+---
+id: math204-t7-applications
+title: "Applications of Taylor Series"
+order: 6
+---
+
 # Applications of Taylor Series
 
 Taylor series are not merely theoretical constructs—they are powerful computational and analytical tools used throughout mathematics, science, and engineering. This section explores practical applications including function approximation, numerical computation, limit evaluation, differential equations, and physical modeling.

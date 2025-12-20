@@ -1,3 +1,9 @@
+---
+id: cs202-t5-opt
+title: "Cache Optimization"
+order: 6
+---
+
 # Cache Optimization Techniques
 
 Improving cache performance involves both hardware techniques (built into the processor) and software techniques (compiler and programmer optimizations). This section covers the most important strategies for reducing miss rate, miss penalty, and hit time.

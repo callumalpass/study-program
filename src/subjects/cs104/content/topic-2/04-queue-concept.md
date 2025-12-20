@@ -1,3 +1,9 @@
+---
+id: cs104-t2-queue-concept
+title: "Queue Concept"
+order: 4
+---
+
 # The Queue Concept: FIFO Principle
 
 A queue is an abstract data type that follows the First-In-First-Out (FIFO) principle. The first element added is the first one to be removed, like a line at a ticket counter where the first person in line is served first.

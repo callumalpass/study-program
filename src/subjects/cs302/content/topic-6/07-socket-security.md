@@ -1,3 +1,9 @@
+---
+id: cs302-t6-security
+title: "Socket Security"
+order: 7
+---
+
 # Socket Security
 
 ## Security Threats

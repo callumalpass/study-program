@@ -1,3 +1,9 @@
+---
+id: math203-t6-strategies
+title: "Problem-Solving Strategies"
+order: 6
+---
+
 # Problem-Solving Strategies for Related Rates
 
 This section consolidates techniques and strategies for tackling related rates problems systematically.

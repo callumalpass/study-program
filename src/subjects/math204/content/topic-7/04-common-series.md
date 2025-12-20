@@ -1,3 +1,9 @@
+---
+id: math204-t7-common
+title: "Common Series"
+order: 4
+---
+
 # Common Maclaurin Series
 
 Memorizing the Maclaurin series for common functions is essential for working efficiently with Taylor series. These series serve as building blocks that you'll use repeatedly to construct more complex series through substitution, differentiation, integration, and other operations. This section presents the most important series along with their derivations and applications.

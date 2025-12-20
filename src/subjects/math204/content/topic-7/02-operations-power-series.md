@@ -1,3 +1,9 @@
+---
+id: math204-t7-operations
+title: "Operations on Power Series"
+order: 2
+---
+
 # Operations on Power Series
 
 One of the most powerful features of power series is that they behave like polynomials: you can add, subtract, multiply, differentiate, and integrate them term by term. These operations allow us to build new series from known ones, making it possible to find power series representations for complex functions without computing derivatives from scratch.

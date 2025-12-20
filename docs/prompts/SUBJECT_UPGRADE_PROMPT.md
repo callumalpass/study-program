@@ -48,7 +48,16 @@ Upgrade in this order:
 
 ### 3.1 Topics with Subtopics
 
-Create/update subtopic markdown files and wire them into `topics.ts`.
+Create/update subtopic markdown files with frontmatter. The shared loader automatically discovers content via glob imports.
+
+**Each markdown file must have frontmatter:**
+```yaml
+---
+id: cs101-t1-intro
+title: "Introduction to Variables"
+order: 1
+---
+```
 
 ### 3.2 Exercises
 
@@ -91,20 +100,28 @@ All subject content is colocated in a single directory:
 
 ```
 src/subjects/[subject]/
-├── content/           # Markdown lesson content
+├── content/           # Markdown lesson content (with frontmatter)
 │   ├── topic-1/       # Subtopics for topic 1
-│   │   ├── 01-introduction.md
+│   │   ├── 01-introduction.md    # Each file has frontmatter
 │   │   ├── 02-concept-name.md
 │   │   └── ...07-*.md
 │   ├── topic-2/
 │   │   └── ...
 │   └── topic-N.md     # Legacy fallback content (optional)
 ├── index.ts           # Re-exports all subject content
-├── topics.ts          # Topic definitions with subtopics
+├── topics.ts          # Topic definitions (uses glob imports)
 ├── quizzes.json       # All quizzes for the subject
 ├── exams.json         # Midterm and Final exams
 ├── exercises.json     # All exercises for the subject
 └── projects.json      # Projects (CS subjects only)
+```
+
+### Shared Loader
+
+All subjects use the shared loader at `src/subjects/loader.ts`:
+
+```typescript
+import { buildTopicsFromGlob } from '../loader';
 ```
 
 ---
@@ -328,38 +345,39 @@ export const [subject]Projects = projectsData as Project[];
 export { [subject]Topics } from './topics';
 ```
 
-### Topics with Subtopics
+### Topics with Glob Imports
 
 ```typescript
 // src/subjects/[subject]/topics.ts
-import { Topic, Subtopic } from '../../core/types';
+import type { Topic } from '../../core/types';
+import { buildTopicsFromGlob } from '../loader';
 
-// Import legacy content (fallback)
-import topic1Content from './content/topic-1.md?raw';
+// Glob import all markdown content automatically
+const content = import.meta.glob('./content/**/*.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+}) as Record<string, string>;
 
-// Import subtopic content
-import t1Introduction from './content/topic-1/01-introduction.md?raw';
-import t1Concept from './content/topic-1/02-concept-name.md?raw';
-// ... more imports
-
-const topic1Subtopics: Subtopic[] = [
-  { id: '[subject]-t1-intro', slug: 'introduction', title: 'Introduction', content: t1Introduction, order: 1 },
-  { id: '[subject]-t1-concept', slug: 'concept-name', title: 'Concept Name', content: t1Concept, order: 2 },
-  // ... 7 subtopics total
-];
-
-export const [subject]Topics: Topic[] = [
+// Topic configuration (only titles and IDs needed - subtopics auto-discovered)
+const topicConfigs = [
   {
-    id: '[subject]-topic-1',
-    title: 'Topic Title',
-    content: topic1Content,
-    subtopics: topic1Subtopics,
-    quizIds: ['[subject]-quiz-1a', '[subject]-quiz-1b', '[subject]-quiz-1c'],
+    number: 1,
+    title: "Topic Title",
+    quizIds: ['[subject]-quiz-1', '[subject]-quiz-1b', '[subject]-quiz-1c'],
     exerciseIds: ['[subject]-t1-ex01', '[subject]-t1-ex02', /* ... 16 total */],
   },
   // ... 7 topics total
 ];
+
+export const [subject]Topics: Topic[] = buildTopicsFromGlob('[subject]', content, topicConfigs);
 ```
+
+The `buildTopicsFromGlob` function:
+1. Finds all markdown files matching `./content/topic-N/*.md`
+2. Parses frontmatter from each file (id, title, order)
+3. Builds Subtopic objects automatically
+4. Returns the complete Topic[] array
 
 ### JSON Data Files
 
@@ -489,6 +507,7 @@ src/subjects/[subject]/content/topic-N/
 - Prefix with 2-digit number for ordering
 - Use lowercase, hyphenated slugs
 - Each file: 800-1200 words
+- **Each file must have frontmatter** (id, title, order)
 
 ---
 
@@ -497,12 +516,13 @@ src/subjects/[subject]/content/topic-N/
 Before marking upgrade complete:
 
 - [ ] 7 topics with 7 subtopics each (49 total, 800+ words each)
+- [ ] All subtopic markdown files have frontmatter (id, title, order)
 - [ ] 112 exercises in exercises.json (16 per topic, difficulty 1-5 distribution)
 - [ ] 21 quizzes in quizzes.json (3 per topic, 5 questions each)
 - [ ] 2 exams in exams.json (Midterm: 25-30q, Final: 40-45q)
 - [ ] 2-3 projects in projects.json with rubrics (CS only)
 - [ ] All IDs follow naming conventions
-- [ ] topics.ts imports from ./content/ correctly
+- [ ] topics.ts uses glob imports and buildTopicsFromGlob
 - [ ] index.ts imports JSON files and exports with types
 - [ ] Build passes without errors (`npm run build`)
 - [ ] Subject review updated (Phase 4)

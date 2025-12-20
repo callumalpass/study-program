@@ -1,3 +1,9 @@
+---
+id: cs201-t3-interpolation
+title: "Interpolation and Exponential Search"
+order: 5
+---
+
 # Interpolation and Exponential Search
 
 Binary search achieves O(log n) time by always checking the middle element, making no assumptions about data distribution. This conservative approach guarantees logarithmic performance regardless of the data. But what if we know more about how values are distributed? What if we don't know the array size? Specialized search algorithms address these scenarios, sometimes achieving better-than-logarithmic performance.

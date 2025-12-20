@@ -1,3 +1,9 @@
+---
+id: math203-t4-concavity
+title: "Concavity and Inflection Points"
+order: 3
+---
+
 # Concavity and Inflection Points
 
 The second derivative reveals how a function curves—whether it bends upward or downward. This information helps us understand the shape of graphs and locate inflection points where the curvature changes.

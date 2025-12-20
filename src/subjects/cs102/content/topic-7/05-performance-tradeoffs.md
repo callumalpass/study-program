@@ -1,3 +1,9 @@
+---
+id: cs102-t7-performance-tradeoffs
+title: "Performance Tradeoffs"
+order: 5
+---
+
 # Performance Tradeoffs Across the Memory Hierarchy
 
 Understanding computer performance requires looking beyond instruction counts and clock speeds. The memory hierarchy—from registers down to disk—dominates real-world performance. Programs with identical big-O complexity can differ by orders of magnitude in actual runtime depending on how well they use the hierarchy. This topic synthesizes what we've learned about caches, virtual memory, and I/O into practical performance principles.

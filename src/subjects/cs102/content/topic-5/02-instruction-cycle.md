@@ -1,3 +1,9 @@
+---
+id: cs102-t5-instruction-cycle
+title: "The Instruction Cycle"
+order: 2
+---
+
 # The Instruction Cycle (Fetch → Decode → Execute)
 
 Every instruction a CPU executes follows a fundamental pattern: fetch the instruction from memory, decode it to understand what to do, execute the operation, and store the results. This **instruction cycle** (also called the fetch-decode-execute cycle) is the heartbeat of any processor. Understanding it reveals how software becomes hardware behavior.

@@ -1,3 +1,9 @@
+---
+id: cs103-t6-protocols
+title: "Protocols"
+order: 5
+---
+
 ## Protocols: Structural Typing
 
 Protocols (introduced in Python 3.8) enable typed duck typing. They define what methods an object must have without requiring inheritance—if an object has the right methods, it satisfies the protocol.

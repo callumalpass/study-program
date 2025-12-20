@@ -1,3 +1,9 @@
+---
+id: cs102-t7-locality-and-caches
+title: "Locality and Caches"
+order: 1
+---
+
 # Locality and Caches
 
 The speed gap between CPUs and main memory is one of the defining challenges in computer architecture. While processor speeds have increased dramatically over the decades, memory latency has improved much more slowly. This "memory wall" means that a modern CPU could be waiting hundreds of cycles for data to arrive from RAM—time when the processor sits idle. Caches exist to bridge this gap by keeping frequently used data close to the CPU where it can be accessed quickly.

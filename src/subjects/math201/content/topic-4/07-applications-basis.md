@@ -1,3 +1,9 @@
+---
+id: math201-t4-applications
+title: "Applications of Basis"
+order: 7
+---
+
 # Applications of Basis
 
 ## Introduction

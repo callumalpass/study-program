@@ -1,3 +1,9 @@
+---
+id: cs204-t7-planning
+title: "Sprint Planning"
+order: 4
+---
+
 # Code Reviews
 
 Code reviews are a systematic examination of source code by one or more developers other than the author. This practice has become a cornerstone of modern software development, serving as both a quality assurance mechanism and a knowledge-sharing tool. When done well, code reviews improve code quality, reduce defects, and strengthen team cohesion.

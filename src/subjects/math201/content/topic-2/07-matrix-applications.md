@@ -1,3 +1,9 @@
+---
+id: math201-t2-applications
+title: "Matrix Applications"
+order: 7
+---
+
 # Matrix Applications
 
 Matrices are not just abstract mathematical objects—they are powerful computational tools that model real-world phenomena across science, engineering, economics, and computer science. This section explores three important applications: computer graphics transformations, Markov chains, and economic input-output models. These applications demonstrate how matrix operations solve practical problems.

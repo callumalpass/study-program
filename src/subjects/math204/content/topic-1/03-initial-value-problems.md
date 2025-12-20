@@ -1,3 +1,9 @@
+---
+id: math204-t1-initial-value
+title: "Initial Value Problems"
+order: 3
+---
+
 # Initial Value Problems
 
 Finding the general antiderivative gives us a family of functions. But in real applications—physics, engineering, economics—we often need one specific function. Initial value problems (IVPs) use given information to pin down the exact solution from this infinite family. This bridges the gap between abstract mathematics and practical problem-solving.

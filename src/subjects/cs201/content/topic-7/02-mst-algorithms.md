@@ -1,3 +1,9 @@
+---
+id: cs201-t7-mst
+title: "MST Algorithms"
+order: 2
+---
+
 # Minimum Spanning Tree Algorithms
 
 The minimum spanning tree problem asks for the cheapest way to connect all vertices in a weighted graph. This elegantly simple problem has profound practical applications: designing networks (communication, transportation, electrical), clustering data points by similarity, and serving as a subroutine in approximation algorithms for harder problems like the traveling salesman problem.

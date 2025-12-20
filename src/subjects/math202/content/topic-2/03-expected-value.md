@@ -1,3 +1,9 @@
+---
+id: math202-t2-expected-value
+title: "Expected Value"
+order: 3
+---
+
 # Expected Value
 
 The expected value is one of the most important concepts in probability theory. It provides a single number that summarizes the "center" or "typical value" of a random variable, representing the long-run average if we could repeat an experiment infinitely many times.

@@ -1,3 +1,9 @@
+---
+id: math101-t6-existential
+title: "The Existential Quantifier (∃)"
+order: 4
+---
+
 # The Existential Quantifier (∃)
 
 ## Definition

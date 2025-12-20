@@ -1,3 +1,9 @@
+---
+id: math301-topic-5-3
+title: "Double Integrals over General Regions"
+order: 3
+---
+
 # Double Integrals over General Regions
 
 ## Introduction

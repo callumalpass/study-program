@@ -1,3 +1,9 @@
+---
+id: math202-t4-moments
+title: "Method of Moments"
+order: 3
+---
+
 # Method of Moments Estimation
 
 The method of moments is one of the oldest and most intuitive approaches to parameter estimation. The core idea is beautifully simple: equate population moments (theoretical) to sample moments (observed) and solve for the unknown parameters. Despite its simplicity, it produces estimators that are often consistent and reasonably efficient.

@@ -1,3 +1,9 @@
+---
+id: math102-t1-incexc
+title: "Inclusion-Exclusion Principle"
+order: 5
+---
+
 # Inclusion-Exclusion Principle
 
 When counting elements in overlapping sets, we must carefully avoid double-counting. The inclusion-exclusion principle provides a systematic way to handle set unions with arbitrary overlaps.

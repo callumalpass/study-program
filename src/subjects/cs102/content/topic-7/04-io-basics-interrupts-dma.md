@@ -1,3 +1,9 @@
+---
+id: cs102-t7-io-basics-interrupts-dma
+title: "I/O Basics: Interrupts and DMA"
+order: 4
+---
+
 # I/O Basics: Interrupts, Polling, and DMA
 
 Input/Output (I/O) is how computers interact with the outside world—keyboards, displays, networks, disks, and countless other devices. Unlike the CPU, which operates at gigahertz speeds, I/O devices operate orders of magnitude slower and at unpredictable times. The challenge is coordinating fast CPUs with slow, asynchronous devices without wasting processor cycles waiting. Three fundamental techniques address this challenge: polling, interrupts, and DMA.

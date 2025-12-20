@@ -1,3 +1,9 @@
+---
+id: math203-t1-lhopital
+title: "L"
+order: 7
+---
+
 # L'Hôpital's Rule
 
 When evaluating limits results in indeterminate forms like $\frac{0}{0}$ or $\frac{\infty}{\infty}$, L'Hôpital's Rule provides a powerful shortcut using derivatives. Named after the French mathematician Guillaume de l'Hôpital (who purchased it from Johann Bernoulli), this rule transforms difficult limits into potentially simpler ones.

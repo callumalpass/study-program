@@ -1,3 +1,9 @@
+---
+id: math102-t4-shortest
+title: "Shortest Paths"
+order: 2
+---
+
 # Shortest Path Algorithms
 
 Finding the shortest path between vertices is a fundamental graph problem with applications in routing, navigation, and network optimization.

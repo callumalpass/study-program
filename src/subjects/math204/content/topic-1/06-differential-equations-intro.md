@@ -1,3 +1,9 @@
+---
+id: math204-t1-diffeq
+title: "Introduction to Differential Equations"
+order: 6
+---
+
 # Introduction to Differential Equations
 
 A differential equation is an equation involving a function and its derivatives. While we've been solving simple differential equations all along (every time we integrate $\frac{dy}{dx} = f(x)$, we're solving a differential equation), many real-world problems lead to more complex forms. This section introduces differential equations systematically, focusing on separable equations and their applications to growth, decay, and natural phenomena.

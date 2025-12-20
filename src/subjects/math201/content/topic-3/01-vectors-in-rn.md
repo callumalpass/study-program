@@ -1,3 +1,9 @@
+---
+id: math201-t3-vectors-rn
+title: "Vectors in R^n"
+order: 1
+---
+
 # Vectors in $\mathbb{R}^n$
 
 Vectors are the fundamental objects of linear algebra. While we're most familiar with vectors in two and three dimensions from physics and geometry, linear algebra extends the concept to $n$ dimensions. This generalization provides a powerful framework for representing data, solving systems of equations, and modeling relationships in high-dimensional spaces.

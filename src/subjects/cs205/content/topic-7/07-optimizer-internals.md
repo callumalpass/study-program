@@ -1,3 +1,9 @@
+---
+id: cs205-t7-optimizer
+title: "Query Optimizer Internals"
+order: 7
+---
+
 # Query Optimizer Internals
 
 The query optimizer transforms SQL statements into efficient execution plans by exploring alternative strategies and estimating their costs. Understanding optimizer internals helps you write queries that optimize well, interpret execution plans accurately, and troubleshoot performance issues when the optimizer makes suboptimal choices.

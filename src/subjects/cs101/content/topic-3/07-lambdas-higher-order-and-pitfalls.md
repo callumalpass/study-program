@@ -1,3 +1,9 @@
+---
+id: cs101-t3-lambda
+title: "Lambdas, Higher-Order, Pitfalls"
+order: 7
+---
+
 ## Lambdas and Higher-Order Functions
 
 A **higher-order function** is a function that either takes another function as an argument or returns a function. This powerful concept enables flexible, reusable code patterns. **Lambda functions** provide a concise way to create small anonymous functions inline.

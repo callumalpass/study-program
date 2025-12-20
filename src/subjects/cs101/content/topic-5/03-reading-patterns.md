@@ -1,3 +1,9 @@
+---
+id: cs101-t5-read
+title: "Reading Patterns"
+order: 3
+---
+
 ## Reading Files
 
 Once you've opened a file, you need to read its contents. Python provides several methods for reading, and choosing the right one depends on your file size and what you need to do with the data.

@@ -1,3 +1,9 @@
+---
+id: math204-t3-trig-integrals
+title: "Trigonometric Integrals"
+order: 2
+---
+
 # Trigonometric Integrals
 
 Integrals involving trigonometric functions appear throughout calculus and its applications, from Fourier analysis to physics problems involving oscillations and waves. While some trigonometric integrals can be solved with basic substitution, many require specialized strategies based on the specific functions involved and their powers. This section develops systematic approaches to evaluating these integrals.

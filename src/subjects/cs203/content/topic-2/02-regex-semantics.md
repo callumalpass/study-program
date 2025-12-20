@@ -1,3 +1,9 @@
+---
+id: cs203-t2-semantics
+title: "Regex Semantics"
+order: 2
+---
+
 # Semantics and Language Definition
 
 The semantics of regular expressions defines exactly which strings belong to the language described by an expression. Understanding these semantics is crucial for correctly designing and reasoning about patterns.

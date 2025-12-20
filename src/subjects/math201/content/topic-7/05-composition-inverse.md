@@ -1,3 +1,9 @@
+---
+id: math201-t7-composition
+title: "Composition and Inverse"
+order: 5
+---
+
 # Composition and Inverse of Linear Transformations
 
 ## Introduction

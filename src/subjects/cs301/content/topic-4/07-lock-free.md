@@ -1,3 +1,9 @@
+---
+id: cs301-t4-lockfree
+title: "Lock-Free Synchronization"
+order: 7
+---
+
 # Lock-Free Synchronization
 
 Lock-free programming uses atomic operations instead of locks for synchronization. This subtopic covers atomic operations, lock-free data structures, and memory ordering.

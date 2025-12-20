@@ -1,3 +1,9 @@
+---
+id: cs301-t3-realtime
+title: "Real-Time Scheduling"
+order: 7
+---
+
 # Real-Time Scheduling
 
 Real-time systems have timing constraints that must be met. This subtopic covers real-time scheduling algorithms and analysis.

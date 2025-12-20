@@ -1,3 +1,9 @@
+---
+id: math201-t3-null-column
+title: "Null Space and Column Space"
+order: 6
+---
+
 # Null Space and Column Space
 
 Every matrix has associated subspaces that reveal deep information about the linear transformation it represents. The null space captures what the matrix "kills" (sends to zero), while the column space describes what the matrix can "reach" (all possible outputs). These fundamental subspaces are central to understanding solutions to linear systems, matrix rank, and the structure of linear transformations.

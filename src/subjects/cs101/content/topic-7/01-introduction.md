@@ -1,3 +1,9 @@
+---
+id: cs101-t7-intro
+title: "Recursion: Big Picture"
+order: 1
+---
+
 ## Recursion: Solving Problems by Solving Smaller Problems
 
 Recursion is one of the most powerful ideas in programming. A recursive function is one that calls itself, breaking a problem into smaller versions of the same problem until reaching a simple case that can be solved directly. While this might sound circular, recursion is a legitimate and elegant problem-solving technique used throughout computer science.

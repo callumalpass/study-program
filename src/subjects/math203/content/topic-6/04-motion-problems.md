@@ -1,3 +1,9 @@
+---
+id: math203-t6-motion
+title: "Motion and Distance Problems"
+order: 4
+---
+
 # Motion and Distance Problems
 
 Related rates problems involving motion typically use the Pythagorean theorem or distance formulas. These problems track moving objects and ask how fast distances or angles change.

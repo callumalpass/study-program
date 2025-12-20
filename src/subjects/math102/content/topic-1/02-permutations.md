@@ -1,3 +1,9 @@
+---
+id: math102-t1-perms
+title: "Permutations"
+order: 2
+---
+
 # Permutations
 
 A permutation is an arrangement of objects where order matters. Permutations answer questions like "How many ways can we arrange, order, or sequence items?"

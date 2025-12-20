@@ -1,3 +1,9 @@
+---
+id: math101-t2-direct
+title: "Direct Proofs"
+order: 2
+---
+
 # Direct Proofs
 
 ## What is a Direct Proof?

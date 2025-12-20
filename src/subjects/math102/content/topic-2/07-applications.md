@@ -1,3 +1,9 @@
+---
+id: math102-t2-apps
+title: "Applications"
+order: 7
+---
+
 # Applications of Recurrence Relations
 
 Recurrence relations appear throughout computer science and mathematics. This section explores real-world applications and shows how to model problems as recurrences.

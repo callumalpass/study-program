@@ -1,3 +1,9 @@
+---
+id: math101-t4-closures
+title: "Closures of Relations"
+order: 6
+---
+
 # Closures of Relations
 
 ## What is a Closure?

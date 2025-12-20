@@ -1,3 +1,9 @@
+---
+id: math401-topic-7-2
+title: "Linear Transformations"
+order: 2
+---
+
 # Möbius Transformations
 
 Möbius transformations (linear fractional transformations) are functions of the form $f(z) = \frac{az+b}{cz+d}$ with $ad - bc \neq 0$. These transformations are the most important conformal maps, forming a group under composition and mapping circles to circles (including lines as circles through infinity).

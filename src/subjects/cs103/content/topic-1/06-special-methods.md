@@ -1,3 +1,9 @@
+---
+id: cs103-t1-special
+title: "Special Methods"
+order: 6
+---
+
 ## Special Methods (Dunder Methods)
 
 Python uses "dunder" methods (double underscore, like `__init__`) to define how objects behave with built-in operations. These special methods let your classes integrate seamlessly with Python's syntax and built-in functions.

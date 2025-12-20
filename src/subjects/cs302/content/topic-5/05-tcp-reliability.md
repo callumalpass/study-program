@@ -1,3 +1,9 @@
+---
+id: cs302-t5-tcp-rel
+title: "TCP Reliability Mechanisms"
+order: 5
+---
+
 # TCP Reliable Data Transfer
 
 ## The Challenge

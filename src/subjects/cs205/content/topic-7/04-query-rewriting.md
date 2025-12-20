@@ -1,3 +1,9 @@
+---
+id: cs205-t7-rewriting
+title: "Query Rewriting"
+order: 4
+---
+
 # Query Rewriting
 
 Query rewriting transforms queries into equivalent but more efficient forms. Both the optimizer and developers can apply rewriting techniques.

@@ -1,3 +1,9 @@
+---
+id: math401-topic-6-4
+title: "Residue Theorem"
+order: 4
+---
+
 # Improper Integrals and Principal Values
 
 Improper integrals involve infinite intervals or singularities. Complex methods handle these elegantly through residue theory. The Cauchy principal value allows treating certain divergent integrals in a meaningful way.

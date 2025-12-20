@@ -1,3 +1,9 @@
+---
+id: cs104-t2-stack-apps
+title: "Stack Applications"
+order: 3
+---
+
 # Stack Applications
 
 Stacks are fundamental to many algorithms and applications. Their LIFO nature makes them perfect for problems involving reversal, matching, and backtracking.

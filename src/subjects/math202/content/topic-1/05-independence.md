@@ -1,3 +1,9 @@
+---
+id: math202-t1-independence
+title: "Independence"
+order: 5
+---
+
 # Independence
 
 ## Introduction

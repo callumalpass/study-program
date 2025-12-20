@@ -1,3 +1,9 @@
+---
+id: cs101-t2-mistakes
+title: "Common Mistakes & Best Practices"
+order: 7
+---
+
 ## Common Mistakes (And How to Fix Them)
 
 Control flow bugs are usually logic bugs: your code runs without errors, but it does the wrong thing. These are often harder to find than syntax errors. This section covers frequent mistakes and how to avoid them.

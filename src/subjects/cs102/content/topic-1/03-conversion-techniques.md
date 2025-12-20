@@ -1,3 +1,9 @@
+---
+id: cs102-t1-conversion-techniques
+title: "Conversion Techniques"
+order: 3
+---
+
 # Conversion Techniques (Decimal ↔ Binary/Hex)
 
 You'll use conversions constantly in systems work—debugging memory dumps, analyzing network packets, working with assembly code, or understanding how data is stored. This subtopic focuses on **repeatable methods** you can trust under exam pressure and in real-world debugging sessions.

@@ -1,3 +1,9 @@
+---
+id: math203-t1-infinity
+title: "Limits at Infinity"
+order: 6
+---
+
 # Limits at Infinity
 
 While limits at a point describe local behavior, limits at infinity describe how functions behave as inputs grow without bound. This reveals the "end behavior" of functions and identifies horizontal asymptotes.

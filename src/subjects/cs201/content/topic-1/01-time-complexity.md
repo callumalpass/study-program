@@ -1,3 +1,9 @@
+---
+id: cs201-t1-time
+title: "Time Complexity Fundamentals"
+order: 1
+---
+
 # Time Complexity Fundamentals
 
 Time complexity is the language we use to describe how algorithms scale. When someone asks whether an algorithm is "fast" or "slow," they're really asking about time complexity—how does running time grow as input size increases? An algorithm that processes a million records quickly might become unusable on a billion records, while another algorithm that seems slower initially might scale gracefully to any size.

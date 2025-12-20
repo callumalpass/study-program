@@ -1,3 +1,9 @@
+---
+id: cs102-t3-floating-point-ieee-754
+title: "Floating Point (IEEE-754)"
+order: 4
+---
+
 # Floating Point and IEEE-754
 
 Computers need to represent not just integers, but real numbers with fractional parts—values like 3.14159, 0.001, or 6.022×10²³. The dominant standard for this is **IEEE-754**, which defines how floating-point numbers are encoded in binary. Understanding this representation explains why floating-point arithmetic sometimes produces surprising results.

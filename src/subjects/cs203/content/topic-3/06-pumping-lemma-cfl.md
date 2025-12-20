@@ -1,3 +1,9 @@
+---
+id: cs203-t3-pumping
+title: "Pumping Lemma for CFLs"
+order: 6
+---
+
 # Pumping Lemma for CFLs
 
 The **Pumping Lemma for Context-Free Languages** provides a necessary condition for context-freeness. It's used to prove certain languages are not context-free.

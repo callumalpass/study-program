@@ -1,3 +1,9 @@
+---
+id: cs203-t2-regextonfa
+title: "Regex to NFA Conversion"
+order: 4
+---
+
 # Regex to NFA Conversion
 
 **Thompson's construction** converts any regular expression to an equivalent NFA. This algorithm is fundamental to regex matching implementations.

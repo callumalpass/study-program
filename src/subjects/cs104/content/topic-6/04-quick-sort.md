@@ -1,3 +1,9 @@
+---
+id: cs104-t6-quick
+title: "Quick Sort"
+order: 4
+---
+
 # Quick Sort
 
 Quick sort is the most widely used sorting algorithm in practice. It's a divide-and-conquer algorithm with excellent average-case performance, though its worst-case is O(n²). Understanding quicksort and its optimizations is essential.

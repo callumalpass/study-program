@@ -1,3 +1,9 @@
+---
+id: math204-t5-laplace
+title: "Introduction to Laplace Transform"
+order: 7
+---
+
 # Introduction to the Laplace Transform
 
 The Laplace transform is one of the most powerful tools in applied mathematics and engineering. It converts differential equations into algebraic equations, making them easier to solve. This transform, defined as an improper integral, is essential for analyzing control systems, electrical circuits, mechanical vibrations, and signal processing.

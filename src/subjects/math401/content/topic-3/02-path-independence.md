@@ -1,3 +1,9 @@
+---
+id: math401-topic-3-2
+title: "Contour Integrals"
+order: 2
+---
+
 # Path Independence and Conservative Fields
 
 In real calculus, certain line integrals depend only on the endpoints, not the path taken. This property, called path independence, extends to complex contour integrals and is intimately connected to the existence of antiderivatives. Path independence is a crucial concept that leads directly to Cauchy's theorem, one of the most important results in complex analysis.

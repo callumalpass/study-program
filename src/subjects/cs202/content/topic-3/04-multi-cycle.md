@@ -1,3 +1,9 @@
+---
+id: cs202-t3-multi
+title: "Multi-Cycle Datapath"
+order: 4
+---
+
 # Multi-Cycle Datapath
 
 The **multi-cycle datapath** improves upon the single-cycle design by breaking instruction execution into multiple steps, each taking one clock cycle. This allows faster clock speeds and more efficient use of hardware resources.

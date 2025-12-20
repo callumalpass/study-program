@@ -1,3 +1,9 @@
+---
+id: math101-t7-recurrence
+title: "Recurrence Relations"
+order: 7
+---
+
 # Recurrence Relations
 
 ## What is a Recurrence Relation?

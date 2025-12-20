@@ -1,3 +1,9 @@
+---
+id: cs202-t6-bandwidth
+title: "Bandwidth and Latency"
+order: 5
+---
+
 # Memory Bandwidth and Latency
 
 Memory bandwidth and latency are the two fundamental performance metrics of memory systems. They interact in complex ways, and understanding both is essential for optimizing system performance.

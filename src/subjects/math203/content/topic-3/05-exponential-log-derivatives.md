@@ -1,3 +1,9 @@
+---
+id: math203-t3-exp-log
+title: "Exponential and Logarithmic Derivatives"
+order: 5
+---
+
 # Derivatives of Exponential and Logarithmic Functions
 
 Exponential and logarithmic functions are fundamental in modeling growth, decay, and many natural phenomena. Their derivatives have remarkably simple forms.

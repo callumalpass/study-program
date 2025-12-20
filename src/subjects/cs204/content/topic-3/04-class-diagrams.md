@@ -1,3 +1,9 @@
+---
+id: cs204-t3-class
+title: "Class Diagrams"
+order: 4
+---
+
 # Class Diagrams
 
 Class diagrams are the most fundamental and widely used UML diagrams. They show the static structure of a system by illustrating classes, their attributes, operations, and relationships. Class diagrams serve as blueprints for object-oriented systems and bridge the gap between analysis, design, and implementation.

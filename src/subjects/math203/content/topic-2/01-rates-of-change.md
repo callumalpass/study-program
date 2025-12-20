@@ -1,3 +1,9 @@
+---
+id: math203-t2-rates
+title: "Rates of Change"
+order: 1
+---
+
 # Rates of Change
 
 The derivative measures how fast one quantity changes relative to another. Before diving into the formal definition, let's build intuition through the concept of rates of change, which appears everywhere in science, engineering, and daily life.

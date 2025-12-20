@@ -1,3 +1,9 @@
+---
+id: math401-topic-3-6
+title: "Antiderivatives"
+order: 6
+---
+
 # Contour Deformation and Homotopy
 
 Contour deformation is a powerful technique in complex integration that allows us to replace complicated integration paths with simpler ones without changing the value of the integral. This principle, based on Cauchy's theorem and the topological concept of homotopy, is fundamental to residue calculus and the evaluation of definite integrals. Understanding when and how contours can be deformed is essential for practical applications of complex analysis.

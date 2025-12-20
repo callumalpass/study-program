@@ -1,3 +1,9 @@
+---
+id: cs203-t7-classp
+title: "Class P"
+order: 2
+---
+
 # Class P
 
 **P** (Polynomial Time) is the class of problems solvable in polynomial time by a deterministic Turing machine. It represents "efficiently solvable" problems and forms one of the most fundamental concepts in computational complexity theory.

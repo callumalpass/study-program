@@ -1,3 +1,9 @@
+---
+id: cs104-t3-fundamentals
+title: "Tree Fundamentals"
+order: 1
+---
+
 # Tree Fundamentals
 
 Trees are hierarchical data structures consisting of nodes connected by edges. Unlike linear structures, trees model parent-child relationships and are fundamental to organizing hierarchical data efficiently.

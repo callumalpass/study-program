@@ -1,3 +1,9 @@
+---
+id: cs201-t5-classic
+title: "Classic DP Problems"
+order: 2
+---
+
 # Classic Dynamic Programming Problems
 
 These fundamental DP problems form the foundation of dynamic programming expertise. Each problem illustrates a common pattern that recurs across countless applications in competitive programming, technical interviews, and real-world software systems. Mastering these problems builds intuition for recognizing DP opportunities and develops the mental models needed to tackle novel problems.

@@ -1,3 +1,9 @@
+---
+id: math101-t2-contradiction
+title: "Proof by Contradiction"
+order: 4
+---
+
 # Proof by Contradiction
 
 ## The Logical Foundation

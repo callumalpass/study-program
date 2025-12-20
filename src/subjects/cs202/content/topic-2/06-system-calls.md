@@ -1,3 +1,9 @@
+---
+id: cs202-t2-syscalls
+title: "System Calls"
+order: 6
+---
+
 # System Calls and OS Interface
 
 **System calls** (syscalls) are the interface between user programs and the operating system kernel. They provide essential services like file I/O, process management, and memory allocation that programs cannot perform directly.

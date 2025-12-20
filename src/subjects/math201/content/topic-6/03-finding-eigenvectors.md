@@ -1,3 +1,9 @@
+---
+id: math201-t6-finding
+title: "Finding Eigenvectors"
+order: 3
+---
+
 # Finding Eigenvectors and Eigenspaces
 
 ## From Eigenvalues to Eigenvectors

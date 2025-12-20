@@ -1,3 +1,9 @@
+---
+id: cs202-t1-modern
+title: "Modern ISAs"
+order: 7
+---
+
 # Survey of Modern ISAs
 
 Understanding modern Instruction Set Architectures requires examining real-world examples. This survey covers the major ISAs in use today: x86-64, ARM, MIPS, and RISC-V, comparing their design choices and application domains.

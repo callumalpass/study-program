@@ -1,3 +1,9 @@
+---
+id: math202-t3-normal
+title: "Normal Distribution"
+order: 5
+---
+
 # Normal Distribution
 
 ## Introduction

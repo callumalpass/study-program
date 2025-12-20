@@ -1,3 +1,9 @@
+---
+id: math201-t1-gauss-jordan
+title: "Gauss-Jordan Elimination"
+order: 3
+---
+
 # Gauss-Jordan Elimination
 
 ## Introduction

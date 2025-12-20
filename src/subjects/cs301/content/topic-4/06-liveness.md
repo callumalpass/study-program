@@ -1,3 +1,9 @@
+---
+id: cs301-t4-liveness
+title: "Liveness and Deadlock"
+order: 6
+---
+
 # Liveness and Synchronization Hazards
 
 Liveness refers to the progress guarantees of concurrent programs. This subtopic covers deadlock, livelock, starvation, and priority inversion.

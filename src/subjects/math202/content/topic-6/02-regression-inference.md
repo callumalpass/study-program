@@ -1,3 +1,9 @@
+---
+id: math202-t6-inference
+title: "Regression Inference"
+order: 2
+---
+
 # Regression Inference
 
 ## Introduction

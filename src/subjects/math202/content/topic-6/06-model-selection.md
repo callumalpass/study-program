@@ -1,3 +1,9 @@
+---
+id: math202-t6-selection
+title: "Model Selection"
+order: 6
+---
+
 # Model Selection
 
 ## Introduction

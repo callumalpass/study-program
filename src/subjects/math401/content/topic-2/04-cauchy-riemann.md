@@ -1,3 +1,9 @@
+---
+id: math401-topic-2-4
+title: "Cauchy-Riemann Equations"
+order: 4
+---
+
 # The Cauchy-Riemann Equations
 
 The Cauchy-Riemann equations are fundamental necessary conditions for complex differentiability. These elegant partial differential equations connect the real and imaginary parts of a complex function, revealing the deep relationship between complex analysis and real multivariable calculus. They are named after Augustin-Louis Cauchy and Bernhard Riemann, who independently discovered their significance.

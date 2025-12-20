@@ -1,3 +1,9 @@
+---
+id: cs103-t7-intro
+title: "Design Principles Overview"
+order: 1
+---
+
 ## Design Principles and Testing
 
 Good object-oriented code isn't just about using classes—it's about organizing code so it remains easy to understand, modify, and extend over time. This topic covers the principles and practices that separate maintainable OOP code from tangled messes.

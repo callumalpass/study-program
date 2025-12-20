@@ -1,3 +1,9 @@
+---
+id: cs201-t2-hybrid
+title: "Hybrid Sorting Algorithms"
+order: 7
+---
+
 # Hybrid Sorting Algorithms
 
 Production-quality sorting implementations never use a single algorithm. Instead, they combine multiple algorithms, each chosen for the situations where it excels. Introsort, used in C++ standard libraries, switches from QuickSort to HeapSort when recursion depth suggests pathological behavior, preventing O(n²) worst case. Timsort, Python's standard sort, combines natural run detection with insertion sort and merge sort to achieve O(n) on already-sorted data. These hybrid approaches represent the evolution from theoretical algorithms to engineering solutions.

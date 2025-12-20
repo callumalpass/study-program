@@ -1,3 +1,9 @@
+---
+id: cs103-t4-protocols
+title: "Protocols"
+order: 6
+---
+
 ## Protocols and Structural Typing
 
 Python 3.8 introduced `Protocol` for typed duck typing. Protocols define what methods/attributes an object must have, without requiring inheritance. This brings type checking to duck typing.

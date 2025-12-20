@@ -1,3 +1,9 @@
+---
+id: cs103-t5-strategy
+title: "Strategy Pattern"
+order: 5
+---
+
 ## The Strategy Pattern
 
 **Problem:** You need to switch between different algorithms at runtime. Hard-coding algorithms creates inflexible, hard-to-test code.

@@ -1,3 +1,9 @@
+---
+id: math204-t2-numerical
+title: "Numerical Integration"
+order: 7
+---
+
 # Numerical Integration
 
 While the Fundamental Theorem of Calculus provides an exact method for evaluating definite integrals when we can find antiderivatives, many important integrals cannot be evaluated in terms of elementary functions. Even simple-looking integrals like $\int e^{-x^2} dx$ or $\int \frac{\sin x}{x} dx$ have no elementary antiderivatives. In these cases, we turn to numerical methods to approximate integral values.

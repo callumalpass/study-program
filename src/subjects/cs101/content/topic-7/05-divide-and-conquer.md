@@ -1,3 +1,9 @@
+---
+id: cs101-t7-dnc
+title: "Divide and Conquer"
+order: 5
+---
+
 ## Divide and Conquer
 
 Divide and conquer is a powerful algorithm design strategy that naturally leads to recursive solutions. The idea is simple: break a problem into smaller subproblems, solve them (often recursively), and combine the results. Many of the most efficient algorithms in computer science follow this pattern.

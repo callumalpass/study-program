@@ -1,3 +1,9 @@
+---
+id: math202-t7-applications
+title: "Bayesian Applications"
+order: 7
+---
+
 ## Bayesian Applications
 
 Bayesian inference isn't just a theoretical framework—it powers real-world decision-making across industries and scientific disciplines. This subtopic explores three important applications: A/B testing for product optimization, spam filtering for email classification, and medical diagnosis for clinical decision support. These examples illustrate how Bayesian thinking translates abstract probability into actionable insights.

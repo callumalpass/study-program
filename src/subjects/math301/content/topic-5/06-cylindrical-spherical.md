@@ -1,3 +1,9 @@
+---
+id: math301-topic-5-6
+title: "Cylindrical and Spherical Coordinates"
+order: 6
+---
+
 # Cylindrical and Spherical Coordinate Systems
 
 ## Introduction

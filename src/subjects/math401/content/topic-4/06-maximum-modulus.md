@@ -1,3 +1,9 @@
+---
+id: math401-topic-4-6
+title: "Mean Value Property"
+order: 6
+---
+
 # Maximum Modulus Principle
 
 The maximum modulus principle is one of the most important and surprising results in complex analysis. It states that if a function is analytic on a region, the maximum of its absolute value cannot occur in the interior—it must occur on the boundary. This principle has profound implications for the behavior of analytic functions and leads to uniqueness theorems and estimates.

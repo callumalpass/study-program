@@ -1,3 +1,9 @@
+---
+id: math102-t5-crypto
+title: "Cryptographic Applications"
+order: 6
+---
+
 # Cryptographic Applications
 
 Number theory provides the mathematical foundation for modern cryptography. This section explores how concepts like modular arithmetic, prime factorization, and discrete logarithms enable secure communication.

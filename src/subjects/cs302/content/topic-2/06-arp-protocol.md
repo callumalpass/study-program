@@ -1,3 +1,9 @@
+---
+id: cs302-t2-arp
+title: "Address Resolution Protocol (ARP)"
+order: 6
+---
+
 # Address Resolution Protocol (ARP)
 
 The **Address Resolution Protocol (ARP)** is the critical glue connecting the Network layer (IP addresses) to the Data Link layer (MAC addresses). When a host wants to send an IP packet on the local network, it must first discover the destination's MAC address—ARP makes this possible.

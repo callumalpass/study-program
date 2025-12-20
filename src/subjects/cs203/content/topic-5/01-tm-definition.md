@@ -1,3 +1,9 @@
+---
+id: cs203-t5-definition
+title: "TM Definition"
+order: 1
+---
+
 # TM Definition
 
 A **Turing Machine (TM)** is the most powerful computational model, equivalent to any general-purpose computer. It can read, write, and move on an infinite tape, providing the theoretical foundation for understanding what problems computers can solve.

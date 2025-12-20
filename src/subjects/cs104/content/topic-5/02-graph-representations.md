@@ -1,3 +1,9 @@
+---
+id: cs104-t5-representations
+title: "Graph Representations"
+order: 2
+---
+
 # Graph Representations
 
 How you represent a graph in code significantly affects the performance of operations. The two main representations are **adjacency lists** and **adjacency matrices**, each with distinct tradeoffs.

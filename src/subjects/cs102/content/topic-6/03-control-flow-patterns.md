@@ -1,3 +1,9 @@
+---
+id: cs102-t6-control-flow-patterns
+title: "Control Flow Patterns"
+order: 3
+---
+
 # Control Flow: Branches, Jumps, and Loops
 
 At the machine level, all control flow—if statements, loops, function calls—reduces to a small set of primitives: unconditional jumps, conditional branches, and comparisons that set flags. Recognizing these patterns in assembly is essential for reading code, debugging, and reverse engineering tasks like analyzing a "binary bomb."

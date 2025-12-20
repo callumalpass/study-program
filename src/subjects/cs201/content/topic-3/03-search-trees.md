@@ -1,3 +1,9 @@
+---
+id: cs201-t3-trees
+title: "Search Trees"
+order: 3
+---
+
 # Search Trees
 
 Binary search trees (BSTs) and their balanced variants provide efficient searching combined with dynamic insertions and deletions—a combination that static arrays cannot achieve. While a sorted array supports O(log n) search via binary search, inserting or deleting elements requires O(n) time to shift elements. BSTs overcome this limitation by using a linked structure that supports O(log n) search, insert, and delete when properly balanced.

@@ -1,3 +1,9 @@
+---
+id: cs204-t2-documentation
+title: "Requirements Documentation"
+order: 3
+---
+
 # Requirements Documentation
 
 Effective requirements documentation transforms the knowledge gathered during elicitation into a structured, unambiguous specification that guides development, testing, and project management. The format and style of documentation should match the development methodology, organizational culture, and project needs. This section explores the most common documentation approaches and provides practical guidance for creating clear, useful requirements documents.

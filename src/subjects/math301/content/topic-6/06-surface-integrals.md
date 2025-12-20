@@ -1,3 +1,9 @@
+---
+id: math301-topic-6-6
+title: "Surface Integrals"
+order: 6
+---
+
 # Surface Integrals of Scalar Fields
 
 ## Introduction

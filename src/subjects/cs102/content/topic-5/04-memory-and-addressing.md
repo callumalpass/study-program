@@ -1,3 +1,9 @@
+---
+id: cs102-t5-memory-and-addressing
+title: "Memory and Addressing"
+order: 4
+---
+
 # Memory and Addressing (Conceptual)
 
 Memory is where programs and data live while a computer runs. Understanding how memory is organized and accessed is fundamental to programming—it explains pointers, arrays, data structures, and many common bugs. At the architecture level, memory is a simple abstraction: a large array of bytes, each with a unique address.

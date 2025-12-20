@@ -1,3 +1,9 @@
+---
+id: cs205-t6-selection
+title: "Index Selection"
+order: 4
+---
+
 # Index Selection
 
 Choosing the right indexes requires analyzing query patterns, understanding costs, and balancing read and write performance. This is one of the most important skills in database tuning.

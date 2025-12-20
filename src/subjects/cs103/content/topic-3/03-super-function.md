@@ -1,3 +1,9 @@
+---
+id: cs103-t3-super
+title: "The super() Function"
+order: 3
+---
+
 ## The `super()` Function
 
 The `super()` function is your connection to parent classes. It lets you call parent methods, extend their behavior, and properly initialize inherited attributes.

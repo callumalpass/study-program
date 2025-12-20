@@ -1,3 +1,9 @@
+---
+id: math101-t7-formulas
+title: "Summation Formulas"
+order: 5
+---
+
 # Summation Formulas
 
 ## Essential Formulas

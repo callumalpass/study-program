@@ -1,3 +1,9 @@
+---
+id: math202-t1-bayes
+title: "Bayes"
+order: 6
+---
+
 # Bayes' Theorem
 
 ## Introduction

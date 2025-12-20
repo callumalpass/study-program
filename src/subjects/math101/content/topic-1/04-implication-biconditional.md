@@ -1,3 +1,9 @@
+---
+id: math101-t1-implication
+title: "Implication and Biconditional"
+order: 4
+---
+
 # Implication and Biconditional
 
 ## The Conditional (Implication) — →

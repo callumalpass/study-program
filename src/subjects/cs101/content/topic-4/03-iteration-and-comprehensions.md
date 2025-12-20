@@ -1,3 +1,9 @@
+---
+id: cs101-t4-iteration
+title: "Iteration and Comprehensions"
+order: 3
+---
+
 ## Iterating Over Lists
 
 Iteration is how you process each element in a list. Python provides several ways to iterate, each suited to different situations.

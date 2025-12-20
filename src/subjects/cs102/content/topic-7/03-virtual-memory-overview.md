@@ -1,3 +1,9 @@
+---
+id: cs102-t7-virtual-memory-overview
+title: "Virtual Memory Overview"
+order: 3
+---
+
 # Virtual Memory Overview
 
 Virtual memory is one of the most important abstractions in computing. It gives each process the illusion of having a large, private, contiguous memory space, even though physical memory is limited and shared among many processes. Behind this illusion, the operating system and hardware work together to map virtual addresses to physical addresses, provide isolation between processes, and efficiently manage the limited resource of RAM.

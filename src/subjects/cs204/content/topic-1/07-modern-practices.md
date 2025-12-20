@@ -1,3 +1,9 @@
+---
+id: cs204-t1-modern
+title: "Modern Practices"
+order: 7
+---
+
 # Modern Software Development Practices
 
 Software development has evolved dramatically in the 21st century. Modern practices emphasize automation, collaboration, and continuous delivery of value. Understanding these practices is essential for contemporary software engineering.

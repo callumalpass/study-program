@@ -1,3 +1,9 @@
+---
+id: cs203-t4-pdatocfg
+title: "PDA to CFG Conversion"
+order: 5
+---
+
 # PDA to CFG Conversion
 
 Every language accepted by a PDA is context-free. The conversion constructs a grammar simulating the PDA's computation.

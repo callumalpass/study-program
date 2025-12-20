@@ -1,3 +1,9 @@
+---
+id: math102-t2-genfunc
+title: "Generating Functions"
+order: 5
+---
+
 # Generating Functions for Recurrences
 
 Generating functions transform recurrence relations into algebraic equations. This powerful technique handles recurrences that resist other methods.

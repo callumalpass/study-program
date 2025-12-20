@@ -1,3 +1,9 @@
+---
+id: cs105-t2-double
+title: "Double Pointers"
+order: 5
+---
+
 # Double Pointers (Pointer to Pointer)
 
 A double pointer is a pointer that holds the address of another pointer. While this sounds abstract, double pointers solve practical problems like modifying a pointer in a function, creating 2D arrays, and working with arrays of strings.

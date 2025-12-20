@@ -1,3 +1,9 @@
+---
+id: math202-t6-multiple
+title: "Multiple Regression"
+order: 5
+---
+
 # Multiple Regression
 
 ## Introduction

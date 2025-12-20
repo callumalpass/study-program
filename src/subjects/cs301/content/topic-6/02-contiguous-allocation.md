@@ -1,3 +1,9 @@
+---
+id: cs301-t6-contiguous
+title: "Contiguous Allocation"
+order: 2
+---
+
 # Contiguous Memory Allocation
 
 Contiguous allocation assigns each process a single continuous block of memory. This subtopic covers fixed and variable partitioning schemes.

@@ -1,3 +1,9 @@
+---
+id: math401-topic-6-6
+title: "Evaluation of Real Integrals"
+order: 6
+---
+
 # Jordan's Lemma
 
 Jordan's lemma is a crucial technical result that allows us to ignore semicircular arc contributions when evaluating Fourier-type integrals. It ensures that certain contour integrals vanish in the limit, enabling the residue theorem to work for integrals over infinite intervals.

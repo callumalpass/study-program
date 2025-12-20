@@ -1,3 +1,9 @@
+---
+id: cs101-t7-base
+title: "Base Cases and Progress"
+order: 2
+---
+
 ## Base Cases and Progress Toward the Base Case
 
 The most common source of bugs in recursive code is getting the base case wrong - either missing it entirely, or writing a recursive case that never reaches it. Understanding these two requirements is essential for writing correct recursive functions.

@@ -1,3 +1,9 @@
+---
+id: cs202-t4-intro
+title: "Introduction to Pipelining"
+order: 1
+---
+
 # Introduction to Pipelining
 
 **Pipelining** is the most important technique for improving processor performance. Like an assembly line in a factory, pipelining allows multiple instructions to be in different stages of execution simultaneously, dramatically increasing throughput.

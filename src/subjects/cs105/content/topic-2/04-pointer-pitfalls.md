@@ -1,3 +1,9 @@
+---
+id: cs105-t2-pitfalls
+title: "Pointer Pitfalls and Common Bugs"
+order: 4
+---
+
 # Pointer Pitfalls and Common Bugs
 
 Pointers are powerful but dangerous. Many of C's notorious bugs—crashes, security vulnerabilities, and mysterious behavior—stem from pointer misuse. Understanding these pitfalls helps you write safer code.

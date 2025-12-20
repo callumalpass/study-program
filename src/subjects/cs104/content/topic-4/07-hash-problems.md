@@ -1,3 +1,9 @@
+---
+id: cs104-t4-problems
+title: "Hash Table Problems"
+order: 7
+---
+
 # Common Hash Table Problems
 
 Hash table problems are interview favorites because they test understanding of time-space tradeoffs and pattern recognition. This section covers essential problems and techniques.

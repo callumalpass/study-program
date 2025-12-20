@@ -1,3 +1,9 @@
+---
+id: cs101-t1-naming
+title: "Variable Naming Rules"
+order: 2
+---
+
 ## Variable Naming Rules
 
 Python has specific rules for naming variables. Understanding these rules will help you write clean, readable code and avoid syntax errors. Good naming is one of the most important skills in programming - it makes your code self-documenting and easier for others (and your future self) to understand.

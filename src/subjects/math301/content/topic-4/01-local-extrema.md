@@ -1,3 +1,9 @@
+---
+id: math301-topic-4-1
+title: "Local Extrema"
+order: 1
+---
+
 # Local Extrema of Multivariable Functions
 
 ## Introduction

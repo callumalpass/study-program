@@ -1,3 +1,9 @@
+---
+id: math401-topic-4-2
+title: "Derivatives via Integral Formula"
+order: 2
+---
+
 # Cauchy's Formula for Derivatives
 
 One of the most remarkable consequences of Cauchy's integral formula is that analytic functions are infinitely differentiable, and their derivatives can be expressed as contour integrals. This stands in stark contrast to real analysis, where differentiability does not imply higher-order differentiability. The formula for derivatives also leads to powerful estimates on the growth of derivatives.

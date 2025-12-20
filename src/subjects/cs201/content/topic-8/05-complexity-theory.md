@@ -1,3 +1,9 @@
+---
+id: cs201-t8-complexity
+title: "Complexity Theory"
+order: 5
+---
+
 # Complexity Theory Fundamentals
 
 Complexity theory asks one of computer science's deepest questions: what makes problems hard? Not hard because we haven't found a good algorithm yet, but fundamentally hard—requiring exponential time no matter how clever we are. The answer, encapsulated in complexity classes like P and NP, provides a map of computational difficulty that guides algorithm design and reveals fundamental limits.

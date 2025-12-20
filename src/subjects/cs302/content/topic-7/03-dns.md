@@ -1,3 +1,9 @@
+---
+id: cs302-t7-dns
+title: "Domain Name System (DNS)"
+order: 3
+---
+
 # DNS: Domain Name System
 
 ## Why DNS?

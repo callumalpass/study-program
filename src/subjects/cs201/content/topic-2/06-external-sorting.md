@@ -1,3 +1,9 @@
+---
+id: cs201-t2-external
+title: "External Sorting"
+order: 6
+---
+
 # External Sorting
 
 The algorithms we've studied assume data fits in memory, but real-world datasets routinely exceed available RAM. Sorting a terabyte of log files, processing satellite imagery, or building database indexes all require external sorting—algorithms designed for data that lives primarily on disk. The fundamental challenge shifts from minimizing comparisons to minimizing I/O operations, since disk access is roughly 100,000 times slower than memory access.

@@ -1,3 +1,9 @@
+---
+id: cs101-t3-params
+title: "Parameters, *args, **kwargs"
+order: 3
+---
+
 ## Parameters in Depth
 
 Python offers flexible ways to define function parameters and pass arguments. Understanding these options lets you write cleaner APIs and call functions more clearly. This subtopic covers positional arguments, keyword arguments, default values, and the special `*args` and `**kwargs` syntax.

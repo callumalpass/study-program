@@ -1,3 +1,9 @@
+---
+id: math102-t7-basics
+title: "Probability Basics"
+order: 1
+---
+
 # Probability Foundations
 
 Probability provides a mathematical framework for reasoning about uncertainty. This foundation connects discrete mathematics to statistics and randomized algorithms.

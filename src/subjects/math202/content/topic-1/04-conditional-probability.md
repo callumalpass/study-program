@@ -1,3 +1,9 @@
+---
+id: math202-t1-conditional
+title: "Conditional Probability"
+order: 4
+---
+
 # Conditional Probability
 
 ## Introduction

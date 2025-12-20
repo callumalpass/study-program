@@ -1,3 +1,9 @@
+---
+id: cs103-t4-intro
+title: "Introduction to Polymorphism"
+order: 1
+---
+
 ## Introduction to Polymorphism
 
 The word "polymorphism" comes from Greek, meaning "many forms." In programming, it means that the same interface can work with objects of different types. When you call `len()` on a string, list, or dictionary, you're using polymorphism—the same function adapts to different types.

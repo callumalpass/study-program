@@ -1,3 +1,9 @@
+---
+id: math204-t4-arc
+title: "Arc Length"
+order: 3
+---
+
 # Arc Length
 
 Arc length measures the distance traveled along a curve, as opposed to the straight-line distance between endpoints. Computing arc length requires integration and leads to some of the most elegant—and challenging—integrals in calculus.

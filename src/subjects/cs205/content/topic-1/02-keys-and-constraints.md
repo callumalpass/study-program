@@ -1,3 +1,9 @@
+---
+id: cs205-t1-keys
+title: "Keys and Constraints"
+order: 2
+---
+
 # Keys and Constraints
 
 Keys are fundamental to the relational model, enabling unique identification of rows and establishing relationships between tables. Constraints enforce data integrity rules.

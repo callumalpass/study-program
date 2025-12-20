@@ -1,3 +1,9 @@
+---
+id: math202-t5-framework
+title: "Hypothesis Testing Framework"
+order: 1
+---
+
 # Hypothesis Testing Framework
 
 Hypothesis testing is the formal process of using sample data to evaluate claims about population parameters. It transforms scientific questions into precise mathematical statements and provides a rigorous framework for decision-making under uncertainty. This systematic approach allows researchers to draw conclusions while controlling the probability of errors.

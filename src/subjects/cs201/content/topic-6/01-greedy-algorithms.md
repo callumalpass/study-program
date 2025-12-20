@@ -1,3 +1,9 @@
+---
+id: cs201-t6-intro
+title: "Greedy Algorithm Design"
+order: 1
+---
+
 # Greedy Algorithm Design
 
 Greedy algorithms embody a seductively simple strategy: at each decision point, make the choice that looks best right now, and never look back. This myopic approach seems almost too simple to work—surely optimal solutions require global reasoning about all possibilities? Yet for many important problems, greedy algorithms produce optimal results with remarkable efficiency.

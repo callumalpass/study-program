@@ -1,3 +1,9 @@
+---
+id: math403-topic-5-5
+title: "Tychonoff Theorem"
+order: 5
+---
+
 # Tychonoff's Theorem
 
 Tychonoff's theorem is one of the most important and powerful results in topology, stating that arbitrary products of compact spaces are compact. This theorem has far-reaching consequences in functional analysis, algebraic geometry, and mathematical logic.

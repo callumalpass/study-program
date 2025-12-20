@@ -1,3 +1,9 @@
+---
+id: cs202-t4-advanced
+title: "Advanced Pipelining"
+order: 6
+---
+
 # Advanced Pipelining Concepts
 
 Modern processors go far beyond the basic 5-stage pipeline. This section introduces advanced techniques that achieve higher performance: deeper pipelines, superscalar execution, and out-of-order processing.

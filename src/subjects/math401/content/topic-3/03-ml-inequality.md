@@ -1,3 +1,9 @@
+---
+id: math401-topic-3-3
+title: "Fundamental Theorem of Contour Integration"
+order: 3
+---
+
 # The ML Inequality and Estimation Lemma
 
 The ML inequality is a fundamental tool for estimating the magnitude of contour integrals without computing them explicitly. This estimation technique is essential for proving theoretical results, establishing bounds in applications, and demonstrating that certain integrals vanish in limiting cases. The ML inequality combines the maximum value of a function on a curve with the length of the curve to bound the integral.

@@ -1,3 +1,9 @@
+---
+id: math102-t6-genfunc
+title: "Generating Functions"
+order: 2
+---
+
 # Generating Functions
 
 Generating functions are a powerful tool for solving counting problems. They transform sequences into formal power series, enabling algebraic manipulation of combinatorial objects.

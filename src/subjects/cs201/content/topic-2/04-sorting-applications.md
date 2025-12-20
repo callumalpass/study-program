@@ -1,3 +1,9 @@
+---
+id: cs201-t2-applications
+title: "Sorting Applications"
+order: 4
+---
+
 # Sorting Applications and Selection
 
 Sorting is not just an end in itself—it is a powerful algorithmic primitive that enables efficient solutions to a vast array of problems. When data is sorted, questions that would require exhaustive search become answerable through binary search or simple scans. Duplicates cluster together for easy detection. Closest pairs become adjacent. The median sits conveniently in the middle. This preprocessing paradigm—sort first, then exploit order—is one of the most widely applicable techniques in algorithm design.

@@ -1,3 +1,9 @@
+---
+id: cs205-t5-locking
+title: "Locking and Deadlocks"
+order: 5
+---
+
 # Locking and Deadlocks
 
 Locks are the primary mechanism for enforcing isolation in database systems. Understanding lock types, granularity, and deadlock handling is essential for database programming.

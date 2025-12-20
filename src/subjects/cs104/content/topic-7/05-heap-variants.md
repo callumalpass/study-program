@@ -1,3 +1,9 @@
+---
+id: cs104-t7-variants
+title: "Heap Variants"
+order: 5
+---
+
 # Heap Variants
 
 While binary heaps are most common, several heap variants offer different trade-offs for specific use cases. Understanding these variants helps you choose the right data structure for your needs.

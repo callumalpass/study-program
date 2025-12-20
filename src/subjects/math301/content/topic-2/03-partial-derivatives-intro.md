@@ -1,3 +1,9 @@
+---
+id: math301-topic-2-3
+title: "Partial Derivatives"
+order: 3
+---
+
 # Introduction to Partial Derivatives
 
 ## Introduction

@@ -1,3 +1,9 @@
+---
+id: math401-topic-1-5
+title: "Roots of Unity"
+order: 5
+---
+
 # De Moivre's Theorem
 
 De Moivre's theorem is a powerful result connecting complex numbers, trigonometry, and algebra. Named after Abraham de Moivre (1667-1754), it provides a formula for computing powers of complex numbers in polar form and extracting roots. The theorem has profound implications for solving polynomial equations, deriving trigonometric identities, and understanding the structure of complex numbers.

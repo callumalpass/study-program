@@ -1,3 +1,9 @@
+---
+id: cs203-t4-dpda
+title: "Deterministic PDAs"
+order: 7
+---
+
 # Deterministic PDAs
 
 A **Deterministic PDA (DPDA)** has at most one choice at each step. DPDAs are less powerful than NPDAs but important for efficient parsing.

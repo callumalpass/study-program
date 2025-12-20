@@ -1,3 +1,9 @@
+---
+id: cs103-t4-subtype
+title: "Subtype Polymorphism"
+order: 2
+---
+
 ## Subtype Polymorphism (Method Overriding)
 
 Subtype polymorphism is the classic OOP form: child classes override parent methods to provide specialized behavior. Code written for the parent type automatically works with children.

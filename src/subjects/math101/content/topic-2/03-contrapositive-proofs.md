@@ -1,3 +1,9 @@
+---
+id: math101-t2-contrapositive
+title: "Contrapositive Proofs"
+order: 3
+---
+
 # Proof by Contrapositive
 
 ## The Logical Foundation

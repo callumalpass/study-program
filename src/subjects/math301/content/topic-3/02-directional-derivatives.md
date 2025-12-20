@@ -1,3 +1,9 @@
+---
+id: math301-topic-3-2
+title: "Directional Derivatives"
+order: 2
+---
+
 # Directional Derivatives
 
 ## Introduction

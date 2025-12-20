@@ -1,3 +1,9 @@
+---
+id: cs101-t1-strings
+title: "Strings"
+order: 4
+---
+
 ## Strings (str)
 
 Strings are sequences of characters enclosed in quotes. They're used to represent text in your programs - from simple messages to complex data like JSON, HTML, or user input. Strings are one of the most frequently used data types in Python.

@@ -1,3 +1,9 @@
+---
+id: math202-t4-sampling
+title: "Sampling Distributions"
+order: 1
+---
+
 # Sampling Distributions
 
 Understanding sampling distributions is the foundation of statistical inference. When we collect data from a sample, we compute statistics like the sample mean or sample proportion. But these statistics aren't fixed numbers—they vary from sample to sample. The sampling distribution describes this variability and allows us to make probability statements about our estimates.

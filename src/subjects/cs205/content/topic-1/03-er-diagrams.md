@@ -1,3 +1,9 @@
+---
+id: cs205-t1-er
+title: "ER Diagrams"
+order: 3
+---
+
 # Entity-Relationship Diagrams
 
 Entity-Relationship (ER) diagrams provide a visual way to design databases at a conceptual level before committing to a specific relational schema. They capture entities, attributes, and relationships in an intuitive graphical notation.

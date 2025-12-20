@@ -1,3 +1,9 @@
+---
+id: cs202-t6-storage
+title: "Storage Systems"
+order: 3
+---
+
 # Storage Systems: SSDs and Hard Drives
 
 Beyond main memory, storage systems provide persistent, high-capacity data storage. Understanding the characteristics of SSDs (Solid State Drives) and HDDs (Hard Disk Drives) is crucial for system design and performance optimization.

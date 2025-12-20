@@ -1,3 +1,9 @@
+---
+id: cs104-t4-fundamentals
+title: "Hash Fundamentals"
+order: 1
+---
+
 # Hash Table Fundamentals
 
 Hash tables are among the most important data structures in computer science, providing average O(1) time complexity for insertions, deletions, and lookups. Understanding how they work is essential for every programmer.

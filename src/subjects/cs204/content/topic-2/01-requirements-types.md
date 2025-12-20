@@ -1,3 +1,9 @@
+---
+id: cs204-t2-types
+title: "Requirements Types"
+order: 1
+---
+
 # Requirements Types
 
 Understanding the different types of requirements is fundamental to successful software engineering. Requirements can be categorized in various ways, but the most important distinction is between functional and non-functional requirements. Each type serves a different purpose and requires different approaches to elicitation, specification, and validation.

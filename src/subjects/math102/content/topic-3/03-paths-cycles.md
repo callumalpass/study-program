@@ -1,3 +1,9 @@
+---
+id: math102-t3-paths
+title: "Paths and Cycles"
+order: 3
+---
+
 # Paths, Walks, and Cycles
 
 Understanding connectivity in graphs requires precise definitions of movement through vertices and edges. These concepts are fundamental to graph algorithms.

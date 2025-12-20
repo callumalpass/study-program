@@ -1,3 +1,9 @@
+---
+id: cs105-t5-formatted
+title: "Formatted I/O"
+order: 6
+---
+
 # Formatted I/O
 
 Formatted I/O functions provide powerful text parsing and generation capabilities. Understanding format specifiers and their options is essential for robust input/output handling.

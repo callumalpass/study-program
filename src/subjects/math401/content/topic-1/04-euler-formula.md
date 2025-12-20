@@ -1,3 +1,9 @@
+---
+id: math401-topic-1-4
+title: "Exponential Form and Euler\"
+order: 4
+---
+
 # Euler's Formula
 
 Euler's formula, $e^{i\theta} = \cos\theta + i\sin\theta$, is one of the most profound and beautiful equations in mathematics. It establishes a deep connection between exponential functions, trigonometry, and complex numbers, unifying seemingly disparate areas of mathematics.

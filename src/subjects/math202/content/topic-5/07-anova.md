@@ -1,3 +1,9 @@
+---
+id: math202-t5-anova
+title: "Analysis of Variance (ANOVA)"
+order: 7
+---
+
 # ANOVA: Analysis of Variance
 
 Analysis of Variance (ANOVA) is a powerful statistical technique for comparing means across three or more groups simultaneously. While t-tests work well for comparing two groups, extending t-tests to multiple groups creates problems with inflated Type I error rates. ANOVA solves this by testing all group means in a single hypothesis test, partitioning the total variability in the data into components that reveal whether group differences are statistically significant.

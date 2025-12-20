@@ -1,3 +1,9 @@
+---
+id: cs105-t7-qualifiers
+title: "Type Qualifiers"
+order: 5
+---
+
 # Type Qualifiers
 
 Type qualifiers modify how variables can be accessed and help compilers optimize code. The three main qualifiers are `const`, `volatile`, and `restrict`.

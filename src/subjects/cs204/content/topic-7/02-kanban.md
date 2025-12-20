@@ -1,3 +1,9 @@
+---
+id: cs204-t7-kanban
+title: "Kanban"
+order: 2
+---
+
 # Kanban
 
 Kanban is a visual workflow management method that originated in Japanese manufacturing and has been successfully adapted for software development and knowledge work. The word "kanban" literally means "visual signal" or "card" in Japanese, reflecting the method's emphasis on visualization and signaling.

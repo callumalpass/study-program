@@ -1,3 +1,9 @@
+---
+id: cs302-t3-header
+title: "IPv4 Header Format"
+order: 4
+---
+
 # IPv4 Packet Header
 
 ## Header Structure Overview

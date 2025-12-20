@@ -1,3 +1,9 @@
+---
+id: cs203-t6-decidable
+title: "Decidable Languages"
+order: 1
+---
+
 # Decidable Languages
 
 A language is **decidable** if a Turing machine can determine membership for every string, always halting with the correct answer. Decidability represents the ideal case of algorithmic solvability—problems we can definitively answer with a computer program.

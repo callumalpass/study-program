@@ -1,3 +1,9 @@
+---
+id: cs203-t6-diagonalization
+title: "Diagonalization"
+order: 3
+---
+
 # Diagonalization
 
 **Diagonalization** is a proof technique showing that certain objects cannot exist. It's the key method for proving undecidability, originating in Cantor's work on infinite sets. The elegance of diagonalization lies in its simplicity: assume something exists, construct a counterexample by systematically differing from every possible case, and derive a contradiction.

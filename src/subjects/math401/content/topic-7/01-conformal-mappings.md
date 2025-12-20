@@ -1,3 +1,9 @@
+---
+id: math401-topic-7-1
+title: "Introduction to Conformal Mappings"
+order: 1
+---
+
 # Conformal Mappings
 
 Conformal mappings are transformations that preserve angles locally. In complex analysis, analytic functions with non-zero derivatives are conformal, making them powerful tools for solving problems in geometry, physics, and engineering. These mappings transform complicated regions into simpler ones while preserving the geometric structure.

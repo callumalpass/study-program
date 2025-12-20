@@ -1,3 +1,9 @@
+---
+id: cs203-t6-halting
+title: "The Halting Problem"
+order: 4
+---
+
 # The Halting Problem
 
 The **Halting Problem** is the most famous undecidable problem: determining whether a given program will eventually halt or run forever. It represents a fundamental limitation of computation—no matter how sophisticated our analysis tools become, we can never build a perfect program analyzer that determines termination for all programs.

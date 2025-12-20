@@ -1,3 +1,9 @@
+---
+id: math401-topic-7-7
+title: "Applications to Physics and Engineering"
+order: 7
+---
+
 # Boundary Value Problems
 
 Boundary value problems (BVPs) seek functions satisfying a differential equation in a domain with specified conditions on the boundary. Conformal mapping is a powerful tool for solving BVPs involving harmonic functions, transforming complex domains into simpler ones where solutions are known or easily computed.

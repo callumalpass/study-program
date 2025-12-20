@@ -1,3 +1,9 @@
+---
+id: cs104-t4-chaining
+title: "Collision Resolution: Chaining"
+order: 3
+---
+
 # Collision Resolution: Chaining
 
 Collisions occur when two different keys hash to the same bucket index. **Chaining** (also called separate chaining) is the most common collision resolution strategy, where each bucket stores a collection of all entries that hash to that index.

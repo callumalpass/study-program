@@ -1,3 +1,9 @@
+---
+id: cs302-t2-mac
+title: "Media Access Control Protocols"
+order: 3
+---
+
 # Media Access Control Protocols
 
 When multiple devices share a communication channel, **Media Access Control (MAC)** protocols determine who transmits when. Without coordination, simultaneous transmissions collide and corrupt each other. MAC protocols solve this fundamental challenge of shared medium access.

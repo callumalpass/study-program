@@ -1,3 +1,9 @@
+---
+id: cs301-t6-segmentation
+title: "Segmentation"
+order: 6
+---
+
 # Segmentation
 
 Segmentation is a memory management scheme that divides memory into variable-length segments. This subtopic covers segmentation concepts, segment tables, and segmentation with paging.

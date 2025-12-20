@@ -1,3 +1,9 @@
+---
+id: cs201-t4-classic
+title: "Classic Divide and Conquer"
+order: 4
+---
+
 # Classic Divide and Conquer Algorithms
 
 Divide and conquer's applicability extends far beyond sorting. The same recursive decomposition that makes merge sort elegant enables efficient solutions for computational geometry (closest pair of points), numerical algorithms (matrix and integer multiplication), and data analysis (counting inversions). Each application reveals new aspects of the paradigm: how to split problems, what makes combination efficient, and where the mathematical insight lies.

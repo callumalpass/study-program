@@ -1,3 +1,9 @@
+---
+id: cs101-t7-pitfalls
+title: "Pitfalls, Best Practices, Practice"
+order: 7
+---
+
 ## Common Pitfalls and Best Practices
 
 Recursion is elegant but error-prone. This subtopic covers the most common mistakes, how to avoid them, and best practices for writing clean recursive code. We'll also provide practice exercises to solidify your understanding.

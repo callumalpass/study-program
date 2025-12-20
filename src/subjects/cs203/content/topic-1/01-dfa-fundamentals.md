@@ -1,3 +1,9 @@
+---
+id: cs203-t1-dfa
+title: "DFA Fundamentals"
+order: 1
+---
+
 # DFA Fundamentals
 
 A **Deterministic Finite Automaton (DFA)** is a mathematical model of computation that processes input strings and either accepts or rejects them. DFAs are the simplest model of computation with practical applications in lexical analysis, pattern matching, and protocol verification.

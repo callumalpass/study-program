@@ -1,3 +1,9 @@
+---
+id: cs205-t1-algebra
+title: "Relational Algebra"
+order: 5
+---
+
 # Relational Algebra
 
 Relational algebra is a procedural query language that forms the theoretical foundation for SQL. Understanding it helps you write better queries and optimize database operations.

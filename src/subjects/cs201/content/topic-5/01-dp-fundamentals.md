@@ -1,3 +1,9 @@
+---
+id: cs201-t5-fundamentals
+title: "DP Fundamentals"
+order: 1
+---
+
 # Dynamic Programming Fundamentals
 
 Dynamic programming (DP) is one of the most powerful algorithm design paradigms, enabling solutions to problems that would otherwise require exponential time. The core insight of dynamic programming is elegantly simple yet profoundly impactful: if a problem can be broken into overlapping subproblems, we can solve each subproblem once and store the result, eliminating redundant computation entirely.

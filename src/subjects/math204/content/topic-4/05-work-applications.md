@@ -1,3 +1,9 @@
+---
+id: math204-t4-work
+title: "Work Applications"
+order: 5
+---
+
 # Work and Integration
 
 Work is a fundamental concept in physics that quantifies energy transfer. When force varies with position—as in stretching a spring or pumping water from a tank—calculating work requires integration. This application demonstrates how calculus extends simple physics formulas to handle continuously varying quantities.

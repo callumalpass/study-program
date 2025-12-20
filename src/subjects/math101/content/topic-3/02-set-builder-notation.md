@@ -1,3 +1,9 @@
+---
+id: math101-t3-builder
+title: "Set-Builder Notation"
+order: 2
+---
+
 # Set-Builder Notation and Special Sets
 
 ## Set-Builder Notation

@@ -1,3 +1,9 @@
+---
+id: math301-topic-2-7
+title: "Differentiability"
+order: 7
+---
+
 # Differentiability and the Total Differential
 
 ## Introduction

@@ -1,3 +1,9 @@
+---
+id: math204-t2-properties
+title: "Properties of Definite Integrals"
+order: 2
+---
+
 # Properties of Definite Integrals
 
 Definite integrals possess several algebraic and geometric properties that simplify computation and reveal important relationships between functions and their integrals. Understanding these properties is essential for efficient problem-solving and provides insight into the structure of integration.

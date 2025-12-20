@@ -1,3 +1,9 @@
+---
+id: cs302-t2-framing
+title: "Data Link Layer and Framing"
+order: 2
+---
+
 # Data Link Layer and Framing
 
 The Data Link layer bridges the gap between raw bit transmission and network-layer packet delivery. It organizes bits into meaningful units called **frames**, provides addressing for local delivery, and detects transmission errors. This layer is essential for reliable communication within a network segment.

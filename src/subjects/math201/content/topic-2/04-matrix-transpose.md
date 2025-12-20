@@ -1,3 +1,9 @@
+---
+id: math201-t2-transpose
+title: "Matrix Transpose"
+order: 4
+---
+
 # Matrix Transpose
 
 The transpose is a fundamental matrix operation that flips a matrix over its main diagonal, interchanging rows and columns. This operation appears throughout linear algebra—in defining symmetric matrices, computing dot products, solving least squares problems, and analyzing linear transformations. Understanding transpose properties is essential for advanced matrix theory.

@@ -1,3 +1,9 @@
+---
+id: math301-topic-2-5
+title: "The Chain Rule"
+order: 5
+---
+
 # Chain Rule for Multivariable Functions
 
 ## Introduction

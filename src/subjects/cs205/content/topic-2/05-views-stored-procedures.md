@@ -1,3 +1,9 @@
+---
+id: cs205-t2-views
+title: "Views and Stored Procedures"
+order: 5
+---
+
 # Views and Stored Procedures
 
 Views provide virtual tables based on queries, while stored procedures encapsulate reusable database logic. Both are essential for building maintainable database applications.

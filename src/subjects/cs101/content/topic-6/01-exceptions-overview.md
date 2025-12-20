@@ -1,3 +1,9 @@
+---
+id: cs101-t6-exceptions
+title: "Exceptions Overview"
+order: 1
+---
+
 ## Exceptions: When Things Go Wrong
 
 Programs don't always run smoothly. Files go missing, users type unexpected input, network connections drop, and calculations produce invalid results. Rather than crashing silently or producing garbage, Python uses **exceptions** to signal when something has gone wrong. Understanding exceptions is essential for writing robust, user-friendly programs.

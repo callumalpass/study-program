@@ -1,3 +1,9 @@
+---
+id: math201-t4-basis-def
+title: "Basis Definition"
+order: 3
+---
+
 # Basis Definition
 
 ## Introduction

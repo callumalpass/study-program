@@ -1,3 +1,9 @@
+---
+id: math201-t5-properties
+title: "Properties of Determinants"
+order: 3
+---
+
 # Properties of Determinants
 
 Determinants have elegant algebraic properties that make them easier to compute and understand. These properties reveal deep connections between matrix operations and their geometric interpretations.

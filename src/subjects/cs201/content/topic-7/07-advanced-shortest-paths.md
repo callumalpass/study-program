@@ -1,3 +1,9 @@
+---
+id: cs201-t7-advanced
+title: "Advanced Shortest Paths"
+order: 7
+---
+
 # Advanced Shortest Path Algorithms
 
 While Dijkstra's algorithm efficiently handles graphs with non-negative edge weights, many real-world problems involve negative weights or require shortest paths between all pairs of vertices. Financial modeling may involve negative costs (rebates, arbitrage). Differential constraints in scheduling naturally produce negative weights. All-pairs queries arise when building distance matrices or precomputing routing tables.

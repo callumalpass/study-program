@@ -1,3 +1,9 @@
+---
+id: cs202-t6-intro
+title: "Memory Hierarchy Introduction"
+order: 1
+---
+
 # Introduction to Memory Hierarchy
 
 The memory hierarchy is one of the most important concepts in computer architecture. It provides the illusion of large, fast memory using a combination of technologies with different characteristics. Understanding the hierarchy is essential for writing efficient software and designing high-performance systems.

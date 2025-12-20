@@ -1,3 +1,9 @@
+---
+id: cs103-t5-intro
+title: "Introduction to Design Patterns"
+order: 1
+---
+
 ## Introduction to Design Patterns
 
 Experienced developers notice that certain problems come up repeatedly: "I need exactly one instance of this class," "I need to create objects without knowing their exact type," "I need to notify multiple objects when something changes." Design patterns are proven solutions to these recurring problems—a shared vocabulary that makes code easier to design, discuss, and maintain.

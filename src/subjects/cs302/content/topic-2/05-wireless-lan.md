@@ -1,3 +1,9 @@
+---
+id: cs302-t2-wireless
+title: "Wireless LAN (Wi-Fi)"
+order: 5
+---
+
 # Wireless LAN (Wi-Fi)
 
 Wireless Local Area Networks (WLANs) provide network connectivity without physical cables, enabling mobility and flexible deployment. Based on IEEE 802.11 standards and commonly branded as **Wi-Fi**, wireless networking has become ubiquitous in homes, offices, and public spaces.

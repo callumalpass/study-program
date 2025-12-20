@@ -1,3 +1,9 @@
+---
+id: cs104-t1-arrays
+title: "Array Fundamentals"
+order: 1
+---
+
 # Array Fundamentals
 
 Arrays are the most fundamental data structure in computer science, providing a way to store collections of elements in contiguous memory locations. Understanding arrays deeply is essential as they form the basis for many other data structures.

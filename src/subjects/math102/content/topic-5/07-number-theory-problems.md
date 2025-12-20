@@ -1,3 +1,9 @@
+---
+id: math102-t5-probs
+title: "Number Theory Problems"
+order: 7
+---
+
 # Number Theory Problems
 
 This section presents classic number theory problems and techniques. Working through these builds problem-solving skills and deeper understanding.

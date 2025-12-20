@@ -1,3 +1,9 @@
+---
+id: cs204-t5-integration
+title: "Integration Testing"
+order: 3
+---
+
 # Integration Testing
 
 Integration testing verifies that different components, modules, or services work correctly together. While unit tests validate individual pieces in isolation, integration tests expose problems in the interactions and interfaces between components.

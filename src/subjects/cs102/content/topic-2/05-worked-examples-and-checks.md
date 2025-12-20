@@ -1,3 +1,9 @@
+---
+id: cs102-t2-worked-examples-and-checks
+title: "Worked Examples and Self-Checks"
+order: 5
+---
+
 # Worked Examples and Self-Checks
 
 This subtopic ties together addition, subtraction, two's complement, overflow detection, and shifts with comprehensive worked examples. Working through these problems step-by-step will solidify your understanding and prepare you for exams and real-world debugging scenarios.

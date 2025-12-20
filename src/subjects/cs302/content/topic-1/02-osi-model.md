@@ -1,3 +1,9 @@
+---
+id: cs302-t1-osi
+title: "The OSI Reference Model"
+order: 2
+---
+
 # The OSI Reference Model
 
 The **Open Systems Interconnection (OSI) model** is a conceptual framework that standardizes network communication into seven distinct layers. Developed by the International Organization for Standardization (ISO) in the 1980s, it provides a universal language for discussing network architecture, even though real-world implementations often differ.

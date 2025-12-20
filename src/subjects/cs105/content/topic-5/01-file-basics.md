@@ -1,3 +1,9 @@
+---
+id: cs105-t5-basics
+title: "File I/O Basics"
+order: 1
+---
+
 # File I/O Basics
 
 File Input/Output enables programs to persist data beyond program execution. C provides powerful, low-level file operations through the standard library's `stdio.h`.

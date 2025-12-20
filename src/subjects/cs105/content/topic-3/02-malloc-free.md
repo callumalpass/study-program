@@ -1,3 +1,9 @@
+---
+id: cs105-t3-malloc-free
+title: "malloc and free"
+order: 2
+---
+
 # malloc and free
 
 The `malloc` and `free` functions are the foundation of dynamic memory management in C. They give you explicit control over heap allocation but require careful handling to avoid memory bugs.

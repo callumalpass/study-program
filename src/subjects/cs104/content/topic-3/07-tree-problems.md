@@ -1,3 +1,9 @@
+---
+id: cs104-t3-problems
+title: "Tree Problems"
+order: 7
+---
+
 # Common Tree Problems and Patterns
 
 Tree problems are favorites in coding interviews and competitive programming. This section covers essential patterns and techniques for solving tree problems effectively.

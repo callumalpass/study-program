@@ -1,3 +1,9 @@
+---
+id: cs103-t7-refactoring
+title: "Refactoring"
+order: 7
+---
+
 ## Refactoring OOP Code
 
 Refactoring is improving code structure without changing its behavior. With tests in place, you can confidently reshape code to be cleaner, more maintainable, and easier to extend.

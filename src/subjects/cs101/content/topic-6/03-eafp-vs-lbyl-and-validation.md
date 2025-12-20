@@ -1,3 +1,9 @@
+---
+id: cs101-t6-eafp
+title: "EAFP vs LBYL and Validation"
+order: 3
+---
+
 ## EAFP vs LBYL: Two Approaches to Error Prevention
 
 When writing code that might fail, you have two main strategies: check conditions before attempting an operation, or attempt the operation and handle any errors. Python has names for these approaches, and understanding when to use each makes your code cleaner and more robust.

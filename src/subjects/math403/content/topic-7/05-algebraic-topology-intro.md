@@ -1,3 +1,9 @@
+---
+id: math403-topic-7-5
+title: "Introduction to Algebraic Topology"
+order: 5
+---
+
 # Introduction to Algebraic Topology
 
 Algebraic topology uses algebraic structures—groups, rings, modules, and categories—to study topological spaces, converting topological problems into algebraic ones that are often easier to solve. The fundamental philosophy is to assign computable algebraic invariants to topological spaces in such a way that homeomorphic (or homotopy equivalent) spaces receive isomorphic invariants. This translation from topology to algebra is one of the great achievements of 20th-century mathematics, providing powerful tools for distinguishing spaces, proving impossibility results, and understanding the structure of continuous maps. The interplay between geometric intuition and algebraic computation makes algebraic topology both conceptually rich and practically applicable.

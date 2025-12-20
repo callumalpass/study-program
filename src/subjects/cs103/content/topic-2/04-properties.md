@@ -1,3 +1,9 @@
+---
+id: cs103-t2-properties
+title: "Properties in Python"
+order: 4
+---
+
 ## Properties: The `@property` Decorator
 
 The `@property` decorator is Python's elegant solution for controlled attribute access. It lets you define methods that behave like attributes, providing the flexibility of methods with the clean syntax of direct access.

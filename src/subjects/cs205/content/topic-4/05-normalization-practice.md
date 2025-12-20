@@ -1,3 +1,9 @@
+---
+id: cs205-t4-practice
+title: "Normalization Practice"
+order: 5
+---
+
 # Normalization Practice
 
 Applying normalization in real-world scenarios requires systematic analysis and practical judgment. This section presents worked examples and exercises.

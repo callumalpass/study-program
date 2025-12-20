@@ -1,3 +1,9 @@
+---
+id: cs101-t3-def
+title: "Defining and Calling"
+order: 2
+---
+
 ## Defining and Calling Functions
 
 Creating your own functions involves two distinct steps: **defining** the function (writing the code) and **calling** it (running the code). This separation is what makes functions reusable - you define once, call many times.

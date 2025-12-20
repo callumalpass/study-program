@@ -1,3 +1,9 @@
+---
+id: cs301-t5-concepts
+title: "Deadlock Concepts"
+order: 1
+---
+
 # Deadlock Concepts
 
 Deadlock is a fundamental problem in operating systems where processes are blocked forever waiting for resources. This subtopic covers deadlock definition, system model, and characterization.

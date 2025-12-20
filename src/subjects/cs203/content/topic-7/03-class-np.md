@@ -1,3 +1,9 @@
+---
+id: cs203-t7-classnp
+title: "Class NP"
+order: 3
+---
+
 # Class NP
 
 **NP** (Nondeterministic Polynomial Time) is the class of problems where solutions can be verified quickly, even if finding solutions may be hard. This asymmetry between finding and checking solutions is one of the most profound and intriguing aspects of computational complexity.

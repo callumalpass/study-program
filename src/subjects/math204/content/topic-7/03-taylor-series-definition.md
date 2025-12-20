@@ -1,3 +1,9 @@
+---
+id: math204-t7-taylor-def
+title: "Taylor Series Definition"
+order: 3
+---
+
 # Taylor Series and Maclaurin Series
 
 Taylor series provide a systematic way to represent any infinitely differentiable function as a power series. They are among the most important tools in calculus, enabling us to approximate complex functions with polynomials, solve differential equations, and understand function behavior near any point.

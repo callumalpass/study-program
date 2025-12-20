@@ -1,3 +1,9 @@
+---
+id: math202-t7-posterior
+title: "Posterior Inference"
+order: 3
+---
+
 ## Posterior Inference
 
 Once we've specified a prior and observed data, Bayes' theorem gives us the posterior distribution—a complete description of our updated knowledge about the parameter. But how do we extract useful information from this distribution? Posterior inference encompasses the techniques for summarizing, interpreting, and using posterior distributions to make decisions and predictions.

@@ -1,3 +1,9 @@
+---
+id: cs302-t3-nat
+title: "Network Address Translation"
+order: 7
+---
+
 # NAT: Network Address Translation
 
 ## The Address Shortage Problem

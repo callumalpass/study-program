@@ -1,3 +1,9 @@
+---
+id: math204-t3-trig-sub
+title: "Trigonometric Substitution"
+order: 3
+---
+
 # Trigonometric Substitution
 
 Trigonometric substitution is a powerful technique for evaluating integrals containing certain radical expressions. The method leverages Pythagorean identities to transform algebraic expressions involving square roots into trigonometric expressions that can be integrated using standard techniques. While it may seem counterintuitive to make an integral more complicated by introducing trigonometric functions, the technique elegantly eliminates radicals that would otherwise be intractable.

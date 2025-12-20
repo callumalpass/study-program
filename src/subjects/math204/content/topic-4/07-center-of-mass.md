@@ -1,3 +1,9 @@
+---
+id: math204-t4-center-mass
+title: "Center of Mass"
+order: 7
+---
+
 # Center of Mass and Centroids
 
 The center of mass is the balance point of an object—the point where the object's entire mass can be considered concentrated. For continuous objects, finding the center of mass requires integration. This concept has applications in engineering, physics, architecture, and even economics.

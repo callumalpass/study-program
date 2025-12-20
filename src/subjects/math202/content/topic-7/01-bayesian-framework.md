@@ -1,3 +1,9 @@
+---
+id: math202-t7-framework
+title: "Bayesian Framework"
+order: 1
+---
+
 ## The Bayesian Framework
 
 Statistical inference deals with learning about unknown quantities from observed data. The Bayesian approach treats these unknown quantities as random variables with probability distributions, and provides a systematic method for updating our beliefs as we observe new evidence. This framework offers an intuitive and mathematically rigorous foundation for reasoning under uncertainty.

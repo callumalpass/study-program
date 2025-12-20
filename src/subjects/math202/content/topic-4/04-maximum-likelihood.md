@@ -1,3 +1,9 @@
+---
+id: math202-t4-mle
+title: "Maximum Likelihood Estimation"
+order: 4
+---
+
 # Maximum Likelihood Estimation
 
 Maximum likelihood estimation (MLE) is the most widely used method for parameter estimation in statistics. The principle is elegant: choose parameter values that make the observed data most probable. Despite its conceptual simplicity, MLE has remarkable theoretical properties and performs optimally in large samples.

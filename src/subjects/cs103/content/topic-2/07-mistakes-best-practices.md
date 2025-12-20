@@ -1,3 +1,9 @@
+---
+id: cs103-t2-mistakes
+title: "Common Mistakes and Best Practices"
+order: 7
+---
+
 ## Common Mistakes and Best Practices
 
 Encapsulation is powerful, but misuse leads to over-engineering, confusing APIs, and hidden bugs. Learn the pitfalls and how to avoid them.

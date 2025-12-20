@@ -1,3 +1,9 @@
+---
+id: math201-t7-geometric
+title: "Geometric Transformations"
+order: 7
+---
+
 # Geometric Transformations in R² and R³
 
 ## Introduction

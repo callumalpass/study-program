@@ -1,3 +1,9 @@
+---
+id: cs104-t6-applications
+title: "Sorting Applications"
+order: 7
+---
+
 # Sorting Applications and Problems
 
 Sorting is a building block for countless algorithms and problems. Understanding when and how to apply sorting is a key problem-solving skill.

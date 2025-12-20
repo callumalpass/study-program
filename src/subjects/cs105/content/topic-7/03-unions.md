@@ -1,3 +1,9 @@
+---
+id: cs105-t7-unions
+title: "Unions"
+order: 3
+---
+
 # Unions
 
 Unions are a C feature that allows multiple members to share the same memory location. This enables type punning, memory reinterpretation, and space-efficient variant types.

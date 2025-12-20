@@ -1,3 +1,9 @@
+---
+id: math403-topic-7-4
+title: "Knot Theory Basics"
+order: 4
+---
+
 # Knot Theory Basics
 
 Knot theory studies embeddings of circles in 3-dimensional space, using topology to distinguish and classify knots. What began as an attempt by 19th-century physicists to model atoms as knotted vortex tubes has evolved into a rich mathematical theory with applications in biology, chemistry, physics, and cryptography. The fundamental question of knot theory is deceptively simple: when are two knots equivalent? Despite this elementary formulation, the question leads to deep mathematics connecting topology, algebra, and combinatorics. Knot theory exemplifies how studying simple objects with topological methods reveals intricate structure and powerful invariants.

@@ -1,3 +1,9 @@
+---
+id: math101-t5-bijections
+title: "Bijections and Inverse Functions"
+order: 5
+---
+
 # Bijections and Inverse Functions
 
 ## Definition of Bijection

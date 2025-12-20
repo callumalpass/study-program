@@ -1,3 +1,9 @@
+---
+id: math301-topic-1-2
+title: "Vector Operations"
+order: 2
+---
+
 # Vector Operations
 
 ## Introduction

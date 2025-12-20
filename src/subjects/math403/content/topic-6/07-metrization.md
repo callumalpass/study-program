@@ -1,3 +1,9 @@
+---
+id: math403-topic-6-7
+title: "Metrization Theorems"
+order: 7
+---
+
 # Metrization Theorems
 
 Metrization theorems characterize which topological spaces are metrizable, providing fundamental connections between topology and metric theory. These theorems answer the natural question: given a topological space defined abstractly through open sets, when can we find a metric that induces exactly that topology? This question lies at the heart of the relationship between the quantitative (metric) and qualitative (topological) approaches to studying spaces.

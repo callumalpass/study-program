@@ -1,3 +1,9 @@
+---
+id: math202-t2-covariance
+title: "Covariance and Correlation"
+order: 7
+---
+
 # Covariance and Correlation
 
 When studying multiple random variables, we often want to quantify their relationship: Do they tend to increase together? Move in opposite directions? Or vary independently? Covariance and correlation provide precise mathematical measures of linear association.

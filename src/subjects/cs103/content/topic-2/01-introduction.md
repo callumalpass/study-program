@@ -1,3 +1,9 @@
+---
+id: cs103-t2-intro
+title: "Introduction to Encapsulation"
+order: 1
+---
+
 ## Introduction to Encapsulation
 
 Imagine a bank vault: you can deposit and withdraw money through the teller window, but you can't walk into the vault and rearrange the cash yourself. This is the essence of encapsulation—controlling access to an object's internal state through a well-defined interface.

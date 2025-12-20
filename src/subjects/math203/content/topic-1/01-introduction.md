@@ -1,3 +1,9 @@
+---
+id: math203-t1-intro
+title: "Introduction to Limits"
+order: 1
+---
+
 # Introduction to Limits
 
 Limits are the cornerstone of calculus. They provide the mathematical foundation for understanding change, motion, and continuity. Before calculus, mathematicians struggled to rigorously define concepts like instantaneous velocity or the slope of a curve at a single point. Limits solve this problem by describing what happens to a function's output as its input approaches a particular value.

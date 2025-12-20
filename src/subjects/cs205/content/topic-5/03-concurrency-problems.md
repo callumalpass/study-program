@@ -1,3 +1,9 @@
+---
+id: cs205-t5-concurrency
+title: "Concurrency Problems"
+order: 3
+---
+
 # Concurrency Problems
 
 When multiple transactions execute simultaneously, various anomalies can occur without proper concurrency control. Understanding these problems is crucial for designing correct database applications.

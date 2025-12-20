@@ -1,3 +1,9 @@
+---
+id: math101-t1-connectives
+title: "Basic Connectives (AND, OR, NOT)"
+order: 3
+---
+
 # Basic Logical Connectives: NOT, AND, OR
 
 ## Introduction to Connectives

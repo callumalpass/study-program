@@ -1,3 +1,9 @@
+---
+id: cs105-t6-advanced
+title: "Advanced Macros"
+order: 4
+---
+
 # Advanced Macros
 
 Beyond basic macros, C provides powerful preprocessor features including stringification, token concatenation, and variadic macros. These enable sophisticated metaprogramming techniques.

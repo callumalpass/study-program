@@ -1,3 +1,9 @@
+---
+id: cs202-t5-intro
+title: "Introduction to Caches"
+order: 1
+---
+
 # Introduction to Cache Memory
 
 **Cache memory** is a small, fast memory that stores copies of frequently accessed data from main memory. Caches exploit the principle of locality to dramatically reduce average memory access time, bridging the speed gap between the CPU and main memory.

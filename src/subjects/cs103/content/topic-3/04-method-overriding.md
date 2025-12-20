@@ -1,3 +1,9 @@
+---
+id: cs103-t3-overriding
+title: "Method Overriding"
+order: 4
+---
+
 ## Method Overriding and Extension
 
 When a child class defines a method with the same name as a parent method, it **overrides** that method. Understanding when to override vs extend is key to effective inheritance.

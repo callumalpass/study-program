@@ -1,3 +1,9 @@
+---
+id: cs302-t1-tcpip
+title: "The TCP/IP Model"
+order: 3
+---
+
 # The TCP/IP Model
 
 While the OSI model provides a conceptual framework, the **TCP/IP model** (also called the Internet model) describes how the Internet actually works. Developed through practical implementation rather than theoretical design, TCP/IP has become the de facto standard for network communication worldwide.

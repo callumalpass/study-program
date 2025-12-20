@@ -1,3 +1,9 @@
+---
+id: math204-t5-infinite-limits
+title: "Infinite Limits (Type 1)"
+order: 1
+---
+
 # Type 1 Improper Integrals: Infinite Limits of Integration
 
 Type 1 improper integrals extend definite integration to infinite intervals. These integrals appear throughout mathematics, physics, and engineering whenever we need to compute quantities over unbounded regions. Understanding convergence and divergence of these integrals is essential for ensuring that calculated values are meaningful.

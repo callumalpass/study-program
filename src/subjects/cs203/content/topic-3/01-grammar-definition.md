@@ -1,3 +1,9 @@
+---
+id: cs203-t3-definition
+title: "Grammar Definition"
+order: 1
+---
+
 # Grammar Definition
 
 A **Context-Free Grammar (CFG)** is a formal system for generating strings through a recursive rewriting process. CFGs can describe nested structures that regular languages cannot, making them essential for programming language syntax, natural language processing, and formal verification.

@@ -1,3 +1,9 @@
+---
+id: cs103-t1-best-practices
+title: "Best Practices"
+order: 7
+---
+
 ## Best Practices and Common Mistakes
 
 Writing good object-oriented code isn't just about knowing the syntax—it's about following patterns that make code maintainable and avoiding pitfalls that cause bugs. This section covers essential practices and common mistakes.

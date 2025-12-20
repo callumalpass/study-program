@@ -1,3 +1,9 @@
+---
+id: cs202-t2-procedures
+title: "Procedures and Stack"
+order: 5
+---
+
 # Procedures and the Call Stack
 
 Procedures (functions) are the building blocks of modular programs. Understanding how they work at the assembly level—including calling conventions, stack frames, and register usage—is essential for systems programming, debugging, and performance optimization.

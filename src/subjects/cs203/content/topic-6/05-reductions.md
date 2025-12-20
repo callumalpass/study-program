@@ -1,3 +1,9 @@
+---
+id: cs203-t6-reductions
+title: "Reductions"
+order: 5
+---
+
 # Reduction Techniques
 
 **Reductions** transfer undecidability from known undecidable problems to new problems. If problem A reduces to problem B, then B is at least as hard as A. Reductions are the primary technique for proving new problems undecidable—instead of creating a new diagonalization argument each time, we show that solving the new problem would let us solve a known undecidable problem.

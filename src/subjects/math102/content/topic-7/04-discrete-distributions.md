@@ -1,3 +1,9 @@
+---
+id: math102-t7-discrete
+title: "Discrete Distributions"
+order: 4
+---
+
 # Discrete Probability Distributions
 
 This section covers the most important discrete probability distributions. Each models a specific type of random process and has characteristic properties.

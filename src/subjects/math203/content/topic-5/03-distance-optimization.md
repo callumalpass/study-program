@@ -1,3 +1,9 @@
+---
+id: math203-t5-distance
+title: "Distance Optimization"
+order: 3
+---
+
 # Distance Optimization
 
 Finding the shortest distance—to a curve, between points, or along a path—is a common optimization problem. A key technique is to minimize distance squared instead of distance, which eliminates the square root and simplifies the calculus.

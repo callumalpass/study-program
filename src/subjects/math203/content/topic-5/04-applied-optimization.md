@@ -1,3 +1,9 @@
+---
+id: math203-t5-applied
+title: "Applied Optimization"
+order: 4
+---
+
 # Applied Optimization
 
 Beyond geometry, optimization appears in economics, physics, engineering, and everyday decision-making. These problems follow the same calculus framework but require translating real-world scenarios into mathematical models.

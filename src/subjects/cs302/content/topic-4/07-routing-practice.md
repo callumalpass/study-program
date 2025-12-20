@@ -1,3 +1,9 @@
+---
+id: cs302-t4-practice
+title: "Routing Best Practices"
+order: 7
+---
+
 # Routing in Practice
 
 ## Building a Routing Table

@@ -1,3 +1,9 @@
+---
+id: math204-t6-divergence-integral
+title: "Divergence and Integral Tests"
+order: 4
+---
+
 # Divergence Test, Integral Test, and p-Series
 
 ## The Divergence Test

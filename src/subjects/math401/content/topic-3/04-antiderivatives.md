@@ -1,3 +1,9 @@
+---
+id: math401-topic-3-4
+title: "Cauchy-Goursat Theorem"
+order: 4
+---
+
 # Complex Antiderivatives
 
 An antiderivative (or primitive) of a complex function extends the familiar concept from real calculus. The existence of an antiderivative has profound implications: it guarantees path independence for contour integrals and provides a fundamental theorem analogous to the real case. Understanding when antiderivatives exist and how to find them is essential for evaluating integrals and applying Cauchy's theorem.

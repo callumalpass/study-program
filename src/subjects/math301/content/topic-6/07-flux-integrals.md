@@ -1,3 +1,9 @@
+---
+id: math301-topic-6-7
+title: "Flux Integrals"
+order: 7
+---
+
 # Flux Integrals
 
 ## Introduction

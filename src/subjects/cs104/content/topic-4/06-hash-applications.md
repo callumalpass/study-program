@@ -1,3 +1,9 @@
+---
+id: cs104-t4-applications
+title: "Hash Table Applications"
+order: 6
+---
+
 # Hash Table Applications
 
 Hash tables are one of the most versatile data structures, appearing in countless real-world applications. Understanding common use cases helps you recognize when to reach for a hash table and how to apply it effectively.

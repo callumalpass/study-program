@@ -1,3 +1,9 @@
+---
+id: cs105-t7-misc
+title: "Miscellaneous Topics"
+order: 7
+---
+
 # Miscellaneous Topics
 
 This section covers additional C features including `typedef`, `sizeof`, alignment, compound literals, and other useful language constructs.

@@ -1,3 +1,9 @@
+---
+id: math203-t1-continuity
+title: "Continuity"
+order: 4
+---
+
 # Continuity
 
 Continuity formalizes the intuitive idea of a function with no breaks, jumps, or holes. A continuous function can be drawn without lifting your pen from the paper. This concept is fundamental to calculus and connects limits to function values.

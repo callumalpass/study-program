@@ -1,3 +1,9 @@
+---
+id: math204-t2-ftc2
+title: "Fundamental Theorem of Calculus (Part 2)"
+order: 4
+---
+
 # Fundamental Theorem of Calculus, Part 2
 
 While Part 1 of the Fundamental Theorem of Calculus tells us that differentiation undoes integration, Part 2 provides the computational power that makes definite integrals practical to evaluate. Instead of computing limits of Riemann sums, we can evaluate definite integrals using antiderivatives. This transforms integration from a difficult limiting process into a straightforward algebraic task.

@@ -1,3 +1,9 @@
+---
+id: cs103-t5-factory
+title: "Factory Pattern"
+order: 3
+---
+
 ## The Factory Pattern
 
 **Problem:** You need to create objects without specifying their exact class upfront. The creation logic might be complex, or the type might depend on runtime conditions.

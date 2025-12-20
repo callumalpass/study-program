@@ -1,3 +1,9 @@
+---
+id: math401-topic-4-4
+title: "Fundamental Theorem of Algebra"
+order: 4
+---
+
 # Liouville's Theorem
 
 Liouville's theorem is one of the most elegant and surprising results in complex analysis. It states that every bounded entire function must be constant—a function that is analytic everywhere and doesn't grow too much must not vary at all! This seemingly simple result has profound consequences, including providing a proof of the Fundamental Theorem of Algebra.

@@ -1,3 +1,9 @@
+---
+id: cs105-t5-buffering
+title: "File Buffering"
+order: 4
+---
+
 # File Buffering
 
 Understanding buffering is crucial for efficient file I/O. Buffers reduce system calls by accumulating data before reading from or writing to files.

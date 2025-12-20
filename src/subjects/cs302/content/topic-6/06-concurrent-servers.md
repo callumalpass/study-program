@@ -1,3 +1,9 @@
+---
+id: cs302-t6-concurrent
+title: "Concurrent Servers"
+order: 6
+---
+
 # Concurrent Server Architectures
 
 ## Why Concurrency?

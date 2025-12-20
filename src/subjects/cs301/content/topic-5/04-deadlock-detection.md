@@ -1,3 +1,9 @@
+---
+id: cs301-t5-detection
+title: "Deadlock Detection"
+order: 4
+---
+
 # Deadlock Detection
 
 Deadlock detection allows deadlocks to occur but detects them when they happen. This subtopic covers detection algorithms for single and multiple instance resources.

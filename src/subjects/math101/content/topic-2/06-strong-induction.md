@@ -1,3 +1,9 @@
+---
+id: math101-t2-strong
+title: "Strong Induction"
+order: 6
+---
+
 # Strong Induction and Well-Ordering
 
 ## Limitations of Standard Induction

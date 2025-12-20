@@ -1,3 +1,9 @@
+---
+id: math301-topic-6-1
+title: "Line Integrals of Scalar Functions"
+order: 1
+---
+
 # Line Integrals of Scalar Fields
 
 ## Introduction

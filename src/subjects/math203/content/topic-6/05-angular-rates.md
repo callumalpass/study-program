@@ -1,3 +1,9 @@
+---
+id: math203-t6-angular
+title: "Angular Related Rates"
+order: 5
+---
+
 # Angular Related Rates
 
 Some problems involve angles that change with time. These problems use trigonometric functions to relate angles to other quantities, then differentiate to find angular rates.

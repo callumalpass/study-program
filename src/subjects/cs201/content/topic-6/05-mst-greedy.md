@@ -1,3 +1,9 @@
+---
+id: cs201-t6-mst
+title: "Minimum Spanning Trees"
+order: 5
+---
+
 # Minimum Spanning Trees
 
 Minimum spanning trees exemplify greedy algorithm design: three different greedy strategies—Kruskal's, Prim's, and Borůvka's—all produce optimal results. The problem is fundamental to network design: connect all nodes at minimum total cost. Telephone networks, power grids, computer networks, and pipeline systems all reduce to MST when connection costs are known.

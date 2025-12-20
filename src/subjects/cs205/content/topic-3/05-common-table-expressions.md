@@ -1,3 +1,9 @@
+---
+id: cs205-t3-cte
+title: "Common Table Expressions"
+order: 5
+---
+
 # Common Table Expressions (CTEs)
 
 CTEs provide a way to define temporary named result sets within a query. They improve readability, enable recursion, and can simplify complex queries.

@@ -1,3 +1,9 @@
+---
+id: cs201-t4-recurrence
+title: "Recurrence Relations"
+order: 2
+---
+
 # Recurrence Relations for Algorithm Analysis
 
 When analyzing recursive algorithms, running time depends on running time for smaller inputs—a mathematical relationship called a recurrence relation. The recurrence T(n) = 2T(n/2) + O(n) says: "to solve a size-n problem, solve two size-n/2 problems and do O(n) additional work." Solving such recurrences—finding closed-form expressions for T(n)—reveals the algorithm's complexity class.

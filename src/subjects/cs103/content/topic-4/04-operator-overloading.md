@@ -1,3 +1,9 @@
+---
+id: cs103-t4-operator
+title: "Operator Overloading"
+order: 4
+---
+
 ## Operator Overloading
 
 Special methods let your classes work with Python's built-in operators. When you write `a + b`, Python calls `a.__add__(b)`. By implementing these methods, you give your objects natural, intuitive syntax.

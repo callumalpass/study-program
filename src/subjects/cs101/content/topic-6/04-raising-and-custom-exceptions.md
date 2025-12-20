@@ -1,3 +1,9 @@
+---
+id: cs101-t6-raise
+title: "Raising and Custom Exceptions"
+order: 4
+---
+
 ## Raising Exceptions: Signaling Errors Yourself
 
 So far we've handled exceptions raised by Python. But you can also **raise** exceptions yourself when your code detects a problem. This is essential for writing functions that communicate errors clearly to their callers. Well-placed exceptions make bugs surface early and error messages meaningful.

@@ -1,3 +1,9 @@
+---
+id: math102-t4-connected
+title: "Connected Components"
+order: 4
+---
+
 # Connected Components and Strong Connectivity
 
 Understanding connectivity structure reveals how a graph decomposes into independently reachable regions. This is fundamental for analyzing network robustness and relationships.

@@ -1,3 +1,9 @@
+---
+id: math101-t5-notation
+title: "Function Notation and Terminology"
+order: 2
+---
+
 # Function Notation and Terminology
 
 ## Standard Notation

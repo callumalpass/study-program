@@ -1,3 +1,9 @@
+---
+id: cs205-t5-acid
+title: "ACID Properties"
+order: 1
+---
+
 # ACID Properties
 
 ACID properties define the fundamental guarantees that database transactions must provide. Understanding these properties is essential for building reliable data systems.

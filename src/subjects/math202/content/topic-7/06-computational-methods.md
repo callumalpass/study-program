@@ -1,3 +1,9 @@
+---
+id: math202-t7-computational
+title: "Computational Methods"
+order: 6
+---
+
 ## Computational Methods for Bayesian Inference
 
 While conjugate priors allow analytical posterior computation for simple models, most real-world problems require computational methods. The posterior distribution $P(\theta \mid x) \propto P(x \mid \theta) P(\theta)$ is often known only up to a normalizing constant, and the integral needed to compute this constant may be intractable. This subtopic introduces the fundamental computational techniques that make Bayesian inference practical for complex models.

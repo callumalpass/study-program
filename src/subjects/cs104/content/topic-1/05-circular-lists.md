@@ -1,3 +1,9 @@
+---
+id: cs104-t1-circular
+title: "Circular Lists"
+order: 5
+---
+
 # Circular Linked Lists
 
 A circular linked list is a variation where the last node points back to the first node, forming a closed loop. This structure has unique properties useful for specific applications like round-robin scheduling and circular buffers.

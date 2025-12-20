@@ -1,3 +1,9 @@
+---
+id: math301-topic-3-6
+title: "Normal Vectors"
+order: 6
+---
+
 # Normal Vectors to Surfaces
 
 ## Introduction

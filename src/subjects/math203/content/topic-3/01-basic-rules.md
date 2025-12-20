@@ -1,3 +1,9 @@
+---
+id: math203-t3-basic
+title: "Basic Differentiation Rules"
+order: 1
+---
+
 # Basic Differentiation Rules
 
 While we can always compute derivatives from the limit definition, that process is tedious. Differentiation rules provide shortcuts that make finding derivatives fast and systematic. These rules are the workhorses of calculus.

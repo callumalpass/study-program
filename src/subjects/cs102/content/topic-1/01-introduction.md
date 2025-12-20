@@ -1,3 +1,9 @@
+---
+id: cs102-t1-introduction
+title: "Introduction"
+order: 1
+---
+
 # Introduction to Number Systems
 
 Computers store and manipulate information using **bits** (0s and 1s). Humans often prefer **decimal** (base 10) because we grew up counting on ten fingers, but computer hardware is naturally aligned with **binary** (base 2). To make binary easier to read and work with, we commonly use **hexadecimal** (base 16) and sometimes **octal** (base 8).

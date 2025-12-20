@@ -1,3 +1,9 @@
+---
+id: cs101-t1-numbers
+title: "Integers & Floats"
+order: 3
+---
+
 ## Integers (int)
 
 Integers are whole numbers without decimal points. They can be positive, negative, or zero. In Python, integers are one of the most commonly used data types, perfect for counting, indexing, and any situation requiring exact whole number values.

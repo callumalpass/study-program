@@ -1,3 +1,9 @@
+---
+id: cs201-t5-state
+title: "State Space Reduction"
+order: 7
+---
+
 # DP State Space Reduction
 
 When state spaces become too large, dynamic programming algorithms can exceed available memory or require prohibitive computation time. Advanced state reduction techniques transform seemingly intractable problems into solvable ones by compressing the state space, eliminating redundancy, or exploiting mathematical structure that reduces complexity.

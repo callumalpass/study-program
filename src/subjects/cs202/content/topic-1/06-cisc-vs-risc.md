@@ -1,3 +1,9 @@
+---
+id: cs202-t1-ciscrisc
+title: "CISC vs RISC"
+order: 6
+---
+
 # CISC vs RISC Architectures
 
 The debate between **Complex Instruction Set Computing (CISC)** and **Reduced Instruction Set Computing (RISC)** represents one of the most important architectural decisions in processor design. Understanding the tradeoffs between these philosophies helps explain why different processors are designed the way they are.

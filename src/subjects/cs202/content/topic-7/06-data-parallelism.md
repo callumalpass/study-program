@@ -1,3 +1,9 @@
+---
+id: cs202-t7-simd
+title: "Data-Level Parallelism"
+order: 6
+---
+
 # Data-Level Parallelism and SIMD
 
 **Data-Level Parallelism (DLP)** applies the same operation to multiple data elements simultaneously. Unlike ILP, which finds parallelism among different operations, DLP exploits parallelism within data. SIMD (Single Instruction, Multiple Data) architectures are the hardware mechanism for exploiting DLP.

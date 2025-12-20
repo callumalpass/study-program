@@ -1,3 +1,9 @@
+---
+id: math202-t6-diagnostics
+title: "Model Diagnostics"
+order: 3
+---
+
 # Model Diagnostics
 
 ## Introduction

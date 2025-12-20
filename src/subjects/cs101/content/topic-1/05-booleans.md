@@ -1,3 +1,9 @@
+---
+id: cs101-t1-bools
+title: "Booleans"
+order: 5
+---
+
 ## Booleans (bool)
 
 Booleans represent truth values. There are only two: `True` and `False`. They're essential for making decisions in your code - every `if` statement, every `while` loop, and every conditional expression ultimately depends on booleans.

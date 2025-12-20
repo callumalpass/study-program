@@ -1,3 +1,9 @@
+---
+id: cs203-t7-npcomplete
+title: "NP-Completeness"
+order: 5
+---
+
 # NP-Completeness
 
 **NP-complete** problems are the "hardest" problems in NP. If any NP-complete problem has a polynomial-time algorithm, then P = NP. This remarkable property makes NP-complete problems central to complexity theory.

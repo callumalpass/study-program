@@ -1,3 +1,9 @@
+---
+id: cs301-t6-paging
+title: "Paging"
+order: 3
+---
+
 # Paging
 
 Paging is a memory management scheme that eliminates external fragmentation by using fixed-size blocks. This subtopic covers basic paging concepts and page table structures.

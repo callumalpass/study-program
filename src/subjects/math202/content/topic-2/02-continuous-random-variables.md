@@ -1,3 +1,9 @@
+---
+id: math202-t2-continuous
+title: "Continuous Random Variables"
+order: 2
+---
+
 # Continuous Random Variables
 
 While discrete random variables handle countable outcomes, many real-world quantities are measured on a continuous scale: height, weight, temperature, time, distance. Continuous random variables provide the mathematical framework for modeling such phenomena.

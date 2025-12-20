@@ -1,3 +1,9 @@
+---
+id: cs102-t4-expressions-to-gates
+title: "From Expressions to Gates"
+order: 3
+---
+
 # From Boolean Expressions to Gates
 
 A Boolean expression is an abstract specification of what a circuit should compute. Translating that expression into actual logic gates is the bridge between mathematical logic and physical hardware. This process—going from "F = (A AND B) OR NOT C" to a circuit diagram with wires and gates—is fundamental to digital design.

@@ -1,3 +1,9 @@
+---
+id: cs203-t6-automata
+title: "Decidability of Automata"
+order: 7
+---
+
 # Decidability for Automata
 
 While TM problems are often undecidable, many problems about finite automata and context-free grammars are decidable. This section surveys these results. The contrast is striking: restricted models of computation (DFAs, NFAs, CFGs) enjoy decidable properties that become undecidable for the full power of Turing machines.

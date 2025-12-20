@@ -1,3 +1,9 @@
+---
+id: cs204-t5-automation
+title: "Test Automation"
+order: 5
+---
+
 # Test-Driven Development and Behavior-Driven Development
 
 Test-Driven Development (TDD) and Behavior-Driven Development (BDD) represent paradigm shifts in how we approach software development. Rather than writing tests after code, these methodologies place testing at the center of the development process, fundamentally changing how we design and build software.

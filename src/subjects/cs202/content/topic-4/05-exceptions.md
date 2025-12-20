@@ -1,3 +1,9 @@
+---
+id: cs202-t4-exceptions
+title: "Exceptions in Pipelines"
+order: 5
+---
+
 # Exceptions and Interrupts in Pipelining
 
 **Exceptions** (unexpected events during execution) and **interrupts** (external events) complicate pipeline design. They require saving state, handling the event, and potentially resuming execution—all while multiple instructions are in flight.

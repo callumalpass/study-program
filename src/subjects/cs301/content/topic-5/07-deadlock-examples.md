@@ -1,3 +1,9 @@
+---
+id: cs301-t5-examples
+title: "Deadlock Examples"
+order: 7
+---
+
 # Deadlock Examples and Case Studies
 
 Understanding deadlock through real examples helps recognize and prevent it. This subtopic covers classic examples, real-world incidents, and debugging techniques.

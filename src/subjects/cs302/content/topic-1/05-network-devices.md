@@ -1,3 +1,9 @@
+---
+id: cs302-t1-devices
+title: "Network Devices"
+order: 5
+---
+
 # Network Devices and Their Functions
 
 Network devices are the hardware components that enable communication between computers. Each type of device operates at specific layers of the network stack and performs distinct functions. Understanding these devices is crucial for designing, troubleshooting, and securing networks.

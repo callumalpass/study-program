@@ -1,3 +1,9 @@
+---
+id: math102-t2-nonhom
+title: "Non-Homogeneous Recurrences"
+order: 3
+---
+
 # Non-Homogeneous Recurrences
 
 Non-homogeneous recurrences include extra terms beyond the previous sequence values. These model situations where external "input" affects each step, common in algorithm analysis and applications.

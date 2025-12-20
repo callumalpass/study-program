@@ -1,3 +1,9 @@
+---
+id: math204-t3-tables
+title: "Tables and Computers"
+order: 7
+---
+
 # Integration Tables and Computer Algebra Systems
 
 While mastering integration techniques by hand builds essential mathematical intuition and problem-solving skills, modern mathematics also embraces powerful computational tools. Integration tables, computer algebra systems (CAS), and online calculators can evaluate integrals instantly, handle extraordinarily complex expressions, and verify manual calculations. This section explores how to effectively use these tools while understanding their limitations and maintaining the mathematical insight that comes from working problems by hand.

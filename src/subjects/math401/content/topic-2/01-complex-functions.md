@@ -1,3 +1,9 @@
+---
+id: math401-topic-2-1
+title: "Complex Functions"
+order: 1
+---
+
 # Functions of a Complex Variable
 
 Functions of a complex variable extend the concept of functions from real analysis to the complex plane. While superficially similar to functions $f: \mathbb{R}^2 \to \mathbb{R}^2$, complex functions possess unique properties that make complex analysis profoundly different—and more powerful—than multivariable real calculus.

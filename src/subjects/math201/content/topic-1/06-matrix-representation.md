@@ -1,3 +1,9 @@
+---
+id: math201-t1-matrix-rep
+title: "Matrix Representation"
+order: 6
+---
+
 # Matrix Representation of Linear Systems
 
 ## Introduction

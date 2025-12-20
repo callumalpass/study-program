@@ -1,3 +1,9 @@
+---
+id: math102-t2-linear
+title: "Linear Homogeneous Recurrences"
+order: 2
+---
+
 # Solving Linear Homogeneous Recurrences
 
 Linear homogeneous recurrences with constant coefficients have a systematic solution method using characteristic equations. This technique solves many recurrences arising in combinatorics and algorithm analysis.

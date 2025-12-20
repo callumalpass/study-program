@@ -1,3 +1,9 @@
+---
+id: cs103-t6-abc
+title: "Abstract Base Classes"
+order: 3
+---
+
 ## Abstract Base Classes (ABCs)
 
 Abstract Base Classes let you define a *required set of methods* that subclasses must implement. Python prevents instantiation of incomplete implementations.

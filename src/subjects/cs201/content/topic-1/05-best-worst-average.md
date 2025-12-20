@@ -1,3 +1,9 @@
+---
+id: cs201-t1-cases
+title: "Best, Worst, and Average Cases"
+order: 5
+---
+
 # Best, Worst, and Average Case Analysis
 
 A single complexity number rarely tells the whole story. Linear search might find its target immediately or scan the entire array—same algorithm, vastly different performance. Quick sort runs in O(n log n) on most inputs but degrades to O(n²) on already-sorted data with poor pivot choice. Understanding best, worst, and average case analysis lets you reason about algorithm behavior across the spectrum of possible inputs.

@@ -1,3 +1,9 @@
+---
+id: cs101-t6-debug
+title: "Debugging Techniques"
+order: 6
+---
+
 ## Practical Debugging Techniques
 
 Every programmer spends significant time debugging. The difference between a novice and an expert isn't that experts write bug-free code - it's that experts debug efficiently. This subtopic covers practical techniques that help you find and fix bugs faster.

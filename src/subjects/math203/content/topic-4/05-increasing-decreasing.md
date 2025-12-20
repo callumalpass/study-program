@@ -1,3 +1,9 @@
+---
+id: math203-t4-increasing
+title: "Increasing and Decreasing Functions"
+order: 5
+---
+
 # Increasing and Decreasing Functions
 
 The first derivative tells us exactly where a function is going up and where it's going down. This information is crucial for sketching graphs and understanding function behavior.

@@ -1,3 +1,9 @@
+---
+id: cs104-t2-deques
+title: "Deques"
+order: 6
+---
+
 # Double-Ended Queues (Deques)
 
 A deque (pronounced "deck") is a double-ended queue that allows insertion and deletion at both the front and rear. It combines the capabilities of both stacks and queues in a single data structure.

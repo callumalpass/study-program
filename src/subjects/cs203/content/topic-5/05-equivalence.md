@@ -1,3 +1,9 @@
+---
+id: cs203-t5-equivalence
+title: "Variant Equivalence"
+order: 5
+---
+
 # Equivalence of TM Variants
 
 All Turing machine variants are computationally equivalent—they recognize the same class of languages. This robustness supports the Church-Turing thesis.

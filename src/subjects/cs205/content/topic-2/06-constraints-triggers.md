@@ -1,3 +1,9 @@
+---
+id: cs205-t2-constraints
+title: "Constraints and Triggers"
+order: 6
+---
+
 # SQL Constraints and Triggers
 
 While basic SQL data manipulation forms the foundation of database operations, constraints and triggers provide the mechanisms for maintaining data integrity automatically. Constraints declare rules that data must follow, while triggers execute custom logic in response to database events. Together, they form a powerful system for enforcing business rules at the database level.

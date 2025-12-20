@@ -1,3 +1,9 @@
+---
+id: cs205-t2-ddl
+title: "DDL Fundamentals"
+order: 1
+---
+
 # Data Definition Language Fundamentals
 
 DDL commands define and modify database structure. Understanding DDL is essential for creating well-designed schemas that enforce data integrity.

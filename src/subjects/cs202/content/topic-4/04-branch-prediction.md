@@ -1,3 +1,9 @@
+---
+id: cs202-t4-branch
+title: "Branch Prediction"
+order: 4
+---
+
 # Branch Prediction
 
 **Branch prediction** is essential for high-performance pipelining. Since branch outcomes aren't known until late in the pipeline, prediction allows continued instruction fetch without waiting, dramatically reducing control hazard penalties.

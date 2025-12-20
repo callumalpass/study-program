@@ -1,3 +1,9 @@
+---
+id: cs104-t7-priority
+title: "Priority Queues"
+order: 3
+---
+
 # Priority Queues
 
 A priority queue is an abstract data type where elements have priorities, and elements with higher priority are served before elements with lower priority. Heaps are the most common implementation of priority queues.

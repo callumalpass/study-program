@@ -1,3 +1,9 @@
+---
+id: cs301-t7-files
+title: "File System Concepts"
+order: 5
+---
+
 # File System Concepts
 
 File systems provide persistent storage abstraction. This subtopic covers file concepts, operations, directories, and file system interface.

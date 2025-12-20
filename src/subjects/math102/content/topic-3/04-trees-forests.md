@@ -1,3 +1,9 @@
+---
+id: math102-t3-trees
+title: "Trees and Forests"
+order: 4
+---
+
 # Trees and Forests
 
 Trees are connected graphs without cycles. They're among the most important structures in computer science, appearing in data structures, algorithms, and network design.

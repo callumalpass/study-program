@@ -1,3 +1,9 @@
+---
+id: math101-t3-intro
+title: "Introduction to Sets"
+order: 1
+---
+
 # Introduction to Sets
 
 ## What is a Set?

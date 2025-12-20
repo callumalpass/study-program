@@ -1,3 +1,9 @@
+---
+id: cs302-t4-ls
+title: "Link State Routing"
+order: 3
+---
+
 # Link State Routing
 
 ## The Link State Approach

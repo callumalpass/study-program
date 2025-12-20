@@ -1,3 +1,9 @@
+---
+id: cs201-t6-proofs
+title: "Proving Greedy Correctness"
+order: 2
+---
+
 # Proving Greedy Correctness
 
 The simplicity of greedy algorithms is deceptive. Because they make locally optimal choices without considering global consequences, they can fail in subtle ways. Coin change with denominations [1, 3, 4] choosing greedily for amount 6 gives three coins (4+1+1) when two suffice (3+3). Without rigorous proof, you risk deploying broken algorithms that seem reasonable but produce suboptimal results.

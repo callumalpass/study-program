@@ -1,3 +1,9 @@
+---
+id: math102-t5-factor
+title: "Prime Factorization"
+order: 4
+---
+
 # Prime Factorization
 
 The Fundamental Theorem of Arithmetic states that every integer greater than 1 has a unique prime factorization. This section explores factorization algorithms and their applications.

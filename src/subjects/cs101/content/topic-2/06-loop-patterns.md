@@ -1,3 +1,9 @@
+---
+id: cs101-t2-patterns
+title: "Loop Patterns"
+order: 6
+---
+
 ## Useful Loop Patterns (The Ones You'll Reuse Everywhere)
 
 Once you know `for` and `while`, the next step is learning **patterns** - repeatable ways to solve common tasks. These patterns appear so frequently that recognizing them instantly makes programming much easier.

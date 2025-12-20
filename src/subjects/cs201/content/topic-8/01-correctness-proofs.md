@@ -1,3 +1,9 @@
+---
+id: cs201-t8-correctness
+title: "Correctness Proofs"
+order: 1
+---
+
 # Algorithm Correctness
 
 Testing can show the presence of bugs, but only proofs can show their absence. In critical systems—medical devices, aviation software, financial trading systems—correctness matters enormously. Even in everyday programming, understanding how to reason about algorithm correctness improves code quality and debugging ability. Correctness proofs transform algorithm design from hopeful coding into mathematical reasoning.

@@ -1,3 +1,9 @@
+---
+id: cs201-t4-closest
+title: "Closest Pair Problem"
+order: 6
+---
+
 # Closest Pair Problem
 
 The closest pair problem asks: given n points in the plane, which two are nearest to each other? The brute force solution checks all O(n²) pairs, but a beautiful divide-and-conquer algorithm achieves O(n log n). This algorithm exemplifies how geometric insight enables efficient combination of subproblem solutions.

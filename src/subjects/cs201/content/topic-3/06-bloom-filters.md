@@ -1,3 +1,9 @@
+---
+id: cs201-t3-bloom
+title: "Bloom Filters and Probabilistic Structures"
+order: 6
+---
+
 # Bloom Filters and Probabilistic Data Structures
 
 Traditional data structures provide exact answers: an element is either in the set or not, a counter holds the precise count, cardinality is an exact number. But exactness comes at a cost—typically O(n) space for n elements. When dealing with billions of elements, this becomes prohibitive: storing 1 billion URLs requires tens of gigabytes minimum.

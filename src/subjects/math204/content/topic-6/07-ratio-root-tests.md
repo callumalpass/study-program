@@ -1,3 +1,9 @@
+---
+id: math204-t6-ratio-root
+title: "Ratio and Root Tests"
+order: 7
+---
+
 # Ratio Test, Root Test, and Absolute Convergence
 
 ## The Ratio Test

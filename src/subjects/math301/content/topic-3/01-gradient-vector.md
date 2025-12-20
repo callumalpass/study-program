@@ -1,3 +1,9 @@
+---
+id: math301-topic-3-1
+title: "The Gradient Vector"
+order: 1
+---
+
 # The Gradient Vector
 
 ## Introduction

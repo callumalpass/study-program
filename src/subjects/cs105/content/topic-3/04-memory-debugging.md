@@ -1,3 +1,9 @@
+---
+id: cs105-t3-debugging
+title: "Memory Debugging Tools"
+order: 4
+---
+
 # Memory Debugging Tools
 
 Memory bugs are notoriously difficult to find. They often cause symptoms far from the actual bug, or work fine during testing but crash in production. Fortunately, powerful tools exist to detect these issues.

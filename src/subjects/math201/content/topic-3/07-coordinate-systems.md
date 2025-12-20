@@ -1,3 +1,9 @@
+---
+id: math201-t3-coordinates
+title: "Coordinate Systems"
+order: 7
+---
+
 # Coordinate Systems
 
 Coordinate systems allow us to represent abstract vectors using familiar $\mathbb{R}^n$ coordinates. Just as we can describe locations on Earth using different coordinate systems (latitude/longitude, UTM, etc.), we can describe vectors in a vector space using different bases. This flexibility is crucial for simplifying calculations, solving differential equations, and understanding geometric transformations.

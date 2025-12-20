@@ -1,3 +1,9 @@
+---
+id: math101-t7-notation
+title: "Summation Notation"
+order: 4
+---
+
 # Summation Notation
 
 ## The Sigma Symbol

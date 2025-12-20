@@ -1,3 +1,9 @@
+---
+id: cs204-t3-sequence
+title: "Sequence Diagrams"
+order: 5
+---
+
 # Sequence Diagrams
 
 Sequence diagrams are behavioral UML diagrams that show how objects interact in a particular scenario, emphasizing the time-ordered sequence of messages between objects. They excel at illustrating complex interactions, making them invaluable for understanding system behavior, designing APIs, and debugging distributed systems.

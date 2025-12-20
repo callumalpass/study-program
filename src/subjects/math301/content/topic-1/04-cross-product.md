@@ -1,3 +1,9 @@
+---
+id: math301-topic-1-4
+title: "The Cross Product"
+order: 4
+---
+
 # Cross Product
 
 ## Introduction

@@ -1,3 +1,9 @@
+---
+id: math401-topic-1-6
+title: "Topology of the Complex Plane"
+order: 6
+---
+
 # Topology of the Complex Plane
 
 The complex plane $\mathbb{C}$ is not merely an algebraic structure—it is also a topological space with a rich geometric structure. Understanding the topology of $\mathbb{C}$ is essential for studying continuity, limits, and the behavior of complex functions. This section develops the fundamental topological concepts that underpin complex analysis.

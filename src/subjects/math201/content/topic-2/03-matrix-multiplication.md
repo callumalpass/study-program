@@ -1,3 +1,9 @@
+---
+id: math201-t2-multiplication
+title: "Matrix Multiplication"
+order: 3
+---
+
 # Matrix Multiplication
 
 Matrix multiplication is one of the most important—and initially surprising—operations in linear algebra. Unlike addition, matrix multiplication is not entry-wise, and the order matters. This operation encodes the composition of linear transformations, making it fundamental to everything from solving systems of equations to computer graphics and quantum mechanics.

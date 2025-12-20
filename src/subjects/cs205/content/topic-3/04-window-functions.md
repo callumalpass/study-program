@@ -1,3 +1,9 @@
+---
+id: cs205-t3-window
+title: "Window Functions"
+order: 4
+---
+
 # Window Functions
 
 Window functions perform calculations across rows related to the current row without collapsing results like GROUP BY. They enable powerful analytics queries.

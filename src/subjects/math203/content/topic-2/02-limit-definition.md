@@ -1,3 +1,9 @@
+---
+id: math203-t2-limit-def
+title: "The Limit Definition"
+order: 2
+---
+
 # The Limit Definition of the Derivative
 
 The derivative transforms the intuitive notion of "rate of change" into a precise mathematical concept using limits. This definition is the foundation of differential calculus.

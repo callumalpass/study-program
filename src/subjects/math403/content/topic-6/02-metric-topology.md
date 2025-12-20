@@ -1,3 +1,9 @@
+---
+id: math403-topic-6-2
+title: "Metric Topology"
+order: 2
+---
+
 # Metric Topology
 
 The metric topology is the natural topology induced by a metric, providing a rich structure that connects metric and topological concepts. Understanding this connection is fundamental to both analysis and topology, as it allows us to translate between quantitative (metric) and qualitative (topological) properties of spaces.

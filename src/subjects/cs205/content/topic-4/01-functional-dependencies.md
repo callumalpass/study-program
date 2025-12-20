@@ -1,3 +1,9 @@
+---
+id: cs205-t4-fd
+title: "Functional Dependencies"
+order: 1
+---
+
 # Functional Dependencies
 
 Functional dependencies (FDs) are constraints that describe relationships between attributes. They form the foundation of normalization theory.

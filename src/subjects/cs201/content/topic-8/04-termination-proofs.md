@@ -1,3 +1,9 @@
+---
+id: cs201-t8-termination
+title: "Termination Proofs"
+order: 4
+---
+
 # Termination Proofs
 
 An algorithm that runs forever is not an algorithm at all—it's just a program that happens to not crash. Termination is a fundamental property that, combined with partial correctness, yields total correctness. While the halting problem tells us that termination is undecidable in general, practical algorithms can often be proven to terminate using straightforward techniques.

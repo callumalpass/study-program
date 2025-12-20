@@ -1,3 +1,9 @@
+---
+id: cs302-t4-bgp
+title: "Border Gateway Protocol (BGP)"
+order: 6
+---
+
 # BGP: Border Gateway Protocol
 
 ## The Need for BGP

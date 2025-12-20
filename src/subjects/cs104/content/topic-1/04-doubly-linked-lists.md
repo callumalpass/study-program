@@ -1,3 +1,9 @@
+---
+id: cs104-t1-doubly
+title: "Doubly Linked Lists"
+order: 4
+---
+
 # Doubly Linked Lists
 
 A doubly linked list extends the singly linked list concept by adding a previous pointer to each node, enabling bidirectional traversal. This additional pointer provides significant advantages for certain operations at the cost of extra memory.

@@ -1,3 +1,9 @@
+---
+id: math401-topic-2-5
+title: "Harmonic Functions"
+order: 5
+---
+
 # Analytic Functions
 
 Analytic functions (also called holomorphic functions) are the central objects of study in complex analysis. These functions possess extraordinary properties that distinguish them fundamentally from general real-valued functions. A function that is differentiable in a region is infinitely differentiable, equals its Taylor series, and satisfies powerful theorems like the maximum modulus principle and Liouville's theorem.

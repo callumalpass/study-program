@@ -1,3 +1,9 @@
+---
+id: math102-t6-stirling
+title: "Stirling Numbers"
+order: 5
+---
+
 # Stirling Numbers
 
 Stirling numbers count fundamental combinatorial structures: ways to partition sets and arrange elements in cycles. They appear throughout combinatorics, probability, and algebra.

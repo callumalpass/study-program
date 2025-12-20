@@ -1,3 +1,9 @@
+---
+id: cs302-t7-security
+title: "Network Security Protocols"
+order: 7
+---
+
 # Network Security Protocols
 
 ## Security Requirements

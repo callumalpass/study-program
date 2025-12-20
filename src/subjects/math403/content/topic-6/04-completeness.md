@@ -1,3 +1,9 @@
+---
+id: math403-topic-6-4
+title: "Completeness"
+order: 4
+---
+
 # Completeness
 
 Completeness is a fundamental property of metric spaces that ensures Cauchy sequences converge, making it essential for analysis and the study of function spaces. The concept bridges the gap between the algebraic notion of "eventually getting close together" (Cauchy sequences) and the topological notion of convergence, providing the foundation for fixed point theorems, differential equations, and functional analysis.

@@ -1,3 +1,9 @@
+---
+id: cs205-t3-aggregation
+title: "Advanced Aggregation"
+order: 6
+---
+
 # Advanced Aggregation Techniques
 
 While basic aggregation with GROUP BY covers most common use cases, SQL provides sophisticated aggregation capabilities for complex analytical queries. This guide explores advanced techniques including grouping sets, cube, rollup, and specialized aggregation patterns that enable powerful data summarization and analysis.

@@ -1,3 +1,9 @@
+---
+id: math201-t2-elementary
+title: "Elementary Matrices"
+order: 6
+---
+
 # Elementary Matrices
 
 Elementary matrices are simple but powerful tools that encode row operations as matrix multiplication. They provide the bridge between the algorithmic process of Gaussian elimination and the theoretical structure of matrix algebra. Understanding elementary matrices reveals why row operations preserve solutions and how they relate to matrix inverses.

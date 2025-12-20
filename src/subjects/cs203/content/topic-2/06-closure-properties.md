@@ -1,3 +1,9 @@
+---
+id: cs203-t2-closure
+title: "Closure Properties"
+order: 6
+---
+
 # Closure Properties of Regular Languages
 
 Regular languages are closed under numerous operations, making them robust and compositionally useful. These closure properties enable building complex languages from simpler ones.

@@ -1,3 +1,9 @@
+---
+id: cs302-t5-tcp-basics
+title: "TCP Fundamentals"
+order: 3
+---
+
 # TCP Fundamentals
 
 ## What TCP Provides
