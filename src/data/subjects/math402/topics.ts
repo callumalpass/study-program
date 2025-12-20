@@ -70,7 +70,7 @@ export const math402Topics: Topic[] = [
       { id: 'math402-topic-1-6', slug: 'significant-digits', order: 6, title: 'Significant Digits', content: topic1_6 },
       { id: 'math402-topic-1-7', slug: 'interval-arithmetic', order: 7, title: 'Interval Arithmetic', content: topic1_7 }
     ],
-    quizIds: ['math402-quiz-1-1', 'math402-quiz-1-2', 'math402-quiz-1-3'],
+    quizIds: ['math402-quiz-1a', 'math402-quiz-1b', 'math402-quiz-1c'],
     exerciseIds: Array.from({ length: 16 }, (_, i) => `math402-t1-ex${String(i + 1).padStart(2, '0')}`)
   },
   {
@@ -86,7 +86,7 @@ export const math402Topics: Topic[] = [
       { id: 'math402-topic-2-6', slug: 'systems-nonlinear', order: 6, title: 'Systems of Nonlinear Equations', content: topic2_6 },
       { id: 'math402-topic-2-7', slug: 'polynomial-roots', order: 7, title: 'Polynomial Root Finding', content: topic2_7 }
     ],
-    quizIds: ['math402-quiz-2-1', 'math402-quiz-2-2', 'math402-quiz-2-3'],
+    quizIds: ['math402-quiz-2a', 'math402-quiz-2b', 'math402-quiz-2c'],
     exerciseIds: Array.from({ length: 16 }, (_, i) => `math402-t2-ex${String(i + 1).padStart(2, '0')}`)
   },
   {
@@ -102,7 +102,7 @@ export const math402Topics: Topic[] = [
       { id: 'math402-topic-3-6', slug: 'spline-interpolation', order: 6, title: 'Spline Interpolation', content: topic3_6 },
       { id: 'math402-topic-3-7', slug: 'least-squares', order: 7, title: 'Least Squares Approximation', content: topic3_7 }
     ],
-    quizIds: ['math402-quiz-3-1', 'math402-quiz-3-2', 'math402-quiz-3-3'],
+    quizIds: ['math402-quiz-3a', 'math402-quiz-3b', 'math402-quiz-3c'],
     exerciseIds: Array.from({ length: 16 }, (_, i) => `math402-t3-ex${String(i + 1).padStart(2, '0')}`)
   },
   {
@@ -118,7 +118,7 @@ export const math402Topics: Topic[] = [
       { id: 'math402-topic-4-6', slug: 'adaptive-integration', order: 6, title: 'Adaptive Integration', content: topic4_6 },
       { id: 'math402-topic-4-7', slug: 'multiple-integrals', order: 7, title: 'Multiple Integrals', content: topic4_7 }
     ],
-    quizIds: ['math402-quiz-4-1', 'math402-quiz-4-2', 'math402-quiz-4-3'],
+    quizIds: ['math402-quiz-4a', 'math402-quiz-4b', 'math402-quiz-4c'],
     exerciseIds: Array.from({ length: 16 }, (_, i) => `math402-t4-ex${String(i + 1).padStart(2, '0')}`)
   },
   {
@@ -134,7 +134,7 @@ export const math402Topics: Topic[] = [
       { id: 'math402-topic-5-6', slug: 'matrix-norms', order: 6, title: 'Matrix Norms', content: topic5_6 },
       { id: 'math402-topic-5-7', slug: 'condition-number', order: 7, title: 'Condition Number', content: topic5_7 }
     ],
-    quizIds: ['math402-quiz-5-1', 'math402-quiz-5-2', 'math402-quiz-5-3'],
+    quizIds: ['math402-quiz-5a', 'math402-quiz-5b', 'math402-quiz-5c'],
     exerciseIds: Array.from({ length: 16 }, (_, i) => `math402-t5-ex${String(i + 1).padStart(2, '0')}`)
   },
   {
@@ -150,7 +150,7 @@ export const math402Topics: Topic[] = [
       { id: 'math402-topic-6-6', slug: 'gmres-method', order: 6, title: 'GMRES Method', content: topic6_6 },
       { id: 'math402-topic-6-7', slug: 'preconditioning', order: 7, title: 'Preconditioning Techniques', content: topic6_7 }
     ],
-    quizIds: ['math402-quiz-6-1', 'math402-quiz-6-2', 'math402-quiz-6-3'],
+    quizIds: ['math402-quiz-6a', 'math402-quiz-6b', 'math402-quiz-6c'],
     exerciseIds: Array.from({ length: 16 }, (_, i) => `math402-t6-ex${String(i + 1).padStart(2, '0')}`)
   },
   {
@@ -166,7 +166,7 @@ export const math402Topics: Topic[] = [
       { id: 'math402-topic-7-6', slug: 'stiff-equations', order: 6, title: 'Stiff Differential Equations', content: topic7_6 },
       { id: 'math402-topic-7-7', slug: 'boundary-value', order: 7, title: 'Boundary Value Problems', content: topic7_7 }
     ],
-    quizIds: ['math402-quiz-7-1', 'math402-quiz-7-2', 'math402-quiz-7-3'],
+    quizIds: ['math402-quiz-7a', 'math402-quiz-7b', 'math402-quiz-7c'],
     exerciseIds: Array.from({ length: 16 }, (_, i) => `math402-t7-ex${String(i + 1).padStart(2, '0')}`)
   }
 ];

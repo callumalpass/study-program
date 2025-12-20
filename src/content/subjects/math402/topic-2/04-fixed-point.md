@@ -1,202 +1,332 @@
 ---
 title: "Fixed-Point Iteration"
-description: "Iterative method for finding fixed points where g(x) = x, foundation for many numerical algorithms"
+description: "Iterative method for solving equations via x = g(x) transformations"
 ---
 
 # Fixed-Point Iteration
 
-Fixed-point iteration is a fundamental technique where we reformulate $f(x) = 0$ as $x = g(x)$ and iterate $x_{n+1} = g(x_n)$.
+Fixed-point iteration is a fundamental technique for solving equations by reformulating $f(x) = 0$ as $x = g(x)$ and iterating $x_{n+1} = g(x_n)$ until convergence.
 
-## Theory
+## Introduction
 
-A **fixed point** of $g$ is a value $p$ such that $g(p) = p$.
+A **fixed point** of a function $g(x)$ is a value $p$ such that:
 
-**Fixed-Point Theorem**: If $g \in C[a,b]$ and $g(x) \in [a,b]$ for all $x \in [a,b]$, and $g$ is a contraction mapping on $[a,b]$ (i.e., $|g'(x)| < 1$), then:
-1. $g$ has a unique fixed point $p \in [a,b]$
-2. The iteration $x_{n+1} = g(x_n)$ converges to $p$ for any $x_0 \in [a,b]$
+$$g(p) = p$$
 
-## Convergence Criterion
+If we can write our equation $f(x) = 0$ in the form $x = g(x)$, then solving $f(x) = 0$ is equivalent to finding a fixed point of $g(x)$.
 
-Near the fixed point:
-$$x_{n+1} - p = g(x_n) - g(p) \approx g'(p)(x_n - p)$$
+**Example transformations**:
+- $x^2 - x - 2 = 0$ becomes $x = \sqrt{x + 2}$ or $x = x^2 - 2$ or $x = rac{x^2 - 2}{x - 1}$
 
-**Convergence condition**: $|g'(p)| < 1$
+Each transformation gives a different $g(x)$, and convergence depends on the choice!
 
-**Convergence rate**:
-- If $0 < |g'(p)| < 1$: linear convergence
-- If $g'(p) = 0$ and $g''(p) \neq 0$: quadratic convergence
+## Fixed-Point Theorem
+
+**Theorem (Fixed-Point Theorem)**: Suppose $g \in C[a,b]$ satisfies:
+1. $g(x) \in [a,b]$ for all $x \in [a,b]$ (maps interval to itself)
+2. $g'(x)$ exists on $(a,b)$ with $|g'(x)| \leq k < 1$ for all $x \in (a,b)$
+
+Then:
+- $g$ has a **unique fixed point** $p$ in $[a,b]$
+- For any $x_0 \in [a,b]$, the sequence $x_{n+1} = g(x_n)$ **converges to $p$**
+
+**Proof sketch**:
+- Existence: By intermediate value theorem applied to $h(x) = g(x) - x$
+- Uniqueness: If $p, q$ are fixed points, then $|p - q| = |g(p) - g(q)| \leq k|p - q|$, implying $p = q$
+- Convergence: $|e_{n+1}| = |x_{n+1} - p| = |g(x_n) - g(p)| \leq k|x_n - p| = k|e_n|$
+
+## Convergence Analysis
+
+### Linear Convergence
+
+If $g'(p) 
+eq 0$, the convergence is **linear** with rate $|g'(p)|$:
+
+$$\lim_{n 	o \infty} rac{|e_{n+1}|}{|e_n|} = |g'(p)|$$
+
+**Implication**: Smaller $|g'(p)|$ means faster convergence.
+
+### Quadratic Convergence
+
+If $g'(p) = 0$ and $g''(p) 
+eq 0$, convergence is **quadratic**:
+
+$$\lim_{n 	o \infty} rac{|e_{n+1}|}{|e_n|^2} = rac{|g''(p)|}{2}$$
+
+**Note**: Newton's method is a fixed-point iteration with $g(x) = x - rac{f(x)}{f'(x)}$ and $g'(p) = 0$, explaining its quadratic convergence!
+
+### General Order
+
+For convergence of order $lpha$:
+
+$$g'(p) = g''(p) = \cdots = g^{(lpha-1)}(p) = 0, \quad g^{(lpha)}(p) 
+eq 0$$
+
+Then:
+
+$$\lim_{n 	o \infty} rac{|e_{n+1}|}{|e_n|^lpha} = rac{|g^{(lpha)}(p)|}{lpha!}$$
+
+## Algorithm Implementation
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 
 def fixed_point_iteration(g, x0, tol=1e-10, max_iter=100):
     """
-    Fixed-point iteration.
+    Fixed-point iteration: x_{n+1} = g(x_n).
     
-    Solves x = g(x) by iterating x_{n+1} = g(x_n)
+    Parameters:
+    - g: iteration function g(x)
+    - x0: initial guess
+    - tol: tolerance
+    - max_iter: maximum iterations
+    
+    Returns:
+    - fixed_point: approximation to fixed point
+    - iterations: number of iterations
+    - history: convergence history
     """
-    history = [x0]
+    history = {'x': [x0], 'error_est': []}
     x = x0
     
     for i in range(max_iter):
         x_new = g(x)
-        history.append(x_new)
+        error_est = abs(x_new - x)
         
-        if abs(x_new - x) < tol:
+        history['x'].append(x_new)
+        history['error_est'].append(error_est)
+        
+        if error_est < tol:
             return x_new, i + 1, history
         
         x = x_new
     
+    print(f"Warning: Did not converge in {max_iter} iterations")
     return x, max_iter, history
 
-# Example 1: x = cos(x)
-g1 = lambda x: np.cos(x)
-root1, iters1, hist1 = fixed_point_iteration(g1, 0.5)
+# Example: Solve x² = x + 2
+# Transform to x = sqrt(x + 2)
+g = lambda x: np.sqrt(x + 2)
 
-print(f"Example 1: x = cos(x)")
-print(f"Fixed point: {root1:.15f}")
-print(f"Verification: cos({root1:.15f}) = {np.cos(root1):.15f}")
-print(f"Iterations: {iters1}\n")
-
-# Example 2: x² - 2 = 0, reformulated as x = 2/x
-g2 = lambda x: 2 / x
-root2, iters2, hist2 = fixed_point_iteration(g2, 1.5, tol=1e-10)
-
-print(f"Example 2: x = 2/x (√2)")
-print(f"Fixed point: {root2:.15f}")
-print(f"√2 = {np.sqrt(2):.15f}")
-print(f"Iterations: {iters2}\n")
-
-# Example 3: Different reformulations
-print("Different reformulations of x² - 2 = 0:")
-
-# g(x) = x² - 2 + x (diverges)
-# g(x) = √2 (trivial)
-# g(x) = (x² + 2)/(2x) (Newton's method!)
-g3 = lambda x: (x**2 + 2) / (2 * x)
-root3, iters3, _ = fixed_point_iteration(g3, 1.5, tol=1e-10)
-print(f"g(x) = (x² + 2)/(2x): {iters3} iterations")
+fixed_pt, iters, hist = fixed_point_iteration(g, 1.5)
+print(f"Fixed-Point Iteration")
+print(f"Equation: x² - x - 2 = 0")
+print(f"Iteration function: g(x) = sqrt(x + 2)")
+print(f"Fixed point: {fixed_pt:.15f}")
+print(f"Verification: g(p) = {g(fixed_pt):.15f}")
+print(f"Iterations: {iters}")
 ```
 
-## Visualizing Convergence
+## Choice of Iteration Function
+
+Consider $x^2 - x - 2 = 0$ with roots $x = 2$ and $x = -1$.
+
+### Option 1: $g_1(x) = \sqrt{x + 2}$
+
+$$g'_1(x) = rac{1}{2\sqrt{x + 2}}$$
+
+At $x = 2$: $|g'_1(2)| = rac{1}{4} < 1$ → **Converges to 2**
+
+### Option 2: $g_2(x) = x^2 - 2$
+
+$$g'_2(x) = 2x$$
+
+At $x = 2$: $|g'_2(2)| = 4 > 1$ → **Diverges from 2**
+
+### Option 3: $g_3(x) = 1 + rac{2}{x}$
+
+$$g'_3(x) = -rac{2}{x^2}$$
+
+At $x = 2$: $|g'_3(2)| = rac{1}{2} < 1$ → **Converges to 2**
 
 ```python
-def visualize_fixed_point(g, x0, true_root, title=""):
-    """Visualize fixed-point iteration on cobweb plot."""
-    # Generate iteration history
-    x, _, history = fixed_point_iteration(g, x0, max_iter=20)
+# Compare different g(x) formulations
+def compare_fixed_point_functions():
+    """Compare convergence of different g(x) for x² - x - 2 = 0."""
     
-    # Create cobweb plot
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+    g1 = lambda x: np.sqrt(x + 2)
+    g2 = lambda x: x**2 - 2
+    g3 = lambda x: 1 + 2/x
     
-    # Cobweb plot
-    x_plot = np.linspace(min(history) - 0.5, max(history) + 0.5, 1000)
-    ax1.plot(x_plot, g(x_plot), 'b-', label='y = g(x)', linewidth=2)
-    ax1.plot(x_plot, x_plot, 'k--', label='y = x', alpha=0.5)
+    x0 = 1.5
     
-    # Draw cobweb
-    for i in range(len(history) - 1):
-        ax1.plot([history[i], history[i]], [history[i], history[i+1]], 'r-', alpha=0.5)
-        ax1.plot([history[i], history[i+1]], [history[i+1], history[i+1]], 'r-', alpha=0.5)
+    print(f"{'Function':<25} {'Converges?':<12} {'Iterations':<12} {'Root'}")
+    print("="*70)
     
-    ax1.plot(history[0], g(history[0]), 'go', markersize=10, label='Start')
-    ax1.plot(history[-1], history[-1], 'ro', markersize=10, label='End')
-    ax1.set_xlabel('x')
-    ax1.set_ylabel('y')
-    ax1.set_title(f'Cobweb Plot: {title}')
-    ax1.legend()
-    ax1.grid(True, alpha=0.3)
-    
-    # Convergence plot
-    errors = [abs(h - true_root) for h in history]
-    ax2.semilogy(range(len(errors)), errors, 'bo-', linewidth=2, markersize=5)
-    ax2.set_xlabel('Iteration')
-    ax2.set_ylabel('|x_n - p|')
-    ax2.set_title('Convergence History')
-    ax2.grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('fixed_point_visualization.png', dpi=150, bbox_inches='tight')
-    plt.close()
-
-visualize_fixed_point(g1, 0.5, root1, "x = cos(x)")
-print("Visualization saved")
-```
-
-## Reformulation Strategies
-
-To solve $f(x) = 0$:
-
-1. **Direct**: $g(x) = x + f(x)$
-2. **Scaled**: $g(x) = x + \alpha f(x)$ (choose $\alpha$ to make $|g'(p)| < 1$)
-3. **Inverted**: $g(x) = x - f(x)/f'(x)$ (Newton's method!)
-
-```python
-def test_reformulations():
-    """Test different reformulations of f(x) = x³ - x - 1 = 0."""
-    f = lambda x: x**3 - x - 1
-    true_root = 1.3247179572447  # Approximate
-    
-    reformulations = [
-        (lambda x: x**3 - 1, "g(x) = x³ - 1"),
-        (lambda x: (x + 1)**(1/3), "g(x) = ∛(x + 1)"),
-        (lambda x: (x + 1) / x**2, "g(x) = (x + 1)/x²"),
-        (lambda x: x - f(x) / (3*x**2 - 1), "Newton"),
-    ]
-    
-    print("\nReformulation comparison:")
-    print(f"{'Reformulation':<25} {'Converged?':<12} {'Iterations':<12}")
-    print("=" * 52)
-    
-    for g, name in reformulations:
+    for name, g in [("g(x) = sqrt(x+2)", g1), 
+                     ("g(x) = x²-2", g2), 
+                     ("g(x) = 1+2/x", g3)]:
         try:
-            root, iters, _ = fixed_point_iteration(g, 1.5, max_iter=50)
-            converged = abs(root - true_root) < 1e-6
-            print(f"{name:<25} {'Yes' if converged else 'No':<12} {iters:<12}")
+            root, iters, _ = fixed_point_iteration(g, x0, max_iter=50)
+            converged = abs(g(root) - root) < 1e-6
+            print(f"{name:<25} {str(converged):<12} {iters:<12} {root:.6f}")
         except:
-            print(f"{name:<25} {'Failed':<12} {'-':<12}")
+            print(f"{name:<25} {'False':<12} {'N/A':<12} {'Diverged'}")
 
-test_reformulations()
+compare_fixed_point_functions()
 ```
 
-## Aitken's Δ² Process
+## Aitken's Δ² Method
 
-Accelerates linearly convergent sequences:
+**Aitken's acceleration** speeds up linearly convergent fixed-point iterations.
 
-$$\tilde{x}_n = x_n - \frac{(x_{n+1} - x_n)^2}{x_{n+2} - 2x_{n+1} + x_n}$$
+Given sequence $\{x_n\}$ with linear convergence, construct:
+
+$$\hat{x}_n = x_n - rac{(x_{n+1} - x_n)^2}{x_{n+2} - 2x_{n+1} + x_n}$$
+
+The accelerated sequence $\{\hat{x}_n\}$ often converges faster.
 
 ```python
-def aitken_acceleration(sequence):
-    """Apply Aitken's Δ² process to accelerate convergence."""
-    n = len(sequence)
-    accelerated = []
+def aitken_acceleration(g, x0, tol=1e-10, max_iter=100):
+    """Fixed-point iteration with Aitken's Δ² acceleration."""
+    x = x0
     
-    for i in range(n - 2):
-        x0, x1, x2 = sequence[i], sequence[i+1], sequence[i+2]
-        denom = x2 - 2*x1 + x0
-        if abs(denom) > 1e-15:
-            x_acc = x0 - (x1 - x0)**2 / denom
-            accelerated.append(x_acc)
+    for i in range(max_iter):
+        x1 = g(x)
+        x2 = g(x1)
+        
+        # Aitken's formula
+        denominator = x2 - 2*x1 + x
+        
+        if abs(denominator) < 1e-15:
+            # Fall back to standard iteration
+            x_new = x2
+        else:
+            x_new = x - (x1 - x)**2 / denominator
+        
+        if abs(x_new - x) < tol:
+            return x_new, i + 1
+        
+        x = x_new
     
-    return accelerated
+    return x, max_iter
 
-# Test
-g = lambda x: np.cos(x)
-_, _, history = fixed_point_iteration(g, 0.5, max_iter=20)
-accelerated = aitken_acceleration(history)
+# Compare standard vs Aitken
+g = lambda x: np.cos(x)  # Find fixed point of cos(x)
 
-print(f"\nAitken Acceleration:")
-print(f"Standard (20 iter): {history[-1]:.15f}")
-print(f"Aitken (18 values): {accelerated[-1]:.15f}")
-print(f"Improvement: {abs(accelerated[-1] - history[-1]):.2e}")
+std_root, std_iters, _ = fixed_point_iteration(g, 1.0)
+ait_root, ait_iters = aitken_acceleration(g, 1.0)
+
+print(f"\nAitken's Acceleration Comparison:")
+print(f"Standard FPI: {std_iters} iterations → {std_root:.10f}")
+print(f"Aitken FPI:   {ait_iters} iterations → {ait_root:.10f}")
+print(f"Speedup: {std_iters/ait_iters:.2f}×")
 ```
 
-## Summary
+## Steffensen's Method
 
-Fixed-point iteration:
-- **Simple and general** framework
-- **Requires** $|g'(p)| < 1$ for convergence
-- **Reformulation matters** - choose $g$ carefully
-- **Can be accelerated** with Aitken's method
-- **Foundation** for Newton's method and many iterative schemes
+Steffensen's method applies Aitken acceleration systematically:
+
+$$x_{n+1} = x_n - rac{(g(x_n) - x_n)^2}{g(g(x_n)) - 2g(x_n) + x_n}$$
+
+Achieves **quadratic convergence** without derivatives!
+
+```python
+def steffensen(g, x0, tol=1e-10, max_iter=50):
+    """Steffensen's method for fixed-point problems."""
+    x = x0
+    
+    for i in range(max_iter):
+        gx = g(x)
+        ggx = g(gx)
+        
+        denominator = ggx - 2*gx + x
+        
+        if abs(denominator) < 1e-15:
+            print("Near-zero denominator, stopping")
+            return gx, i
+        
+        x_new = x - (gx - x)**2 / denominator
+        
+        if abs(x_new - x) < tol:
+            return x_new, i + 1
+        
+        x = x_new
+    
+    return x, max_iter
+
+# Example: cos(x) = x
+root_steff, iters_steff = steffensen(lambda x: np.cos(x), 1.0)
+
+print(f"\nSteffensen's Method:")
+print(f"Fixed point of cos(x): {root_steff:.15f}")
+print(f"Iterations: {iters_steff}")
+print(f"Verification: cos({root_steff:.6f}) = {np.cos(root_steff):.15f}")
+```
+
+## Applications
+
+### System of Equations
+
+Fixed-point iteration extends naturally to systems:
+
+$$\mathbf{x}_{n+1} = \mathbf{g}(\mathbf{x}_n)$$
+
+Convergence requires $\|\mathbf{J}_g(\mathbf{p})\| < 1$ (Jacobian spectral radius < 1).
+
+### Banach Fixed-Point Theorem
+
+In complete metric spaces, the fixed-point theorem generalizes to infinite dimensions (ODEs, PDEs, integral equations).
+
+### Optimization
+
+Many optimization algorithms are fixed-point iterations:
+- Gradient descent: $x_{n+1} = x_n - lpha 
+abla f(x_n)$
+- Proximal methods: $x_{n+1} = 	ext{prox}_f(x_n)$
+
+## Worked Example
+
+**Problem**: Find the positive root of $x = \cos(x)$ using fixed-point iteration.
+
+**Solution**:
+
+The equation is already in fixed-point form with $g(x) = \cos(x)$.
+
+Check convergence criterion:
+$$g'(x) = -\sin(x)$$
+
+The fixed point $p$ satisfies $p = \cos(p)$, so $p pprox 0.739$ (known result).
+
+At $p$: $|g'(p)| = |\sin(0.739)| pprox 0.674 < 1$ → **Converges!**
+
+```python
+# Detailed iteration
+g = lambda x: np.cos(x)
+x = 1.0  # Initial guess
+
+print(f"{'n':<5} {'x_n':<20} {'g(x_n)':<20} {'|x_n+1 - x_n|':<15}")
+print("="*65)
+
+for n in range(15):
+    x_new = g(x)
+    print(f"{n:<5} {x:<20.15f} {x_new:<20.15f} {abs(x_new - x):<15.2e}")
+    
+    if abs(x_new - x) < 1e-10:
+        print(f"\nConverged to {x_new:.15f}")
+        break
+    
+    x = x_new
+```
+
+**Output shows**:
+- Monotonic convergence from $x_0 = 1.0$
+- Error decreases by factor ~0.67 each iteration (matching $|g'(p)|$)
+- Convergence in ~10-12 iterations
+
+## Key Takeaways
+
+- Fixed-point iteration solves $x = g(x)$ via $x_{n+1} = g(x_n)$
+- Converges if $|g'(p)| < 1$ at the fixed point
+- Convergence rate depends on $|g'(p)|$: smaller is faster
+- **Choice of $g(x)$ is critical** for convergence
+- Aitken and Steffensen methods accelerate convergence
+- Newton's method is a fixed-point iteration with $g'(p) = 0$
+
+## Common Mistakes
+
+1. **Arbitrary choice of $g(x)$**: Must verify $|g'(p)| < 1$
+2. **Ignoring divergence**: If $|g'(p)| > 1$, iteration diverges
+3. **Poor initial guess**: May converge to different fixed point or diverge
+4. **Not checking uniqueness**: Multiple fixed points may exist
+5. **Confusing with rootfinding**: Fixed point of $g$ ≠ root of $g$ (unless $g(x) = 0$)
