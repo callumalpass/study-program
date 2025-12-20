@@ -69,7 +69,7 @@ Each subtopic markdown file must include:
 
 ### File Naming
 ```
-src/content/subjects/{subject}/topic-{N}/
+src/subjects/{subject}/content/topic-{N}/
 ├── 01-introduction.md
 ├── 02-{concept-name}.md
 ├── 03-{concept-name}.md
@@ -393,35 +393,41 @@ Each rubric criterion must have:
 
 ---
 
-## 9. Data Storage Format
+## 9. Subject Directory Structure
 
-Assessment data (quizzes, exams, exercises, projects) is stored in **JSON files** for easier editing and validation:
+Each subject is fully self-contained in a single directory with all content and data colocated:
 
-### File Structure
+### Directory Structure
 
 ```
-src/data/subjects/{subject}/
-├── index.ts          # TypeScript loader (imports JSON, exports with types)
-├── topics.ts         # Topic definitions (handles markdown imports)
-├── quizzes.json      # All quizzes for the subject
-├── exams.json        # Midterm and final exams
-├── exercises.json    # All exercises for the subject
-└── projects.json     # Projects (CS subjects only)
+src/subjects/{subject}/
+├── content/              # Markdown lesson content
+│   ├── topic-1/          # Subtopic markdown files
+│   │   ├── 01-intro.md
+│   │   └── ...
+│   ├── topic-1.md        # Topic overview (optional)
+│   └── ...
+├── index.ts              # TypeScript exports (imports from JSON)
+├── topics.ts             # Topic definitions (handles markdown imports)
+├── quizzes.json          # All quizzes for the subject
+├── exams.json            # Midterm and final exams
+├── exercises.json        # All exercises for the subject
+└── projects.json         # Projects (CS subjects only)
 ```
 
-### Why JSON?
+### Why Colocated?
 
-1. **Easier to edit** - No TypeScript syntax to worry about
-2. **Validation** - Can be validated against JSON Schema
-3. **Tooling** - Better editor support for data files
-4. **Separation** - Content data separate from code logic
+1. **Single source of truth** - All content for a subject in one place
+2. **Easier navigation** - No jumping between directories
+3. **Simpler imports** - Relative paths like `./content/topic-1/`
+4. **Self-contained** - Each subject can be worked on independently
 
-### TypeScript Types
+### TypeScript Exports
 
 The `index.ts` file imports JSON and exports with proper types:
 
 ```typescript
-import type { Quiz, Exam, Exercise } from '../../../core/types';
+import type { Quiz, Exam, Exercise } from '../../core/types';
 import quizzesData from './quizzes.json';
 import examsData from './exams.json';
 import exercisesData from './exercises.json';
@@ -440,26 +446,26 @@ To validate a subject meets standards:
 
 ```bash
 # Count subtopics per topic
-find src/content/subjects/{subject}/topic-* -name "*.md" | wc -l
+find src/subjects/{subject}/content/topic-* -name "*.md" | wc -l
 # Expected: 49 (7 topics × 7 subtopics)
 
 # Estimate word counts
-wc -w src/content/subjects/{subject}/topic-*/*.md
+wc -w src/subjects/{subject}/content/topic-*/*.md
 
 # Count exercises (from JSON)
-jq 'length' src/data/subjects/{subject}/exercises.json
+jq 'length' src/subjects/{subject}/exercises.json
 # Expected: 112
 
 # Count quizzes
-jq 'length' src/data/subjects/{subject}/quizzes.json
+jq 'length' src/subjects/{subject}/quizzes.json
 # Expected: 21
 
 # Count quiz questions total
-jq '[.[].questions | length] | add' src/data/subjects/{subject}/quizzes.json
+jq '[.[].questions | length] | add' src/subjects/{subject}/quizzes.json
 # Expected: 105 (21 quizzes × 5 questions)
 
 # Run quality analysis
-npm run quality -- {subject}
+npm run quality
 ```
 
 ---
@@ -468,6 +474,7 @@ npm run quality -- {subject}
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.2 | 2025-12-20 | Colocated content and data into unified src/subjects/ structure |
 | 1.1 | 2025-12-20 | Migrated assessment data from TypeScript to JSON format |
 | 1.0 | 2025-12-17 | Initial standard based on curriculum review |
 

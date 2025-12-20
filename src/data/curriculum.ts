@@ -1,27 +1,27 @@
 import { Subject } from '@/core/types';
 
 // Import topic content from subject files
-import { cs101Topics } from './subjects/cs101/topics';
-import { math101Topics } from './subjects/math101/topics';
-import { cs102Topics } from './subjects/cs102/topics';
-import { cs103Topics } from './subjects/cs103/topics';
-import { math102Topics } from './subjects/math102/topics';
-import { cs104Topics } from './subjects/cs104/topics';
-import { cs105Topics } from './subjects/cs105/topics';
-import { math203Topics } from './subjects/math203/topics';
-import { cs201Topics } from './subjects/cs201/topics';
-import { cs202Topics } from './subjects/cs202/topics';
-import { cs203Topics } from './subjects/cs203/topics';
-import { cs204Topics } from './subjects/cs204/topics';
-import { cs205Topics } from './subjects/cs205/topics';
-import { math201Topics } from './subjects/math201/topics';
-import { math202Topics } from './subjects/math202/topics';
-import { math204Topics } from './subjects/math204/topics';
-import { cs302Topics } from './subjects/cs302/topics';
-import { cs303Topics } from './subjects/cs303/topics';
-import { cs304Topics } from './subjects/cs304/topics';
-import { cs305Topics } from './subjects/cs305/topics';
-import { cs306Topics } from './subjects/cs306/topics';
+import { cs101Topics } from '../subjects/cs101/topics';
+import { math101Topics } from '../subjects/math101/topics';
+import { cs102Topics } from '../subjects/cs102/topics';
+import { cs103Topics } from '../subjects/cs103/topics';
+import { math102Topics } from '../subjects/math102/topics';
+import { cs104Topics } from '../subjects/cs104/topics';
+import { cs105Topics } from '../subjects/cs105/topics';
+import { math203Topics } from '../subjects/math203/topics';
+import { cs201Topics } from '../subjects/cs201/topics';
+import { cs202Topics } from '../subjects/cs202/topics';
+import { cs203Topics } from '../subjects/cs203/topics';
+import { cs204Topics } from '../subjects/cs204/topics';
+import { cs205Topics } from '../subjects/cs205/topics';
+import { math201Topics } from '../subjects/math201/topics';
+import { math202Topics } from '../subjects/math202/topics';
+import { math204Topics } from '../subjects/math204/topics';
+import { cs302Topics } from '../subjects/cs302/topics';
+import { cs303Topics } from '../subjects/cs303/topics';
+import { cs304Topics } from '../subjects/cs304/topics';
+import { cs305Topics } from '../subjects/cs305/topics';
+import { cs306Topics } from '../subjects/cs306/topics';
 
 /**
  * Complete Computer Science Degree Curriculum

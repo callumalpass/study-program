@@ -20,7 +20,7 @@ import { renderExportPage } from './pages/export';
 import { renderTimelinePage } from './pages/timeline';
 
 // Import all subject content from central registry
-import { allQuizzes, allExercises, allProjects, allExams } from './data/subjects';
+import { allQuizzes, allExercises, allProjects, allExams } from './subjects';
 
 /**
  * Apply the theme to the document

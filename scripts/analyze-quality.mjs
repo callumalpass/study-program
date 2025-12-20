@@ -93,7 +93,7 @@ async function createViteServer(projectRoot) {
 
 // Load a subject's data using Vite SSR
 async function loadSubjectData(vite, subjectId, projectRoot) {
-  const modulePath = `/src/data/subjects/${subjectId}/index.ts`;
+  const modulePath = `/src/subjects/${subjectId}/index.ts`;
 
   try {
     const module = await vite.ssrLoadModule(modulePath);
@@ -523,7 +523,7 @@ async function main() {
   const jsonOutput = args.includes('--json');
 
   const projectRoot = join(__dirname, '..');
-  const dataDir = join(projectRoot, 'src', 'data', 'subjects');
+  const dataDir = join(projectRoot, 'src', 'subjects');
 
   if (!jsonOutput) {
     console.log('\n  Starting Vite server for SSR module loading...');
