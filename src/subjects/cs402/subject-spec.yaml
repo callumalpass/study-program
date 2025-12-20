@@ -1,0 +1,277 @@
+# CS402: Machine Learning - Subject Specification
+# This spec guides content creation for an applied ML course covering both theory and implementation.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs402
+title: Machine Learning
+category: cs
+
+role:
+  level: advanced
+  transformation: >
+    From "I know what ML is conceptually" to "I can implement, train, evaluate,
+    and deploy machine learning models for real-world problems, understanding
+    the theory behind each algorithm and when to apply it."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 800
+
+  prerequisite_knowledge:
+    - Linear algebra (matrices, vectors, eigenvalues)
+    - Calculus (derivatives, partial derivatives, gradients)
+    - Probability and statistics (distributions, Bayes theorem, hypothesis testing)
+    - Python programming proficiency
+    - Basic algorithms and data structures
+
+  essential_concepts:
+    - Supervised learning (regression, classification)
+    - Unsupervised learning (clustering, dimensionality reduction)
+    - Neural networks and deep learning fundamentals
+    - Model evaluation metrics and validation strategies
+    - Regularization and overfitting prevention
+    - Gradient descent optimization
+    - Feature engineering and data preprocessing
+    - Modern architectures (CNNs, RNNs, Transformers)
+
+  out_of_scope:
+    - Reinforcement learning beyond basic introduction (covered in CS408)
+    - Production MLOps and deployment (covered in CS409)
+    - Advanced generative models (GANs, diffusion) in depth
+    - Distributed training at scale
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Implements ML algorithms from scratch (not just using libraries)
+    - Chooses appropriate algorithms for given problem types
+    - Diagnoses overfitting/underfitting and applies corrections
+    - Evaluates models using appropriate metrics
+    - Tunes hyperparameters systematically
+    - Understands mathematical foundations behind algorithms
+
+  common_struggles:
+    - Confusing training and test set purposes
+    - Choosing wrong evaluation metrics for the problem
+    - Overfitting without recognizing it
+    - Not normalizing/scaling features appropriately
+    - Misunderstanding gradient descent convergence
+    - Tensor shape mismatches in neural networks
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Mathematical formulation before implementation
+    - Complete working Python code examples (PyTorch or NumPy)
+    - Visualization of key concepts where applicable
+    - Comparison with related algorithms
+    - Real-world application examples
+
+  conventions:
+    - Python 3.10+ with type hints
+    - PyTorch for neural networks, scikit-learn for classical ML
+    - LaTeX for all mathematical expressions
+    - NumPy for from-scratch implementations
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Machine learning requires both theoretical understanding and practical skills.
+    Exercises should include both mathematical derivations and code implementations.
+    Students must be able to implement algorithms from scratch to truly understand them,
+    but also use standard libraries effectively for real projects.
+
+  measures:
+    - Correct implementation of ML algorithms
+    - Appropriate model selection for problem types
+    - Proper evaluation methodology (no data leakage)
+    - Understanding of mathematical foundations
+    - Ability to diagnose and fix model issues
+
+  anti_patterns:
+    - Exercises that only test library API knowledge
+    - Questions about hyperparameter values without context
+    - Ignoring mathematical foundations
+    - Not requiring justification for model choices
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard passing threshold. ML concepts build on each other, so solid
+    understanding of foundations is critical. However, some flexibility on
+    quizzes/exams since theoretical questions can be challenging.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Mix of implementation exercises (build algorithms from scratch) and
+    applied exercises (use libraries to solve problems). From-scratch
+    implementations build deep understanding, library exercises build
+    practical skills.
+
+  types:
+    coding_with_tests: "60%"
+    coding_ai_evaluated: "30%"
+    written: "10%"
+    justification: >
+      Most exercises are coding with test cases for immediate feedback.
+      Some AI-evaluated for open-ended model design. Written exercises
+      for mathematical derivations and algorithm analysis.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard. ML requires substantial practice to build intuition.
+      Mix of implementation and application exercises.
+
+  difficulty_distribution:
+    1: 2
+    2: 3
+    3: 5
+    4: 4
+    5: 2
+    justification: >
+      Balanced distribution leaning toward medium-hard. ML has high floor
+      (even "easy" exercises require coding). Difficulty 1-2 for basic
+      implementations, 3-4 for full algorithms, 5 for advanced architectures.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding of algorithms and their properties.
+    Focus on when to use algorithms, their assumptions, and behavior.
+    Code output questions for algorithm tracing.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic covering fundamentals,
+      application, and edge cases.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "15%"
+    fill_blank: "10%"
+    code_output: "20%"
+    coding: "0%"
+    written: "5%"
+    justification: >
+      Heavy multiple choice for algorithm properties and comparisons.
+      Code output for tracing algorithm behavior. Some written for
+      short mathematical explanations.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test both theoretical understanding and practical algorithm knowledge.
+    Mix of conceptual questions and short implementations. Students should
+    demonstrate they understand not just what algorithms do, but why.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      12-14 multiple choice on algorithm properties and comparisons,
+      6-8 code tracing/output questions, 4-6 short answer on theory,
+      2-3 short implementation questions.
+    coverage: "Topics 1-4: ML overview, regression, classification, neural networks"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 150
+    format: >
+      18-22 multiple choice, 10-12 code tracing, 6-8 short answer,
+      4-6 implementation questions. Comprehensive with emphasis on
+      deep learning and model evaluation (Topics 5-7).
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 2
+  rationale: >
+    ML is inherently project-based. Students need experience with full
+    ML pipelines from data to deployment. Two projects: one classical ML,
+    one deep learning.
+
+  goals:
+    - Complete end-to-end ML pipeline experience
+    - Real dataset preprocessing and feature engineering
+    - Model selection and hyperparameter tuning
+    - Proper evaluation and result interpretation
+    - Experience with both classical ML and deep learning
+
+  estimated_hours: "15-20"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise uses data not split into train/test properly
+  - Solution uses high-level library when from-scratch was requested
+  - Quiz question has multiple correct answers without indicating so
+  - Content shows accuracy for imbalanced classification without mention of metrics
+  - Neural network example without proper weight initialization
+  - Gradient descent without learning rate discussion
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  CS402 is a gateway to advanced AI/ML topics. Students should leave with
+  strong foundations that enable them to learn new architectures and
+  techniques independently. Emphasize understanding over memorization -
+  students who understand gradient descent can learn any optimization-based
+  model. Balance theory and practice: every equation should have corresponding
+  code, every code example should connect to theory.
