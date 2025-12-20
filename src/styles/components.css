@@ -2678,6 +2678,34 @@
   background: var(--color-accent-primary);
 }
 
+.content-navigator .overview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.content-navigator .overview-actions .btn {
+  flex-shrink: 0;
+}
+
+.content-navigator .overview-actions .btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .content-navigator .overview-actions {
+    flex-direction: column;
+  }
+
+  .content-navigator .overview-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .content-navigator {
