@@ -267,6 +267,18 @@ async function initApp(): Promise<void> {
   });
 
   // Router initializes itself via constructor - no need to call init()
+
+  // Flush sync on page unload to ensure remote sync completes
+  window.addEventListener('beforeunload', () => {
+    progressStorage.flushSync();
+  });
+
+  // Also flush when tab becomes hidden (user switches tabs)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      progressStorage.flushSync();
+    }
+  });
 }
 
 // Initialize when DOM is ready

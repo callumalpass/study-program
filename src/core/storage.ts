@@ -91,6 +91,70 @@ export class ProgressStorage {
   }
 
   /**
+   * Immediately sync to GitHub Gist without debounce.
+   * Call this on page unload to ensure pending changes are saved.
+   */
+  flushSync(): void {
+    // Cancel any pending debounced sync
+    if (this.syncTimeout) {
+      clearTimeout(this.syncTimeout);
+      this.syncTimeout = null;
+    }
+
+    // Only sync if credentials exist
+    const { githubToken, gistId } = this.progress.settings;
+    if (!githubToken || !gistId) {
+      return;
+    }
+
+    // Use sendBeacon for reliable delivery during page unload
+    // Falls back to synchronous approach if sendBeacon unavailable
+    try {
+      const payload = JSON.stringify(this.progress);
+      const url = `https://api.github.com/gists/${gistId}`;
+      const body = JSON.stringify({
+        files: {
+          'cs_degree_progress.json': {
+            content: payload,
+          },
+        },
+      });
+
+      // sendBeacon is more reliable during page unload
+      if (typeof navigator.sendBeacon === 'function') {
+        const blob = new Blob([body], { type: 'application/json' });
+        // Note: sendBeacon doesn't support custom headers, so we use fetch with keepalive
+        fetch(url, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Bearer ${githubToken}`,
+            'Content-Type': 'application/json',
+          },
+          body,
+          keepalive: true, // Allows request to outlive the page
+        }).catch(() => {
+          // Silent fail - we're unloading anyway
+        });
+      } else {
+        // Fallback for older browsers
+        fetch(url, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Bearer ${githubToken}`,
+            'Content-Type': 'application/json',
+          },
+          body,
+          keepalive: true,
+        }).catch(() => {
+          // Silent fail
+        });
+      }
+    } catch {
+      // Silent fail during unload
+    }
+  }
+
+  /**
    * Sync progress from GitHub Gist (pull remote changes)
    * Returns { synced: true/false, updated: true/false }
    */
@@ -415,6 +479,28 @@ export class ProgressStorage {
     const views = this.progress.subjects[subjectId]?.subtopicViews;
     if (!views) return false;
     return subtopicIds.every(id => views[id] !== undefined);
+  }
+
+  /**
+   * Get the most recently viewed subtopic for a subject.
+   * Returns the subtopic ID with the most recent lastViewedAt, or null if none.
+   */
+  getLastViewedSubtopicForSubject(subjectId: string): { subtopicId: string; lastViewedAt: Date } | null {
+    const views = this.progress.subjects[subjectId]?.subtopicViews;
+    if (!views || Object.keys(views).length === 0) {
+      return null;
+    }
+
+    let mostRecent: { subtopicId: string; lastViewedAt: Date } | null = null;
+
+    for (const [subtopicId, view] of Object.entries(views)) {
+      const lastViewedAt = new Date(view.lastViewedAt);
+      if (!mostRecent || lastViewedAt.getTime() > mostRecent.lastViewedAt.getTime()) {
+        mostRecent = { subtopicId, lastViewedAt };
+      }
+    }
+
+    return mostRecent;
   }
 
   /**

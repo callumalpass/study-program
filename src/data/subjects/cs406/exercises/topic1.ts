@@ -1705,7 +1705,7 @@ for action in actions:
     print(f"{action}:")
     print(f"  Possible outcomes:")
     for outcome, prob in zip(outcomes, probs):
-        print(f"    ${outcome['money']} (prob: {prob:.1%})")
+        print(f"    \${outcome['money']} (prob: {prob:.1%})")
     print(f"  Expected utility: {expected:.2f}")
     print()
 

@@ -327,7 +327,7 @@ print(compare_cloud_costs(730, 100, 50))`,
 costs = compare_cloud_costs(730, 100, 50)
 for provider, breakdown in costs.items():
     if provider != 'recommendation':
-        print(f"{provider}: ${breakdown['total']:.2f}")
+        print(f"{provider}: \${breakdown['total']:.2f}")
 print(f"\\nRecommendation: {costs['recommendation']}")`,
     testCases: [
       {
@@ -415,13 +415,13 @@ print(calculate_ri_savings(1000, 3))`,
 # Examples
 print("1-Year RI Savings:")
 result = calculate_ri_savings(1000, 1)
-print(f"  Monthly: ${result['ri_monthly']} (was ${result['on_demand_monthly']})")
-print(f"  Total savings: ${result['total_savings']} ({result['savings_pct']}%)")
+print(f"  Monthly: \${result['ri_monthly']} (was \${result['on_demand_monthly']})")
+print(f"  Total savings: \${result['total_savings']} ({result['savings_pct']}%)")
 
 print("\\n3-Year RI Savings:")
 result = calculate_ri_savings(1000, 3)
-print(f"  Monthly: ${result['ri_monthly']} (was ${result['on_demand_monthly']})")
-print(f"  Total savings: ${result['total_savings']} ({result['savings_pct']}%)"),`,
+print(f"  Monthly: \${result['ri_monthly']} (was \${result['on_demand_monthly']})")
+print(f"  Total savings: \${result['total_savings']} ({result['savings_pct']}%)"),`,
     testCases: [
       {
         input: "calculate_ri_savings(1000, 1)['total_savings']",

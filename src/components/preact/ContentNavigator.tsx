@@ -12,6 +12,7 @@ import {
 } from '@/core/router';
 import { renderMarkdown, renderMermaidDiagrams } from '@/components/markdown';
 import { ReadingList } from './ReadingList';
+import { progressStorage } from '@/core/storage';
 
 interface ContentNavigatorProps {
   subject: Subject;
@@ -110,6 +111,26 @@ export function ContentNavigator({
     if (!currentTopic?.subtopics?.length || !currentSubtopicSlug) return null;
     return currentTopic.subtopics.find(st => st.slug === currentSubtopicSlug) || currentTopic.subtopics[0];
   }, [currentTopic, currentSubtopicSlug]);
+
+  // Find the last viewed subtopic for "Continue Reading" in subject overview
+  const lastViewedSubtopicInfo = useMemo(() => {
+    const lastViewed = progressStorage.getLastViewedSubtopicForSubject(subject.id);
+    if (!lastViewed) return null;
+
+    // Find the topic and subtopic from the subject structure
+    for (const topic of subject.topics) {
+      if (!topic.subtopics) continue;
+      const subtopic = topic.subtopics.find(st => st.id === lastViewed.subtopicId);
+      if (subtopic) {
+        return {
+          topic,
+          subtopic,
+          lastViewedAt: lastViewed.lastViewedAt,
+        };
+      }
+    }
+    return null;
+  }, [subject.id, subject.topics, progress?.subtopicViews]);
 
   const topicIndex = currentTopic ? subject.topics.findIndex(t => t.id === currentTopicId) : -1;
   const subtopicIndex = useMemo(() => {
@@ -242,6 +263,13 @@ export function ContentNavigator({
     navigateToProject(subject.id, projectId);
   }, [subject.id]);
 
+  const handleContinueReadingClick = useCallback((e: Event) => {
+    e.preventDefault();
+    if (lastViewedSubtopicInfo) {
+      navigateToSubtopic(subject.id, lastViewedSubtopicInfo.topic.id, lastViewedSubtopicInfo.subtopic.slug);
+    }
+  }, [subject.id, lastViewedSubtopicInfo]);
+
   // Render content based on current state
   const renderContent = () => {
     if (currentSubtopic) {
@@ -356,15 +384,26 @@ export function ContentNavigator({
         <div class="overview-section">
           <h2>Get Started</h2>
           <p>Select a topic from the sidebar to begin learning, or jump straight into practice.</p>
-          {subject.topics.length > 0 && (
-            <button
-              class="btn btn-primary"
-              onClick={(e) => handleTopicClick(e, subject.topics[0].id)}
-            >
-              Start with {subject.topics[0].title}
-              <span dangerouslySetInnerHTML={{ __html: Icons.ArrowRight }} />
-            </button>
-          )}
+          <div class="overview-actions">
+            {lastViewedSubtopicInfo && (
+              <button
+                class="btn btn-primary"
+                onClick={handleContinueReadingClick}
+              >
+                Continue Reading: {lastViewedSubtopicInfo.subtopic.title}
+                <span dangerouslySetInnerHTML={{ __html: Icons.ArrowRight }} />
+              </button>
+            )}
+            {subject.topics.length > 0 && (
+              <button
+                class={`btn ${lastViewedSubtopicInfo ? 'btn-secondary' : 'btn-primary'}`}
+                onClick={(e) => handleTopicClick(e, subject.topics[0].id)}
+              >
+                Start with {subject.topics[0].title}
+                <span dangerouslySetInnerHTML={{ __html: Icons.ArrowRight }} />
+              </button>
+            )}
+          </div>
         </div>
 
         {dependencyGraph && (
