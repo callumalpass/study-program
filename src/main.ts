@@ -19,6 +19,7 @@ import { renderQuizPage, renderExercisePage, renderProjectPage, renderExamPage }
 import { renderExportPage } from './pages/export';
 import { renderTimelinePage } from './pages/timeline';
 import { renderCourseBuilderPage } from './pages/course-builder';
+import { updateMermaidTheme } from './components/markdown';
 
 // Import all subject content from central registry
 import { allQuizzes, allExercises, allProjects, allExams } from './subjects';
@@ -28,13 +29,17 @@ import { allQuizzes, allExercises, allProjects, allExams } from './subjects';
  */
 function applyTheme(theme: Theme): void {
   const root = document.documentElement;
+  let isDark = false;
 
   if (theme === 'auto') {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', isDark ? 'dark' : 'light');
   } else {
+    isDark = theme === 'dark';
     root.setAttribute('data-theme', theme);
   }
+
+  updateMermaidTheme(isDark);
 }
 
 /**
@@ -173,7 +178,11 @@ function initMobileNav(): void {
   // Close menu when clicking a nav link (on mobile)
   sidebar.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
-    if (target.closest('.sidebar-nav-link') || target.closest('.subject-link')) {
+    if (
+      target.closest('.sidebar-nav-link') ||
+      target.closest('.subject-link') ||
+      target.closest('.subject-header-new')
+    ) {
       // Small delay to allow navigation to start
       setTimeout(closeMenu, 100);
     }

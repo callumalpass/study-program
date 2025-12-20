@@ -66,6 +66,7 @@ export function ContentNavigator({
   const [showAllExercises, setShowAllExercises] = useState(false);
   const [showAllQuizzes, setShowAllQuizzes] = useState(false);
   const [mobilePanel, setMobilePanel] = useState<'topics' | 'practice'>('topics');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const graphContainerRef = useRef<HTMLDivElement>(null);
 
   // Filter content for this subject
@@ -230,6 +231,7 @@ export function ContentNavigator({
   // Navigation handlers
   const handleTopicClick = useCallback((e: Event, topicId: string) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false);
     const topic = subject.topics.find(t => t.id === topicId);
     if (topic?.subtopics?.length) {
       navigateToSubtopic(subject.id, topicId, topic.subtopics[0].slug);
@@ -240,31 +242,37 @@ export function ContentNavigator({
 
   const handleSubtopicClick = useCallback((e: Event, topicId: string, slug: string) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false);
     navigateToSubtopic(subject.id, topicId, slug);
   }, [subject.id]);
 
   const handleQuizClick = useCallback((e: Event, quizId: string) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false);
     navigateToQuiz(subject.id, quizId);
   }, [subject.id]);
 
   const handleExerciseClick = useCallback((e: Event, exerciseId: string) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false);
     navigateToExercise(subject.id, exerciseId);
   }, [subject.id]);
 
   const handleExamClick = useCallback((e: Event, examId: string) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false);
     navigateToExam(subject.id, examId);
   }, [subject.id]);
 
   const handleProjectClick = useCallback((e: Event, projectId: string) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false);
     navigateToProject(subject.id, projectId);
   }, [subject.id]);
 
   const handleContinueReadingClick = useCallback((e: Event) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false);
     if (lastViewedSubtopicInfo) {
       navigateToSubtopic(subject.id, lastViewedSubtopicInfo.topic.id, lastViewedSubtopicInfo.subtopic.slug);
     }
@@ -420,210 +428,223 @@ export function ContentNavigator({
     <div class="content-navigator" data-mobile-panel={mobilePanel}>
       {/* Left sidebar */}
       <nav class="content-sidebar" aria-label="Subject navigation">
-        {/* Mobile panel tabs (shown via CSS on small screens) */}
-        <div class="content-sidebar-tabs" role="tablist" aria-label="Subject panels">
-          <button
-            type="button"
-            class={`content-sidebar-tab ${mobilePanel === 'topics' ? 'active' : ''}`}
-            aria-selected={mobilePanel === 'topics'}
-            onClick={() => setMobilePanel('topics')}
-          >
-            <span class="tab-icon" dangerouslySetInnerHTML={{ __html: Icons.Curriculum }} />
-            <span class="tab-label">Topics</span>
-          </button>
-          <button
-            type="button"
-            class={`content-sidebar-tab ${mobilePanel === 'practice' ? 'active' : ''}`}
-            aria-selected={mobilePanel === 'practice'}
-            onClick={() => setMobilePanel('practice')}
-          >
-            <span class="tab-icon" dangerouslySetInnerHTML={{ __html: Icons.Progress }} />
-            <span class="tab-label">Practice</span>
-          </button>
-        </div>
+        {/* Mobile menu toggle */}
+        <button
+          type="button"
+          class="mobile-menu-toggle"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-expanded={isMobileMenuOpen}
+        >
+          <span class="toggle-label">{currentTopic ? currentTopic.title : 'Menu'}</span>
+          <span class="toggle-icon" dangerouslySetInnerHTML={{ __html: isMobileMenuOpen ? Icons.ChevronUp : Icons.ChevronDown }} />
+        </button>
 
-        {/* Topics section */}
-        <div class="sidebar-section topics-section">
-          <div class="sidebar-section-header">
-            <span class="section-icon" dangerouslySetInnerHTML={{ __html: Icons.Curriculum }} />
-            <span>Topics</span>
+        <div class={`sidebar-content-wrapper ${isMobileMenuOpen ? 'open' : ''}`}>
+          {/* Mobile panel tabs (shown via CSS on small screens) */}
+          <div class="content-sidebar-tabs" role="tablist" aria-label="Subject panels">
+            <button
+              type="button"
+              class={`content-sidebar-tab ${mobilePanel === 'topics' ? 'active' : ''}`}
+              aria-selected={mobilePanel === 'topics'}
+              onClick={() => setMobilePanel('topics')}
+            >
+              <span class="tab-icon" dangerouslySetInnerHTML={{ __html: Icons.Curriculum }} />
+              <span class="tab-label">Topics</span>
+            </button>
+            <button
+              type="button"
+              class={`content-sidebar-tab ${mobilePanel === 'practice' ? 'active' : ''}`}
+              aria-selected={mobilePanel === 'practice'}
+              onClick={() => setMobilePanel('practice')}
+            >
+              <span class="tab-icon" dangerouslySetInnerHTML={{ __html: Icons.Progress }} />
+              <span class="tab-label">Practice</span>
+            </button>
           </div>
-          <div class="topic-list">
-            {subject.topics.map((topic, index) => {
-              const isActive = currentTopicId === topic.id;
-              const isCompleted = isTopicCompleted(topic);
-              const hasSubtopics = topic.subtopics && topic.subtopics.length > 0;
-              const topicProgress = getTopicProgress(topic);
 
-              return (
-                <div key={topic.id} class={`topic-group ${isActive ? 'active' : ''}`}>
-                  <button
-                    class={`topic-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
-                    onClick={(e) => handleTopicClick(e, topic.id)}
-                  >
-                    <span class="topic-title">{topic.title}</span>
-                    {topicProgress.total > 0 && !isCompleted && (
-                      <span class="topic-progress">{topicProgress.completed}/{topicProgress.total}</span>
+          {/* Topics section */}
+          <div class="sidebar-section topics-section">
+            <div class="sidebar-section-header">
+              <span class="section-icon" dangerouslySetInnerHTML={{ __html: Icons.Curriculum }} />
+              <span>Topics</span>
+            </div>
+            <div class="topic-list">
+              {subject.topics.map((topic, index) => {
+                const isActive = currentTopicId === topic.id;
+                const isCompleted = isTopicCompleted(topic);
+                const hasSubtopics = topic.subtopics && topic.subtopics.length > 0;
+                const topicProgress = getTopicProgress(topic);
+
+                return (
+                  <div key={topic.id} class={`topic-group ${isActive ? 'active' : ''}`}>
+                    <button
+                      class={`topic-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
+                      onClick={(e) => handleTopicClick(e, topic.id)}
+                    >
+                      <span class="topic-title">{topic.title}</span>
+                      {topicProgress.total > 0 && !isCompleted && (
+                        <span class="topic-progress">{topicProgress.completed}/{topicProgress.total}</span>
+                      )}
+                    </button>
+
+                    {/* Subtopics (shown when topic is active) */}
+                    {isActive && hasSubtopics && (
+                      <div class="subtopic-list">
+                        {topic.subtopics!.map((subtopic) => {
+                          const isSubtopicActive = currentSubtopicSlug === subtopic.slug;
+                          const isViewed = isSubtopicViewed(subtopic.id);
+
+                          return (
+                            <button
+                              key={subtopic.id}
+                              class={`subtopic-item ${isSubtopicActive ? 'active' : ''} ${isViewed ? 'viewed' : ''}`}
+                              onClick={(e) => handleSubtopicClick(e, topic.id, subtopic.slug)}
+                            >
+                              <span class="subtopic-indicator">
+                                {isViewed ? (
+                                  <span class="indicator-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                                ) : (
+                                  <span class="indicator-dot" />
+                                )}
+                              </span>
+                              <span class="subtopic-title">{subtopic.title}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
                     )}
-                  </button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
 
-                  {/* Subtopics (shown when topic is active) */}
-                  {isActive && hasSubtopics && (
-                    <div class="subtopic-list">
-                      {topic.subtopics!.map((subtopic) => {
-                        const isSubtopicActive = currentSubtopicSlug === subtopic.slug;
-                        const isViewed = isSubtopicViewed(subtopic.id);
+          {/* Practice section */}
+          <div class="sidebar-section practice-section">
+            <div class="sidebar-section-header">
+              <span class="section-icon" dangerouslySetInnerHTML={{ __html: Icons.Progress }} />
+              <span>Practice</span>
+            </div>
 
-                        return (
-                          <button
-                            key={subtopic.id}
-                            class={`subtopic-item ${isSubtopicActive ? 'active' : ''} ${isViewed ? 'viewed' : ''}`}
-                            onClick={(e) => handleSubtopicClick(e, topic.id, subtopic.slug)}
-                          >
-                            <span class="subtopic-indicator">
-                              {isViewed ? (
-                                <span class="indicator-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
-                              ) : (
-                                <span class="indicator-dot" />
-                              )}
-                            </span>
-                            <span class="subtopic-title">{subtopic.title}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
+            {!hasPracticeItems && (
+              <div class="practice-empty">No practice items for this topic yet.</div>
+            )}
+
+            {/* Quizzes */}
+            {practiceQuizzes.length > 0 && (
+              <div class="practice-group">
+                <div class="practice-group-header">
+                  <span>Quizzes</span>
+                  <span class="practice-count">
+                    {practiceQuizzes.filter(q => isQuizAttempted(q.id)).length}/{practiceQuizzes.length}
+                  </span>
                 </div>
-              );
-            })}
+                {practiceQuizzes.slice(0, showAllQuizzes ? undefined : INITIAL_QUIZ_COUNT).map((quiz, index) => {
+                  const attempted = isQuizAttempted(quiz.id);
+                  const isActive = currentPracticeId === quiz.id;
+                  return (
+                    <button
+                      key={quiz.id}
+                      class={`practice-item ${attempted ? 'completed' : ''} ${isActive ? 'active' : ''}`}
+                      onClick={(e) => handleQuizClick(e, quiz.id)}
+                    >
+                      <span class="practice-title">Quiz {index + 1}</span>
+                      {attempted && (
+                        <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                      )}
+                    </button>
+                  );
+                })}
+                {practiceQuizzes.length > INITIAL_QUIZ_COUNT && (
+                  <button class="practice-toggle" onClick={() => setShowAllQuizzes(!showAllQuizzes)}>
+                    {showAllQuizzes ? 'Show less' : `+${practiceQuizzes.length - INITIAL_QUIZ_COUNT} more`}
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Exercises */}
+            {practiceExercises.length > 0 && (
+              <div class="practice-group">
+                <div class="practice-group-header">
+                  <span>Exercises</span>
+                  <span class="practice-count">
+                    {practiceExercises.filter(e => isExerciseComplete(e.id)).length}/{practiceExercises.length}
+                  </span>
+                </div>
+                {practiceExercises.slice(0, showAllExercises ? undefined : INITIAL_EXERCISE_COUNT).map((exercise, index) => {
+                  const completed = isExerciseComplete(exercise.id);
+                  const isActive = currentPracticeId === exercise.id;
+                  return (
+                    <button
+                      key={exercise.id}
+                      class={`practice-item ${completed ? 'completed' : ''} ${isActive ? 'active' : ''}`}
+                      onClick={(e) => handleExerciseClick(e, exercise.id)}
+                    >
+                      <span class="practice-title">Exercise {index + 1}</span>
+                      {completed && (
+                        <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                      )}
+                    </button>
+                  );
+                })}
+                {practiceExercises.length > INITIAL_EXERCISE_COUNT && (
+                  <button class="practice-toggle" onClick={() => setShowAllExercises(!showAllExercises)}>
+                    {showAllExercises ? 'Show less' : `+${practiceExercises.length - INITIAL_EXERCISE_COUNT} more`}
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Exams */}
+            {subjectExams.length > 0 && (
+              <div class="practice-group">
+                <div class="practice-group-header">
+                  <span>Exams</span>
+                </div>
+                {subjectExams.map((exam) => {
+                  const attempted = isExamAttempted(exam.id);
+                  const isActive = currentPracticeId === exam.id;
+                  return (
+                    <button
+                      key={exam.id}
+                      class={`practice-item exam-item ${attempted ? 'completed' : ''} ${isActive ? 'active' : ''}`}
+                      onClick={(e) => handleExamClick(e, exam.id)}
+                    >
+                      <span class="practice-title">{exam.title}</span>
+                      {attempted && (
+                        <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Projects */}
+            {subjectProjects.length > 0 && (
+              <div class="practice-group">
+                <div class="practice-group-header">
+                  <span>Projects</span>
+                </div>
+                {subjectProjects.map((project) => {
+                  const submitted = hasProjectSubmission(project.id);
+                  return (
+                    <button
+                      key={project.id}
+                      class={`practice-item project-item ${submitted ? 'completed' : ''}`}
+                      onClick={(e) => handleProjectClick(e, project.id)}
+                    >
+                      <span class="practice-title">{project.title}</span>
+                      {submitted && (
+                        <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
-        </div>
-
-        {/* Practice section */}
-        <div class="sidebar-section practice-section">
-          <div class="sidebar-section-header">
-            <span class="section-icon" dangerouslySetInnerHTML={{ __html: Icons.Progress }} />
-            <span>Practice</span>
-          </div>
-
-          {!hasPracticeItems && (
-            <div class="practice-empty">No practice items for this topic yet.</div>
-          )}
-
-          {/* Quizzes */}
-          {practiceQuizzes.length > 0 && (
-            <div class="practice-group">
-              <div class="practice-group-header">
-                <span>Quizzes</span>
-                <span class="practice-count">
-                  {practiceQuizzes.filter(q => isQuizAttempted(q.id)).length}/{practiceQuizzes.length}
-                </span>
-              </div>
-              {practiceQuizzes.slice(0, showAllQuizzes ? undefined : INITIAL_QUIZ_COUNT).map((quiz, index) => {
-                const attempted = isQuizAttempted(quiz.id);
-                const isActive = currentPracticeId === quiz.id;
-                return (
-                  <button
-                    key={quiz.id}
-                    class={`practice-item ${attempted ? 'completed' : ''} ${isActive ? 'active' : ''}`}
-                    onClick={(e) => handleQuizClick(e, quiz.id)}
-                  >
-                    <span class="practice-title">Quiz {index + 1}</span>
-                    {attempted && (
-                      <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
-                    )}
-                  </button>
-                );
-              })}
-              {practiceQuizzes.length > INITIAL_QUIZ_COUNT && (
-                <button class="practice-toggle" onClick={() => setShowAllQuizzes(!showAllQuizzes)}>
-                  {showAllQuizzes ? 'Show less' : `+${practiceQuizzes.length - INITIAL_QUIZ_COUNT} more`}
-                </button>
-              )}
-            </div>
-          )}
-
-          {/* Exercises */}
-          {practiceExercises.length > 0 && (
-            <div class="practice-group">
-              <div class="practice-group-header">
-                <span>Exercises</span>
-                <span class="practice-count">
-                  {practiceExercises.filter(e => isExerciseComplete(e.id)).length}/{practiceExercises.length}
-                </span>
-              </div>
-              {practiceExercises.slice(0, showAllExercises ? undefined : INITIAL_EXERCISE_COUNT).map((exercise, index) => {
-                const completed = isExerciseComplete(exercise.id);
-                const isActive = currentPracticeId === exercise.id;
-                return (
-                  <button
-                    key={exercise.id}
-                    class={`practice-item ${completed ? 'completed' : ''} ${isActive ? 'active' : ''}`}
-                    onClick={(e) => handleExerciseClick(e, exercise.id)}
-                  >
-                    <span class="practice-title">Exercise {index + 1}</span>
-                    {completed && (
-                      <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
-                    )}
-                  </button>
-                );
-              })}
-              {practiceExercises.length > INITIAL_EXERCISE_COUNT && (
-                <button class="practice-toggle" onClick={() => setShowAllExercises(!showAllExercises)}>
-                  {showAllExercises ? 'Show less' : `+${practiceExercises.length - INITIAL_EXERCISE_COUNT} more`}
-                </button>
-              )}
-            </div>
-          )}
-
-          {/* Exams */}
-          {subjectExams.length > 0 && (
-            <div class="practice-group">
-              <div class="practice-group-header">
-                <span>Exams</span>
-              </div>
-              {subjectExams.map((exam) => {
-                const attempted = isExamAttempted(exam.id);
-                const isActive = currentPracticeId === exam.id;
-                return (
-                  <button
-                    key={exam.id}
-                    class={`practice-item exam-item ${attempted ? 'completed' : ''} ${isActive ? 'active' : ''}`}
-                    onClick={(e) => handleExamClick(e, exam.id)}
-                  >
-                    <span class="practice-title">{exam.title}</span>
-                    {attempted && (
-                      <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
-          {/* Projects */}
-          {subjectProjects.length > 0 && (
-            <div class="practice-group">
-              <div class="practice-group-header">
-                <span>Projects</span>
-              </div>
-              {subjectProjects.map((project) => {
-                const submitted = hasProjectSubmission(project.id);
-                return (
-                  <button
-                    key={project.id}
-                    class={`practice-item project-item ${submitted ? 'completed' : ''}`}
-                    onClick={(e) => handleProjectClick(e, project.id)}
-                  >
-                    <span class="practice-title">{project.title}</span>
-                    {submitted && (
-                      <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          )}
         </div>
       </nav>
 

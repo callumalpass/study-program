@@ -13,6 +13,18 @@ mermaid.initialize({
   securityLevel: 'loose',
 });
 
+/**
+ * Update Mermaid theme configuration.
+ * Call this when the application theme changes.
+ */
+export function updateMermaidTheme(isDark: boolean): void {
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: isDark ? 'dark' : 'default',
+    securityLevel: 'loose',
+  });
+}
+
 // Import core Prism languages
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-javascript';

@@ -110,6 +110,8 @@ export function CodeEditor({
   // AI evaluation state (for exercises without test cases)
   const [aiEvaluation, setAiEvaluation] = useState<EvaluationResult | null>(null);
   const [isAiEvaluating, setIsAiEvaluating] = useState(false);
+  const [copyFeedback, setCopyFeedback] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
 
   // Check if we're in AI evaluation mode (no test cases but has solution)
   const isAiEvaluationMode = testCases.length === 0 && !!solution && !!problem;
@@ -269,6 +271,7 @@ export function CodeEditor({
     setIsError(false);
     setShowTestResults(false);
     clearErrorDecorations();
+    setIsRunning(true);
 
     const startTime = performance.now();
 
@@ -293,6 +296,8 @@ export function CodeEditor({
       const errorMessage = error instanceof Error ? error.message : String(error);
       setOutput(`Error: ${errorMessage}`);
       highlightErrorLine(errorMessage);
+    } finally {
+      setIsRunning(false);
     }
   }, [language, onRun, highlightErrorLine, clearErrorDecorations]);
 
@@ -307,6 +312,7 @@ export function CodeEditor({
     setIsError(false);
     setShowTestResults(true);
     clearErrorDecorations();
+    setIsRunning(true);
 
     const startTime = performance.now();
 
@@ -343,6 +349,8 @@ export function CodeEditor({
       setOutput(`Error: ${errorMessage}`);
       highlightErrorLine(errorMessage);
       return [];
+    } finally {
+      setIsRunning(false);
     }
   }, [language, testCases, solution, onTestResults, highlightErrorLine, clearErrorDecorations]);
 
@@ -427,6 +435,8 @@ export function CodeEditor({
 
     try {
       await navigator.clipboard.writeText(editor.getValue());
+      setCopyFeedback(true);
+      setTimeout(() => setCopyFeedback(false), 2000);
     } catch (err) {
       console.error('Failed to copy:', err);
     }
@@ -529,7 +539,8 @@ export function CodeEditor({
               <span class="btn-icon" dangerouslySetInnerHTML={{ __html: Icons.Refresh }} /> Reset
             </button>
             <button class="btn btn-ghost btn-copy" onClick={handleCopy} title="Copy code to clipboard">
-              <span class="btn-icon" dangerouslySetInnerHTML={{ __html: Icons.Export }} /> Copy
+              <span class="btn-icon" dangerouslySetInnerHTML={{ __html: copyFeedback ? Icons.Check : Icons.Export }} /> 
+              {copyFeedback ? 'Copied!' : 'Copy'}
             </button>
             <button class="btn btn-ghost btn-download" onClick={handleDownload} title="Download code as file">
               <span class="btn-icon" dangerouslySetInnerHTML={{ __html: Icons.Download }} /> Download
@@ -579,9 +590,18 @@ export function CodeEditor({
       <div class={`output-panel ${showOutput ? 'show' : ''} ${isError ? 'error' : ''}`}>
         <div class="output-header">
           <span>Output</span>
-          {executionTime !== null && <span class="execution-time">{executionTime}ms</span>}
+          {executionTime !== null && !isRunning && <span class="execution-time">{executionTime}ms</span>}
         </div>
-        <pre class="output-content">{output}</pre>
+        <pre class="output-content">
+          {isRunning ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span class="spinner" style={{ width: '16px', height: '16px', borderWidth: '2px' }}></span>
+              <span>Running...</span>
+            </div>
+          ) : (
+            output
+          )}
+        </pre>
       </div>
 
       {/* Test results panel */}

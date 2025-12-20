@@ -129,20 +129,19 @@ export function renderSettingsPage(container: HTMLElement): void {
               </div>
             </div>
             <div class="setting-control vertical">
-               <div class="input-group" style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+               <div class="input-group">
                   <input 
                     type="password" 
                     id="github-token-input" 
-                    class="text-input" 
+                    class="text-input form-input" 
                     placeholder="ghp_..." 
                     value="${settings.githubToken || ''}"
-                    style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-default); border-radius: 4px; background: var(--color-bg-surface); color: var(--color-text-primary);"
                   >
                   <button id="connect-github-btn" class="btn btn-primary">
                     ${settings.githubToken ? 'Update' : 'Connect'}
                   </button>
                </div>
-               <div id="github-status" class="status-message ${settings.gistId ? 'success' : ''}" style="font-size: 0.9em; color: var(--text-secondary);">
+               <div id="github-status" class="status-message ${settings.gistId ? 'success' : ''}">
                  ${settings.gistId
                    ? `${Icons.Check} Connected to Gist ID: ${settings.gistId.substring(0, 8)}...`
                    : `${Icons.StatusNotStarted} Not connected`}
@@ -151,7 +150,7 @@ export function renderSettingsPage(container: HTMLElement): void {
                <button id="sync-now-btn" class="btn btn-secondary" style="margin-top: 0.5rem;">
                  Sync Now
                </button>
-               <div id="sync-status" style="font-size: 0.85em; color: var(--text-secondary); margin-top: 0.25rem;"></div>
+               <div id="sync-status" class="status-message" style="margin-top: 0.25rem;"></div>
                ` : ''}
             </div>
           </div>
@@ -173,20 +172,19 @@ export function renderSettingsPage(container: HTMLElement): void {
               </div>
             </div>
             <div class="setting-control vertical">
-               <div class="input-group" style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+               <div class="input-group">
                   <input
                     type="password"
                     id="gemini-api-key-input"
-                    class="text-input"
+                    class="text-input form-input"
                     placeholder="AI..."
                     value="${settings.geminiApiKey || ''}"
-                    style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-default); border-radius: 4px; background: var(--color-bg-surface); color: var(--color-text-primary);"
                   >
                   <button id="save-gemini-key-btn" class="btn btn-primary">
                     ${settings.geminiApiKey ? 'Update' : 'Save'}
                   </button>
                </div>
-               <div id="gemini-status" class="status-message ${settings.geminiApiKey ? 'success' : ''}" style="font-size: 0.9em; color: var(--text-secondary);">
+               <div id="gemini-status" class="status-message ${settings.geminiApiKey ? 'success' : ''}">
                  ${settings.geminiApiKey
                    ? `${Icons.Check} API key configured`
                    : `${Icons.StatusNotStarted} Not configured`}
