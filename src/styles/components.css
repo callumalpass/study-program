@@ -734,31 +734,46 @@
   flex-wrap: wrap;
 }
 
+.editor-toolbar .toolbar-right {
+  gap: var(--space-xs);
+}
+
+.editor-toolbar .toolbar-right .btn {
+  padding: 4px 10px;
+  font-size: var(--font-size-xs);
+  gap: var(--space-xs);
+}
+
+.editor-toolbar .toolbar-right .btn-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
 .toolbar-separator {
   width: 1px;
-  height: 20px;
+  height: 16px;
   background-color: var(--color-border-default);
-  margin: 0 var(--space-xs);
+  margin: 0 4px;
 }
 
 /* Font Controls */
 .font-controls {
   display: flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: 4px;
 }
 
 .font-size-display {
   font-family: var(--font-mono);
   font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
-  min-width: 36px;
+  min-width: 30px;
   text-align: center;
 }
 
 .btn-font {
-  padding: var(--space-xs) var(--space-sm);
-  min-width: 32px;
+  padding: 4px 8px;
+  min-width: 28px;
 }
 
 /* Button Icons */
@@ -3173,6 +3188,5 @@
   border-color: var(--color-border-emphasis);
   background-color: var(--color-bg-surface);
 }
-
 
 
