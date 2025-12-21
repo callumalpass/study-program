@@ -242,6 +242,7 @@ export function renderSettingsPage(container: HTMLElement): void {
         <h2>About</h2>
         <div class="settings-group">
           <div class="about-info">
+            <div style="margin-bottom: var(--space-md);">${Icons.KineticBrick}</div>
             <h3>Stod</h3>
             <p>A comprehensive platform for tracking your progress through a computer science degree curriculum.</p>
             <div class="version-info">

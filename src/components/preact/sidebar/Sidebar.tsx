@@ -32,7 +32,7 @@ export function Sidebar({
       {/* Header with logo */}
       <div class="sidebar-header">
         <a href="#/" class="sidebar-logo">
-          <span class="logo-icon" dangerouslySetInnerHTML={{ __html: Icons.Logo }} />
+          <span class="logo-icon" dangerouslySetInnerHTML={{ __html: Icons.PensiveBrick }} />
           <span class="logo-text">Stod</span>
         </a>
       </div>

@@ -21,7 +21,7 @@
 }
 
 .breadcrumb a:hover {
-  color: var(--color-accent-primary);
+  color: var(--color-accent-text-hover);
 }
 
 .breadcrumb .separator {
@@ -194,6 +194,12 @@
   border-color: var(--color-accent-primary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+
+.subject-card:not(.locked):hover h3,
+.subject-card:not(.locked):hover h4,
+.subject-card:not(.locked):hover .subject-code {
+  color: var(--color-accent-text-hover);
 }
 
 .subject-card.locked {
@@ -399,7 +405,7 @@
 .action-card:hover {
   background: var(--color-bg-elevated);
   border-color: var(--color-accent-primary);
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
 }
 
 .action-card .action-icon {
@@ -467,6 +473,10 @@
   transform: translateX(4px);
 }
 
+.review-item:hover .review-item-title {
+  color: var(--color-accent-text-hover);
+}
+
 .review-item-icon {
   font-size: var(--font-size-xl);
   opacity: 0.8;
@@ -497,7 +507,7 @@
 
 .review-item:hover .review-item-arrow {
   transform: translateX(4px);
-  color: var(--color-accent-primary);
+  color: var(--color-accent-text-hover);
 }
 
 .review-more {
@@ -806,6 +816,10 @@
   border-color: var(--color-border-emphasis);
 }
 
+.topics-list .topic-item:hover .topic-info h3 {
+  color: var(--color-accent-text-hover);
+}
+
 .topics-list .topic-item.completed {
   border-color: var(--color-success);
 }
@@ -871,6 +885,10 @@
 
 .project-item:hover {
   border-color: var(--color-border-emphasis);
+}
+
+.project-item:hover .project-info h3 {
+  color: var(--color-accent-text-hover);
 }
 
 .project-item.submitted {
@@ -1433,7 +1451,7 @@ textarea.code-editor::placeholder {
 }
 
 .hints-modal .modal-close:hover {
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
 }
 
 .hints-modal .modal-body {
@@ -2587,6 +2605,10 @@ textarea.code-editor::placeholder {
   background: var(--color-bg-elevated);
 }
 
+.year-breakdown-header:hover h3 {
+  color: var(--color-accent-text-hover);
+}
+
 .year-breakdown-header h3 {
   margin: 0;
   font-size: var(--font-size-md);
@@ -2643,6 +2665,10 @@ textarea.code-editor::placeholder {
 .subject-breakdown-item:hover {
   border-color: var(--color-accent-primary);
   transform: translateX(4px);
+}
+
+.subject-breakdown-item:hover .subject-info h5 {
+  color: var(--color-accent-text-hover);
 }
 
 .subject-breakdown-header {
@@ -2855,6 +2881,10 @@ textarea.code-editor::placeholder {
   border-color: var(--color-border-emphasis);
 }
 
+.setting-item:hover:not(.danger-zone) .setting-info h3 {
+  color: var(--color-accent-text-hover);
+}
+
 .setting-info {
   flex: 1;
   padding-right: var(--space-lg);
@@ -2897,7 +2927,7 @@ textarea.code-editor::placeholder {
 }
 
 .theme-option:hover {
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
 }
 
 .theme-option.active {
@@ -3533,7 +3563,7 @@ input:checked + .toggle-slider:before {
 }
 
 .toggle-btn:hover {
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
 }
 
 .toggle-btn.active {
@@ -3989,6 +4019,10 @@ img {
   border-color: var(--color-border-strong);
 }
 
+.pace-option:hover .pace-label {
+  color: var(--color-accent-text-hover);
+}
+
 .pace-option.selected {
   border-color: var(--color-accent-primary);
   background: rgba(88, 166, 255, 0.1);
@@ -4284,7 +4318,7 @@ img {
 }
 
 .timeline-page .modal-close:hover {
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
 }
 
 .timeline-page #modal-planner {
@@ -4392,6 +4426,10 @@ img {
   box-shadow: var(--shadow-lg);
 }
 
+.template-card:hover .template-name {
+  color: var(--color-accent-text-hover);
+}
+
 .template-icon {
   font-size: 2rem;
   margin-bottom: var(--space-md);
@@ -4495,6 +4533,11 @@ img {
 
 .subject-item:hover {
   border-color: var(--color-border-hover);
+}
+
+.subject-item:hover .subject-title,
+.subject-item:hover .subject-code {
+  color: var(--color-accent-text-hover);
 }
 
 .subject-item.selected {

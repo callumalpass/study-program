@@ -74,7 +74,7 @@
 
 .sidebar-nav-link:hover {
   background-color: var(--color-bg-elevated);
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
   text-decoration: none;
 }
 
@@ -118,6 +118,11 @@
 .sidebar-subject-link:hover {
   background: var(--color-bg-elevated);
   text-decoration: none;
+}
+
+.sidebar-subject-link:hover .sidebar-subject-title,
+.sidebar-subject-link:hover .sidebar-subject-code {
+  color: var(--color-accent-text-hover);
 }
 
 .sidebar-subject-link.active {
@@ -174,15 +179,31 @@
 }
 
 .logo-icon {
-  font-size: var(--font-size-2xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--color-accent-primary);
-  animation: logo-color 4.5s ease-in-out infinite;
+}
+
+.sidebar-logo .logo-icon {
+  min-width: 80px;
+  min-height: 80px;
 }
 
 .logo-icon svg {
-  transform-origin: center;
-  animation: logo-squash 4.5s ease-in-out infinite;
-  will-change: transform;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar-logo .logo-icon svg {
+  margin-top: 0;
+}
+
+.mobile-header .logo-icon svg {
+  width: 48px;
+  height: 48px;
+  margin-top: 0;
 }
 
 .logo-text {
@@ -243,6 +264,11 @@
 .subject-link:hover {
   background: var(--color-bg-elevated);
   text-decoration: none;
+}
+
+.subject-link:hover .subject-title,
+.subject-link:hover .subject-subtitle {
+  color: var(--color-accent-text-hover);
 }
 
 .subject-link.active {
@@ -343,7 +369,7 @@
 .subject-hover-menu .menu-action:hover,
 .subject-hover-menu .menu-action:focus-visible {
   background: var(--color-bg-elevated);
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
 }
 
 .subject-hover-menu .menu-icon svg {
@@ -451,7 +477,7 @@
 .subject-submenu .menu-action:hover,
 .subject-submenu .menu-action:focus-visible {
   background: var(--color-bg-elevated);
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
 }
 
 .subject-submenu .menu-condensed {
@@ -593,7 +619,7 @@
 }
 
 .sidebar-toggle:hover {
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
   background: var(--color-bg-elevated);
 }
 
@@ -775,10 +801,6 @@
   color: var(--color-text-primary);
 }
 
-.mobile-header .logo-icon {
-  font-size: var(--font-size-xl);
-}
-
 .mobile-header .mobile-logo span:not(.logo-icon) {
   font-family: 'JetBrains Mono', monospace;
   font-weight: 500;
@@ -923,7 +945,7 @@
 
 .sidebar-close-btn:hover {
   background: var(--color-bg-overlay);
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
 }
 
 /* ==========================================================================
@@ -1123,7 +1145,7 @@
 
 .filter-btn:hover {
   background: var(--color-bg-elevated);
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
 }
 
 .filter-btn.active {
@@ -1175,7 +1197,7 @@
 }
 
 .subject-group-header-new:hover {
-  color: var(--color-text-secondary);
+  color: var(--color-accent-text-hover);
   background: var(--color-bg-elevated);
 }
 
@@ -1233,6 +1255,11 @@
 .subject-header-new:hover {
   background: var(--color-bg-hover);
   border-color: var(--color-border-default);
+}
+
+.subject-header-new:hover .subject-title-new,
+.subject-header-new:hover .subject-code-new {
+  color: var(--color-accent-text-hover);
 }
 
 .subject-item-new.active .subject-header-new {
@@ -1302,7 +1329,7 @@
 
 .expand-btn:hover {
   background: var(--color-bg-surface);
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
 }
 
 .expand-btn svg {
@@ -1395,7 +1422,7 @@
 }
 
 .topic-list-inner .topic-item:hover {
-  color: var(--color-text-primary);
+  color: var(--color-accent-text-hover);
   background: var(--color-bg-hover);
   text-decoration: none;
   border-left-color: var(--color-border-default);
@@ -1406,7 +1433,7 @@
 }
 
 .topic-list-inner .topic-item.completed:hover {
-  color: var(--color-text-secondary);
+  color: var(--color-accent-text-hover);
 }
 
 .topic-list-inner .topic-item.current {
@@ -1429,6 +1456,7 @@
 
 .topic-list-inner .topic-item.more.expand-toggle:hover {
   opacity: 1;
+  color: var(--color-accent-text-hover);
   background: var(--color-bg-hover);
   border-left-color: var(--color-accent-primary);
 }
