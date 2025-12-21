@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import type { Subject, SubjectProgress, Quiz, Exercise, Exam, Project } from '@/core/types';
 import { Icons } from '@/components/icons';
+import { Mascots } from '@/components/mascots';
 import { Nav } from './Nav';
 import { SubjectList } from './SubjectList';
 
@@ -12,6 +13,24 @@ interface SidebarProps {
   exercises: Exercise[];
   exams: Exam[];
   projects: Project[];
+}
+
+// Determine which mascot to show based on current route
+function getMascotForPath(path: string): string {
+  // Reading content (subtopic pages)
+  if (path.match(/\/subject\/[^/]+\/topic\/[^/]+\/.+/)) {
+    return Mascots.Reading;
+  }
+  // Quiz or exercise (thinking/answering)
+  if (path.includes('/quiz/') || path.includes('/exercise/')) {
+    return Mascots.Pondering;
+  }
+  // Progress page (zen/reflection)
+  if (path.includes('/progress')) {
+    return Mascots.Zen;
+  }
+  // Default
+  return Mascots.Pensive;
 }
 
 export function Sidebar({
@@ -27,13 +46,16 @@ export function Sidebar({
   void exams;
   void projects;
 
+  const currentMascot = getMascotForPath(currentPath);
+
   return (
     <div class="sidebar-content">
       {/* Header with logo */}
       <div class="sidebar-header">
-        <a href="#/" class="sidebar-logo">
-          <span class="logo-icon" dangerouslySetInnerHTML={{ __html: Icons.PensiveBrick }} />
-          <span class="logo-text">Stod</span>
+        <a href="#/" class="sidebar-logo" title="study program">
+          <span class="logo-icon" dangerouslySetInnerHTML={{ __html: currentMascot }} />
+          <span class="logo-text">stup</span>
+          <span class="logo-tagline"><strong>stu</strong>dy <strong>p</strong>rogram</span>
         </a>
       </div>
 

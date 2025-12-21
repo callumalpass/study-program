@@ -109,147 +109,156 @@ export function renderHomePage(container: HTMLElement, subjects: Subject[]): voi
   const stats = calculateStats(filteredSubjects, userProgress);
 
   container.innerHTML = `
-    <div class="home-page">
-      <section class="progress-summary">
-        <h2>Overall Progress</h2>
-        <div class="progress-card">
-          <div class="progress-bar-container">
-            <div class="progress-bar" style="width: ${overallProgress.percentageComplete}%"></div>
-            <span class="progress-percentage">${overallProgress.percentageComplete}%</span>
-          </div>
-          <div class="progress-stats">
-            <div class="stat">
-              <span class="stat-value">${overallProgress.completedSubjects}</span>
-              <span class="stat-label">Completed</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">${overallProgress.inProgressSubjects}</span>
-              <span class="stat-label">In Progress</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">${overallProgress.totalSubjects - overallProgress.completedSubjects - overallProgress.inProgressSubjects}</span>
-              <span class="stat-label">Remaining</span>
-            </div>
-            <div class="stat">
-              <span class="stat-value">${overallProgress.completedHours} / ${overallProgress.totalHours}</span>
-              <span class="stat-label">Hours</span>
-            </div>
-          </div>
+    <div class="page-container home-page">
+      <header class="page-header">
+        <div class="page-header-content">
+          <h1>Dashboard</h1>
+          <p class="subtitle">Welcome back to your computer science journey.</p>
         </div>
-      </section>
+      </header>
 
-      ${nextRecommended ? `
-        <section class="current-subject">
-          <h2>Continue Learning</h2>
-          <div class="subject-card featured" data-subject-id="${nextRecommended.id}">
-            <div class="subject-header">
-              <div>
-                <h3>${nextRecommended.title}</h3>
-                <p class="subject-code">${nextRecommended.code}</p>
+      <div class="page-content">
+        <section class="progress-summary">
+          <h2>Overall Progress</h2>
+          <div class="progress-card">
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="width: ${overallProgress.percentageComplete}%"></div>
+              <span class="progress-percentage">${overallProgress.percentageComplete}%</span>
+            </div>
+            <div class="progress-stats">
+              <div class="stat">
+                <span class="stat-value">${overallProgress.completedSubjects}</span>
+                <span class="stat-label">Completed</span>
               </div>
-              <button class="btn btn-primary continue-btn" data-subject-id="${nextRecommended.id}">
-                Continue
-              </button>
-            </div>
-            <p class="subject-description">${nextRecommended.description}</p>
-            <div class="subject-meta">
-              <span class="meta-item">Year ${nextRecommended.year}, Semester ${nextRecommended.semester}</span>
-              <span class="meta-item">${nextRecommended.estimatedHours} hours</span>
+              <div class="stat">
+                <span class="stat-value">${overallProgress.inProgressSubjects}</span>
+                <span class="stat-label">In Progress</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">${overallProgress.totalSubjects - overallProgress.completedSubjects - overallProgress.inProgressSubjects}</span>
+                <span class="stat-label">Remaining</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value">${overallProgress.completedHours} / ${overallProgress.totalHours}</span>
+                <span class="stat-label">Hours</span>
+              </div>
             </div>
           </div>
         </section>
-      ` : `
-        <section class="current-subject">
-          <div class="completion-message">
-            <h2>Congratulations!</h2>
-            <p>You've completed all available subjects. Check the curriculum for more information.</p>
-            <button class="btn btn-primary" id="view-curriculum-btn">View Curriculum</button>
-          </div>
-        </section>
-      `}
 
-      ${renderDailyReviewSection()}
-
-      ${inProgressSubjects.length > 0 ? `
-        <section class="recent-subjects">
-          <h2>Subjects in Progress</h2>
-          <div class="subjects-grid">
-            ${inProgressSubjects.slice(0, 4).map(subject => {
-              const progress = progressStorage.getSubjectProgress(subject.id);
-              const completion = progress ? calculateSubjectCompletion(subject, progress) : 0;
-
-              return `
-                <div class="subject-card" data-subject-id="${subject.id}">
-                  <div class="subject-header">
-                    <div>
-                      <h3>${subject.title}</h3>
-                      <p class="subject-code">${subject.code}</p>
-                    </div>
-                  </div>
-                  <div class="subject-progress">
-                    <div class="progress-bar-small">
-                      <div class="progress-bar" style="width: ${completion}%"></div>
-                    </div>
-                    <span class="progress-text">${completion}%</span>
-                  </div>
+        ${nextRecommended ? `
+          <section class="current-subject">
+            <h2>Continue Learning</h2>
+            <div class="subject-card featured" data-subject-id="${nextRecommended.id}">
+              <div class="subject-header">
+                <div>
+                  <h3>${nextRecommended.title}</h3>
+                  <p class="subject-code">${nextRecommended.code}</p>
                 </div>
-              `;
-            }).join('')}
+                <button class="btn btn-primary continue-btn" data-subject-id="${nextRecommended.id}">
+                  Continue
+                </button>
+              </div>
+              <p class="subject-description">${nextRecommended.description}</p>
+              <div class="subject-meta">
+                <span class="meta-item">Year ${nextRecommended.year}, Semester ${nextRecommended.semester}</span>
+                <span class="meta-item">${nextRecommended.estimatedHours} hours</span>
+              </div>
+            </div>
+          </section>
+        ` : `
+          <section class="current-subject">
+            <div class="completion-message">
+              <h2>Congratulations!</h2>
+              <p>You've completed all available subjects. Check the curriculum for more information.</p>
+              <button class="btn btn-primary" id="view-curriculum-btn">View Curriculum</button>
+            </div>
+          </section>
+        `}
+
+        ${renderDailyReviewSection()}
+
+        ${inProgressSubjects.length > 0 ? `
+          <section class="recent-subjects">
+            <h2>Subjects in Progress</h2>
+            <div class="subjects-grid">
+              ${inProgressSubjects.slice(0, 4).map(subject => {
+                const progress = progressStorage.getSubjectProgress(subject.id);
+                const completion = progress ? calculateSubjectCompletion(subject, progress) : 0;
+
+                return `
+                  <div class="subject-card" data-subject-id="${subject.id}">
+                    <div class="subject-header">
+                      <div>
+                        <h3>${subject.title}</h3>
+                        <p class="subject-code">${subject.code}</p>
+                      </div>
+                    </div>
+                    <div class="subject-progress">
+                      <div class="progress-bar-small">
+                        <div class="progress-bar" style="width: ${completion}%"></div>
+                      </div>
+                      <span class="progress-text">${completion}%</span>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </section>
+        ` : ''}
+
+        <section class="quick-stats">
+          <h2>Your Statistics</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">${Icons.StatQuiz}</div>
+              <div class="stat-content">
+                <span class="stat-number">${stats.quizzesCompleted}</span>
+                <span class="stat-description">Quizzes Completed</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">${Icons.StatCode}</div>
+              <div class="stat-content">
+                <span class="stat-number">${stats.exercisesCompleted}</span>
+                <span class="stat-description">Exercises Solved</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">${Icons.StatProject}</div>
+              <div class="stat-content">
+                <span class="stat-number">${stats.projectsSubmitted}</span>
+                <span class="stat-description">Projects Submitted</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">${Icons.StatTarget}</div>
+              <div class="stat-content">
+                <span class="stat-number">${stats.averageQuizScore}%</span>
+                <span class="stat-description">Average Quiz Score</span>
+              </div>
+            </div>
           </div>
         </section>
-      ` : ''}
 
-      <section class="quick-stats">
-        <h2>Your Statistics</h2>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon">${Icons.StatQuiz}</div>
-            <div class="stat-content">
-              <span class="stat-number">${stats.quizzesCompleted}</span>
-              <span class="stat-description">Quizzes Completed</span>
-            </div>
+        <section class="quick-actions">
+          <h2>Quick Actions</h2>
+          <div class="actions-grid">
+            <button class="action-card" id="view-curriculum-action">
+              <span class="action-icon">${Icons.Curriculum}</span>
+              <span class="action-label">View Curriculum</span>
+            </button>
+            <button class="action-card" id="view-progress-action">
+              <span class="action-icon">${Icons.Progress}</span>
+              <span class="action-label">View Progress</span>
+            </button>
+            <button class="action-card" id="view-settings-action">
+              <span class="action-icon">${Icons.Settings}</span>
+              <span class="action-label">Settings</span>
+            </button>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon">${Icons.StatCode}</div>
-            <div class="stat-content">
-              <span class="stat-number">${stats.exercisesCompleted}</span>
-              <span class="stat-description">Exercises Solved</span>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">${Icons.StatProject}</div>
-            <div class="stat-content">
-              <span class="stat-number">${stats.projectsSubmitted}</span>
-              <span class="stat-description">Projects Submitted</span>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">${Icons.StatTarget}</div>
-            <div class="stat-content">
-              <span class="stat-number">${stats.averageQuizScore}%</span>
-              <span class="stat-description">Average Quiz Score</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="quick-actions">
-        <h2>Quick Actions</h2>
-        <div class="actions-grid">
-          <button class="action-card" id="view-curriculum-action">
-            <span class="action-icon">${Icons.Curriculum}</span>
-            <span class="action-label">View Curriculum</span>
-          </button>
-          <button class="action-card" id="view-progress-action">
-            <span class="action-icon">${Icons.Progress}</span>
-            <span class="action-label">View Progress</span>
-          </button>
-          <button class="action-card" id="view-settings-action">
-            <span class="action-icon">${Icons.Settings}</span>
-            <span class="action-label">Settings</span>
-          </button>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   `;
 

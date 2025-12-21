@@ -3,6 +3,7 @@ import type { Theme, UserSettings } from '@/core/types';
 import { progressStorage, resetProgress, importProgress } from '@/core/storage';
 import { githubService } from '@/services/github';
 import { Icons } from '@/components/icons';
+import { Mascots } from '@/components/mascots';
 import { validateGeminiApiKey } from '@/utils/gemini-eval';
 
 /**
@@ -17,268 +18,243 @@ export function renderSettingsPage(container: HTMLElement): void {
   const hasProgress = totalSubjects > 0;
 
   container.innerHTML = `
-    <div class="settings-page">
-      <header class="settings-header">
-        <h1>Settings</h1>
-        <p class="subtitle">Customize your learning experience</p>
+    <div class="page-container settings-page">
+      <header class="page-header">
+        <div class="page-header-content">
+          <h1>Settings</h1>
+          <p class="subtitle">Customize your learning experience</p>
+        </div>
       </header>
 
-      <section class="settings-section">
-        <h2>Appearance</h2>
-        <div class="settings-group">
-          <div class="setting-item">
-            <div class="setting-info">
-              <h3>Theme</h3>
-              <p>Choose your preferred color theme</p>
-            </div>
-            <div class="setting-control">
-              <div class="theme-selector">
-                <button
-                  class="theme-option ${settings.theme === 'light' ? 'active' : ''}"
-                  data-theme="light"
-                >
-                  <span class="theme-icon">${Icons.Sun}</span>
-                  <span class="theme-label">Light</span>
-                </button>
-                <button
-                  class="theme-option ${settings.theme === 'dark' ? 'active' : ''}"
-                  data-theme="dark"
-                >
-                  <span class="theme-icon">${Icons.Moon}</span>
-                  <span class="theme-label">Dark</span>
-                </button>
-                <button
-                  class="theme-option ${settings.theme === 'auto' ? 'active' : ''}"
-                  data-theme="auto"
-                >
-                  <span class="theme-icon">${Icons.Monitor}</span>
-                  <span class="theme-label">Auto</span>
-                </button>
+      <div class="page-content">
+        <section class="settings-section">
+          <h2>Appearance</h2>
+          <div class="settings-group">
+            <div class="setting-item">
+              <div class="setting-info">
+                <h3>Theme</h3>
+                <p>Choose your preferred color theme</p>
+              </div>
+              <div class="setting-control">
+                <div class="theme-selector">
+                  <button
+                    class="theme-option ${settings.theme === 'light' ? 'active' : ''}"
+                    data-theme="light"
+                  >
+                    <span class="theme-icon">${Icons.Sun}</span>
+                    <span class="theme-label">Light</span>
+                  </button>
+                  <button
+                    class="theme-option ${settings.theme === 'dark' ? 'active' : ''}"
+                    data-theme="dark"
+                  >
+                    <span class="theme-icon">${Icons.Moon}</span>
+                    <span class="theme-label">Dark</span>
+                  </button>
+                  <button
+                    class="theme-option ${settings.theme === 'auto' ? 'active' : ''}"
+                    data-theme="auto"
+                  >
+                    <span class="theme-icon">${Icons.Monitor}</span>
+                    <span class="theme-label">Auto</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="settings-section">
-        <h2>Code Editor</h2>
-        <div class="settings-group">
-          <div class="setting-item">
-            <div class="setting-info">
-              <h3>Font Size</h3>
-              <p>Adjust the code editor font size</p>
-            </div>
-            <div class="setting-control">
-              <div class="font-size-control">
-                <button class="btn btn-small" id="decrease-font-btn">−</button>
-                <span class="font-size-value" id="font-size-value">${settings.codeEditorFontSize}px</span>
-                <button class="btn btn-small" id="increase-font-btn">+</button>
-                <input
-                  type="range"
-                  id="font-size-slider"
-                  min="10"
-                  max="24"
-                  value="${settings.codeEditorFontSize}"
-                  class="font-size-slider"
-                >
+        <section class="settings-section">
+          <h2>Code Editor</h2>
+          <div class="settings-group">
+            <div class="setting-item">
+              <div class="setting-info">
+                <h3>Font Size</h3>
+                <p>Adjust the code editor font size</p>
               </div>
-              <div class="font-preview">
-                <pre><code style="font-size: ${settings.codeEditorFontSize}px;">function example() {
+              <div class="setting-control">
+                <div class="font-size-control">
+                  <button class="btn btn-small" id="decrease-font-btn">−</button>
+                  <span class="font-size-value" id="font-size-value">${settings.codeEditorFontSize}px</span>
+                  <button class="btn btn-small" id="increase-font-btn">+</button>
+                  <input
+                    type="range"
+                    id="font-size-slider"
+                    min="10"
+                    max="24"
+                    value="${settings.codeEditorFontSize}"
+                    class="font-size-slider"
+                  >
+                </div>
+                <div class="font-preview">
+                  <pre><code style="font-size: ${settings.codeEditorFontSize}px;">function example() {
   console.log("Preview");
 }</code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="settings-section">
-        <h2>Display</h2>
-        <div class="settings-group">
-          <div class="setting-item">
-            <div class="setting-info">
-              <h3>Show Completed Items</h3>
-              <p>Display completed subjects and assessments in lists</p>
-            </div>
-            <div class="setting-control">
-              <label class="toggle-switch">
-                <input
-                  type="checkbox"
-                  id="show-completed-toggle"
-                  ${settings.showCompletedItems ? 'checked' : ''}
-                >
-                <span class="toggle-slider"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="settings-section">
-        <h2>Cloud Sync</h2>
-        <div class="settings-group">
-          <div class="setting-item">
-            <div class="setting-info">
-              <h3>GitHub Gist Sync</h3>
-              <p>Sync your progress across devices using a GitHub Gist.</p>
-              <div class="help-text">
-                <small>
-                  1. <a href="https://github.com/settings/tokens/new?scopes=gist&description=CS+Degree+Progress" target="_blank" rel="noopener noreferrer">Generate a Personal Access Token</a> with 'gist' scope.<br>
-                  2. Paste it below and click Connect.
-                </small>
-              </div>
-            </div>
-            <div class="setting-control vertical">
-               <div class="input-group">
-                  <input 
-                    type="password" 
-                    id="github-token-input" 
-                    class="text-input form-input" 
-                    placeholder="ghp_..." 
-                    value="${settings.githubToken || ''}"
-                  >
-                  <button id="connect-github-btn" class="btn btn-primary">
-                    ${settings.githubToken ? 'Update' : 'Connect'}
-                  </button>
-               </div>
-               <div id="github-status" class="status-message ${settings.gistId ? 'success' : ''}">
-                 ${settings.gistId
-                   ? `${Icons.Check} Connected to Gist ID: ${settings.gistId.substring(0, 8)}...`
-                   : `${Icons.StatusNotStarted} Not connected`}
-               </div>
-               ${settings.gistId ? `
-               <button id="sync-now-btn" class="btn btn-secondary" style="margin-top: 0.5rem;">
-                 Sync Now
-               </button>
-               <div id="sync-status" class="status-message" style="margin-top: 0.25rem;"></div>
-               ` : ''}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="settings-section">
-        <h2>AI Features</h2>
-        <div class="settings-group">
-          <div class="setting-item">
-            <div class="setting-info">
-              <h3>Gemini API Key</h3>
-              <p>Enable AI-powered evaluation for written exercises.</p>
-              <div class="help-text">
-                <small>
-                  1. <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Get an API key from Google AI Studio</a><br>
-                  2. Paste it below and click Save.
-                </small>
-              </div>
-            </div>
-            <div class="setting-control vertical">
-               <div class="input-group">
-                  <input
-                    type="password"
-                    id="gemini-api-key-input"
-                    class="text-input form-input"
-                    placeholder="AI..."
-                    value="${settings.geminiApiKey || ''}"
-                  >
-                  <button id="save-gemini-key-btn" class="btn btn-primary">
-                    ${settings.geminiApiKey ? 'Update' : 'Save'}
-                  </button>
-               </div>
-               <div id="gemini-status" class="status-message ${settings.geminiApiKey ? 'success' : ''}">
-                 ${settings.geminiApiKey
-                   ? `${Icons.Check} API key configured`
-                   : `${Icons.StatusNotStarted} Not configured`}
-               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="settings-section">
-        <h2>Progress Data</h2>
-        <div class="settings-group">
-          <div class="setting-item">
-            <div class="setting-info">
-              <h3>Account Information</h3>
-              <p>Your progress data is stored locally in your browser</p>
-            </div>
-            <div class="setting-stats">
-              <div class="stat-row">
-                <span class="stat-label">Started:</span>
-                <span class="stat-value">${formatDate(userProgress.startedAt)}</span>
-              </div>
-              <div class="stat-row">
-                <span class="stat-label">Subjects in Progress:</span>
-                <span class="stat-value">${totalSubjects}</span>
-              </div>
-              <div class="stat-row">
-                <span class="stat-label">Data Version:</span>
-                <span class="stat-value">v${userProgress.version}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="setting-item danger-zone">
-            <div class="setting-info">
-              <h3>Reset Progress</h3>
-              <p>Permanently delete all your progress data. This action cannot be undone.</p>
-              ${hasProgress ? `
-                <div class="warning-message">
-                  <span class="warning-icon">${Icons.Alert}</span>
-                  <span>You have progress in ${totalSubjects} subject${totalSubjects > 1 ? 's' : ''}. Consider exporting your data first.</span>
                 </div>
-              ` : ''}
-            </div>
-            <div class="setting-control">
-              <button class="btn btn-danger" id="reset-progress-btn">
-                Reset All Progress
-              </button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="settings-section">
-        <h2>About</h2>
-        <div class="settings-group">
-          <div class="about-info">
-            <div style="margin-bottom: var(--space-md);">${Icons.KineticBrick}</div>
-            <h3>Stod</h3>
-            <p>A comprehensive platform for tracking your progress through a computer science degree curriculum.</p>
-            <div class="version-info">
-              <span>Version 1.0.0</span>
+        <section class="settings-section">
+          <h2>Display</h2>
+          <div class="settings-group">
+            <div class="setting-item">
+              <div class="setting-info">
+                <h3>Show Completed Items</h3>
+                <p>Display completed subjects and assessments in lists</p>
+              </div>
+              <div class="setting-control">
+                <label class="toggle-switch">
+                  <input
+                    type="checkbox"
+                    id="show-completed-toggle"
+                    ${settings.showCompletedItems ? 'checked' : ''}
+                  >
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
 
-    <div class="confirmation-modal" id="reset-modal" style="display: none;">
-      <div class="modal-overlay"></div>
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>Reset All Progress?</h3>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to reset all your progress? This will permanently delete:</p>
-          <ul class="reset-warning-list">
-            <li>All subject progress and completions</li>
-            <li>All quiz attempts and scores</li>
-            <li>All exercise submissions</li>
-            <li>All project submissions</li>
-          </ul>
-          <p class="warning-text">This action cannot be undone. Consider exporting your progress first.</p>
-          <div class="confirmation-input">
-            <label for="reset-confirmation">Type <strong>RESET</strong> to confirm:</label>
-            <input type="text" id="reset-confirmation" placeholder="RESET" autocomplete="off">
+        <section class="settings-section">
+          <h2>Cloud Sync</h2>
+          <div class="settings-group">
+            <div class="setting-item">
+              <div class="setting-info">
+                <h3>GitHub Gist Sync</h3>
+                <p>Sync your progress across devices using a GitHub Gist.</p>
+                <div class="help-text">
+                  <small>
+                    1. <a href="https://github.com/settings/tokens/new?scopes=gist&description=CS+Degree+Progress" target="_blank" rel="noopener noreferrer">Generate a Personal Access Token</a> with 'gist' scope.<br>
+                    2. Paste it below and click Connect.
+                  </small>
+                </div>
+              </div>
+              <div class="setting-control vertical">
+                 <div class="input-group">
+                    <input 
+                      type="password" 
+                      id="github-token-input" 
+                      class="text-input form-input" 
+                      placeholder="ghp_..." 
+                      value="${settings.githubToken || ''}"
+                    >
+                    <button id="connect-github-btn" class="btn btn-primary">
+                      ${settings.githubToken ? 'Update' : 'Connect'}
+                    </button>
+                 </div>
+                 <div id="github-status" class="status-message ${settings.gistId ? 'success' : ''}">
+                   ${settings.gistId
+                     ? `${Icons.Check} Connected to Gist ID: ${settings.gistId.substring(0, 8)}...`
+                     : `${Icons.StatusNotStarted} Not connected`}
+                 </div>
+                 ${settings.gistId ? `
+                 <button id="sync-now-btn" class="btn btn-secondary" style="margin-top: 0.5rem;">
+                   Sync Now
+                 </button>
+                 <div id="sync-status" class="status-message" style="margin-top: 0.25rem;"></div>
+                 ` : ''}
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="modal-actions">
-          <button class="btn btn-secondary" id="cancel-reset-btn">Cancel</button>
-          <button class="btn btn-danger" id="confirm-reset-btn" disabled>
-            Reset All Progress
-          </button>
-        </div>
+        </section>
+
+        <section class="settings-section">
+          <h2>AI Features</h2>
+          <div class="settings-group">
+            <div class="setting-item">
+              <div class="setting-info">
+                <h3>Gemini API Key</h3>
+                <p>Enable AI-powered evaluation for written exercises.</p>
+                <div class="help-text">
+                  <small>
+                    1. <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Get an API key from Google AI Studio</a><br>
+                    2. Paste it below and click Save.
+                  </small>
+                </div>
+              </div>
+              <div class="setting-control vertical">
+                 <div class="input-group">
+                    <input
+                      type="password"
+                      id="gemini-api-key-input"
+                      class="text-input form-input"
+                      placeholder="AI..."
+                      value="${settings.geminiApiKey || ''}"
+                    >
+                    <button id="save-gemini-key-btn" class="btn btn-primary">
+                      ${settings.geminiApiKey ? 'Update' : 'Save'}
+                    </button>
+                 </div>
+                 <div id="gemini-status" class="status-message ${settings.geminiApiKey ? 'success' : ''}">
+                   ${settings.geminiApiKey
+                     ? `${Icons.Check} API key configured`
+                     : `${Icons.StatusNotStarted} Not configured`}
+                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <h2>Progress Data</h2>
+          <div class="settings-group">
+            <div class="setting-item">
+              <div class="setting-info">
+                <h3>Account Information</h3>
+                <p>Your progress data is stored locally in your browser</p>
+              </div>
+              <div class="setting-stats">
+                <div class="stat-row">
+                  <span class="stat-label">Started:</span>
+                  <span class="stat-value">${formatDate(userProgress.startedAt)}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Subjects in Progress:</span>
+                  <span class="stat-value">${totalSubjects}</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-label">Data Version:</span>
+                  <span class="stat-value">v${userProgress.version}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="setting-item danger-zone">
+              <div class="setting-info">
+                <h3>Reset Progress</h3>
+                <p>Permanently delete all your progress data. This action cannot be undone.</p>
+                ${hasProgress ? `
+                  <div class="warning-message">
+                    <span class="warning-icon">${Icons.Alert}</span>
+                    <span>You have progress in ${totalSubjects} subject${totalSubjects > 1 ? 's' : ''}. Consider exporting your data first.</span>
+                  </div>
+                ` : ''}
+              </div>
+              <div class="setting-control">
+                <button class="btn btn-danger" id="reset-progress-btn">
+                  Reset All Progress
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <h2>About</h2>
+          <div class="settings-group">
+            <div class="about-info">
+              <div style="margin-bottom: var(--space-md);">${Mascots.Kinetic}</div>
+              <h3>stup</h3>
+              <p>A comprehensive platform for tracking your progress through a computer science degree curriculum.</p>
+              <div class="version-info">
+                <span>Version 1.0.0</span>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   `;

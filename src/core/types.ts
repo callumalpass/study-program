@@ -1,4 +1,4 @@
-// Core type definitions for Stod Learning Platform
+// Core type definitions for stup Learning Platform
 
 export type SubjectStatus = 'not_started' | 'in_progress' | 'completed';
 export type QuestionType = 'multiple_choice' | 'fill_blank' | 'true_false' | 'code_output' | 'coding' | 'written';

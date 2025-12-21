@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Stod Icon Demos</title>
+    <title>Stod Brick Mascot</title>
     <style>
       :root {
         --bg: #f6f2ea;
@@ -91,44 +91,6 @@
         stroke: var(--accent);
       }
 
-      /* The Stod Brick */
-      .brick-body {
-        animation: brick-fall 4s ease-in infinite;
-        transform-origin: 32px 48px;
-      }
-      .brick-face {
-        animation: brick-face-wobble 4s linear infinite;
-        transform-origin: 32px 38px;
-      }
-
-      .brick-blink {
-        animation: brick-blink 5s step-end infinite;
-        transform-origin: center;
-      }
-
-      @keyframes brick-fall {
-        0% { transform: translateY(-120px); }
-        20% { transform: translateY(0) scaleY(1); }
-        25% { transform: scaleY(0.6) scaleX(1.3); } /* Squash */
-        30% { transform: scaleY(1.1) scaleX(0.9); } /* Stretch */
-        35% { transform: scaleY(1) scaleX(1); }
-        80% { transform: scaleY(1) scaleX(1); opacity: 1; }
-        90% { opacity: 0; }
-        100% { opacity: 0; transform: translateY(0); }
-      }
-
-      @keyframes brick-face-wobble {
-        0%, 35% { transform: translate(0, 0); }
-        40% { transform: translate(-2px, 0); }
-        45% { transform: translate(2px, 0); }
-        50% { transform: translate(0, 0); }
-      }
-
-      @keyframes brick-blink {
-        0%, 90%, 100% { transform: scaleY(1); }
-        95% { transform: scaleY(0); }
-      }
-
       .label {
         font-weight: 700;
         font-size: 20px;
@@ -140,6 +102,83 @@
         line-height: 1.5;
         max-width: 240px;
         margin: 0 auto;
+      }
+
+      /* ========== ANIMATIONS ========== */
+
+      /* Blink - shared by most variants */
+      .brick-blink {
+        animation: brick-blink 5s step-end infinite;
+      }
+      @keyframes brick-blink {
+        0%, 92%, 100% { transform: scaleY(1); }
+        96% { transform: scaleY(0.1); }
+      }
+
+      /* Kinetic - falling brick */
+      .brick-fall {
+        animation: brick-fall 4s ease-in infinite;
+        transform-origin: 32px 48px;
+      }
+      .brick-fall .brick-face {
+        animation: brick-face-wobble 4s linear infinite;
+        transform-origin: 32px 38px;
+      }
+      @keyframes brick-fall {
+        0% { transform: translateY(-120px); }
+        20% { transform: translateY(0) scaleY(1); }
+        25% { transform: scaleY(0.6) scaleX(1.3); }
+        30% { transform: scaleY(1.1) scaleX(0.9); }
+        35% { transform: scaleY(1) scaleX(1); }
+        80% { transform: scaleY(1) scaleX(1); opacity: 1; }
+        90% { opacity: 0; }
+        100% { opacity: 0; transform: translateY(0); }
+      }
+      @keyframes brick-face-wobble {
+        0%, 35% { transform: translate(0, 0); }
+        40% { transform: translate(-2px, 0); }
+        45% { transform: translate(2px, 0); }
+        50% { transform: translate(0, 0); }
+      }
+
+      /* Zen - floating */
+      .brick-float {
+        animation: brick-float 3s ease-in-out infinite;
+        transform-origin: 32px 38px;
+      }
+      @keyframes brick-float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-5px) rotate(1deg); }
+      }
+
+      /* Pondering - wobble think */
+      .brick-wobble {
+        animation: brick-wobble 2.5s ease-in-out infinite;
+        transform-origin: 32px 38px;
+      }
+      @keyframes brick-wobble {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(-5deg); }
+        75% { transform: rotate(5deg); }
+      }
+
+      /* Reading - eyes scan */
+      .eyes-scan {
+        animation: eyes-scan 3s ease-in-out infinite;
+      }
+      @keyframes eyes-scan {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(1.5px); }
+        75% { transform: translateX(-1.5px); }
+      }
+
+      /* Glasses glint */
+      .glasses-glint {
+        animation: glasses-glint 4s ease-in-out infinite;
+      }
+      @keyframes glasses-glint {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 0.5; }
       }
 
       @media (max-width: 520px) {
@@ -154,71 +193,203 @@
   </head>
   <body>
     <header>
-      <h1>Stod Icon Concept</h1>
-      <p>The definitive mascot for the serious student.</p>
+      <h1>Stod Brick Mascot</h1>
+      <p>Six expressions based on the V1 design.</p>
     </header>
 
     <main>
-      <section class="card">
-        <div class="icon-wrap">
-          <svg viewBox="0 0 64 64" aria-hidden="true">
-            <g class="brick-body">
-              <!-- Brick Base -->
-              <rect x="18" y="28" width="28" height="20" rx="2" fill="var(--card)" />
-              <line x1="18" y1="28" x2="46" y2="28" stroke="var(--ink)" />
-              
-              <g class="brick-face">
-                <!-- Glasses -->
-                <g class="accent">
-                  <circle cx="26" cy="38" r="4" />
-                  <circle cx="38" cy="38" r="4" />
-                  <path d="M30 38h4" />
-                  <path d="M18 38h4M42 38h4" />
-                </g>
-                <!-- Eyes (behind glasses) -->
-                <g class="brick-blink">
-                  <circle cx="26" cy="38" r="1" fill="var(--ink)" stroke="none" />
-                  <circle cx="38" cy="38" r="1" fill="var(--ink)" stroke="none" />
-                </g>
-                <!-- Mouth -->
-                <path d="M28 45h8" stroke-width="1.5" />
-              </g>
-            </g>
-          </svg>
-        </div>
-        <div class="label">Kinetic Brick</div>
-        <div class="note">He's trying his best. Knowledge is heavy, and so is he.</div>
-      </section>
-
+      <!-- 1. PENSIVE (idle/default) -->
       <section class="card">
         <div class="icon-wrap">
           <svg viewBox="0 0 64 64" aria-hidden="true">
             <g>
-              <!-- Brick Base -->
-              <rect x="18" y="28" width="28" height="20" rx="2" fill="var(--card)" />
-              <line x1="18" y1="28" x2="46" y2="28" stroke="var(--ink)" />
-              
-              <g>
+              <!-- Brick body -->
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+
+              <!-- Glasses -->
+              <g class="accent">
+                <circle cx="26" cy="37" r="4" />
+                <circle cx="38" cy="37" r="4" />
+                <path d="M30 37h4" />
+              </g>
+
+              <!-- Eyes -->
+              <g class="brick-blink">
+                <circle cx="26" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+                <circle cx="38" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+              </g>
+
+              <!-- Neutral mouth -->
+              <path d="M29 44h6" stroke-width="1.5" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Pensive</div>
+        <div class="note">Default idle state. Calm, observant, ready to learn.</div>
+      </section>
+
+      <!-- 2. KINETIC (falling/loading) -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <g class="brick-fall">
+              <!-- Brick body -->
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+
+              <g class="brick-face">
                 <!-- Glasses -->
                 <g class="accent">
-                  <circle cx="26" cy="38" r="4" />
-                  <circle cx="38" cy="38" r="4" />
-                  <path d="M30 38h4" />
-                  <path d="M18 38h4M42 38h4" />
+                  <circle cx="26" cy="37" r="4" />
+                  <circle cx="38" cy="37" r="4" />
+                  <path d="M30 37h4" />
                 </g>
-                <!-- Eyes (behind glasses) -->
+
+                <!-- Eyes -->
                 <g class="brick-blink">
-                  <circle cx="26" cy="38" r="1" fill="var(--ink)" stroke="none" />
-                  <circle cx="38" cy="38" r="1" fill="var(--ink)" stroke="none" />
+                  <circle cx="26" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+                  <circle cx="38" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
                 </g>
-                <!-- Mouth -->
-                <path d="M28 45h8" stroke-width="1.5" />
+
+                <!-- Neutral mouth -->
+                <path d="M29 44h6" stroke-width="1.5" />
               </g>
             </g>
           </svg>
         </div>
-        <div class="label">Pensive Brick</div>
-        <div class="note">Just sitting there, absorbing information through osmosis.</div>
+        <div class="label">Kinetic</div>
+        <div class="note">Falls, squashes, recovers. For loading states.</div>
+      </section>
+
+      <!-- 3. ZEN (content/success) -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <g class="brick-float">
+              <!-- Brick body -->
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+
+              <!-- Glasses - slightly thicker -->
+              <g class="accent">
+                <circle cx="26" cy="37" r="4.5" stroke-width="2.5" />
+                <circle cx="38" cy="37" r="4.5" stroke-width="2.5" />
+                <path d="M30.5 37h3" stroke-width="2" />
+              </g>
+
+              <!-- Glint -->
+              <circle cx="24" cy="35" r="1" fill="white" stroke="none" class="glasses-glint" />
+              <circle cx="36" cy="35" r="1" fill="white" stroke="none" class="glasses-glint" />
+
+              <!-- Eyes -->
+              <g class="brick-blink">
+                <circle cx="26" cy="37" r="1.3" fill="var(--ink)" stroke="none" />
+                <circle cx="38" cy="37" r="1.3" fill="var(--ink)" stroke="none" />
+              </g>
+
+              <!-- Content smile -->
+              <path d="M28 44q4 2.5 8 0" stroke-width="1.5" fill="none" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Zen</div>
+        <div class="note">Floats peacefully. For success or completion.</div>
+      </section>
+
+      <!-- 4. PONDERING (thinking) -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <g class="brick-wobble">
+              <!-- Brick body -->
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+
+              <!-- Glasses -->
+              <g class="accent">
+                <circle cx="26" cy="37" r="4" />
+                <circle cx="38" cy="37" r="4" />
+                <path d="M30 37h4" />
+              </g>
+
+              <!-- Eyes looking up-right -->
+              <g class="brick-blink">
+                <circle cx="27" cy="36" r="1.2" fill="var(--ink)" stroke="none" />
+                <circle cx="39" cy="36" r="1.2" fill="var(--ink)" stroke="none" />
+              </g>
+
+              <!-- Small "o" thinking mouth -->
+              <circle cx="32" cy="45" r="2" fill="none" stroke-width="1.5" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Pondering</div>
+        <div class="note">Wobbles while thinking. Eyes drift upward.</div>
+      </section>
+
+      <!-- 5. READING (focused/studying) -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <g>
+              <!-- Brick body -->
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+
+              <!-- Glasses -->
+              <g class="accent">
+                <circle cx="26" cy="37" r="4" />
+                <circle cx="38" cy="37" r="4" />
+                <path d="M30 37h4" />
+              </g>
+
+              <!-- Eyes scanning left-right, positioned lower -->
+              <g class="eyes-scan">
+                <circle cx="25" cy="38" r="1.2" fill="var(--ink)" stroke="none" />
+                <circle cx="37" cy="38" r="1.2" fill="var(--ink)" stroke="none" />
+              </g>
+
+              <!-- Slight concentration frown -->
+              <path d="M29 44q3 -1 6 0" stroke-width="1.5" fill="none" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Reading</div>
+        <div class="note">Eyes scan across. For active study mode.</div>
+      </section>
+
+      <!-- 6. DELIGHTED (achievement/celebration) -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <g class="brick-float">
+              <!-- Brick body -->
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+
+              <!-- Glasses -->
+              <g class="accent">
+                <circle cx="26" cy="37" r="4" />
+                <circle cx="38" cy="37" r="4" />
+                <path d="M30 37h4" />
+              </g>
+
+              <!-- Glint -->
+              <circle cx="24" cy="35" r="1" fill="white" stroke="none" class="glasses-glint" />
+              <circle cx="36" cy="35" r="1" fill="white" stroke="none" class="glasses-glint" />
+
+              <!-- Happy closed eyes (arcs) -->
+              <path d="M24 37q2 -2 4 0" stroke-width="1.8" fill="none" stroke="var(--ink)" />
+              <path d="M36 37q2 -2 4 0" stroke-width="1.8" fill="none" stroke="var(--ink)" />
+
+              <!-- Big smile -->
+              <path d="M27 44q5 4 10 0" stroke-width="1.5" fill="none" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Delighted</div>
+        <div class="note">Happy squint, big smile. For achievements.</div>
       </section>
     </main>
   </body>

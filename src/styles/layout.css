@@ -174,9 +174,15 @@
 /* Sidebar Logo */
 .sidebar-logo {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-md);
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-md) var(--space-sm);
+  text-decoration: none;
+}
+
+.sidebar-logo:hover {
+  text-decoration: none;
 }
 
 .logo-icon {
@@ -187,8 +193,8 @@
 }
 
 .sidebar-logo .logo-icon {
-  min-width: 80px;
-  min-height: 80px;
+  width: 88px;
+  height: 88px;
 }
 
 .logo-icon svg {
@@ -208,14 +214,41 @@
 }
 
 .logo-text {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: var(--font-size-lg);
-  font-weight: 500;
+  font-family: var(--font-logo);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+
+.logo-tagline {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+  margin-top: 2px;
+}
+
+.logo-tagline strong {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+/* Hover effect on logo */
+.sidebar-logo:hover .logo-icon {
+  animation: logo-bounce 0.4s ease;
+}
+
+.sidebar-logo:hover .logo-text {
   color: var(--color-accent-primary);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transform: rotate(-2deg) skewX(-6deg);
-  display: inline-block;
+}
+
+@keyframes logo-bounce {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-4px); }
+  60% { transform: translateY(-2px); }
 }
 
 /* Sidebar Subjects Section */
@@ -797,19 +830,15 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-normal);
-  color: var(--color-text-primary);
+  text-decoration: none;
 }
 
 .mobile-header .mobile-logo span:not(.logo-icon) {
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 500;
-  color: var(--color-accent-primary);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transform: rotate(-2deg) skewX(-6deg);
-  display: inline-block;
+  font-family: var(--font-logo);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: 0.02em;
 }
 
 @keyframes logo-squash {
@@ -847,17 +876,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .logo-text {
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mobile-header .mobile-logo span:not(.logo-icon) {
-    transform: none;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .logo-icon {

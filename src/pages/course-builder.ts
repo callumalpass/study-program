@@ -4,6 +4,7 @@ import { progressStorage } from '@/core/storage';
 import { courseTemplates, getTemplateById } from '@/data/templates';
 import { curriculum } from '@/data/curriculum';
 import { navigate } from '@/core/router';
+import { Mascots } from '@/components/mascots';
 
 interface CourseBuilderFilters {
   category: SubjectCategory | 'all';
@@ -79,134 +80,141 @@ export function renderCourseBuilderPage(container: HTMLElement): void {
   const filteredSubjects = filterSubjects(curriculum, currentFilters);
 
   container.innerHTML = `
-    <div class="course-builder-page">
-      <header class="course-builder-header">
-        <h1>Course Builder</h1>
-        <p class="subtitle">Build your personalized learning path</p>
-        <div class="selection-summary">
-          <span class="summary-stat">
-            <strong>${selectedCount}</strong> subjects selected
-          </span>
-          <span class="summary-stat">
-            <strong>${totalHours.toLocaleString()}</strong> estimated hours
-          </span>
+    <div class="page-container course-builder-page">
+      <header class="page-header">
+        <div class="page-header-content">
+          <h1>Course Builder</h1>
+          <p class="subtitle">Build your personalized learning path</p>
+        </div>
+        <div class="page-header-actions">
+          <div class="selection-summary" style="text-align: right;">
+            <div class="summary-stat">
+              <strong>${selectedCount}</strong> subjects selected
+            </div>
+            <div class="summary-stat">
+              <strong>${totalHours.toLocaleString()}</strong> estimated hours
+            </div>
+          </div>
         </div>
       </header>
 
-      <section class="templates-section">
-        <h2>Start from a Template</h2>
-        <p class="section-description">Choose a pre-built learning path or customize your own below.</p>
-        <div class="templates-grid">
-          ${courseTemplates.map(template => `
-            <div class="template-card" data-template-id="${template.id}">
-              <h3 class="template-name">${template.name}</h3>
-              <p class="template-description">${template.description}</p>
-              <div class="template-meta">
-                <span>${template.subjectIds.length} subjects</span>
-                <span>${template.estimatedHours.toLocaleString()} hours</span>
-              </div>
-              <button class="btn btn-secondary apply-template-btn" data-template-id="${template.id}">
-                Apply Template
-              </button>
-            </div>
-          `).join('')}
-        </div>
-      </section>
-
-      <section class="catalog-section">
-        <h2>Subject Catalog</h2>
-        <p class="section-description">Select individual subjects to add to your learning path.</p>
-
-        <div class="catalog-controls">
-          <div class="search-box">
-            <input
-              type="text"
-              id="subject-search"
-              placeholder="Search subjects..."
-              value="${currentFilters.search}"
-            />
-          </div>
-
-          <div class="filter-controls">
-            <select id="category-filter">
-              <option value="all" ${currentFilters.category === 'all' ? 'selected' : ''}>All Categories</option>
-              <option value="cs" ${currentFilters.category === 'cs' ? 'selected' : ''}>Computer Science</option>
-              <option value="math" ${currentFilters.category === 'math' ? 'selected' : ''}>Mathematics</option>
-            </select>
-
-            <select id="year-filter">
-              <option value="" ${currentFilters.year === null ? 'selected' : ''}>All Years</option>
-              <option value="1" ${currentFilters.year === 1 ? 'selected' : ''}>Year 1</option>
-              <option value="2" ${currentFilters.year === 2 ? 'selected' : ''}>Year 2</option>
-              <option value="3" ${currentFilters.year === 3 ? 'selected' : ''}>Year 3</option>
-              <option value="4" ${currentFilters.year === 4 ? 'selected' : ''}>Year 4</option>
-            </select>
-          </div>
-
-          <div class="bulk-actions">
-            <button class="btn btn-small" id="select-all-btn">Select All Visible</button>
-            <button class="btn btn-small btn-secondary" id="deselect-all-btn">Deselect All Visible</button>
-            <button class="btn btn-small btn-danger" id="clear-selection-btn">Clear All</button>
-          </div>
-        </div>
-
-        <div class="subject-list">
-          ${filteredSubjects.length === 0 ? `
-            <div class="empty-state">
-              <p>No subjects match your filters.</p>
-            </div>
-          ` : filteredSubjects.map(subject => {
-            const isSelected = selectedIds.includes(subject.id);
-            const missingPrereqs = getMissingPrerequisites(subject.id, selectedIds);
-            const hasMissingPrereqs = missingPrereqs.length > 0 && !isSelected;
-
-            return `
-              <div class="subject-item ${isSelected ? 'selected' : ''} ${hasMissingPrereqs ? 'has-warning' : ''}"
-                   data-subject-id="${subject.id}">
-                <div class="subject-checkbox">
-                  <input
-                    type="checkbox"
-                    id="subject-${subject.id}"
-                    ${isSelected ? 'checked' : ''}
-                  />
+      <div class="page-content">
+        <section class="templates-section">
+          <h2>Start from a Template</h2>
+          <p class="section-description">Choose a pre-built learning path or customize your own below.</p>
+          <div class="templates-grid">
+            ${courseTemplates.map(template => `
+              <div class="template-card" data-template-id="${template.id}">
+                <h3 class="template-name">${template.name}</h3>
+                <p class="template-description">${template.description}</p>
+                <div class="template-meta">
+                  <span>${template.subjectIds.length} subjects</span>
+                  <span>${template.estimatedHours.toLocaleString()} hours</span>
                 </div>
-                <div class="subject-info">
-                  <div class="subject-header">
-                    <span class="subject-code">${subject.code}</span>
-                    <span class="category-badge category-${subject.category}">${subject.category.toUpperCase()}</span>
-                    <span class="year-badge">Year ${subject.year}</span>
+                <button class="btn btn-secondary apply-template-btn" data-template-id="${template.id}">
+                  Apply Template
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <section class="catalog-section">
+          <h2>Subject Catalog</h2>
+          <p class="section-description">Select individual subjects to add to your learning path.</p>
+
+          <div class="catalog-controls">
+            <div class="search-box">
+              <input
+                type="text"
+                id="subject-search"
+                placeholder="Search subjects..."
+                value="${currentFilters.search}"
+              />
+            </div>
+
+            <div class="filter-controls">
+              <select id="category-filter">
+                <option value="all" ${currentFilters.category === 'all' ? 'selected' : ''}>All Categories</option>
+                <option value="cs" ${currentFilters.category === 'cs' ? 'selected' : ''}>Computer Science</option>
+                <option value="math" ${currentFilters.category === 'math' ? 'selected' : ''}>Mathematics</option>
+              </select>
+
+              <select id="year-filter">
+                <option value="" ${currentFilters.year === null ? 'selected' : ''}>All Years</option>
+                <option value="1" ${currentFilters.year === 1 ? 'selected' : ''}>Year 1</option>
+                <option value="2" ${currentFilters.year === 2 ? 'selected' : ''}>Year 2</option>
+                <option value="3" ${currentFilters.year === 3 ? 'selected' : ''}>Year 3</option>
+                <option value="4" ${currentFilters.year === 4 ? 'selected' : ''}>Year 4</option>
+              </select>
+            </div>
+
+            <div class="bulk-actions">
+              <button class="btn btn-small" id="select-all-btn">Select All Visible</button>
+              <button class="btn btn-small btn-secondary" id="deselect-all-btn">Deselect All Visible</button>
+              <button class="btn btn-small btn-danger" id="clear-selection-btn">Clear All</button>
+            </div>
+          </div>
+
+          <div class="subject-list">
+            ${filteredSubjects.length === 0 ? `
+              <div class="empty-state">
+                <div class="empty-state-mascot">${Mascots.Pondering}</div>
+                <p>No subjects match your filters.</p>
+              </div>
+            ` : filteredSubjects.map(subject => {
+              const isSelected = selectedIds.includes(subject.id);
+              const missingPrereqs = getMissingPrerequisites(subject.id, selectedIds);
+              const hasMissingPrereqs = missingPrereqs.length > 0 && !isSelected;
+
+              return `
+                <div class="subject-item ${isSelected ? 'selected' : ''} ${hasMissingPrereqs ? 'has-warning' : ''}"
+                     data-subject-id="${subject.id}">
+                  <div class="subject-checkbox">
+                    <input
+                      type="checkbox"
+                      id="subject-${subject.id}"
+                      ${isSelected ? 'checked' : ''}
+                    />
                   </div>
-                  <h4 class="subject-title">${subject.title}</h4>
-                  <div class="subject-meta">
-                    <span>${subject.estimatedHours} hours</span>
-                    <span>${subject.topics.length} topics</span>
-                    ${subject.prerequisites.length > 0 ? `
-                      <span class="prereq-count">${subject.prerequisites.length} prerequisite${subject.prerequisites.length > 1 ? 's' : ''}</span>
+                  <div class="subject-info">
+                    <div class="subject-header">
+                      <span class="subject-code">${subject.code}</span>
+                      <span class="category-badge category-${subject.category}">${subject.category.toUpperCase()}</span>
+                      <span class="year-badge">Year ${subject.year}</span>
+                    </div>
+                    <h4 class="subject-title">${subject.title}</h4>
+                    <div class="subject-meta">
+                      <span>${subject.estimatedHours} hours</span>
+                      <span>${subject.topics.length} topics</span>
+                      ${subject.prerequisites.length > 0 ? `
+                        <span class="prereq-count">${subject.prerequisites.length} prerequisite${subject.prerequisites.length > 1 ? 's' : ''}</span>
+                      ` : ''}
+                    </div>
+                    ${hasMissingPrereqs ? `
+                      <div class="prereq-warning">
+                        Missing prerequisites: ${missingPrereqs.map(id => {
+                          const prereq = curriculum.find(s => s.id === id);
+                          return prereq?.code || id;
+                        }).join(', ')}
+                      </div>
                     ` : ''}
                   </div>
-                  ${hasMissingPrereqs ? `
-                    <div class="prereq-warning">
-                      Missing prerequisites: ${missingPrereqs.map(id => {
-                        const prereq = curriculum.find(s => s.id === id);
-                        return prereq?.code || id;
-                      }).join(', ')}
-                    </div>
-                  ` : ''}
                 </div>
-              </div>
-            `;
-          }).join('')}
-        </div>
-      </section>
+              `;
+            }).join('')}
+          </div>
+        </section>
 
-      <div class="course-builder-footer">
-        <div class="footer-summary">
-          <strong>${selectedCount}</strong> subjects · <strong>${totalHours.toLocaleString()}</strong> hours
-        </div>
-        <div class="footer-actions">
-          <button class="btn btn-primary" id="view-curriculum-btn" ${selectedCount === 0 ? 'disabled' : ''}>
-            View My Curriculum →
-          </button>
+        <div class="course-builder-footer">
+          <div class="footer-summary">
+            <strong>${selectedCount}</strong> subjects · <strong>${totalHours.toLocaleString()}</strong> hours
+          </div>
+          <div class="footer-actions">
+            <button class="btn btn-primary" id="view-curriculum-btn" ${selectedCount === 0 ? 'disabled' : ''}>
+              View My Curriculum →
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -43,123 +43,127 @@ export function renderExportPage(
     : null;
 
   container.innerHTML = `
-    <div class="export-page">
+    <div class="page-container export-page">
       <header class="page-header">
-        <h1>Export to PDF</h1>
-        <p class="page-description">
-          Download course materials as a PDF document for offline study or printing.
-        </p>
+        <div class="page-header-content">
+          <h1>Export to PDF</h1>
+          <p class="subtitle">
+            Download course materials as a PDF document for offline study or printing.
+          </p>
+        </div>
       </header>
 
-      <div class="export-container">
-        <div class="export-card">
-          <div class="export-section">
-            <label class="export-label" for="subject-select">Select Subject</label>
-            <select id="subject-select" class="export-select" ${state.isGenerating ? 'disabled' : ''}>
-              ${implementedSubjects.map(subject => `
-                <option value="${subject.id}" ${subject.id === state.selectedSubjectId ? 'selected' : ''}>
-                  ${subject.code} - ${subject.title}
-                </option>
-              `).join('')}
-            </select>
-          </div>
-
-          ${selectedSubject ? `
-            <div class="export-preview">
-              <h3>Content Preview</h3>
-              <div class="preview-stats">
-                <div class="stat-item">
-                  <span class="stat-value">${stats?.topics || 0}</span>
-                  <span class="stat-label">Topics</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-value">${stats?.quizzes || 0}</span>
-                  <span class="stat-label">Quizzes</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-value">${stats?.exercises || 0}</span>
-                  <span class="stat-label">Exercises</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-value">${stats?.projects || 0}</span>
-                  <span class="stat-label">Projects</span>
-                </div>
-              </div>
-              <p class="preview-description">${selectedSubject.description}</p>
+      <div class="page-content">
+        <div class="export-container">
+          <div class="export-card">
+            <div class="export-section">
+              <label class="export-label" for="subject-select">Select Subject</label>
+              <select id="subject-select" class="export-select" ${state.isGenerating ? 'disabled' : ''}>
+                ${implementedSubjects.map(subject => `
+                  <option value="${subject.id}" ${subject.id === state.selectedSubjectId ? 'selected' : ''}>
+                    ${subject.code} - ${subject.title}
+                  </option>
+                `).join('')}
+              </select>
             </div>
-          ` : ''}
 
-          <div class="export-section">
-            <label class="export-label">Options</label>
-            <div class="export-checkbox">
-              <input
-                type="checkbox"
-                id="include-solutions"
-                ${state.includeSolutions ? 'checked' : ''}
-                ${state.isGenerating ? 'disabled' : ''}
+            ${selectedSubject ? `
+              <div class="export-preview">
+                <h3>Content Preview</h3>
+                <div class="preview-stats">
+                  <div class="stat-item">
+                    <span class="stat-value">${stats?.topics || 0}</span>
+                    <span class="stat-label">Topics</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value">${stats?.quizzes || 0}</span>
+                    <span class="stat-label">Quizzes</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value">${stats?.exercises || 0}</span>
+                    <span class="stat-label">Exercises</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value">${stats?.projects || 0}</span>
+                    <span class="stat-label">Projects</span>
+                  </div>
+                </div>
+                <p class="preview-description">${selectedSubject.description}</p>
+              </div>
+            ` : ''}
+
+            <div class="export-section">
+              <label class="export-label">Options</label>
+              <div class="export-checkbox">
+                <input
+                  type="checkbox"
+                  id="include-solutions"
+                  ${state.includeSolutions ? 'checked' : ''}
+                  ${state.isGenerating ? 'disabled' : ''}
+                >
+                <label for="include-solutions">
+                  <span class="checkbox-title">Include Solutions & Answers</span>
+                  <span class="checkbox-description">
+                    Show quiz answers, exercise solutions, and explanations
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div class="export-actions">
+              <button
+                id="generate-pdf-btn"
+                class="btn btn-primary btn-large"
+                ${state.isGenerating || !selectedSubject ? 'disabled' : ''}
               >
-              <label for="include-solutions">
-                <span class="checkbox-title">Include Solutions & Answers</span>
-                <span class="checkbox-description">
-                  Show quiz answers, exercise solutions, and explanations
-                </span>
-              </label>
+                ${state.isGenerating ? `
+                  <span class="btn-spinner"></span>
+                  <span>${state.progress || 'Generating...'}</span>
+                ` : `
+                  <span class="btn-icon">${Icons.Export}</span>
+                  <span>Generate PDF</span>
+                `}
+              </button>
             </div>
-          </div>
 
-          <div class="export-actions">
-            <button
-              id="generate-pdf-btn"
-              class="btn btn-primary btn-large"
-              ${state.isGenerating || !selectedSubject ? 'disabled' : ''}
-            >
-              ${state.isGenerating ? `
-                <span class="btn-spinner"></span>
-                <span>${state.progress || 'Generating...'}</span>
-              ` : `
-                <span class="btn-icon">${Icons.Export}</span>
-                <span>Generate PDF</span>
-              `}
-            </button>
-          </div>
-
-          ${state.isGenerating ? `
-            <div class="export-progress">
-              <div class="progress-bar">
-                <div class="progress-bar-indeterminate"></div>
+            ${state.isGenerating ? `
+              <div class="export-progress">
+                <div class="progress-bar">
+                  <div class="progress-bar-indeterminate"></div>
+                </div>
+                <p class="progress-text">${state.progress}</p>
               </div>
-              <p class="progress-text">${state.progress}</p>
+            ` : ''}
+          </div>
+
+          <div class="export-info">
+            <h3>What's Included</h3>
+            <ul class="info-list">
+              <li>
+                <strong>Cover Page</strong>
+                <span>Subject title, description, and learning objectives</span>
+              </li>
+              <li>
+                <strong>Topic Content</strong>
+                <span>Full lecture notes and explanations for each topic</span>
+              </li>
+              <li>
+                <strong>Exercises</strong>
+                <span>All coding and written exercises with test cases</span>
+              </li>
+              <li>
+                <strong>Projects</strong>
+                <span>Project descriptions with requirements and grading rubrics</span>
+              </li>
+              <li>
+                <strong>Quizzes</strong>
+                <span>Quiz questions ${state.includeSolutions ? 'with answers and explanations' : '(answers hidden)'}</span>
+              </li>
+            </ul>
+
+            <div class="info-note">
+              <strong>Note:</strong> PDF generation may take a few moments for subjects with extensive content.
             </div>
-          ` : ''}
-        </div>
-
-        <div class="export-info">
-          <h3>What's Included</h3>
-          <ul class="info-list">
-            <li>
-              <strong>Cover Page</strong>
-              <span>Subject title, description, and learning objectives</span>
-            </li>
-            <li>
-              <strong>Topic Content</strong>
-              <span>Full lecture notes and explanations for each topic</span>
-            </li>
-            <li>
-              <strong>Exercises</strong>
-              <span>All coding and written exercises with test cases</span>
-            </li>
-            <li>
-              <strong>Projects</strong>
-              <span>Project descriptions with requirements and grading rubrics</span>
-            </li>
-            <li>
-              <strong>Quizzes</strong>
-              <span>Quiz questions ${state.includeSolutions ? 'with answers and explanations' : '(answers hidden)'}</span>
-            </li>
-          </ul>
-
-          <div class="info-note">
-            <strong>Note:</strong> PDF generation may take a few moments for subjects with extensive content.
           </div>
         </div>
       </div>

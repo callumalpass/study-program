@@ -42,141 +42,145 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
   const achievements = calculateAchievements(filteredSubjects, userProgress);
 
   container.innerHTML = `
-    <div class="progress-page">
-      <header class="progress-header">
-        <h1>Your Progress</h1>
-        <p class="subtitle">Track your journey through the curriculum</p>
+    <div class="page-container progress-page">
+      <header class="page-header">
+        <div class="page-header-content">
+          <h1>Your Progress</h1>
+          <p class="subtitle">Track your journey through the curriculum</p>
+        </div>
       </header>
 
-      <section class="overall-progress">
-        <h2>Overall Degree Progress</h2>
-        <div class="progress-overview-card">
-          <div class="circular-progress">
-            <svg class="progress-ring" width="200" height="200">
-              <circle
-                class="progress-ring-circle-bg"
-                stroke="#e5e7eb"
-                stroke-width="20"
-                fill="transparent"
-                r="80"
-                cx="100"
-                cy="100"
-              />
-              <circle
-                class="progress-ring-circle"
-                stroke="#3b82f6"
-                stroke-width="20"
-                fill="transparent"
-                r="80"
-                cx="100"
-                cy="100"
-                stroke-dasharray="${2 * Math.PI * 80}"
-                stroke-dashoffset="${2 * Math.PI * 80 * (1 - overallProgress.percentageComplete / 100)}"
-                transform="rotate(-90 100 100)"
-              />
-              <text x="100" y="100" class="progress-text" text-anchor="middle" dy=".3em">
-                ${overallProgress.percentageComplete}%
-              </text>
-            </svg>
-          </div>
-          <div class="progress-stats-grid">
-            <div class="stat-box">
-              <div class="stat-value">${overallProgress.completedSubjects}</div>
-              <div class="stat-label">Subjects Completed</div>
+      <div class="page-content">
+        <section class="overall-progress">
+          <h2>Overall Degree Progress</h2>
+          <div class="progress-overview-card">
+            <div class="circular-progress">
+              <svg class="progress-ring" width="200" height="200">
+                <circle
+                  class="progress-ring-circle-bg"
+                  stroke="#e5e7eb"
+                  stroke-width="20"
+                  fill="transparent"
+                  r="80"
+                  cx="100"
+                  cy="100"
+                />
+                <circle
+                  class="progress-ring-circle"
+                  stroke="#3b82f6"
+                  stroke-width="20"
+                  fill="transparent"
+                  r="80"
+                  cx="100"
+                  cy="100"
+                  stroke-dasharray="${2 * Math.PI * 80}"
+                  stroke-dashoffset="${2 * Math.PI * 80 * (1 - overallProgress.percentageComplete / 100)}"
+                  transform="rotate(-90 100 100)"
+                />
+                <text x="100" y="100" class="progress-text" text-anchor="middle" dy=".3em">
+                  ${overallProgress.percentageComplete}%
+                </text>
+              </svg>
             </div>
-            <div class="stat-box">
-              <div class="stat-value">${overallProgress.inProgressSubjects}</div>
-              <div class="stat-label">In Progress</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-value">${overallProgress.totalSubjects - overallProgress.completedSubjects - overallProgress.inProgressSubjects}</div>
-              <div class="stat-label">Not Started</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-value">${overallProgress.completedHours}</div>
-              <div class="stat-label">Hours Completed</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="year-breakdown">
-        <h2>Progress by Year</h2>
-        <div class="year-cards">
-          ${Array.from({ length: 4 }, (_, i) => i + 1).map(year => {
-            const stats = yearStats[year];
-            return `
-              <div class="year-card">
-                <div class="year-card-header">
-                  <h3>Year ${year}</h3>
-                  <div class="year-progress-bar">
-                    <div class="progress-bar" style="width: ${stats.percentComplete}%"></div>
-                  </div>
-                </div>
-                <div class="year-card-stats">
-                  <span>${stats.completed} / ${stats.total} subjects</span>
-                  <span class="year-percentage">${stats.percentComplete}%</span>
-                </div>
+            <div class="progress-stats-grid">
+              <div class="stat-box">
+                <div class="stat-value">${overallProgress.completedSubjects}</div>
+                <div class="stat-label">Subjects Completed</div>
               </div>
-            `;
-          }).join('')}
-        </div>
-      </section>
-
-      <section class="subject-breakdown">
-        <h2>Detailed Progress</h2>
-        ${renderSubjectBreakdown(groupedSubjects, userProgress)}
-      </section>
-
-      ${achievements.length > 0 ? `
-        <section class="achievements">
-          <h2>Achievements & Milestones</h2>
-          <div class="achievements-grid">
-            ${achievements.map(achievement => `
-              <div class="achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'}">
-                <div class="achievement-icon">${achievement.icon}</div>
-                <div class="achievement-content">
-                  <h3>${achievement.title}</h3>
-                  <p>${achievement.description}</p>
-                  ${achievement.unlocked ? `
-                    <span class="achievement-date">Unlocked ${formatDate(achievement.unlockedDate!)}</span>
-                  ` : `
-                    <div class="achievement-progress">
-                      <div class="progress-bar-small">
-                        <div class="progress-bar" style="width: ${achievement.progress}%"></div>
-                      </div>
-                      <span>${achievement.progress}%</span>
-                    </div>
-                  `}
-                </div>
+              <div class="stat-box">
+                <div class="stat-value">${overallProgress.inProgressSubjects}</div>
+                <div class="stat-label">In Progress</div>
               </div>
-            `).join('')}
+              <div class="stat-box">
+                <div class="stat-value">${overallProgress.totalSubjects - overallProgress.completedSubjects - overallProgress.inProgressSubjects}</div>
+                <div class="stat-label">Not Started</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-value">${overallProgress.completedHours}</div>
+                <div class="stat-label">Hours Completed</div>
+              </div>
+            </div>
           </div>
         </section>
-      ` : ''}
 
-      <section class="data-management">
-        <h2>Data Management</h2>
-        <div class="data-actions">
-          <div class="action-group">
-            <h3>Export Progress</h3>
-            <p>Download your progress data as a JSON file for backup</p>
-            <button class="btn btn-primary" id="export-progress-btn">
-              <span class="icon">${Icons.Download}</span>
-              Export Progress
-            </button>
+        <section class="year-breakdown">
+          <h2>Progress by Year</h2>
+          <div class="year-cards">
+            ${Array.from({ length: 4 }, (_, i) => i + 1).map(year => {
+              const stats = yearStats[year];
+              return `
+                <div class="year-card">
+                  <div class="year-card-header">
+                    <h3>Year ${year}</h3>
+                    <div class="year-progress-bar">
+                      <div class="progress-bar" style="width: ${stats.percentComplete}%"></div>
+                    </div>
+                  </div>
+                  <div class="year-card-stats">
+                    <span>${stats.completed} / ${stats.total} subjects</span>
+                    <span class="year-percentage">${stats.percentComplete}%</span>
+                  </div>
+                </div>
+              `;
+            }).join('')}
           </div>
-          <div class="action-group">
-            <h3>Import Progress</h3>
-            <p>Restore your progress from a previously exported file</p>
-            <input type="file" id="import-file-input" accept=".json" style="display: none">
-            <button class="btn btn-primary" id="import-progress-btn">
-              <span class="icon">${Icons.Upload}</span>
-              Import Progress
-            </button>
+        </section>
+
+        <section class="subject-breakdown">
+          <h2>Detailed Progress</h2>
+          ${renderSubjectBreakdown(groupedSubjects, userProgress)}
+        </section>
+
+        ${achievements.length > 0 ? `
+          <section class="achievements">
+            <h2>Achievements & Milestones</h2>
+            <div class="achievements-grid">
+              ${achievements.map(achievement => `
+                <div class="achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'}">
+                  <div class="achievement-icon">${achievement.icon}</div>
+                  <div class="achievement-content">
+                    <h3>${achievement.title}</h3>
+                    <p>${achievement.description}</p>
+                    ${achievement.unlocked ? `
+                      <span class="achievement-date">Unlocked ${formatDate(achievement.unlockedDate!)}</span>
+                    ` : `
+                      <div class="achievement-progress">
+                        <div class="progress-bar-small">
+                          <div class="progress-bar" style="width: ${achievement.progress}%"></div>
+                        </div>
+                        <span>${achievement.progress}%</span>
+                      </div>
+                    `}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+        ` : ''}
+
+        <section class="data-management">
+          <h2>Data Management</h2>
+          <div class="data-actions">
+            <div class="action-group">
+              <h3>Export Progress</h3>
+              <p>Download your progress data as a JSON file for backup</p>
+              <button class="btn btn-primary" id="export-progress-btn">
+                <span class="icon">${Icons.Download}</span>
+                Export Progress
+              </button>
+            </div>
+            <div class="action-group">
+              <h3>Import Progress</h3>
+              <p>Restore your progress from a previously exported file</p>
+              <input type="file" id="import-file-input" accept=".json" style="display: none">
+              <button class="btn btn-primary" id="import-progress-btn">
+                <span class="icon">${Icons.Upload}</span>
+                Import Progress
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   `;
 

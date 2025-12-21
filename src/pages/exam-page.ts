@@ -3,6 +3,7 @@ import type { Subject, Exam, QuizQuestion } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { navigateToSubject } from '@/core/router';
 import { Icons } from '@/components/icons';
+import { Mascots } from '@/components/mascots';
 import { renderQuiz, createQuestionElement, collectAnswer, checkAnswer } from '@/components/quiz';
 import { renderNotFound, formatDate } from './assessment-utils';
 import { generatePracticeQuestion, evaluateWrittenExercise } from '@/utils/gemini-eval';
@@ -372,7 +373,7 @@ function renderPracticeMode(
 function getPracticeLoadingTemplate(): string {
   return `
     <div class="practice-loading">
-      <div class="loading-spinner"></div>
+      <div class="loading-mascot">${Mascots.Pondering}</div>
       <p>Generating practice question...</p>
     </div>
   `;
@@ -567,7 +568,7 @@ async function evaluateWrittenAnswer(
   // Show loading state
   feedbackContainer.innerHTML = `
     <div class="practice-evaluating">
-      <div class="loading-spinner"></div>
+      <div class="loading-mascot">${Mascots.Reading}</div>
       <p>Evaluating your answer...</p>
     </div>
   `;
@@ -669,7 +670,7 @@ async function evaluateCodingAnswer(
   // Show loading state
   feedbackContainer.innerHTML = `
     <div class="practice-evaluating">
-      <div class="loading-spinner"></div>
+      <div class="loading-mascot">${Mascots.Reading}</div>
       <p>Running tests...</p>
     </div>
   `;

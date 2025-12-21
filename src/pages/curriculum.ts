@@ -3,7 +3,6 @@ import type { Subject } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import {
   getSubjectsByYearAndSemester,
-  arePrerequisitesMet,
   calculateSubjectCompletion,
 } from '@/core/progress';
 import { navigateToSubject, navigateToCourseBuilder } from '@/core/router';
@@ -96,10 +95,6 @@ export function renderCurriculumPage(container: HTMLElement, subjects: Subject[]
             <span>Not Started</span>
           </div>
           <div class="legend-item">
-            <span class="status-badge status-locked"></span>
-            <span>Locked</span>
-          </div>
-          <div class="legend-item">
             <span class="status-badge status-in-progress"></span>
             <span>In Progress</span>
           </div>
@@ -186,9 +181,8 @@ function renderCurriculumTree(
  */
 function renderSubjectCard(subject: Subject, allSubjects: Subject[], userProgress: any): string {
   const progress = userProgress.subjects[subject.id];
-  const status = getSubjectStatus(subject, userProgress, allSubjects);
+  const status = getSubjectStatus(subject, userProgress);
   const completion = progress ? calculateSubjectCompletion(subject, progress) : 0;
-  const isLocked = status === 'locked';
 
   // Get prerequisite names
   const prerequisiteNames = subject.prerequisites
@@ -198,7 +192,7 @@ function renderSubjectCard(subject: Subject, allSubjects: Subject[], userProgres
     });
 
   return `
-    <div class="subject-card ${isLocked ? 'locked' : ''}" data-subject-id="${subject.id}">
+    <div class="subject-card" data-subject-id="${subject.id}">
       <div class="subject-status">
         <span class="status-badge status-${status}"></span>
       </div>
@@ -239,13 +233,6 @@ function renderSubjectCard(subject: Subject, allSubjects: Subject[], userProgres
             ${subject.topics.length} topics
           </span>
         </div>
-
-        ${isLocked ? `
-          <div class="locked-overlay">
-            <span class="lock-icon">${Icons.Lock}</span>
-            <span class="lock-text">Complete prerequisites to unlock</span>
-          </div>
-        ` : ''}
       </div>
     </div>
   `;
@@ -254,15 +241,8 @@ function renderSubjectCard(subject: Subject, allSubjects: Subject[], userProgres
 /**
  * Get the status of a subject
  */
-function getSubjectStatus(subject: Subject, userProgress: any, allSubjects: Subject[]): string {
+function getSubjectStatus(subject: Subject, userProgress: any): string {
   const progress = userProgress.subjects[subject.id];
-
-  // Check if prerequisites are met
-  const prerequisitesMet = arePrerequisitesMet(subject, userProgress);
-
-  if (!prerequisitesMet) {
-    return 'locked';
-  }
 
   if (!progress) {
     return 'not-started';
@@ -292,7 +272,7 @@ function truncateText(text: string, maxLength: number): string {
  */
 function attachEventListeners(container: HTMLElement, allSubjects: Subject[], filteredSubjects: Subject[]): void {
   // Subject card clicks
-  container.querySelectorAll('.subject-card:not(.locked)').forEach(card => {
+  container.querySelectorAll('.subject-card').forEach(card => {
     card.addEventListener('click', () => {
       const subjectId = (card as HTMLElement).dataset.subjectId;
       if (subjectId) navigateToSubject(subjectId);
