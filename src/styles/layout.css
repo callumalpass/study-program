@@ -175,14 +175,25 @@
 
 .logo-icon {
   font-size: var(--font-size-2xl);
+  color: var(--color-accent-primary);
+  animation: logo-color 4.5s ease-in-out infinite;
+}
+
+.logo-icon svg {
+  transform-origin: center;
+  animation: logo-squash 4.5s ease-in-out infinite;
+  will-change: transform;
 }
 
 .logo-text {
-  font-family: var(--font-body);
+  font-family: 'JetBrains Mono', monospace;
   font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-normal);
-  color: var(--color-text-primary);
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  color: var(--color-accent-primary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-2deg) skewX(-6deg);
+  display: inline-block;
 }
 
 /* Sidebar Subjects Section */
@@ -766,6 +777,69 @@
 
 .mobile-header .logo-icon {
   font-size: var(--font-size-xl);
+}
+
+.mobile-header .mobile-logo span:not(.logo-icon) {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  color: var(--color-accent-primary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-2deg) skewX(-6deg);
+  display: inline-block;
+}
+
+@keyframes logo-squash {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  15% {
+    transform: scale(1.08, 0.92) rotate(-6deg);
+  }
+  35% {
+    transform: scale(0.94, 1.12) rotate(7deg);
+  }
+  55% {
+    transform: scale(1.12, 0.9) rotate(-8deg);
+  }
+  75% {
+    transform: scale(0.96, 1.08) rotate(4deg);
+  }
+}
+
+@keyframes logo-color {
+  0%,
+  100% {
+    color: var(--color-accent-primary);
+  }
+  50% {
+    color: var(--color-text-primary);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-icon svg {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-text {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-header .mobile-logo span:not(.logo-icon) {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-icon {
+    animation: none;
+  }
 }
 
 /* Hamburger Menu Button */

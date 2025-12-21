@@ -111,7 +111,7 @@ export function renderHomePage(container: HTMLElement, subjects: Subject[]): voi
   container.innerHTML = `
     <div class="home-page">
       <header class="home-header">
-        <h1>Groundwork</h1>
+        <h1>Stod</h1>
         <p class="subtitle">A self-study platform covering undergraduate CS and mathematics curriculum. ${filteredSubjects.length} subjects with lessons, quizzes, coding exercises, projects, and practice exams. Code runs in the browser via Pyodide.</p>
       </header>
 

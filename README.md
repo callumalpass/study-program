@@ -1,4 +1,4 @@
-# Groundwork
+# Stod
 
 A browser-based self-study platform for a 4-year undergraduate computer science curriculum.
 
