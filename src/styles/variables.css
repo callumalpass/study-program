@@ -1,95 +1,102 @@
 /* Design Tokens - CSS Variables */
-/* Brutalist Design System - Minimal, High Contrast */
+/* "Stoody" Design System - Soft, Tactile, Friendly */
 :root {
-  /* Colors - Dark Theme (Softer Brutalist) */
-  --color-bg-deep: #121212;
-  --color-bg-surface: #1a1a1a;
-  --color-bg-elevated: #222222;
-  --color-bg-overlay: #2a2a2a;
+  /* Colors - Dark Theme (Cozy Night) */
+  --color-bg-deep: #2d3436;
+  --color-bg-surface: #353b48;
+  --color-bg-elevated: #2f3640;
+  --color-bg-overlay: #3d4655;
 
-  /* Text Colors - Simplified */
-  --color-text-primary: #e5e5e5;
-  --color-text-secondary: #a0a0a0;  /* for within-element hierarchy only */
-  --color-text-muted: #707070;      /* for completed/inactive states */
-  --color-text-inverse: #121212;
+  /* Text Colors - Softened */
+  --color-text-primary: #dfe6e9;
+  --color-text-secondary: #b2bec3;
+  --color-text-muted: #636e72;
+  --color-text-inverse: #2d3436;
 
-  /* Accent Colors - Monochrome */
-  --color-accent-primary: #e5e5e5;
-  --color-accent-primary-hover: #ffffff;
-  --color-accent-primary-active: #a3a3a3;
-  --color-accent-primary-rgb: 229, 229, 229;
-  --color-success: #4ade80;
-  --color-success-subtle: #22c55e;
-  --color-error: #f87171;
-  --color-error-subtle: #ef4444;
-  --color-warning: #fbbf24;
-  --color-warning-subtle: #f59e0b;
+  /* Accent Colors - Playful & Dual */
+  /* Primary: "Blurple" (Soft Indigo) */
+  --color-accent-primary: #a29bfe;
+  --color-accent-primary-hover: #6c5ce7;
+  --color-accent-primary-active: #5849be;
+  --color-accent-primary-rgb: 162, 155, 254;
 
-  /* Border Colors - Minimal */
-  --color-border-default: #333333;
-  --color-border-muted: #2a2a2a;
-  --color-border-emphasis: #444444;
+  /* Secondary: "Mint" (Fresh Green) */
+  --color-accent-secondary: #55efc4;
+  --color-accent-secondary-hover: #00b894;
+  --color-accent-secondary-rgb: 85, 239, 196;
 
-  /* Spacing Scale */
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-2xl: 48px;
-  --space-3xl: 64px;
+  /* Functional Colors */
+  --color-success: #55efc4;
+  --color-success-subtle: #00b894;
+  --color-error: #ff7675;
+  --color-error-subtle: #d63031;
+  --color-warning: #ffeaa7;
+  --color-warning-subtle: #fdcb6e;
 
-  /* Typography */
-  --font-display: 'Playfair Display', 'Georgia', serif;
-  --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco',
-               'Courier New', monospace;
+  /* Border Colors - Soft */
+  --color-border-default: #464f5b;
+  --color-border-muted: #3d4655;
+  --color-border-emphasis: #576574;
+
+  /* Spacing Scale - Generous */
+  --space-xs: 6px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+
+  /* Typography - Round & Friendly */
+  --font-display: 'Quicksand', 'Varela Round', 'Nunito', 'Segoe UI Rounded', system-ui, sans-serif;
+  --font-sans: 'Nunito', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
   --font-heading: var(--font-display);
   --font-body: var(--font-sans);
 
-  /* Font Sizes - Simplified */
-  --font-size-xs: 0.875rem;   /* 14px - small labels */
-  --font-size-sm: 0.9375rem;  /* 15px - body */
-  --font-size-md: 0.9375rem;  /* 15px - body */
-  --font-size-lg: 0.9375rem;  /* 15px - body */
-  --font-size-xl: 1.5rem;     /* 24px - h3 */
-  --font-size-2xl: 1.875rem;  /* 30px - h2 */
-  --font-size-3xl: 2.5rem;    /* 40px - h1 */
+  /* Font Sizes */
+  --font-size-xs: 0.875rem;
+  --font-size-sm: 1rem;
+  --font-size-md: 1.125rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 3rem;
 
   /* Font Weights */
-  --font-weight-light: 300;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+  --font-weight-light: 400;
+  --font-weight-normal: 500; /* Slightly bolder base */
+  --font-weight-medium: 600;
+  --font-weight-semibold: 700;
+  --font-weight-bold: 800;
 
   /* Line Heights */
-  --line-height-tight: 1.25;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.75;
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
 
   /* Layout */
-  --sidebar-width: 320px;
-  --content-max-width: 800px;
-  --content-wide-max-width: 1200px;
-  --header-height: 60px;
+  --sidebar-width: 300px;
+  --content-max-width: 840px;
+  --content-wide-max-width: 1280px;
+  --header-height: 70px;
 
-  /* Border Radius - Brutalist: Sharp Corners */
-  --radius-sm: 0;
-  --radius-md: 0;
-  --radius-lg: 0;
-  --radius-xl: 0;
-  --radius-full: 0;
+  /* Border Radius - Very Round */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
 
-  /* Shadows - Brutalist: None */
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
+  /* Shadows - Soft & Tactile */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.2);
 
   /* Transitions */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 150ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-base: 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-slow: 500ms cubic-bezier(0.25, 0.8, 0.25, 1);
 
   /* Z-index Scale */
   --z-base: 1;
@@ -102,66 +109,74 @@
 
   /* Progress & Status Colors */
   --color-progress-bg: var(--color-bg-elevated);
-  --color-progress-fill: var(--color-accent-primary);
+  --color-progress-fill: var(--color-accent-secondary); /* Use secondary accent for progress */
 
-  /* Code Syntax Highlighting - Colorful */
-  --code-bg: #1a1a1a;
-  --code-fg: #e5e5e5;
-  --code-comment: #6b7280;
-  --code-keyword: #f472b6;
-  --code-string: #a7f3d0;
-  --code-function: #93c5fd;
-  --code-variable: #fcd34d;
-  --code-number: #c4b5fd;
-  --code-operator: #f9a8d4;
-  --code-punctuation: #9ca3af;
+  /* Code Syntax Highlighting - Pastel */
+  --code-bg: #2d3436;
+  --code-fg: #dfe6e9;
+  --code-comment: #636e72;
+  --code-keyword: #a29bfe;
+  --code-string: #55efc4;
+  --code-function: #74b9ff;
+  --code-variable: #ffeaa7;
+  --code-number: #fd79a8;
+  --code-operator: #fab1a0;
+  --code-punctuation: #b2bec3;
 }
 
-/* Light Theme - Clean Minimal */
+/* Light Theme - Warm Paper */
 [data-theme="light"] {
-  /* Colors - Light Theme (Clean) */
-  --color-bg-deep: #ffffff;
-  --color-bg-surface: #fafafa;
-  --color-bg-elevated: #ffffff;
-  --color-bg-overlay: #f5f5f5;
+  /* Colors - Light Theme (Paper & Clay) */
+  --color-bg-deep: #fdfbf7;      /* Warm paper white */
+  --color-bg-surface: #ffffff;   /* Pure white cards */
+  --color-bg-elevated: #f4f4f0;  /* Light clay */
+  --color-bg-overlay: #eaeae5;
 
   /* Text Colors */
-  --color-text-primary: #171717;
-  --color-text-secondary: #525252;
-  --color-text-muted: #a3a3a3;
+  --color-text-primary: #2d3436; /* Soft charcoal */
+  --color-text-secondary: #636e72;
+  --color-text-muted: #b2bec3;
   --color-text-inverse: #ffffff;
 
-  /* Accent Colors - Monochrome for Light Mode */
-  --color-accent-primary: #171717;
-  --color-accent-primary-hover: #000000;
-  --color-accent-primary-active: #404040;
-  --color-accent-primary-rgb: 23, 23, 23;
-  --color-success: #16a34a;
-  --color-success-subtle: #dcfce7;
-  --color-error: #dc2626;
-  --color-error-subtle: #fee2e2;
-  --color-warning: #ca8a04;
-  --color-warning-subtle: #fef9c3;
+  /* Accent Colors */
+  /* Primary: "Blurple" (Bold Indigo) */
+  --color-accent-primary: #6c5ce7;
+  --color-accent-primary-hover: #5849be;
+  --color-accent-primary-active: #4834d4;
+  --color-accent-primary-rgb: 108, 92, 231;
 
-  /* Border Colors - Very Light */
-  --color-border-default: #e5e5e5;
-  --color-border-muted: #f5f5f5;
-  --color-border-emphasis: #d4d4d4;
+  /* Secondary: "Mint" (Vibrant Teal) */
+  --color-accent-secondary: #00b894;
+  --color-accent-secondary-hover: #00a884;
+  --color-accent-secondary-rgb: 0, 184, 148;
 
-  /* Shadows - Brutalist: None */
-  --shadow-sm: none;
-  --shadow-md: none;
-  --shadow-lg: none;
+  /* Functional Colors */
+  --color-success: #00b894;
+  --color-success-subtle: #55efc4;
+  --color-error: #d63031;
+  --color-error-subtle: #ff7675;
+  --color-warning: #fdcb6e;
+  --color-warning-subtle: #ffeaa7;
 
-  /* Code Syntax Highlighting - Colorful Light */
-  --code-bg: #fafafa;
-  --code-fg: #171717;
-  --code-comment: #6b7280;
-  --code-keyword: #db2777;
-  --code-string: #059669;
-  --code-function: #2563eb;
-  --code-variable: #d97706;
-  --code-number: #7c3aed;
-  --code-operator: #be185d;
-  --code-punctuation: #6b7280;
+  /* Border Colors - Defined */
+  --color-border-default: #dfe6e9;
+  --color-border-muted: #f4f4f0;
+  --color-border-emphasis: #b2bec3;
+
+  /* Shadows - Colored & Soft */
+  --shadow-sm: 0 2px 8px rgba(108, 92, 231, 0.08);
+  --shadow-md: 0 8px 24px rgba(108, 92, 231, 0.12);
+  --shadow-lg: 0 16px 48px rgba(108, 92, 231, 0.16);
+
+  /* Code Syntax Highlighting - Soft Light */
+  --code-bg: #f4f4f0;
+  --code-fg: #2d3436;
+  --code-comment: #b2bec3;
+  --code-keyword: #6c5ce7;
+  --code-string: #00b894;
+  --code-function: #0984e3;
+  --code-variable: #d63031;
+  --code-number: #e17055;
+  --code-operator: #fdcb6e;
+  --code-punctuation: #636e72;
 }
