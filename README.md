@@ -1,6 +1,6 @@
 # stup
 
-Stup is a study program for structured, multi-subject learning.
+Stup is a **stu**dy **p**rogram: a self-study platform with readings, exercises, quizzes, and exams.
 
 ## Why
 
