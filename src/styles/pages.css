@@ -62,11 +62,6 @@
    Home Page
    ========================================================================== */
 
-.home-page {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-}
-
 .home-header {
   margin-bottom: var(--space-2xl);
 }
@@ -2336,6 +2331,29 @@ textarea.code-editor::placeholder {
   margin-bottom: 0;
 }
 
+/* Mascot in loading states */
+.loading-mascot {
+  width: 80px;
+  height: 80px;
+}
+
+.loading-mascot svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Empty state mascot */
+.empty-state-mascot {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-md);
+}
+
+.empty-state-mascot svg {
+  width: 100%;
+  height: 100%;
+}
+
 .practice-error {
   padding: var(--space-xl);
   text-align: center;
@@ -2447,11 +2465,6 @@ textarea.code-editor::placeholder {
 /* ==========================================================================
    Progress Page
    ========================================================================== */
-
-.progress-page {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-}
 
 .progress-header {
   margin-bottom: var(--space-2xl);
@@ -2844,11 +2857,6 @@ textarea.code-editor::placeholder {
 /* ==========================================================================
    Settings Page
    ========================================================================== */
-
-.settings-page {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-}
 
 .settings-section {
   margin-bottom: var(--space-2xl);
@@ -3260,11 +3268,6 @@ input:checked + .toggle-slider:before {
 /* ==========================================================================
    Export Page
    ========================================================================== */
-
-.export-page {
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-}
 
 .export-page .page-description {
   color: var(--color-text-secondary);
@@ -3906,12 +3909,6 @@ img {
    Timeline Page
    ========================================================================== */
 
-.timeline-page {
-  max-width: var(--content-wide-max-width);
-  margin: 0 auto;
-  padding: var(--space-lg);
-}
-
 /* Timeline Setup View */
 .timeline-setup {
   display: flex;
@@ -4337,10 +4334,6 @@ img {
 
 /* Responsive Timeline */
 @media (max-width: 768px) {
-  .timeline-page {
-    padding: var(--space-md);
-  }
-
   .timeline-header {
     flex-direction: column;
     align-items: stretch;
@@ -4358,12 +4351,6 @@ img {
 /* ==========================================================================
    Course Builder Page
    ========================================================================== */
-
-.course-builder-page {
-  padding: var(--space-xl);
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
 .course-builder-header {
   margin-bottom: var(--space-2xl);
@@ -4633,10 +4620,6 @@ img {
   margin-top: var(--space-xl);
   background: var(--color-bg-surface);
   border-top: 1px solid var(--color-border-default);
-  margin-left: calc(-1 * var(--space-xl));
-  margin-right: calc(-1 * var(--space-xl));
-  padding-left: var(--space-xl);
-  padding-right: var(--space-xl);
 }
 
 .footer-summary {
@@ -4655,10 +4638,6 @@ img {
 
 /* Responsive Course Builder */
 @media (max-width: 768px) {
-  .course-builder-page {
-    padding: var(--space-md);
-  }
-
   .catalog-controls {
     flex-direction: column;
     align-items: stretch;

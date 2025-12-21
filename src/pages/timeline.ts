@@ -35,15 +35,17 @@ export function renderTimelinePage(
  */
 function renderPlannerSetup(container: HTMLElement, subjects: Subject[]): void {
   container.innerHTML = `
-    <div class="timeline-page">
-      <div class="timeline-setup">
-        <div class="setup-welcome">
+    <div class="page-container wide timeline-page">
+      <header class="page-header">
+        <div class="page-header-content">
           <h1>Plan Your Learning Journey</h1>
-          <p class="text-secondary">
+          <p class="subtitle">
             Create a personalized study timeline to track your progress through the
             ${subjects.length} subjects in this degree program.
           </p>
         </div>
+      </header>
+      <div class="page-content">
         <div id="planner-container"></div>
       </div>
     </div>
@@ -98,78 +100,82 @@ function renderTimeline(
   }).length;
 
   container.innerHTML = `
-    <div class="timeline-page">
-      <div class="timeline-header">
-        <div class="timeline-title">
-          <h1>${Icons.Calendar} Study Timeline</h1>
-          <p class="text-secondary">
+    <div class="page-container wide timeline-page">
+      <header class="page-header">
+        <div class="page-header-content">
+          <h1>Study Timeline</h1>
+          <p class="subtitle">
             Started ${formatDate(startDate)} &middot; ${PACE_LABELS[studyPlan.pace]} &middot;
             Est. completion ${formatDate(estimatedEnd)}
           </p>
         </div>
-        <button class="btn btn-secondary btn-sm" id="edit-plan-btn">
-          ${Icons.Edit} Edit Plan
-        </button>
-      </div>
+        <div class="page-header-actions">
+          <button class="btn btn-secondary btn-sm" id="edit-plan-btn">
+            ${Icons.Edit} Edit Plan
+          </button>
+        </div>
+      </header>
 
-      <div class="timeline-stats">
-        <div class="stat-card">
-          <span class="stat-value stat-completed">${completed}</span>
-          <span class="stat-label">Completed</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-value stat-in-progress">${inProgress}</span>
-          <span class="stat-label">In Progress</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-value stat-scheduled">${scheduled}</span>
-          <span class="stat-label">Scheduled</span>
-        </div>
-        ${behindSchedule > 0 ? `
-        <div class="stat-card stat-card-warning">
-          <span class="stat-value stat-behind">${behindSchedule}</span>
-          <span class="stat-label">Behind Schedule</span>
-        </div>
-        ` : ''}
-        <div class="stat-card">
-          <span class="stat-value">${subjects.length}</span>
-          <span class="stat-label">Total Subjects</span>
-        </div>
-      </div>
-
-      <div class="timeline-legend">
-        <div class="legend-item">
-          <span class="legend-color legend-completed"></span>
-          <span>Completed</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-color legend-in-progress"></span>
-          <span>In Progress</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-color legend-scheduled"></span>
-          <span>Scheduled</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-color legend-blocked"></span>
-          <span>Blocked</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-color legend-overdue"></span>
-          <span>Overdue</span>
-        </div>
-      </div>
-
-      <div id="gantt-container" class="timeline-gantt-wrapper"></div>
-
-      <div id="edit-modal" class="modal" style="display: none;">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2>Edit Study Plan</h2>
-            <button class="modal-close" id="close-modal">&times;</button>
+      <div class="page-content">
+        <div class="timeline-stats">
+          <div class="stat-card">
+            <span class="stat-value stat-completed">${completed}</span>
+            <span class="stat-label">Completed</span>
           </div>
-          <div id="modal-planner"></div>
+          <div class="stat-card">
+            <span class="stat-value stat-in-progress">${inProgress}</span>
+            <span class="stat-label">In Progress</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value stat-scheduled">${scheduled}</span>
+            <span class="stat-label">Scheduled</span>
+          </div>
+          ${behindSchedule > 0 ? `
+          <div class="stat-card stat-card-warning">
+            <span class="stat-value stat-behind">${behindSchedule}</span>
+            <span class="stat-label">Behind Schedule</span>
+          </div>
+          ` : ''}
+          <div class="stat-card">
+            <span class="stat-value">${subjects.length}</span>
+            <span class="stat-label">Total Subjects</span>
+          </div>
+        </div>
+
+        <div class="timeline-legend">
+          <div class="legend-item">
+            <span class="legend-color legend-completed"></span>
+            <span>Completed</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color legend-in-progress"></span>
+            <span>In Progress</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color legend-scheduled"></span>
+            <span>Scheduled</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color legend-blocked"></span>
+            <span>Blocked</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color legend-overdue"></span>
+            <span>Overdue</span>
+          </div>
+        </div>
+
+        <div id="gantt-container" class="timeline-gantt-wrapper"></div>
+
+        <div id="edit-modal" class="modal" style="display: none;">
+          <div class="modal-backdrop"></div>
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Edit Study Plan</h2>
+              <button class="modal-close" id="close-modal">&times;</button>
+            </div>
+            <div id="modal-planner"></div>
+          </div>
         </div>
       </div>
     </div>

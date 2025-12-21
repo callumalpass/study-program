@@ -40,9 +40,9 @@ export function renderCurriculumPage(container: HTMLElement, subjects: Subject[]
   const isFiltered = selectedIds.length > 0 && selectedCount < totalSubjectCount;
 
   container.innerHTML = `
-    <div class="curriculum-page">
-      <header class="curriculum-header">
-        <div>
+    <div class="page-container ${currentFilters.viewMode === 'graph' ? 'wide ' : ''}curriculum-page">
+      <header class="page-header">
+        <div class="page-header-content">
           <h1>Curriculum</h1>
           <p class="subtitle">
             ${isFiltered
@@ -50,66 +50,70 @@ export function renderCurriculumPage(container: HTMLElement, subjects: Subject[]
               : `${totalSubjectCount} subjects in your program`}
           </p>
         </div>
-        <div class="curriculum-filters">
-          <div class="view-toggle">
-            <button class="toggle-btn ${currentFilters.viewMode === 'list' ? 'active' : ''}" data-view="list">
-              ${Icons.Curriculum} List
+        <div class="page-header-actions">
+          <div class="curriculum-filters">
+            <div class="view-toggle">
+              <button class="toggle-btn ${currentFilters.viewMode === 'list' ? 'active' : ''}" data-view="list">
+                ${Icons.Curriculum} List
+              </button>
+              <button class="toggle-btn ${currentFilters.viewMode === 'graph' ? 'active' : ''}" data-view="graph">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="6" cy="6" r="3"></circle>
+                  <circle cx="6" cy="18" r="3"></circle>
+                  <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+                  <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+                  <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+                </svg> Graph
+              </button>
+            </div>
+            <div class="filter-group">
+              <label for="year-filter">Year:</label>
+              <select id="year-filter" class="filter-select">
+                <option value="">All Years</option>
+                <option value="1">Year 1</option>
+                <option value="2">Year 2</option>
+                <option value="3">Year 3</option>
+                <option value="4">Year 4</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="show-completed-filter" ${currentFilters.showCompleted ? 'checked' : ''}>
+                <span>Show completed</span>
+              </label>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="edit-selection-btn">
+              ${Icons.CourseBuilder} Edit Selection
             </button>
-            <button class="toggle-btn ${currentFilters.viewMode === 'graph' ? 'active' : ''}" data-view="graph">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="6" cy="6" r="3"></circle>
-                <circle cx="6" cy="18" r="3"></circle>
-                <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
-                <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
-                <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
-              </svg> Graph
-            </button>
           </div>
-          <div class="filter-group">
-            <label for="year-filter">Year:</label>
-            <select id="year-filter" class="filter-select">
-              <option value="">All Years</option>
-              <option value="1">Year 1</option>
-              <option value="2">Year 2</option>
-              <option value="3">Year 3</option>
-              <option value="4">Year 4</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label class="checkbox-label">
-              <input type="checkbox" id="show-completed-filter" ${currentFilters.showCompleted ? 'checked' : ''}>
-              <span>Show completed</span>
-            </label>
-          </div>
-          <button class="btn btn-secondary btn-sm" id="edit-selection-btn">
-            ${Icons.CourseBuilder} Edit Selection
-          </button>
         </div>
       </header>
 
-      <div class="curriculum-legend">
-        <div class="legend-item">
-          <span class="status-badge status-not-started"></span>
-          <span>Not Started</span>
+      <div class="page-content">
+        <div class="curriculum-legend">
+          <div class="legend-item">
+            <span class="status-badge status-not-started"></span>
+            <span>Not Started</span>
+          </div>
+          <div class="legend-item">
+            <span class="status-badge status-locked"></span>
+            <span>Locked</span>
+          </div>
+          <div class="legend-item">
+            <span class="status-badge status-in-progress"></span>
+            <span>In Progress</span>
+          </div>
+          <div class="legend-item">
+            <span class="status-badge status-completed"></span>
+            <span>Completed</span>
+          </div>
         </div>
-        <div class="legend-item">
-          <span class="status-badge status-locked"></span>
-          <span>Locked</span>
-        </div>
-        <div class="legend-item">
-          <span class="status-badge status-in-progress"></span>
-          <span>In Progress</span>
-        </div>
-        <div class="legend-item">
-          <span class="status-badge status-completed"></span>
-          <span>Completed</span>
-        </div>
-      </div>
 
-      <div class="curriculum-content" id="curriculum-content-area">
-        ${currentFilters.viewMode === 'list' 
-          ? renderCurriculumTree(groupedSubjects, subjects, userProgress, currentFilters)
-          : ''}
+        <div class="curriculum-content" id="curriculum-content-area">
+          ${currentFilters.viewMode === 'list' 
+            ? renderCurriculumTree(groupedSubjects, subjects, userProgress, currentFilters)
+            : ''}
+        </div>
       </div>
     </div>
   `;
