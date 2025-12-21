@@ -1,0 +1,273 @@
+# CS102: Computer Systems Fundamentals - Subject Specification
+# This spec guides content creation for a foundational systems course that bridges
+# programming with hardware understanding.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs102
+title: Computer Systems Fundamentals
+category: cs
+
+role:
+  level: introductory
+  transformation: >
+    From "programs just work magically" to "I understand how data is represented
+    in binary, how logic gates compute, and how CPU, memory, and I/O work together."
+    Students should finish with mental models that make assembly language, debugging,
+    and systems programming tractable.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Basic programming experience (CS101 or equivalent)
+    - Elementary algebra and arithmetic
+    - Comfort with logical reasoning (if-then, AND/OR)
+
+  essential_concepts:
+    - Number systems and base conversion (binary, hex, octal)
+    - Binary arithmetic and two's complement representation
+    - Data representation (integers, floats, characters, endianness)
+    - Boolean algebra and logic gates
+    - Basic CPU architecture (fetch-decode-execute cycle)
+    - Assembly language basics (registers, addressing, control flow)
+    - Memory hierarchy (cache, virtual memory, I/O)
+
+  out_of_scope:
+    - Advanced CPU design (pipelining details, superscalar - covered in CS202)
+    - Operating system internals (covered in CS301)
+    - Digital circuit design and synthesis
+    - Compiler construction (covered in CS304)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: conceptual
+
+  mastery_indicators:
+    - Converts fluently between binary, hex, decimal, and octal
+    - Predicts overflow and sign behavior in two's complement arithmetic
+    - Reads and interprets hex dumps and memory layouts
+    - Traces instruction execution through the fetch-decode-execute cycle
+    - Understands why cache locality matters for performance
+    - Reads simple assembly code and predicts register/memory state
+
+  common_struggles:
+    - Confusing signed vs unsigned interpretation of the same bits
+    - Forgetting endianness when reading multi-byte values
+    - Not understanding why floating-point arithmetic is imprecise
+    - Conflating logical operations with arithmetic operations
+    - Thinking of assembly as "just weird syntax" rather than CPU operations
+    - Underestimating cache effects on program performance
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Visual diagrams (mermaid or ASCII art) for architectural concepts
+    - Concrete bit-level examples for every representation concept
+    - Step-by-step worked examples for conversions and calculations
+    - Connection to real debugging/programming scenarios
+    - Historical context where it illuminates design choices
+
+  conventions:
+    - Use 0x prefix for hex, 0b for binary when code-like
+    - Use subscript notation (₂, ₁₆, ₁₀) in explanatory text
+    - Show memory in little-endian unless otherwise specified
+    - Assembly examples should use a simple, readable pseudocode style
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    This subject tests understanding of representations and mechanisms, not
+    memorization of trivia. Students should be able to work through problems
+    systematically using first principles. The goal is building mental models
+    that transfer to other systems courses and debugging scenarios.
+
+  measures:
+    - Accurate conversion between number systems
+    - Correct interpretation of signed/unsigned values
+    - Understanding of IEEE-754 floating-point representation
+    - Ability to trace CPU execution and memory operations
+    - Recognition of cache behavior and locality patterns
+
+  anti_patterns:
+    - Memorizing specific conversions instead of understanding algorithms
+    - Trivia about specific CPU models rather than general principles
+    - Complex circuit analysis (that's electrical engineering)
+    - Detailed assembly syntax for real architectures (conceptual understanding)
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard thresholds. This is a foundational subject where solid understanding
+    is important for later systems courses. The material is conceptual rather than
+    proof-based, so 70% passing is appropriate.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises focus on calculation, conversion, and interpretation tasks that
+    build fluency with binary representations. Many exercises are short and
+    drill-like to build automatic facility with conversions. Longer exercises
+    require tracing execution or analyzing memory layouts.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "100%"
+    written: "0%"
+    justification: >
+      Exercises are coding-style (implement converters, interpret values) but
+      validated by AI since many have multiple valid approaches or formats.
+      No pure written exercises since this is fundamentally about computation.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard. Building fluency with conversions and representations
+      requires volume of practice. Many exercises are quick drills (5 min) while
+      some are more substantial tracing problems (15-20 min).
+
+  difficulty_distribution:
+    1: 3
+    2: 4
+    3: 4
+    4: 3
+    5: 2
+    justification: >
+      Slightly more medium difficulty than the base distribution. The concepts
+      aren't proof-based but require careful attention to detail. Difficulty 5
+      exercises involve complex multi-step problems (e.g., trace a function
+      through cache, decode IEEE-754 special cases).
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test factual recall of representations, quick conversions, and
+    understanding of key concepts. They provide checkpoints before the more
+    substantial exercises.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic allow progression from
+      definitions to application to tricky cases.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "20%"
+    fill_blank: "20%"
+    code_output: "10%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on multiple choice and true/false for conceptual understanding.
+      Fill-blank for exact values (conversions). Some code_output for tracing
+      simple programs. No coding in quizzes - that's for exercises.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams combine short-answer conceptual questions with longer calculation
+    and tracing problems. Students should demonstrate both recall and the
+    ability to work through multi-step problems.
+
+  midterm:
+    questions:
+      minimum: 25
+      target: 28
+      maximum: 32
+    duration_minutes: 75
+    format: >
+      Mix of conversion problems, true/false conceptual questions, and
+      short tracing problems. Covers Topics 1-4: number systems, arithmetic,
+      data representation, and boolean logic.
+    coverage: "Topics 1-4"
+
+  final:
+    questions:
+      minimum: 40
+      target: 44
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      Cumulative with emphasis on architecture and memory topics. Includes
+      longer tracing problems and interpretation of memory dumps or cache
+      behavior.
+    coverage: "All topics, emphasis on Topics 5-7"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    CS102 is primarily a conceptual foundations course. The exercises provide
+    sufficient hands-on practice with conversions and representations. Projects
+    would require significant implementation that isn't the focus of this subject.
+    The "Binary Bomb" project exists as an optional enrichment for interested
+    students but isn't required for credit.
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires memorizing specific bit patterns rather than deriving them
+  - Quiz question tests trivia about specific processor models
+  - Content hand-waves IEEE-754 instead of explaining the structure
+  - Assembly examples use complex syntax that obscures the concepts
+  - Exercises require implementing real assembly for specific architectures
+  - Content confuses logical shifts with arithmetic shifts without explanation
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  CS102 serves as a bridge between high-level programming (CS101) and systems
+  courses (CS202 Computer Architecture, CS301 Operating Systems). Students
+  need to understand "what's really happening" beneath their programs without
+  getting lost in hardware details. The key insight is that everything is bits -
+  the same bits can be interpreted as unsigned integers, signed integers,
+  floating-point numbers, characters, instructions, or addresses depending on
+  context. Content should emphasize this unified view while building specific
+  skills for each representation type.

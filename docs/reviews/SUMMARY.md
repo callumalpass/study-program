@@ -7,8 +7,8 @@
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| COMPLETE (10/10) | 33 | 87% |
-| COMPLETE (7-9/10) | 5 | 13% |
+| COMPLETE (10/10) | 34 | 89% |
+| COMPLETE (7-9/10) | 4 | 11% |
 | NEEDS WORK | 0 | 0% |
 | INCOMPLETE | 0 | 0% |
 
@@ -16,6 +16,7 @@
 
 ### Production Ready (10/10)
 - CS101: Introduction to Programming
+- CS102: Computer Systems Fundamentals
 - CS103: Object-Oriented Programming
 - CS104: Data Structures
 - CS202: Computer Architecture
@@ -48,7 +49,6 @@
 - MATH404: Optimization Theory
 
 ### Good with Minor Issues (7-9/10)
-- CS102: Computer Systems Fundamentals (7/10)
 - CS105: Introduction to C Programming (8/10)
 - CS201: Algorithms (7/10)
 - CS302: Computer Networks (8/10)
@@ -83,8 +83,8 @@ Some subjects have subtopics below the 800-word minimum:
 ## Year-by-Year Summary
 
 ### Year 1 (7 subjects)
-- **Complete:** CS101, CS103, CS104, CS105, MATH101, MATH102
-- **Good:** CS102
+- **Complete:** CS101, CS102, CS103, CS104, CS105, MATH101, MATH102
+- **Good:** (none)
 
 ### Year 2 (9 subjects)
 - **Complete:** CS202, CS203, CS204, CS205, MATH201, MATH202, MATH203, MATH204
@@ -109,6 +109,7 @@ Some subjects have subtopics below the 800-word minimum:
 ## Recent Updates (2025-12-21)
 
 ### Subjects Upgraded to Production Ready
+- **CS102: Computer Systems Fundamentals** - Created subject-spec.yaml (exam-only subject), added 14 new subtopics (2 per topic) to bring each topic from 5 to 7 subtopics, total ~19,000 words added. Now at 100% with 49/49 subtopics averaging 1455 words each.
 - **MATH404: Optimization Theory** - Created subject-spec.yaml, expanded Topics 3-7 content to ~1000 words/subtopic (Duality, Convexity, Gradient Methods, Constrained Opt), completed exams (26 midterm + 42 final), verified 112 exercises and 105 quiz questions.
 - **CS104: Data Structures** - Created subject-spec.yaml, expanded all 15 subtopics below 800 words, added second project, verified all exercises and exams.
 - **CS405: Cloud Computing** - Created subject-spec.yaml, fixed topics.ts, expanded Topic 7, added 103 exercises.
