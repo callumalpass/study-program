@@ -21,7 +21,8 @@
   left: 0;
   width: var(--sidebar-width);
   height: 100vh;
-  background-color: var(--color-bg-surface);
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.12), rgba(34, 197, 94, 0.04)),
+    var(--color-bg-surface);
   border-right: 1px solid var(--color-border-default);
   overflow-y: auto;
   padding: var(--space-md);
@@ -1525,5 +1526,67 @@
   .topic-item {
     padding: var(--space-sm) var(--space-sm);
     min-height: 40px;
+  }
+}
+
+/* ==========================================================================
+   Unified Page Layout
+   ========================================================================== */
+
+.page-container {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding-bottom: var(--space-2xl);
+}
+
+.page-container.wide {
+  max-width: var(--content-wide-max-width);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.page-header-content {
+  flex: 1;
+}
+
+.page-header h1 {
+  margin: 0 0 var(--space-xs) 0;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  line-height: 1.2;
+}
+
+.page-header .subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: var(--line-height-relaxed);
+}
+
+.page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: stretch;
+  }
+  
+  .page-header-actions {
+    width: 100%;
+    flex-wrap: wrap;
   }
 }
