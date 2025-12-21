@@ -1,6 +1,5 @@
 // Mini dependency graph for subject page - shows prerequisites and dependents
 import type { Subject, UserProgress } from '@/core/types';
-import { arePrerequisitesMet } from '@/core/progress';
 import { navigateToSubject } from '@/core/router';
 
 // Get theme-aware colors from CSS variables
@@ -21,7 +20,7 @@ interface NodeData {
   subject: Subject;
   x: number;
   y: number;
-  status: 'locked' | 'not-started' | 'in-progress' | 'completed' | 'current';
+  status: 'not-started' | 'in-progress' | 'completed' | 'current';
 }
 
 const NODE_WIDTH = 160;
@@ -132,8 +131,7 @@ function getNodeStatus(subject: Subject, userProgress: UserProgress): NodeData['
   const progress = userProgress.subjects[subject.id];
   if (progress?.status === 'completed') return 'completed';
   if (progress?.status === 'in_progress') return 'in-progress';
-  if (arePrerequisitesMet(subject, userProgress)) return 'not-started';
-  return 'locked';
+  return 'not-started';
 }
 
 function drawEdge(svg: SVGSVGElement, from: NodeData, to: NodeData, isMet: boolean, colors: ReturnType<typeof getThemeColors>): void {
@@ -178,11 +176,6 @@ function drawNode(svg: SVGSVGElement, node: NodeData, colors: ReturnType<typeof 
     case 'in-progress':
       strokeColor = colors.accentPrimary;
       fillColor = colors.bgElevated;
-      break;
-    case 'locked':
-      strokeColor = colors.borderDefault;
-      fillColor = colors.bgSurface;
-      textColor = colors.textMuted;
       break;
     case 'not-started':
       strokeColor = colors.textMuted;

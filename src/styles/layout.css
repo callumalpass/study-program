@@ -177,12 +177,15 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-xs);
-  padding: var(--space-md) var(--space-md) var(--space-sm);
+  padding: var(--space-xs) 0;
   text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: opacity var(--transition-fast);
 }
 
 .sidebar-logo:hover {
   text-decoration: none;
+  background-color: transparent;
 }
 
 .logo-icon {
@@ -193,8 +196,9 @@
 }
 
 .sidebar-logo .logo-icon {
-  width: 88px;
-  height: 88px;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
 }
 
 .logo-icon svg {
@@ -214,26 +218,14 @@
 }
 
 .logo-text {
-  font-family: var(--font-logo);
-  font-size: 2rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  font-weight: 300;
   color: var(--color-text-primary);
-  letter-spacing: 0.01em;
+  letter-spacing: -0.02em;
   line-height: 1;
-}
-
-.logo-tagline {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--color-text-muted);
-  letter-spacing: 0.02em;
-  margin-top: 2px;
-}
-
-.logo-tagline strong {
-  color: var(--color-text-secondary);
-  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
 }
 
 /* Hover effect on logo */
@@ -243,6 +235,7 @@
 
 .sidebar-logo:hover .logo-text {
   color: var(--color-accent-primary);
+  border-color: var(--color-accent-text-hover);
 }
 
 @keyframes logo-bounce {

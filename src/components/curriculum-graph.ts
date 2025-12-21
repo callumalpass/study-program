@@ -1,5 +1,4 @@
 import type { Subject } from '@/core/types';
-import { arePrerequisitesMet } from '@/core/progress';
 import { navigateToSubject } from '@/core/router';
 
 // Get theme-aware colors from CSS variables
@@ -27,7 +26,7 @@ interface Node extends Subject {
   width: number;
   height: number;
   level: number;
-  status: 'locked' | 'not-started' | 'in-progress' | 'completed';
+  status: 'not-started' | 'in-progress' | 'completed';
 }
 
 interface Edge {
@@ -158,13 +157,10 @@ export class CurriculumGraph {
         const y = this.PADDING + index * (this.NODE_HEIGHT + this.NODE_SPACING);
 
         const progress = this.userProgress.subjects[subject.id];
-        let status: Node['status'] = 'locked';
-        
-        if (arePrerequisitesMet(subject, this.userProgress)) {
-           status = 'not-started';
-           if (progress) {
-             status = progress.status === 'completed' ? 'completed' : 'in-progress';
-           }
+        let status: Node['status'] = 'not-started';
+
+        if (progress) {
+          status = progress.status === 'completed' ? 'completed' : 'in-progress';
         }
 
         this.nodes.set(subject.id, {
@@ -252,10 +248,6 @@ export class CurriculumGraph {
       } else if (node.status === 'in-progress') {
         strokeColor = this.colors!.accentPrimary;
         fillColor = this.colors!.bgElevated;
-      } else if (node.status === 'locked') {
-        strokeColor = this.colors!.borderDefault;
-        fillColor = this.colors!.bgSurface;
-        textColor = this.colors!.textMuted;
       } else {
         // Not started but available
         strokeColor = this.colors!.textMuted;
@@ -299,9 +291,7 @@ export class CurriculumGraph {
       
       // Event Listeners
       g.addEventListener('click', () => {
-         if (node.status !== 'locked') {
-           navigateToSubject(node.id);
-         }
+        navigateToSubject(node.id);
       });
       
       g.addEventListener('mouseenter', () => this.highlightConnections(node.id));

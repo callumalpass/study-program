@@ -250,3 +250,25 @@ export function loadQuizzesFromGlob(
 ): Quiz[] {
   return Object.values(globResult).flat();
 }
+
+/**
+ * Group item IDs by numeric topic suffix in topicId (e.g., "cs303-topic-4").
+ */
+export function groupIdsByTopic<T extends { id: string; topicId?: string }>(
+  items: T[]
+): Record<number, string[]> {
+  const grouped: Record<number, string[]> = {};
+
+  items.forEach(item => {
+    if (!item.topicId) return;
+    const match = item.topicId.match(/-topic-(\d+)$/);
+    if (!match) return;
+    const topicNumber = Number(match[1]);
+    if (!grouped[topicNumber]) {
+      grouped[topicNumber] = [];
+    }
+    grouped[topicNumber].push(item.id);
+  });
+
+  return grouped;
+}

@@ -80,8 +80,7 @@
     "difficulty": 2,
     "description": "Implement a function to increment a Semantic Version string.\n\nInputs: version string (e.g., '1.0.0'), release type ('major', 'minor', 'patch').\nOutput: New version string.",
     "starterCode": "type ReleaseType = 'major' | 'minor' | 'patch';\n\nfunction incrementVersion(version: string, type: ReleaseType): string {\n  // TODO: Parse and increment version\n  return '';\n}",
-    "solution": "type ReleaseType = 'major' | 'minor' | 'patch';\n\nfunction incrementVersion(version: string, type: ReleaseType): string {\n  const parts = version.split('.').map(Number);\n  let [major, minor, patch] = parts;\n  \n  switch (type) {\n    case 'major':\n      major++;\n      minor = 0;\n      patch = 0;\n      break;\n    case 'minor':\n      minor++;\n      patch = 0;\n      break;\n    case 'patch':\n      patch++;\n      break;\n  }\n  \n  return `${major}.${minor}.${patch}`;
-}",
+    "solution": "type ReleaseType = 'major' | 'minor' | 'patch';\n\nfunction incrementVersion(version: string, type: ReleaseType): string {\n  const parts = version.split('.').map(Number);\n  let [major, minor, patch] = parts;\n  \n  switch (type) {\n    case 'major':\n      major++;\n      minor = 0;\n      patch = 0;\n      break;\n    case 'minor':\n      minor++;\n      patch = 0;\n      break;\n    case 'patch':\n      patch++;\n      break;\n  }\n  \n  return `${major}.${minor}.${patch}`;\n}",
     "hints": [
       "Split the string by '.'",
       "Parse parts to integers",
@@ -111,10 +110,10 @@
     "difficulty": 3,
     "description": "Validate that all internal links in a documentation page resolve to existing headers.\n\nInput: markdown content string.\nOutput: Array of broken link texts (e.g., '[Link](#missing)').",
     "starterCode": "function validateLinks(markdown: string): string[] {\n  // TODO: Find [text](#anchor) and check if #anchor exists as header\n  return [];\n}",
-    "solution": "function validateLinks(markdown: string): string[] {\n  const brokenLinks: string[] = [];\n  \n  const headers = new Set<string>();\n  const headerRegex = /^#+\s+(.+)$/gm;\n  let match;\n  while ((match = headerRegex.exec(markdown)) !== null) {\n    const slug = match[1].toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');\n    headers.add(slug);\n  }\n  \n  const linkRegex = /\\\[.*?\]\(#([^)]+)\)/g;\n  while ((match = linkRegex.exec(markdown)) !== null) {\n    const anchor = match[1];\n    if (!headers.has(anchor)) {\n      brokenLinks.push(match[0]);\n    }\n  }\n  \n  return brokenLinks;\n}",
+    "solution": "function validateLinks(markdown: string): string[] {\n  const brokenLinks: string[] = [];\n  \n  const headers = new Set<string>();\n  const headerRegex = /^#+\\s+(.+)$/gm;\n  let match;\n  while ((match = headerRegex.exec(markdown)) !== null) {\n    const slug = match[1].toLowerCase().replace(/\\s+/g, '-').replace(/[^a-z0-9-]/g, '');\n    headers.add(slug);\n  }\n  \n  const linkRegex = /\\\\\\[.*?\\]\\(#([^)]+)\\)/g;\n  while ((match = linkRegex.exec(markdown)) !== null) {\n    const anchor = match[1];\n    if (!headers.has(anchor)) {\n      brokenLinks.push(match[0]);\n    }\n  }\n  \n  return brokenLinks;\n}",
     "hints": [
-      "Regex for headers: /^#+\s+(.+)$/gm",
-      "Regex for links: /\\\[.*?\]\(#([^)]+)\)/g",
+      "Regex for headers: /^#+\\\\s+(.+)$/gm",
+      "Regex for links: /\\\\\\[.*?\\]\\(#([^)]+)\\)/g",
       "Slugify header text to match anchor format"
     ],
     "testCases": [],

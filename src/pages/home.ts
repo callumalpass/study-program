@@ -113,7 +113,7 @@ export function renderHomePage(container: HTMLElement, subjects: Subject[]): voi
       <header class="page-header">
         <div class="page-header-content">
           <h1>Dashboard</h1>
-          <p class="subtitle">Welcome back to your computer science journey.</p>
+          <p class="subtitle">Welcome back to your study program.</p>
         </div>
       </header>
 

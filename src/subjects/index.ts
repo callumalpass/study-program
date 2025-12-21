@@ -44,7 +44,24 @@ import { cs304Quizzes, cs304Exercises, cs304Projects, cs304Exams } from './cs304
 // Year 3 - Semester 2
 import { cs305Quizzes, cs305Exercises, cs305Projects, cs305Exams } from './cs305';
 import { cs306Quizzes, cs306Exercises, cs306Projects, cs306Exams } from './cs306';
-// cs307 - in progress
+import { cs307Quizzes, cs307Exercises, cs307Projects, cs307Exams } from './cs307';
+import { math301Quizzes, math301Exercises, math301Exams } from './math301';
+import { math302Quizzes, math302Exercises, math302Exams } from './math302';
+import { math303Quizzes, math303Exercises, math303Exams } from './math303';
+import { math304Quizzes, math304Exercises, math304Exams } from './math304';
+
+// Year 4
+import { cs401Quizzes, cs401Exercises, cs401Projects, cs401Exams } from './cs401';
+import { cs402Quizzes, cs402Exercises, cs402Projects, cs402Exams } from './cs402';
+import { cs403Quizzes, cs403Exercises, cs403Projects, cs403Exams } from './cs403';
+import { cs404Quizzes, cs404Exercises, cs404Projects, cs404Exams } from './cs404';
+import { cs405Quizzes, cs405Exercises, cs405Projects, cs405Exams } from './cs405';
+import { cs406Quizzes, cs406Exercises, cs406Projects, cs406Exams } from './cs406';
+import { cs407Quizzes, cs407Exercises, cs407Projects, cs407Exams } from './cs407';
+import { math401Quizzes, math401Exercises, math401Exams } from './math401';
+import { math402Quizzes, math402Exercises, math402Exams } from './math402';
+import { math403Quizzes, math403Exercises, math403Exams } from './math403';
+import { math404Quizzes, math404Exercises, math404Exams } from './math404';
 
 // Aggregate all quizzes
 export const allQuizzes: Quiz[] = [
@@ -73,6 +90,23 @@ export const allQuizzes: Quiz[] = [
   ...cs304Quizzes,
   ...cs305Quizzes,
   ...cs306Quizzes,
+  ...cs307Quizzes,
+  ...math301Quizzes,
+  ...math302Quizzes,
+  ...math303Quizzes,
+  ...math304Quizzes,
+  // Year 4
+  ...cs401Quizzes,
+  ...cs402Quizzes,
+  ...cs403Quizzes,
+  ...cs404Quizzes,
+  ...cs405Quizzes,
+  ...cs406Quizzes,
+  ...cs407Quizzes,
+  ...math401Quizzes,
+  ...math402Quizzes,
+  ...math403Quizzes,
+  ...math404Quizzes,
 ];
 
 // Aggregate all exams
@@ -102,6 +136,23 @@ export const allExams: Exam[] = [
   ...cs304Exams,
   ...cs305Exams,
   ...cs306Exams,
+  ...cs307Exams,
+  ...math301Exams,
+  ...math302Exams,
+  ...math303Exams,
+  ...math304Exams,
+  // Year 4
+  ...cs401Exams,
+  ...cs402Exams,
+  ...cs403Exams,
+  ...cs404Exams,
+  ...cs405Exams,
+  ...cs406Exams,
+  ...cs407Exams,
+  ...math401Exams,
+  ...math402Exams,
+  ...math403Exams,
+  ...math404Exams,
 ];
 
 // Aggregate all exercises
@@ -131,6 +182,23 @@ export const allExercises: Exercise[] = [
   ...cs304Exercises,
   ...cs305Exercises,
   ...cs306Exercises,
+  ...cs307Exercises,
+  ...math301Exercises,
+  ...math302Exercises,
+  ...math303Exercises,
+  ...math304Exercises,
+  // Year 4
+  ...cs401Exercises,
+  ...cs402Exercises,
+  ...cs403Exercises,
+  ...cs404Exercises,
+  ...cs405Exercises,
+  ...cs406Exercises,
+  ...cs407Exercises,
+  ...math401Exercises,
+  ...math402Exercises,
+  ...math403Exercises,
+  ...math404Exercises,
 ];
 
 // Aggregate all projects (note: math subjects don't have projects)
@@ -155,4 +223,13 @@ export const allProjects: Project[] = [
   ...cs304Projects,
   ...cs305Projects,
   ...cs306Projects,
+  ...cs307Projects,
+  // Year 4
+  ...cs401Projects,
+  ...cs402Projects,
+  ...cs403Projects,
+  ...cs404Projects,
+  ...cs405Projects,
+  ...cs406Projects,
+  ...cs407Projects,
 ];

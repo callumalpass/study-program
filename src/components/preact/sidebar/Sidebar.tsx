@@ -55,7 +55,6 @@ export function Sidebar({
         <a href="#/" class="sidebar-logo" title="study program">
           <span class="logo-icon" dangerouslySetInnerHTML={{ __html: currentMascot }} />
           <span class="logo-text">stup</span>
-          <span class="logo-tagline"><strong>stu</strong>dy <strong>p</strong>rogram</span>
         </a>
       </div>
 
