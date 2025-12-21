@@ -1,28 +1,77 @@
 ---
-title: "Constrained Optimization Methods"
-description: "Lagrangian and penalty-based approaches"
+title: "The Lagrangian"
+description: "The fundamental tool for constrained optimization"
 ---
 
-# Constrained Optimization
+# The Lagrangian
 
-## Lagrangian
+The Lagrangian function is the bridge that connects constrained optimization to unconstrained optimization. It converts constraints into objective function terms using weighted penalties (Lagrange multipliers).
 
-$$\mathcal{L}(x, \mu, \lambda) = f(x) + \mu^T g(x) + \lambda^T h(x)$$
+## Definition
 
-## KKT Conditions
+Consider the standard optimization problem:
+$$
+\begin{align}
+\min \quad & f_0(x) \\
+\text{s.t.} \quad & f_i(x) \leq 0, \quad i = 1, \ldots, m \\
+& h_i(x) = 0, \quad i = 1, \ldots, p
+\end{align}
+$$
+Domain $\mathcal{D} = \bigcap \textbf{dom} f_i \cap \bigcap \textbf{dom} h_i$.
 
-1. Stationarity
-2. Primal feasibility
-3. Dual feasibility
-4. Complementarity
+The **Lagrangian** function $L: \mathbb{R}^n \times \mathbb{R}^m \times \mathbb{R}^p \to \mathbb{R}$ is defined as:
 
-## Python
+$$ L(x, \lambda, \nu) = f_0(x) + \sum_{i=1}^m \lambda_i f_i(x) + \sum_{i=1}^p \nu_i h_i(x) $$
 
-```python
-import cvxpy as cp
+- $x$: Primal variables.
+- $\lambda_i$: Dual variables (multipliers) associated with inequalities. **Must be $\geq 0$.**
+- $\nu_i$: Dual variables associated with equalities. **Unrestricted (Free).**
 
-x = cp.Variable(2)
-problem = cp.Problem(cp.Minimize(cp.sum_squares(x)), [x[0] + x[1] >= 1])
-problem.solve()
-print(f"Solution: {x.value}")
-```
+## Interpretation
+
+The Lagrangian is a weighted sum of the objective and the constraints.
+- If $x$ satisfies constraints ($f_i(x) \leq 0, h_i(x) = 0$) and $\lambda \geq 0$:
+  $$ L(x, \lambda, \nu) \leq f_0(x) $$
+  (Since $\lambda_i f_i(x) \leq 0$ and $\nu_i h_i(x) = 0$).
+
+The Lagrangian provides a **lower bound** on the objective function for feasible points.
+
+## The Dual Function
+
+The **Lagrange Dual Function** $g(\lambda, \nu)$ is the minimum of the Lagrangian over $x$:
+
+$$ g(\lambda, \nu) = \inf_{x \in \mathcal{D}} L(x, \lambda, \nu) = \inf_{x \in \mathcal{D}} \left( f_0(x) + \sum \lambda_i f_i(x) + \sum \nu_i h_i(x) \right) $$
+
+**Key Property:** The dual function $g(\lambda, \nu)$ is **always concave**, even if the original problem is non-convex.
+*Proof:* $L$ is affine in $(\lambda, \nu)$ for fixed $x$. $g$ is the pointwise infimum of a family of affine functions. Infimum of affine functions is concave.
+
+## Lower Bound Property
+
+For any feasible $\tilde{x}$ and any feasible dual pair $(\lambda, \nu)$ with $\lambda \geq 0$:
+$$ g(\lambda, \nu) \leq f_0(\tilde{x}) $$
+
+*Proof:*
+$g(\lambda, \nu) = \inf_x L(x, \lambda, \nu) \leq L(\tilde{x}, \lambda, \nu)$
+$= f_0(\tilde{x}) + \sum \lambda_i f_i(\tilde{x}) + \sum \nu_i h_i(\tilde{x})$
+Since $\tilde{x}$ is feasible, $f_i(\tilde{x}) \leq 0$ and $h_i(\tilde{x}) = 0$. Since $\lambda \geq 0$, $\lambda_i f_i(\tilde{x}) \leq 0$.
+So $L(\tilde{x}, \lambda, \nu) \leq f_0(\tilde{x})$.
+
+This confirms the Weak Duality theorem for general optimization. The dual problem ($\max g(\lambda, \nu)$) provides the best lower bound.
+
+## Example: Least Squares
+
+$$ \min x^T x \quad \text{s.t.} \quad Ax = b $$
+Lagrangian: $L(x, \nu) = x^T x + \nu^T (Ax - b)$.
+To find dual function $g(\nu)$, minimize $L$ w.r.t $x$.
+$\nabla_x L = 2x + A^T \nu = 0 \implies x = -(1/2) A^T \nu$.
+Substitute back:
+$g(\nu) = \frac{1}{4} \nu^T A A^T \nu + \nu^T (A(-\frac{1}{2}A^T \nu) - b)$
+$g(\nu) = \frac{1}{4} \nu^T A A^T \nu - \frac{1}{2} \nu^T A A^T \nu - \nu^T b$
+$g(\nu) = -\frac{1}{4} \nu^T A A^T \nu - b^T \nu$.
+
+Dual Problem:
+$\max_\nu -\frac{1}{4} \nu^T A A^T \nu - b^T \nu$.
+This is an unconstrained concave quadratic maximization.
+Solution: $\nu = -2(AA^T)^{-1} b$.
+Recover primal: $x = -(1/2)A^T (-2(AA^T)^{-1} b) = A^T(AA^T)^{-1}b$.
+This is the standard Least Norm solution!

@@ -3,10 +3,10 @@
     "id": "math404-midterm",
     "subjectId": "math404",
     "title": "Midterm Exam",
-    "durationMinutes": 120,
+    "durationMinutes": 90,
     "instructions": [
       "Answer all questions",
-      "Show all work",
+      "Show all work for written problems",
       "Partial credit is available"
     ],
     "questions": [
@@ -36,7 +36,7 @@
         "type": "multiple_choice",
         "prompt": "Which statement about convex functions is TRUE?",
         "options": [
-          "A convex function can have multiple local minima",
+          "A convex function can have multiple local minima with different values",
           "Every local minimum of a convex function is a global minimum",
           "The sum of two convex functions is concave",
           "All polynomial functions are convex"
@@ -48,8 +48,215 @@
         "id": "math404-mid-q5",
         "type": "written",
         "prompt": "Prove that f(x) = ||x||² is convex by showing f(λx + (1-λ)y) ≤ λf(x) + (1-λ)f(y).",
-        "correctAnswer": "Using ||λx + (1-λ)y||² = λ²||x||² + 2λ(1-λ)x·y + (1-λ)²||y||² and noting that x·y ≤ ||x||||y||, we can show the inequality holds.",
+        "correctAnswer": "Using ||λx + (1-λ)y||² = λ²||x||² + 2λ(1-λ)x·y + (1-λ)²||y||² and noting that x·y ≤ ||x||||y|| (Cauchy-Schwarz) or simple quadratic expansion.",
         "explanation": "This follows from the convexity definition and properties of norms."
+      },
+      {
+        "id": "math404-mid-q6",
+        "type": "multiple_choice",
+        "prompt": "In Linear Programming, if the primal problem is unbounded, then the dual problem is:",
+        "options": [
+          "Infeasible",
+          "Unbounded",
+          "Optimal",
+          "Feasible"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Weak duality implies that if the primal is unbounded (max -> infinity), no finite dual bound can exist, so dual is infeasible."
+      },
+      {
+        "id": "math404-mid-q7",
+        "type": "multiple_choice",
+        "prompt": "Which of the following sets is NOT convex?",
+        "options": [
+          "A line segment",
+          "A subspace",
+          "The set of integers Z",
+          "A hyperplane"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The set of integers is discrete; the midpoint between 0 and 1 (0.5) is not an integer."
+      },
+      {
+        "id": "math404-mid-q8",
+        "type": "multiple_choice",
+        "prompt": "The intersection of an arbitrary collection of convex sets is:",
+        "options": [
+          "Always convex",
+          "Sometimes convex",
+          "Never convex",
+          "Concave"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Intersection preserves convexity."
+      },
+      {
+        "id": "math404-mid-q9",
+        "type": "multiple_choice",
+        "prompt": "For a standard form LP (min c'x s.t. Ax=b, x>=0), the dual constraints are:",
+        "options": [
+          "A'y >= c",
+          "A'y <= c",
+          "Ay = c",
+          "Ay >= b"
+        ],
+        "correctAnswer": 1,
+        "explanation": "For minimization with equality constraints, dual variables are free and constraints are <=."
+      },
+      {
+        "id": "math404-mid-q10",
+        "type": "multiple_choice",
+        "prompt": "Complementary slackness implies that if a dual variable is strictly positive, the corresponding primal constraint must be:",
+        "options": [
+          "Inactive (slack > 0)",
+          "Active (binding)",
+          "Redundant",
+          "Violated"
+        ],
+        "correctAnswer": 1,
+        "explanation": "If the price is positive, the resource must be fully utilized (binding)."
+      },
+      {
+        "id": "math404-mid-q11",
+        "type": "multiple_choice",
+        "prompt": "A function f is convex if and only if its epigraph is:",
+        "options": [
+          "Closed",
+          "Bounded",
+          "Convex",
+          "Affine"
+        ],
+        "correctAnswer": 2,
+        "explanation": "This is the geometric definition of a convex function."
+      },
+      {
+        "id": "math404-mid-q12",
+        "type": "multiple_choice",
+        "prompt": "Which of the following operations preserves convexity?",
+        "options": [
+          "Maximum of convex functions",
+          "Minimum of convex functions",
+          "Product of convex functions",
+          "Difference of convex functions"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The pointwise maximum of convex functions is convex."
+      },
+      {
+        "id": "math404-mid-q13",
+        "type": "multiple_choice",
+        "prompt": "The conjugate function f*(y) is always:",
+        "options": [
+          "Differentiable",
+          "Convex",
+          "Concave",
+          "Bounded"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The conjugate is the pointwise supremum of affine functions, hence convex."
+      },
+      {
+        "id": "math404-mid-q14",
+        "type": "multiple_choice",
+        "prompt": "Farkas' Lemma deals with the existence of solutions to:",
+        "options": [
+          "Quadratic equations",
+          "Systems of linear inequalities",
+          "Differential equations",
+          "Integer programs"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Farkas' Lemma is a theorem of the alternative for linear inequalities."
+      },
+      {
+        "id": "math404-mid-q15",
+        "type": "multiple_choice",
+        "prompt": "If f is twice differentiable, it is convex if and only if its Hessian is:",
+        "options": [
+          "Positive definite",
+          "Positive semidefinite",
+          "Negative semidefinite",
+          "Invertible"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Positive semidefiniteness (curving up) corresponds to convexity."
+      },
+      {
+        "id": "math404-mid-q16",
+        "type": "true_false",
+        "prompt": "A linear function is both convex and concave.",
+        "correctAnswer": true,
+        "explanation": "Yes, a hyperplane is the boundary case for both."
+      },
+      {
+        "id": "math404-mid-q17",
+        "type": "true_false",
+        "prompt": "The union of two convex sets is always convex.",
+        "correctAnswer": false,
+        "explanation": "Two disjoint circles form a non-convex union."
+      },
+      {
+        "id": "math404-mid-q18",
+        "type": "true_false",
+        "prompt": "Weak duality holds for any optimization problem, not just convex ones.",
+        "correctAnswer": true,
+        "explanation": "Weak duality is a simple algebraic property of the Lagrangian."
+      },
+      {
+        "id": "math404-mid-q19",
+        "type": "true_false",
+        "prompt": "Strong duality always holds for Linear Programming.",
+        "correctAnswer": true,
+        "explanation": "Unless both primal and dual are infeasible, strong duality holds for LP."
+      },
+      {
+        "id": "math404-mid-q20",
+        "type": "true_false",
+        "prompt": "The Euclidean norm ||x|| is a convex function.",
+        "correctAnswer": true,
+        "explanation": "Norms satisfy the triangle inequality, which implies convexity."
+      },
+      {
+        "id": "math404-mid-q21",
+        "type": "fill_blank",
+        "prompt": "A set C is convex if for any x, y in C and theta in [0, 1], the point ______ is also in C.",
+        "correctAnswer": "theta*x + (1-theta)*y",
+        "explanation": "This is the definition of a convex combination."
+      },
+      {
+        "id": "math404-mid-q22",
+        "type": "fill_blank",
+        "prompt": "The ______ of a set C is the set of all convex combinations of points in C.",
+        "correctAnswer": "convex hull",
+        "explanation": "The convex hull is the smallest convex set containing C."
+      },
+      {
+        "id": "math404-mid-q23",
+        "type": "fill_blank",
+        "prompt": "In the dual simplex method, we maintain ______ feasibility while working towards primal feasibility.",
+        "correctAnswer": "dual",
+        "explanation": "Dual simplex iterates on dual feasible bases."
+      },
+      {
+        "id": "math404-mid-q24",
+        "type": "fill_blank",
+        "prompt": "A function whose sublevel sets are all convex is called ______.",
+        "correctAnswer": "quasiconvex",
+        "explanation": "Quasiconvexity is a weaker condition than convexity."
+      },
+      {
+        "id": "math404-mid-q25",
+        "type": "written",
+        "prompt": "Given the LP: Max z = 2x₁ + x₂ s.t. x₁ ≤ 4, x₂ ≤ 3, x₁, x₂ ≥ 0. What is the optimal value?",
+        "correctAnswer": "x₁=4, x₂=3. z = 2(4) + 3 = 11.",
+        "explanation": "The constraints are independent upper bounds."
+      },
+      {
+        "id": "math404-mid-q26",
+        "type": "written",
+        "prompt": "Is the function f(x) = e^x convex? Justify using derivatives.",
+        "correctAnswer": "f'(x) = e^x, f''(x) = e^x. Since e^x > 0 for all x, f''(x) > 0, so f is strictly convex.",
+        "explanation": "Positive second derivative implies convexity."
       }
     ]
   },
@@ -57,7 +264,7 @@
     "id": "math404-final",
     "subjectId": "math404",
     "title": "Final Exam",
-    "durationMinutes": 180,
+    "durationMinutes": 150,
     "instructions": [
       "Answer all questions",
       "Show all work",
@@ -118,6 +325,311 @@
         "prompt": "Perform one Newton iteration on f(x) = x³ - 2x - 5 starting from x₀ = 2.",
         "correctAnswer": "f(2) = 8 - 4 - 5 = -1, f'(2) = 12 - 2 = 10. x₁ = 2 - (-1)/10 = 2.1",
         "explanation": "Newton update: x_{k+1} = x_k - f(x_k)/f'(x_k)"
+      },
+      {
+        "id": "math404-fin-q8",
+        "type": "multiple_choice",
+        "prompt": "Which optimization problem class generalizes all others in this list?",
+        "options": [
+          "Linear Programming (LP)",
+          "Quadratic Programming (QP)",
+          "Second-Order Cone Programming (SOCP)",
+          "Semidefinite Programming (SDP)"
+        ],
+        "correctAnswer": 3,
+        "explanation": "SDP contains SOCP, which contains QP, which contains LP."
+      },
+      {
+        "id": "math404-fin-q9",
+        "type": "multiple_choice",
+        "prompt": "For an unconstrained strictly convex problem, a point where the gradient is zero is:",
+        "options": [
+          "A global maximum",
+          "A global minimum",
+          "A saddle point",
+          "A local minimum but not necessarily global"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Strict convexity ensures the stationary point is the unique global minimum."
+      },
+      {
+        "id": "math404-fin-q10",
+        "type": "multiple_choice",
+        "prompt": "Newton's method has what type of convergence rate near the solution?",
+        "options": [
+          "Linear",
+          "Superlinear",
+          "Quadratic",
+          "Sublinear"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Newton's method doubles the number of accurate digits at each step (quadratic)."
+      },
+      {
+        "id": "math404-fin-q11",
+        "type": "multiple_choice",
+        "prompt": "BFGS is an example of what type of method?",
+        "options": [
+          "First-order method",
+          "Quasi-Newton method",
+          "Exact Newton method",
+          "Derivative-free method"
+        ],
+        "correctAnswer": 1,
+        "explanation": "BFGS approximates the Hessian, making it a Quasi-Newton method."
+      },
+      {
+        "id": "math404-fin-q12",
+        "type": "multiple_choice",
+        "prompt": "Which condition ensures that Strong Duality holds for a convex problem?",
+        "options": [
+          "Line search condition",
+          "Slater's condition",
+          "Armijo condition",
+          "Lipschitz condition"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Slater's condition (existence of strictly feasible point) is sufficient for strong duality."
+      },
+      {
+        "id": "math404-fin-q13",
+        "type": "multiple_choice",
+        "prompt": "Coordinate Descent is guaranteed to converge for:",
+        "options": [
+          "Any function",
+          "Differentiable strictly convex functions",
+          "Non-smooth non-separable functions",
+          "Concave functions"
+        ],
+        "correctAnswer": 1,
+        "explanation": "CD works for smooth strictly convex functions (and some separable non-smooth ones)."
+      },
+      {
+        "id": "math404-fin-q14",
+        "type": "multiple_choice",
+        "prompt": "In Stochastic Gradient Descent (SGD), the step size must generally:",
+        "options": [
+          "Increase over time",
+          "Stay constant",
+          "Decrease over time",
+          "Be random"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Diminishing step sizes are needed to damp out the noise variance."
+      },
+      {
+        "id": "math404-fin-q15",
+        "type": "multiple_choice",
+        "prompt": "The 'Shadow Price' of a resource constraint in LP corresponds to:",
+        "options": [
+          "The primal variable value",
+          "The optimal dual variable value",
+          "The slack variable value",
+          "The reduced cost"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Dual variables represent the marginal value of the constraint resource."
+      },
+      {
+        "id": "math404-fin-q16",
+        "type": "multiple_choice",
+        "prompt": "Robust Optimization with ellipsoidal uncertainty leads to what type of problem?",
+        "options": [
+          "LP",
+          "QP",
+          "SOCP",
+          "GP"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Maximizing a linear function over an ellipsoid yields a second-order cone constraint."
+      },
+      {
+        "id": "math404-fin-q17",
+        "type": "multiple_choice",
+        "prompt": "Which method is best suited for L1-regularized least squares (Lasso)?",
+        "options": [
+          "Newton's Method",
+          "Coordinate Descent",
+          "Conjugate Gradient",
+          "Ellipsoid Method"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Coordinate descent with soft-thresholding is very efficient for Lasso."
+      },
+      {
+        "id": "math404-fin-q18",
+        "type": "true_false",
+        "prompt": "Interior Point methods approach the optimal solution from the boundary of the feasible set.",
+        "correctAnswer": false,
+        "explanation": "They approach from the interior (center), avoiding the boundary until convergence."
+      },
+      {
+        "id": "math404-fin-q19",
+        "type": "true_false",
+        "prompt": "The Hessian of a convex function is always positive definite or positive semidefinite.",
+        "correctAnswer": true,
+        "explanation": "This is the second-order condition for convexity."
+      },
+      {
+        "id": "math404-fin-q20",
+        "type": "true_false",
+        "prompt": "Geometric Programming problems are convex in their natural form.",
+        "correctAnswer": false,
+        "explanation": "They are convex only after a logarithmic transformation."
+      },
+      {
+        "id": "math404-fin-q21",
+        "type": "true_false",
+        "prompt": "Trust Region methods solve a subproblem constrained to a small neighborhood.",
+        "correctAnswer": true,
+        "explanation": "Yes, they trust the model only within a region Δ."
+      },
+      {
+        "id": "math404-fin-q22",
+        "type": "true_false",
+        "prompt": "The Augmented Lagrangian method adds a quadratic penalty term to the Lagrangian.",
+        "correctAnswer": true,
+        "explanation": "This smooths the dual function and improves convergence."
+      },
+      {
+        "id": "math404-fin-q23",
+        "type": "true_false",
+        "prompt": "SQP stands for Sequential Quadratic Programming.",
+        "correctAnswer": true,
+        "explanation": "SQP solves a sequence of QP subproblems."
+      },
+      {
+        "id": "math404-fin-q24",
+        "type": "true_false",
+        "prompt": "Backtracking line search guarantees finding the global minimum along the search direction.",
+        "correctAnswer": false,
+        "explanation": "It only guarantees 'sufficient decrease' (Armijo condition), not the exact minimum."
+      },
+      {
+        "id": "math404-fin-q25",
+        "type": "fill_blank",
+        "prompt": "The inequality f(E[x]) <= E[f(x)] for convex f is known as ______ Inequality.",
+        "correctAnswer": "Jensen's",
+        "explanation": "Fundamental probability inequality for convex functions."
+      },
+      {
+        "id": "math404-fin-q26",
+        "type": "fill_blank",
+        "prompt": "In the KKT conditions, the requirement λ_i * g_i(x) = 0 is called ______.",
+        "correctAnswer": "complementary slackness",
+        "explanation": "Ensures constraints are either binding or have zero multiplier."
+      },
+      {
+        "id": "math404-fin-q27",
+        "type": "fill_blank",
+        "prompt": "The condition number of a matrix is the ratio of its largest eigenvalue to its ______ eigenvalue.",
+        "correctAnswer": "smallest",
+        "explanation": "κ = λ_max / λ_min."
+      },
+      {
+        "id": "math404-fin-q28",
+        "type": "fill_blank",
+        "prompt": "A function f(x) = max(f_1(x), f_2(x)) where f_1, f_2 are convex is ______.",
+        "correctAnswer": "convex",
+        "explanation": "Pointwise maximum preserves convexity."
+      },
+      {
+        "id": "math404-fin-q29",
+        "type": "code_output",
+        "prompt": "Given gradient g=[3, 4], what is the steepest descent direction?",
+        "correctAnswer": "[-3, -4]",
+        "explanation": "Steepest descent is the negative gradient direction."
+      },
+      {
+        "id": "math404-fin-q30",
+        "type": "code_output",
+        "prompt": "If x_k = 10 and we apply x_{k+1} = x_k - 0.1 * 2*x_k (grad of x^2), what is x_{k+1}?",
+        "correctAnswer": "8",
+        "explanation": "10 - 0.1 * 20 = 10 - 2 = 8."
+      },
+      {
+        "id": "math404-fin-q31",
+        "type": "written",
+        "prompt": "Explain why the log-barrier function -log(-f(x)) is used in Interior Point methods.",
+        "correctAnswer": "It approaches infinity as f(x) -> 0 from below, creating a smooth 'wall' that prevents the optimizer from leaving the feasible region.",
+        "explanation": "It approximates the indicator function of the feasible set."
+      },
+      {
+        "id": "math404-fin-q32",
+        "type": "written",
+        "prompt": "State Farkas' Lemma.",
+        "correctAnswer": "Exactly one of the following holds: (1) Ax = b, x >= 0 has a solution, OR (2) A'y >= 0, b'y < 0 has a solution.",
+        "explanation": "Theorem of the alternative for linear inequalities."
+      },
+      {
+        "id": "math404-fin-q33",
+        "type": "written",
+        "prompt": "Calculate the gradient and Hessian of f(x,y) = x^2 + 3y^2 + 2xy.",
+        "correctAnswer": "Gradient = [2x+2y, 6y+2x]', Hessian = [[2, 2], [2, 6]].",
+        "explanation": "Standard partial differentiation."
+      },
+      {
+        "id": "math404-fin-q34",
+        "type": "written",
+        "prompt": "Is the Hessian [[2, 2], [2, 6]] positive definite? Why?",
+        "correctAnswer": "Yes. Determinant = 12 - 4 = 8 > 0, and top-left element 2 > 0 (Sylvester's criterion).",
+        "explanation": "Positive determinant and positive trace/diagonal elements imply PD for 2x2."
+      },
+      {
+        "id": "math404-fin-q35",
+        "type": "written",
+        "prompt": "What is the computational complexity of one step of Newton's method?",
+        "correctAnswer": "O(n^3)",
+        "explanation": "Dominated by solving the linear system (inverting the Hessian)."
+      },
+      {
+        "id": "math404-fin-q36",
+        "type": "written",
+        "prompt": "Why is L-BFGS preferred over BFGS for large problems?",
+        "correctAnswer": "L-BFGS does not store the full n x n Hessian approximation, reducing memory from O(n^2) to O(mn).",
+        "explanation": "It uses a limited memory history of vectors."
+      },
+      {
+        "id": "math404-fin-q37",
+        "type": "written",
+        "prompt": "Formulate the Max-Cut problem relaxation as an SDP.",
+        "correctAnswer": "max (1/2) sum w_ij (1 - X_ij) s.t. X_ii = 1, X >= 0 (PSD).",
+        "explanation": "Relaxes the discrete constraint x_i in {-1,1} to a matrix constraint."
+      },
+      {
+        "id": "math404-fin-q38",
+        "type": "written",
+        "prompt": "Define the convex hull of a set of points S.",
+        "correctAnswer": "The set of all convex combinations of points in S.",
+        "explanation": "Or the smallest convex set containing S."
+      },
+      {
+        "id": "math404-fin-q39",
+        "type": "written",
+        "prompt": "What is a 'supporting hyperplane' to a convex set C at boundary point x?",
+        "correctAnswer": "A hyperplane passing through x such that C lies entirely on one side of it.",
+        "explanation": "Geometric concept central to duality."
+      },
+      {
+        "id": "math404-fin-q40",
+        "type": "written",
+        "prompt": "In the context of optimization, what is 'Slack'?",
+        "correctAnswer": "The difference between the resource limit and the actual usage (b - Ax).",
+        "explanation": "Slack variables measure distance from the constraint boundary."
+      },
+      {
+        "id": "math404-fin-q41",
+        "type": "written",
+        "prompt": "Give an example of a function that is quasiconvex but not convex.",
+        "correctAnswer": "f(x) = sqrt(|x|) or log(x).",
+        "explanation": "Sublevel sets are convex, but the graph is not 'bowl' shaped."
+      },
+      {
+        "id": "math404-fin-q42",
+        "type": "written",
+        "prompt": "What is the primary advantage of Stochastic Gradient Descent over Batch Gradient Descent?",
+        "correctAnswer": "Low computational cost per iteration (O(1) vs O(n)), allowing scalability to massive datasets.",
+        "explanation": "Efficiency per step is key for big data."
       }
     ]
   }

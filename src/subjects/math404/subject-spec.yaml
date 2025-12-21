@@ -1,0 +1,173 @@
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: "math404"
+title: "Optimization Theory"
+category: "math"
+
+role:
+  level: "advanced"
+  transformation: "From 'solving equations' to 'rigorously finding optimal solutions in high-dimensional spaces'"
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+  
+  prerequisite_knowledge:
+    - "Multivariable Calculus (MATH301)"
+    - "Linear Algebra (MATH201)"
+    - "Real Analysis (MATH303)"
+
+  essential_concepts:
+    - "Mathematical formulation of optimization problems"
+    - "Linear programming and the Simplex method"
+    - "Duality theory and sensitivity analysis"
+    - "Convex sets and convex functions"
+    - "KKT conditions for constrained optimization"
+    - "Gradient descent and Newton's method"
+    - "Lagrange multipliers"
+
+  out_of_scope:
+    - "Deep learning optimization (covered in CS402)"
+    - "Discrete optimization (covered in CS403)"
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: "proof-based"
+  
+  mastery_indicators:
+    - "Can formulate real-world problems as mathematical optimization models"
+    - "Can prove convexity of sets and functions"
+    - "Can derive dual problems and interpret dual variables"
+    - "Can apply KKT conditions to solve constrained problems"
+
+  common_struggles:
+    - "Geometric intuition in high dimensions"
+    - "Distinction between local and global optima"
+    - "Rigorous application of KKT conditions"
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - "Include geometric visualizations where possible"
+    - "Connect theoretical results to algorithmic implications"
+  
+  conventions:
+    - "LaTeX for all mathematical expressions"
+    - "Standard notation for gradients and Hessians"
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: "Focus on both theoretical understanding (proofs, derivations) and practical application (algorithms, problem formulation)."
+  
+  measures:
+    - "Ability to prove theoretical properties (e.g., convexity, duality)"
+    - "Ability to solve optimization problems analytically and numerically"
+
+  anti_patterns:
+    - "Rote memorization of algorithms without understanding convergence properties"
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 60
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: "Mix of calculation, proof, and formulation exercises to build robust understanding."
+  
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: "Pure math subject - exercises focus on proofs and derivations."
+
+  per_topic:
+    minimum: 16
+    target: 16
+    maximum: 20
+    justification: "Standard practice volume for mastery."
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: "Check conceptual understanding of definitions and theorems."
+  
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: "Standard check."
+
+  question_types:
+    multiple_choice: "60%"
+    true_false: "20%"
+    fill_blank: "20%"
+    code_output: "0%"
+    coding: "0%"
+    written: "0%"
+    justification: "Focus on concept checking."
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: "Comprehensive assessment of theoretical and practical mastery."
+
+  midterm:
+    questions:
+      minimum: 25
+      target: 26
+      maximum: 30
+    duration_minutes: 90
+    format: "Multiple choice and short answer"
+    coverage: "Topics 1-4"
+
+  final:
+    questions:
+      minimum: 40
+      target: 42
+      maximum: 50
+    duration_minutes: 150
+    format: "Multiple choice and short answer"
+    coverage: "All topics, cumulative"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: "Exam-based assessment is standard for this theoretical math course."
+  goals: []
+  estimated_hours: "0"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - "Confusing weak vs strong duality"
+  - "Misapplying KKT conditions to non-differentiable or non-regular problems"
