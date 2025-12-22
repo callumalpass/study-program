@@ -7,8 +7,8 @@
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| COMPLETE (10/10) | 36 | 95% |
-| COMPLETE (7-9/10) | 2 | 5% |
+| COMPLETE (10/10) | 37 | 97% |
+| COMPLETE (7-9/10) | 1 | 3% |
 | NEEDS WORK | 0 | 0% |
 | INCOMPLETE | 0 | 0% |
 
@@ -49,11 +49,11 @@
 - MATH304: Abstract Algebra
 - MATH401: Complex Analysis
 - MATH402: Numerical Methods
+- MATH301: Multivariable Calculus
 - MATH403: Introduction to Topology
 - MATH404: Optimization Theory
 
 ### Good with Minor Issues (7-9/10)
-- MATH301: Multivariable Calculus (8/10)
 - MATH303: Real Analysis (8/10)
 
 ### Needs Significant Work (4-6/10)
@@ -67,7 +67,7 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 - CS301, CS303, CS304, CS305, CS306, CS307
 - CS403
 - MATH101, MATH102, MATH201, MATH202
-- MATH301, MATH302, MATH304, MATH403
+- MATH302, MATH304, MATH403
 
 ### 2. Exercise Shortages
 - (None remaining - all subjects have 16+ exercises per topic)
@@ -97,8 +97,8 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 - **Good:** (none)
 
 ### Year 3 (11 subjects)
-- **Complete:** CS301, CS302, CS303, CS304, CS305, CS306, CS307, MATH302, MATH304
-- **Good:** MATH301, MATH303
+- **Complete:** CS301, CS302, CS303, CS304, CS305, CS306, CS307, MATH301, MATH302, MATH304
+- **Good:** MATH303
 
 ### Year 4 (11 subjects)
 - **Complete:** CS401, CS402, CS403, CS404, CS405, CS406, CS407, MATH401, MATH402, MATH403, MATH404
@@ -108,11 +108,20 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (21 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (20 subjects) |
 
-**Total Estimated:** ~10.5 hours for spec files.
+**Total Estimated:** ~10 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### MATH301: Multivariable Calculus Upgraded to Production Ready
+- **Status changed:** 8/10 -> 10/10
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation including 1000 words/subtopic target
+  2. Fixed quiz question math301-q21: Chain rule answer corrected from "5t⁴" to "7t⁶"
+  3. Fixed exam question math301-final-q13: Gradient magnitude answer corrected from "√61" to "7"
+  4. Fixed exam question math301-final-q25: Integral answer corrected from "5" to "4"
+- **Quality verified:** ~74,725 total words (avg 1525/subtopic), 112 exercises, 105 quiz questions, 74 exam questions
 
 ### CS401: Distributed Systems Upgraded to Production Ready
 - **Status changed:** 8/10 -> 10/10

@@ -1,0 +1,277 @@
+# MATH301: Multivariable Calculus - Subject Specification
+# This spec guides content creation for a rigorous multivariable calculus course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: math301
+title: Multivariable Calculus
+category: math
+
+role:
+  level: intermediate
+  transformation: >
+    From "single-variable calculus techniques" to "I can analyze functions of
+    multiple variables, compute partial derivatives, multiple integrals, and
+    apply the fundamental theorems of vector calculus." Students gain geometric
+    intuition for higher-dimensional calculus and its applications.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Single-variable calculus (derivatives, integrals, series)
+    - Basic linear algebra (vectors, matrices, determinants)
+    - Parametric equations and polar coordinates
+    - Familiarity with 2D and 3D coordinate systems
+
+  essential_concepts:
+    - Vectors and vector-valued functions in 2D and 3D
+    - Partial derivatives and the chain rule for multivariable functions
+    - Gradient, directional derivatives, and tangent planes
+    - Optimization with and without constraints (Lagrange multipliers)
+    - Double and triple integrals with various coordinate systems
+    - Line integrals and surface integrals
+    - Vector calculus theorems (Green's, Stokes', Divergence)
+
+  out_of_scope:
+    - Differential forms beyond introductory mention
+    - Tensor calculus
+    - Higher-dimensional integrals (n > 3)
+    - Complex analysis applications
+    - Measure theory
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Computes partial derivatives and applies chain rule correctly
+    - Sets up and evaluates double/triple integrals with appropriate bounds
+    - Chooses correct coordinate systems for integration problems
+    - Applies Lagrange multipliers to constrained optimization problems
+    - Computes line and surface integrals for scalar and vector fields
+    - Applies Green's, Stokes', and Divergence theorems appropriately
+    - Visualizes and sketches curves, surfaces, and vector fields
+
+  common_struggles:
+    - Setting up integration bounds for non-rectangular regions
+    - Choosing between Cartesian, polar, cylindrical, and spherical coordinates
+    - Understanding the geometric meaning of gradient and directional derivatives
+    - Correctly parameterizing curves and surfaces
+    - Confusion about when to use which vector calculus theorem
+    - Sign errors in cross products and surface orientation
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Include geometric interpretations alongside algebraic derivations
+    - Provide multiple worked examples progressing from simple to complex
+    - Show visualizations (when applicable) for 2D and 3D concepts
+    - Connect concepts to physics and engineering applications
+    - Include common pitfalls and how to avoid them
+
+  conventions:
+    - LaTeX for all mathematical expressions
+    - Use standard notation: bold for vectors, nabla for gradient/curl/divergence
+    - Consistent coordinate system conventions (right-hand rule)
+    - Python examples for numerical verification where appropriate
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Multivariable calculus requires both computational fluency and conceptual
+    understanding. Assessments should test the ability to set up problems
+    correctly, execute computations, and interpret results geometrically.
+    Students must demonstrate they can choose appropriate techniques and
+    coordinate systems.
+
+  measures:
+    - Correct setup of integration bounds and limits
+    - Accurate computation of derivatives, integrals, and vector operations
+    - Appropriate selection of coordinate systems and parameterizations
+    - Geometric interpretation of results
+    - Application of theorems with correct conditions verified
+
+  anti_patterns:
+    - Problems solvable by formula substitution without understanding
+    - Questions with only trivial integrals that don't test setup skills
+    - Ignoring orientation and sign conventions in vector calculus
+    - Asking for memorized formulas without application
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard passing threshold for an intermediate math course. Exercises
+    require higher threshold because computational practice is essential.
+    Quiz and exam thresholds slightly lower to account for time pressure
+    and the complexity of multi-step problems.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Multivariable calculus requires extensive practice with computational
+    techniques. Exercises progress from basic differentiation/integration to
+    complex multi-step problems requiring appropriate technique selection.
+    Python-based verification builds computational intuition.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      Pure mathematics subject. All exercises involve calculus computations
+      (derivatives, integrals, optimizations) that are best evaluated by AI
+      comparing student work to reference solutions. Python code in solutions
+      is for verification, not the primary assessment.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Computational fluency requires volume of practice.
+      Each topic has distinct techniques that need reinforcement through multiple
+      examples. 16 exercises per topic provides good coverage of difficulty levels.
+
+  difficulty_distribution:
+    1: 2
+    2: 4
+    3: 5
+    4: 3
+    5: 2
+    justification: >
+      Balanced distribution with emphasis on medium difficulty. Difficulty 1-2
+      exercises build basic technique. Difficulty 3-4 require multi-step solutions.
+      Difficulty 5 exercises involve complex applications or multiple concepts.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding and formula recall before students
+    attempt full computational exercises. They verify students understand
+    definitions, can trace through simple calculations, and recognize when
+    to apply specific techniques.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic allow progression from
+      definitions (Quiz A) to applications (Quiz B) to synthesis (Quiz C).
+      Five questions each provides good sampling without being overwhelming.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "20%"
+    fill_blank: "15%"
+    code_output: "15%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Multiple choice tests conceptual understanding and technique recognition.
+      True/false addresses common misconceptions. Fill-blank for formulas and
+      definitions. Code output for numerical verification of calculations.
+      No full written proofs in quizzes (those are in exercises).
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test comprehensive understanding across topics. Problems require
+    complete solutions including setup, computation, and interpretation.
+    Time allows 2-3 minutes per question on average, with longer multi-part
+    problems testing integration of concepts.
+
+  midterm:
+    questions:
+      minimum: 22
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      8-10 computational problems (partial derivatives, integration, optimization),
+      8-10 conceptual questions (definitions, true/false, technique selection),
+      4-6 multi-part application problems.
+    coverage: "Topics 1-4: Vectors, partial derivatives, gradient, optimization"
+
+  final:
+    questions:
+      minimum: 38
+      target: 45
+      maximum: 52
+    duration_minutes: 120
+    format: >
+      15-18 computational problems across all topics,
+      12-15 conceptual questions including vector calculus theorems,
+      8-12 multi-part problems requiring technique synthesis.
+    coverage: "Comprehensive: all 7 topics with emphasis on Topics 5-7"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    Pure math courses assess through problem sets and exams rather than projects.
+    The computational nature of exercises (with Python verification) provides
+    practical application experience. No separate projects needed.
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires integration technique not covered in the course
+  - Problem has ambiguous bounds or region specification
+  - Vector calculus question doesn't specify surface orientation
+  - Optimization problem doesn't verify critical point classification
+  - Solution uses a theorem without checking its hypotheses apply
+  - Quiz question tests formula memorization rather than application
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Multivariable calculus bridges single-variable calculus and more advanced
+  analysis. Content should emphasize geometric intuition alongside computation.
+  The vector calculus theorems (Green's, Stokes', Divergence) are capstone
+  results that unify the course. Students should understand these as different
+  manifestations of a single principle. Python examples help verify answers
+  and build computational intuition.

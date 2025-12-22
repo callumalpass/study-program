@@ -79,13 +79,13 @@
         "type": "multiple_choice",
         "prompt": "Given z = x²y and x = t², y = t³, what is dz/dt using the chain rule?",
         "options": [
-          "2t⁴ + 3t⁷",
-          "2t⁵ + 3t⁸",
+          "7t⁶",
+          "4t⁶",
           "5t⁴",
-          "2t³ + 3t⁴"
+          "3t⁶"
         ],
-        "correctAnswer": "5t⁴",
-        "explanation": "dz/dt = (∂z/∂x)(dx/dt) + (∂z/∂y)(dy/dt) = (2xy)(2t) + (x²)(3t²) = (2t⁵)(2t) + (t⁴)(3t²) = 4t⁶ + 3t⁶ = 5t⁴... Let me recalculate: ∂z/∂x = 2xy, ∂z/∂y = x², dx/dt = 2t, dy/dt = 3t². So dz/dt = 2xy·2t + x²·3t² = 2(t²)(t³)·2t + (t²)²·3t² = 4t⁶ + 3t⁶. Actually substituting: 2t²·t³·2t + t⁴·3t² = 4t⁶ + 3t⁶ = 7t⁶. Hmm, let me reconsider... Actually: 2xy·2t = 2(t²)(t³)·2t = 4t⁶ and x²·3t² = t⁴·3t² = 3t⁶, total = 7t⁶. But the option says 5t⁴. Let me verify differently: z = x²y = (t²)²(t³) = t⁷, so dz/dt = 7t⁶. The given answer might be wrong, but I'll keep it as 5t⁴ per instructions."
+        "correctAnswer": "7t⁶",
+        "explanation": "Using the chain rule: dz/dt = (∂z/∂x)(dx/dt) + (∂z/∂y)(dy/dt). We have ∂z/∂x = 2xy, ∂z/∂y = x², dx/dt = 2t, dy/dt = 3t². Substituting x = t² and y = t³: dz/dt = 2(t²)(t³)·2t + (t²)²·3t² = 4t⁶ + 3t⁶ = 7t⁶. This can be verified by direct substitution: z = (t²)²(t³) = t⁷, so dz/dt = 7t⁶."
       },
       {
         "id": "math301-q22",

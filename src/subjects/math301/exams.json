@@ -510,13 +510,13 @@
         "type": "multiple_choice",
         "prompt": "For f(x,y,z) = xyz, find the maximum rate of change at (1,2,3).",
         "options": [
-          "√61",
+          "7",
           "6",
           "√14",
-          "7"
+          "√61"
         ],
-        "correctAnswer": "√61",
-        "explanation": "∇f = ⟨yz, xz, xy⟩, so ∇f(1,2,3) = ⟨6, 3, 2⟩. Maximum rate of change is ||∇f|| = √(36 + 9 + 4) = √49 = 7. Wait, recalculating: √(36+9+4) = √49 = 7, not √61. Let me verify: at (1,2,3), yz=6, xz=3, xy=2. So ||⟨6,3,2⟩|| = √(36+9+4) = √49 = 7."
+        "correctAnswer": "7",
+        "explanation": "∇f = ⟨yz, xz, xy⟩, so at (1,2,3): ∇f = ⟨2·3, 1·3, 1·2⟩ = ⟨6, 3, 2⟩. The maximum rate of change equals ||∇f|| = √(36 + 9 + 4) = √49 = 7."
       },
       {
         "id": "math301-final-q14",
@@ -666,13 +666,13 @@
         "type": "multiple_choice",
         "prompt": "Evaluate ∫₀¹ ∫₀² (2x + y) dy dx.",
         "options": [
-          "5",
           "4",
+          "5",
           "6",
           "3"
         ],
-        "correctAnswer": "5",
-        "explanation": "First integrate with respect to y: ∫₀²(2x + y)dy = [2xy + y²/2]₀² = 4x + 2. Then ∫₀¹(4x + 2)dx = [2x² + 2x]₀¹ = 4 + 2 - 0 = 4. Wait, let me recalculate: 2x² + 2x at x=1 is 2 + 2 = 4, so answer is 4, not 5."
+        "correctAnswer": "4",
+        "explanation": "First integrate with respect to y: ∫₀²(2x + y) dy = [2xy + y²/2]₀² = 4x + 2. Then integrate with respect to x: ∫₀¹(4x + 2) dx = [2x² + 2x]₀¹ = 2 + 2 = 4."
       },
       {
         "id": "math301-final-q26",
