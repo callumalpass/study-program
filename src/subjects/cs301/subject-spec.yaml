@@ -1,0 +1,282 @@
+# CS301: Operating Systems - Subject Specification
+# This spec guides content creation for an intermediate systems programming course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs301
+title: Operating Systems
+category: cs
+
+role:
+  level: intermediate
+  transformation: >
+    From "computers run programs" to "I understand how operating systems manage
+    processes, memory, and resources to enable programs to run efficiently and safely."
+    Students should finish understanding the abstractions that make modern computing possible.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Data structures (CS104) - linked lists, trees, hash tables, queues
+    - C programming (CS105) - pointers, memory management, system calls
+    - Computer architecture basics (CS102) - CPU, memory hierarchy, interrupts
+    - Basic algorithms (CS201) - complexity analysis, graph algorithms
+
+  essential_concepts:
+    - Process management (states, PCB, creation, termination, IPC)
+    - Threads and concurrency (models, synchronization, parallelism)
+    - CPU scheduling algorithms (FCFS, SJF, Round Robin, Priority, MLFQ)
+    - Synchronization primitives (mutexes, semaphores, monitors, condition variables)
+    - Deadlock (conditions, prevention, avoidance, detection, recovery)
+    - Memory management (paging, segmentation, page tables, TLB)
+    - Virtual memory (demand paging, page replacement, thrashing)
+    - File systems (concepts, implementation, directory structure)
+
+  out_of_scope:
+    - Kernel development and device drivers (advanced systems course)
+    - Distributed operating systems (covered in CS401)
+    - Real-time operating systems in depth (specialized topic)
+    - Network stack implementation (covered in CS302)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Traces process state transitions through scheduling decisions
+    - Implements correct synchronization for concurrent programs
+    - Calculates scheduling metrics (turnaround, waiting, response time)
+    - Applies Banker's algorithm for deadlock avoidance
+    - Performs virtual address translation with page tables and TLB
+    - Analyzes page replacement algorithm behavior
+    - Identifies race conditions and deadlock potential in code
+
+  common_struggles:
+    - Confusing process vs thread resource sharing boundaries
+    - Not understanding preemption and when context switches occur
+    - Writing synchronization code with race conditions
+    - Misapplying deadlock conditions (4 conditions are necessary, not sufficient)
+    - Address translation errors (confusing virtual and physical addresses)
+    - Not understanding when page faults occur in demand paging
+    - Calculating scheduling metrics incorrectly (especially with arrivals)
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Each algorithm explained with worked examples showing step-by-step execution
+    - Diagrams for state transitions, memory layouts, and algorithm behavior
+    - Code examples in C showing system calls and low-level implementation
+    - Mathematical formulas with LaTeX for scheduling metrics and address translation
+    - Common pitfalls highlighted for synchronization and concurrent programming
+    - Real-world examples from Linux/Unix where applicable
+
+  conventions:
+    - C for systems programming examples (with Python for simulation exercises)
+    - POSIX API for thread and process examples (pthreads, fork, exec)
+    - LaTeX for all mathematical expressions
+    - Mermaid diagrams for state transitions and flowcharts
+    - Consistent terminology matching Silberschatz/Galvin textbook
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Operating systems requires both conceptual understanding and practical implementation
+    skills. Students must understand the theory behind scheduling and memory management
+    algorithms while also being able to write correct concurrent code. Exercises balance
+    algorithm implementation with theoretical analysis. Projects provide hands-on
+    experience building OS components.
+
+  measures:
+    - Correct implementation of scheduling and page replacement algorithms
+    - Thread-safe code that avoids race conditions and deadlocks
+    - Accurate calculation of scheduling and memory management metrics
+    - Understanding of when and why OS makes specific decisions
+    - Ability to trace algorithm execution step by step
+
+  anti_patterns:
+    - Memorizing algorithm steps without understanding the design trade-offs
+    - Writing synchronization code without considering all interleavings
+    - Testing only happy-path scenarios (must consider edge cases)
+    - Calculating metrics without showing work or intermediate steps
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 70
+    exams: 65
+
+  rationale: >
+    Standard passing thresholds since this is an intermediate course and students
+    should have solid foundations from prerequisites. Slightly lower exam threshold
+    acknowledges that time pressure can affect performance on calculation-heavy
+    scheduling and memory problems.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises mix algorithm implementation with analysis. Students build simulators
+    for scheduling and page replacement, implement synchronization primitives, and
+    solve problems requiring metric calculations. Both coding and conceptual exercises
+    are needed since OS requires understanding theory and writing correct code.
+
+  types:
+    coding_with_tests: "70%"
+    coding_ai_evaluated: "20%"
+    written: "10%"
+    justification: >
+      Majority coding with tests for algorithm implementation (schedulers, page
+      replacement, synchronization). AI-evaluated for design questions and code
+      analysis. Written for theoretical analysis and trace problems.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. OS topics require substantial practice with
+      both implementation and analysis. 16 exercises per topic provides enough
+      variety for algorithm variants and edge cases.
+
+  difficulty_distribution:
+    1: 2
+    2: 4
+    3: 5
+    4: 3
+    5: 2
+    justification: >
+      Balanced distribution with emphasis on medium difficulty. Easy exercises
+      for basic algorithm tracing, medium for implementation, hard for complex
+      scenarios like deadlock detection or multi-level page tables.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes verify conceptual understanding and ability to trace algorithm execution
+    without coding. They catch students who can copy implementations but don't
+    understand the underlying decisions the OS makes.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard quiz count. Three quizzes per topic allow progression from
+      definitions to algorithm tracing to complex scenarios.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "20%"
+    fill_blank: "15%"
+    code_output: "15%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy multiple choice for conceptual questions about OS decisions.
+      Code output for tracing pthread code and predicting behavior.
+      Fill-blank for terminology and formulas.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test understanding of algorithms and ability to work through problems
+    by hand. Students should be able to trace scheduling decisions, perform
+    address translation, and analyze synchronization code without a computer.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 28
+    duration_minutes: 90
+    format: >
+      Mix of conceptual questions, algorithm tracing, code analysis, and
+      short calculations. Includes process state diagrams, scheduling metric
+      calculations, and synchronization code analysis.
+    coverage: "Topics 1-4: Process Management, Threads, Scheduling, Synchronization"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 46
+    duration_minutes: 120
+    format: >
+      Comprehensive exam covering all topics. Includes address translation,
+      page replacement tracing, deadlock analysis, and cumulative topics.
+      At least one substantial calculation problem per topic area.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 2
+  rationale: >
+    Projects provide hands-on experience building OS components. Students implement
+    substantial systems that integrate multiple concepts. Two projects: one focused
+    on scheduling (mid-course), one on memory management (end-of-course).
+
+  goals:
+    - Implement a working scheduler simulator with multiple algorithms
+    - Build a virtual memory manager with page replacement
+    - Practice systems programming with C/Python
+    - Understand trade-offs between different OS strategies
+    - Gain experience with simulation and performance analysis
+
+  estimated_hours: "10-12"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Synchronization code example has race conditions
+  - Scheduling calculation doesn't account for arrival times correctly
+  - Address translation example confuses virtual and physical addresses
+  - Deadlock example claims deadlock when conditions aren't actually met
+  - Page replacement trace doesn't match algorithm specification
+  - Exercise expects knowledge of OS internals not covered in course
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Operating Systems is a bridge between theoretical CS and practical systems work.
+  Content should balance rigorous algorithm analysis with realistic C programming
+  examples. Students often struggle with the mental shift from high-level programming
+  to systems thinking—content should explicitly address this transition. Emphasize
+  that OS concepts appear everywhere: databases, browsers, distributed systems.
