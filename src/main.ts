@@ -11,6 +11,7 @@ import { curriculum } from './data/curriculum';
 import type { Theme } from './core/types';
 import { showToast } from './components/toast';
 import { renderSidebar } from './components/preact/sidebar';
+import { renderMobileHeaderMascot } from './components/preact/mobile-header';
 import { renderHomePage } from './pages/home';
 import { renderCurriculumPage } from './pages/curriculum';
 import { renderSubjectPage } from './pages/subject';
@@ -221,6 +222,7 @@ async function initApp(): Promise<void> {
 
   const sidebarEl = document.getElementById('sidebar');
   const mainEl = document.getElementById('main-content');
+  const mobileMascotEl = document.getElementById('mobile-mascot');
 
   if (!sidebarEl || !mainEl) {
     console.error('Required DOM elements not found');
@@ -238,6 +240,10 @@ async function initApp(): Promise<void> {
     safeRender(sidebarEl, path, () => {
       renderSidebar(sidebarEl, path, curriculum, userProgress.subjects, allQuizzes, allExercises, allExams, allProjects);
     });
+
+    if (mobileMascotEl) {
+      renderMobileHeaderMascot(mobileMascotEl, path, allExercises);
+    }
 
     // Route to appropriate page (wrapped in error boundary)
     safeRender(mainEl, path, () => {
