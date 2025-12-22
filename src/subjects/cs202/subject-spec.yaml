@@ -1,0 +1,288 @@
+# CS202: Computer Architecture - Subject Specification
+# This spec guides content creation for a foundational computer architecture course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs202
+title: Computer Architecture
+category: cs
+
+role:
+  level: intermediate
+  transformation: >
+    From "computers run programs somehow" to "I understand exactly how hardware
+    executes instructions, from ISA design through pipelining and memory hierarchy."
+    Students finish able to reason about performance at the hardware level.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - CS101 programming fundamentals (variables, loops, functions)
+    - CS102 computer systems basics (binary, memory, processes)
+    - Basic digital logic (AND, OR, NOT gates)
+    - Number systems (binary, hexadecimal)
+
+  essential_concepts:
+    - Instruction Set Architecture (ISA) design and encoding
+    - Assembly language programming (MIPS focus)
+    - CPU datapath components and control signals
+    - Pipelining fundamentals and hazards
+    - Cache memory organization and write policies
+    - Memory hierarchy design and performance
+    - Instruction-level parallelism techniques
+
+  out_of_scope:
+    - Operating system internals (covered in CS301)
+    - FPGA/ASIC design and HDL programming
+    - Advanced microarchitecture (out-of-order execution details)
+    - GPU architecture (specialized topic)
+    - Quantum computing
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Decodes machine instructions into assembly without reference sheets
+    - Traces instruction execution through pipeline stages correctly
+    - Calculates cache hit/miss rates and effective access times
+    - Identifies and resolves pipeline hazards
+    - Evaluates tradeoffs between different architectural choices
+    - Writes correct MIPS assembly for non-trivial algorithms
+
+  common_struggles:
+    - Confusing ISA (programmer-visible) with microarchitecture (implementation)
+    - Off-by-one errors in pipeline stage counting
+    - Mixing up cache miss types (compulsory, capacity, conflict)
+    - Forgetting sign extension in MIPS immediate values
+    - Misunderstanding branch delay slots
+    - Incorrect CPI calculations for pipelined processors
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Include worked examples with step-by-step calculations
+    - Show timing diagrams for pipeline concepts
+    - Provide address calculations with full working
+    - Compare alternatives (e.g., direct-mapped vs set-associative cache)
+    - Relate concepts to real processors (x86-64, ARM, MIPS)
+
+  conventions:
+    - MIPS as primary assembly language for examples
+    - Hexadecimal for memory addresses and encodings
+    - Binary for instruction formats and bit fields
+    - Timing diagrams use standard IF-ID-EX-MEM-WB notation
+    - Performance metrics use standard formulas (CPI, AMAT, speedup)
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Computer architecture combines conceptual understanding with quantitative analysis.
+    Students must both understand why designs work and calculate their performance.
+    Exercises mix theory (explain why forwarding solves a hazard) with practice
+    (calculate the effective CPI with a given miss rate).
+
+  measures:
+    - Correct instruction encoding/decoding
+    - Accurate pipeline hazard identification and resolution
+    - Precise cache address calculations and miss classification
+    - Valid performance analysis using CPI, AMAT, speedup formulas
+    - Sound reasoning about design tradeoffs
+
+  anti_patterns:
+    - Pure memorization of instruction encodings without understanding
+    - Calculations without explanation of why the formula applies
+    - Questions answerable without understanding pipeline timing
+    - Tricky edge cases that rarely occur in practice
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 70
+    exams: 65
+
+  rationale: >
+    Standard passing threshold for a core Year 2 course. The exam threshold is
+    slightly lower because time pressure affects quantitative calculations.
+    Students who understand the concepts should be able to pass even with
+    occasional calculation errors.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises combine written analysis (explain the concept, trace execution)
+    with quantitative problems (calculate addresses, CPI, hit rates). This
+    reflects the mixed nature of computer architecture: understanding both
+    the "why" and the "how much." All exercises are written/analysis since
+    this is primarily a hardware concepts course.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      All exercises are written analysis and calculation problems. While
+      projects involve coding (assembly programming, simulators), the
+      exercises focus on conceptual understanding and manual calculation.
+      This ensures students can work through problems without tools.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Topics cover substantial material requiring
+      varied practice: ISA encoding, pipeline tracing, cache calculations,
+      performance analysis. Sixteen exercises per topic provides adequate
+      practice across the breadth of each topic.
+
+  difficulty_distribution:
+    1: 2
+    2: 4
+    3: 5
+    4: 3
+    5: 2
+    justification: >
+      Moderate distribution with most exercises at difficulty 2-4. Easy
+      exercises (D1-D2) build confidence with basic encoding and tracing.
+      Medium exercises (D3) are the core workload. Hard exercises (D4-D5)
+      involve complex multi-step calculations or design tradeoffs.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test recall of key concepts and quick calculation skills.
+    They ensure students have the foundational knowledge needed for
+    more complex exercises and projects. Focus on conceptual understanding
+    rather than lengthy calculations.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic allow progressive testing:
+      Quiz A (definitions and basic concepts), Quiz B (tracing and classification),
+      Quiz C (performance concepts and tradeoffs).
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "15%"
+    fill_blank: "15%"
+    code_output: "20%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on multiple choice for conceptual questions. Code output for
+      assembly tracing ("what value is in $t0 after this sequence?").
+      Fill-blank for formulas and field values. No full coding or written
+      answers in quizzes - those are in exercises.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test comprehensive understanding with a mix of conceptual questions
+    and multi-step calculations. Students should expect roughly equal time
+    on conceptual/tracing questions and quantitative analysis.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 27
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      10-12 multiple choice (concepts, quick calculations), 8-10 short answer
+      (instruction decoding, pipeline tracing), 5-8 calculation problems
+      (branch targets, pipeline timing). Mix of ISA, assembly, datapath,
+      and pipelining topics.
+    coverage: "Topics 1-4: ISA, Assembly, Datapath, Pipelining"
+
+  final:
+    questions:
+      minimum: 38
+      target: 43
+      maximum: 48
+    duration_minutes: 150
+    format: >
+      15-18 multiple choice, 12-15 short answer, 10-15 calculation problems.
+      Comprehensive coverage with emphasis on cache and memory hierarchy
+      (Topics 5-6) and ILP (Topic 7). At least one problem integrating
+      pipelining with cache behavior.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 3
+  rationale: >
+    Three projects provide hands-on experience with concepts: assembly
+    programming (Project 1), pipeline simulation (Project 2), and cache
+    simulation (Project 3). Each project reinforces a major topic area
+    and gives students practical experience beyond paper analysis.
+
+  goals:
+    - Apply assembly programming skills in a realistic project
+    - Implement pipeline concepts in software simulation
+    - Build and analyze cache behavior empirically
+    - Experience performance measurement and analysis
+
+  estimated_hours: "10-15"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Instruction encoding question without specifying architecture (MIPS vs x86)
+  - Pipeline timing question without clear pipeline stage names
+  - Cache problem without specifying replacement policy
+  - Performance calculation without stating assumptions
+  - Assembly code using pseudo-instructions without noting expansion
+  - Quiz question requiring lengthy calculation (should be in exercises)
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Computer Architecture bridges software and hardware understanding. Students
+  should leave with an intuition for how programs actually execute on real
+  processors. While MIPS is the primary teaching architecture, content should
+  reference modern x86-64 and ARM where relevant. Performance analysis is
+  central - every design decision has performance implications that students
+  should be able to quantify.
