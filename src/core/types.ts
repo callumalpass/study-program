@@ -95,6 +95,19 @@ export interface QuizQuestion {
   modelAnswer?: string; // Full model answer for AI evaluation of written questions
 }
 
+// Answer types for quiz questions
+export interface CodingAnswer {
+  code: string;
+  passed: boolean;
+}
+
+// Union type for all possible quiz answers
+// - number: multiple_choice (option index)
+// - boolean: true_false
+// - string: fill_blank, code_output, written
+// - CodingAnswer: coding questions
+export type QuizAnswer = number | boolean | string | CodingAnswer;
+
 // Coding Exercise Types
 export interface CodingExercise {
   id: string;
@@ -223,7 +236,7 @@ export interface AiEvaluationRecord {
 export interface QuizAttempt {
   attemptId: string;
   timestamp: string; // ISO date string
-  answers: Record<string, any>;
+  answers: Record<string, QuizAnswer>;
   score: number; // Percentage
   timeSpentSeconds: number;
   aiGrades?: Record<string, AiGrade>; // AI grades for written questions, keyed by question ID
@@ -232,7 +245,7 @@ export interface QuizAttempt {
 export interface ExamAttempt {
   attemptId: string;
   timestamp: string; // ISO date string
-  answers: Record<string, any>;
+  answers: Record<string, QuizAnswer>;
   score: number; // Percentage
   timeSpentSeconds: number;
   aiGrades?: Record<string, AiGrade>; // AI grades for written questions, keyed by question ID

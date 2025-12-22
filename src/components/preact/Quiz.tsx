@@ -1,6 +1,6 @@
 import { h, Fragment } from 'preact';
 import { useState, useEffect, useCallback, useRef } from 'preact/hooks';
-import type { Quiz as QuizType, Exam, QuizQuestion, QuizAttempt } from '@/core/types';
+import type { Quiz as QuizType, Exam, QuizQuestion, QuizAttempt, QuizAnswer, CodingAnswer } from '@/core/types';
 import { Icons } from '@/components/icons';
 import { Question } from './Question';
 
@@ -12,7 +12,7 @@ interface QuizProps {
 }
 
 interface QuizState {
-  answers: Record<string, any>;
+  answers: Record<string, QuizAnswer>;
   submitted: boolean;
   showExplanations: boolean;
 }
@@ -23,7 +23,11 @@ function formatTimeRemaining(seconds: number): string {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
-function checkAnswer(question: QuizQuestion, answer: any): boolean {
+function isCodingAnswer(answer: QuizAnswer | undefined): answer is CodingAnswer {
+  return typeof answer === 'object' && answer !== null && 'code' in answer;
+}
+
+function checkAnswer(question: QuizQuestion, answer: QuizAnswer | undefined): boolean {
   if (answer === undefined) return false;
 
   switch (question.type) {
@@ -32,10 +36,12 @@ function checkAnswer(question: QuizQuestion, answer: any): boolean {
       return answer === question.correctAnswer;
     case 'fill_blank':
     case 'code_output':
-    case 'written':
-      return normalizeAnswer(answer) === normalizeAnswer(question.correctAnswer);
+    case 'written': {
+      const textAnswer = typeof answer === 'string' ? answer : '';
+      return normalizeAnswer(textAnswer) === normalizeAnswer(question.correctAnswer);
+    }
     case 'coding':
-      return typeof answer === 'object' && answer?.passed === true;
+      return isCodingAnswer(answer) && answer.passed === true;
     default:
       return false;
   }
@@ -46,7 +52,7 @@ function normalizeAnswer(value: string | number | boolean | undefined): string {
   return String(value).trim().toLowerCase();
 }
 
-function calculateScore(quiz: QuizType | Exam, answers: Record<string, any>): number {
+function calculateScore(quiz: QuizType | Exam, answers: Record<string, QuizAnswer>): number {
   let correct = 0;
   quiz.questions.forEach((question) => {
     if (checkAnswer(question, answers[question.id])) {
@@ -68,7 +74,7 @@ export function Quiz({ quiz, onComplete, durationMinutes, isExam = false }: Quiz
   );
   const [timedOut, setTimedOut] = useState(false);
 
-  const handleAnswerChange = useCallback((questionId: string, answer: any) => {
+  const handleAnswerChange = useCallback((questionId: string, answer: QuizAnswer) => {
     setState((prev) => ({
       ...prev,
       answers: { ...prev.answers, [questionId]: answer },

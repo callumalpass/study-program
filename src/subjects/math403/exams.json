@@ -225,6 +225,72 @@
         "correctAnswer": "proof",
         "explanation": "This shows that sets between a connected set and its closure are connected.",
         "modelAnswer": "Suppose B is not connected. Then B = U ∪ V where U, V are nonempty disjoint sets open in B.\n\nSince A ⊆ B and A is connected, A must lie entirely in U or V (say U, WLOG).\n\nThen A ⊆ U. Since U is open in B (in the subspace topology), U = B ∩ U' for some open U' in the ambient space.\n\nNow cl(A) ⊆ cl(U). But wait, we need to be more careful. Since A ⊆ U and U is open in the subspace B, and B contains the closure of A, we need to show V = ∅.\n\nSince V is open in B and disjoint from A, and A is dense in B (as A ⊆ B ⊆ cl(A)), we must have V = ∅, contradiction.\n\nTherefore B is connected."
+      },
+      {
+        "id": "mid-q21",
+        "type": "multiple_choice",
+        "prompt": "Let X = {a, b, c} with topology τ = {∅, {a}, {a, b}, X}. Which of the following is cl({b})?",
+        "options": [
+          "{b}",
+          "{a, b}",
+          "{b, c}",
+          "X"
+        ],
+        "correctAnswer": 3,
+        "explanation": "The closed sets are complements of open sets: X, {b, c}, {c}, ∅. The smallest closed set containing {b} is X."
+      },
+      {
+        "id": "mid-q22",
+        "type": "true_false",
+        "prompt": "A topology τ on X is discrete if and only if every singleton {x} is open.",
+        "correctAnswer": true,
+        "explanation": "True. If every singleton is open, then every subset is a union of singletons, hence open. Conversely, if τ is discrete, every set including singletons is open."
+      },
+      {
+        "id": "mid-q23",
+        "type": "multiple_choice",
+        "prompt": "In the product topology on ℝ × ℝ, the set (0, 1) × (0, 1) is:",
+        "options": [
+          "Open but not closed",
+          "Closed but not open",
+          "Both open and closed",
+          "Neither open nor closed"
+        ],
+        "correctAnswer": 0,
+        "explanation": "(0, 1) × (0, 1) is open (product of open sets is open in product topology). It is not closed since its complement is not open in the product topology."
+      },
+      {
+        "id": "mid-q24",
+        "type": "multiple_choice",
+        "prompt": "If X has the indiscrete topology (only ∅ and X are open), which continuous functions f: X → ℝ exist?",
+        "options": [
+          "Only constant functions",
+          "All functions",
+          "No functions",
+          "Only injective functions"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Only constant functions. For non-constant f, the preimage of some open interval would be a proper nonempty subset, which isn't open in the indiscrete topology."
+      },
+      {
+        "id": "mid-q25",
+        "type": "true_false",
+        "prompt": "The connected components of a topological space form a partition of the space.",
+        "correctAnswer": true,
+        "explanation": "True. Every point lies in exactly one connected component (the maximal connected set containing it), so the components partition the space."
+      },
+      {
+        "id": "mid-q26",
+        "type": "multiple_choice",
+        "prompt": "Which of the following is a subbasis for the standard topology on ℝ?",
+        "options": [
+          "{(a, b) : a, b ∈ ℝ}",
+          "{(-∞, a) : a ∈ ℝ} ∪ {(a, ∞) : a ∈ ℝ}",
+          "{[a, b] : a, b ∈ ℝ}",
+          "{{x} : x ∈ ℝ}"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The collection of rays {(-∞, a)} ∪ {(a, ∞)} is a subbasis for ℝ. Finite intersections give (a, b) intervals, which form a basis."
       }
     ]
   },
@@ -560,6 +626,134 @@
         "correctAnswer": "π₁(S¹) ≅ ℤ",
         "explanation": "The fundamental group classifies loops up to homotopy.",
         "modelAnswer": "The fundamental group of S¹ is π₁(S¹) ≅ ℤ (the integers under addition).\n\nIntuitively, loops in S¹ are classified by their winding number - the number of times they wind around the circle. A loop that winds around n times (where n can be negative for opposite orientation) corresponds to the integer n.\n\nTwo loops are homotopic (can be continuously deformed into each other) if and only if they have the same winding number. The group operation is concatenation of loops, which adds winding numbers.\n\nThis makes π₁(S¹) ≅ ℤ, capturing the fundamental topological property that S¹ has a \"hole\" that loops can wind around."
+      },
+      {
+        "id": "final-q31",
+        "type": "multiple_choice",
+        "prompt": "Which of the following topological properties is NOT an invariant under homeomorphism?",
+        "options": [
+          "Being Hausdorff",
+          "Being compact",
+          "Being a subset of ℝ²",
+          "Being connected"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Being a subset of ℝ² is not a topological property - it depends on embedding, not intrinsic topology. All the others are topological invariants."
+      },
+      {
+        "id": "final-q32",
+        "type": "true_false",
+        "prompt": "In a Hausdorff space, every compact subset is closed.",
+        "correctAnswer": true,
+        "explanation": "True. This is a fundamental result: compact subsets of Hausdorff spaces are closed. The converse requires the ambient space to be compact."
+      },
+      {
+        "id": "final-q33",
+        "type": "multiple_choice",
+        "prompt": "Let f: X → Y be a continuous surjection where X is compact. Which is necessarily true?",
+        "options": [
+          "Y is Hausdorff",
+          "Y is compact",
+          "f is a homeomorphism",
+          "Y is connected"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The continuous image of a compact space is compact. The other properties depend on additional conditions (injectivity, Hausdorff property of Y, etc.)."
+      },
+      {
+        "id": "final-q34",
+        "type": "multiple_choice",
+        "prompt": "The one-point compactification of ℝ is homeomorphic to:",
+        "options": [
+          "ℝ",
+          "S¹ (the circle)",
+          "[0, 1]",
+          "ℝ²"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The one-point compactification of ℝ is homeomorphic to S¹. We add a point at infinity that connects both ends of the real line into a circle."
+      },
+      {
+        "id": "final-q35",
+        "type": "true_false",
+        "prompt": "A space X is locally compact if every point has a compact neighborhood.",
+        "correctAnswer": true,
+        "explanation": "True. This is the definition of local compactness. Equivalently, every point has a neighborhood basis of compact sets."
+      },
+      {
+        "id": "final-q36",
+        "type": "multiple_choice",
+        "prompt": "In a metric space, which characterization of compactness holds?",
+        "options": [
+          "Compact ⟺ sequentially compact ⟺ complete and totally bounded",
+          "Compact ⟺ closed and bounded",
+          "Compact ⟺ every open cover has a finite subcover (only)",
+          "Compact ⟺ connected and bounded"
+        ],
+        "correctAnswer": 0,
+        "explanation": "In metric spaces, compactness, sequential compactness, and completeness plus total boundedness are all equivalent. Closed and bounded works only in ℝⁿ (Heine-Borel)."
+      },
+      {
+        "id": "final-q37",
+        "type": "written",
+        "prompt": "State and prove that the product of two connected spaces is connected.",
+        "correctAnswer": "proof",
+        "explanation": "This is a key result about products preserving connectedness.",
+        "modelAnswer": "Theorem: If X and Y are connected, then X × Y is connected.\n\nProof: Fix a point (x₀, y₀) ∈ X × Y. For any (x, y) ∈ X × Y, we construct a connected path from (x₀, y₀) to (x, y).\n\nConsider the sets:\n- X × {y₀} ≅ X (homeomorphic, hence connected)\n- {x} × Y ≅ Y (homeomorphic, hence connected)\n\nNote that (x₀, y₀) ∈ X × {y₀}, (x, y₀) ∈ X × {y₀}, and (x, y₀) ∈ {x} × Y, (x, y) ∈ {x} × Y.\n\nThe set A = (X × {y₀}) ∪ ({x} × Y) is connected because it's the union of two connected sets with nonempty intersection {(x, y₀)}.\n\nBoth (x₀, y₀) and (x, y) lie in A, so they're in the same connected set.\n\nSince (x, y) was arbitrary, X × Y = ⋃_{(x,y)} A_{(x,y)} where each A_{(x,y)} is connected and all contain (x₀, y₀). Therefore X × Y is connected."
+      },
+      {
+        "id": "final-q38",
+        "type": "multiple_choice",
+        "prompt": "A topological space is T₁ if:",
+        "options": [
+          "Any two distinct points can be separated by disjoint open sets",
+          "Every singleton is closed",
+          "The space is metrizable",
+          "Every continuous function is bounded"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A space is T₁ if every singleton {x} is closed. Equivalently, for distinct points x, y, there exist open sets U ∋ x and V ∋ y with y ∉ U and x ∉ V."
+      },
+      {
+        "id": "final-q39",
+        "type": "true_false",
+        "prompt": "Every second countable space is separable.",
+        "correctAnswer": true,
+        "explanation": "True. If {Bₙ} is a countable basis, pick one point from each nonempty Bₙ to get a countable dense set."
+      },
+      {
+        "id": "final-q40",
+        "type": "multiple_choice",
+        "prompt": "The Lebesgue number lemma applies to which type of space?",
+        "options": [
+          "Any topological space",
+          "Compact metric spaces",
+          "Complete metric spaces",
+          "Connected spaces"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The Lebesgue number lemma applies to compact metric spaces. It states that for any open cover of a compact metric space, there exists a Lebesgue number δ > 0 such that any set of diameter < δ lies in some cover element."
+      },
+      {
+        "id": "final-q41",
+        "type": "multiple_choice",
+        "prompt": "Two spaces X and Y have the same homotopy type if:",
+        "options": [
+          "They are homeomorphic",
+          "They have isomorphic fundamental groups",
+          "There exist continuous maps f: X → Y and g: Y → X with g∘f ≃ id_X and f∘g ≃ id_Y",
+          "They have the same cardinality"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Homotopy equivalence requires continuous maps f and g such that g∘f is homotopic to id_X and f∘g is homotopic to id_Y. This is weaker than homeomorphism."
+      },
+      {
+        "id": "final-q42",
+        "type": "written",
+        "prompt": "Prove that a continuous bijection from a compact space to a Hausdorff space is a homeomorphism.",
+        "correctAnswer": "proof",
+        "explanation": "This is a fundamental theorem combining compactness and Hausdorff properties.",
+        "modelAnswer": "Let f: X → Y be a continuous bijection where X is compact and Y is Hausdorff.\n\nWe need to show f⁻¹ is continuous, equivalently, f is a closed map (since f is bijective, f maps closed sets to closed sets iff f⁻¹ maps open sets to open sets).\n\nLet C ⊆ X be closed. Since X is compact and C is closed, C is compact.\n\nSince f is continuous and C is compact, f(C) is compact.\n\nSince Y is Hausdorff and f(C) is compact, f(C) is closed in Y.\n\nTherefore f maps closed sets to closed sets, so f is a closed map.\n\nSince f is a continuous closed bijection, f⁻¹ is continuous, making f a homeomorphism."
       }
     ]
   }

@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { useEffect, useRef, useState, useCallback } from 'preact/hooks';
-import type { QuizQuestion } from '@/core/types';
+import type { QuizQuestion, QuizAnswer, CodingAnswer } from '@/core/types';
 import { renderMarkdown } from '@/components/markdown';
 import { escapeHtml } from '@/utils/html';
 import { Icons } from '@/components/icons';
@@ -11,10 +11,10 @@ import Prism from 'prismjs';
 interface QuestionProps {
   question: QuizQuestion;
   index: number;
-  answer: any;
+  answer: QuizAnswer | undefined;
   showFeedback: boolean;
   isExam: boolean;
-  onAnswerChange: (questionId: string, answer: any) => void;
+  onAnswerChange: (questionId: string, answer: QuizAnswer) => void;
   isCorrect?: boolean;
 }
 
@@ -62,15 +62,20 @@ export function Question({
 
   const handleCodeChange = useCallback((code: string) => {
     if (!showFeedback) {
-      onAnswerChange(question.id, { code, passed: codingTestsPassed ?? false });
+      const codingAnswer: CodingAnswer = { code, passed: codingTestsPassed ?? false };
+      onAnswerChange(question.id, codingAnswer);
     }
   }, [question.id, showFeedback, codingTestsPassed, onAnswerChange]);
+
+  const isCodingAnswer = (ans: QuizAnswer | undefined): ans is CodingAnswer =>
+    typeof ans === 'object' && ans !== null && 'code' in ans;
 
   const handleTestResults = useCallback((results: TestResult[], allPassed: boolean) => {
     setCodingTestsPassed(allPassed);
     // Update answer with test results
-    const currentCode = typeof answer === 'object' ? answer.code : answer || question.starterCode || '';
-    onAnswerChange(question.id, { code: currentCode, passed: allPassed, results });
+    const currentCode = isCodingAnswer(answer) ? answer.code : (typeof answer === 'string' ? answer : question.starterCode || '');
+    const codingAnswer: CodingAnswer = { code: currentCode, passed: allPassed };
+    onAnswerChange(question.id, codingAnswer);
   }, [question.id, question.starterCode, answer, onAnswerChange]);
 
   const renderAnswerInput = () => {
@@ -135,8 +140,10 @@ export function Question({
 
       case 'fill_blank':
       case 'code_output': {
+        // For fill_blank and code_output, answer is always a string
+        const textAnswer = typeof answer === 'string' ? answer : '';
         const isTextCorrect = showFeedback &&
-          normalizeAnswer(answer) === normalizeAnswer(question.correctAnswer);
+          normalizeAnswer(textAnswer) === normalizeAnswer(question.correctAnswer);
         const inputClass = showFeedback
           ? `text-input ${isTextCorrect ? 'correct' : 'incorrect'}`
           : 'text-input';
@@ -151,7 +158,7 @@ export function Question({
                   ? 'Enter the expected output...'
                   : 'Enter your answer...'
               }
-              value={answer ?? ''}
+              value={textAnswer}
               disabled={showFeedback}
               onInput={(e) => handleTextInput((e.target as HTMLInputElement).value)}
             />
@@ -159,32 +166,34 @@ export function Question({
         );
       }
 
-      case 'written':
-        // For now, use a simple textarea. Could integrate Monaco later.
+      case 'written': {
+        // For written questions, answer is always a string
+        const writtenAnswer = typeof answer === 'string' ? answer : '';
         return (
           <div class="answer-container">
             {showFeedback ? (
               <div
                 class="written-answer-display"
                 dangerouslySetInnerHTML={{
-                  __html: answer ? renderMarkdown(String(answer)) : '<em>No answer provided</em>',
+                  __html: writtenAnswer ? renderMarkdown(writtenAnswer) : '<em>No answer provided</em>',
                 }}
               />
             ) : (
               <textarea
                 class="text-input written-textarea"
                 placeholder="Enter your answer..."
-                value={answer ?? ''}
+                value={writtenAnswer}
                 rows={6}
                 onInput={(e) => handleTextInput((e.target as HTMLTextAreaElement).value)}
               />
             )}
           </div>
         );
+      }
 
       case 'coding': {
-        const currentCode = typeof answer === 'object' ? answer.code : answer || question.starterCode || '';
-        const testsPassed = typeof answer === 'object' ? answer.passed : null;
+        const currentCode = isCodingAnswer(answer) ? answer.code : (typeof answer === 'string' ? answer : question.starterCode || '');
+        const testsPassed = isCodingAnswer(answer) ? answer.passed : null;
 
         return (
           <div class="answer-container coding-container">

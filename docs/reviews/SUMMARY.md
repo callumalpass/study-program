@@ -67,7 +67,7 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 - CS303, CS304, CS305, CS306, CS307
 - CS403
 - MATH101, MATH102, MATH201, MATH202
-- MATH302, MATH304, MATH403
+- MATH302, MATH304
 
 ### 2. Exercise Shortages
 - (None remaining - all subjects have 16+ exercises per topic)
@@ -108,11 +108,23 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (15 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (12 subjects) |
 
-**Total Estimated:** ~7.5 hours for spec files.
+**Total Estimated:** ~6 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### MATH403: Introduction to Topology - Added Subject Specification and Completed Exams
+- **Status:** Now fully production-ready with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: topological spaces, bases, continuity, connectedness, compactness, metric spaces, algebraic topology introduction
+  3. Specified assessment philosophy for proof-based content
+  4. Defined exercise types (100% written proofs)
+  5. Set exam targets (26 midterm, 42 final)
+  6. Added 6 midterm questions (20 → 26) to meet spec target
+  7. Added 12 final exam questions (30 → 42) to meet spec target
+- **Quality verified:** 84,534 total words (avg 1,725/subtopic), 112 exercises, 105 quiz questions, 68 exam questions
 
 ### CS301: Operating Systems - Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml

@@ -1,6 +1,6 @@
 import { h, Fragment } from 'preact';
 import { useState, useCallback, useRef } from 'preact/hooks';
-import type { Subject, Exam, QuizQuestion } from '@/core/types';
+import type { Subject, Exam, QuizQuestion, QuizAnswer, CodingAnswer } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { Icons } from '@/components/icons';
 import { Question } from './Question';
@@ -19,7 +19,7 @@ interface PracticeState {
   questionCount: number;
   isLoading: boolean;
   hasAnswered: boolean;
-  answer: any;
+  answer: QuizAnswer | undefined;
   isEvaluating: boolean;
   feedback: FeedbackState | null;
   error: string | null;
@@ -31,16 +31,22 @@ interface FeedbackState {
   details?: string;
 }
 
-function checkSimpleAnswer(question: QuizQuestion, answer: any): boolean {
-  if (answer === undefined || answer === null) return false;
+function isCodingAnswer(answer: QuizAnswer | undefined): answer is CodingAnswer {
+  return typeof answer === 'object' && answer !== null && 'code' in answer;
+}
+
+function checkSimpleAnswer(question: QuizQuestion, answer: QuizAnswer | undefined): boolean {
+  if (answer === undefined) return false;
 
   switch (question.type) {
     case 'multiple_choice':
     case 'true_false':
       return answer === question.correctAnswer;
     case 'fill_blank':
-    case 'code_output':
-      return String(answer).trim().toLowerCase() === String(question.correctAnswer).trim().toLowerCase();
+    case 'code_output': {
+      const textAnswer = typeof answer === 'string' ? answer : '';
+      return textAnswer.trim().toLowerCase() === String(question.correctAnswer).trim().toLowerCase();
+    }
     default:
       return false;
   }
@@ -115,7 +121,7 @@ export function PracticeMode({ subject, exam, onExit }: PracticeModeProps) {
     }
   }
 
-  const handleAnswerChange = useCallback((questionId: string, answer: any) => {
+  const handleAnswerChange = useCallback((questionId: string, answer: QuizAnswer) => {
     setState(prev => ({ ...prev, answer }));
   }, []);
 
@@ -134,8 +140,9 @@ export function PracticeMode({ subject, exam, onExit }: PracticeModeProps) {
         // Written questions need AI evaluation
         const apiKey = progressStorage.getSettings().geminiApiKey;
         if (apiKey) {
+          const writtenAnswer = typeof answer === 'string' ? answer : '';
           const modelAnswer = currentQuestion.modelAnswer || currentQuestion.explanation;
-          const result = await evaluateWrittenExercise(apiKey, currentQuestion.prompt, modelAnswer, answer || '');
+          const result = await evaluateWrittenExercise(apiKey, currentQuestion.prompt, modelAnswer, writtenAnswer);
 
           isCorrect = result.passed;
           message = result.passed ? 'Good answer!' : 'Needs improvement';
@@ -150,7 +157,7 @@ export function PracticeMode({ subject, exam, onExit }: PracticeModeProps) {
         }
       } else if (currentQuestion.type === 'coding') {
         // Coding questions run tests
-        const code = typeof answer === 'object' ? answer.code : answer;
+        const code = isCodingAnswer(answer) ? answer.code : (typeof answer === 'string' ? answer : '');
         const testCases = currentQuestion.testCases || [];
 
         if (testCases.length > 0 && currentQuestion.solution) {

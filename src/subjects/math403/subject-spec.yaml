@@ -1,0 +1,274 @@
+# MATH403: Introduction to Topology - Subject Specification
+# This spec guides content creation for an advanced proof-based topology course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: math403
+title: Introduction to Topology
+category: math
+
+role:
+  level: advanced
+  transformation: >
+    From "I know metric space concepts from analysis" to "I understand topological
+    spaces as a general framework that abstracts and extends metric space ideas,
+    and I can prove fundamental theorems about continuity, connectedness, and
+    compactness in this abstract setting."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Real analysis (sequences, limits, continuity in metric spaces)
+    - Set theory (unions, intersections, complements, functions)
+    - Mathematical proof techniques (contradiction, induction, contrapositive)
+    - Familiarity with metric spaces and their basic properties
+
+  essential_concepts:
+    - Definition and examples of topological spaces
+    - Open sets, closed sets, interior, closure, boundary
+    - Bases and subbases for topologies
+    - Continuous functions and homeomorphisms
+    - Product and quotient topologies
+    - Connectedness and path connectedness
+    - Compactness and its characterizations
+    - Metric spaces as topological spaces
+    - Completeness and the Baire category theorem
+    - Introduction to algebraic topology (fundamental group)
+
+  out_of_scope:
+    - Homology and cohomology theories (graduate algebraic topology)
+    - Manifolds and differential topology (separate course)
+    - Functional analysis and operator theory
+    - Category-theoretic foundations of topology
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: proof-based
+
+  mastery_indicators:
+    - Verifies topology axioms for given collections of sets
+    - Constructs epsilon-delta style proofs adapted to topological definitions
+    - Applies continuity criteria (preimage of open, neighborhood preservation)
+    - Identifies and proves when spaces are (not) homeomorphic
+    - Uses compactness and connectedness to prove existence results
+    - Recognizes which proof technique applies to a given topological statement
+
+  common_struggles:
+    - Confusing the topology on a space with the space itself
+    - Forgetting that open/closed depends on which topology is being used
+    - Applying metric space intuition incorrectly in non-metrizable spaces
+    - Confusing "connected" with "path connected"
+    - Not recognizing when to use compactness versus sequential compactness
+    - Difficulty with quotient topologies and equivalence classes
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Every definition must include both examples and non-examples
+    - Provide intuitive explanations before formal definitions where possible
+    - Include diagrams/visualizations for key topological concepts
+    - Show the relationship between topological and metric space versions of concepts
+    - Explicit counterexamples for common misconceptions
+
+  conventions:
+    - LaTeX for all mathematical expressions
+    - Use standard notation (tau for topology, cl for closure, int for interior)
+    - State theorems formally, then explain in plain language
+    - Proofs should begin with "Proof:" and end with a square symbol
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Topology requires both conceptual understanding and proof-writing skill.
+    Assessments should test the ability to verify definitions, construct proofs,
+    identify topological properties, and recognize when spaces are (not) homeomorphic.
+    Written proofs should demonstrate logical structure, not just correct conclusions.
+
+  measures:
+    - Ability to verify topology axioms and apply definitions
+    - Proof construction skills (direct, contradiction, contrapositive)
+    - Recognition of topological invariants
+    - Application of compactness and connectedness theorems
+    - Understanding relationships between different topological properties
+
+  anti_patterns:
+    - Questions answerable by memorizing specific proofs from the text
+    - True/false without requiring justification for deeper questions
+    - Problems that test only metric space concepts (those belong in analysis)
+    - Questions about esoteric counterexamples without broader purpose
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 65
+
+  thresholds:
+    exercises: 60
+    quizzes: 65
+    exams: 60
+
+  rationale: >
+    Lower passing threshold than typical because topology has a steep learning
+    curve and proof construction is difficult. A student who successfully proves
+    60% of problems has demonstrated significant mathematical maturity. Focus
+    should be on depth of understanding rather than percentage of correct answers.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises scaffold proof-writing in the topological context. Early exercises
+    verify definitions and apply basic concepts. Later exercises require full
+    proof construction, identifying topological properties, and recognizing
+    homeomorphisms. All exercises are proof-based or proof-adjacent.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      Pure mathematics subject. All exercises involve proofs, counterexample
+      construction, or verification of topological properties. AI evaluation
+      compares student proofs to reference solutions for logical validity.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Standard count. Each exercise requires substantial thought but topology
+      exercises can be more diverse than pure analysis exercises. Mix of
+      verification, proof, and counterexample exercises.
+
+  difficulty_distribution:
+    1: 2
+    2: 4
+    3: 5
+    4: 3
+    5: 2
+    justification: >
+      Skewed toward medium difficulty. Even "easy" topology problems require
+      proof structure. Difficulty 1-2 exercises verify definitions or find
+      simple examples. Difficulty 4-5 require novel proof construction or
+      identifying subtle distinctions.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding, definition recall, and basic proof
+    recognition. They ensure students understand the definitions and can identify
+    correct applications before attempting full exercises.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard count. Three quizzes per topic allows progression from definitions
+      (Quiz A) to applications (Quiz B) to deeper understanding (Quiz C).
+
+  question_types:
+    multiple_choice: "60%"
+    true_false: "30%"
+    fill_blank: "0%"
+    code_output: "0%"
+    coding: "0%"
+    written: "10%"
+    justification: >
+      Multiple choice for conceptual understanding and recognizing correct
+      statements. True/false for addressing misconceptions (with required
+      explanation in some cases). Limited written for short justifications.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test proof construction and conceptual understanding under time
+    pressure. Mix of shorter verification problems and longer proof construction.
+    Students should demonstrate mastery of definitions and ability to construct
+    novel proofs using course techniques.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      Mix of multiple choice (8-10), true/false (4-6), and written proofs (6-8).
+      Written questions include definition verification, short proofs, and
+      one or two longer proof constructions.
+    coverage: "Topics 1-4: Topological Spaces, Bases, Continuity, Connectedness"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      Mix of multiple choice (14-16), true/false (8-10), and written proofs (10-14).
+      Comprehensive coverage with emphasis on compactness, metric spaces, and
+      applications. At least two longer proof construction problems.
+    coverage: "Comprehensive: all 7 topics with emphasis on later material"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    Pure mathematics courses traditionally assess via problem sets and exams
+    rather than projects. The exercises serve as ongoing proof practice.
+    No separate projects needed for a topology course.
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise asks to reproduce a specific proof from the content verbatim
+  - Question tests metric space concepts without topological generalization
+  - Content uses "clearly" or "obviously" without justification
+  - Counterexample exercise but no non-examples shown in content
+  - Question relies on knowledge of specific spaces not covered in course
+  - True/false question about deep theorem without requiring justification
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Topology requires a shift in thinking from metric to abstract spaces. Content
+  should frequently contrast topological definitions with metric space versions
+  students already know. Early topics should move slowly, building intuition
+  before formalism. Later topics can move faster as students develop topological
+  maturity. Emphasize that many spaces students know (real line, plane, sphere)
+  are studied from a new perspective, not replaced by abstract nonsense.
