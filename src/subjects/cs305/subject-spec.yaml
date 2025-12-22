@@ -1,0 +1,287 @@
+# CS305: Web Development - Subject Specification
+# This spec guides content creation for a hands-on, project-oriented web development course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs305
+title: Web Development
+category: cs
+
+role:
+  level: intermediate
+  transformation: >
+    From "I can write simple programs" to "I can build complete, interactive web
+    applications using HTML, CSS, and JavaScript with modern best practices."
+    Students should finish confident they can build and deploy web applications.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Programming fundamentals (variables, functions, control flow)
+    - Basic understanding of how the internet works (HTTP, URLs)
+    - Familiarity with text editors or IDEs
+    - Basic command line usage
+
+  essential_concepts:
+    - HTML document structure and semantic markup
+    - CSS styling, layout (Flexbox, Grid), and responsive design
+    - JavaScript fundamentals (ES6+ syntax, DOM, events)
+    - DOM manipulation and event handling
+    - Responsive design principles and media queries
+    - Asynchronous JavaScript (Promises, async/await, Fetch API)
+    - Modern web development tooling and best practices
+    - Web accessibility (WCAG guidelines, ARIA)
+
+  out_of_scope:
+    - Backend development and server-side languages (covered in other courses)
+    - Database integration (covered in CS205)
+    - Advanced JavaScript frameworks in depth (React, Vue, Angular - overview only)
+    - DevOps and deployment pipelines (brief overview only)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: applied
+
+  mastery_indicators:
+    - Builds responsive, accessible web pages from scratch
+    - Writes clean, modular JavaScript with proper event handling
+    - Uses modern CSS layouts (Flexbox, Grid) appropriately
+    - Implements asynchronous operations with proper error handling
+    - Integrates external APIs and manages application state
+    - Follows web accessibility best practices (semantic HTML, ARIA)
+    - Uses browser developer tools effectively for debugging
+
+  common_struggles:
+    - CSS specificity and cascade order confusion
+    - Understanding the asynchronous nature of JavaScript
+    - Event bubbling and delegation patterns
+    - Managing state in larger applications
+    - Cross-browser compatibility issues
+    - Responsive breakpoint design decisions
+    - Accessibility requirements beyond basic compliance
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Every concept demonstrated with working code examples
+    - Show browser DevTools debugging techniques where relevant
+    - Include common mistakes and how to fix them
+    - Progressive examples building from simple to complex
+    - Emphasize accessibility considerations throughout
+
+  conventions:
+    - HTML5 semantic elements and valid markup
+    - Modern CSS (Flexbox, Grid, CSS variables, modern selectors)
+    - ES6+ JavaScript (const/let, arrow functions, template literals, modules)
+    - All code examples must be copy-paste runnable in a browser
+    - Include browser compatibility notes where relevant
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Web development is learned by building. Projects and exercises should create
+    real, functional web content. Immediate visual feedback from the browser
+    motivates learning. Assessments should test practical skills: can the student
+    build it and does it work correctly?
+
+  measures:
+    - Code correctness and functionality
+    - Proper use of semantic HTML and accessibility features
+    - CSS layout skills and responsive design implementation
+    - JavaScript DOM manipulation and event handling
+    - Asynchronous programming patterns
+    - Code organization and best practices
+
+  anti_patterns:
+    - Asking about browser-specific quirks that change frequently
+    - Testing memorization of CSS property names without context
+    - Problems requiring deprecated or non-standard features
+    - Ignoring accessibility in favor of visual-only solutions
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard passing threshold. Web development has immediate visual feedback,
+    making it easier to iterate until code works. Lower quiz/exam thresholds
+    because conceptual questions can be tricky even when students can build
+    working applications.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    High volume of practical exercises builds fluency with HTML, CSS, and
+    JavaScript. Each exercise produces visible results in the browser, providing
+    immediate motivation. Exercises progress from single-concept to multi-concept
+    integration, preparing students for larger projects.
+
+  types:
+    coding_with_tests: "90%"
+    coding_ai_evaluated: "10%"
+    written: "0%"
+    justification: >
+      Almost all exercises are coding with automated tests for immediate
+      feedback. Some design/styling exercises use AI evaluation since visual
+      outcomes can have multiple valid approaches. No written exercises - this
+      is a hands-on, build-it course.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Web development benefits from volume of practice
+      across HTML, CSS, and JavaScript. Each exercise is small and focused,
+      building skills incrementally.
+
+  difficulty_distribution:
+    1: 3
+    2: 3
+    3: 4
+    4: 3
+    5: 3
+    justification: >
+      Standard distribution. Web development has a gradual learning curve.
+      Beginner exercises build confidence with basic syntax and structures.
+      Expert exercises integrate multiple concepts (responsive layouts with
+      async data fetching, accessible interactive components).
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding and code reading skills that
+    complement hands-on exercises. They ensure students understand why
+    certain approaches work, not just how to copy patterns.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic: fundamentals, application,
+      and mastery levels. Allows testing of conceptual knowledge separate from
+      practical building skills.
+
+  question_types:
+    multiple_choice: "45%"
+    true_false: "15%"
+    fill_blank: "10%"
+    code_output: "30%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on code_output to test whether students can trace JavaScript
+      execution and predict DOM states. Multiple choice for conceptual
+      understanding (CSS specificity, semantic HTML choices). Fill-blank
+      for syntax patterns. No coding in quizzes - exercises handle that.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test understanding without browser/IDE assistance. Mix of code
+    tracing, conceptual questions, and short coding problems. Students should
+    demonstrate they understand the material, not just that they can Google it.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      8-10 code tracing questions (HTML/CSS/JS output), 10-12 multiple choice
+      conceptual questions (semantic HTML, CSS rules, JS behavior), 4-6 short
+      coding problems (write a function, CSS rule, or HTML structure).
+    coverage: "Topics 1-4: HTML, CSS, JavaScript Fundamentals, DOM Manipulation"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 180
+    format: >
+      12-15 code tracing, 15-18 multiple choice, 8-12 short coding problems.
+      Cumulative with emphasis on later topics (responsive design, async JS,
+      modern tooling). At least one problem integrating HTML, CSS, and JS.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 3
+  rationale: >
+    Web development is fundamentally about building complete applications.
+    Three projects at increasing complexity: static site, interactive app,
+    and API-integrated dashboard. Each project builds on skills from previous
+    topics and creates portfolio pieces students can show employers.
+
+  goals:
+    - Build complete, functional web applications
+    - Integrate HTML, CSS, and JavaScript skills
+    - Practice responsive design and accessibility
+    - Work with external APIs and asynchronous data
+    - Create portfolio pieces for job applications
+
+  estimated_hours: "15-25"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires browser-specific APIs not covered in content
+  - CSS exercise has only one "correct" visual solution
+  - Test expects exact pixel measurements for responsive layouts
+  - Code example uses deprecated HTML elements or attributes
+  - JavaScript example uses var instead of const/let without pedagogical reason
+  - Accessibility is treated as optional or afterthought
+  - Solution works only in a specific browser
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Web development is highly visual and tactile. Content should encourage
+  students to experiment in browser DevTools. Error messages in browsers
+  are often cryptic - explain common ones. Emphasize that web standards
+  evolve, so the skill is learning how to learn, not memorizing current APIs.
+  Accessibility should be woven throughout, not relegated to a single topic.

@@ -64,7 +64,7 @@
 
 ### 1. Missing subject-spec.yaml
 Many subjects still need subject-spec.yaml files (required since 2025-12-20):
-- CS305, CS306, CS307
+- CS306, CS307
 - CS403
 - MATH101, MATH102, MATH201, MATH202
 - MATH302, MATH304
@@ -108,11 +108,22 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (10 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (9 subjects) |
 
-**Total Estimated:** ~5.0 hours for spec files.
+**Total Estimated:** ~4.5 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### CS305: Web Development - Added Subject Specification
+- **Status:** Already 10/10, now with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: HTML, CSS, JavaScript, DOM, responsive design, async JS, modern tooling
+  3. Specified assessment philosophy for hands-on, project-oriented learning
+  4. Defined exercise distribution (90% coding with tests, 10% AI-evaluated)
+  5. Set project count to 3 (matching existing: Portfolio, Todo App, Weather Dashboard)
+  6. Set exam targets (26 midterm, 42 final) matching existing content
+- **Quality verified:** 90,416 total words (avg 1,845/subtopic), 112 exercises, 105 quiz questions, 68 exam questions, 3 projects
 
 ### CS304: Compilers - Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml
