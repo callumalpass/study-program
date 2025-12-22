@@ -5,18 +5,18 @@ export interface PDFExportOptions {
   includeSolutions: boolean;
 }
 
-function isCodingExercise(exercise: Exercise): exercise is CodingExercise {
+export function isCodingExercise(exercise: Exercise): exercise is CodingExercise {
   return 'starterCode' in exercise;
 }
 
-function getDifficultyLabel(difficulty?: number): string {
+export function getDifficultyLabel(difficulty?: number): string {
   if (!difficulty) return '';
   const labels = ['', 'Beginner', 'Easy', 'Medium', 'Hard', 'Expert'];
   return labels[difficulty] || '';
 }
 
 // Strip markdown formatting for plain text
-function stripMarkdown(text: string): string {
+export function stripMarkdown(text: string): string {
   return text
     .replace(/#{1,6}\s+/g, '') // headers
     .replace(/\*\*(.+?)\*\*/g, '$1') // bold
