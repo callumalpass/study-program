@@ -13,7 +13,7 @@ export function renderProgressBar(
   } = {}
 ): void {
   container.innerHTML = '';
-  container.className = 'progress-bar-container';
+  container.classList.add('progress-bar-container');
 
   // Clamp percentage between 0 and 100
   const clampedPercent = Math.max(0, Math.min(100, percent));
@@ -75,7 +75,7 @@ export function renderCircularProgress(
   } = {}
 ): void {
   container.innerHTML = '';
-  container.className = 'circular-progress-container';
+  container.classList.add('circular-progress-container');
 
   const size = options.size || 120;
   const strokeWidth = options.strokeWidth || 8;
