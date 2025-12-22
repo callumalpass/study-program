@@ -1,20 +1,12 @@
 # stu.p
 
-**stu.p** is a **stu**dy **p**rogram: a self-study platform with readings, exercises, quizzes, and exams.
-
-## Why
-
-A good curriculum provides structure: prerequisites, exercises that build on each other, exams that force you to actually learn the material. This project attempts to provide that structure for self-study. It's a static site—your progress stays in your browser or syncs to your own GitHub Gist.
-
-It's meant to be difficult in the way university courses are difficult. There are prerequisites, timed exams, and projects with rubrics. Unlike most difficult material online, this actually checks your work.
-
-The content is written by AI. The prompts and quality standards used to generate it are in `docs/`. You can also use AI (via your own Gemini API key) to get feedback on written exercises and projects.
+**stu.p** is a **stu**dy **p**rogram: a computer science oriented self-study platform with readings, exercises, quizzes, and exams.
 
 ## What This Is
 
-This is a structured learning environment covering a growing catalog of subjects; the current content focuses on computer science and mathematics. Each subject contains reading material, exercises, quizzes, and exams. The platform tracks your progress locally and optionally syncs it to a GitHub Gist.
+A structured learning environment covering computer science and mathematics. Each subject contains reading material, exercises, quizzes, and exams. The curriculum follows prerequisite chains—you can study in any order, but the platform indicates when prerequisites are incomplete. Progress stays in your browser or syncs to your own GitHub Gist.
 
-The curriculum follows prerequisite chains typical of formal programs. You can study subjects in any order, but the platform indicates when prerequisites are incomplete.
+The content is written by AI. The prompts and quality standards used to generate it are in `docs/`. You can also use AI (via your own Gemini API key) to get feedback on written exercises and projects.
 
 ## Content Structure
 
@@ -26,8 +18,6 @@ Subjects include:
 - Written exercises for math and theory subjects
 - Longer projects with rubrics
 - Practice exams (midterm and final)
-
-Not all subjects have complete content yet. The status of each subject is visible in the interface.
 
 ## How Exercises Work
 
