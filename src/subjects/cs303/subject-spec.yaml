@@ -1,0 +1,285 @@
+# CS303: Programming Languages - Subject Specification
+# This spec guides content creation for a comprehensive study of programming language
+# theory, design, and implementation.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs303
+title: Programming Languages
+category: cs
+
+role:
+  level: advanced
+  transformation: >
+    From "I use programming languages" to "I understand how programming languages
+    work, how they're designed, and why they make the tradeoffs they do." Students
+    should finish able to evaluate language design choices, implement language
+    features, and understand the theory underlying modern programming languages.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1200
+
+  prerequisite_knowledge:
+    - Object-oriented programming (CS103)
+    - Data structures (CS104)
+    - Discrete mathematics (MATH101)
+    - Basic understanding of recursion and tree structures
+    - Familiarity with at least two programming paradigms
+
+  essential_concepts:
+    - Programming paradigms (imperative, declarative, functional, OOP, logic)
+    - Type systems (static vs dynamic, type inference, polymorphism, soundness)
+    - Functional programming (higher-order functions, closures, immutability, monads)
+    - Formal semantics (operational, denotational, axiomatic)
+    - Interpreters and evaluation strategies
+    - Memory management (manual, reference counting, garbage collection)
+    - Advanced language features (metaprogramming, generics, coroutines, effects)
+
+  out_of_scope:
+    - Compiler optimization techniques (covered in CS304)
+    - Lexical analysis and parsing theory (covered in CS304)
+    - Machine code generation (covered in CS304)
+    - Formal verification beyond introduction (graduate topic)
+    - Concurrency theory (covered in CS401)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Implements interpreters for small languages with closures and recursion
+    - Analyzes type system properties (soundness, decidability, expressiveness)
+    - Writes and evaluates formal semantic specifications
+    - Compares garbage collection algorithms and their tradeoffs
+    - Applies monads to structure effectful computations
+    - Evaluates programming language design decisions critically
+
+  common_struggles:
+    - Confusing scoping rules (lexical vs dynamic)
+    - Understanding closure capture semantics
+    - Grasping the purpose and mechanics of monads
+    - Differentiating operational semantics styles (small-step vs big-step)
+    - Understanding type inference and unification
+    - Seeing connections between theory and practical language features
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Connect theoretical concepts to practical language implementations
+    - Show code examples in multiple languages to illustrate paradigm differences
+    - Include formal definitions followed by intuitive explanations
+    - Provide worked examples of semantic derivations
+    - Compare different approaches (e.g., GC algorithms) with tradeoff analysis
+
+  conventions:
+    - LaTeX for formal definitions and inference rules
+    - Python for interpreter implementations (accessible baseline)
+    - Haskell examples for functional concepts and type systems
+    - Scheme/Lisp for metacircular interpreters
+    - C for memory management concepts
+    - Mermaid diagrams for control flow and data structures
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Programming language theory requires both understanding formal concepts and
+    applying them in implementations. Assessments balance conceptual questions
+    about language design with hands-on implementation exercises. Students should
+    be able to both analyze existing languages and build new language features.
+
+  measures:
+    - Understanding of language paradigms and their tradeoffs
+    - Ability to implement language features (interpreters, type checkers, GC)
+    - Comprehension of formal semantics and type theory
+    - Critical analysis of programming language design decisions
+    - Application of theory to practical language implementation
+
+  anti_patterns:
+    - Memorizing syntax without understanding semantics
+    - Testing obscure language trivia rather than concepts
+    - Implementation exercises without theoretical grounding
+    - Theory exercises without connection to practice
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard thresholds apply since this is a mixed theory/implementation subject.
+    Students need solid understanding of both formal concepts and practical
+    implementation to succeed in compiler courses and advanced PL work.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises mix conceptual analysis with implementation challenges. Implementation
+    exercises build interpreters, type checkers, and garbage collectors. Conceptual
+    exercises analyze semantics, type system properties, and design tradeoffs.
+    All coding exercises use automated tests for immediate feedback.
+
+  types:
+    coding_with_tests: "70%"
+    coding_ai_evaluated: "15%"
+    written: "15%"
+    justification: >
+      Most exercises are implementations with automated tests (interpreters,
+      type systems, GC). Some design/analysis exercises need AI evaluation.
+      Written exercises cover formal semantics and design critique.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard. Implementation exercises require building up from
+      simple to complex, and conceptual topics need sufficient practice with
+      formal notation and analysis.
+
+  difficulty_distribution:
+    1: 2
+    2: 4
+    3: 5
+    4: 3
+    5: 2
+    justification: >
+      Balanced distribution with emphasis on medium difficulty. Easy exercises
+      build foundational understanding; hard exercises require combining multiple
+      concepts or implementing sophisticated features.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding of paradigms, type systems, and
+    semantics. They ensure students have the theoretical foundation needed
+    for implementation exercises. Code tracing tests understanding of
+    evaluation strategies and scoping.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard count. Three quizzes per topic allow progression from
+      definitions to application to edge cases.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "20%"
+    fill_blank: "10%"
+    code_output: "20%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on conceptual multiple choice for language design and theory.
+      Code output for evaluation/scoping understanding. True/false catches
+      common misconceptions about type systems and semantics.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test both conceptual understanding and implementation ability.
+    Written questions assess understanding of formal semantics and type theory.
+    Coding questions require implementing language features under time pressure.
+    Students should demonstrate they understand why, not just how.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      10-12 multiple choice on paradigms and type systems, 4-5 written
+      analysis questions on semantics, 5-6 short coding (functions, closures,
+      higher-order functions).
+    coverage: "Topics 1-4: Paradigms, Type Systems, Functional Programming, Semantics"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      15-18 multiple choice covering all topics, 6-8 written questions on
+      semantics/types/design, 8-10 coding problems on interpreters/GC/features.
+      At least one integrative problem combining multiple topics.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 4
+  rationale: >
+    Four substantial projects build complete language implementation skills:
+    an interpreter, a type inference engine, a garbage collector, and a
+    bytecode VM. These projects synthesize theory into working code and
+    give students portfolio pieces demonstrating deep PL knowledge.
+
+  goals:
+    - Build a complete interpreter with closures, recursion, and environments
+    - Implement Hindley-Milner type inference with polymorphism
+    - Compare garbage collection algorithms through implementation
+    - Construct a bytecode compiler and virtual machine
+
+  estimated_hours: "20-25"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires language-specific syntax trivia rather than concepts
+  - Interpreter exercise works for examples but fails on closures
+  - Type system exercise ignores occurs check or unification
+  - GC implementation doesn't handle cycles (for ref counting)
+  - Semantics exercise has ambiguous evaluation order
+  - Code examples use undefined or advanced library features
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  CS303 bridges theory and practice. Students often struggle to connect
+  lambda calculus to real languages, or formal semantics to actual
+  interpreters. Content should constantly relate formal concepts to
+  languages students know. Show how Python closures are the same concept
+  as lambda calculus, how TypeScript's type inference relates to
+  Algorithm W, how JVM's garbage collection implements marking algorithms.
+  The goal is that students see real languages differently after this course.

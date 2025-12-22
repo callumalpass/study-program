@@ -64,7 +64,7 @@
 
 ### 1. Missing subject-spec.yaml
 Many subjects still need subject-spec.yaml files (required since 2025-12-20):
-- CS303, CS304, CS305, CS306, CS307
+- CS304, CS305, CS306, CS307
 - CS403
 - MATH101, MATH102, MATH201, MATH202
 - MATH302, MATH304
@@ -108,11 +108,22 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (12 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (11 subjects) |
 
-**Total Estimated:** ~6 hours for spec files.
+**Total Estimated:** ~5.5 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### CS303: Programming Languages - Added Subject Specification
+- **Status:** Already 10/10, now with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: paradigms, type systems, functional programming, formal semantics, interpreters, memory management, advanced features
+  3. Specified assessment philosophy balancing theory and implementation
+  4. Defined exercise distribution (70% coding with tests, 15% AI-evaluated, 15% written)
+  5. Set project count to 4 (matching existing: Interpreter, Type Inference, GC, VM/Compiler)
+  6. Set exam targets (26 midterm, 42 final) matching existing content
+- **Quality verified:** 75,931 total words (avg 1,550/subtopic), 112 exercises, 105 quiz questions, 68 exam questions, 4 projects
 
 ### MATH403: Introduction to Topology - Added Subject Specification and Completed Exams
 - **Status:** Now fully production-ready with complete subject-spec.yaml
