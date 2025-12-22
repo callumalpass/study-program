@@ -1,5 +1,5 @@
 // Curriculum overview page
-import type { Subject } from '@/core/types';
+import type { Subject, UserProgress } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import {
   getSubjectsByYearAndSemester,
@@ -136,7 +136,7 @@ export function renderCurriculumPage(container: HTMLElement, subjects: Subject[]
 function renderCurriculumTree(
   groupedSubjects: Map<number, Map<number, Subject[]>>,
   allSubjects: Subject[],
-  userProgress: any,
+  userProgress: UserProgress,
   filters: CurriculumFilters
 ): string {
   const years = Array.from(groupedSubjects.keys()).sort();
@@ -179,7 +179,7 @@ function renderCurriculumTree(
 /**
  * Render a single subject card
  */
-function renderSubjectCard(subject: Subject, allSubjects: Subject[], userProgress: any): string {
+function renderSubjectCard(subject: Subject, allSubjects: Subject[], userProgress: UserProgress): string {
   const progress = userProgress.subjects[subject.id];
   const status = getSubjectStatus(subject, userProgress);
   const completion = progress ? calculateSubjectCompletion(subject, progress) : 0;
@@ -241,7 +241,7 @@ function renderSubjectCard(subject: Subject, allSubjects: Subject[], userProgres
 /**
  * Get the status of a subject
  */
-function getSubjectStatus(subject: Subject, userProgress: any): string {
+function getSubjectStatus(subject: Subject, userProgress: UserProgress): string {
   const progress = userProgress.subjects[subject.id];
 
   if (!progress) {
@@ -254,7 +254,7 @@ function getSubjectStatus(subject: Subject, userProgress: any): string {
 /**
  * Check if all prerequisites for a subject are met
  */
-function isPrerequisiteMet(subjectId: string, userProgress: any): boolean {
+function isPrerequisiteMet(subjectId: string, userProgress: UserProgress): boolean {
   const progress = userProgress.subjects[subjectId];
   return progress?.status === 'completed';
 }
