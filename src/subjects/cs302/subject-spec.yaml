@@ -1,0 +1,282 @@
+# CS302: Computer Networks - Subject Specification
+# This spec guides content creation for a comprehensive networking course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs302
+title: Computer Networks
+category: cs
+
+role:
+  level: intermediate
+  transformation: >
+    From "networks are magic" to "I understand how data travels across the Internet,
+    can analyze network protocols, and can build networked applications." Students
+    should finish able to design and troubleshoot network systems.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Programming fundamentals (CS101/CS103)
+    - Basic data structures (arrays, lists, dictionaries)
+    - Binary and hexadecimal number systems
+    - Basic understanding of operating systems concepts
+
+  essential_concepts:
+    - Network architecture and layered models (OSI, TCP/IP)
+    - Physical and data link layer protocols (Ethernet, ARP)
+    - Network layer and IP addressing (IPv4, IPv6, subnetting, CIDR)
+    - Routing algorithms (distance vector, link state, OSPF, BGP)
+    - Transport layer protocols (TCP, UDP, flow control, congestion control)
+    - Socket programming and network application development
+    - Application layer protocols (HTTP, DNS, SMTP, FTP)
+    - Network security fundamentals (TLS, firewalls)
+
+  out_of_scope:
+    - Advanced network security and cryptography (covered in CS307)
+    - Software-defined networking in depth (advanced topic)
+    - Wireless protocols beyond WiFi basics (specialized topic)
+    - Network administration and operations (practical course)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Traces packet flow through the network stack for any given scenario
+    - Calculates subnets, CIDR blocks, and routing table entries correctly
+    - Implements client-server applications using TCP and UDP sockets
+    - Analyzes protocol headers and identifies protocol behaviors
+    - Debugs network connectivity issues using appropriate tools
+    - Explains trade-offs between different protocols and architectures
+
+  common_struggles:
+    - Confusion between layers and which protocols operate where
+    - Subnetting and CIDR calculations (binary arithmetic)
+    - Understanding TCP state machines and connection management
+    - Distinguishing between routing and forwarding
+    - Socket programming concepts (blocking, concurrency, buffers)
+    - Understanding why certain design choices were made (e.g., why TCP uses three-way handshake)
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Protocol headers should be shown in ASCII art or structured diagrams
+    - Include practical examples with real IP addresses and port numbers
+    - Show packet traces or Wireshark-style examples where relevant
+    - Code examples in Python and/or C for socket programming topics
+    - Connect theoretical concepts to real-world systems (e.g., "this is how Netflix streams video")
+
+  conventions:
+    - Python 3.x for socket programming examples
+    - C for low-level networking examples where appropriate
+    - Use standard port numbers and addresses in examples
+    - Mermaid diagrams for network topologies and protocol flows
+    - RFC references for protocol specifications
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Networking requires both conceptual understanding and practical skills.
+    Assessments should test ability to trace protocol behavior, calculate
+    addressing, and implement network code. Projects build real networked
+    applications that demonstrate end-to-end understanding.
+
+  measures:
+    - Protocol analysis and packet tracing skills
+    - Subnetting and addressing calculations
+    - Socket programming implementation
+    - Understanding of protocol design trade-offs
+    - Troubleshooting and debugging network issues
+
+  anti_patterns:
+    - Memorization of port numbers or header field sizes without understanding
+    - Multiple choice questions that can be answered by elimination
+    - Socket programming exercises without proper error handling requirements
+    - Questions that test RFC trivia rather than understanding
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard thresholds for an intermediate course. Programming exercises
+    require a higher bar because incorrect network code can be dangerous.
+    Quiz and exam thresholds are slightly lower to account for the breadth
+    of material covered.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Networking requires hands-on practice with both calculations and code.
+    Exercises range from subnetting math to socket programming. All coding
+    exercises have automated tests because network code must handle edge cases.
+
+  types:
+    coding_with_tests: "85%"
+    coding_ai_evaluated: "10%"
+    written: "5%"
+    justification: >
+      Most exercises are coding with tests for immediate feedback. Some
+      open-ended design questions (AI-evaluated) and a few written explanations
+      for protocol analysis. Heavy emphasis on testable code.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Networking topics have natural exercises:
+      packet parsing, address calculations, socket programs. 16 per topic
+      provides good coverage without overwhelming students.
+
+  difficulty_distribution:
+    1: 2
+    2: 4
+    3: 5
+    4: 3
+    5: 2
+    justification: >
+      Slight emphasis on medium difficulty. Level 1 exercises cover basic
+      calculations and simple socket operations. Level 5 exercises involve
+      complex protocol implementations or multi-threaded servers.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding and ability to trace protocol
+    behavior. Code output questions are essential for verifying students
+    can predict network behavior without running code.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard quiz count. Three quizzes per topic allow progression from
+      definitions to application to mastery. 15 questions per topic is
+      sufficient for covering key concepts.
+
+  question_types:
+    multiple_choice: "40%"
+    true_false: "15%"
+    fill_blank: "15%"
+    code_output: "30%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on code_output to test protocol tracing skills (what does this
+      code send? what will the server receive?). Multiple choice for
+      conceptual understanding. Fill-blank for protocol fields and terms.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test comprehensive understanding of networking concepts.
+    Mix of conceptual questions, calculations (subnetting), and short
+    coding problems. Students should be able to trace protocol behavior
+    on paper.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      8-10 multiple choice conceptual questions, 6-8 subnetting/addressing
+      calculations, 5-6 protocol tracing questions, 4-6 short answer
+      explaining protocol behavior or design choices.
+    coverage: "Topics 1-4: Architecture, Physical/Data Link, Network Layer, Routing"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 46
+    duration_minutes: 120
+    format: >
+      15-18 multiple choice, 8-10 calculations, 8-10 protocol tracing,
+      8-12 short answer/coding. Cumulative with emphasis on transport
+      layer, socket programming, and application protocols.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 2
+  rationale: >
+    Projects are essential for networking to integrate concepts into real
+    applications. Students should build working networked systems that
+    demonstrate understanding of protocols, socket programming, and
+    application design. Two projects minimum; subject has 4 substantial
+    options.
+
+  goals:
+    - Implement working client-server applications
+    - Handle network errors and edge cases properly
+    - Demonstrate understanding of protocols through implementation
+    - Build something that could be extended for real use
+
+  estimated_hours: "15-30"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Socket code that ignores return values or error conditions
+  - Subnetting exercises with ambiguous or invalid addresses
+  - Protocol descriptions that contradict RFC specifications
+  - Examples using deprecated or insecure protocols without noting it
+  - Code that blocks indefinitely without timeout handling
+  - Quiz questions that test memorization of obscure protocol details
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Computer Networks is a core CS course that bridges theory and practice.
+  Students often struggle early with the layered model but gain appreciation
+  as they see how layers compose. Socket programming is where many students
+  first encounter concurrent programming challenges. Content should emphasize
+  the "why" behind protocol design, not just the "what." Real-world examples
+  (how does Netflix work? how does a web browser connect?) make concepts
+  concrete.

@@ -168,3 +168,72 @@ Converting between binary and decimal is fundamental:
 - 255 = 11111111
 
 Understanding binary is essential for subnetting calculations.
+
+## Determining if Two Hosts Are on the Same Network
+
+A fundamental question in networking: can two hosts communicate directly, or do they need a router? The answer depends on whether they're on the same network.
+
+**To check if hosts are on the same network**:
+1. AND each host's IP address with the subnet mask
+2. If the results are equal, they're on the same network
+
+**Example**:
+```
+Host A: 192.168.1.50
+Host B: 192.168.1.100
+Subnet Mask: 255.255.255.0
+
+Host A & Mask: 192.168.1.0
+Host B & Mask: 192.168.1.0
+Result: Same network (192.168.1.0/24)
+```
+
+**Example with different networks**:
+```
+Host A: 192.168.1.50
+Host B: 192.168.2.100
+Subnet Mask: 255.255.255.0
+
+Host A & Mask: 192.168.1.0
+Host B & Mask: 192.168.2.0
+Result: Different networks - need router
+```
+
+This calculation happens on every host for every packet sent. If the destination is on the same network, send directly. If not, send to the default gateway (router).
+
+## Address Exhaustion and Mitigation
+
+IPv4's 4.3 billion addresses seemed infinite in 1981 when the protocol was designed. Today, they're effectively exhausted. Several techniques mitigate this:
+
+**NAT (Network Address Translation)**: Allows multiple devices to share a single public IP address. A home network might have 50 devices but appears as one IP to the Internet. NAT is covered in detail in a later subtopic.
+
+**CIDR**: Replaced wasteful classful allocation with flexible prefix lengths. An organization needing 500 addresses can get a /23 (512 addresses) instead of a Class B (65,536 addresses).
+
+**Private Address Reuse**: The same private addresses (10.x.x.x, 192.168.x.x) are used in millions of networks worldwide. Each is unique only within its network.
+
+**IPv6**: The long-term solution with 128-bit addresses (340 undecillion addresses). Deployment is ongoing but slow due to the success of NAT.
+
+## Common Pitfalls in IP Addressing
+
+**Pitfall 1: Forgetting the network and broadcast addresses**
+
+A /24 network has 256 addresses but only 254 usable for hosts. The first address is the network address (192.168.1.0), and the last is the broadcast address (192.168.1.255). Assigning either to a host causes problems.
+
+**Pitfall 2: Subnet mask mismatches**
+
+If two hosts have different subnet masks, they may disagree about network boundaries. Host A with 255.255.255.0 and Host B with 255.255.0.0 will have different views of the network.
+
+**Pitfall 3: Using public addresses on private networks**
+
+Accidentally using someone else's public IP range on your private network creates routing chaos when traffic tries to reach the real owner of those addresses.
+
+## Key Takeaways
+
+- IPv4 addresses are 32-bit numbers written in dotted decimal notation
+- Addresses are divided into network and host portions
+- Classful addressing (A/B/C) is historical; CIDR is used today
+- Subnet masks indicate which bits are network vs host
+- CIDR notation (/24) specifies the prefix length
+- Special addresses include network, broadcast, loopback, link-local, and private ranges
+- Private addresses (RFC 1918) are not routed on the public Internet
+- Binary arithmetic skills are essential for network calculations

@@ -132,3 +132,93 @@ This state enables reliability but requires memory and processing.
 | Higher latency | Lower latency |
 
 TCP is the right choice for most applications. UDP is appropriate when applications need fine-grained control or cannot tolerate TCP's latency.
+
+## Maximum Segment Size (MSS)
+
+The **Maximum Segment Size (MSS)** is the largest amount of data that TCP will send in a single segment, excluding the TCP header. MSS is negotiated during connection establishment:
+
+```
+Client: "My MSS is 1460 bytes"
+Server: "My MSS is 1460 bytes"
+```
+
+**Common MSS values**:
+- **1460 bytes**: Standard for Ethernet (1500 MTU - 20 IP header - 20 TCP header)
+- **1220 bytes**: Used over some VPN tunnels
+- **536 bytes**: Minimum that must be supported
+
+MSS is independent of the window size. A large window doesn't mean large segments—MSS limits individual segment size while window controls how much unacknowledged data can be in flight.
+
+**Why not just use very large segments?** The Maximum Transmission Unit (MTU) of the network path limits segment size. If a segment is too large, it must be fragmented by IP, which is inefficient and can cause problems if fragments are lost.
+
+## TCP Pseudo-Header and Checksum
+
+TCP's checksum protects against data corruption. Unlike many checksums, TCP's checksum covers more than just the TCP segment—it includes a **pseudo-header** containing IP addresses:
+
+```
+Pseudo-Header (12 bytes):
++---------------------------+
+| Source IP Address (4)     |
++---------------------------+
+| Destination IP Address (4)|
++---------------------------+
+|  Zero |Protocol|TCP Length|
++---------------------------+
+```
+
+This pseudo-header ensures that a segment arriving at the wrong destination (due to IP address corruption) will fail its checksum. The checksum algorithm is the one's complement of the one's complement sum of all 16-bit words.
+
+**Checksum calculation**:
+1. Set checksum field to zero
+2. Pad to 16-bit boundary if needed
+3. Sum all 16-bit words (including pseudo-header, header, and data)
+4. Take one's complement of the sum
+
+While not as strong as CRC, this checksum catches most transmission errors and is fast to compute in software.
+
+## TCP Timers
+
+TCP uses several timers to ensure reliability:
+
+**Retransmission Timer**: Triggers retransmission if an ACK doesn't arrive in time. The timeout value (RTO) is calculated from measured round-trip times:
+
+```
+RTO = SRTT + 4 × RTTVAR
+
+Where:
+  SRTT = Smoothed Round-Trip Time
+  RTTVAR = Round-Trip Time Variation
+```
+
+If a segment is retransmitted, TCP applies **exponential backoff**: the timeout doubles for each successive retransmission (1s, 2s, 4s, 8s...).
+
+**Persistence Timer**: Prevents deadlock when the receiver advertises a zero window. TCP periodically sends probe segments to check if the window has opened.
+
+**Keepalive Timer**: Detects dead connections. If no data is exchanged for a period (typically 2 hours), TCP sends keepalive probes. If no response, the connection is closed.
+
+**TIME-WAIT Timer**: After closing a connection, TCP waits (2 × MSL, typically 60-240 seconds) before the same socket pair can be reused. This ensures delayed packets from the old connection don't interfere with a new one.
+
+## Common TCP Mistakes
+
+**Mistake 1: Assuming one send() = one recv()**
+
+TCP is a byte stream. A single `send()` may be delivered across multiple `recv()` calls, or multiple `send()` calls may arrive in a single `recv()`. Applications must handle partial reads and implement message boundaries.
+
+**Mistake 2: Ignoring half-closed connections**
+
+When one side sends FIN, it can still receive data. Applications must handle the case where the peer has closed its sending side but you haven't finished sending.
+
+**Mistake 3: Not handling connection resets properly**
+
+A RST can arrive at any time. Applications should gracefully handle `ECONNRESET` errors rather than crashing.
+
+## Key Takeaways
+
+- TCP transforms unreliable IP into a reliable byte stream service
+- Sequence numbers identify byte positions, enabling reordering and duplicate detection
+- Cumulative acknowledgments indicate the next expected byte
+- TCP maintains connection state: sequence numbers, windows, timers
+- The segment format includes ports, sequence/ack numbers, flags, window, and checksum
+- MSS negotiation prevents fragmentation
+- Multiple timers ensure reliability and detect failures
+- TCP is connection-oriented and full-duplex, suitable for most applications
