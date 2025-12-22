@@ -1,0 +1,290 @@
+# CS105: Introduction to C Programming - Subject Specification
+# This spec guides content creation for an introductory systems programming course in C.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs105
+title: Introduction to C Programming
+category: cs
+
+role:
+  level: introductory
+  transformation: >
+    From "I can program in Python" to "I understand how programs interact with
+    memory and hardware, and I can write efficient, low-level code." Students
+    should finish ready for systems programming and understanding why C remains
+    foundational to modern computing.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 800
+
+  prerequisite_knowledge:
+    - Basic programming experience (CS101 or equivalent)
+    - Understanding of variables, control flow, and functions
+    - Familiarity with at least one high-level programming language
+    - Basic understanding of how programs execute
+
+  essential_concepts:
+    - C syntax, types, and operators
+    - Pointers and pointer arithmetic
+    - Dynamic memory allocation (malloc, free, realloc)
+    - Structures, unions, and user-defined types
+    - File I/O operations (text and binary files)
+    - Preprocessor directives and compilation model
+    - Memory layout (stack, heap, data segments)
+    - Common pitfalls (buffer overflows, memory leaks, undefined behavior)
+
+  out_of_scope:
+    - Advanced data structures (covered in CS104)
+    - Operating system internals (covered in CS301)
+    - Network programming (covered in CS302)
+    - C++ features (separate language)
+    - Embedded systems specifics
+    - Multi-threading (advanced topic)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: procedural
+
+  mastery_indicators:
+    - Writes correct pointer operations without memory errors
+    - Manages dynamic memory without leaks (verified by valgrind)
+    - Understands and prevents common security vulnerabilities
+    - Reads and writes files correctly with proper error handling
+    - Uses structures effectively to organize data
+    - Debugs segmentation faults and memory corruption
+    - Understands the compilation model (preprocessor, compiler, linker)
+
+  common_struggles:
+    - Confusing pointers and arrays (especially with function arguments)
+    - Forgetting to free dynamically allocated memory
+    - Off-by-one errors in string manipulation
+    - Using uninitialized variables or pointers
+    - Double-free and use-after-free bugs
+    - Buffer overflows from incorrect bounds checking
+    - Misunderstanding pass-by-value vs pass-by-pointer
+    - Forgetting NULL checks after malloc
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Show memory diagrams for pointer concepts
+    - Always demonstrate both correct and incorrect usage patterns
+    - Include error messages students will see when things go wrong
+    - Show valgrind output for memory-related topics
+    - Emphasize defensive programming practices (NULL checks, bounds checking)
+    - Include real-world context for why C patterns matter
+
+  conventions:
+    - C11 standard (with notes on older standards where relevant)
+    - K&R style bracing and 4-space indentation
+    - All code examples must compile with gcc -Wall -Wextra -pedantic
+    - Show compiler warnings and how to fix them
+    - Memory diagrams use consistent visual notation
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    C programming requires understanding both syntax AND memory model. Assessments
+    must test whether students can write correct code AND understand why it works.
+    Many small coding exercises build muscle memory for safe patterns. Projects
+    integrate concepts into real applications demonstrating systems thinking.
+
+  measures:
+    - Code correctness (compiles without warnings, runs correctly)
+    - Memory safety (no leaks, no undefined behavior)
+    - Error handling (checks return values, handles failures gracefully)
+    - Understanding of memory layout and pointer semantics
+    - Ability to debug common C errors
+
+  anti_patterns:
+    - Exercises that work correctly despite memory bugs
+    - Code that relies on undefined behavior working by accident
+    - Problems solvable by pattern matching without understanding
+    - Ignoring compiler warnings in starter code or solutions
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard threshold because while C is challenging, students must demonstrate
+    competence in memory management to proceed to systems courses. Memory bugs
+    in C can have severe consequences (security vulnerabilities, data corruption),
+    so a solid foundation is essential.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    C requires building correct habits through repetition. Exercises progress from
+    single-concept problems to multi-concept integration. Memory management and
+    pointer exercises are weighted heavily because these skills are fundamental
+    and error-prone.
+
+  types:
+    coding_with_tests: "100%"
+    coding_ai_evaluated: "0%"
+    written: "0%"
+    justification: >
+      All exercises are coding with automated tests. C code must be verifiably
+      correct - memory bugs and undefined behavior cannot be caught by AI evaluation.
+      Automated testing ensures code compiles, runs, and produces correct output.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. C has many details to master, and students need
+      substantial practice with memory operations. Each exercise builds correct
+      habits that prevent bugs in larger programs.
+
+  difficulty_distribution:
+    1: 3
+    2: 3
+    3: 4
+    4: 3
+    5: 3
+    justification: >
+      Balanced distribution because even "easy" C problems require attention to
+      memory safety. Higher difficulty exercises involve pointer manipulation,
+      dynamic allocation patterns, and debugging. Students should be comfortable
+      with difficulty 4 exercises to succeed in systems courses.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding of memory layout, pointer semantics,
+    and C language rules. They complement coding exercises by ensuring students
+    can predict program behavior before running code.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic cover definitions (Quiz A),
+      code tracing and output prediction (Quiz B), and edge cases and gotchas
+      (Quiz C).
+
+  question_types:
+    multiple_choice: "35%"
+    true_false: "20%"
+    fill_blank: "15%"
+    code_output: "30%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on code_output to test pointer tracing and memory model understanding.
+      True/false for common misconceptions about C semantics. Multiple choice
+      for conceptual questions about when to use different techniques.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test understanding of C without IDE assistance. Students must trace
+    pointer operations, predict memory layout, and write small functions by hand.
+    This reveals whether they truly understand C or rely on trial-and-error.
+
+  midterm:
+    questions:
+      minimum: 23
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      8-10 code output/tracing questions, 8-10 multiple choice on concepts,
+      4-6 short coding problems (write a function in 5-10 lines).
+      Must include pointer manipulation and memory allocation questions.
+    coverage: "Topics 1-4: C basics, pointers, memory management, structures"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      15-18 code output/tracing, 12-15 multiple choice, 8-12 short coding.
+      Comprehensive coverage with emphasis on memory management, file I/O,
+      and integration of multiple concepts. At least one debugging question.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 3
+  rationale: >
+    Projects integrate multiple C concepts into real applications. They require
+    sustained work with pointers, memory management, and file I/O - skills that
+    only solidify through larger programs. Three projects provide progression:
+    (1) basic integration, (2) data structure implementation, (3) systems-level
+    memory management.
+
+  goals:
+    - Integrate structures, pointers, memory management, and file I/O
+    - Build non-trivial programs that manage complex state
+    - Practice defensive programming in larger codebases
+    - Gain experience debugging memory issues in real programs
+    - Develop appreciation for systems-level programming
+
+  estimated_hours: "12-15"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Code example compiles but has undefined behavior
+  - Exercise solution has memory leaks
+  - Missing NULL checks after malloc in examples
+  - Using deprecated or unsafe functions (gets, sprintf) without warning
+  - Assuming specific pointer sizes or memory layout
+  - Solutions that work by accident due to uninitialized memory
+  - Quiz question about behavior that differs across compilers
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  This course bridges high-level programming (Python/JavaScript) and systems
+  programming. Students often struggle with the transition because C errors are
+  less forgiving. Content should normalize debugging struggles and teach systematic
+  approaches (valgrind, printf debugging, memory diagrams). The goal is not just
+  "write C code" but "understand how computers actually work with memory."
