@@ -1,5 +1,9 @@
 # stu.p
 
+<p align="center">
+  <img src="public/brick-guy-pondering.svg" alt="stu.p Brick Mascot Pondering" width="150" height="150">
+</p>
+
 **stu.p** is a **stu**dy **p**rogram: a computer science oriented self-study platform with readings, exercises, quizzes, and exams.
 
 ## What This Is
