@@ -1,0 +1,294 @@
+# CS201: Algorithms - Subject Specification
+# This spec guides content creation for an intermediate algorithms course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs201
+title: Algorithms
+category: cs
+
+role:
+  level: intermediate
+  transformation: >
+    From "I can write code that works" to "I can analyze, design, and prove the
+    correctness of efficient algorithms for complex problems." Students should
+    finish able to recognize algorithmic patterns, analyze time/space complexity,
+    and choose the right approach for a given problem.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  # NOTE: This subject has 8 topics instead of the standard 7.
+  # Justification: Algorithms is a broad subject that spans both paradigms
+  # (sorting, searching, divide-and-conquer, dynamic programming, greedy, graphs)
+  # AND formal methods (correctness proofs, complexity theory). Combining these
+  # into 7 topics would either shortchange the paradigms or skip formal methods
+  # entirely. The 8-topic structure provides comprehensive coverage:
+  # - Topics 1-7: Core algorithm paradigms and techniques
+  # - Topic 8: Formal methods (correctness proofs, complexity theory, approximation)
+  topic_count: 8
+
+  prerequisite_knowledge:
+    - Programming fundamentals (CS101)
+    - Object-oriented programming concepts (CS102)
+    - Basic data structures (arrays, linked lists, trees, hash tables from CS104)
+    - Mathematical maturity (discrete math, basic proofs)
+    - Big-O notation familiarity (introduced in CS104)
+
+  essential_concepts:
+    - Algorithm analysis and asymptotic notation
+    - Sorting algorithms (comparison-based and linear-time)
+    - Searching algorithms (binary search, hash-based, trees)
+    - Divide and conquer paradigm and recurrence relations
+    - Dynamic programming and memoization
+    - Greedy algorithms and correctness proofs
+    - Graph algorithms (traversal, shortest paths, MST)
+    - Algorithm correctness and complexity theory
+
+  out_of_scope:
+    - Advanced data structures (B-trees, Fibonacci heaps - covered in CS403)
+    - Parallel and distributed algorithms (covered in CS401)
+    - Randomized algorithms beyond basic examples (covered in CS403)
+    - Computational geometry beyond basic examples
+    - String algorithms beyond basic pattern matching
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Analyzes algorithm complexity correctly (time and space)
+    - Recognizes which paradigm applies to a given problem
+    - Implements algorithms correctly from pseudocode
+    - Proves algorithm correctness using loop invariants
+    - Identifies when greedy fails and DP is needed
+    - Traces algorithm execution on examples
+    - Designs novel algorithms by combining learned techniques
+
+  common_struggles:
+    - Confusing average case with worst case analysis
+    - Incorrect recurrence relation formulation
+    - Not recognizing optimal substructure in DP problems
+    - Forgetting base cases in recursive algorithms
+    - Incorrect loop invariant formulation
+    - Confusing Dijkstra with Bellman-Ford applicability
+    - Off-by-one errors in binary search and partitioning
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Pseudocode for every algorithm with clear variable naming
+    - Complexity analysis (time and space) for every algorithm
+    - Worked examples tracing algorithm execution step-by-step
+    - Visual diagrams (Mermaid) for algorithm flow and data structure state
+    - Common pitfalls section addressing typical implementation errors
+    - Comparison with alternative approaches where applicable
+
+  conventions:
+    - Python 3.10+ for all code examples
+    - LaTeX for complexity expressions and mathematical notation
+    - Pseudocode follows CLRS-style conventions
+    - Mermaid diagrams for algorithm visualization
+    - Clear distinction between algorithm idea and implementation details
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Algorithm understanding requires both theoretical analysis and practical
+    implementation. Students must be able to analyze complexity, prove correctness,
+    AND write working code. Exercises should mix implementation problems with
+    analysis questions. Code-tracing and hand-simulation build understanding
+    before implementation.
+
+  measures:
+    - Correct complexity analysis (asymptotic bounds)
+    - Working implementations that pass edge cases
+    - Correct proof structure for algorithm correctness
+    - Algorithm selection for problem characteristics
+    - Code tracing and prediction of algorithm behavior
+
+  anti_patterns:
+    - Pure memorization of complexity values without understanding
+    - Algorithm implementation without complexity analysis
+    - Trick questions about obscure corner cases
+    - Questions answerable by library lookup rather than understanding
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 70
+    exams: 65
+
+  rationale: >
+    Standard passing thresholds for an intermediate subject. Slightly lower
+    exam threshold because algorithm exams often require novel problem-solving
+    under time pressure, which is harder than practiced exercises.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Mix of implementation exercises (to build coding fluency) and analysis
+    exercises (to develop theoretical understanding). Coding exercises have
+    automated tests. Written exercises for proofs and analysis are AI-evaluated.
+    Exercises progress from implementing known algorithms to designing variations.
+
+  types:
+    coding_with_tests: "75%"
+    coding_ai_evaluated: "10%"
+    written: "15%"
+    justification: >
+      Majority coding with tests for immediate feedback on correctness.
+      Some AI-evaluated coding for open-ended optimization problems.
+      Written exercises for complexity analysis and correctness proofs.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard. Algorithms requires substantial practice to develop
+      pattern recognition. 16 exercises per topic × 8 topics = 128 total,
+      providing comprehensive coverage of each algorithmic paradigm.
+
+  difficulty_distribution:
+    1: 2
+    2: 3
+    3: 5
+    4: 4
+    5: 2
+    justification: >
+      Slightly skewed toward medium difficulty. Algorithms is an intermediate
+      subject so fewer trivial exercises. Difficulty 3-4 are the core learning
+      zone. Two challenging problems per topic for advanced students.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding, complexity recognition, and code
+    tracing. They complement coding exercises by testing whether students
+    understand WHY algorithms work, not just that they can implement them.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic (Fundamentals, Application,
+      Mastery) with 5 questions each. Total 15 questions per topic, 120 total.
+
+  question_types:
+    multiple_choice: "40%"
+    true_false: "15%"
+    fill_blank: "15%"
+    code_output: "30%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on code_output for algorithm tracing (what does this code produce?).
+      Multiple choice for complexity analysis and paradigm recognition.
+      Fill-blank for recurrence relations and complexity expressions.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test understanding without IDE assistance. Mix of complexity analysis,
+    algorithm tracing, short implementations, and correctness arguments.
+    Both exams have standard question counts with 8 topics providing more
+    content to draw from.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      6-8 complexity analysis questions, 6-8 code tracing questions,
+      6-8 multiple choice on algorithm selection, 4-6 short coding problems.
+      Focus on paradigms from first half of course.
+    coverage: "Topics 1-4: Analysis, Sorting, Searching, Divide and Conquer"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      10-12 complexity analysis, 10-12 code tracing, 10-12 multiple choice,
+      8-12 short coding/written problems. Comprehensive coverage with
+      emphasis on later topics (DP, Greedy, Graphs, Correctness).
+    coverage: "Comprehensive: all 8 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 2
+  rationale: >
+    Projects provide experience with larger algorithmic implementations
+    that span multiple concepts. Two projects allow one focused on
+    search/optimization algorithms and one on graph algorithms.
+
+  goals:
+    - Apply multiple algorithmic paradigms to a single problem
+    - Implement and compare different algorithmic approaches
+    - Analyze practical performance vs theoretical complexity
+    - Build intuition for algorithm selection in real problems
+
+  estimated_hours: "10-15"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires library algorithms instead of implementation
+  - Complexity analysis without explanation of derivation
+  - Algorithm implementation without edge case testing
+  - Proof of correctness that skips loop invariant base case
+  - Code example with incorrect complexity in comments
+  - Exercise tests memorization of algorithm names rather than understanding
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  This is often students' first deep dive into algorithm analysis and design.
+  Content should bridge intuition (what the algorithm does) with formalism
+  (why it works and how fast it is). Visual representations of algorithm
+  execution are crucial for building understanding. Students should be able
+  to trace any algorithm by hand before implementing it.

@@ -1,14 +1,14 @@
 # Curriculum Review Summary
 
-**Review Date:** 2025-12-21
+**Review Date:** 2025-12-23
 **Total Subjects Reviewed:** 38
 
 ## Quick Stats
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| COMPLETE (10/10) | 34 | 89% |
-| COMPLETE (7-9/10) | 4 | 11% |
+| COMPLETE (10/10) | 33 | 87% |
+| COMPLETE (7-9/10) | 5 | 13% |
 | NEEDS WORK | 0 | 0% |
 | INCOMPLETE | 0 | 0% |
 
@@ -19,6 +19,7 @@
 - CS102: Computer Systems Fundamentals
 - CS103: Object-Oriented Programming
 - CS104: Data Structures
+- CS201: Algorithms
 - CS202: Computer Architecture
 - CS203: Theory of Computation
 - CS204: Software Engineering
@@ -50,7 +51,6 @@
 
 ### Good with Minor Issues (7-9/10)
 - CS105: Introduction to C Programming (8/10)
-- CS201: Algorithms (7/10)
 - CS302: Computer Networks (8/10)
 - CS401: Distributed Systems (8/10)
 - MATH301: Multivariable Calculus (8/10)
@@ -61,24 +61,30 @@
 
 ## Common Issues
 
-### 1. Exercise Shortages
-Some subjects don't have 16 exercises per topic:
-- (None remaining - all subjects have 16 exercises per topic)
+### 1. Missing subject-spec.yaml
+Many subjects still need subject-spec.yaml files (required since 2025-12-20):
+- CS105, CS202, CS203, CS204, CS205
+- CS301, CS302, CS303, CS304, CS305, CS306, CS307
+- CS401, CS403
+- MATH101, MATH102, MATH201, MATH202, MATH203
+- MATH301, MATH302, MATH304, MATH403
 
-### 2. Word Count Deficiencies
-Some subjects have subtopics below the 800-word minimum:
-- (None remaining)
+### 2. Exercise Shortages
+- (None remaining - all subjects have 16+ exercises per topic)
 
-### 3. Missing/Incomplete Content
+### 3. Word Count Deficiencies
+- (None remaining - all subtopics meet 800+ word minimum)
+
+### 4. Incomplete Project Rubrics
 - (None remaining)
 
 ## Priority Action Items
 
 ### Immediate (Blocking Production)
-(None - all immediate blockers resolved)
+(None remaining)
 
 ### High Priority
-(None - all high priority items resolved)
+- Create subject-spec.yaml files for all subjects listed in Common Issues #1
 
 ## Year-by-Year Summary
 
@@ -87,8 +93,8 @@ Some subjects have subtopics below the 800-word minimum:
 - **Good:** (none)
 
 ### Year 2 (9 subjects)
-- **Complete:** CS202, CS203, CS204, CS205, MATH201, MATH202, MATH203, MATH204
-- **Good:** CS201
+- **Complete:** CS201, CS202, CS203, CS204, CS205, MATH201, MATH202, MATH203, MATH204
+- **Good:** (none)
 
 ### Year 3 (11 subjects)
 - **Complete:** CS301, CS303, CS304, CS305, CS306, CS307, MATH302, MATH304
@@ -100,13 +106,24 @@ Some subjects have subtopics below the 800-word minimum:
 
 ## Estimated Work Remaining
 
-| Subject | Estimated Hours |
-|---------|-----------------|
-| - | 0 |
+| Subject | Estimated Hours | Work Needed |
+|---------|-----------------|-------------|
+| Various | 0.5 each | Create subject-spec.yaml files (25 subjects) |
 
-**Total Estimated:** 0 hours. All subjects meet the base quality standard.
+**Total Estimated:** ~12-13 hours for spec files.
 
-## Recent Updates (2025-12-21)
+## Recent Updates (2025-12-23)
+
+### CS201: Algorithms Upgraded to Production Ready
+- **Status changed:** 7/10 → 10/10
+- **Changes made:**
+  1. Created `subject-spec.yaml` with 8-topic justification and complete pedagogical documentation
+  2. Fixed Maze Solver project rubric (expanded from 1 criterion/2 levels to 4 criteria/4 levels, weights now sum to 100%)
+  3. Added second project: Sorting Algorithm Benchmark Suite with 12 requirements and complete rubric
+  4. Both projects now have 12 requirements each, 4 rubric criteria with 4 levels, weights summing to 100%
+- **Content quality remains excellent:** 86,000+ words, 128 exercises, 120 quiz questions, complete exams
+
+## Previous Updates (2025-12-21)
 
 ### Subjects Upgraded to Production Ready
 - **CS102: Computer Systems Fundamentals** - Created subject-spec.yaml (exam-only subject), added 14 new subtopics (2 per topic) to bring each topic from 5 to 7 subtopics, total ~19,000 words added. Now at 100% with 49/49 subtopics averaging 1455 words each.

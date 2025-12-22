@@ -3,43 +3,331 @@
     "id": "cs201-project-maze",
     "subjectId": "cs201",
     "title": "Maze Solver",
-    "description": "Build a tool that finds the shortest path through a maze using graph algorithms. You will implement BFS for unweighted shortest paths and A* for optimized searching.",
-    "estimatedHours": 10,
+    "description": "Build a comprehensive maze-solving application that implements multiple pathfinding algorithms and provides visual feedback on algorithm execution. This project integrates concepts from graph algorithms, searching techniques, and algorithm analysis.\n\nYou will create a system that can:\n1. Parse maze representations from text files or strings\n2. Implement and compare multiple pathfinding algorithms\n3. Visualize the search process and final paths\n4. Analyze and report algorithm performance\n\nThe maze is represented as a 2D grid where:\n- '#' represents walls (impassable)\n- '.' represents open paths\n- 'S' represents the start position\n- 'E' represents the end/goal position\n\nYour implementation should handle edge cases like mazes with no solution, multiple paths of equal length, and various maze sizes.\n\nThis project reinforces your understanding of graph traversal algorithms (BFS, DFS), heuristic search (A*), and algorithm analysis. You'll gain practical experience with algorithm implementation, performance measurement, and visualization techniques.",
+    "estimatedHours": 12,
     "requirements": [
-      "Implement BFS",
-      "Implement A*",
-      "Visualize path"
+      "Implement a Maze class that parses maze input from strings or files and validates the maze structure",
+      "Implement Breadth-First Search (BFS) to find the shortest unweighted path",
+      "Implement Depth-First Search (DFS) to find any valid path",
+      "Implement A* search with Manhattan distance heuristic for optimized pathfinding",
+      "Track and return the path from start to end as a list of coordinates",
+      "Count and report the number of cells visited during each search",
+      "Handle edge cases: no solution, start equals end, invalid maze format",
+      "Implement path visualization showing the explored cells and final path",
+      "Compare algorithm performance (path length, cells visited, execution time) on test mazes",
+      "Write unit tests covering normal cases, edge cases, and algorithm correctness",
+      "Document time and space complexity of each algorithm implementation",
+      "Create at least 5 test mazes of varying sizes and complexity for benchmarking"
     ],
     "rubric": [
       {
-        "name": "Correctness",
-        "weight": 50,
+        "name": "Algorithm Implementation",
+        "weight": 35,
         "levels": [
           {
-            "score": 50,
-            "label": "Perfect",
-            "description": "Finds optimal path"
+            "score": 4,
+            "label": "Excellent",
+            "description": "All three algorithms (BFS, DFS, A*) correctly implemented with optimal performance. BFS and A* find shortest paths; A* explores fewer cells than BFS on average. Code is clean and well-structured."
           },
           {
-            "score": 0,
-            "label": "Failed",
-            "description": "Does not find path"
+            "score": 3,
+            "label": "Good",
+            "description": "All three algorithms implemented and work correctly. May have minor inefficiencies but produce correct results. Code is readable."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Two algorithms correctly implemented. Third algorithm has bugs or is missing. Basic functionality works for simple mazes."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Only one algorithm works correctly. Major implementation issues or algorithms produce incorrect paths."
+          }
+        ]
+      },
+      {
+        "name": "Edge Case Handling",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Gracefully handles all edge cases: no solution (returns None/empty), start==end (returns single-cell path), invalid input (raises appropriate errors), large mazes (no stack overflow). Clear error messages."
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Handles most edge cases correctly. May have minor issues with unusual inputs but doesn't crash."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Handles some edge cases. May crash or produce incorrect results for some unusual inputs."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal edge case handling. Crashes on invalid input or produces incorrect results for no-solution mazes."
+          }
+        ]
+      },
+      {
+        "name": "Testing and Analysis",
+        "weight": 25,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Comprehensive test suite with unit tests for each algorithm and edge case. Performance analysis includes execution time, cells visited, and path length comparisons. 5+ test mazes with documented complexity analysis."
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good test coverage for main functionality. Performance comparison between algorithms included. 3-4 test mazes."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic tests for each algorithm. Limited performance analysis. 2-3 test mazes."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal or no tests. No performance analysis. Only trivial test mazes."
+          }
+        ]
+      },
+      {
+        "name": "Code Quality and Documentation",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Clean, well-organized code following Python conventions. Comprehensive docstrings. Complexity analysis documented for each algorithm. README with usage instructions and examples."
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Readable code with some documentation. Docstrings for main functions. Basic README."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Code works but organization could be improved. Minimal documentation."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poorly organized code. No documentation or comments. Hard to understand."
           }
         ]
       }
     ],
     "scaffolding": {
-      "overview": "Build a maze solver using graph traversal algorithms.",
+      "overview": "Build a maze solver using graph traversal algorithms. You'll implement BFS, DFS, and A* to find paths through mazes, then compare their performance.",
       "gettingStarted": [
-        "Create a Maze class that parses a grid and identifies start (S) and end (E) positions",
-        "Implement BFS to find the shortest unweighted path",
-        "Implement A* with a heuristic for optimized searching",
-        "Add visualization to show the path found"
+        "Create a Maze class that parses a grid string and identifies start (S) and end (E) positions",
+        "Implement a method to get valid neighbors (non-wall cells within bounds)",
+        "Start with BFS using a queue and visited set - this is the simplest correct algorithm",
+        "Add DFS using a stack (or recursion) to see how it differs from BFS",
+        "Implement A* with Manhattan distance heuristic using heapq for the priority queue",
+        "Add visualization by printing the maze with visited cells marked"
+      ],
+      "milestones": [
+        "Milestone 1: Maze parsing and validation (2 hours)",
+        "Milestone 2: BFS implementation with path reconstruction (3 hours)",
+        "Milestone 3: DFS implementation (2 hours)",
+        "Milestone 4: A* implementation with heuristic (3 hours)",
+        "Milestone 5: Testing, edge cases, and performance analysis (2 hours)"
       ],
       "tips": [
-        "Use a queue for BFS and a priority queue (heapq) for A*",
-        "Track visited cells to avoid infinite loops",
-        "For A*, Manhattan distance works well as a heuristic for grid mazes"
+        "Use a queue (collections.deque) for BFS and a priority queue (heapq) for A*",
+        "Track visited cells to avoid infinite loops and revisiting",
+        "Store parent pointers to reconstruct the path after reaching the goal",
+        "For A*, f(n) = g(n) + h(n) where g is cost so far and h is heuristic estimate",
+        "Manhattan distance |x1-x2| + |y1-y2| is an admissible heuristic for grid mazes",
+        "Test with mazes that have no solution to verify your edge case handling"
+      ],
+      "starterResources": [
+        {
+          "label": "Python heapq documentation",
+          "description": "Priority queue implementation for A*",
+          "link": "https://docs.python.org/3/library/heapq.html"
+        },
+        {
+          "label": "Python collections.deque",
+          "description": "Efficient queue for BFS",
+          "link": "https://docs.python.org/3/library/collections.html#collections.deque"
+        }
+      ]
+    }
+  },
+  {
+    "id": "cs201-project-sorting-benchmark",
+    "subjectId": "cs201",
+    "title": "Sorting Algorithm Benchmark Suite",
+    "description": "Build a comprehensive sorting algorithm benchmark suite that implements, visualizes, and analyzes multiple sorting algorithms. This project integrates concepts from sorting algorithms, algorithm analysis, and empirical performance measurement.\n\nYou will create a system that can:\n1. Implement multiple sorting algorithms from scratch\n2. Generate test data with different characteristics (random, sorted, reverse-sorted, nearly-sorted)\n3. Measure and compare algorithm performance empirically\n4. Visualize the sorting process and performance results\n5. Analyze how input characteristics affect algorithm performance\n\nSorting algorithms to implement:\n- Simple sorts: Bubble Sort, Selection Sort, Insertion Sort\n- Efficient sorts: Merge Sort, Quick Sort, Heap Sort\n- Bonus: Counting Sort, Radix Sort (for integer data)\n\nThis project reinforces your understanding of sorting algorithm mechanics, time complexity analysis, and the gap between theoretical and practical performance. You'll gain experience with algorithm implementation, benchmarking methodology, and data visualization.",
+    "estimatedHours": 14,
+    "requirements": [
+      "Implement at least 6 sorting algorithms: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, and Heap Sort",
+      "Each algorithm must sort in-place where possible, or document memory usage if not",
+      "Implement a test data generator that creates arrays of different sizes (100, 1000, 10000, 100000) and types (random, sorted, reverse-sorted, nearly-sorted)",
+      "Measure execution time using appropriate timing mechanisms (time.perf_counter)",
+      "Count comparisons and swaps/assignments for each algorithm run",
+      "Handle edge cases: empty arrays, single elements, duplicate values, already sorted input",
+      "Implement stable vs unstable sort verification using objects with key/value pairs",
+      "Create performance comparison charts (execution time vs input size) using matplotlib or similar",
+      "Write unit tests verifying correctness of each sorting algorithm",
+      "Document theoretical vs empirical complexity for each algorithm",
+      "Analyze and explain any deviations between theoretical and measured performance",
+      "Create a summary report comparing algorithm performance across input types"
+    ],
+    "rubric": [
+      {
+        "name": "Algorithm Implementation",
+        "weight": 35,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "All 6+ sorting algorithms correctly implemented with proper complexity. Algorithms handle all input types correctly. Code is clean, efficient, and well-structured. Bonus algorithms (Counting Sort, Radix Sort) implemented."
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "All 6 required algorithms implemented and work correctly. May have minor inefficiencies but produce correct sorted output. Code is readable."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "4-5 algorithms correctly implemented. Some algorithms may have bugs or incorrect complexity. Basic functionality works."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Fewer than 4 algorithms work correctly. Major implementation issues or algorithms produce incorrect output."
+          }
+        ]
+      },
+      {
+        "name": "Benchmarking and Analysis",
+        "weight": 30,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Comprehensive benchmarking across all input sizes and types. Clear visualizations showing performance curves. Insightful analysis of theoretical vs empirical complexity with explanations for any discrepancies. Statistical robustness (multiple runs, averages)."
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good benchmarking coverage with multiple input sizes and types. Visualizations present. Analysis compares algorithms effectively."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic benchmarking with limited input variety. Simple comparisons. Minimal analysis of results."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal or no benchmarking. No visualizations. No meaningful analysis."
+          }
+        ]
+      },
+      {
+        "name": "Testing and Edge Cases",
+        "weight": 20,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Comprehensive test suite covering correctness, stability, edge cases (empty, single, duplicates, pre-sorted). Tests verify both output correctness and in-place behavior. All tests pass."
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Good test coverage for main functionality. Most edge cases handled. Tests for correctness present."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Basic tests for each algorithm. Some edge cases tested."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Minimal or no tests. Edge cases not considered."
+          }
+        ]
+      },
+      {
+        "name": "Code Quality and Documentation",
+        "weight": 15,
+        "levels": [
+          {
+            "score": 4,
+            "label": "Excellent",
+            "description": "Clean, well-organized code following Python conventions. Comprehensive docstrings for each algorithm explaining approach and complexity. README with usage instructions, sample output, and interpretation guide."
+          },
+          {
+            "score": 3,
+            "label": "Good",
+            "description": "Readable code with documentation. Docstrings for main functions. Basic README."
+          },
+          {
+            "score": 2,
+            "label": "Satisfactory",
+            "description": "Code works but organization could be improved. Minimal documentation."
+          },
+          {
+            "score": 1,
+            "label": "Needs Improvement",
+            "description": "Poorly organized code. No documentation. Hard to understand."
+          }
+        ]
+      }
+    ],
+    "scaffolding": {
+      "overview": "Build a sorting algorithm benchmark suite to implement, test, and compare multiple sorting algorithms. You'll measure real performance and compare it to theoretical complexity.",
+      "gettingStarted": [
+        "Start with the simple O(n^2) sorts: Bubble Sort, Selection Sort, Insertion Sort",
+        "Implement Merge Sort (recursive divide-and-conquer) - this is the most straightforward O(n log n) sort",
+        "Implement Quick Sort with careful pivot selection (median-of-three recommended)",
+        "Implement Heap Sort using a max-heap (heapify down operation)",
+        "Create a data generator with parameters for size and type (random, sorted, etc.)",
+        "Add timing using time.perf_counter() around each sort call"
+      ],
+      "milestones": [
+        "Milestone 1: Simple sorts (Bubble, Selection, Insertion) with tests (3 hours)",
+        "Milestone 2: Merge Sort implementation and testing (2 hours)",
+        "Milestone 3: Quick Sort with pivot strategies (2 hours)",
+        "Milestone 4: Heap Sort implementation (2 hours)",
+        "Milestone 5: Benchmarking framework and data generation (2 hours)",
+        "Milestone 6: Visualization and analysis report (3 hours)"
+      ],
+      "tips": [
+        "Make copies of arrays before sorting to enable fair comparisons on identical input",
+        "Use time.perf_counter() instead of time.time() for accurate measurements",
+        "Run each benchmark multiple times and take the average to reduce noise",
+        "For Quick Sort, median-of-three pivot selection avoids worst case on sorted input",
+        "Track comparisons by incrementing a counter each time you compare elements",
+        "For visualizations, matplotlib's plot() and bar() functions are useful",
+        "Nearly-sorted data: shuffle only ~5-10% of elements from a sorted array"
+      ],
+      "starterResources": [
+        {
+          "label": "Python time module",
+          "description": "Use perf_counter for high-resolution timing",
+          "link": "https://docs.python.org/3/library/time.html#time.perf_counter"
+        },
+        {
+          "label": "Matplotlib documentation",
+          "description": "For creating performance visualization charts",
+          "link": "https://matplotlib.org/stable/tutorials/introductory/pyplot.html"
+        }
       ]
     }
   }
