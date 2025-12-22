@@ -93,7 +93,7 @@ export function SubjectItem({
         {/* Progress bar at bottom of header */}
         <div
           class="subject-progress-bar"
-          style={{ '--progress': `${progressPercent}%`, '--progress-color': statusColor } as any}
+          style={{ '--progress': `${progressPercent}%`, '--progress-color': statusColor }}
         />
       </div>
     </div>
