@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from 'preact/hooks';
 import * as monaco from 'monaco-editor';
 import { initVimMode, VimMode } from 'monaco-vim';
 import { Icons } from '@/components/icons';
+import { renderMarkdown } from '@/components/markdown';
 import { progressStorage } from '@/core/storage';
 import { evaluateWrittenExercise, type EvaluationResult } from '@/utils/gemini-eval';
 
@@ -15,7 +16,7 @@ export interface ProofEditorProps {
   solution?: string;
   problem?: string;
   onSave?: (content: string, timeSpentSeconds: number) => void;
-  onEvaluate?: (result: EvaluationResult) => void;
+  onEvaluate?: (result: EvaluationResult, content: string, timeSpentSeconds: number) => void;
 }
 
 const STORAGE_PREFIX = 'cs_degree_proof_';
@@ -48,9 +49,12 @@ export function ProofEditor({
   const [vimEnabled, setVimEnabled] = useState(() =>
     localStorage.getItem('cs_degree_vim_mode') === 'true'
   );
-  const [isSaved, setIsSaved] = useState(true);
+  const [isSaved, setIsSaved] = useState(false);
   const [hintsRevealed, setHintsRevealed] = useState(0);
   const [showSolution, setShowSolution] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewHtml, setPreviewHtml] = useState('');
+  const showPreviewRef = useRef(false);
 
   // AI Evaluation state
   const [isEvaluating, setIsEvaluating] = useState(false);
@@ -65,6 +69,7 @@ export function ProofEditor({
   const fullStorageKey = storageKey ? `${STORAGE_PREFIX}${storageKey}` : null;
   const savedContent = fullStorageKey ? localStorage.getItem(fullStorageKey) : null;
   const startingContent = savedContent || initialValue || '';
+  const hasInitialSavedContent = Boolean(savedContent || initialValue);
 
   // Initialize Monaco editor
   useEffect(() => {
@@ -99,6 +104,9 @@ export function ProofEditor({
           localStorage.setItem(fullStorageKey, editor.getValue());
         }, 1000);
       }
+      if (showPreviewRef.current) {
+        setPreviewHtml(renderMarkdown(editor.getValue()));
+      }
     });
 
     // Keyboard shortcut for save
@@ -111,8 +119,8 @@ export function ProofEditor({
       vimModeRef.current = initVimMode(editor, vimStatusRef.current);
     }
 
-    // Mark as saved if we loaded saved content
-    if (savedContent) {
+    // Mark as saved if we loaded saved content or completion content
+    if (hasInitialSavedContent) {
       setIsSaved(true);
     }
 
@@ -187,7 +195,7 @@ export function ProofEditor({
 
   // Clear handler
   const handleClear = useCallback(() => {
-    if (!confirm('Clear your proof? This cannot be undone.')) return;
+    if (!confirm('Clear your response? This cannot be undone.')) return;
 
     const editor = editorRef.current;
     if (!editor) return;
@@ -216,9 +224,10 @@ export function ProofEditor({
     const editor = editorRef.current;
     if (!editor || !geminiApiKey || !problem || !solution) return;
 
-    const content = editor.getValue().trim();
+    const rawContent = editor.getValue();
+    const content = rawContent.trim();
     if (!content) {
-      alert('Please write your proof before requesting AI evaluation.');
+      alert('Please write your response before requesting AI evaluation.');
       return;
     }
 
@@ -227,8 +236,9 @@ export function ProofEditor({
 
     try {
       const result = await evaluateWrittenExercise(geminiApiKey, problem, solution, content);
+      const timeSpent = Math.round((Date.now() - startTimeRef.current) / 1000);
       setEvaluationResult(result);
-      onEvaluate?.(result);
+      onEvaluate?.(result, rawContent, timeSpent);
     } catch (error) {
       console.error('AI evaluation error:', error);
       setEvaluationError(error instanceof Error ? error.message : 'Failed to evaluate');
@@ -270,23 +280,37 @@ export function ProofEditor({
     setShowSolution(prev => !prev);
   }, [showSolution]);
 
+  const togglePreview = useCallback(() => {
+    setShowPreview(prev => {
+      const next = !prev;
+      showPreviewRef.current = next;
+      if (next && editorRef.current) {
+        setPreviewHtml(renderMarkdown(editorRef.current.getValue()));
+      }
+      return next;
+    });
+  }, []);
+
   const containerClass = `proof-editor-container ${currentTheme === 'vs-light' ? 'light-theme' : ''} ${isFullscreen ? 'fullscreen' : ''}`;
 
   return (
     <div class={containerClass}>
       <div class="editor-wrapper">
-        {/* Toolbar */}
         <div class="editor-toolbar">
           <div class="toolbar-left">
-            <button class="btn btn-primary btn-save" onClick={handleSave} title="Save your proof (Ctrl+S)">
-              <span class="btn-icon" dangerouslySetInnerHTML={{ __html: Icons.Check }} /> Save Proof
+            <button class="btn btn-primary btn-save" onClick={handleSave} title="Save your response (Ctrl+S)">
+              <span class="btn-icon" dangerouslySetInnerHTML={{ __html: Icons.Check }} /> Save Response
+            </button>
+            <button class="btn btn-secondary btn-preview" onClick={togglePreview} title="Preview rendered response">
+              <span class="btn-icon" dangerouslySetInnerHTML={{ __html: Icons.Monitor }} />
+              {showPreview ? ' Hide Preview' : ' Preview'}
             </button>
             {canEvaluate && (
               <button
                 class="btn btn-secondary btn-evaluate"
                 onClick={handleEvaluate}
                 disabled={isEvaluating}
-                title="Get AI feedback on your proof"
+                title="Get AI feedback on your response"
               >
                 <span class="btn-icon" dangerouslySetInnerHTML={{ __html: Icons.Beaker }} />
                 {isEvaluating ? ' Evaluating...' : ' AI Evaluate'}
@@ -341,14 +365,26 @@ export function ProofEditor({
           </div>
         </div>
 
-        {/* Editor */}
         <div ref={editorContainerRef} class="editor-element" style={{ height }} />
 
-        {/* Vim status bar */}
         <div ref={vimStatusRef} class="vim-status-bar" style={{ display: vimEnabled ? 'block' : 'none' }} />
       </div>
 
-      {/* Hints panel */}
+      {showPreview && (
+        <div class="preview-panel">
+          <div class="preview-header">
+            <span class="preview-title">
+              <span class="panel-icon" dangerouslySetInnerHTML={{ __html: Icons.Monitor }} />
+              {' '}Preview
+            </span>
+          </div>
+          <div
+            class="preview-content"
+            dangerouslySetInnerHTML={{ __html: previewHtml || '<em>Nothing to preview yet.</em>' }}
+          />
+        </div>
+      )}
+
       {hints.length > 0 && (
         <div class="hints-panel">
           <div class="hints-header">
@@ -376,7 +412,6 @@ export function ProofEditor({
         </div>
       )}
 
-      {/* Solution panel */}
       {solution && (
         <div class="solution-panel">
           <div class="solution-header">
@@ -396,7 +431,6 @@ export function ProofEditor({
         </div>
       )}
 
-      {/* AI Evaluation panel */}
       {(evaluationResult || evaluationError || isEvaluating) && (
         <div class="evaluation-panel">
           <div class="evaluation-header">
@@ -407,7 +441,7 @@ export function ProofEditor({
           </div>
           <div class="evaluation-content">
             {isEvaluating && (
-              <div class="evaluation-loading">Analyzing your proof...</div>
+              <div class="evaluation-loading">Analyzing your response...</div>
             )}
             {evaluationError && (
               <div class="evaluation-error">

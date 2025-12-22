@@ -352,10 +352,6 @@
   color: var(--color-error);
 }
 
-.code-editor-shell {
-  margin-bottom: var(--space-sm);
-}
-
 .form-hint.text-success {
   color: var(--color-success);
 }
@@ -1111,6 +1107,49 @@
   color: var(--color-text-primary);
   white-space: pre-wrap;
   overflow-x: auto;
+}
+
+/* Preview Panel */
+.preview-panel {
+  border-top: 1px solid var(--color-border-default);
+  background-color: var(--color-bg-surface);
+}
+
+.preview-panel.hidden {
+  display: none;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background-color: rgba(88, 166, 255, 0.1);
+  border-bottom: 1px solid var(--color-border-default);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-accent-primary);
+}
+
+.preview-title {
+  display: flex;
+  align-items: center;
+}
+
+.preview-content {
+  padding: var(--space-md);
+  background: var(--color-bg-elevated);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-relaxed);
+}
+
+.preview-content > *:first-child {
+  margin-top: 0;
+}
+
+.preview-content > *:last-child {
+  margin-bottom: 0;
 }
 
 /* AI Evaluation Panel */
@@ -3232,12 +3271,10 @@
   fill: var(--brick-glint);
   stroke: none;
   opacity: 0;
-  animation: brick-glint 4s ease-in-out infinite;
 }
 
 /* Shared blink animation */
 .brick-blink {
-  animation: brick-blink 5s step-end infinite;
   transform-origin: center;
 }
 
@@ -3248,35 +3285,29 @@
 
 /* ===== KINETIC (falling/loading) ===== */
 .brick-kinetic {
-  animation: brick-fall 4s ease-in infinite;
   transform-origin: 32px 48px;
 }
 
 .brick-kinetic .brick-face {
-  animation: brick-face-wobble 4s linear infinite;
   transform-origin: 32px 38px;
 }
 
 /* Single fall variant (for one-time animations) */
 .brick-kinetic-once {
-  animation: brick-fall-once 2.5s ease-out 1 forwards;
   transform-origin: 32px 48px;
 }
 
 .brick-kinetic-once .brick-face {
-  animation: brick-face-wobble 2.5s linear 1 forwards;
   transform-origin: 32px 38px;
 }
 
 /* ===== ZEN (floating/success) ===== */
 .brick-zen {
-  animation: brick-float 3s ease-in-out infinite;
   transform-origin: 32px 38px;
 }
 
 /* ===== PONDERING (thinking) ===== */
 .brick-pondering {
-  animation: brick-wobble 2.5s ease-in-out infinite;
   transform-origin: 32px 38px;
 }
 
@@ -3286,72 +3317,12 @@
 }
 
 .brick-eyes-scan {
-  animation: brick-eyes-scan 3s ease-in-out infinite;
+  /* Animation handled in animations.css */
 }
 
 /* ===== DELIGHTED (achievement) ===== */
 .brick-delighted {
-  animation: brick-float 3s ease-in-out infinite;
   transform-origin: 32px 38px;
-}
-
-/* ========== KEYFRAMES ========== */
-
-@keyframes brick-blink {
-  0%, 92%, 100% { transform: scaleY(1); }
-  96% { transform: scaleY(0.1); }
-}
-
-@keyframes brick-glint {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 0.6; }
-}
-
-@keyframes brick-fall {
-  0% { transform: translateY(-120px); opacity: 0; }
-  15% { opacity: 1; }
-  20% { transform: translateY(0) scaleY(1); }
-  25% { transform: scaleY(0.6) scaleX(1.3); }
-  30% { transform: scaleY(1.1) scaleX(0.9); }
-  35% { transform: scaleY(1) scaleX(1); }
-  80% { transform: scaleY(1) scaleX(1); opacity: 1; }
-  90% { opacity: 0; }
-  100% { opacity: 0; transform: translateY(0); }
-}
-
-@keyframes brick-fall-once {
-  0% { transform: translateY(-150px); opacity: 0; }
-  10% { opacity: 1; }
-  20% { transform: translateY(0) scaleY(1); }
-  25% { transform: scaleY(0.6) scaleX(1.3); }
-  30% { transform: scaleY(1.1) scaleX(0.9); }
-  35% { transform: scaleY(1) scaleX(1); }
-  100% { transform: translateY(0) scaleY(1) scaleX(1); opacity: 1; }
-}
-
-@keyframes brick-face-wobble {
-  0%, 35% { transform: translate(0, 0); }
-  40% { transform: translate(-2px, 0); }
-  45% { transform: translate(2px, 0); }
-  50% { transform: translate(0, 0); }
-  100% { transform: translate(0, 0); }
-}
-
-@keyframes brick-float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-5px) rotate(1deg); }
-}
-
-@keyframes brick-wobble {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-5deg); }
-  75% { transform: rotate(5deg); }
-}
-
-@keyframes brick-eyes-scan {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(1.5px); }
-  75% { transform: translateX(-1.5px); }
 }
 
 /* Home Header Alignment for Kinetic Brick */

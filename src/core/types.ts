@@ -1,4 +1,4 @@
-// Core type definitions for stup Learning Platform
+// Core type definitions for stu.p Learning Platform
 
 export type SubjectStatus = 'not_started' | 'in_progress' | 'completed';
 export type QuestionType = 'multiple_choice' | 'fill_blank' | 'true_false' | 'code_output' | 'coding' | 'written';
@@ -214,6 +214,12 @@ export interface AiGrade {
   passed: boolean;
 }
 
+export interface AiEvaluationRecord {
+  score: number; // 0-100
+  passed: boolean;
+  timestamp: string; // ISO date string
+}
+
 export interface QuizAttempt {
   attemptId: string;
   timestamp: string; // ISO date string
@@ -241,6 +247,7 @@ export interface ExerciseCompletion {
   totalTestCases?: number; // Optional for written exercises
   timeSpentSeconds: number;
   type?: 'coding' | 'written'; // Type of exercise
+  aiEvaluations?: AiEvaluationRecord[];
 }
 
 export interface ProjectAiEvaluation {

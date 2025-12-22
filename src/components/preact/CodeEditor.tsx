@@ -44,7 +44,7 @@ export interface CodeEditorProps {
   onTestResults?: (results: TestResult[], allPassed: boolean) => void;
   onChange?: (code: string) => void;
   /** Callback when AI evaluation completes (for exercises without test cases) */
-  onAiEvaluation?: (result: EvaluationResult) => void;
+  onAiEvaluation?: (result: EvaluationResult, code: string) => void;
 }
 
 export interface CodeEditorRef {
@@ -359,7 +359,8 @@ export function CodeEditor({
     const editor = editorRef.current;
     if (!editor || !solution || !problem || !geminiApiKey) return;
 
-    const code = editor.getValue().trim();
+    const rawCode = editor.getValue();
+    const code = rawCode.trim();
     if (!code) {
       setOutput('Please write some code before requesting AI evaluation.');
       setShowOutput(true);
@@ -386,7 +387,7 @@ export function CodeEditor({
       setOutput(result.passed ? 'AI Evaluation: Passed!' : 'AI Evaluation: Needs work');
       setIsError(!result.passed);
 
-      onAiEvaluation?.(result);
+      onAiEvaluation?.(result, rawCode);
     } catch (error) {
       setIsError(true);
       const errorMessage = error instanceof Error ? error.message : String(error);

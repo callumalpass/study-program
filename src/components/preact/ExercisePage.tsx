@@ -1,6 +1,6 @@
 import { h, Fragment } from 'preact';
 import { useState, useCallback, useEffect, useRef } from 'preact/hooks';
-import type { Subject, CodingExercise, WrittenExercise, Exercise, ExerciseCompletion } from '@/core/types';
+import type { Subject, CodingExercise, WrittenExercise, Exercise, ExerciseCompletion, AiEvaluationRecord } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { navigateToExercise, navigateToTopic } from '@/core/router';
 import { Icons } from '@/components/icons';
@@ -30,6 +30,12 @@ function formatLanguage(lang: string): string {
   return langMap[lang] || lang;
 }
 
+function formatAiHistory(records: AiEvaluationRecord[], maxEntries = 3): string {
+  if (records.length <= 1) return '';
+  const scores = records.slice(0, -1).slice(-maxEntries).map(record => record.score);
+  return scores.join(', ');
+}
+
 interface ExercisePageProps {
   subject: Subject;
   exercise: Exercise;
@@ -55,6 +61,11 @@ export function ExercisePage({
   );
 
   const startTimeRef = useRef(Date.now());
+
+  useEffect(() => {
+    setCompletion(progressStorage.getExerciseCompletion(subjectId, exerciseId) ?? null);
+    startTimeRef.current = Date.now();
+  }, [subjectId, exerciseId]);
 
   const handleNavigatePrev = useCallback(() => {
     if (prevExercise) {
@@ -137,6 +148,13 @@ function CodingExercisePage({
   const subjectId = subject.id;
   const exerciseId = exercise.id;
   const isPassed = completion?.passed ?? false;
+  const isAiEvaluationMode = exercise.testCases.length === 0 && !!exercise.solution;
+  const aiHistory = completion?.aiEvaluations ?? [];
+  const latestAi = aiHistory[aiHistory.length - 1];
+  const previousAiScores = formatAiHistory(aiHistory);
+  const showCompletionGroup = isAiEvaluationMode
+    ? Boolean(latestAi || completion || previousAiScores)
+    : Boolean(isPassed || completion);
 
   const handleTestResults = useCallback((results: TestResult[], allPassed: boolean) => {
     const timeSpent = Math.round((Date.now() - startTimeRef.current) / 1000);
@@ -157,25 +175,29 @@ function CodingExercisePage({
   }, [subjectId, exerciseId, startTimeRef, setCompletion]);
 
   // Handle AI evaluation for exercises without test cases
-  const handleAiEvaluation = useCallback((result: EvaluationResult) => {
+  const handleAiEvaluation = useCallback((result: EvaluationResult, code: string) => {
     const timeSpent = Math.round((Date.now() - startTimeRef.current) / 1000);
+    const aiRecord = {
+      score: result.score,
+      passed: result.passed,
+      timestamp: new Date().toISOString(),
+    };
 
     const newCompletion: ExerciseCompletion = {
       completionId: `completion_${Date.now()}`,
       timestamp: new Date().toISOString(),
-      code: '',
+      code,
       passed: result.passed,
       timeSpentSeconds: timeSpent,
       type: 'coding',
+      aiEvaluations: [aiRecord],
     };
 
     progressStorage.addExerciseCompletion(subjectId, exerciseId, newCompletion);
-    setCompletion(newCompletion);
+    setCompletion(progressStorage.getExerciseCompletion(subjectId, exerciseId) ?? newCompletion);
   }, [subjectId, exerciseId, startTimeRef, setCompletion]);
 
   // Check if this exercise uses AI evaluation (no test cases)
-  const isAiEvaluationMode = exercise.testCases.length === 0 && !!exercise.solution;
-
   return (
     <div class="exercise-page">
       <nav class="breadcrumb">
@@ -201,19 +223,31 @@ function CodingExercisePage({
             <span class="icon" dangerouslySetInnerHTML={{ __html: isAiEvaluationMode ? Icons.Sparkles : Icons.Beaker }} />
             {isAiEvaluationMode ? 'AI Evaluation' : `${exercise.testCases.length} test cases`}
           </span>
-          {isPassed ? (
-            <span class="completion-badge passed">
-              <span dangerouslySetInnerHTML={{ __html: Icons.Check }} /> Completed
-            </span>
-          ) : completion && !isAiEvaluationMode ? (
-            <span class="completion-badge partial">
-              {completion.passedTestCases ?? 0}/{completion.totalTestCases ?? 0} passed
-            </span>
-          ) : completion && isAiEvaluationMode ? (
-            <span class="completion-badge partial">
-              AI evaluated - needs work
-            </span>
-          ) : null}
+          {showCompletionGroup && (
+            <div class="completion-group">
+              {isAiEvaluationMode ? (
+                latestAi ? (
+                  <span class={`completion-badge ${latestAi.passed ? 'passed' : 'partial'}`}>
+                    <span dangerouslySetInnerHTML={{ __html: latestAi.passed ? Icons.Check : Icons.Cross }} />
+                    {' '}AI {latestAi.passed ? 'Passed' : 'Needs Work'} ({latestAi.score})
+                  </span>
+                ) : completion ? (
+                  <span class="completion-badge partial">AI evaluation saved</span>
+                ) : null
+              ) : isPassed ? (
+                <span class="completion-badge passed">
+                  <span dangerouslySetInnerHTML={{ __html: Icons.Check }} /> Completed
+                </span>
+              ) : completion ? (
+                <span class="completion-badge partial">
+                  {completion.passedTestCases ?? 0}/{completion.totalTestCases ?? 0} passed
+                </span>
+              ) : null}
+              {isAiEvaluationMode && previousAiScores && (
+                <span class="ai-score-history">Previous AI scores: {previousAiScores}</span>
+              )}
+            </div>
+          )}
         </div>
       </header>
 
@@ -228,6 +262,7 @@ function CodingExercisePage({
       <section class="exercise-workspace">
         <h2>Code Editor</h2>
         <CodeEditor
+          key={`coding_${exerciseId}`}
           language={exercise.language}
           initialValue={exercise.starterCode}
           starterCode={exercise.starterCode}
@@ -283,20 +318,45 @@ function WrittenExercisePage({
 }: WrittenExercisePageProps) {
   const subjectId = subject.id;
   const exerciseId = exercise.id;
-  const hasSavedProof = completion?.type === 'written' && (completion.code?.trim().length ?? 0) > 0;
+  const hasSavedResponse = completion?.type === 'written' && (completion.code?.trim().length ?? 0) > 0;
+  const aiHistory = completion?.aiEvaluations ?? [];
+  const latestAi = aiHistory[aiHistory.length - 1];
+  const previousAiScores = formatAiHistory(aiHistory);
+  const showCompletionGroup = Boolean(hasSavedResponse || latestAi || previousAiScores);
 
   const handleSave = useCallback((content: string, timeSpentSeconds: number) => {
+    const latestAiResult = aiHistory[aiHistory.length - 1];
     const newCompletion: ExerciseCompletion = {
       completionId: `completion_${Date.now()}`,
       timestamp: new Date().toISOString(),
       code: content,
-      passed: content.trim().length > 0,
+      passed: latestAiResult ? latestAiResult.passed : content.trim().length > 0,
       timeSpentSeconds,
       type: 'written',
     };
 
     progressStorage.addExerciseCompletion(subjectId, exerciseId, newCompletion);
-    setCompletion(newCompletion);
+    setCompletion(progressStorage.getExerciseCompletion(subjectId, exerciseId) ?? newCompletion);
+  }, [subjectId, exerciseId, aiHistory, setCompletion]);
+
+  const handleEvaluate = useCallback((result: EvaluationResult, content: string, timeSpentSeconds: number) => {
+    const aiRecord = {
+      score: result.score,
+      passed: result.passed,
+      timestamp: new Date().toISOString(),
+    };
+    const newCompletion: ExerciseCompletion = {
+      completionId: `completion_${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      code: content,
+      passed: result.passed,
+      timeSpentSeconds,
+      type: 'written',
+      aiEvaluations: [aiRecord],
+    };
+
+    progressStorage.addExerciseCompletion(subjectId, exerciseId, newCompletion);
+    setCompletion(progressStorage.getExerciseCompletion(subjectId, exerciseId) ?? newCompletion);
   }, [subjectId, exerciseId, setCompletion]);
 
   return (
@@ -317,10 +377,23 @@ function WrittenExercisePage({
           <span class="exercise-counter">Exercise {currentIndex + 1} of {totalExercises}</span>
           <span class="meta-separator" />
           <span class="exercise-type-badge">Written</span>
-          {hasSavedProof && (
-            <span class="completion-badge saved">
-              <span dangerouslySetInnerHTML={{ __html: Icons.Check }} /> Proof Saved
-            </span>
+          {showCompletionGroup && (
+            <div class="completion-group">
+              {hasSavedResponse && (
+                <span class="completion-badge saved">
+                  <span dangerouslySetInnerHTML={{ __html: Icons.Check }} /> Response Saved
+                </span>
+              )}
+              {latestAi && (
+                <span class={`completion-badge ${latestAi.passed ? 'passed' : 'partial'}`}>
+                  <span dangerouslySetInnerHTML={{ __html: latestAi.passed ? Icons.Check : Icons.Cross }} />
+                  {' '}AI {latestAi.passed ? 'Passed' : 'Needs Work'} ({latestAi.score})
+                </span>
+              )}
+              {previousAiScores && (
+                <span class="ai-score-history">Previous AI scores: {previousAiScores}</span>
+              )}
+            </div>
           )}
         </div>
       </header>
@@ -334,13 +407,14 @@ function WrittenExercisePage({
       </section>
 
       <section class="exercise-workspace">
-        <h2>Your Proof</h2>
+        <h2>Your Response</h2>
         <p class="proof-instructions">
-          Write your proof below. You can use Markdown formatting and LaTeX notation
+          Write your response below. You can use Markdown formatting and LaTeX notation
           (e.g., <code>$x^2$</code> for inline math). Your work is auto-saved as a draft,
-          but click "Save Proof" to save it to your progress.
+          but click "Save Response" to save it to your progress.
         </p>
         <ProofEditor
+          key={`written_${exerciseId}`}
           initialValue={completion?.code || ''}
           storageKey={`proof_${subjectId}_${exerciseId}`}
           hints={exercise.hints}
@@ -348,6 +422,7 @@ function WrittenExercisePage({
           problem={exercise.description}
           height="300px"
           onSave={handleSave}
+          onEvaluate={handleEvaluate}
         />
       </section>
 

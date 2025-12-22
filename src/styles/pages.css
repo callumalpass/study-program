@@ -1121,8 +1121,20 @@
   height: 14px;
 }
 
-.exercise-meta-row .completion-badge {
+.exercise-meta-row .completion-group {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.exercise-meta-row .ai-score-history {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs) var(--space-sm);
 }
 
 .quiz-progress {

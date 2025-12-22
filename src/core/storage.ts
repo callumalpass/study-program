@@ -448,6 +448,14 @@ export class ProgressStorage {
 
     const subjectProgress = this.progress.subjects[subjectId];
     const existing = subjectProgress.exerciseCompletions[exerciseId];
+    const incomingAiEvaluations = completion.aiEvaluations ?? [];
+    const mergedAiEvaluations = incomingAiEvaluations.length > 0
+      ? [...(existing?.aiEvaluations ?? []), ...incomingAiEvaluations]
+      : existing?.aiEvaluations;
+    const hasAiEvaluation = incomingAiEvaluations.length > 0;
+    const isAiOnlyCompletion = hasAiEvaluation &&
+      completion.passedTestCases === undefined &&
+      completion.totalTestCases === undefined;
 
     // Determine if new completion is better than existing
     const shouldReplace = !existing ||
@@ -457,7 +465,9 @@ export class ProgressStorage {
       (completion.passed === existing.passed &&
        (completion.passedTestCases ?? 0) > (existing.passedTestCases ?? 0)) ||
       // For written exercises: always update if new has content
-      (completion.type === 'written' && completion.code.trim().length > 0);
+      (completion.type === 'written' && completion.code.trim().length > 0) ||
+      // For AI-evaluated exercises: always update to latest evaluation
+      isAiOnlyCompletion;
 
     if (shouldReplace) {
       // Accumulate total time spent
@@ -465,6 +475,12 @@ export class ProgressStorage {
       subjectProgress.exerciseCompletions[exerciseId] = {
         ...completion,
         timeSpentSeconds: totalTime,
+        aiEvaluations: mergedAiEvaluations,
+      };
+    } else if (mergedAiEvaluations && existing) {
+      subjectProgress.exerciseCompletions[exerciseId] = {
+        ...existing,
+        aiEvaluations: mergedAiEvaluations,
       };
     }
 
