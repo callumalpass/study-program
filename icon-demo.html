@@ -181,6 +181,42 @@
         50% { opacity: 0.5; }
       }
 
+      /* Sleeping Zs */
+      .brick-snooze {
+        animation: brick-snooze 3s ease-in-out infinite;
+        transform-origin: center;
+      }
+      .brick-snooze-delay {
+        animation-delay: 1.2s;
+      }
+      @keyframes brick-snooze {
+        0% { transform: translate(0, 0) scale(0.8); opacity: 0; }
+        20% { opacity: 1; }
+        100% { transform: translate(6px, -10px) scale(1.2); opacity: 0; }
+      }
+
+      /* Shake for stress */
+      .brick-shake {
+        animation: brick-shake 0.5s cubic-bezier(.36,.07,.19,.97) infinite both;
+        transform-origin: center;
+      }
+      @keyframes brick-shake {
+        10%, 90% { transform: translate3d(-1px, 0, 0); }
+        20%, 80% { transform: translate3d(2px, 0, 0); }
+        30%, 50%, 70% { transform: translate3d(-2px, 0, 0); }
+        40%, 60% { transform: translate3d(2px, 0, 0); }
+      }
+
+      /* Pulse for determination */
+      .brick-pulse {
+        animation: brick-pulse 2s ease-in-out infinite;
+      }
+      @keyframes brick-pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+      }
+
       @media (max-width: 520px) {
         header {
           padding: 20px 20px 6px;
@@ -194,33 +230,26 @@
   <body>
     <header>
       <h1>Stod Brick Mascot</h1>
-      <p>Six expressions based on the V1 design.</p>
+      <p>Extended expressions based on the V1 design.</p>
     </header>
 
     <main>
-      <!-- 1. PENSIVE (idle/default) -->
+      <!-- 1. PENSIVE -->
       <section class="card">
         <div class="icon-wrap">
           <svg viewBox="0 0 64 64" aria-hidden="true">
             <g>
-              <!-- Brick body -->
               <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
               <line x1="20" y1="28" x2="44" y2="28" />
-
-              <!-- Glasses -->
               <g class="accent">
                 <circle cx="26" cy="37" r="4" />
                 <circle cx="38" cy="37" r="4" />
                 <path d="M30 37h4" />
               </g>
-
-              <!-- Eyes -->
               <g class="brick-blink">
                 <circle cx="26" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
                 <circle cx="38" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
               </g>
-
-              <!-- Neutral mouth -->
               <path d="M29 44h6" stroke-width="1.5" />
             </g>
           </svg>
@@ -229,30 +258,23 @@
         <div class="note">Default idle state. Calm, observant, ready to learn.</div>
       </section>
 
-      <!-- 2. KINETIC (falling/loading) -->
+      <!-- 2. KINETIC -->
       <section class="card">
         <div class="icon-wrap">
           <svg viewBox="0 0 64 64" aria-hidden="true">
             <g class="brick-fall">
-              <!-- Brick body -->
               <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
               <line x1="20" y1="28" x2="44" y2="28" />
-
               <g class="brick-face">
-                <!-- Glasses -->
                 <g class="accent">
                   <circle cx="26" cy="37" r="4" />
                   <circle cx="38" cy="37" r="4" />
                   <path d="M30 37h4" />
                 </g>
-
-                <!-- Eyes -->
                 <g class="brick-blink">
                   <circle cx="26" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
                   <circle cx="38" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
                 </g>
-
-                <!-- Neutral mouth -->
                 <path d="M29 44h6" stroke-width="1.5" />
               </g>
             </g>
@@ -262,33 +284,24 @@
         <div class="note">Falls, squashes, recovers. For loading states.</div>
       </section>
 
-      <!-- 3. ZEN (content/success) -->
+      <!-- 3. ZEN -->
       <section class="card">
         <div class="icon-wrap">
           <svg viewBox="0 0 64 64" aria-hidden="true">
             <g class="brick-float">
-              <!-- Brick body -->
               <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
               <line x1="20" y1="28" x2="44" y2="28" />
-
-              <!-- Glasses - slightly thicker -->
               <g class="accent">
                 <circle cx="26" cy="37" r="4.5" stroke-width="2.5" />
                 <circle cx="38" cy="37" r="4.5" stroke-width="2.5" />
                 <path d="M30.5 37h3" stroke-width="2" />
               </g>
-
-              <!-- Glint -->
               <circle cx="24" cy="35" r="1" fill="white" stroke="none" class="glasses-glint" />
               <circle cx="36" cy="35" r="1" fill="white" stroke="none" class="glasses-glint" />
-
-              <!-- Eyes -->
               <g class="brick-blink">
                 <circle cx="26" cy="37" r="1.3" fill="var(--ink)" stroke="none" />
                 <circle cx="38" cy="37" r="1.3" fill="var(--ink)" stroke="none" />
               </g>
-
-              <!-- Content smile -->
               <path d="M28 44q4 2.5 8 0" stroke-width="1.5" fill="none" />
             </g>
           </svg>
@@ -297,29 +310,22 @@
         <div class="note">Floats peacefully. For success or completion.</div>
       </section>
 
-      <!-- 4. PONDERING (thinking) -->
+      <!-- 4. PONDERING -->
       <section class="card">
         <div class="icon-wrap">
           <svg viewBox="0 0 64 64" aria-hidden="true">
             <g class="brick-wobble">
-              <!-- Brick body -->
               <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
               <line x1="20" y1="28" x2="44" y2="28" />
-
-              <!-- Glasses -->
               <g class="accent">
                 <circle cx="26" cy="37" r="4" />
                 <circle cx="38" cy="37" r="4" />
                 <path d="M30 37h4" />
               </g>
-
-              <!-- Eyes looking up-right -->
               <g class="brick-blink">
                 <circle cx="27" cy="36" r="1.2" fill="var(--ink)" stroke="none" />
                 <circle cx="39" cy="36" r="1.2" fill="var(--ink)" stroke="none" />
               </g>
-
-              <!-- Small "o" thinking mouth -->
               <circle cx="32" cy="45" r="2" fill="none" stroke-width="1.5" />
             </g>
           </svg>
@@ -328,29 +334,22 @@
         <div class="note">Wobbles while thinking. Eyes drift upward.</div>
       </section>
 
-      <!-- 5. READING (focused/studying) -->
+      <!-- 5. READING -->
       <section class="card">
         <div class="icon-wrap">
           <svg viewBox="0 0 64 64" aria-hidden="true">
             <g>
-              <!-- Brick body -->
               <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
               <line x1="20" y1="28" x2="44" y2="28" />
-
-              <!-- Glasses -->
               <g class="accent">
                 <circle cx="26" cy="37" r="4" />
                 <circle cx="38" cy="37" r="4" />
                 <path d="M30 37h4" />
               </g>
-
-              <!-- Eyes scanning left-right, positioned lower -->
               <g class="eyes-scan">
                 <circle cx="25" cy="38" r="1.2" fill="var(--ink)" stroke="none" />
                 <circle cx="37" cy="38" r="1.2" fill="var(--ink)" stroke="none" />
               </g>
-
-              <!-- Slight concentration frown -->
               <path d="M29 44q3 -1 6 0" stroke-width="1.5" fill="none" />
             </g>
           </svg>
@@ -359,37 +358,197 @@
         <div class="note">Eyes scan across. For active study mode.</div>
       </section>
 
-      <!-- 6. DELIGHTED (achievement/celebration) -->
+      <!-- 6. DELIGHTED -->
       <section class="card">
         <div class="icon-wrap">
           <svg viewBox="0 0 64 64" aria-hidden="true">
             <g class="brick-float">
-              <!-- Brick body -->
               <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
               <line x1="20" y1="28" x2="44" y2="28" />
-
-              <!-- Glasses -->
               <g class="accent">
                 <circle cx="26" cy="37" r="4" />
                 <circle cx="38" cy="37" r="4" />
                 <path d="M30 37h4" />
               </g>
-
-              <!-- Glint -->
               <circle cx="24" cy="35" r="1" fill="white" stroke="none" class="glasses-glint" />
               <circle cx="36" cy="35" r="1" fill="white" stroke="none" class="glasses-glint" />
-
-              <!-- Happy closed eyes (arcs) -->
               <path d="M24 37q2 -2 4 0" stroke-width="1.8" fill="none" stroke="var(--ink)" />
               <path d="M36 37q2 -2 4 0" stroke-width="1.8" fill="none" stroke="var(--ink)" />
-
-              <!-- Big smile -->
               <path d="M27 44q5 4 10 0" stroke-width="1.5" fill="none" />
             </g>
           </svg>
         </div>
         <div class="label">Delighted</div>
         <div class="note">Happy squint, big smile. For achievements.</div>
+      </section>
+
+      <!-- 7. CONFUSED -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <g>
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+              <g class="accent" transform="rotate(-5, 32, 37)">
+                <circle cx="26" cy="37" r="4" />
+                <circle cx="38" cy="37" r="4" />
+                <path d="M30 37h4" />
+              </g>
+              <g class="brick-blink">
+                <circle cx="26" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+                <circle cx="38" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+              </g>
+              <path d="M28 44c1-1 2 1 3 0s2-1 3 0s2 1 3 0" stroke-width="1.5" fill="none" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Confused</div>
+        <div class="note">Crooked glasses, wavy mouth. For tough problems.</div>
+      </section>
+
+      <!-- 8. SHOCKED -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <g>
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+              <g class="accent" transform="translate(0, -3)">
+                <circle cx="26" cy="37" r="4" />
+                <circle cx="38" cy="37" r="4" />
+                <path d="M30 37h4" />
+              </g>
+              <g class="brick-blink">
+                <circle cx="26" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+                <circle cx="38" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+              </g>
+              <circle cx="32" cy="45" r="3" stroke-width="1.5" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Shocked</div>
+        <div class="note">Raised glasses, open mouth. For errors or surprises.</div>
+      </section>
+
+      <!-- 9. SLEEPING -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <g>
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+              <g class="accent">
+                <circle cx="26" cy="37" r="4" />
+                <circle cx="38" cy="37" r="4" />
+                <path d="M30 37h4" />
+              </g>
+              <path d="M24 37q2 2 4 0" stroke-width="1.5" fill="none" />
+              <path d="M36 37q2 2 4 0" stroke-width="1.5" fill="none" />
+              <path d="M29 44q3 1.2 6 0" stroke-width="1.5" fill="none" />
+              <path d="M46 22l4-4h-4l4-4" stroke-width="1.5" class="brick-snooze accent" />
+              <path d="M40 26l3-3h-3l3-3" stroke-width="1.2" class="brick-snooze brick-snooze-delay accent" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Sleeping</div>
+        <div class="note">Eyes closed, Zs floating. For offline or idle.</div>
+      </section>
+
+      <!-- 10. CONFIDENT -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <g>
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+              <g class="brick-sunglasses">
+                <circle cx="26" cy="37" r="4.5" fill="var(--ink)" stroke="var(--ink)" />
+                <circle cx="38" cy="37" r="4.5" fill="var(--ink)" stroke="var(--ink)" />
+                <path d="M30 37h4" stroke="var(--ink)" stroke-width="2" />
+                <path d="M23 35q2 -2 2 0" stroke="white" stroke-width="1.5" fill="none" opacity="0.6" />
+              </g>
+              <path d="M28 44q4 2.5 8 0" stroke-width="1.5" fill="none" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Confident</div>
+        <div class="note">Sunglasses, cool demeanor. For mastery/expertise.</div>
+      </section>
+
+      <!-- 11. STRESSED -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <g class="brick-shake">
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+              <g class="accent">
+                <circle cx="26" cy="37" r="4" />
+                <circle cx="38" cy="37" r="4" />
+                <path d="M30 37h4" />
+              </g>
+              <g class="brick-blink">
+                <circle cx="26" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+                <circle cx="38" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+              </g>
+              <path d="M28 44c1-1 2 1 3 0s2-1 3 0s2 1 3 0" stroke-width="1.5" fill="none" />
+              <path d="M50 30q-2 4 0 6q2-2 0-6" fill="var(--accent)" stroke="var(--accent)" stroke-width="1.5" />
+              <path d="M14 32q2 4 0 6q-2-2 0-6" fill="var(--accent)" stroke="var(--accent)" stroke-width="1.5" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Stressed</div>
+        <div class="note">Sweat drops, shaking. For deadlines/errors.</div>
+      </section>
+
+      <!-- 12. DETERMINED -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <g class="brick-pulse">
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" />
+              <line x1="20" y1="28" x2="44" y2="28" />
+              <g class="accent">
+                <circle cx="26" cy="37" r="4" />
+                <circle cx="38" cy="37" r="4" />
+                <path d="M30 37h4" />
+              </g>
+              <path d="M22 32l6 2" stroke-width="1.5" />
+              <path d="M42 32l-6 2" stroke-width="1.5" />
+              <g class="brick-blink">
+                <circle cx="26" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+                <circle cx="38" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+              </g>
+              <rect x="28" y="44" width="8" height="3" rx="1" stroke-width="1.5" fill="none" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Determined</div>
+        <div class="note">Furrowed brows, focused. For hard challenges.</div>
+      </section>
+
+      <!-- 13. FAVICON -->
+      <section class="card">
+        <div class="icon-wrap">
+          <svg viewBox="16 26 32 24" aria-hidden="true">
+            <g>
+              <rect x="18" y="28" width="28" height="20" rx="4" fill="var(--card)" stroke-width="1.5" />
+              <line x1="20" y1="28" x2="44" y2="28" stroke-width="1.5" />
+              <g class="accent">
+                <circle cx="26" cy="37" r="4" stroke-width="1.5" />
+                <circle cx="38" cy="37" r="4" stroke-width="1.5" />
+                <path d="M30 37h4" stroke-width="1.5" />
+              </g>
+              <g class="brick-blink">
+                <circle cx="26" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+                <circle cx="38" cy="37" r="1.2" fill="var(--ink)" stroke="none" />
+              </g>
+              <path d="M29 44h6" stroke-width="1.5" />
+            </g>
+          </svg>
+        </div>
+        <div class="label">Favicon</div>
+        <div class="note">Zoomed in with thicker strokes. Optimized for 16x16 / 32x32.</div>
       </section>
     </main>
   </body>

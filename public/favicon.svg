@@ -1,4 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="12" fill="#0d1117"/>
-  <text x="50" y="68" font-family="system-ui" font-size="48" font-weight="bold" fill="#58a6ff" text-anchor="middle">CS</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="16 26 32 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <style>
+    .brick-path { stroke: #1a1a1a; }
+    .brick-eyes { fill: #1a1a1a; }
+    .brick-glasses { stroke: #ff69b4; }
+    @media (prefers-color-scheme: dark) {
+      .brick-path { stroke: #ffffff; }
+      .brick-eyes { fill: #ffffff; }
+      .brick-glasses { stroke: #ff69b4; }
+    }
+  </style>
+  <g>
+    <!-- Body Outline -->
+    <rect x="18" y="28" width="28" height="20" rx="4" class="brick-path" stroke-width="2.5" />
+    <line x1="20" y1="28" x2="44" y2="28" class="brick-path" stroke-width="2.5" />
+
+    <!-- Pink Glasses -->
+    <g class="brick-glasses" stroke-width="2.5">
+      <circle cx="26" cy="37" r="4" />
+      <circle cx="38" cy="37" r="4" />
+      <path d="M30 37h4" />
+    </g>
+
+    <!-- Eyes -->
+    <g class="brick-eyes">
+      <circle cx="26" cy="37" r="1.5" />
+      <circle cx="38" cy="37" r="1.5" />
+    </g>
+
+    <!-- Mouth -->
+    <path d="M29 44h6" class="brick-path" stroke-width="2" />
+  </g>
 </svg>
