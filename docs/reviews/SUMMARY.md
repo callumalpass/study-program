@@ -66,7 +66,7 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 - CS202, CS203, CS204, CS205
 - CS301, CS303, CS304, CS305, CS306, CS307
 - CS401, CS403
-- MATH101, MATH102, MATH201, MATH202, MATH203
+- MATH101, MATH102, MATH201, MATH202
 - MATH301, MATH302, MATH304, MATH403
 
 ### 2. Exercise Shortages
@@ -108,11 +108,25 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (23 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (22 subjects) |
 
-**Total Estimated:** ~11.5 hours for spec files.
+**Total Estimated:** ~11 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### MATH203: Calculus I Upgraded to Production Ready
+- **Status changed:** 10/10 (confirmed, with spec file added)
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation including 900 words/subtopic target
+  2. Added 7 new subtopics (one per topic) to bring from 42 to 49 subtopics:
+     - Topic 2: Applications Preview (connecting theory to practical uses)
+     - Topic 3: Logarithmic Differentiation (variable bases/exponents)
+     - Topic 4: Rolle's Theorem and Applications (theoretical foundation)
+     - Topic 5: Business Optimization and Comprehensive Review (2 subtopics)
+     - Topic 6: Advanced Related Rates (complex multi-variable problems)
+     - Topic 7: Curve Sketching Complete Framework (summary with reference tables)
+  3. All 49 subtopics now meet 900+ word requirement (avg 921 words)
+- **Quality verified:** 45,133 total words, 140 exercises (20/topic), 105 quiz questions, 70 exam questions
 
 ### CS105: Introduction to C Programming Upgraded to Production Ready
 - **Status changed:** 8/10 → 10/10

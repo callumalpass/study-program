@@ -1,0 +1,266 @@
+# MATH203: Calculus I - Subject Specification
+# This spec guides content creation for an introductory differential calculus course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: math203
+title: Calculus I
+category: math
+
+role:
+  level: intermediate
+  transformation: >
+    From "I can compute limits and derivatives by rote" to "I understand what derivatives
+    mean and can apply them to solve real-world optimization and rate-of-change problems."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 900
+
+  prerequisite_knowledge:
+    - Precalculus (algebra, trigonometry, functions)
+    - Basic graphing and function behavior
+    - Algebraic manipulation (factoring, simplifying)
+    - Trigonometric identities
+
+  essential_concepts:
+    - Limits and continuity
+    - Definition of the derivative via limits
+    - Differentiation rules (power, product, quotient, chain)
+    - Applications of derivatives (extrema, concavity, optimization)
+    - Related rates problems
+    - Curve sketching using calculus
+    - L'Hôpital's Rule for indeterminate forms
+
+  out_of_scope:
+    - Integration (covered in Calculus II / MATH204)
+    - Multivariable calculus (covered in MATH301)
+    - Differential equations (covered in MATH302)
+    - Rigorous epsilon-delta proofs (covered in Real Analysis / MATH303)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Evaluates limits using algebraic techniques and L'Hôpital's Rule
+    - Computes derivatives using multiple rules correctly
+    - Identifies critical points and classifies extrema
+    - Solves optimization word problems systematically
+    - Analyzes related rates scenarios and sets up equations
+    - Sketches curves using first and second derivative analysis
+
+  common_struggles:
+    - Forgetting to check for indeterminate forms before applying L'Hôpital
+    - Confusing product rule with chain rule
+    - Missing negative signs when differentiating
+    - Setting up optimization problems incorrectly (wrong constraint)
+    - Not distinguishing between local and global extrema
+    - Related rates: confusing constants with variables
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Start each subtopic with motivation explaining why the concept matters
+    - Include worked examples showing step-by-step calculations
+    - Provide both computational and conceptual exercises
+    - Use proper LaTeX notation for all mathematical expressions
+    - Include common mistakes section where applicable
+
+  conventions:
+    - LaTeX for all mathematical expressions
+    - Leibniz notation (dy/dx) as primary, Lagrange notation (f'(x)) as secondary
+    - Standard function names (sin, cos, ln, exp)
+    - Graphs and diagrams where visual intuition helps
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Calculus I requires both computational fluency and conceptual understanding.
+    Students must be able to compute derivatives quickly and accurately, but also
+    understand what derivatives represent and how to apply them. Assessments balance
+    drill problems for fluency with word problems requiring setup and interpretation.
+
+  measures:
+    - Ability to compute derivatives using standard rules
+    - Understanding of limits and continuity
+    - Application of derivatives to optimization and related rates
+    - Interpretation of derivatives in context (rates of change)
+    - Curve sketching using calculus techniques
+
+  anti_patterns:
+    - Pure computation without context
+    - Trick questions exploiting notation quirks
+    - Problems requiring integration techniques
+    - Memorization of specific problem types without understanding
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard passing threshold appropriate for an intermediate math course.
+    Students need solid computational skills that build on precalculus and serve
+    as foundation for Calculus II and beyond. Slightly lower quiz/exam thresholds
+    account for time pressure.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Higher volume of exercises than base standard because computational fluency
+    requires practice. Mix of drill problems for speed and application problems
+    for depth. Exercises progress from basic differentiation to multi-step
+    optimization and related rates problems.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      Pure mathematics subject. All exercises are written (computations, proofs,
+      word problems). AI evaluation compares student work against reference solutions.
+
+  per_topic:
+    minimum: 16
+    target: 20
+    maximum: 24
+    justification: >
+      Higher than base standard (20 vs 16) because calculus requires computational
+      fluency. Many exercises are drill problems for speed building. Application
+      problems require more thought but fewer repetitions.
+
+  difficulty_distribution:
+    1: 4
+    2: 6
+    3: 6
+    4: 3
+    5: 1
+    justification: >
+      Skewed toward easier difficulties for computational fluency. Many D1-D2
+      exercises build speed with differentiation rules. D3-D4 for optimization
+      and related rates. D5 for challenging applications.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding and ability to identify which technique
+    applies. Mix of computation and interpretation questions ensures students
+    understand meaning, not just mechanics.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes allow progression: basics, applications,
+      and synthesis. 5 questions each provides adequate coverage without fatigue.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "15%"
+    fill_blank: "20%"
+    code_output: "0%"
+    coding: "0%"
+    written: "15%"
+    justification: >
+      Multiple choice for conceptual understanding and quick computation.
+      Fill-blank for formulas and rules. Limited written for showing work
+      on short problems. No coding in a pure math course.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams assess cumulative understanding with balanced computational and
+    application problems. Time pressure tests fluency. Written problems
+    require showing work for partial credit.
+
+  midterm:
+    questions:
+      minimum: 25
+      target: 28
+      maximum: 32
+    duration_minutes: 75
+    format: >
+      10-12 computation problems (limits, derivatives), 8-10 multiple choice
+      conceptual questions, 5-8 short application problems (optimization setup,
+      related rates).
+    coverage: "Topics 1-4: Limits, derivatives, differentiation rules, applications"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      15-18 computation problems across all topics, 12-15 multiple choice,
+      10-14 application problems including optimization and related rates,
+      2-3 curve sketching problems.
+    coverage: "Comprehensive: all 7 topics with emphasis on applications"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    Pure math courses assess via problem sets and exams rather than projects.
+    The extensive exercise sets provide sufficient practice. Calculus problems
+    are self-contained and don't benefit from project format.
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires integration techniques not yet covered
+  - Optimization problem has ambiguous constraints
+  - Related rates problem missing essential given information
+  - L'Hôpital's Rule applied to non-indeterminate form
+  - Curve sketching without specifying domain
+  - Quiz answer depends on calculator precision
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Calculus I is foundational for all STEM disciplines. Content should balance
+  rigorous computation with intuitive understanding. Students should leave
+  knowing not just how to differentiate, but why derivatives matter for
+  modeling change. Real-world applications (physics, economics, biology)
+  make concepts concrete. The 7 subtopics per topic requirement means adding
+  capstone/summary subtopics where current topics have only 6.

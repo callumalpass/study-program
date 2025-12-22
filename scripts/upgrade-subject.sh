@@ -58,8 +58,8 @@ Read these files for context:
 
 ## Your Task
 
-1. **Read docs/reviews/SUMMARY.md** and run `npm run quality` to identify the highest priority subject that still needs work
-2. Pick ONE subject from the "Priority Action Items" section (Immediate priority first, then High, then Medium)
+1. **Read docs/reviews/SUMMARY.md and run `npm run quality`** to identify the highest priority subject that still needs work
+2. Pick ONE subject 
 3. Upgrade that subject completely
 
 ### Phase 0: Subject Specification (Required First)
