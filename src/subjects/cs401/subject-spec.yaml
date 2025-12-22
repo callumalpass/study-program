@@ -1,0 +1,288 @@
+# CS401: Distributed Systems - Subject Specification
+# This spec guides content creation for an advanced course on distributed computing systems.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs401
+title: Distributed Systems
+category: cs
+
+role:
+  level: advanced
+  transformation: >
+    From "I can build single-machine applications" to "I can design and implement
+    systems that coordinate across multiple machines, handle failures gracefully,
+    and maintain consistency guarantees in the presence of network partitions and
+    node failures."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Operating systems fundamentals (processes, threads, concurrency)
+    - Computer networks (TCP/IP, HTTP, sockets)
+    - Data structures and algorithms
+    - Object-oriented programming proficiency
+    - Basic database concepts
+
+  essential_concepts:
+    - Distributed system models and architectural patterns
+    - Time synchronization and logical clocks
+    - Consensus algorithms (Paxos, Raft)
+    - Replication strategies and consistency models
+    - Fault tolerance and failure detection
+    - MapReduce and distributed data processing
+    - Microservices architecture patterns
+
+  out_of_scope:
+    - Specific cloud provider implementations (covered in CS405)
+    - Machine learning distributed training (covered in CS402)
+    - Blockchain applications beyond consensus (separate course)
+    - Low-level network programming details
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Designs distributed systems with appropriate consistency/availability tradeoffs
+    - Implements consensus protocols correctly handling edge cases
+    - Debugs distributed systems issues using logical timestamps and causality
+    - Chooses appropriate replication strategies for given requirements
+    - Builds fault-tolerant services that recover gracefully from failures
+    - Applies chaos engineering principles to validate system resilience
+
+  common_struggles:
+    - Underestimating the impact of network partitions
+    - Confusing sequential consistency with linearizability
+    - Implementing distributed locks without proper fencing
+    - Failing to handle split-brain scenarios
+    - Not accounting for message ordering and delivery guarantees
+    - Overlooking the impossibility results (CAP, FLP)
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Include practical code examples demonstrating key concepts
+    - Show failure scenarios and how systems should handle them
+    - Provide architectural diagrams using Mermaid for complex systems
+    - Reference real-world systems (Google, Amazon, Netflix) as case studies
+    - Include both theoretical foundations and practical implementation guidance
+
+  conventions:
+    - JavaScript/TypeScript for distributed system implementations
+    - Python for data processing examples
+    - All code must be well-commented with async/await patterns
+    - Use Mermaid diagrams for architecture visualization
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Distributed systems require both theoretical understanding and practical
+    implementation skills. Assessments must test understanding of impossibility
+    results and tradeoffs (theory) while also requiring students to implement
+    working distributed algorithms (practice). Real-world failure scenarios
+    should feature prominently in exercises and exams.
+
+  measures:
+    - Understanding of distributed computing fundamentals (CAP, FLP)
+    - Ability to implement consensus and replication protocols
+    - Skill in designing systems with appropriate consistency guarantees
+    - Proficiency in debugging distributed systems issues
+    - Application of fault tolerance and resilience patterns
+
+  anti_patterns:
+    - Questions that can be answered without understanding tradeoffs
+    - Implementation exercises without failure handling requirements
+    - Memorization of specific algorithm steps without understanding
+    - Exercises that work only in happy-path scenarios
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 70
+    exams: 65
+
+  rationale: >
+    Standard passing thresholds. Exam threshold slightly lower because
+    distributed systems concepts can be nuanced and partial understanding
+    is still valuable. Exercises require higher threshold because they
+    must produce working code that handles failures correctly.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises combine coding implementations with written analysis of distributed
+    systems tradeoffs. Students must implement working distributed algorithms
+    while also demonstrating understanding of why certain designs are chosen.
+    Test cases validate correctness including failure scenarios.
+
+  types:
+    coding_with_tests: "80%"
+    coding_ai_evaluated: "10%"
+    written: "10%"
+    justification: >
+      Majority coding with tests for immediate feedback on implementations.
+      Some AI-evaluated coding for open-ended design problems. Written
+      exercises for analyzing tradeoffs and impossibility results where
+      there's no single correct answer.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Each exercise should demonstrate understanding
+      of distributed systems concepts. Mix of implementation exercises (consensus,
+      replication) and design analysis exercises (tradeoff evaluation).
+
+  difficulty_distribution:
+    1: 2
+    2: 3
+    3: 5
+    4: 4
+    5: 2
+    justification: >
+      Skewed toward medium-hard difficulty (3-4) because distributed systems
+      concepts have inherent complexity. Easy exercises (1-2) cover basic
+      concepts. Hard exercises (5) involve implementing complete protocols
+      or handling complex failure scenarios.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding of distributed systems fundamentals,
+    including impossible results, consistency models, and protocol behavior.
+    Code tracing questions verify understanding of algorithm execution.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard quiz count. Three quizzes per topic: fundamentals (definitions,
+      impossibility results), application (algorithm behavior, code tracing),
+      mastery (edge cases, failure scenarios).
+
+  question_types:
+    multiple_choice: "45%"
+    true_false: "20%"
+    fill_blank: "10%"
+    code_output: "25%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on multiple choice for testing understanding of tradeoffs and
+      theoretical concepts. Code output questions for tracing distributed
+      algorithm execution. True/false for common misconceptions about
+      consistency models and impossibility results.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test comprehensive understanding of distributed systems from theory
+    through implementation. Mix of conceptual questions about tradeoffs and
+    practical questions about protocol behavior. Written questions require
+    design analysis and tradeoff evaluation.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      10-12 multiple choice on fundamentals, 6-8 code tracing questions,
+      4-6 short answer on tradeoffs and design decisions. Focus on
+      Topics 1-4: fundamentals, time/coordination, consensus, replication.
+    coverage: "Topics 1-4: Fundamentals, Time & Coordination, Consensus, Replication"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      15-18 multiple choice, 10-12 code tracing, 8-10 short answer/design
+      questions. Comprehensive coverage with emphasis on integration across
+      topics. At least one question requiring design of complete system.
+    coverage: "Comprehensive: all 7 topics with emphasis on integration"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 3
+
+  rationale: >
+    Projects are essential for distributed systems because implementing
+    working distributed algorithms reveals nuances that theory alone cannot
+    convey. Three substantial projects cover the core distributed systems
+    patterns: consensus, data processing, and microservices.
+
+  goals:
+    - Implement a complete distributed consensus protocol
+    - Build a distributed data processing framework
+    - Design and deploy a microservices architecture
+    - Handle realistic failure scenarios in production-like environments
+    - Apply observability and resilience patterns
+
+  estimated_hours: "12-18"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise assumes network is reliable or never partitions
+  - Code example doesn't handle failure cases
+  - Quiz question tests memorization of specific algorithm without understanding
+  - Design doesn't address split-brain or network partition scenarios
+  - Solution uses synchronous blocking in distributed context inappropriately
+  - Exercise doesn't require proper error handling for distributed operations
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Distributed systems is a challenging subject that requires students to think
+  about what can go wrong rather than just what should go right. Content should
+  emphasize the "eight fallacies of distributed computing" and how real systems
+  fail. Case studies from Google (Spanner, Chubby), Amazon (Dynamo), and Netflix
+  (Chaos Monkey) help ground theory in practice. Students should leave this
+  course able to reason about distributed systems behavior and design systems
+  that are resilient to realistic failures.

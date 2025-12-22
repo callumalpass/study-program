@@ -7,8 +7,8 @@
 
 | Status | Count | Percentage |
 |--------|-------|------------|
-| COMPLETE (10/10) | 35 | 92% |
-| COMPLETE (7-9/10) | 3 | 8% |
+| COMPLETE (10/10) | 36 | 95% |
+| COMPLETE (7-9/10) | 2 | 5% |
 | NEEDS WORK | 0 | 0% |
 | INCOMPLETE | 0 | 0% |
 
@@ -32,6 +32,7 @@
 - CS305: Web Development
 - CS306: Computer Graphics
 - CS307: Security Fundamentals
+- CS401: Distributed Systems
 - CS402: Machine Learning
 - CS403: Advanced Algorithms
 - CS404: Capstone Project
@@ -52,7 +53,6 @@
 - MATH404: Optimization Theory
 
 ### Good with Minor Issues (7-9/10)
-- CS401: Distributed Systems (8/10)
 - MATH301: Multivariable Calculus (8/10)
 - MATH303: Real Analysis (8/10)
 
@@ -65,7 +65,7 @@
 Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 - CS202, CS203, CS204, CS205
 - CS301, CS303, CS304, CS305, CS306, CS307
-- CS401, CS403
+- CS403
 - MATH101, MATH102, MATH201, MATH202
 - MATH301, MATH302, MATH304, MATH403
 
@@ -101,18 +101,27 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 - **Good:** MATH301, MATH303
 
 ### Year 4 (11 subjects)
-- **Complete:** CS402, CS403, CS404, CS405, CS406, CS407, MATH401, MATH402, MATH403, MATH404
-- **Good:** CS401
+- **Complete:** CS401, CS402, CS403, CS404, CS405, CS406, CS407, MATH401, MATH402, MATH403, MATH404
+- **Good:** (none)
 
 ## Estimated Work Remaining
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (22 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (21 subjects) |
 
-**Total Estimated:** ~11 hours for spec files.
+**Total Estimated:** ~10.5 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### CS401: Distributed Systems Upgraded to Production Ready
+- **Status changed:** 8/10 -> 10/10
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Verified all content meets quality standards
+  3. Confirmed Chaos Engineering subtopic has 2,436 words (well above 800-word minimum)
+  4. All 3 projects confirmed with complete rubrics
+- **Quality verified:** 114,356 total words (avg 2,334/subtopic), 112 exercises, 105 quiz questions, 68 exam questions, 3 projects
 
 ### MATH203: Calculus I Upgraded to Production Ready
 - **Status changed:** 10/10 (confirmed, with spec file added)
@@ -129,7 +138,7 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 - **Quality verified:** 45,133 total words, 140 exercises (20/topic), 105 quiz questions, 70 exam questions
 
 ### CS105: Introduction to C Programming Upgraded to Production Ready
-- **Status changed:** 8/10 → 10/10
+- **Status changed:** 8/10 -> 10/10
 - **Changes made:**
   1. Created `subject-spec.yaml` with full pedagogical documentation
   2. Documented curriculum requirements, assessment philosophy, and grading thresholds
@@ -137,7 +146,7 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 - **All content meets quality standard:** 48,408 total words (avg 988/subtopic), 112 exercises, 105 quiz questions, 68 exam questions, 3 projects with rubrics
 
 ### CS302: Computer Networks Upgraded to Production Ready
-- **Status changed:** 8/10 → 10/10
+- **Status changed:** 8/10 -> 10/10
 - **Changes made:**
   1. Created `subject-spec.yaml` with full pedagogical documentation
   2. Expanded TCP Basics subtopic from ~623 to ~1253 words
@@ -145,7 +154,7 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 - **All content now meets quality standard:** 46,673 total words (avg 953/subtopic), 112 exercises, 105 quiz questions, complete exams, 4 projects
 
 ### CS201: Algorithms Upgraded to Production Ready
-- **Status changed:** 7/10 → 10/10
+- **Status changed:** 7/10 -> 10/10
 - **Changes made:**
   1. Created `subject-spec.yaml` with 8-topic justification and complete pedagogical documentation
   2. Fixed Maze Solver project rubric (expanded from 1 criterion/2 levels to 4 criteria/4 levels, weights now sum to 100%)
