@@ -65,6 +65,7 @@ export function ExercisePage({
   useEffect(() => {
     setCompletion(progressStorage.getExerciseCompletion(subjectId, exerciseId) ?? null);
     startTimeRef.current = Date.now();
+    window.dispatchEvent(new CustomEvent('mascot:exercise-reset'));
   }, [subjectId, exerciseId]);
 
   const handleNavigatePrev = useCallback(() => {
@@ -172,6 +173,9 @@ function CodingExercisePage({
 
     progressStorage.addExerciseCompletion(subjectId, exerciseId, newCompletion);
     setCompletion(newCompletion);
+    if (allPassed) {
+      window.dispatchEvent(new CustomEvent('mascot:exercise-success'));
+    }
   }, [subjectId, exerciseId, startTimeRef, setCompletion]);
 
   // Handle AI evaluation for exercises without test cases
@@ -195,6 +199,9 @@ function CodingExercisePage({
 
     progressStorage.addExerciseCompletion(subjectId, exerciseId, newCompletion);
     setCompletion(progressStorage.getExerciseCompletion(subjectId, exerciseId) ?? newCompletion);
+    if (result.passed) {
+      window.dispatchEvent(new CustomEvent('mascot:exercise-success'));
+    }
   }, [subjectId, exerciseId, startTimeRef, setCompletion]);
 
   // Check if this exercise uses AI evaluation (no test cases)
@@ -357,6 +364,9 @@ function WrittenExercisePage({
 
     progressStorage.addExerciseCompletion(subjectId, exerciseId, newCompletion);
     setCompletion(progressStorage.getExerciseCompletion(subjectId, exerciseId) ?? newCompletion);
+    if (result.passed) {
+      window.dispatchEvent(new CustomEvent('mascot:exercise-success'));
+    }
   }, [subjectId, exerciseId, setCompletion]);
 
   return (
