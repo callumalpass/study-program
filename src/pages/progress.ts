@@ -1,5 +1,5 @@
 // Progress/Statistics page
-import type { Subject } from '@/core/types';
+import type { Subject, UserProgress, SubjectProgress, QuizAttempt, ExerciseCompletion } from '@/core/types';
 import { progressStorage, exportProgress, importProgress } from '@/core/storage';
 import {
   calculateOverallProgress,
@@ -192,7 +192,7 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
  */
 function renderSubjectBreakdown(
   groupedSubjects: Map<number, Map<number, Subject[]>>,
-  userProgress: any
+  userProgress: UserProgress
 ): string {
   const years = Array.from(groupedSubjects.keys()).sort();
 
@@ -256,13 +256,15 @@ function renderSubjectBreakdown(
 /**
  * Calculate statistics per year
  */
-function calculateYearStatistics(subjects: Subject[], userProgress: any): Record<number, {
+interface YearStats {
   total: number;
   completed: number;
   inProgress: number;
   percentComplete: number;
-}> {
-  const stats: Record<number, any> = {
+}
+
+function calculateYearStatistics(subjects: Subject[], userProgress: UserProgress): Record<number, YearStats> {
+  const stats: Record<number, YearStats> = {
     1: { total: 0, completed: 0, inProgress: 0, percentComplete: 0 },
     2: { total: 0, completed: 0, inProgress: 0, percentComplete: 0 },
     3: { total: 0, completed: 0, inProgress: 0, percentComplete: 0 },
@@ -297,7 +299,7 @@ function calculateYearStatistics(subjects: Subject[], userProgress: any): Record
 /**
  * Calculate achievements
  */
-function calculateAchievements(subjects: Subject[], userProgress: any): Array<{
+interface Achievement {
   id: string;
   title: string;
   description: string;
@@ -305,22 +307,24 @@ function calculateAchievements(subjects: Subject[], userProgress: any): Array<{
   unlocked: boolean;
   unlockedDate?: string;
   progress: number;
-}> {
+}
+
+function calculateAchievements(subjects: Subject[], userProgress: UserProgress): Achievement[] {
   const overallProgress = calculateOverallProgress(subjects, userProgress);
 
   // Count total quizzes and exercises completed
   let totalQuizzesPassed = 0;
   let totalExercisesPassed = 0;
 
-  Object.values(userProgress.subjects).forEach((subjectProgress: any) => {
-    Object.values(subjectProgress.quizAttempts).forEach((attempts: any) => {
+  Object.values(userProgress.subjects).forEach((subjectProgress: SubjectProgress) => {
+    Object.values(subjectProgress.quizAttempts).forEach((attempts: QuizAttempt[]) => {
       if (attempts && attempts.length > 0) {
-        const bestScore = Math.max(...attempts.map((a: any) => a.score));
+        const bestScore = Math.max(...attempts.map((a: QuizAttempt) => a.score));
         if (bestScore >= 70) totalQuizzesPassed++;
       }
     });
 
-    Object.values(subjectProgress.exerciseCompletions).forEach((completion: any) => {
+    Object.values(subjectProgress.exerciseCompletions).forEach((completion: ExerciseCompletion) => {
       if (completion && completion.passed) {
         totalExercisesPassed++;
       }
@@ -383,7 +387,7 @@ function calculateAchievements(subjects: Subject[], userProgress: any): Array<{
 /**
  * Check if a year is complete
  */
-function isYearComplete(subjects: Subject[], userProgress: any, year: number): boolean {
+function isYearComplete(subjects: Subject[], userProgress: UserProgress, year: number): boolean {
   const yearSubjects = subjects.filter(s => s.year === year);
   return yearSubjects.every(subject => {
     const progress = userProgress.subjects[subject.id];
@@ -394,7 +398,7 @@ function isYearComplete(subjects: Subject[], userProgress: any, year: number): b
 /**
  * Calculate progress for a specific year
  */
-function calculateYearProgress(subjects: Subject[], userProgress: any, year: number): number {
+function calculateYearProgress(subjects: Subject[], userProgress: UserProgress, year: number): number {
   const yearSubjects = subjects.filter(s => s.year === year);
   if (yearSubjects.length === 0) return 0;
 
