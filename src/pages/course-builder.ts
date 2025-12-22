@@ -5,67 +5,18 @@ import { courseTemplates, getTemplateById } from '@/data/templates';
 import { curriculum } from '@/data/curriculum';
 import { navigate } from '@/core/router';
 import { Mascots } from '@/components/mascots';
-
-interface CourseBuilderFilters {
-  category: SubjectCategory | 'all';
-  year: number | null;
-  search: string;
-}
+import {
+  getMissingPrerequisites,
+  getDependentSubjects,
+  filterSubjects,
+  type CourseBuilderFilters,
+} from './course-builder-utils';
 
 let currentFilters: CourseBuilderFilters = {
   category: 'all',
   year: null,
   search: '',
 };
-
-/**
- * Get prerequisite subjects that are not selected
- */
-function getMissingPrerequisites(subjectId: string, selectedIds: string[]): string[] {
-  const subject = curriculum.find(s => s.id === subjectId);
-  if (!subject) return [];
-  return subject.prerequisites.filter(prereqId => !selectedIds.includes(prereqId));
-}
-
-/**
- * Get subjects that would be orphaned if this subject is removed
- */
-function getDependentSubjects(subjectId: string, selectedIds: string[]): Subject[] {
-  return curriculum.filter(s =>
-    selectedIds.includes(s.id) &&
-    s.prerequisites.includes(subjectId)
-  );
-}
-
-/**
- * Filter subjects based on current filters
- */
-function filterSubjects(subjects: Subject[], filters: CourseBuilderFilters): Subject[] {
-  return subjects.filter(subject => {
-    // Category filter
-    if (filters.category !== 'all' && subject.category !== filters.category) {
-      return false;
-    }
-
-    // Year filter
-    if (filters.year !== null && subject.year !== filters.year) {
-      return false;
-    }
-
-    // Search filter
-    if (filters.search) {
-      const searchLower = filters.search.toLowerCase();
-      const matchesCode = subject.code.toLowerCase().includes(searchLower);
-      const matchesTitle = subject.title.toLowerCase().includes(searchLower);
-      const matchesDesc = subject.description.toLowerCase().includes(searchLower);
-      if (!matchesCode && !matchesTitle && !matchesDesc) {
-        return false;
-      }
-    }
-
-    return true;
-  });
-}
 
 /**
  * Render the course builder page
@@ -164,7 +115,7 @@ export function renderCourseBuilderPage(container: HTMLElement): void {
               </div>
             ` : filteredSubjects.map(subject => {
               const isSelected = selectedIds.includes(subject.id);
-              const missingPrereqs = getMissingPrerequisites(subject.id, selectedIds);
+              const missingPrereqs = getMissingPrerequisites(subject.id, selectedIds, curriculum);
               const hasMissingPrereqs = missingPrereqs.length > 0 && !isSelected;
 
               return `
@@ -362,7 +313,7 @@ function toggleSubject(subjectId: string, container: HTMLElement): void {
 
   if (isSelected) {
     // Check for dependent subjects before removing
-    const dependents = getDependentSubjects(subjectId, selectedIds);
+    const dependents = getDependentSubjects(subjectId, selectedIds, curriculum);
     if (dependents.length > 0) {
       const dependentCodes = dependents.map(s => s.code).join(', ');
       const confirmed = confirm(
