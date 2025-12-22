@@ -1,6 +1,6 @@
-# stup
+# stu.p
 
-Stup is a **stu**dy **p**rogram: a self-study platform with readings, exercises, quizzes, and exams.
+**stu.p** is a **stu**dy **p**rogram: a self-study platform with readings, exercises, quizzes, and exams.
 
 ## Why
 
