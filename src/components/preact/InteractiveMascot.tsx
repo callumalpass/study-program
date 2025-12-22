@@ -34,7 +34,23 @@ const BOREDOM_THRESHOLDS = {
 };
 
 // Dream icons for thought bubbles - weird and surreal
-const DREAM_ICONS = ['🦑', '🧀', '👁️', '🌀', '🦷', '🪺', '🫠', '🔮', '🪼', '🧲', '🦔', '🫧', '🪬', '🍄', '🐙'];
+const DREAM_ICONS = [
+  '🦑', '🧀', '👁️', '🌀', '🦷', '🪺', '🫠', '🔮', '🪼', '🧲',
+  '🦔', '🫧', '🪬', '🍄', '🐙', '🦴', '🧿', '🪞', '🛰️', '🧬',
+  '🕳️', '🧯', '🪚', '🧫', '🗝️', '🧱', '🧪', '🪐', '🧻', '🦠',
+  '🫥', '🪁', '🧭', '🧵', '🪡', '🧶', '🦇', '🦉', '🦚', '🪅',
+  '🪆', '🪤', '🧺', '🪣', '🪧', '🪢', '🪠', '🧠', '🫀', '🫁',
+  '🫦', '🧟', '🧌', '🧜', '🧛', '🧞', '🧚', '🧙', '🗿', '🗼',
+  '🧩', '🧨', '🧮', '🫙', '🫗', '🫖', '🫕', '🫔', '🫒', '🫐',
+  '🫑', '🫛', '🫜', '🪸', '🪱', '🪲', '🪳', '🪰', '🪴', '🪹',
+  '🪿', '🪵', '🪨', '🪶', '🦝', '🦥', '🦦', '🦭', '🦩', '🦬',
+  '🦣', '🐝', '🐌', '🐛', '🦋', '🐢', '🐍', '🦂', '🕷️', '🕸️',
+  '🐜', '🧊', '🧋', '🧃', '🧉', '🥽', '🧷', '🧹', '🧼', '🧴',
+  '🧽', '🪥', '🪒', '🧸', '🪗', '🪕', '🪘', '🪇', '🪈', '🎛️',
+  '🎚️', '🎲', '🛸', '🧰', '🔢', '🔣', '📐', '📏', '📈', '📉',
+  '📊', '➕', '➖', '✖️', '➗', '🏁', '🏳️‍🌈', '🏴‍☠️', '🇬🇧', '🇺🇸',
+  '🇯🇵', '🇮🇳', '🇧🇷', '🇿🇦', '🇳🇿', '🇰🇪', '🇲🇽'
+];
 
 // Konami code sequence
 const KONAMI_CODE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
@@ -81,6 +97,8 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
   const [konamiActive, setKonamiActive] = useState(false);
   const [showSparkles, setShowSparkles] = useState(false);
   const [scrollOffset, setScrollOffset] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isJumping, setIsJumping] = useState(false);
 
   // Charm states
   const [headTilt, setHeadTilt] = useState(0);
@@ -106,6 +124,11 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
   const lastMousePos = useRef({ x: 0, y: 0 });
   const lastDelta = useRef({ x: 0, y: 0 });
   const shakeScore = useRef(0);
+  const jumpTimerRef = useRef<number>();
+  const successTimerRef = useRef<number>();
+  const glanceTimerRef = useRef<number>();
+  const glanceCleanupTimerRef = useRef<number>();
+  const forwardGlanceTimersRef = useRef<number[]>([]);
 
   // Konami code tracking
   const konamiIndex = useRef(0);
@@ -308,19 +331,43 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
     }
   }, [isYawning, boredomLevel]);
 
-  // --- Wandering Mind (Saccades) ---
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isIdle && Math.random() < 0.12) {
-        setDistraction({ x: 0, y: 0 });
-        setTimeout(() => {
-          setDistraction(null);
-        }, 200 + Math.random() * 600);
-      }
-    }, 1000);
+    if (mood !== 'Pondering') {
+      setDistraction(null);
+    }
+  }, [mood]);
 
-    return () => clearInterval(interval);
-  }, [isIdle]);
+  // --- Occasional Forward Glances (non-pondering) ---
+  useEffect(() => {
+    const clearForwardTimers = () => {
+      forwardGlanceTimersRef.current.forEach((timerId) => clearTimeout(timerId));
+      forwardGlanceTimersRef.current = [];
+    };
+
+    let nextTimer: number;
+
+    const scheduleGlance = () => {
+      const delay = 1400 + Math.random() * 2200;
+      nextTimer = window.setTimeout(() => {
+        const effectiveMood = overrideMood || (isIdle ? 'Sleeping' : mood);
+        if (effectiveMood !== 'Pondering' && effectiveMood !== 'Sleeping') {
+          setDistraction({ x: 0, y: 0 });
+          const timerId = window.setTimeout(() => {
+            setDistraction(null);
+          }, 220 + Math.random() * 720);
+          forwardGlanceTimersRef.current.push(timerId);
+        }
+        scheduleGlance();
+      }, delay);
+    };
+
+    scheduleGlance();
+
+    return () => {
+      clearTimeout(nextTimer);
+      clearForwardTimers();
+    };
+  }, [mood, overrideMood, isIdle]);
 
   // --- Scroll Awareness ---
   useEffect(() => {
@@ -332,6 +379,8 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
 
       // Map to eye offset (-1.5 to 1.5)
       setScrollOffset((scrollPercent - 0.5) * 3);
+      // Track reading progress (0-1)
+      setScrollProgress(Math.min(1, Math.max(0, scrollPercent)));
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -351,6 +400,11 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
 
     if (distraction) {
       targetPosition.current = { x: distraction.x, y: distraction.y };
+      return;
+    }
+
+    if (effectiveMood === 'Pondering') {
+      targetPosition.current = { x: 0, y: 0 };
       return;
     }
 
@@ -483,6 +537,51 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
   // --- Click Handling with Click Count Tracking ---
   const lastClickTime = useRef(0);
 
+  const triggerSuccessJump = useCallback(() => {
+    setOverrideMood('Delighted');
+    setIsJumping(true);
+
+    if (jumpTimerRef.current) {
+      clearTimeout(jumpTimerRef.current);
+    }
+    if (successTimerRef.current) {
+      clearTimeout(successTimerRef.current);
+    }
+
+    jumpTimerRef.current = window.setTimeout(() => {
+      setIsJumping(false);
+    }, 650);
+
+    successTimerRef.current = window.setTimeout(() => {
+      setOverrideMood(null);
+    }, 2200);
+  }, []);
+
+  useEffect(() => {
+    const handleExerciseSuccess = () => {
+      if (!overrideMood) {
+        triggerSuccessJump();
+      }
+    };
+    const handleExerciseReset = () => {
+      setIsJumping(false);
+      setOverrideMood(null);
+    };
+
+    window.addEventListener('mascot:exercise-success', handleExerciseSuccess);
+    window.addEventListener('mascot:exercise-reset', handleExerciseReset);
+    return () => {
+      window.removeEventListener('mascot:exercise-success', handleExerciseSuccess);
+      window.removeEventListener('mascot:exercise-reset', handleExerciseReset);
+      if (jumpTimerRef.current) {
+        clearTimeout(jumpTimerRef.current);
+      }
+      if (successTimerRef.current) {
+        clearTimeout(successTimerRef.current);
+      }
+    };
+  }, [overrideMood, triggerSuccessJump]);
+
   const handleClick = useCallback(() => {
     const now = Date.now();
     const timeSinceLastClick = now - lastClickTime.current;
@@ -493,7 +592,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
       // Spin!
       setIsSpinning(true);
       onEvent?.({ type: 'double-click' });
-      setTimeout(() => setIsSpinning(false), 600);
+      setTimeout(() => setIsSpinning(false), 450);
       return;
     }
 
@@ -577,7 +676,11 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
 
   // Determine which eyes to show
   const showBlinkEyes = !isDizzyMood && !isYawning && (isPensive || isConfident || isStressed || isDetermined || isConfused || isShocked || isZen || isKinetic);
-  const showUpRightEyes = isPondering;
+  const showPonderingEyes = isPondering;
+  const showStandardPupils = showBlinkEyes || showPonderingEyes;
+  const pupilLeftX = showPonderingEyes ? 27 : 26;
+  const pupilRightX = showPonderingEyes ? 39 : 38;
+  const pupilY = showPonderingEyes ? 36 : 37;
   const showScanEyes = isReading;
   const showClosedEyes = isSleeping;
   const showHappyEyes = isDelighted;
@@ -590,11 +693,13 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
   const showSmileMouth = isConfident || isZen;
   const showBigSmileMouth = isDelighted;
   const showThinkMouth = isPondering;
-  const showFrownMouth = isReading;
   const showWavyMouth = isStressed || isConfused || isDizzyMood;
   const showOpenMouth = isShocked;
   const showGritMouth = isDetermined;
   const showYawnMouth = isYawning;
+
+  // Reading mouth curve - interpolate from frown (-1) to smile (1.5) based on scroll
+  const readingMouthCurve = -1 + (scrollProgress * 2.5);
 
   // Animation classes
   const isFloating = isZen || isDelighted;
@@ -616,7 +721,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
       fill="none"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class={`interactive-mascot mascot-${activeMood.toLowerCase()} ${isSpinning ? 'mascot-spin' : ''} ${konamiActive ? 'mascot-konami' : ''} ${isDizzyMood ? 'mascot-dizzy' : ''}`}
+      class={`interactive-mascot mascot-${activeMood.toLowerCase()} ${isSpinning ? 'mascot-spin' : ''} ${konamiActive ? 'mascot-konami' : ''} ${isDizzyMood ? 'mascot-dizzy' : ''} ${isJumping ? 'mascot-jump' : ''}`}
       style={{
         cursor: 'pointer',
         overflow: 'visible',
@@ -677,19 +782,27 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
             dangerouslySetInnerHTML={{ __html: Mascots.sunglasses }}
           />
 
-          {/* Eyes: Blink (Standard) - Now handles individual winking */}
-          <g style={{ opacity: showBlinkEyes ? 1 : 0, transition: 'opacity 0.3s' }}>
-            <circle ref={leftPupilRef} cx="26" cy="37" r="1.2" class="brick-pupils" style={{ transform: isLeftBlinking ? 'scaleY(0.1)' : 'scaleY(1)', transformOrigin: 'center' }} />
-            <circle ref={rightPupilRef} cx="38" cy="37" r="1.2" class="brick-pupils" style={{ transform: isRightBlinking ? 'scaleY(0.1)' : 'scaleY(1)', transformOrigin: 'center' }} />
-          </g>
-
-          {/* Eyes: UpRight (Pondering) */}
-          <g style={{ opacity: showUpRightEyes ? 1 : 0, transition: 'opacity 0.3s' }}>
-            <g class="brick-blink" style={{ transform: blinkState ? 'scaleY(0.1)' : 'scaleY(1)', transformOrigin: 'center' }}>
-              <circle cx="27" cy="36" r="1.2" class="brick-pupils" />
-              <circle cx="39" cy="36" r="1.2" class="brick-pupils" />
+          {/* Eyes: Standard + Pondering (with tracking) */}
+          {showStandardPupils && (
+            <g style={{ opacity: 1, transition: 'opacity 0.3s' }}>
+              <circle
+                ref={leftPupilRef}
+                cx={pupilLeftX}
+                cy={pupilY}
+                r="1.2"
+                class="brick-pupils"
+                style={{ transform: isLeftBlinking || (showPonderingEyes && blinkState) ? 'scaleY(0.1)' : 'scaleY(1)', transformOrigin: 'center' }}
+              />
+              <circle
+                ref={rightPupilRef}
+                cx={pupilRightX}
+                cy={pupilY}
+                r="1.2"
+                class="brick-pupils"
+                style={{ transform: isRightBlinking || (showPonderingEyes && blinkState) ? 'scaleY(0.1)' : 'scaleY(1)', transformOrigin: 'center' }}
+              />
             </g>
-          </g>
+          )}
 
           {/* Eyes: Scan (Reading) */}
           <g style={{ opacity: showScanEyes ? 1 : 0, transition: 'opacity 0.3s' }}>
@@ -724,7 +837,14 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
           <g style={{ opacity: showSmileMouth ? 1 : 0, transition: 'opacity 0.3s' }} dangerouslySetInnerHTML={{ __html: Mascots.mouthSmile }} />
           <g style={{ opacity: showBigSmileMouth ? 1 : 0, transition: 'opacity 0.3s' }} dangerouslySetInnerHTML={{ __html: Mascots.mouthBigSmile }} />
           <g style={{ opacity: showThinkMouth ? 1 : 0, transition: 'opacity 0.3s' }} dangerouslySetInnerHTML={{ __html: Mascots.mouthThink }} />
-          <g style={{ opacity: showFrownMouth ? 1 : 0, transition: 'opacity 0.3s' }} dangerouslySetInnerHTML={{ __html: Mascots.mouthFrown }} />
+          {/* Reading mouth - curve interpolates based on scroll progress */}
+          <path
+            d={`M29 44q3 ${readingMouthCurve} 6 0`}
+            class="brick-stroke"
+            stroke-width="1.5"
+            fill="none"
+            style={{ opacity: isReading ? 1 : 0, transition: 'opacity 0.3s' }}
+          />
           <g style={{ opacity: showWavyMouth ? 1 : 0, transition: 'opacity 0.3s' }} dangerouslySetInnerHTML={{ __html: Mascots.mouthWavy }} />
           <g style={{ opacity: showOpenMouth ? 1 : 0, transition: 'opacity 0.3s' }} dangerouslySetInnerHTML={{ __html: Mascots.mouthOpen }} />
           <g style={{ opacity: showGritMouth ? 1 : 0, transition: 'opacity 0.3s' }} dangerouslySetInnerHTML={{ __html: Mascots.mouthGrit }} />
@@ -753,7 +873,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
         )}
 
         {/* Snoring - Animated bubbles */}
-        {(boredomLevel === 'snoring' || boredomLevel === 'dreaming') && (
+        {boredomLevel === 'snoring' && (
           <g class="mascot-snore-bubbles">
             <circle cx="48" cy="42" r="2" class="snore-bubble snore-bubble-1" />
             <circle cx="52" cy="36" r="3" class="snore-bubble snore-bubble-2" />
