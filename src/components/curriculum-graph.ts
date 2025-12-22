@@ -1,4 +1,4 @@
-import type { Subject } from '@/core/types';
+import type { Subject, UserProgress } from '@/core/types';
 import { navigateToSubject } from '@/core/router';
 
 // Get theme-aware colors from CSS variables
@@ -38,7 +38,7 @@ interface Edge {
 export class CurriculumGraph {
   private container: HTMLElement;
   private subjects: Subject[];
-  private userProgress: any;
+  private userProgress: UserProgress;
   private nodes: Map<string, Node> = new Map();
   private svg: SVGSVGElement | null = null;
   private colors: ReturnType<typeof getThemeColors> | null = null;
@@ -54,7 +54,7 @@ export class CurriculumGraph {
   private readonly NODE_SPACING = 100; // Vertical spacing
   private readonly PADDING = 50;
 
-  constructor(subjects: Subject[], userProgress: any) {
+  constructor(subjects: Subject[], userProgress: UserProgress) {
     this.subjects = subjects;
     this.userProgress = userProgress;
     this.container = document.createElement('div');
