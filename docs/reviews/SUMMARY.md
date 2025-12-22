@@ -64,7 +64,7 @@
 
 ### 1. Missing subject-spec.yaml
 Many subjects still need subject-spec.yaml files (required since 2025-12-20):
-- CS306, CS307
+- CS307
 - CS403
 - MATH101, MATH102, MATH201, MATH202
 - MATH302, MATH304
@@ -108,11 +108,22 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (9 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (8 subjects) |
 
-**Total Estimated:** ~4.5 hours for spec files.
+**Total Estimated:** ~4 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### CS306: Computer Graphics - Added Subject Specification
+- **Status:** Already 10/10, now with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: graphics pipeline, transformations, viewing, rasterization, illumination, texture mapping, ray tracing
+  3. Specified assessment philosophy for applied graphics programming
+  4. Defined exercise distribution (85% coding with tests, 10% AI-evaluated, 5% written)
+  5. Set project count to 3 (matching existing: Software Rasterizer, 3D Scene Viewer, Ray Tracer)
+  6. Set exam targets (26 midterm, 42 final) matching existing content
+- **Quality verified:** 105,821 total words (avg 2,160/subtopic), 112 exercises, 105 quiz questions, 68 exam questions, 3 projects
 
 ### CS305: Web Development - Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml

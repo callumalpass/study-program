@@ -1,0 +1,281 @@
+# CS306: Computer Graphics - Subject Specification
+# This spec guides content creation for an intermediate graphics programming course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs306
+title: Computer Graphics
+category: cs
+
+role:
+  level: intermediate
+  transformation: >
+    From "graphics are magic" to "I understand how images are rendered from 3D
+    geometry and can implement rendering algorithms from scratch." Students finish
+    able to build rasterizers, write shaders, and implement ray tracers.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Linear algebra (vectors, matrices, transformations)
+    - Calculus (derivatives for shading, integration concepts for global illumination)
+    - Programming proficiency (C++, Python, or similar)
+    - Data structures (trees for acceleration structures, arrays for buffers)
+
+  essential_concepts:
+    - Graphics pipeline architecture and stages
+    - 2D and 3D transformations using matrices
+    - Viewing and projection (orthographic, perspective)
+    - Rasterization algorithms (line drawing, triangle filling)
+    - Illumination models (Phong, Blinn-Phong)
+    - Texture mapping and filtering
+    - Ray tracing fundamentals and global illumination
+
+  out_of_scope:
+    - Real-time game engine development (covered in advanced courses)
+    - GPU architecture and optimization (covered in CS405)
+    - Advanced global illumination (path tracing variants)
+    - VR/AR rendering techniques
+    - Neural rendering and AI-based graphics
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: applied
+
+  mastery_indicators:
+    - Implements Bresenham's line algorithm correctly from memory
+    - Derives and applies homogeneous transformation matrices
+    - Writes vertex and fragment shaders for common lighting effects
+    - Traces rays through a scene and computes correct intersections
+    - Identifies appropriate anti-aliasing techniques for given scenarios
+    - Explains trade-offs between rasterization and ray tracing
+
+  common_struggles:
+    - Confusing row-major vs column-major matrix conventions
+    - Getting transformation order wrong (scale, rotate, translate)
+    - Mixing up model, view, and projection spaces
+    - Off-by-one errors in pixel coordinate systems
+    - Incorrect normal transformation (forgetting inverse transpose)
+    - Understanding perspective divide and clip coordinates
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Every algorithm explained with pseudocode and working implementation
+    - Mathematical formulas accompanied by geometric intuition
+    - Visual diagrams illustrating coordinate spaces and transformations
+    - Code examples in multiple languages where appropriate (Python, C++, GLSL)
+    - Performance considerations discussed for real-time applications
+
+  conventions:
+    - Column-major matrices (OpenGL/GLSL convention)
+    - Right-handed coordinate system unless otherwise noted
+    - LaTeX for mathematical expressions
+    - Mermaid diagrams for pipeline and workflow visualizations
+    - GLSL syntax for shader code examples
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Computer graphics requires both theoretical understanding and practical
+    implementation skill. Exercises emphasize writing correct, working code
+    that produces visible results. Students should be able to implement
+    algorithms from specifications and debug visual artifacts.
+
+  measures:
+    - Correctness of algorithm implementations
+    - Ability to trace through matrix transformations step by step
+    - Understanding of when to apply specific techniques
+    - Code that produces expected visual output
+    - Debugging skills for common graphics artifacts
+
+  anti_patterns:
+    - Pure memorization of matrix formulas without understanding
+    - Exercises that can only be solved with specific library calls
+    - Questions about obscure API details rather than concepts
+    - Code that works by trial-and-error rather than understanding
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Graphics programming requires precision—off-by-one errors and incorrect
+    formulas produce visible artifacts. The passing threshold reflects that
+    students must demonstrate competence in core algorithms. Quiz/exam thresholds
+    are slightly lower because theoretical questions can be nuanced.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Graphics exercises focus on implementing algorithms that produce visible
+    results. Students should see their code create images, making debugging
+    more intuitive. Test cases verify numerical correctness while visual
+    output confirms understanding.
+
+  types:
+    coding_with_tests: "85%"
+    coding_ai_evaluated: "10%"
+    written: "5%"
+    justification: >
+      Most exercises are coding with automated tests for immediate feedback
+      on algorithm correctness. Some AI-evaluated exercises for open-ended
+      implementations where multiple approaches are valid. A few written
+      exercises for deriving transformations or explaining concepts.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Standard base count. Graphics benefits from practice with variations
+      on core algorithms. Each exercise builds on previous work, creating
+      a progression toward complete implementations.
+
+  difficulty_distribution:
+    1: 3
+    2: 3
+    3: 4
+    4: 3
+    5: 3
+    justification: >
+      Standard distribution. Graphics has a natural progression from simple
+      primitives to complex effects. Difficulty 5 exercises involve complete
+      subsystem implementations (e.g., complete shading model, full rasterizer).
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test theoretical understanding that underpins implementations.
+    Students should understand why algorithms work, not just how to code them.
+    Code tracing is particularly important for debugging graphics programs.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic: fundamentals (definitions,
+      formulas), application (algorithm tracing, transformations), and mastery
+      (debugging scenarios, optimization choices).
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "15%"
+    fill_blank: "10%"
+    code_output: "25%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on multiple choice for concept understanding and common pitfalls.
+      Code output questions for tracing through transformations and shaders.
+      No coding in quizzes—that's what exercises are for.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test ability to work through graphics problems without IDE support.
+    Students should be able to derive transformations, trace through algorithms
+    on paper, and identify issues from described symptoms.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      10-12 multiple choice on concepts and formulas, 8-10 short answer
+      requiring matrix derivations or algorithm tracing, 4-6 longer problems
+      requiring multi-step solutions.
+    coverage: "Topics 1-4: Pipeline, Transformations, Viewing, Rasterization"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 150
+    format: >
+      15-18 multiple choice covering all topics, 12-15 short answer on
+      algorithms and transformations, 8-10 longer problems including
+      shader debugging and ray tracing calculations.
+    coverage: "Comprehensive: all 7 topics with emphasis on shading and ray tracing"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 3
+  rationale: >
+    Graphics is fundamentally about building complete rendering systems.
+    Projects provide the authentic experience of creating something that
+    produces visible images. Three projects cover the major paradigms:
+    software rasterization, GPU-based rendering, and ray tracing.
+
+  goals:
+    - Implement complete rendering pipelines from scratch
+    - Experience debugging visual artifacts
+    - Apply optimization techniques for interactive performance
+    - Create portfolio-quality visual demonstrations
+
+  estimated_hours: "25-35"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Code example uses deprecated OpenGL fixed-function pipeline
+  - Matrix convention inconsistent within topic (mixing row/column major)
+  - Exercise expects specific library (e.g., GLM) without stating so
+  - Shader code uses features not available in target GLSL version
+  - Test case expects floating-point equality without epsilon tolerance
+  - Visual example described but no actual image or diagram provided
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Computer Graphics bridges mathematics and visual arts. Content should balance
+  rigorous formulas with geometric intuition. Students often struggle with the
+  abstract nature of coordinate spaces—use diagrams liberally. Real-time
+  performance matters in graphics; mention complexity and optimization where
+  relevant. Projects are essential; the satisfaction of seeing rendered images
+  motivates continued learning.
