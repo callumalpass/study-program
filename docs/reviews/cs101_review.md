@@ -148,20 +148,22 @@ None required - this subject meets all standards. Minor optional enhancements co
 
 ### Midterm Exam (cs101-exam-midterm)
 - **Duration:** 75 minutes
-- **Questions:** 26 comprehensive questions
-- **Coverage:** Variables (6q), Control Flow (6q), Functions (6q), Lists/Dicts (6q), File I/O (2q)
+- **Questions:** 30 comprehensive questions (meets spec target)
+- **Coverage:** Variables (6q), Control Flow (6q), Functions (6q), Lists/Dicts (10q), File I/O (2q)
 - **Question Types:** Multiple choice, code output, true/false, fill blank, coding challenges
 - **Quality:** Excellent balance of testing conceptual understanding and practical application
 - **Instructions:** Clear and student-friendly
+- **Added 2025-12-23:** 4 new questions covering mutability vs immutability, truthiness, list modification, and dictionary key checking
 
 ### Final Exam (cs101-exam-final)
 - **Duration:** 120 minutes
-- **Questions:** 42 comprehensive questions
-- **Coverage:** Variables (5q), Control Flow (5q), Functions (5q), Lists/Dicts (6q), File I/O (4q), Error Handling (6q), Recursion (6q), Debugging (4q), Comprehensive Challenge (1q)
+- **Questions:** 45 comprehensive questions (meets spec target)
+- **Coverage:** Variables (5q), Control Flow (5q), Functions (5q), Lists/Dicts (6q), File I/O (4q), Error Handling (7q), Recursion (7q), Debugging (4q), Comprehensive Challenges (2q)
 - **Question Types:** Multiple choice, code output, true/false, fill blank, written response, coding challenges
 - **Quality:** Truly comprehensive - covers all course material with appropriate depth
 - **Progressive Difficulty:** Questions build from fundamentals to advanced concepts
 - **Written Questions:** Include model answers to guide grading (e.g., questions on `==` vs `is`, mutable defaults)
+- **Added 2025-12-23:** 3 new questions covering error handling patterns, dictionary time complexity, and recursive list building
 
 ## Project Assessment
 

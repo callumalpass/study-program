@@ -285,6 +285,48 @@
         "prompt": "Using the \"with\" statement when opening files automatically closes the file when done.",
         "correctAnswer": true,
         "explanation": "The \"with\" statement is a context manager that handles file closing, even if an error occurs."
+      },
+      {
+        "id": "mid-q27",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "def mystery(a, b):\n    a = a + 1\n    b.append(4)\n\nx = 5\ny = [1, 2, 3]\nmystery(x, y)\nprint(x, y)",
+        "correctAnswer": "5 [1, 2, 3, 4]",
+        "explanation": "Integers are immutable, so x remains 5. Lists are mutable, so y is modified in-place to [1, 2, 3, 4]."
+      },
+      {
+        "id": "mid-q28",
+        "type": "multiple_choice",
+        "prompt": "What is the output of `bool([])` and `bool([0])`?",
+        "options": [
+          "True, True",
+          "False, False",
+          "False, True",
+          "True, False"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Empty sequences are falsy (False), while non-empty sequences are truthy (True), even if they contain falsy values like 0."
+      },
+      {
+        "id": "mid-q29",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "colors = [\"red\", \"green\", \"blue\"]\ncolors[1] = \"yellow\"\nprint(\", \".join(colors))",
+        "correctAnswer": "red, yellow, blue",
+        "explanation": "Lists are mutable. colors[1] is changed from \"green\" to \"yellow\". join() combines with \", \" separator."
+      },
+      {
+        "id": "mid-q30",
+        "type": "multiple_choice",
+        "prompt": "Which statement correctly checks if a key exists in a dictionary?",
+        "options": [
+          "if key in dict.keys():",
+          "if dict.has(key):",
+          "if key in dict:",
+          "if dict.contains(key):"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The idiomatic way is 'if key in dict:', which is both readable and efficient (O(1) lookup)."
       }
     ]
   },
@@ -816,6 +858,35 @@
         ],
         "correctAnswer": true,
         "explanation": "Convert to lowercase, split into words, and count occurrences using a dictionary."
+      },
+      {
+        "id": "final-q43",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "def process(items):\n    result = []\n    for item in items:\n        try:\n            result.append(int(item))\n        except ValueError:\n            result.append(0)\n    return result\n\nprint(process([\"3\", \"abc\", \"5\", \"\"]))",
+        "correctAnswer": "[3, 0, 5, 0]",
+        "explanation": "\"3\" and \"5\" convert to integers. \"abc\" and \"\" raise ValueError, caught and replaced with 0."
+      },
+      {
+        "id": "final-q44",
+        "type": "multiple_choice",
+        "prompt": "What is the time complexity of looking up a key in a Python dictionary?",
+        "options": [
+          "O(n)",
+          "O(log n)",
+          "O(1) average case",
+          "O(n²)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Python dictionaries use hash tables, providing O(1) average-case lookup time."
+      },
+      {
+        "id": "final-q45",
+        "type": "code_output",
+        "prompt": "What does this code print?",
+        "codeSnippet": "def countdown(n):\n    if n <= 0:\n        return []\n    return [n] + countdown(n - 1)\n\nprint(countdown(4))",
+        "correctAnswer": "[4, 3, 2, 1]",
+        "explanation": "The recursive function builds a list by prepending n to the recursive result. Base case returns [] when n <= 0."
       }
     ]
   }

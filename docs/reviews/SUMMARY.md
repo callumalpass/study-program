@@ -114,6 +114,20 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 ## Recent Updates (2025-12-23)
 
+### CS101: Introduction to Programming - Added Exam Questions to Meet Spec Targets
+- **Status:** Already 10/10, now with complete exam question counts per spec
+- **Changes made:**
+  1. Added 4 midterm questions (26 → 30) to meet spec target
+     - mid-q27: Mutability behavior with integers vs lists
+     - mid-q28: Truthiness of empty vs non-empty sequences
+     - mid-q29: List modification and string join
+     - mid-q30: Idiomatic dictionary key checking
+  2. Added 3 final exam questions (42 → 45) to meet spec target
+     - final-q43: Error handling with try/except in loops
+     - final-q44: Dictionary lookup time complexity
+     - final-q45: Recursive list building pattern
+- **Quality verified:** 59,463 total words (avg 1,214/subtopic), 112 exercises, 105 quiz questions, 75 exam questions, 3 projects
+
 ### CS303: Programming Languages - Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml
 - **Changes made:**
