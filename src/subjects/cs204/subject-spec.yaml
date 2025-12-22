@@ -1,0 +1,292 @@
+# CS204: Software Engineering - Subject Specification
+# This spec guides content creation for a comprehensive software engineering course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs204
+title: Software Engineering
+category: cs
+
+role:
+  level: intermediate
+  transformation: >
+    From "I can write code" to "I can build and ship maintainable software systems
+    as part of a team." Students learn that software engineering is not just coding—
+    it encompasses requirements, design, testing, deployment, and collaboration.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Proficiency in at least one programming language (CS101)
+    - Object-oriented programming concepts (CS103)
+    - Basic understanding of data structures (CS104)
+    - Version control basics (Git fundamentals)
+
+  essential_concepts:
+    - Software development lifecycle models (Waterfall, Agile, Spiral)
+    - Requirements engineering (elicitation, documentation, validation)
+    - Software design principles (SOLID, DRY, KISS)
+    - UML modeling (class diagrams, sequence diagrams, use cases)
+    - Design patterns (creational, structural, behavioral)
+    - Testing strategies (unit, integration, system, acceptance)
+    - Version control workflows (Git Flow, trunk-based development)
+    - CI/CD pipelines and DevOps practices
+    - Agile methodologies (Scrum, Kanban)
+    - Code quality and technical debt management
+
+  out_of_scope:
+    - Specific programming language mastery (assumed prerequisite)
+    - Deep DevOps/infrastructure topics (covered in CS405)
+    - Project management beyond Agile basics
+    - Enterprise architecture patterns (advanced topic)
+    - Security engineering (covered in CS307)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Selects appropriate SDLC model given project constraints
+    - Writes clear, testable requirements with acceptance criteria
+    - Creates accurate UML diagrams that communicate design effectively
+    - Applies design patterns appropriately to solve specific problems
+    - Writes comprehensive tests at multiple levels (unit, integration, system)
+    - Uses Git effectively for collaboration with proper branching strategies
+    - Sets up and maintains CI/CD pipelines
+    - Conducts and responds to code reviews constructively
+    - Identifies and addresses technical debt proactively
+
+  common_struggles:
+    - Confusing SDLC models and when to apply each
+    - Writing requirements that are too vague or untestable
+    - Overusing design patterns where simpler solutions suffice
+    - Testing only the "happy path" and missing edge cases
+    - Treating version control as just a backup system
+    - Merging code without proper review process
+    - Underestimating the importance of documentation
+    - Ignoring technical debt until it becomes critical
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Include real-world examples and case studies where applicable
+    - Show both "what to do" and "what not to do" with anti-patterns
+    - Provide practical exercises that mirror industry practices
+    - Connect concepts to their purpose—explain the "why" not just the "how"
+    - Include diagrams for visual concepts (UML, workflows, architectures)
+
+  conventions:
+    - Use UML 2.0 notation for all diagrams
+    - Code examples in Python or TypeScript (widely understood)
+    - Reference industry tools but teach concepts, not specific tools
+    - Follow established terminology from IEEE/ACM software engineering body of knowledge
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Software engineering is learned through practice. Assessments combine
+    conceptual understanding (SDLC selection, design principles) with practical
+    application (creating UML diagrams, writing test cases, designing solutions).
+    Projects are essential—they integrate multiple concepts in realistic scenarios
+    that mirror industry work.
+
+  measures:
+    - Understanding of when to apply different methodologies and patterns
+    - Ability to document requirements and designs clearly
+    - Skill in writing comprehensive, maintainable tests
+    - Competence with version control and collaboration workflows
+    - Judgment in making appropriate trade-off decisions
+
+  anti_patterns:
+    - Pure memorization of pattern names without understanding applicability
+    - Testing knowledge of specific tools rather than underlying concepts
+    - Questions that have only one "correct" answer in subjective areas
+    - Assessments that can be passed without hands-on practice
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 70
+    exams: 65
+
+  rationale: >
+    Software engineering requires both conceptual understanding and practical skill.
+    The same passing threshold for exercises and quizzes reflects this balance.
+    Exams are slightly lower because some concepts are better demonstrated through
+    projects than timed exams.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Software engineering exercises emphasize analysis and design over coding.
+    Students analyze scenarios, create diagrams, identify appropriate patterns,
+    and evaluate trade-offs. Written exercises dominate because the core skills
+    are communication and decision-making, not just implementation.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "15%"
+    written: "85%"
+    justification: >
+      Most exercises involve analysis, design, and documentation—skills that
+      require written explanation. Some coding exercises for testing and CI/CD
+      topics are evaluated by AI since they involve setup/configuration rather
+      than algorithmic correctness.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Standard exercise count. Software engineering topics have breadth that
+      benefits from variety—each exercise covers a different facet (e.g.,
+      different patterns, different testing techniques, different scenarios).
+
+  difficulty_distribution:
+    1: 2
+    2: 3
+    3: 5
+    4: 4
+    5: 2
+    justification: >
+      Balanced distribution with emphasis on medium difficulty. Software
+      engineering exercises often involve nuanced judgment calls—there are
+      few truly "easy" exercises and fewer "expert" ones since expertise
+      develops through project work more than individual exercises.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes verify conceptual understanding before students attempt more complex
+    exercises and projects. They catch misunderstandings about terminology,
+    process phases, and pattern applicability.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard count. Three quizzes per topic allow progression from basic
+      terminology to application scenarios to edge cases and trade-offs.
+
+  question_types:
+    multiple_choice: "60%"
+    true_false: "20%"
+    fill_blank: "10%"
+    code_output: "5%"
+    coding: "0%"
+    written: "5%"
+    justification: >
+      Heavy on multiple choice because software engineering involves choosing
+      appropriate approaches. True/false for common misconceptions. Limited
+      code output for version control and testing topics. Short written
+      responses for explaining rationale behind decisions.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams assess integrated understanding across topics. Students should
+    demonstrate they can select appropriate methodologies, apply design
+    principles, and make reasoned trade-off decisions—skills needed for
+    real software engineering work.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 27
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      Mix of multiple choice (conceptual), short answer (explain decisions),
+      and diagram creation (UML). Emphasis on SDLC selection, requirements
+      writing, and design principles.
+    coverage: "Topics 1-4: SDLC, Requirements, Design/UML, Design Patterns"
+
+  final:
+    questions:
+      minimum: 38
+      target: 43
+      maximum: 48
+    duration_minutes: 150
+    format: >
+      Comprehensive mix including case study analysis, scenario-based questions,
+      and design exercises. Integrative questions that span multiple topics.
+      Should include at least one substantial design problem.
+    coverage: "All 7 topics with emphasis on integration and trade-offs"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 3
+  rationale: >
+    Projects are essential in software engineering—they integrate multiple
+    concepts in realistic scenarios. Three projects allow progression from
+    simpler applications of course concepts to complex, industry-like
+    development including full CI/CD pipelines.
+
+  goals:
+    - Apply multiple software engineering concepts in an integrated context
+    - Experience full development lifecycle from requirements to deployment
+    - Practice collaboration and code review workflows
+    - Build portfolio-worthy projects demonstrating professional practices
+
+  estimated_hours: "20-28"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise asks about specific tool features rather than underlying concepts
+  - Design pattern exercise has only one acceptable solution
+  - Requirements exercise accepts vague, untestable statements
+  - Testing exercise only covers happy path scenarios
+  - SDLC question treats all models as equally appropriate for all situations
+  - Project doesn't require meaningful integration of multiple topic areas
+  - Content presents one methodology (e.g., Agile) as universally superior
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Software engineering bridges the gap between individual coding skill and
+  team-based software development. Content should emphasize that there are
+  rarely absolute right answers—context matters. Students should finish
+  understanding that good software engineering is about making informed
+  trade-offs, not following rigid rules. The projects are where real learning
+  happens; exercises and quizzes support but don't replace hands-on experience.
