@@ -1,0 +1,445 @@
+/* ========== ANIMATIONS ========== */
+
+/* -------------------------------------------------------------------------- */
+/*                                MASCOT ANIMATIONS                           */
+/* -------------------------------------------------------------------------- */
+
+/* Shared blink animation */
+.brick-blink {
+  animation: brick-blink 5s step-end infinite;
+  transform-origin: center;
+}
+
+@keyframes brick-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.1); }
+}
+
+/* Kinetic - Fall */
+.brick-kinetic {
+  animation: brick-fall 4s ease-in infinite;
+  transform-origin: 32px 48px;
+}
+
+.brick-kinetic .brick-face {
+  animation: brick-face-wobble 4s linear infinite;
+  transform-origin: 32px 38px;
+}
+
+@keyframes brick-fall {
+  0% { transform: translateY(-120px); opacity: 0; }
+  15% { opacity: 1; }
+  20% { transform: translateY(0) scaleY(1); }
+  25% { transform: scaleY(0.6) scaleX(1.3); }
+  30% { transform: scaleY(1.1) scaleX(0.9); }
+  35% { transform: scaleY(1) scaleX(1); }
+  80% { transform: scaleY(1) scaleX(1); opacity: 1; }
+  90% { opacity: 0; }
+  100% { opacity: 0; transform: translateY(0); }
+}
+
+@keyframes brick-face-wobble {
+  0%, 35% { transform: translate(0, 0); }
+  40% { transform: translate(-2px, 0); }
+  45% { transform: translate(2px, 0); }
+  50% { transform: translate(0, 0); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Single fall variant (for one-time animations) */
+.brick-kinetic-once {
+  animation: brick-fall-once 2.5s ease-out 1 forwards;
+  transform-origin: 32px 48px;
+}
+
+.brick-kinetic-once .brick-face {
+  animation: brick-face-wobble 2.5s linear 1 forwards;
+  transform-origin: 32px 38px;
+}
+
+@keyframes brick-fall-once {
+  0% { transform: translateY(-150px); opacity: 0; }
+  10% { opacity: 1; }
+  20% { transform: translateY(0) scaleY(1); }
+  25% { transform: scaleY(0.6) scaleX(1.3); }
+  30% { transform: scaleY(1.1) scaleX(0.9); }
+  35% { transform: scaleY(1) scaleX(1); }
+  100% { transform: translateY(0) scaleY(1) scaleX(1); opacity: 1; }
+}
+
+/* Float (Zen, Delighted) */
+.brick-zen,
+.brick-delighted,
+.brick-float {
+  animation: brick-float 3s ease-in-out infinite;
+  transform-origin: 32px 38px;
+}
+
+@keyframes brick-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(1deg); }
+}
+
+/* Wobble (Pondering) */
+.brick-pondering,
+.brick-wobble {
+  animation: brick-wobble 2.5s ease-in-out infinite;
+  transform-origin: 32px 38px;
+}
+
+@keyframes brick-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+/* Eyes Scan (Reading) */
+.brick-eyes-scan,
+.eyes-scan {
+  animation: brick-eyes-scan 3s ease-in-out infinite;
+}
+
+@keyframes brick-eyes-scan {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(1.5px); }
+  75% { transform: translateX(-1.5px); }
+}
+
+/* Dizzy Spiral Eyes */
+.brick-rotate-eyes {
+  animation: brick-rotate-eyes 4s linear infinite;
+  transform-origin: 32px 37px;
+}
+
+@keyframes brick-rotate-eyes {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Glint */
+.brick-glint {
+  fill: var(--brick-glint);
+  stroke: none;
+  opacity: 0;
+  animation: brick-glint 4s ease-in-out infinite;
+}
+
+@keyframes brick-glint {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.6; }
+}
+
+/* Snooze (Sleeping) */
+.brick-snooze {
+  animation: brick-snooze 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.brick-snooze-delay {
+  animation-delay: 1.2s;
+}
+
+@keyframes brick-snooze {
+  0% { transform: translate(0, 0) scale(0.8); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translate(6px, -10px) scale(1.2); opacity: 0; }
+}
+
+/* Shake (Stressed) */
+.brick-shake {
+  animation: brick-shake 0.5s cubic-bezier(.36,.07,.19,.97) infinite both;
+  transform-origin: center;
+}
+
+@keyframes brick-shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-2px, 0, 0); }
+  40%, 60% { transform: translate3d(2px, 0, 0); }
+}
+
+/* Pulse (Determined) */
+.brick-pulse {
+  animation: brick-pulse 2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes brick-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                                GENERAL ANIMATIONS                          */
+/* -------------------------------------------------------------------------- */
+
+/* Logo Bounce */
+@keyframes logo-bounce {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-4px); }
+  60% { transform: translateY(-2px); }
+}
+
+
+/* -------------------------------------------------------------------------- */
+/*                          ENHANCED MASCOT ANIMATIONS                        */
+/* -------------------------------------------------------------------------- */
+
+/* Ambient Breathing */
+.mascot-breathing {
+  animation: mascot-breathe 3s ease-in-out infinite;
+  transform-origin: 32px 48px;
+}
+
+.mascot-sleeping .mascot-body-group.mascot-breathing {
+  animation: mascot-sleep-breathe 4.5s ease-in-out infinite;
+}
+
+@keyframes mascot-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+@keyframes mascot-sleep-breathe {
+  0%, 100% { transform: scale(0.98) translateY(0); }
+  50% { transform: scale(1.01) translateY(1px); }
+}
+
+/* Entrance Bounce */
+.mascot-entrance {
+  animation: mascot-entrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform-origin: 32px 48px;
+}
+
+@keyframes mascot-entrance {
+  0% { transform: translateY(-30px) scale(0.8); opacity: 0; }
+  50% { transform: translateY(4px) scale(1.05); opacity: 1; }
+  70% { transform: translateY(-2px) scale(0.98); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* Blush */
+.mascot-blush {
+  fill: #ffb8b8;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mascot-blush-active {
+  opacity: 0.6;
+}
+
+/* Glasses Reflection/Glare */
+.mascot-reflection {
+  fill: white;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.1s ease;
+  pointer-events: none;
+}
+
+.mascot-reflection-active {
+  opacity: 0.4;
+}
+
+/* Hover Lean */
+.mascot-lean {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: 32px 48px;
+}
+
+/* Squint Eyes */
+.mascot-squint .brick-blink {
+  transform: scaleY(0.6) !important;
+}
+
+/* Spin Easter Egg */
+.mascot-spin {
+  animation: mascot-spin 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: 32px 38px;
+}
+
+@keyframes mascot-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Konami Code - Sunglasses Drop */
+.mascot-konami .mascot-sunglasses-drop {
+  animation: sunglasses-drop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes sunglasses-drop {
+  0% { transform: translateY(-20px); opacity: 0; }
+  60% { transform: translateY(2px); }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Sparkle Particles */
+.mascot-sparkle {
+  opacity: 0;
+  transform-origin: center;
+}
+
+.mascot-sparkle-active {
+  animation: sparkle-burst 1s ease-out forwards;
+}
+
+@keyframes sparkle-burst {
+  0% { opacity: 0; transform: scale(0); }
+  20% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0; transform: scale(0.5) translateY(-10px); }
+}
+
+/* Individual sparkle positions */
+.sparkle-1 { animation-delay: 0s; }
+.sparkle-2 { animation-delay: 0.1s; }
+.sparkle-3 { animation-delay: 0.2s; }
+.sparkle-4 { animation-delay: 0.15s; }
+
+/* Animated Sweat Drip */
+.mascot-sweat-animated {
+  animation: sweat-drip 2s ease-in infinite;
+  transform-origin: top center;
+}
+
+.mascot-sweat-animated:nth-child(2) {
+  animation-delay: 1s;
+}
+
+@keyframes sweat-drip {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: 0.8; }
+  80% { opacity: 0.8; }
+  100% { transform: translateY(15px) scale(0.6); opacity: 0; }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                          BOREDOM ESCALATION ANIMATIONS                     */
+/* -------------------------------------------------------------------------- */
+
+/* Snore Bubbles */
+.snore-bubble {
+  fill: rgba(255, 255, 255, 0.6);
+  stroke: var(--brick-stroke, #2d3436);
+  stroke-width: 1;
+  opacity: 0;
+}
+
+.snore-bubble-1 {
+  animation: snore-bubble 2.5s ease-in-out infinite;
+}
+
+.snore-bubble-2 {
+  animation: snore-bubble 2.5s ease-in-out infinite 0.4s;
+}
+
+.snore-bubble-3 {
+  animation: snore-bubble 2.5s ease-in-out infinite 0.8s;
+}
+
+@keyframes snore-bubble {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-15px) scale(1.2);
+  }
+}
+
+/* Dream Bubble */
+.mascot-dream-bubble {
+  animation: dream-float 3s ease-in-out infinite;
+}
+
+.dream-trail {
+  fill: rgba(255, 255, 255, 0.5);
+  stroke: var(--brick-stroke, #2d3436);
+  stroke-width: 0.8;
+}
+
+.dream-trail-1 {
+  animation: dream-trail-pulse 2s ease-in-out infinite;
+}
+
+.dream-trail-2 {
+  animation: dream-trail-pulse 2s ease-in-out infinite 0.3s;
+}
+
+.dream-cloud {
+  fill: rgba(255, 255, 255, 0.9);
+  stroke: var(--brick-stroke, #2d3436);
+  stroke-width: 1;
+  animation: dream-cloud-pulse 4s ease-in-out infinite;
+}
+
+.dream-icon {
+  animation: dream-icon-fade 3s ease-in-out infinite;
+  fill: #2d3436;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+
+@keyframes dream-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes dream-trail-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+@keyframes dream-cloud-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes dream-icon-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Gone - Float Away */
+.mascot-gone {
+  animation: mascot-float-away 2s ease-in-out forwards;
+}
+
+.mascot-gone .mascot-body-group {
+  animation: mascot-drift 4s ease-in-out infinite;
+}
+
+@keyframes mascot-float-away {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(-20px) translateX(30px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-30px) translateX(50px);
+    opacity: 0.3;
+  }
+}
+
+@keyframes mascot-drift {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-2px) rotate(2deg);
+  }
+  75% {
+    transform: translateY(2px) rotate(-2deg);
+  }
+}
