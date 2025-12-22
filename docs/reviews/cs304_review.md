@@ -1,9 +1,9 @@
 # CS304: Compilers - Review Report
 
-**Review Date:** 2025-12-17
+**Review Date:** 2025-12-23
 **Reviewer:** Automated Quality Review
 
-## Overall Status: COMPLETE
+## Overall Status: COMPLETE (with subject-spec.yaml)
 
 ## Scores Summary
 
@@ -238,3 +238,14 @@ The subject demonstrates best practices in:
 - Practical hands-on learning opportunities
 
 **CS304: Compilers is production-ready and serves as an excellent model for other subjects in the curriculum.**
+
+## Recent Updates (2025-12-23)
+
+### Added Subject Specification
+- Created `subject-spec.yaml` with complete pedagogical documentation
+- Documented curriculum requirements: lexical analysis, parsing, semantic analysis, IR, code generation, optimization, runtime systems
+- Specified assessment philosophy balancing theory and implementation
+- Defined exercise distribution (85% coding with tests, 10% AI-evaluated, 5% written)
+- Set exam targets (26 midterm, 42 final) matching existing content
+- Set project count to 2 (matching existing Expression Compiler and Optimizing Backend projects)
+- **Quality verified:** 84,492 total words (avg 1,724/subtopic), 112 exercises, 105 quiz questions, 68 exam questions, 2 projects

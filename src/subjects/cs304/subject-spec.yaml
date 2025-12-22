@@ -1,0 +1,282 @@
+# CS304: Compilers - Subject Specification
+# This spec guides content creation for a comprehensive compiler construction course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs304
+title: Compilers
+category: cs
+
+role:
+  level: advanced
+  transformation: >
+    From "programs run because the computer executes them" to "I understand how
+    source code transforms into executable instructions, and I can build tools
+    that perform this transformation."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Data structures (trees, graphs, hash tables)
+    - Algorithms (recursion, graph traversal)
+    - Programming experience in at least one language
+    - Basic understanding of computer architecture (registers, memory, stack)
+    - Familiarity with regular expressions
+    - Theory of computation basics (automata, formal languages)
+
+  essential_concepts:
+    - Lexical analysis (scanning, regular expressions, finite automata)
+    - Syntax analysis (parsing, context-free grammars, parse trees)
+    - Semantic analysis (type checking, symbol tables, scope)
+    - Intermediate representations (three-address code, SSA, control flow graphs)
+    - Code generation (instruction selection, register allocation)
+    - Code optimization (local, global, loop optimizations)
+    - Runtime systems (memory management, garbage collection, calling conventions)
+
+  out_of_scope:
+    - Advanced optimization research topics (polyhedral models)
+    - GPU/SIMD compilation specifics
+    - Partial evaluation and program specialization
+    - Formal verification of compilers
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Writes lexers that correctly tokenize source code with error recovery
+    - Implements parsers using both hand-written recursive descent and parser generators
+    - Builds symbol tables with proper scope handling
+    - Generates correct intermediate code from ASTs
+    - Applies standard optimization techniques (dead code, constant folding)
+    - Understands register allocation as graph coloring
+    - Explains runtime support for different language features
+
+  common_struggles:
+    - Confusing regular and context-free languages
+    - Left recursion elimination in grammars
+    - Building FIRST and FOLLOW sets correctly
+    - Understanding shift-reduce conflicts
+    - SSA form conversion and phi functions
+    - Liveness analysis and interference graphs
+    - Stack frame layout and calling conventions
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Every algorithm should include worked examples with step-by-step traces
+    - Grammar transformations should show before/after clearly
+    - Code generation examples should show source, IR, and target code side by side
+    - Include diagrams for automata, parse trees, control flow graphs
+    - Show actual tool output where applicable (flex, bison, LLVM)
+
+  conventions:
+    - Python for implementation examples (most accessible)
+    - Use standard compiler notation (A -> alpha for productions)
+    - Assembly examples use x86-64 AT&T syntax or MIPS for simplicity
+    - LaTeX for formal notation and grammar productions
+    - Mermaid diagrams for flowcharts and state machines
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Compiler construction is both theoretical and practical. Assessments should
+    balance understanding of algorithms and formalisms with hands-on implementation.
+    Students should be able to trace through algorithms by hand and implement them
+    in code. Projects are essential for understanding how components integrate.
+
+  measures:
+    - Ability to trace parsing algorithms by hand
+    - Correct implementation of compiler phases
+    - Understanding of trade-offs in design decisions
+    - Recognition of which techniques apply to which problems
+
+  anti_patterns:
+    - Asking about tool-specific command-line flags
+    - Pure memorization of algorithm pseudocode without understanding
+    - Questions answerable without understanding the underlying theory
+    - Exam problems requiring implementation of full algorithms (time-constrained)
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard thresholds. The subject requires both theoretical understanding and
+    practical skill, so exams test concepts while exercises build implementation
+    ability. Quizzes slightly lower because tracing algorithms can be error-prone
+    even with good understanding.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Compiler phases are best learned by building them. High volume of coding exercises
+    ensures students implement all major components. Mix of small focused exercises
+    (tokenizer for specific input) and larger integration exercises.
+
+  types:
+    coding_with_tests: "85%"
+    coding_ai_evaluated: "10%"
+    written: "5%"
+    justification: >
+      Primarily coding with automated tests for immediate feedback on correctness.
+      AI-evaluated for design decisions and open-ended problems (e.g., "design a
+      grammar for..."). Small percentage written for explaining trade-offs and
+      algorithm choices.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Compiler phases have many small, testable components
+      (tokenize this input, parse this grammar, generate code for this construct).
+      Volume builds fluency with techniques.
+
+  difficulty_distribution:
+    1: 3
+    2: 3
+    3: 4
+    4: 3
+    5: 3
+    justification: >
+      Standard distribution. Even "easy" compiler exercises require understanding
+      the concepts. Difficulty scales from single-phase problems to multi-phase
+      integration. Difficulty 5 reserved for optimization challenges and edge cases.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding and algorithm tracing. Students should
+    be able to trace through parsing, code generation, and optimization by hand.
+    This builds intuition before implementing in code.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic: fundamentals (definitions),
+      application (trace algorithms), mastery (predict outcomes, identify issues).
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "10%"
+    fill_blank: "10%"
+    code_output: "15%"
+    coding: "5%"
+    written: "10%"
+    justification: >
+      Heavy multiple choice for conceptual questions about algorithms and techniques.
+      Code output for tracing compiler transformations (what does this code compile to?).
+      Some coding for short exercises (write a regex for...).
+      Written for explaining algorithm trade-offs.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test depth of understanding under time pressure. Students should trace
+    algorithms by hand, explain design decisions, and solve small problems.
+    No full implementation required—that's what projects are for.
+
+  midterm:
+    questions:
+      minimum: 22
+      target: 26
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      ~10 multiple choice (concepts), ~8 algorithm tracing (parse trees, DFA
+      simulation, code generation), ~5 short answer (explain differences,
+      identify issues), ~3 small coding (regex, grammar fragment).
+    coverage: "Topics 1-4: Lexical analysis, parsing, semantic analysis, IR"
+
+  final:
+    questions:
+      minimum: 36
+      target: 42
+      maximum: 48
+    duration_minutes: 180
+    format: >
+      Comprehensive with emphasis on later topics. ~15 multiple choice, ~12
+      algorithm tracing, ~8 short answer, ~7 small problems (optimization,
+      code generation). At least one question integrating multiple phases.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 2
+  rationale: >
+    Projects are essential in a compilers course—students must build actual
+    compiler components to understand how they work together. Two projects:
+    one front-end focused (lexer + parser + semantic analysis), one back-end
+    focused (code generation + optimization).
+
+  goals:
+    - Build a complete front-end from source to typed AST
+    - Generate correct code from intermediate representation
+    - Implement at least one optimization pass
+    - Experience the full compilation pipeline
+
+  estimated_hours: "20-25"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires implementing a full LR parser by hand (unrealistic scope)
+  - Quiz question asks about specific tool version numbers or flags
+  - Content shows grammar without explaining how to parse it
+  - Code generation exercise doesn't specify target architecture conventions
+  - Optimization exercise has no way to verify correctness of output
+  - Project rubric doesn't account for partial implementations
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Compilers is a cornerstone course that integrates theory (formal languages,
+  algorithms) with practice (implementation). Students often find it challenging
+  because it requires precise thinking about transformations. Content should
+  emphasize step-by-step algorithm traces and build intuition through examples
+  before formal definitions. The joy of compilers is seeing something you built
+  actually compile and run code—projects should enable this experience.
