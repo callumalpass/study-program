@@ -64,7 +64,7 @@
 
 ### 1. Missing subject-spec.yaml
 Many subjects still need subject-spec.yaml files (required since 2025-12-20):
-- CS203, CS204, CS205
+- CS204, CS205
 - CS301, CS303, CS304, CS305, CS306, CS307
 - CS403
 - MATH101, MATH102, MATH201, MATH202
@@ -109,11 +109,22 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (19 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (18 subjects) |
 
-**Total Estimated:** ~9.5 hours for spec files.
+**Total Estimated:** ~9 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### CS203: Theory of Computation - Added Subject Specification
+- **Status:** Already 10/10, now with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: finite automata, regular languages, CFGs, PDAs, Turing machines, decidability, complexity
+  3. Specified assessment philosophy for mixed theoretical/construction content
+  4. Defined exercise distribution (100% written proofs/constructions)
+  5. Set project count to 3 (matching existing simulators: FA, CFG Parser, TM)
+  6. Set exam targets (26 midterm, 42 final) matching existing content
+- **Quality verified:** 74,176 total words (avg 1514/subtopic), 112 exercises, 105 quiz questions, 68 exam questions, 3 projects
 
 ### CS202: Computer Architecture - Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml

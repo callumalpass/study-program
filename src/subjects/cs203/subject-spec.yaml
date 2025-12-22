@@ -1,0 +1,289 @@
+# CS203: Theory of Computation - Subject Specification
+# This spec guides content creation for a foundational theoretical CS course
+# covering automata theory, formal languages, and computational complexity.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs203
+title: Theory of Computation
+category: cs
+
+role:
+  level: intermediate
+  transformation: >
+    From "I can write programs" to "I understand what computation itself can and
+    cannot do." Students learn to reason formally about languages, automata, and
+    the fundamental limits of computation—knowledge that informs algorithm design,
+    compiler construction, and understanding of P vs NP.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Discrete mathematics (sets, functions, relations, proofs)
+    - Mathematical maturity and comfort with formal notation
+    - Basic programming ability (for understanding computational models)
+    - Familiarity with proof techniques (induction, contradiction)
+
+  essential_concepts:
+    - Deterministic and nondeterministic finite automata (DFA, NFA)
+    - Regular expressions and their equivalence to finite automata
+    - Context-free grammars and parse trees
+    - Pushdown automata and their relationship to CFGs
+    - Turing machines as a model of general computation
+    - Decidability, recognizability, and the halting problem
+    - Computational complexity classes (P, NP, NP-complete)
+
+  out_of_scope:
+    - Advanced complexity theory (PSPACE, EXP, circuit complexity)
+    - Kolmogorov complexity
+    - Quantum computation models
+    - Formal verification and model checking (separate course)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Constructs DFAs and NFAs for given language specifications
+    - Proves languages are not regular using the pumping lemma
+    - Converts between automata, regular expressions, and grammars
+    - Designs Turing machines for specific computational tasks
+    - Applies reduction techniques to prove undecidability
+    - Identifies NP-complete problems and understands their significance
+
+  common_struggles:
+    - Distinguishing DFA from NFA acceptance semantics
+    - Applying the pumping lemma correctly (choosing the right string)
+    - Understanding nondeterminism as "guessing" rather than parallelism
+    - Constructing reductions in the correct direction
+    - Confusing decidable with recognizable languages
+    - Understanding why NP-completeness matters for algorithm design
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Formal definitions with precise mathematical notation
+    - Visual diagrams for automata (state diagrams, transition tables)
+    - Worked examples before formal theorems
+    - Proof sketches followed by complete proofs for major results
+    - Explicit connections between different formalisms (automata ↔ languages)
+
+  conventions:
+    - LaTeX for all mathematical expressions and formal notation
+    - Consistent symbols (Q for states, Σ for alphabet, δ for transition)
+    - State diagrams with standard notation (double circle for accept states)
+    - Clear separation of definitions, theorems, and proofs
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Theory of Computation requires both proof construction and practical skill
+    in designing automata and grammars. Assessments should test the ability to
+    construct formal objects (DFAs, grammars, Turing machines) and prove
+    properties about languages. Understanding the "why" matters as much as
+    the "how"—students should grasp the significance of undecidability and
+    complexity classes, not just their definitions.
+
+  measures:
+    - Ability to construct automata and grammars for given specifications
+    - Correct application of pumping lemmas and closure properties
+    - Understanding of decidability and reduction techniques
+    - Recognition of complexity class membership and NP-completeness
+
+  anti_patterns:
+    - Pure memorization of specific automata or proofs from lectures
+    - Questions requiring only syntactic manipulation without understanding
+    - Trivial closure property applications without insight
+    - Problems where answer can be guessed without reasoning
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard thresholds appropriate for an intermediate theory course. Students
+    need solid understanding of automata and formal languages as foundation for
+    compilers, but the material allows partial credit for construction problems.
+    Slightly lower quiz/exam threshold acknowledges that multiple-choice can
+    be challenging for theoretical concepts.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises balance construction tasks (design an automaton/grammar) with
+    proof tasks (show a language is not regular). Written exercises allow
+    detailed evaluation of proof structure and automaton design choices.
+    The mix of practical construction and theoretical proofs reflects the
+    dual nature of the subject.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      All exercises are written/proof-based. "Construction" exercises (design
+      a DFA, write a grammar) are evaluated as written work since the output
+      is a formal mathematical object, not executable code. AI evaluation
+      compares constructions against reference solutions for correctness.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Standard base count. Each topic has a good balance of construction
+      exercises (design automata/grammars) and proof exercises (pumping lemma,
+      closure properties). Volume helps students develop fluency with formalisms.
+
+  difficulty_distribution:
+    1: 2
+    2: 3
+    3: 5
+    4: 4
+    5: 2
+    justification: >
+      Slight skew toward medium difficulty. Easy exercises for basic construction
+      practice, medium for standard proofs, hard for complex reductions and
+      multi-step constructions. Two difficulty-5 exercises per topic for
+      advanced pumping lemma proofs or complex reductions.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding and quick application of definitions.
+    Students should be able to trace automaton execution, identify language
+    membership, and recognize properties without extended construction work.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes allow progression: basics (definitions),
+      application (tracing, membership), and synthesis (properties, comparisons).
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "20%"
+    fill_blank: "15%"
+    code_output: "15%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on multiple choice for conceptual questions about language properties
+      and automaton behavior. True/false for common misconceptions. Fill-blank
+      for formal definitions. Code_output repurposed for "what does this automaton
+      accept?" tracing questions.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams require substantial construction and proof work. Students should
+    design automata, apply pumping lemmas, and demonstrate understanding of
+    decidability and complexity. Time allows 3-4 minutes per question for
+    shorter items, 10-15 minutes for construction problems.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 28
+    duration_minutes: 75
+    format: >
+      8-10 construction problems (design DFA/NFA/grammar), 8-10 short answer
+      (trace automaton, identify language), 6-8 proof problems (pumping lemma,
+      closure properties). Mix of topics 1-4.
+    coverage: "Topics 1-4: Finite automata, regular languages, CFGs, PDAs"
+
+  final:
+    questions:
+      minimum: 40
+      target: 42
+      maximum: 45
+    duration_minutes: 120
+    format: >
+      12-15 construction problems, 12-15 short answer, 12-15 proof/analysis
+      problems. Comprehensive with emphasis on Turing machines, decidability,
+      and complexity. At least one reduction proof and one NP-completeness
+      problem.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 3
+  rationale: >
+    Projects implement the theoretical concepts as working software, bridging
+    theory and practice. Students gain deeper understanding by building
+    simulators for the computational models they study. The three projects
+    correspond to the three major computational models: finite automata,
+    pushdown automata, and Turing machines.
+
+  goals:
+    - Build working simulators for automata and formal machines
+    - Translate theoretical definitions into executable code
+    - Understand the relationship between theory and implementation
+    - Develop appreciation for what different computational models can express
+
+  estimated_hours: "10-15"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Automaton construction has no clear acceptance criteria
+  - Pumping lemma exercise uses a string that doesn't satisfy the lemma conditions
+  - Reduction proof goes in wrong direction (from known undecidable to target)
+  - Quiz question about complexity classes requires memorization of specific problems
+  - Content uses informal "obviously" when formal argument is needed
+  - Exercise asks to reproduce specific automaton from content rather than design new one
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Theory of Computation bridges discrete math and practical computer science.
+  Content should emphasize the "why" of computational limits—why DFAs can't
+  count, why the halting problem matters, why NP-completeness affects algorithm
+  choice. Students often struggle with the abstract nature; visual diagrams and
+  concrete examples help. The progression from finite automata to Turing machines
+  should feel like a natural expansion of computational power, not disconnected
+  topics.
