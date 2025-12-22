@@ -1,5 +1,14 @@
 // Home/Dashboard page
-import type { Subject, ReviewItem } from '@/core/types';
+import type {
+  Subject,
+  ReviewItem,
+  SubjectProgress,
+  UserProgress,
+  QuizAttempt,
+  ExamAttempt,
+  ExerciseCompletion,
+  ProjectSubmission,
+} from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import {
   calculateOverallProgress,
@@ -269,7 +278,7 @@ export function renderHomePage(container: HTMLElement, subjects: Subject[]): voi
 /**
  * Calculate completion percentage for a subject (helper function)
  */
-function calculateSubjectCompletion(subject: Subject, progress: any): number {
+function calculateSubjectCompletion(subject: Subject, progress: SubjectProgress): number {
   if (!progress || progress.status === 'not_started') return 0;
   if (progress.status === 'completed') return 100;
 
@@ -281,7 +290,7 @@ function calculateSubjectCompletion(subject: Subject, progress: any): number {
       totalItems++;
       const attempts = progress.quizAttempts[quizId];
       if (attempts && attempts.length > 0) {
-        const bestScore = Math.max(...attempts.map((a: any) => a.score));
+        const bestScore = Math.max(...attempts.map((a: QuizAttempt) => a.score));
         if (bestScore >= 70) completedItems++;
       }
     });
@@ -298,7 +307,7 @@ function calculateSubjectCompletion(subject: Subject, progress: any): number {
     totalItems++;
     const attempts = progress.examAttempts?.[examId];
     if (attempts && attempts.length > 0) {
-      const bestScore = Math.max(...attempts.map((a: any) => a.score));
+      const bestScore = Math.max(...attempts.map((a: ExamAttempt) => a.score));
       if (bestScore >= 70) completedItems++;
     }
   });
@@ -308,7 +317,7 @@ function calculateSubjectCompletion(subject: Subject, progress: any): number {
     totalItems++;
     const submissions = progress.projectSubmissions?.[projectId];
     if (submissions && submissions.length > 0) {
-      const bestSubmission = submissions.reduce((best: any, sub: any) => {
+      const bestSubmission = submissions.reduce((best: ProjectSubmission, sub: ProjectSubmission) => {
         const score = sub.aiEvaluation?.score ?? 0;
         const bestScore = best.aiEvaluation?.score ?? 0;
         return score > bestScore ? sub : best;
@@ -328,7 +337,7 @@ function calculateSubjectCompletion(subject: Subject, progress: any): number {
 /**
  * Calculate statistics for the dashboard
  */
-function calculateStats(subjects: Subject[], userProgress: any): {
+function calculateStats(subjects: Subject[], userProgress: UserProgress): {
   quizzesCompleted: number;
   exercisesCompleted: number;
   projectsSubmitted: number;
@@ -340,15 +349,15 @@ function calculateStats(subjects: Subject[], userProgress: any): {
   let totalQuizScore = 0;
   let quizAttemptCount = 0;
 
-  Object.entries(userProgress.subjects).forEach(([subjectId, progress]: [string, any]) => {
+  Object.entries(userProgress.subjects).forEach(([_subjectId, progress]) => {
     // Count quizzes
-    Object.values(progress.quizAttempts).forEach((attempts: any) => {
+    Object.values(progress.quizAttempts).forEach((attempts: QuizAttempt[]) => {
       if (attempts && attempts.length > 0) {
-        const bestScore = Math.max(...attempts.map((a: any) => a.score));
+        const bestScore = Math.max(...attempts.map((a: QuizAttempt) => a.score));
         if (bestScore >= 70) quizzesCompleted++;
 
         // Add to average calculation
-        attempts.forEach((attempt: any) => {
+        attempts.forEach((attempt: QuizAttempt) => {
           totalQuizScore += attempt.score;
           quizAttemptCount++;
         });
@@ -356,14 +365,14 @@ function calculateStats(subjects: Subject[], userProgress: any): {
     });
 
     // Count exercises
-    Object.values(progress.exerciseCompletions).forEach((completion: any) => {
+    Object.values(progress.exerciseCompletions).forEach((completion: ExerciseCompletion) => {
       if (completion && completion.passed) {
         exercisesCompleted++;
       }
     });
 
     // Count projects
-    Object.values(progress.projectSubmissions).forEach((submissions: any) => {
+    Object.values(progress.projectSubmissions).forEach((submissions: ProjectSubmission[]) => {
       if (submissions && submissions.length > 0) {
         projectsSubmitted += submissions.length;
       }
