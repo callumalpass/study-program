@@ -13,15 +13,16 @@
  */
 
 import { createServer } from 'vite';
-import { readdir, stat } from 'fs/promises';
+import { readdir, stat, readFile } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import YAML from 'yaml';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Expected exports for each subject
-const EXPECTED_EXPORTS = ['Topics', 'Quizzes', 'Exercises', 'Projects', 'Exams'];
+// Expected exports are driven by subject-spec.yaml where available.
+const BASE_EXPORTS = ['Topics', 'Quizzes', 'Exercises', 'Exams'];
 
 // Create Vite server for SSR module loading
 async function createViteServer(projectRoot) {
@@ -35,8 +36,30 @@ async function createViteServer(projectRoot) {
   return server;
 }
 
+// Load and parse subject-spec.yaml if it exists
+async function loadSubjectSpec(subjectId, subjectsDir) {
+  const specPath = join(subjectsDir, subjectId, 'subject-spec.yaml');
+  try {
+    const content = await readFile(specPath, 'utf-8');
+    return YAML.parse(content);
+  } catch {
+    return null; // No spec file
+  }
+}
+
+function buildExpectedExports(spec) {
+  const expected = [...BASE_EXPORTS];
+  const projectsRequired = spec?.projects?.required;
+
+  if (projectsRequired === undefined || projectsRequired) {
+    expected.push('Projects');
+  }
+
+  return expected;
+}
+
 // Validate a single subject's imports
-async function validateSubject(vite, subjectId) {
+async function validateSubject(vite, subjectId, subjectsDir) {
   const modulePath = `/src/subjects/${subjectId}/index.ts`;
   const result = {
     id: subjectId,
@@ -48,9 +71,11 @@ async function validateSubject(vite, subjectId) {
 
   try {
     const module = await vite.ssrLoadModule(modulePath);
+    const spec = await loadSubjectSpec(subjectId, subjectsDir);
+    const expectedExports = buildExpectedExports(spec);
 
     // Check for expected exports
-    for (const suffix of EXPECTED_EXPORTS) {
+    for (const suffix of expectedExports) {
       const exportName = `${subjectId}${suffix}`;
       if (exportName in module) {
         const value = module[exportName];
@@ -150,7 +175,7 @@ async function main() {
     const subjectStat = await stat(subjectPath);
 
     if (subjectStat.isDirectory() && !subjectId.startsWith('.')) {
-      const result = await validateSubject(vite, subjectId);
+      const result = await validateSubject(vite, subjectId, subjectsDir);
       results.push(result);
     }
   }

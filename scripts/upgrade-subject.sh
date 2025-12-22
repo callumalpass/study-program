@@ -11,13 +11,28 @@ PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 cd "$PROJECT_ROOT"
 
-# Number of subjects to upgrade (default: 5, or pass as argument)
-MAX_ITERATIONS=${1:-5}
+# Default values
+MAX_ITERATIONS=5
+TOOL="claude"
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --tool)
+      TOOL="$2"
+      shift 2
+      ;;
+    *)
+      MAX_ITERATIONS="$1"
+      shift
+      ;;
+  esac
+done
 
 echo "=================================="
 echo "Subject Upgrade Script"
 echo "=================================="
-echo ""
+echo "Using tool: $TOOL"
 echo "Will upgrade up to $MAX_ITERATIONS subjects"
 echo "Each iteration picks the highest priority subject from docs/reviews/SUMMARY.md"
 echo ""
@@ -56,7 +71,9 @@ Read these files for context:
    - exercises, quizzes, exams, and project targets
 
 ### Phase 1: Select Subject & Audit
+
 1. Read SUMMARY.md and pick the highest priority incomplete subject
+   - If all subjects are complete, pick any subject
 2. Read its review at docs/reviews/{subject}_review.md
 3. Audit the subject's current state:
    - Subject spec in src/subjects/{subject}/subject-spec.yaml
@@ -67,20 +84,23 @@ Read these files for context:
    - Exams in src/subjects/{subject}/exams.json
    - Projects in src/subjects/{subject}/projects.json (if required by spec)
 
-### Phase 2: Identify Gaps
+### Phase 2: Identify gaps and quality issues
 Compare against the subject's spec (or defaults if not overridden):
 - 7 topics with 7 subtopics each
-- Words per subtopic (spec.curriculum.subtopic_word_target, default: 1000)
+- Subtopic content (spec.curriculum.subtopic_word_target, default: 1000)
 - Exercises per topic (spec.exercises.per_topic.target, default: 16)
 - Quizzes per topic (spec.quizzes.per_topic, default: 3 × 5 questions)
 - Exams (spec.exams targets, default: ~26 midterm, ~42 final)
 - Projects (spec.projects.required, spec.projects.count)
+- Identify areas where any of these might be improved
+- Be on the lookout for content quality gaps (clarity, correctness, depth, cohesion)
 
 ### Phase 3: Implementation
-Fix ALL gaps found (using spec targets):
+Fix ALL gaps found (using spec targets), including quality issues:
 1. Create subject-spec.yaml if missing (required, including curriculum section)
 2. Expand subtopics to meet spec.curriculum.subtopic_word_target (default: 1000 words)
 3. Ensure content covers all spec.curriculum.essential_concepts
+3a. Improve content quality (clarity, correctness, depth, cohesion) wherever it falls short
 4. Add exercises to content/topic-N/exercises.json (per spec.exercises.per_topic.target)
 5. Add quizzes to content/topic-N/quizzes.json (per spec.quizzes.per_topic)
 6. Add/complete exams in exams.json (per spec.exams targets)
@@ -114,6 +134,7 @@ After all upgrades and review updates are complete:
 - Follow the type definitions in src/core/types.ts
 - Use the ID naming conventions from SUBJECT_UPGRADE_PROMPT.md
 - Run npm run build to verify TypeScript compiles without errors
+- Address both quantity gaps (spec targets) and quality gaps (clarity, correctness, depth, cohesion)
 - Use the TodoWrite tool to track progress through all phases
 - Do NOT skip Phase 4 (updating reviews) or Phase 5 (committing)
 - Complete the chosen subject FULLY
@@ -122,12 +143,20 @@ Begin by reading docs/reviews/SUMMARY.md to pick the highest priority subject.
 EOF
 )
 
-    # Run Claude with the upgrade prompt
-    if claude --dangerously-skip-permissions -p "$PROMPT"; then
+    # Run the selected tool
+    if [ "$TOOL" == "codex" ]; then
+        SUCCESS=0
+        codex --full-auto "$PROMPT" || SUCCESS=$?
+    else
+        SUCCESS=0
+        claude --dangerously-skip-permissions -p "$PROMPT" || SUCCESS=$?
+    fi
+
+    if [ $SUCCESS -eq 0 ]; then
         echo ""
         echo "✓ Completed iteration $i"
     else
-        EXIT_CODE=$?
+        EXIT_CODE=$SUCCESS
         echo ""
         echo "✗ Error in iteration $i (exit code: $EXIT_CODE)"
         if [ $EXIT_CODE -eq 130 ]; then

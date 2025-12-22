@@ -768,6 +768,35 @@
         "prompt": "The principle that subclasses should be usable wherever the base class is expected is the Liskov ____ Principle.",
         "correctAnswer": "Substitution",
         "explanation": "LSP ensures substitutability of subclasses for base types."
+      },
+      {
+        "id": "final-q43",
+        "type": "multiple_choice",
+        "prompt": "Which change best reflects the Single Responsibility Principle?",
+        "options": [
+          "Add billing and authentication logic to a User class",
+          "Split User responsibilities into AuthService and BillingService",
+          "Use multiple inheritance to combine unrelated behaviors",
+          "Add more helper methods to a giant Manager class"
+        ],
+        "correctAnswer": 1,
+        "explanation": "SRP favors small classes with one reason to change; splitting responsibilities reduces coupling."
+      },
+      {
+        "id": "final-q44",
+        "type": "code_output",
+        "prompt": "What is printed by this code?",
+        "codeSnippet": "class Duck:\n    def quack(self): return \"quack\"\n\nclass Person:\n    def quack(self): return \"improvised\"\n\ndef speak(obj):\n    return obj.quack()\n\nprint(speak(Duck()))\nprint(speak(Person()))",
+        "correctAnswer": "quack\nimprovised",
+        "explanation": "Duck typing allows any object with the right method to be used."
+      },
+      {
+        "id": "final-q45",
+        "type": "written",
+        "prompt": "Why can heavy side effects in `__init__` make testing harder? Give a brief explanation.",
+        "correctAnswer": "side effects",
+        "explanation": "Side effects in constructors create hidden dependencies and make tests brittle.",
+        "modelAnswer": "Constructors that perform I/O, network calls, or global state changes create hidden dependencies and slow tests. They also make it hard to instantiate objects in isolation or substitute fakes. Keeping `__init__` lightweight and injecting dependencies (e.g., a database client) lets tests provide controlled doubles and keeps object creation predictable and fast."
       }
     ]
   }

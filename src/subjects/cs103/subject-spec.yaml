@@ -1,0 +1,249 @@
+# CS103: Object-Oriented Programming - Subject Specification
+# This spec guides content creation for an early OOP course focused on design.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs103
+title: Object-Oriented Programming
+category: cs
+
+role:
+  level: introductory
+  transformation: >
+    From "I can write functions" to "I can design maintainable systems with
+    classes, interfaces, and clear responsibilities." Students should be able
+    to model real-world problems using OOP principles.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 850
+
+  prerequisite_knowledge:
+    - Comfortable writing functions and using basic data structures (CS101)
+    - Familiar with debugging and reading error messages
+    - Basic understanding of modular code organization
+
+  essential_concepts:
+    - Classes, objects, and instance state
+    - Encapsulation and data hiding
+    - Inheritance and method overriding
+    - Polymorphism and dynamic dispatch
+    - Abstraction with interfaces/abstract base classes
+    - Composition over inheritance
+    - Core design patterns (Singleton, Factory, Observer, Strategy, Decorator)
+    - Design principles (SOLID) and unit testing
+
+  out_of_scope:
+    - Advanced metaprogramming and reflection
+    - Framework-heavy patterns (ORMs, DI containers)
+    - Concurrency, async patterns, and threading
+    - Enterprise architecture and distributed systems
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Models a problem domain with cohesive classes and clear responsibilities
+    - Uses inheritance only when it preserves substitutability
+    - Selects composition to avoid fragile class hierarchies
+    - Implements polymorphic behavior without type checks
+    - Writes unit tests that target object behavior and contracts
+
+  common_struggles:
+    - Confusing class attributes with instance attributes
+    - Overusing inheritance for code reuse
+    - Violating encapsulation with public mutable state
+    - Using type checks instead of polymorphism
+    - Creating "god classes" with too many responsibilities
+    - Misapplying design patterns without a real need
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Include at least one small class diagram or object relationship sketch
+    - Show both a naive design and an improved OOP design when possible
+    - Provide examples of testing object behavior, not just implementation
+    - Highlight tradeoffs between inheritance and composition
+    - Tie every design pattern to a concrete use case
+
+  conventions:
+    - Python 3.10+ syntax
+    - PEP 8 style (snake_case, 4-space indent)
+    - Type hints for public methods when they clarify intent
+    - All code examples must be runnable as-is
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    OOP mastery is about making sound design choices, not just using syntax.
+    Assessments emphasize modeling, reasoning about tradeoffs, and writing
+    clean, testable code with clear object boundaries.
+
+  measures:
+    - Correctness of object behavior across test cases
+    - Quality of class design (cohesion, encapsulation, responsibility)
+    - Appropriate use of polymorphism and interfaces
+    - Ability to refactor toward simpler, more maintainable designs
+
+  anti_patterns:
+    - Memorizing pattern names without understanding when to use them
+    - Trivia about language internals unrelated to design decisions
+    - Exercises that force inheritance where composition is better
+    - Overly large coding problems that obscure design intent
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Consistent with CS101, but still expects students to demonstrate solid
+    design habits. Exercises carry the most weight because design skill comes
+    from practice and iteration.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    OOP skill is built through repeated design-and-implement cycles.
+    Exercises should emphasize object modeling, method contracts, and
+    appropriate use of inheritance and composition. Each exercise should be
+    completable in 10-20 minutes.
+
+  types:
+    coding_with_tests: "100%"
+    coding_ai_evaluated: "0%"
+    written: "0%"
+    justification: >
+      Automated tests provide immediate feedback on object behavior. All
+      exercises are coding tasks that can be validated with test cases.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Standard volume provides enough repetition to internalize OOP concepts
+      without overwhelming students.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding of OOP principles and the ability
+    to predict behavior of object-oriented code.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Three short quizzes per topic allow a progression from definitions to
+      code tracing and design judgments.
+
+  question_types:
+    multiple_choice: "35%"
+    true_false: "15%"
+    fill_blank: "10%"
+    code_output: "40%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Code tracing is essential in OOP. Multiple choice and true/false cover
+      design principles and common misconceptions.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams assess understanding without IDE support and focus on reasoning
+    about class interactions, inheritance, and design tradeoffs.
+
+  midterm:
+    questions:
+      minimum: 25
+      target: 28
+      maximum: 32
+    duration_minutes: 75
+    format: >
+      Mix of code tracing, short design questions, and small coding tasks
+      (implement or refactor a class in 10-15 lines).
+    coverage: "Topics 1-4: classes, encapsulation, inheritance, polymorphism"
+
+  final:
+    questions:
+      minimum: 40
+      target: 45
+      maximum: 50
+    duration_minutes: 120
+    format: >
+      Cumulative exam with emphasis on design patterns, interfaces, and
+      testing. Includes a small design scenario requiring class choices.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 2
+  rationale: >
+    Projects allow students to design a small system end-to-end, apply
+    patterns appropriately, and practice refactoring.
+
+  goals:
+    - Model a real-world problem using OOP concepts
+    - Use composition and interfaces to keep designs flexible
+    - Demonstrate testing of object behavior
+    - Apply at least one pattern where it improves maintainability
+
+  estimated_hours: "10-14"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercises that require multiple inheritance without a strong rationale
+  - Designs that rely on public mutable fields instead of methods
+  - Pattern usage without explaining the problem it solves
+  - Examples that violate substitutability or encapsulation
+  - Tests that assert on private implementation details
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Keep the focus on modeling and design reasoning. Students should learn to
+  justify why a class exists, what it owns, and how objects collaborate.
+  Encourage refactoring and discourage over-engineering.
