@@ -44,7 +44,7 @@ const SYNC_DEBOUNCE_MS = 5000; // Sync at most every 5 seconds
 
 export class ProgressStorage {
   private progress: UserProgress;
-  private syncTimeout: any = null;
+  private syncTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
     this.progress = this.load();
