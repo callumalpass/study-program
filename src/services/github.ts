@@ -3,6 +3,16 @@ import { UserProgress } from '../core/types';
 const GIST_FILENAME = 'cs-degree-progress.json';
 const GIST_DESCRIPTION = 'CS Degree Learning Platform Progress';
 
+/**
+ * Minimal type for GitHub Gist API response.
+ * Only includes fields actually used by this service.
+ * See: https://docs.github.com/en/rest/gists/gists
+ */
+interface GitHubGist {
+  id: string;
+  files: Record<string, { filename: string; content?: string }>;
+}
+
 export class GitHubService {
   /**
    * Validate the personal access token by fetching the user profile
@@ -36,8 +46,8 @@ export class GitHubService {
 
       if (!response.ok) return null;
 
-      const gists = await response.json();
-      const existingGist = gists.find((gist: any) => 
+      const gists: GitHubGist[] = await response.json();
+      const existingGist = gists.find((gist) =>
         gist.files && gist.files[GIST_FILENAME]
       );
 
