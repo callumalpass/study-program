@@ -64,7 +64,6 @@
 
 ### 1. Missing subject-spec.yaml
 Many subjects still need subject-spec.yaml files (required since 2025-12-20):
-- CS205
 - CS301, CS303, CS304, CS305, CS306, CS307
 - CS403
 - MATH101, MATH102, MATH201, MATH202
@@ -109,11 +108,22 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (17 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (16 subjects) |
 
-**Total Estimated:** ~8.5 hours for spec files.
+**Total Estimated:** ~8 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### CS205: Database Systems - Added Subject Specification
+- **Status:** Already 10/10, now with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: relational model, SQL, normalization, ACID, indexing, optimization
+  3. Specified assessment philosophy for mixed conceptual/practical content
+  4. Defined exercise types (100% written/SQL, AI-evaluated)
+  5. Set project count to 3 (matching existing projects)
+  6. Set exam targets (26 midterm, 42 final) matching existing content
+- **Quality verified:** 63,088 total words (avg 1288/subtopic), 112 exercises, 105 quiz questions, 68 exam questions, 3 projects
 
 ### CS204: Software Engineering - Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml

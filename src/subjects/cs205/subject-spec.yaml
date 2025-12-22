@@ -1,0 +1,285 @@
+# CS205: Database Systems - Subject Specification
+# This spec guides content creation for a comprehensive database systems course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs205
+title: Database Systems
+category: cs
+
+role:
+  level: intermediate
+  transformation: >
+    From "data is stored in files" to "I can design, implement, and optimize
+    relational databases that maintain data integrity under concurrent access."
+    Students should finish able to design schemas, write complex SQL, and
+    understand the internals of query processing.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Programming fundamentals (variables, loops, functions)
+    - Object-oriented programming concepts
+    - Basic data structures (arrays, lists, dictionaries)
+    - File I/O operations
+    - Elementary set theory and logic
+
+  essential_concepts:
+    - Relational model and ER diagrams
+    - SQL DDL (CREATE, ALTER, DROP)
+    - SQL DML (SELECT, INSERT, UPDATE, DELETE)
+    - Joins, subqueries, and advanced query patterns
+    - Normalization (1NF through BCNF/4NF)
+    - Transactions and ACID properties
+    - Concurrency control and isolation levels
+    - Indexing structures (B-trees, hash indexes)
+    - Query optimization and execution plans
+
+  out_of_scope:
+    - NoSQL databases (covered in CS401)
+    - Distributed databases and sharding
+    - Data warehousing and OLAP (touched briefly, not in depth)
+    - Specific DBMS administration (focus is on concepts)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Designs normalized database schemas from requirements
+    - Writes complex SQL queries with joins, subqueries, and window functions
+    - Explains query execution plans and identifies optimization opportunities
+    - Predicts and prevents concurrency anomalies using appropriate isolation levels
+    - Chooses appropriate index structures for query workloads
+    - Applies normalization algorithms to eliminate redundancy
+
+  common_struggles:
+    - JOIN confusion (INNER vs OUTER, which table's rows survive)
+    - Normalization steps (identifying functional dependencies correctly)
+    - Transaction isolation levels (which anomalies each level prevents)
+    - Aggregate queries with GROUP BY (columns must be in GROUP BY or aggregated)
+    - NULL handling in SQL (three-valued logic)
+    - Composite key usage and foreign key references
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - SQL examples should use consistent sample database (e.g., employees, products)
+    - Show complete, runnable SQL statements (not fragments)
+    - Include output of SELECT queries to show expected results
+    - Explain each normalization step with before/after schemas
+    - Use execution plan diagrams for query optimization topics
+
+  conventions:
+    - Standard SQL syntax (PostgreSQL-compatible where vendor differences exist)
+    - UPPERCASE for SQL keywords (SELECT, FROM, WHERE)
+    - lowercase for table and column names with underscores (user_id, order_date)
+    - Indented SQL for readability in multi-line queries
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Database skills require both theoretical understanding and practical application.
+    Students must be able to write correct SQL, design normalized schemas, and
+    reason about transaction behavior. Assessments mix SQL writing with conceptual
+    questions about normalization, indexing, and concurrency.
+
+  measures:
+    - SQL query correctness (produces expected results)
+    - Schema design quality (normalization, constraints, relationships)
+    - Understanding of query execution (reading EXPLAIN output)
+    - Ability to identify and prevent concurrency anomalies
+    - Index selection based on query patterns
+
+  anti_patterns:
+    - Asking for exact syntax memorization (DBMS documentation exists)
+    - SQL queries with only one possible approach
+    - Normalization exercises without realistic business context
+    - Questions about specific DBMS internals rather than concepts
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 70
+    exams: 65
+
+  rationale: >
+    Standard passing threshold for intermediate CS subject. Exercises require
+    working SQL which has clear right/wrong answers. Exam threshold slightly
+    lower because theoretical questions (normalization steps, isolation levels)
+    require nuanced understanding.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    SQL is learned by writing SQL. Exercises progress from simple queries to
+    complex multi-table operations. Written exercises evaluate understanding
+    of normalization, transactions, and optimization concepts. All exercises
+    use consistent sample database schemas for continuity.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      SQL exercises are written-type evaluated by AI against reference solutions.
+      This allows flexibility in syntax and approach while checking correctness
+      of query logic and results. No automated test cases because SQL output
+      comparison requires semantic understanding.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Database work benefits from volume of practice
+      with varied query patterns. Each exercise builds on previous concepts
+      within the topic.
+
+  difficulty_distribution:
+    1: 3
+    2: 3
+    3: 4
+    4: 3
+    5: 3
+    justification: >
+      Balanced distribution. Basic queries are quick wins, but complex joins,
+      subqueries, and optimization problems require significant effort at
+      difficulty 4-5. Students need practice across the full difficulty range.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding that supports practical SQL work.
+    They verify students understand why queries work, not just how to write them.
+    Fill-blank questions test SQL syntax patterns.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic: fundamentals, application,
+      and mastery levels. Five questions each allows coverage of key concepts
+      without overwhelming students.
+
+  question_types:
+    multiple_choice: "40%"
+    true_false: "20%"
+    fill_blank: "25%"
+    code_output: "15%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Multiple choice for conceptual questions (which join type, which normal form).
+      Fill-blank for SQL syntax patterns (SELECT ___ FROM ___). Code_output for
+      predicting query results. True/false for common misconceptions.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test ability to write SQL without IDE assistance and demonstrate
+    understanding of database theory. Mix of short SQL queries, schema design,
+    and conceptual questions. Students should spend 2-3 minutes per question.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      10-12 SQL writing questions (SELECT, JOIN, GROUP BY),
+      6-8 normalization/schema design questions,
+      4-6 conceptual multiple choice (keys, constraints, ER diagrams).
+      All questions based on provided schema descriptions.
+    coverage: "Topics 1-4: Relational model, SQL fundamentals/advanced, normalization"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 46
+    duration_minutes: 120
+    format: >
+      15-18 SQL writing questions including window functions and CTEs,
+      8-10 normalization and schema design,
+      8-10 transactions/concurrency/isolation questions,
+      6-8 indexing and query optimization.
+      Cumulative with emphasis on later topics.
+    coverage: "Comprehensive: all 7 topics with emphasis on transactions and optimization"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 3
+  rationale: >
+    Projects apply database concepts to realistic scenarios. The three projects
+    cover the full database lifecycle: design (E-Commerce), optimization (Query Lab),
+    and transactions (Bank System). Each requires integrating multiple topics.
+
+  goals:
+    - Design a complete database from requirements through implementation
+    - Analyze and optimize query performance using execution plans
+    - Implement correct transaction handling with concurrency control
+    - Practice SQL writing in context of larger applications
+
+  estimated_hours: "15-25"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - SQL query uses non-standard syntax specific to one DBMS
+  - Normalization exercise has ambiguous functional dependencies
+  - Transaction isolation question doesn't specify isolation level
+  - Query optimization question asks about specific DBMS internals
+  - Exercise schema inconsistent with other exercises in subject
+  - NULL handling not addressed when relevant to query semantics
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Database Systems is a practical subject where students learn by doing. The course
+  balances theoretical foundations (relational algebra, normalization theory, ACID)
+  with practical skills (SQL writing, index selection, query optimization). Content
+  should emphasize that theory informs practice: understanding normalization prevents
+  update anomalies, understanding execution plans enables optimization. Use a
+  consistent sample database across topics to reduce cognitive load on students.
