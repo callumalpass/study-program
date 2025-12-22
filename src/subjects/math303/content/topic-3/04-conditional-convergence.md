@@ -1,97 +1,130 @@
 ---
-title: "Conditional Convergence and Rearrangements"
+title: "Conditional Convergence and Its Properties"
 slug: "conditional-convergence"
-description: "Riemann Rearrangement Theorem and properties of conditionally convergent series"
+description: "Understanding conditionally convergent series and their fundamental properties"
 ---
 
-# Conditional Convergence and Rearrangements
+# Conditional Convergence and Its Properties
 
-## Rearrangements of Series
+## Introduction to Conditional Convergence
 
-**Definition:** A **rearrangement** of a series $\sum_{n=1}^{\infty} a_n$ is a series $\sum_{n=1}^{\infty} a_{\sigma(n)}$ where $\sigma: \mathbb{N} \to \mathbb{N}$ is a bijection.
+In our study of infinite series, we have encountered two fundamentally different types of convergent behavior. A series $\sum_{n=1}^{\infty} a_n$ converges **absolutely** if the series of absolute values $\sum_{n=1}^{\infty} |a_n|$ also converges. However, many important series converge without their absolute values converging—these are called **conditionally convergent** series. Understanding this distinction is crucial for working rigorously with infinite series in analysis.
 
-**Example 1:** The series $\sum_{n=1}^{\infty} \frac{1}{n^2}$ can be rearranged as:
+**Definition (Conditional Convergence):** A series $\sum_{n=1}^{\infty} a_n$ is said to **converge conditionally** if:
+1. The series $\sum_{n=1}^{\infty} a_n$ converges, and
+2. The series $\sum_{n=1}^{\infty} |a_n|$ diverges.
+
+In other words, conditional convergence occurs when a series converges only because of the cancellation between positive and negative terms, not because the terms become small fast enough to guarantee absolute convergence.
+
+## The Alternating Harmonic Series: A Paradigmatic Example
+
+The most important example of conditional convergence is the **alternating harmonic series**:
+
 $$
-\frac{1}{1^2} + \frac{1}{3^2} + \frac{1}{2^2} + \frac{1}{5^2} + \frac{1}{4^2} + \cdots
-$$
-
-## Absolutely Convergent Series
-
-**Theorem 4.1:** If $\sum a_n$ converges absolutely, then every rearrangement converges to the same sum.
-
-**Proof:** Let $\sum a_{\sigma(n)}$ be a rearrangement and $S = \sum a_n$. Let $\epsilon > 0$.
-
-Since $\sum |a_n|$ converges, choose $N$ such that $\sum_{n=N+1}^{\infty} |a_n| < \epsilon/2$.
-
-Choose $M$ large enough that $\{1, 2, \ldots, N\} \subseteq \{\sigma(1), \ldots, \sigma(M)\}$.
-
-For $m \geq M$, the partial sum $\sum_{k=1}^{m} a_{\sigma(k)}$ differs from $\sum_{k=1}^{N} a_k$ by at most terms with indices $> N$, so:
-$$
-\left|\sum_{k=1}^{m} a_{\sigma(k)} - S\right| < \epsilon
+\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n} = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \frac{1}{5} - \frac{1}{6} + \cdots
 $$
 
-## Riemann Rearrangement Theorem
+**Claim:** This series converges conditionally to $\ln 2$.
 
-**Theorem 4.2 (Riemann Rearrangement Theorem):** If $\sum a_n$ converges conditionally, then for any $L \in \mathbb{R} \cup \{\pm\infty\}$, there exists a rearrangement that converges to (or diverges to) $L$.
+**Proof of Convergence:** By the Alternating Series Test (Leibniz test), a series $\sum (-1)^{n+1} b_n$ converges if:
+- The terms $b_n$ are positive
+- The sequence $(b_n)$ is decreasing
+- $\lim_{n \to \infty} b_n = 0$
 
-**Proof sketch:** Since $\sum a_n$ converges conditionally, both $\sum a_n^+$ and $\sum a_n^-$ diverge to $\infty$.
+For $b_n = 1/n$, all three conditions hold, so the alternating harmonic series converges.
 
-To rearrange to converge to $L$:
-- Add positive terms until the partial sum exceeds $L$
-- Add negative terms until it drops below $L$
-- Repeat
+**Proof of Conditional Convergence:** The series of absolute values is $\sum_{n=1}^{\infty} \frac{1}{n}$, the harmonic series, which diverges. Hence the convergence is conditional.
 
-Since $a_n \to 0$, the oscillations shrink, and the series converges to $L$.
-
-**Example 2:** Consider $\sum \frac{(-1)^{n+1}}{n} = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \cdots = \ln 2$.
-
-Rearrange to get $\frac{3\ln 2}{2}$:
+**The Sum Equals $\ln 2$:** This remarkable fact follows from the Taylor series expansion of $\ln(1+x)$ evaluated at $x = 1$, which requires careful justification using uniform convergence (covered in Topic 7). We have:
 $$
-1 + \frac{1}{3} - \frac{1}{2} + \frac{1}{5} + \frac{1}{7} - \frac{1}{4} + \cdots
+\ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots
+$$
+Setting $x = 1$ gives $\ln 2 = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \cdots$.
+
+## Characterization via Positive and Negative Parts
+
+For any series $\sum a_n$, we can decompose the terms into positive and negative parts:
+
+**Definition:** The **positive part** and **negative part** of $a_n$ are:
+$$
+a_n^+ = \max(a_n, 0) = \frac{a_n + |a_n|}{2}, \quad a_n^- = \max(-a_n, 0) = \frac{|a_n| - a_n}{2}
 $$
 
-(Take two positive, one negative, repeating.)
+Note that $a_n^+ \geq 0$, $a_n^- \geq 0$, and $a_n = a_n^+ - a_n^-$, $|a_n| = a_n^+ + a_n^-$.
 
-The partial sums can be analyzed to show convergence to $\frac{3\ln 2}{2}$.
+**Theorem (Characterization of Conditional Convergence):** A series $\sum a_n$ converges conditionally if and only if:
+1. $\sum a_n$ converges
+2. $\sum a_n^+ = +\infty$
+3. $\sum a_n^- = +\infty$
 
-## Examples of Conditional Convergence
+**Proof:** If $\sum a_n$ converges absolutely, then both $\sum a_n^+$ and $\sum a_n^-$ converge (since each is bounded by $\sum |a_n|$). Conversely, if $\sum a_n$ converges conditionally, then $\sum |a_n| = \sum a_n^+ + \sum a_n^-$ diverges. But if one of $\sum a_n^+$ or $\sum a_n^-$ converged, then since $a_n = a_n^+ - a_n^-$, the convergence of $\sum a_n$ would imply convergence of the other, contradicting divergence of $\sum |a_n|$. Hence both must diverge. □
 
-**Example 3:** $\sum \frac{(-1)^n}{n}$ converges conditionally.
+This characterization is crucial for understanding why conditionally convergent series are "fragile"—the convergence depends on a precise balance between infinitely large positive and negative sums.
 
-**Example 4:** $\sum \frac{\sin n}{n}$ converges conditionally (by Dirichlet's test).
+## Additional Examples of Conditional Convergence
 
-**Example 5:** $\sum \frac{(-1)^n \ln n}{n}$ converges conditionally.
+**Example 1:** The series $\sum_{n=2}^{\infty} \frac{(-1)^n}{\ln n}$ converges conditionally.
 
-## Grouping Terms
+*Proof:* The terms $b_n = 1/\ln n$ decrease to 0, so the Alternating Series Test applies. For absolute convergence, we note that $1/\ln n > 1/n$ for $n \geq 3$, so $\sum 1/\ln n$ diverges by comparison with the harmonic series.
 
-**Theorem 4.3:** If $\sum a_n$ converges absolutely, then grouping terms (without changing order) doesn't affect convergence or the sum.
+**Example 2:** The series $\sum_{n=1}^{\infty} \frac{\sin n}{n}$ converges conditionally.
 
-For conditional convergence, grouping can change behavior!
+*Proof:* This is not obviously alternating, but it can be shown to converge using **Dirichlet's test**. The partial sums of $\sin n$ are bounded (they can be computed using the formula for geometric sums of complex exponentials), and $1/n$ decreases to 0. Hence the series converges.
 
-**Example 6:** $\sum \frac{(-1)^{n+1}}{n} = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \cdots$
+For absolute convergence, note that $|\sin n| \geq \sin^2 n = (1 - \cos 2n)/2$. Since $\sum 1/(2n) = \infty$ and $\sum \cos(2n)/n$ converges by Dirichlet's test, we get $\sum |\sin n|/n = \infty$.
 
-Group as: $(1 - \frac{1}{2}) + (\frac{1}{3} - \frac{1}{4}) + \cdots = \sum \frac{1}{2n(2n-1)}$, which still converges (but the proof requires care).
+**Example 3:** The series $\sum_{n=1}^{\infty} \frac{(-1)^n \ln n}{n}$ converges conditionally.
 
-But grouping incorrectly can yield divergence in pathological cases.
+*Proof:* The terms $b_n = \ln n / n$ eventually decrease (for $n \geq 3$) and approach 0 as $n \to \infty$ (by L'Hôpital's rule). The Alternating Series Test applies. The series of absolute values diverges since $\ln n / n > 1/(n)$ for large $n$ would suggest convergence, but more carefully, $\sum \ln n / n$ diverges by the integral test:
+$$
+\int_2^{\infty} \frac{\ln x}{x} dx = \frac{(\ln x)^2}{2} \Big|_2^{\infty} = \infty
+$$
 
-## The Alternating Harmonic Series
+## Non-Example: Not Every Convergent Series with Alternating Signs is Conditionally Convergent
 
-**Theorem 4.4:** The series $\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}$ converges to $\ln 2$.
+**Example 4:** Consider $\sum_{n=1}^{\infty} \frac{(-1)^n}{n^2}$.
 
-**Proof:** Uses the Taylor series for $\ln(1+x)$ evaluated at $x=1$. This requires uniform convergence results we'll develop later.
+This series converges by the Alternating Series Test, but the series of absolute values $\sum 1/n^2$ also converges (it's a $p$-series with $p = 2 > 1$). Hence this series converges **absolutely**, not conditionally.
 
-## Exercises
+**Key Insight:** The alternating signs help convergence, but if the terms decrease fast enough, the series would converge absolutely regardless of signs. Conditional convergence specifically captures the case where cancellation is essential.
 
-1. Construct a rearrangement of $\sum \frac{(-1)^{n+1}}{n}$ that diverges to $\infty$.
+## The Fragility of Conditional Convergence
 
-2. Prove that if $\sum a_n$ converges absolutely to $S$ and $\sum b_n$ is a rearrangement, then $\sum b_n = S$.
+Conditionally convergent series exhibit a remarkable fragility that absolutely convergent series do not share:
 
-3. Show that $\sum_{n=2}^{\infty} \frac{(-1)^n}{\ln n}$ converges conditionally.
+**Observation 1 (Sensitivity to Grouping):** While grouping consecutive terms of a convergent series preserves convergence, the way we group terms can reveal the delicate balance in conditional convergence.
 
-4. Can a rearrangement of a divergent series converge? Provide an example or prove impossibility.
+For the alternating harmonic series:
+$$
+(1 - \frac{1}{2}) + (\frac{1}{3} - \frac{1}{4}) + \cdots = \sum_{n=1}^{\infty} \frac{1}{2n(2n-1)}
+$$
 
-5. Investigate $\sum ((-1)^n + \frac{1}{n^2})$: does it converge absolutely, conditionally, or diverge?
+This grouped series also converges (by comparison with $\sum 1/n^2$), demonstrating that grouping preserves convergence.
 
-## Conclusion
+**Observation 2 (Sensitivity to Rearrangement):** Unlike absolutely convergent series, conditionally convergent series can have their sums completely changed—or made to diverge—by rearranging terms. This is the content of the Riemann Rearrangement Theorem, discussed in the next section.
 
-Conditional convergence reveals the delicate nature of infinite summation. Unlike absolutely convergent series, conditionally convergent series depend critically on the order of terms. The Riemann Rearrangement Theorem shows that conditional convergence is fragile: rearrangement can produce any desired sum. This underscores the importance of absolute convergence in analysis.
+## Connection to Analysis and Applications
+
+Conditional convergence appears throughout analysis:
+
+1. **Fourier Series:** Many Fourier series converge conditionally at points of discontinuity, making the order of summation crucial.
+
+2. **Analytic Number Theory:** Series like $\sum (-1)^n/n$ and related Dirichlet series exhibit conditional convergence with deep connections to the distribution of prime numbers.
+
+3. **Probability Theory:** Conditional convergence affects the calculation of expected values for random variables that can take both positive and negative values.
+
+## Key Takeaways
+
+- **Conditional convergence** means a series converges, but the series of absolute values diverges.
+- The alternating harmonic series $\sum (-1)^{n+1}/n$ is the archetypal example, converging to $\ln 2$.
+- Conditionally convergent series have both $\sum a_n^+ = \infty$ and $\sum a_n^- = \infty$—convergence depends on cancellation.
+- Conditional convergence is "fragile" compared to absolute convergence: rearrangement can change the sum.
+- Common tests (Alternating Series Test, Dirichlet's Test) help identify conditionally convergent series.
+
+## Common Mistakes to Avoid
+
+1. **Assuming alternating series are conditionally convergent:** Many alternating series converge absolutely (e.g., $\sum (-1)^n/n^2$).
+
+2. **Forgetting to check absolute convergence:** When applying the Alternating Series Test, always separately check whether $\sum |a_n|$ converges.
+
+3. **Treating conditional and absolute convergence identically:** Operations valid for absolutely convergent series (like rearrangement) may fail for conditionally convergent ones.

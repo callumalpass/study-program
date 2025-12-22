@@ -1,112 +1,188 @@
 ---
 title: "Power Series"
 slug: "power-series"
-description: "Radius of convergence and properties of power series"
+description: "Radius of convergence, properties of power series, and term-by-term operations"
 ---
 
 # Power Series
 
-## Definition
+## Introduction
 
-**Definition:** A **power series** centered at $a$ is a series of the form:
-$$
-\sum_{n=0}^{\infty} c_n (x - a)^n
-$$
+Power series provide a bridge between infinite series and functions, allowing us to represent functions as "infinite polynomials." They are foundational to complex analysis, differential equations, and many applications in physics and engineering. In this section, we develop the theory of power series from the perspective of real analysis, focusing on convergence properties and the operations we can perform.
 
-where $c_n$ are constants (coefficients) and $x$ is a variable.
+## Definition of Power Series
 
-For simplicity, we often take $a = 0$:
+**Definition:** A **power series** centered at $a \in \mathbb{R}$ is a series of the form:
 $$
-\sum_{n=0}^{\infty} c_n x^n
+\sum_{n=0}^{\infty} c_n (x - a)^n = c_0 + c_1(x-a) + c_2(x-a)^2 + c_3(x-a)^3 + \cdots
 $$
 
-## Radius of Convergence
+where $(c_n)$ is a sequence of real numbers called the **coefficients**, and $x$ is a variable.
 
-**Theorem 7.1:** For every power series $\sum c_n x^n$, there exists $R \in [0, \infty]$ (the **radius of convergence**) such that:
-- The series converges absolutely for $|x| < R$
-- The series diverges for $|x| > R$
-- Behavior at $|x| = R$ varies (must check each endpoint)
+For simplicity, we often work with power series centered at $a = 0$:
+$$
+\sum_{n=0}^{\infty} c_n x^n = c_0 + c_1 x + c_2 x^2 + c_3 x^3 + \cdots
+$$
 
-**Proof:** Let $S = \{r \geq 0 : \sum c_n r^n \text{ converges}\}$. Set $R = \sup S$ (possibly $\infty$).
+The theory for general $a$ follows by the substitution $y = x - a$.
 
-If $|x| < R$, choose $r$ with $|x| < r < R$. Then $\sum c_n r^n$ converges, so $\sum |c_n x^n| \leq \sum |c_n| r^n < \infty$.
+**Question:** For which values of $x$ does a power series converge?
 
-If $|x| > R$, then $|c_n x^n| \not\to 0$, so the series diverges.
+## The Radius of Convergence
 
-## Computing Radius of Convergence
+Unlike Taylor series in calculus, where convergence was often taken for granted, in real analysis we must carefully characterize the domain of convergence.
 
-**Theorem 7.2 (Cauchy-Hadamard):**
+**Theorem (Radius of Convergence):** For every power series $\sum_{n=0}^{\infty} c_n x^n$, there exists a unique number $R \in [0, \infty]$, called the **radius of convergence**, such that:
+
+1. The series converges absolutely for all $|x| < R$
+2. The series diverges for all $|x| > R$
+3. The behavior at $|x| = R$ (the boundary) must be checked separately for each case
+
+**Proof:** Define:
+$$
+R = \sup\{r \geq 0 : \sum |c_n| r^n \text{ converges}\}
+$$
+
+(with $R = 0$ if this set is $\{0\}$, and $R = \infty$ if the set is unbounded).
+
+**For $|x| < R$:** Choose $r$ with $|x| < r < R$. By definition of $R$, the series $\sum |c_n| r^n$ converges. Since $|c_n x^n| = |c_n| |x|^n \leq |c_n| r^n$ for all $n$ (because $|x| < r$), the comparison test gives absolute convergence of $\sum c_n x^n$.
+
+**For $|x| > R$:** If $\sum c_n x^n$ converged, then $c_n x^n \to 0$, which would imply $|c_n| |x|^n$ is bounded. But then $\sum |c_n| r^n$ would converge for some $r < |x|$ by comparison, contradicting the definition of $R$. Hence the series diverges. □
+
+The set $\{x : |x| < R\}$ is called the **interval of convergence** (excluding endpoints), and the full interval including endpoints that converge is the **domain of convergence**.
+
+## Computing the Radius of Convergence
+
+Two formulas are commonly used:
+
+**Theorem (Cauchy-Hadamard Formula):**
 $$
 R = \frac{1}{\limsup_{n \to \infty} \sqrt[n]{|c_n|}}
 $$
 
-**Theorem 7.3 (Ratio Test):** If $\lim_{n \to \infty} \frac{|c_{n+1}|}{|c_n|}$ exists, then:
-$$
-R = \lim_{n \to \infty} \frac{|c_n|}{|c_{n+1}|}
-$$
+This formula always works, using the conventions $1/0 = \infty$ and $1/\infty = 0$.
 
-**Example 1:** $\sum \frac{x^n}{n!}$
-
+**Theorem (Ratio Test Formula):** If $\lim_{n \to \infty} \left|\frac{c_{n+1}}{c_n}\right|$ exists (including $\infty$), then:
 $$
-\frac{|c_{n+1}|}{|c_n|} = \frac{1/(n+1)!}{1/n!} = \frac{1}{n+1} \to 0
+R = \lim_{n \to \infty} \left|\frac{c_n}{c_{n+1}}\right|
 $$
 
-So $R = \infty$. The series converges for all $x$ (this is $e^x$).
+This formula is often easier to compute when the limit exists.
 
-**Example 2:** $\sum n! x^n$
+## Examples of Radius of Convergence
 
+**Example 1: The exponential series** $\sum_{n=0}^{\infty} \frac{x^n}{n!}$
+
+Using the ratio test:
 $$
-\frac{|c_{n+1}|}{|c_n|} = n+1 \to \infty
-$$
-
-So $R = 0$. The series only converges at $x = 0$.
-
-**Example 3:** $\sum x^n$ (geometric series)
-
-$$
-R = 1
+\left|\frac{c_{n+1}}{c_n}\right| = \frac{1/(n+1)!}{1/n!} = \frac{1}{n+1} \to 0
 $$
 
-Converges for $|x| < 1$, diverges for $|x| \geq 1$.
+Hence $R = 1/0 = \infty$. The series converges for all $x \in \mathbb{R}$, and its sum is $e^x$.
 
-## Endpoint Behavior
+**Example 2: The factorial series** $\sum_{n=0}^{\infty} n! x^n$
 
-**Example 4:** $\sum \frac{x^n}{n}$
+Using the ratio test:
+$$
+\left|\frac{c_{n+1}}{c_n}\right| = \frac{(n+1)!}{n!} = n+1 \to \infty
+$$
 
-$R = 1$. At $x = 1$: $\sum \frac{1}{n}$ diverges. At $x = -1$: $\sum \frac{(-1)^n}{n}$ converges.
+Hence $R = 0$. The series converges only at $x = 0$.
 
-**Example 5:** $\sum \frac{x^n}{n^2}$
+**Example 3: The geometric series** $\sum_{n=0}^{\infty} x^n$
 
-$R = 1$. Both $x = \pm 1$ give convergent series.
+Here $c_n = 1$ for all $n$, so $\limsup \sqrt[n]{|c_n|} = 1$, giving $R = 1$. The series converges for $|x| < 1$ and diverges for $|x| \geq 1$.
 
-## Uniform Convergence on Compact Sets
+**Example 4: The logarithmic series** $\sum_{n=1}^{\infty} \frac{x^n}{n}$
 
-**Theorem 7.4:** If $\sum c_n x^n$ has radius of convergence $R > 0$, then for any $r < R$, the series converges uniformly on $|x| \leq r$.
+Using the ratio test: $|c_{n+1}/c_n| = n/(n+1) \to 1$, so $R = 1$.
 
-This allows term-by-term differentiation and integration.
+At $x = 1$: $\sum 1/n$ diverges (harmonic series).
+At $x = -1$: $\sum (-1)^n/n$ converges (alternating harmonic series).
 
-## Differentiation and Integration
+The domain of convergence is $[-1, 1)$.
 
-**Theorem 7.5:** If $f(x) = \sum_{n=0}^{\infty} c_n x^n$ with radius $R > 0$, then:
+**Example 5:** $\sum_{n=1}^{\infty} \frac{x^n}{n^2}$
+
+$R = 1$ by the ratio test. At $x = \pm 1$: $\sum 1/n^2$ converges. The domain is $[-1, 1]$.
+
+## Uniform Convergence on Compact Subsets
+
+A crucial property of power series is that they converge uniformly on compact subsets of their interval of convergence.
+
+**Theorem:** If $\sum c_n x^n$ has radius of convergence $R > 0$, then for any $0 < r < R$, the series converges uniformly on $[-r, r]$.
+
+**Proof:** For $|x| \leq r < R$, we have $|c_n x^n| \leq |c_n| r^n$. Since $\sum |c_n| r^n$ converges (because $r < R$), the Weierstrass M-test gives uniform convergence on $[-r, r]$. □
+
+This uniform convergence is what allows us to perform term-by-term operations.
+
+## Term-by-Term Differentiation
+
+**Theorem:** If $f(x) = \sum_{n=0}^{\infty} c_n x^n$ has radius of convergence $R > 0$, then:
 
 1. $f$ is differentiable on $(-R, R)$
 2. $f'(x) = \sum_{n=1}^{\infty} n c_n x^{n-1}$
-3. The derived series has the same radius of convergence
+3. The differentiated series has the same radius of convergence $R$
 
-**Example 6:** $e^x = \sum \frac{x^n}{n!}$
+**Proof Sketch:** The key is that uniform convergence on compact subsets allows interchanging the limit (derivative) with the sum. The radius of convergence is preserved because $\limsup \sqrt[n]{n|c_n|} = \limsup \sqrt[n]{|c_n|}$ (since $\sqrt[n]{n} \to 1$). □
 
+**Corollary:** Power series are infinitely differentiable on their interval of convergence, and:
 $$
-\frac{d}{dx} e^x = \sum \frac{n x^{n-1}}{n!} = \sum \frac{x^{n-1}}{(n-1)!} = e^x
+f^{(k)}(x) = \sum_{n=k}^{\infty} n(n-1)\cdots(n-k+1) c_n x^{n-k}
 $$
 
-## Exercises
+**Example 6:** For $e^x = \sum \frac{x^n}{n!}$:
+$$
+\frac{d}{dx} e^x = \sum_{n=1}^{\infty} \frac{n x^{n-1}}{n!} = \sum_{n=1}^{\infty} \frac{x^{n-1}}{(n-1)!} = \sum_{m=0}^{\infty} \frac{x^m}{m!} = e^x
+$$
 
-1. Find the radius of convergence of $\sum \frac{(2x)^n}{n^2}$.
+This proves $\frac{d}{dx} e^x = e^x$ from the series definition.
 
-2. Show that $\sum \frac{x^{2n}}{(2n)!}$ and $\sum \frac{x^{2n+1}}{(2n+1)!}$ both have $R = \infty$.
+## Term-by-Term Integration
 
-3. Find $R$ for $\sum \frac{x^n}{1 + n^2}$.
+**Theorem:** If $f(x) = \sum_{n=0}^{\infty} c_n x^n$ has radius of convergence $R > 0$, then for $|x| < R$:
+$$
+\int_0^x f(t) \, dt = \sum_{n=0}^{\infty} \frac{c_n x^{n+1}}{n+1}
+$$
 
-## Conclusion
+The integrated series also has radius of convergence $R$.
 
-Power series provide analytic representations of functions. The radius of convergence determines where the series defines a function, and term-by-term operations preserve analyticity. Power series are fundamental to complex analysis and differential equations.
+**Example 7:** Since $\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n$ for $|x| < 1$:
+$$
+-\ln(1-x) = \int_0^x \frac{1}{1-t} \, dt = \sum_{n=0}^{\infty} \frac{x^{n+1}}{n+1} = \sum_{n=1}^{\infty} \frac{x^n}{n}
+$$
+
+This gives the Taylor series for $-\ln(1-x)$ on $(-1, 1)$.
+
+## Abel's Theorem and Endpoint Behavior
+
+**Theorem (Abel's Theorem):** If $\sum c_n$ converges (at $x = 1$), then:
+$$
+\lim_{x \to 1^-} \sum_{n=0}^{\infty} c_n x^n = \sum_{n=0}^{\infty} c_n
+$$
+
+This allows us to extend convergence results to the boundary in certain cases.
+
+**Example 8:** The alternating harmonic series $\sum (-1)^{n+1}/n = \ln 2$, and:
+$$
+\ln 2 = \lim_{x \to 1^-} \sum_{n=1}^{\infty} \frac{(-1)^{n+1} x^n}{n} = \lim_{x \to 1^-} \ln(1+x) = \ln 2
+$$
+
+## Key Takeaways
+
+- Every power series $\sum c_n x^n$ has a **radius of convergence** $R$ determining where it converges.
+- Within $(-R, R)$, convergence is **absolute**; outside $(-R, R)$, the series **diverges**.
+- **Endpoint behavior** varies and must be checked individually.
+- Power series converge **uniformly on compact subsets**, enabling term-by-term operations.
+- **Differentiation and integration** can be performed term-by-term, preserving the radius of convergence.
+- **Abel's theorem** connects series values at the boundary to limits from within.
+
+## Common Mistakes to Avoid
+
+1. **Forgetting to check endpoints:** The radius $R$ only determines $(-R, R)$; endpoints need separate analysis.
+
+2. **Assuming convergence at endpoints extends inside:** Convergence at $x = R$ doesn't guarantee uniform convergence up to $R$.
+
+3. **Differentiating without checking $R > 0$:** If $R = 0$, the series only converges at one point and isn't differentiable.
+
+4. **Confusing pointwise and uniform convergence:** Power series converge uniformly on compact subsets of $(-R, R)$, but not necessarily on the entire interval.
