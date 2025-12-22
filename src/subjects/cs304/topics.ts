@@ -4,8 +4,13 @@
  * Uses glob imports and frontmatter for automatic content discovery.
  */
 
-import type { Topic } from '../../core/types';
-import { buildTopicsFromGlob } from '../loader';
+import type { Topic, Quiz, Exercise } from '../../core/types';
+import {
+  buildTopicsFromGlob,
+  loadExercisesFromGlob,
+  loadQuizzesFromGlob,
+  groupIdsByTopic,
+} from '../loader';
 
 // Glob import all markdown content
 const content = import.meta.glob('./content/**/*.md', {
@@ -14,238 +19,62 @@ const content = import.meta.glob('./content/**/*.md', {
   import: 'default',
 }) as Record<string, string>;
 
+const quizModules = import.meta.glob('./content/*/quizzes.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, Quiz[]>;
+
+const exerciseModules = import.meta.glob('./content/*/exercises.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, Exercise[]>;
+
+const quizIdsByTopic = groupIdsByTopic(loadQuizzesFromGlob(quizModules));
+const exerciseIdsByTopic = groupIdsByTopic(loadExercisesFromGlob(exerciseModules));
+
 // Topic configuration (titles and IDs for quizzes/exercises)
 const topicConfigs = [
   {
-    number: 0,
-    title: 'Introduction to Compilers',
-  },
-  {
-    number: 0,
-    title: 'Lexical Analysis Basics',
-  },
-  {
-    number: 0,
-    title: 'Regular Expressions',
-  },
-  {
-    number: 0,
-    title: 'Finite Automata',
-  },
-  {
-    number: 0,
-    title: 'Scanner Implementation',
-  },
-  {
-    number: 0,
-    title: 'Scanner Generators',
-  },
-  {
-    number: 0,
-    title: 'Error Handling in Lexing',
-    quizIds: ['cs304-t1-quiz-1', 'cs304-t1-quiz-2', 'cs304-t1-quiz-3'],
-  },
-  {
-    number: 0,
-    title: 'Context-Free Grammars',
-  },
-  {
-    number: 0,
-    title: 'Derivations and Parse Trees',
-  },
-  {
-    number: 0,
-    title: 'Top-Down Parsing',
-  },
-  {
-    number: 0,
-    title: 'LL Parsing',
-  },
-  {
-    number: 0,
-    title: 'Bottom-Up Parsing',
-  },
-  {
-    number: 0,
-    title: 'LR Parsing',
-  },
-  {
-    number: 0,
-    title: 'Parser Generators',
-    quizIds: ['cs304-t2-quiz-1', 'cs304-t2-quiz-2', 'cs304-t2-quiz-3'],
-  },
-  {
-    number: 0,
-    title: 'Attribute Grammars',
-  },
-  {
-    number: 0,
-    title: 'Symbol Tables',
-  },
-  {
-    number: 0,
-    title: 'Type Checking',
-  },
-  {
-    number: 0,
-    title: 'Scope Resolution',
-  },
-  {
-    number: 0,
-    title: 'Type Inference',
-  },
-  {
-    number: 0,
-    title: 'Semantic Error Detection',
-  },
-  {
-    number: 0,
-    title: 'AST Construction',
-    quizIds: ['cs304-t3-quiz-1', 'cs304-t3-quiz-2', 'cs304-t3-quiz-3'],
-  },
-  {
-    number: 0,
-    title: 'IR Overview',
-  },
-  {
-    number: 0,
-    title: 'Three-Address Code',
-  },
-  {
-    number: 0,
-    title: 'Control Flow Graphs',
-  },
-  {
-    number: 0,
-    title: 'SSA Form',
-  },
-  {
-    number: 0,
-    title: 'IR Lowering',
-  },
-  {
-    number: 0,
-    title: 'IR in Practice',
-  },
-  {
-    number: 0,
-    title: 'IR Transformations',
-    quizIds: ['cs304-t4-quiz-1', 'cs304-t4-quiz-2', 'cs304-t4-quiz-3'],
-  },
-  {
-    number: 0,
-    title: 'Target Machine Architecture',
-  },
-  {
-    number: 0,
-    title: 'Instruction Selection',
-  },
-  {
-    number: 0,
-    title: 'Register Allocation',
-  },
-  {
-    number: 0,
-    title: 'Instruction Scheduling',
-  },
-  {
-    number: 0,
-    title: 'Calling Conventions',
-  },
-  {
-    number: 0,
-    title: 'Stack Management',
-  },
-  {
-    number: 0,
-    title: 'Object File Formats',
-    quizIds: ['cs304-t5-quiz-1', 'cs304-t5-quiz-2', 'cs304-t5-quiz-3'],
-  },
-  {
-    number: 0,
-    title: 'Optimization Overview',
-  },
-  {
-    number: 0,
-    title: 'Local Optimization',
-  },
-  {
-    number: 0,
-    title: 'Global Optimization',
-  },
-  {
-    number: 0,
-    title: 'Loop Optimization',
-  },
-  {
-    number: 0,
-    title: 'Data Flow Analysis',
-  },
-  {
-    number: 0,
-    title: 'Alias Analysis',
-  },
-  {
-    number: 0,
-    title: 'Interprocedural Optimization',
-    quizIds: ['cs304-t6-quiz-1', 'cs304-t6-quiz-2', 'cs304-t6-quiz-3'],
-  },
-  {
-    number: 0,
-    title: 'Runtime Systems Overview',
-  },
-  {
-    number: 0,
-    title: 'Memory Management',
-  },
-  {
-    number: 0,
-    title: 'Garbage Collection',
-  },
-  {
-    number: 0,
-    title: 'Exception Handling',
-  },
-  {
-    number: 0,
-    title: 'Virtual Machines',
-  },
-  {
-    number: 0,
-    title: 'JIT Compilation',
-  },
-  {
-    number: 0,
-    title: 'Linking and Loading',
-    quizIds: ['cs304-t7-quiz-1', 'cs304-t7-quiz-2', 'cs304-t7-quiz-3'],
-  },
-  {
     number: 1,
     title: 'Lexical Analysis',
+    quizIds: quizIdsByTopic[1] ?? [],
+    exerciseIds: exerciseIdsByTopic[1] ?? [],
   },
   {
     number: 2,
-    title: 'Syntax Analysis',
+    title: 'Parsing',
+    quizIds: quizIdsByTopic[2] ?? [],
+    exerciseIds: exerciseIdsByTopic[2] ?? [],
   },
   {
     number: 3,
     title: 'Semantic Analysis',
+    quizIds: quizIdsByTopic[3] ?? [],
+    exerciseIds: exerciseIdsByTopic[3] ?? [],
   },
   {
     number: 4,
-    title: 'Intermediate Representations',
+    title: 'Intermediate Representation',
+    quizIds: quizIdsByTopic[4] ?? [],
+    exerciseIds: exerciseIdsByTopic[4] ?? [],
   },
   {
     number: 5,
     title: 'Code Generation',
+    quizIds: quizIdsByTopic[5] ?? [],
+    exerciseIds: exerciseIdsByTopic[5] ?? [],
   },
   {
     number: 6,
     title: 'Optimization',
+    quizIds: quizIdsByTopic[6] ?? [],
+    exerciseIds: exerciseIdsByTopic[6] ?? [],
   },
   {
     number: 7,
     title: 'Runtime Systems',
+    quizIds: quizIdsByTopic[7] ?? [],
+    exerciseIds: exerciseIdsByTopic[7] ?? [],
   },
 ];
 
