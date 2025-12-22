@@ -6,7 +6,7 @@ import {
   getSubjectsByYearSemester,
   getPrerequisites,
   arePrerequisitesMet,
-} from '@/data/curriculum';
+} from '../src/data/curriculum';
 
 describe('curriculum data', () => {
   describe('curriculum array', () => {
