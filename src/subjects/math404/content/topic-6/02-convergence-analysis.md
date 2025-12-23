@@ -15,6 +15,20 @@ Understanding these rates allows us to compare algorithms (e.g., Gradient Descen
 
 Let $e_k = \|x^{(k)} - x^*\|$ or $e_k = f(x^{(k)}) - f^*$ be the error at step $k$.
 
+The following plot illustrates the different convergence rates on a log scale:
+
+```plot
+{
+  "xAxis": { "domain": [0, 50], "label": "Iteration k" },
+  "yAxis": { "domain": [0.0001, 100], "label": "Error" },
+  "data": [
+    { "fn": "10/x", "color": "#dc2626", "title": "Sublinear O(1/k)" },
+    { "fn": "10*0.9^x", "color": "#16a34a", "title": "Linear O(0.9^k)" },
+    { "fn": "10*0.7^x", "color": "#2563eb", "title": "Fast Linear O(0.7^k)" }
+  ]
+}
+```
+
 ### 1. Sublinear Convergence ($O(1/k)$)
 $$ e_k \leq \frac{C}{k^p} $$
 Error decreases like $1/k$ or $1/\sqrt{k}$.

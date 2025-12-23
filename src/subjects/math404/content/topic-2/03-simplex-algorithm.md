@@ -30,6 +30,22 @@ where $A$ is $m \times n$ with rank $m$ (assume $n > m$).
 
 ### Algorithm Steps
 
+The simplex algorithm can be visualized as a flowchart:
+
+```mermaid
+flowchart TD
+    A[Start: Initial BFS] --> B{All reduced costs ≥ 0?}
+    B -->|Yes| C[Current solution is optimal]
+    B -->|No| D[Select entering variable<br/>most negative reduced cost]
+    D --> E[Compute direction d]
+    E --> F{Any d_i > 0?}
+    F -->|No| G[Problem is UNBOUNDED]
+    F -->|Yes| H[Minimum ratio test<br/>Select leaving variable]
+    H --> I[Pivot: swap entering/leaving]
+    I --> J[Update basis and BFS]
+    J --> B
+```
+
 1. **Initialize**: Find an initial BFS (Phase I or use slack variables if $b \geq 0$)
 2. **Optimality test**: Check if current solution is optimal (all reduced costs $\geq 0$)
 3. **Select entering variable**: Choose variable with most negative reduced cost

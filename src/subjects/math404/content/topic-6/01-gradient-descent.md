@@ -21,6 +21,34 @@ The gradient $\nabla f(x)$ points in the direction of **steepest ascent** (great
 Therefore, $-\nabla f(x)$ points in the direction of **steepest descent**.
 We take a small step downhill. Like rolling a ball down a hill, eventually, we should reach the bottom (a minimum).
 
+The following flowchart shows the gradient descent algorithm:
+
+```mermaid
+flowchart TD
+    A[Start: Initialize x⁰] --> B{Check stopping criterion}
+    B -->|"‖∇f(x)‖ ≤ ε"| C[Return x as solution]
+    B -->|"‖∇f(x)‖ > ε"| D["Compute gradient ∇f(x)"]
+    D --> E["Choose step size α"]
+    E --> F["Update: x ← x - α∇f(x)"]
+    F --> G["k ← k + 1"]
+    G --> B
+```
+
+Consider the simple quadratic function $f(x) = x^2$. The gradient is $\nabla f(x) = 2x$, pointing away from the minimum at $x=0$. Taking steps opposite to the gradient moves us toward the minimum:
+
+```plot
+{
+  "xAxis": { "domain": [-3, 3] },
+  "yAxis": { "domain": [-1, 9] },
+  "data": [
+    { "fn": "x^2", "color": "#2563eb", "title": "f(x) = x²" },
+    { "fn": "2*x", "color": "#16a34a", "title": "Gradient: 2x" }
+  ]
+}
+```
+
+When $x > 0$, the gradient is positive (pointing right), so we move left (toward the minimum). When $x < 0$, the gradient is negative (pointing left), so we move right (toward the minimum).
+
 ## Why the Negative Gradient?
 
 Consider the first-order Taylor expansion of $f$ around $x$:

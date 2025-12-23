@@ -72,12 +72,42 @@ Optimal value $\frac{1}{2}(2)^2 = 2$.
 ## Geometric Interpretation
 
 Consider minimizing $f(x)$ subject to $g(x) \leq 0$.
-At the optimum $x^*$: 
+
+```mermaid
+graph LR
+    subgraph "KKT Geometry"
+        direction TB
+        A["∇f(x*) = objective gradient"]
+        B["∇g(x*) = constraint gradient"]
+        C["At optimum: -∇f = λ∇g"]
+        A --> C
+        B --> C
+    end
+    subgraph "Cases"
+        D["Interior: λ = 0, ∇f = 0"]
+        E["Boundary: λ > 0, gradients oppose"]
+    end
+```
+
+At the optimum $x^*$:
 1.  If $g(x^*) < 0$ (interior), then we must be at an unconstrained minimum $\nabla f(x^*) = 0$. KKT matches ($\lambda = 0$).
 2.  If $g(x^*) = 0$ (boundary), then the level curves of $f$ and $g$ must be tangent.
     Also, $-\nabla f$ must point **into** the feasible region (opposing $\nabla g$).
     $-\nabla f = \lambda \nabla g$ with $\lambda \geq 0$.
     $\nabla f + \lambda \nabla g = 0$.
+
+The example $\min \frac{1}{2}x^2$ s.t. $x \geq 2$ is illustrated below. The unconstrained minimum is at $x=0$, but the constraint forces the solution to $x=2$:
+
+```plot
+{
+  "xAxis": { "domain": [-1, 5] },
+  "yAxis": { "domain": [-1, 13] },
+  "data": [
+    { "fn": "0.5*x^2", "color": "#2563eb", "title": "f(x) = x²/2" },
+    { "fn": "2", "color": "#dc2626", "title": "Constraint: x = 2" }
+  ]
+}
+```
 
 ## Generalized KKT
 

@@ -15,6 +15,20 @@ $$ f(\theta x + (1 - \theta)y) \leq \theta f(x) + (1 - \theta)f(y) $$
 
 **Geometric Interpretation:** The graph of the function lies **below** the chord (line segment) connecting any two points on the graph. It looks like a bowl (or a valley).
 
+The following plot compares convex, concave, and non-convex functions:
+
+```plot
+{
+  "xAxis": { "domain": [-2, 2] },
+  "yAxis": { "domain": [-2, 5] },
+  "data": [
+    { "fn": "x^2", "color": "#2563eb", "title": "Convex: x²" },
+    { "fn": "-x^2 + 3", "color": "#dc2626", "title": "Concave: -x² + 3" },
+    { "fn": "x^3 - x", "color": "#16a34a", "title": "Neither: x³ - x" }
+  ]
+}
+```
+
 A function is **strictly convex** if the inequality is strict for $x \neq y$ and $\theta \in (0, 1)$.
 A function is **concave** if $-f$ is convex. Concave functions look like hills or domes.
 

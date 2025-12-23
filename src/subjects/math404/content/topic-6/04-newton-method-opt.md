@@ -26,6 +26,21 @@ This is the **Newton Step**.
 
 ## The Algorithm
 
+```mermaid
+flowchart TD
+    A[Start: Initialize x₀] --> B["Compute gradient g = ∇f(x)"]
+    B --> C["Compute Hessian H = ∇²f(x)"]
+    C --> D["Solve H·p = -g for Newton step p"]
+    D --> E{H positive definite?}
+    E -->|No| F[Modify H or use trust region]
+    E -->|Yes| G["Line search: choose α"]
+    F --> G
+    G --> H["Update: x ← x + α·p"]
+    H --> I{Converged?}
+    I -->|"‖g‖ < ε"| J[Return x as solution]
+    I -->|No| B
+```
+
 1.  Start at $x_0$.
 2.  Compute gradient $g_k = \nabla f(x_k)$ and Hessian $H_k = \nabla^2 f(x_k)$.
 3.  Solve linear system $H_k p_k = -g_k$ for $p_k$.

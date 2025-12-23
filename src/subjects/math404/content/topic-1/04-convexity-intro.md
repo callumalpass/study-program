@@ -20,6 +20,18 @@ The difference between convex and nonconvex optimization is fundamental—it's t
 
 A set $\mathcal{C} \subseteq \mathbb{R}^n$ is **convex** if for any two points in the set, the line segment connecting them is also in the set.
 
+```mermaid
+graph LR
+    subgraph "Convex Set"
+        A((A)) --> B((B))
+        A --> C["Line segment AB stays inside"]
+        B --> C
+    end
+    subgraph "Non-Convex Set"
+        D((D)) -.->|"crosses outside"| E((E))
+    end
+```
+
 **Formal definition**: $\mathcal{C}$ is convex if for all $x, y \in \mathcal{C}$ and all $\theta \in [0, 1]$:
 
 $$
@@ -83,6 +95,21 @@ f(\theta x + (1 - \theta) y) \leq \theta f(x) + (1 - \theta) f(y)
 $$
 
 **Geometric interpretation**: The function lies below the line segment connecting any two points on its graph.
+
+The following plot shows a convex function $f(x) = x^2$ and a non-convex function $f(x) = \sin(x)$:
+
+```plot
+{
+  "xAxis": { "domain": [-3, 3] },
+  "yAxis": { "domain": [-2, 9] },
+  "data": [
+    { "fn": "x^2", "color": "#2563eb", "title": "Convex: x²" },
+    { "fn": "sin(x)*2", "color": "#dc2626", "title": "Non-convex: sin(x)" }
+  ]
+}
+```
+
+Notice how for the convex function $x^2$, any chord (line segment between two points on the curve) lies **above** the curve. For the non-convex function $\sin(x)$, chords can lie below the curve.
 
 ### Strict and Strong Convexity
 

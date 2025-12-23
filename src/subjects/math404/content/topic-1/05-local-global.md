@@ -51,6 +51,16 @@ but the converse is generally **false**. A function can have multiple local mini
 
 Consider $f(x) = x^4 - 2x^2 + 1$ on $\mathbb{R}$.
 
+```plot
+{
+  "xAxis": { "domain": [-2.5, 2.5] },
+  "yAxis": { "domain": [-0.5, 3] },
+  "data": [
+    { "fn": "x^4 - 2*x^2 + 1", "color": "#2563eb", "title": "f(x) = x⁴ - 2x² + 1" }
+  ]
+}
+```
+
 Taking the derivative: $f'(x) = 4x^3 - 4x = 4x(x^2 - 1)$
 
 Critical points: $x = -1, 0, 1$

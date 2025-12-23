@@ -22,6 +22,7 @@ import { cs303Topics } from '../subjects/cs303/topics';
 import { cs304Topics } from '../subjects/cs304/topics';
 import { cs305Topics } from '../subjects/cs305/topics';
 import { cs306Topics } from '../subjects/cs306/topics';
+import { math404Topics } from '../subjects/math404/topics';
 
 /**
  * Complete Computer Science Degree Curriculum
@@ -1066,15 +1067,8 @@ export const curriculum: Subject[] = [
       'Apply optimization techniques to machine learning and data science problems'
     ],
     estimatedHours: 120,
-    topics: [
-      { id: 'math404-1', title: 'Optimization Problem Formulation', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math404-2', title: 'Linear Programming', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math404-3', title: 'Duality Theory', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math404-4', title: 'Convex Sets and Functions', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math404-5', title: 'Convex Optimization', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math404-6', title: 'Gradient Methods', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math404-7', title: 'Constrained Optimization and KKT Conditions', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math404Topics,
+    examIds: ['math404-exam-midterm', 'math404-exam-final']
   }
 ];
 
