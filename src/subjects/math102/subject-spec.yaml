@@ -1,0 +1,279 @@
+# MATH102: Discrete Mathematics II - Subject Specification
+# This spec guides content creation for the second semester of discrete math,
+# covering combinatorics, recurrence relations, graph theory, number theory, and probability.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: math102
+title: Discrete Mathematics II
+category: math
+
+role:
+  level: introductory
+  transformation: >
+    From "I can follow proofs" to "I can analyze algorithms, count discrete structures,
+    and reason about graphs and probabilistic processes." Students develop the mathematical
+    toolkit essential for algorithm analysis, cryptography, and theoretical CS.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 800
+
+  prerequisite_knowledge:
+    - MATH101: Discrete Mathematics I (logic, proofs, sets, relations, functions)
+    - Basic algebra and arithmetic fluency
+    - Familiarity with proof techniques (direct, contradiction, contrapositive)
+    - Comfort with mathematical notation and logical reasoning
+
+  essential_concepts:
+    - Counting principles (product/sum rules, permutations, combinations)
+    - Pigeonhole principle and inclusion-exclusion
+    - Recurrence relations and the Master Theorem
+    - Generating functions for solving recurrences
+    - Graph definitions, representations, and properties
+    - Graph traversal algorithms (BFS, DFS, shortest paths, MST)
+    - Number theory (divisibility, GCD, modular arithmetic, primes)
+    - Discrete probability (random variables, expectation, distributions)
+
+  out_of_scope:
+    - Advanced probability theory (covered in MATH202)
+    - Continuous probability distributions
+    - NP-completeness and complexity classes (covered in CS203)
+    - Advanced graph algorithms (network flow, matching beyond basics)
+    - Analytic number theory
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Correctly counts arrangements using appropriate combinatorial techniques
+    - Solves recurrence relations using characteristic equations or generating functions
+    - Represents graphs and applies BFS/DFS/shortest path algorithms
+    - Computes GCD, modular inverses, and applies Fermat's/Euler's theorems
+    - Calculates probabilities, expectations, and variances for discrete distributions
+    - Connects counting and probability to algorithm analysis
+
+  common_struggles:
+    - Distinguishing permutations vs combinations (order matters)
+    - Setting up recurrence relations from problem descriptions
+    - Applying the Master Theorem to non-standard forms
+    - Distinguishing graph isomorphism from equality
+    - Off-by-one errors in graph indexing (0 vs 1-indexed)
+    - Modular arithmetic with negative numbers
+    - Conditional probability vs joint probability
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Definitions followed by multiple worked examples
+    - Algorithm pseudocode with Python implementations
+    - Visual diagrams for graphs and tree structures
+    - Step-by-step problem solutions showing work
+    - Connection to CS applications (algorithm analysis, cryptography)
+
+  conventions:
+    - LaTeX for all mathematical expressions
+    - Python for algorithm implementations
+    - Mermaid diagrams for graph visualizations
+    - Standard graph notation (V, E, adjacency lists/matrices)
+    - Big-O notation for complexity analysis
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Discrete Mathematics II bridges pure math and CS. Assessment balances
+    computational fluency (counting, solving recurrences, computing GCD) with
+    conceptual understanding (why algorithms work, when techniques apply).
+    Algorithm trace questions test understanding of graph traversals.
+    Written proofs remain important but are balanced with calculation.
+
+  measures:
+    - Correct application of counting principles and formulas
+    - Ability to set up and solve recurrence relations
+    - Understanding of graph properties and algorithm correctness
+    - Facility with modular arithmetic and number-theoretic concepts
+    - Calculation of probabilities and expected values
+
+  anti_patterns:
+    - Pure memorization of formulas without understanding applicability
+    - Graph problems solvable by inspection without general technique
+    - Number theory trivia that won't generalize
+    - Probability problems requiring complex combinatorics not yet covered
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard passing threshold. This subject has more calculation than MATH101,
+    so partial credit is more applicable. Quiz/exam thresholds slightly lower
+    to account for time pressure on multi-step problems.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    High volume of practice builds fluency with discrete structures and algorithms.
+    Exercises range from direct formula application to multi-step proofs and
+    algorithm tracing. All exercises are written/proof-based as this is a
+    mathematics subject, though some include algorithm analysis components.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      Pure mathematics subject. All exercises are proofs, counting problems,
+      recurrence solving, graph analysis, or probability calculations. AI
+      evaluation compares student work to reference solutions.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Standard base count. Topics are calculation-heavy (counting, recurrences)
+      so 16 exercises per topic provides sufficient practice. Exercises range
+      from quick drills to extended analysis problems.
+
+  difficulty_distribution:
+    1: 3
+    2: 4
+    3: 5
+    4: 3
+    5: 1
+    justification: >
+      Balanced distribution for an introductory course. Difficulty 1-2 exercises
+      focus on direct formula application. Difficulty 3-4 require multi-step
+      reasoning or proof. Difficulty 5 exercises connect multiple concepts or
+      require creative problem-solving.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes check computational fluency and conceptual recall. Quick questions
+    on counting formulas, graph properties, and number theory facts prepare
+    students for more complex exercise problems.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic (A: fundamentals, B: application,
+      C: mastery) provide staged assessment. 15 questions per topic ensures
+      comprehensive coverage of key concepts and formulas.
+
+  question_types:
+    multiple_choice: "40%"
+    true_false: "20%"
+    fill_blank: "15%"
+    code_output: "15%"
+    coding: "0%"
+    written: "10%"
+    justification: >
+      Multiple choice for conceptual understanding and formula selection.
+      Code output for algorithm tracing (BFS/DFS order, shortest path values).
+      Fill-blank for terminology and formula recall. True/false for common
+      misconceptions. Limited written for short calculations or proofs.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test both computational skill and conceptual understanding. Mix of
+    calculation problems (counting, recurrences, modular arithmetic) and
+    reasoning problems (graph properties, algorithm correctness, probability).
+    Time allows for showing work on multi-step problems.
+
+  midterm:
+    questions:
+      minimum: 22
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      ~10-12 multiple choice, ~4-5 fill-blank for formulas/values, ~4-5 code
+      output for algorithm traces, ~4-6 written (counting problems, recurrence
+      solving, graph analysis). Emphasis on Topics 1-4.
+    coverage: "Topics 1-4: Combinatorics, Recurrence Relations, Graph Theory Basics, Graph Algorithms"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 46
+    duration_minutes: 120
+    format: >
+      Comprehensive coverage of all topics. ~14-16 multiple choice, ~6-8
+      fill-blank, ~6-8 code output, ~14-18 written (proofs, calculations,
+      algorithm analysis). Later topics (number theory, advanced counting,
+      probability) receive emphasis on final.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    Mathematics courses assess via problem sets and exams rather than projects.
+    The exercises serve as distributed practice. Graph algorithm implementations
+    are covered in CS courses (CS104 Data Structures, CS201 Algorithms).
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Counting problem where order of operations is ambiguous
+  - Recurrence problem requiring technique not covered (e.g., generating functions for Topics 1-3)
+  - Graph problem with ambiguous edge direction or weight
+  - Algorithm trace with non-deterministic tie-breaking not specified
+  - Probability problem requiring continuous distributions
+  - Number theory problem requiring Chinese Remainder Theorem (not core)
+  - Exercise asking for algorithm implementation rather than analysis/proof
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  MATH102 completes the discrete math foundation for CS. Content should
+  consistently connect to algorithm analysis (recurrences for divide-and-conquer,
+  graph algorithms for CS104 preview, probability for randomized algorithms).
+  The transition from MATH101's proof focus to MATH102's calculation+proof
+  balance prepares students for CS201 Algorithms. Number theory content should
+  emphasize cryptographic applications (RSA, Diffie-Hellman concepts).

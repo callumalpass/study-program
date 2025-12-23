@@ -63,8 +63,8 @@
 ## Common Issues
 
 ### 1. Missing subject-spec.yaml
-Many subjects still need subject-spec.yaml files (required since 2025-12-20):
-- MATH102, MATH201, MATH202
+Some subjects still need subject-spec.yaml files (required since 2025-12-20):
+- MATH201, MATH202
 - MATH302, MATH304
 
 ### 2. Exercise Shortages
@@ -82,7 +82,7 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 (None remaining - all 38 subjects are production ready!)
 
 ### High Priority
-- Create subject-spec.yaml files for all subjects listed in Common Issues #1
+- Create subject-spec.yaml files for remaining subjects: MATH201, MATH202, MATH302, MATH304
 
 ## Year-by-Year Summary
 
@@ -106,11 +106,22 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (5 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (4 subjects) |
 
-**Total Estimated:** ~2.5 hours for spec files.
+**Total Estimated:** ~2 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### MATH102: Discrete Mathematics II - Added Subject Specification
+- **Status:** Already 10/10, now with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: combinatorics, recurrence relations, graph theory, graph algorithms, number theory, advanced counting, probability foundations
+  3. Specified assessment philosophy for mixed calculation/proof content
+  4. Defined exercise distribution (100% written) with 16 exercises per topic target
+  5. Set exam targets (26 midterm, 42 final) matching existing content
+  6. Documented that projects are not required (exam-only math subject)
+- **Quality verified:** 47,591 total words (avg 971/subtopic), 112 exercises, 105 quiz questions, 68 exam questions
 
 ### MATH101: Discrete Mathematics I - Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml
