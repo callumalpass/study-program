@@ -1,0 +1,284 @@
+# MATH202: Probability and Statistics - Subject Specification
+# This spec guides content creation for a foundational course in probability theory
+# and statistical inference, essential for data science, machine learning, and research.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: math202
+title: Probability and Statistics
+category: math
+
+role:
+  level: intermediate
+  transformation: >
+    From "I can compute averages and percentages" to "I can model uncertainty,
+    draw valid conclusions from data, and understand the mathematical foundations
+    of statistical inference and machine learning."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Calculus I (differentiation, integration, limits)
+    - Basic set theory and logical reasoning
+    - Comfort with mathematical notation and functions
+    - Familiarity with summation and series notation
+
+  essential_concepts:
+    - Probability axioms, sample spaces, and events
+    - Conditional probability and Bayes' theorem
+    - Discrete and continuous random variables
+    - Expected value, variance, and moments
+    - Common probability distributions (binomial, Poisson, normal, exponential)
+    - Central Limit Theorem and its applications
+    - Point estimation and confidence intervals
+    - Hypothesis testing framework and error types
+    - Linear regression and correlation
+    - Introduction to Bayesian inference
+
+  out_of_scope:
+    - Measure-theoretic probability (graduate-level)
+    - Stochastic processes beyond basic concepts
+    - Advanced multivariate analysis (covered in MATH301)
+    - Time series analysis
+    - Non-parametric statistics (advanced topic)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Correctly applies probability rules to multi-step problems
+    - Chooses appropriate distributions for real-world scenarios
+    - Computes and interprets confidence intervals correctly
+    - Designs and conducts hypothesis tests with proper conclusions
+    - Fits and interprets regression models
+    - Distinguishes between frequentist and Bayesian interpretations
+
+  common_struggles:
+    - Confusing conditional probability P(A|B) with P(B|A)
+    - Misinterpreting confidence intervals as probability statements
+    - Forgetting to check assumptions for statistical tests
+    - Confusing standard deviation with standard error
+    - Incorrectly stating conclusions from hypothesis tests
+    - Conflating correlation with causation
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Every distribution introduced with its PDF/PMF, mean, variance, and typical applications
+    - Worked examples showing complete solution steps with intermediate calculations
+    - Real-world context for statistical concepts (medical, business, science examples)
+    - Clear distinction between population parameters and sample statistics
+    - Explicit statement of assumptions required for each technique
+
+  conventions:
+    - LaTeX for all mathematical expressions
+    - Use standard notation (Greek letters for parameters, Latin for statistics)
+    - Random variables in uppercase (X, Y), realizations in lowercase (x, y)
+    - Consistent use of sigma-notation for sums and integrals
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Probability and statistics require both computational fluency and conceptual
+    understanding. Students must be able to perform calculations correctly AND
+    interpret results meaningfully. Assessment should balance formula application
+    with problem setup and interpretation. Real-world context in problems tests
+    whether students can translate scenarios into appropriate statistical frameworks.
+
+  measures:
+    - Correct computation of probabilities and statistics
+    - Appropriate selection of statistical methods
+    - Valid interpretation of results in context
+    - Proper statement of assumptions and limitations
+    - Understanding of when methods apply and don't apply
+
+  anti_patterns:
+    - Pure formula memorization without application
+    - Problems with unrealistic or decontextualized numbers
+    - Questions answerable without understanding the underlying concepts
+    - Trick questions exploiting notation ambiguities
+    - Questions requiring obscure formulas not covered in content
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard passing threshold for a core mathematics course. Exercises require
+    higher threshold as they provide practice with feedback. Quiz and exam
+    thresholds slightly lower to account for time pressure and the multi-step
+    nature of statistical problems where early errors propagate.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises build computational fluency and problem-solving skills. All exercises
+    are written (proof/calculation style) because statistics requires showing work,
+    stating assumptions, and interpreting results. Automated grading cannot assess
+    the quality of statistical interpretations. AI evaluation compares student
+    solutions to model answers for both correctness and reasoning quality.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      This is a mathematical statistics course, not a computational statistics
+      course. All exercises involve probability calculations, derivations, and
+      statistical inference that require showing work. AI evaluation assesses
+      both computational correctness and quality of interpretation.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Full base standard count. Statistics requires volume of practice to build
+      intuition for when to apply different techniques. Each exercise is focused
+      on one or two concepts but requires multiple steps.
+
+  difficulty_distribution:
+    1: 2
+    2: 4
+    3: 5
+    4: 3
+    5: 2
+    justification: >
+      Balanced distribution with slight emphasis on medium difficulty. Statistics
+      problems naturally have many steps, so even "easy" problems require work.
+      Difficulty 1-2 focus on single concepts; difficulty 4-5 require integrating
+      multiple concepts or handling less standard situations.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding, formula recall, and quick calculations.
+    They identify students who need more practice before attempting longer exercises.
+    Mix of question types tests different aspects: definitions, computation, and
+    interpretation.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic allow progression through
+      the subtopics within each topic. 15 questions per topic provides good
+      coverage without being overwhelming.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "15%"
+    fill_blank: "20%"
+    code_output: "0%"
+    coding: "0%"
+    written: "15%"
+    justification: >
+      Multiple choice tests conceptual understanding and common misconceptions.
+      True/false addresses typical errors and misinterpretations. Fill-blank
+      tests formula recall and numerical computation. Limited written for
+      short interpretation questions.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams require both computation and interpretation under time pressure.
+    Mix of short-answer and longer problems tests breadth and depth.
+    Calculator use permitted for numerical calculations to focus on
+    concepts rather than arithmetic.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 26
+      maximum: 30
+    duration_minutes: 90
+    format: >
+      10-12 short conceptual questions (multiple choice, true/false, fill-blank),
+      10-12 calculation problems (expected value, probability, basic inference),
+      3-4 written problems requiring setup and interpretation.
+    coverage: "Topics 1-4: Probability, Random Variables, Distributions, Statistical Inference"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      15-18 short conceptual questions across all topics,
+      18-22 calculation problems including regression and Bayesian,
+      5-8 written problems integrating multiple concepts.
+    coverage: "Comprehensive: all 7 topics with emphasis on hypothesis testing, regression, and Bayesian inference"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    Mathematics subjects in this curriculum are exam-only without projects.
+    The exercises provide sufficient practice, and the mathematical content
+    is best assessed through problems and exams rather than extended projects.
+    Computational statistics projects (using R or Python) could be added as
+    optional enrichment but are not core to this theoretical foundations course.
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise gives probability greater than 1 or less than 0 as answer
+  - Hypothesis test conclusion states "accept H0" instead of "fail to reject H0"
+  - Confidence interval interpretation uses language suggesting probability of parameter
+  - Problem requires distribution table not provided or memorization of obscure values
+  - Solution uses method not covered in content (e.g., advanced techniques)
+  - Missing units or context in interpretation questions
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  This course bridges pure mathematics and applied data analysis. Content should
+  emphasize both mathematical rigor (proofs of key theorems, derivations of formulas)
+  and practical application (when to use which test, how to interpret results).
+  Students completing this course should be prepared for machine learning, data science,
+  and advanced statistics courses. The Bayesian inference topic provides important
+  foundation for modern statistical computing and AI/ML applications.

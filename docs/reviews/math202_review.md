@@ -1,6 +1,6 @@
 # MATH202: Probability and Statistics - Review Report
 
-**Review Date:** 2025-12-17
+**Review Date:** 2025-12-23
 **Reviewer:** Automated Quality Review
 
 ## Overall Status: COMPLETE
@@ -209,3 +209,16 @@ MATH202: Probability and Statistics is a **complete, exemplary subject** that ex
 The combination of thorough theoretical exposition, extensive worked examples, practical applications, and comprehensive assessment materials makes this subject outstanding. Students completing this course will have a solid foundation in probability theory and statistical inference, well-prepared for advanced topics in statistics, machine learning, data science, and other quantitative fields.
 
 **Status: APPROVED - No revisions needed**
+
+## Recent Updates (2025-12-23)
+
+### Added Subject Specification
+- **Status:** Already 10/10, now with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: probability axioms, conditional probability, random variables, distributions, CLT, estimation, hypothesis testing, regression, Bayesian inference
+  3. Specified assessment philosophy balancing computational fluency and conceptual understanding
+  4. Defined exercise distribution (100% written) with 16 exercises per topic target
+  5. Set exam targets (26 midterm, 42 final) matching existing content
+  6. Documented that projects are not required (exam-only math subject)
+- **Quality verified:** 83,901 total words (avg 1,712/subtopic), 112 exercises, 105 quiz questions, 68 exam questions
