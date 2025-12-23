@@ -295,6 +295,7 @@ export function createCodeEditor(
 
   // Hints panel (if hints provided)
   if (config.hints && config.hints.length > 0) {
+    const hints = config.hints;
     const hintsPanel = document.createElement('div');
     hintsPanel.className = 'hints-panel';
 
@@ -303,14 +304,14 @@ export function createCodeEditor(
 
     const hintsTitle = document.createElement('span');
     hintsTitle.className = 'hints-title';
-    hintsTitle.innerHTML = `<span class="panel-icon">${Icons.LightBulb}</span> Hints (${config.hints.length} available)`;
+    hintsTitle.innerHTML = `<span class="panel-icon">${Icons.LightBulb}</span> Hints (${hints.length} available)`;
     hintsHeader.appendChild(hintsTitle);
 
     const showHintButton = document.createElement('button');
     showHintButton.className = 'btn btn-ghost btn-show-hint';
     showHintButton.textContent = 'Show Hint';
     showHintButton.onclick = () => {
-      if (hintsRevealed < config.hints!.length) {
+      if (hintsRevealed < hints.length) {
         hintsRevealed++;
         renderHints();
       }
@@ -330,14 +331,14 @@ export function createCodeEditor(
       for (let i = 0; i < hintsRevealed; i++) {
         const hintEl = document.createElement('div');
         hintEl.className = 'hint-item';
-        hintEl.innerHTML = `<span class="hint-number">Hint ${i + 1}:</span> ${config.hints![i]}`;
+        hintEl.innerHTML = `<span class="hint-number">Hint ${i + 1}:</span> ${hints[i]}`;
         hintsContent.appendChild(hintEl);
       }
-      if (hintsRevealed >= config.hints!.length) {
+      if (hintsRevealed >= hints.length) {
         showHintButton.disabled = true;
         showHintButton.textContent = 'All hints shown';
       } else {
-        showHintButton.textContent = `Show Hint (${hintsRevealed}/${config.hints!.length})`;
+        showHintButton.textContent = `Show Hint (${hintsRevealed}/${hints.length})`;
       }
     }
   }
