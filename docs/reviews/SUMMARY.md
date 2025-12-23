@@ -64,7 +64,7 @@
 
 ### 1. Missing subject-spec.yaml
 Some subjects still need subject-spec.yaml files (required since 2025-12-20):
-- MATH302, MATH304
+- MATH304
 
 ### 2. Exercise Shortages
 - (None remaining - all subjects have 16+ exercises per topic)
@@ -81,7 +81,7 @@ Some subjects still need subject-spec.yaml files (required since 2025-12-20):
 (None remaining - all 38 subjects are production ready!)
 
 ### High Priority
-- Create subject-spec.yaml files for remaining subjects: MATH302, MATH304
+- Create subject-spec.yaml files for remaining subjects: MATH304
 
 ## Year-by-Year Summary
 
@@ -105,11 +105,22 @@ Some subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (2 subjects) |
+| MATH304 | 0.5 | Create subject-spec.yaml file |
 
-**Total Estimated:** ~1.0 hours for spec files.
+**Total Estimated:** ~0.5 hours for spec file.
 
 ## Recent Updates (2025-12-23)
+
+### MATH302: Ordinary Differential Equations - Added Subject Specification
+- **Status:** Already 10/10, now with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: ODE classification, first-order methods (separable, linear, exact), existence/uniqueness, second-order equations, higher-order equations, systems and eigenvalue methods, Laplace transforms, series solutions, applications
+  3. Specified assessment philosophy for computational ODE approach (Python/NumPy)
+  4. Defined exercise distribution (100% coding with tests) with 16 exercises per topic target
+  5. Set exam targets (26 midterm, 42+ final) matching existing content
+  6. Documented that projects are not required (exam-only math subject)
+- **Quality verified:** 67,039 total words (avg 1,368/subtopic), 112 exercises, 105 quiz questions, 94 exam questions
 
 ### MATH202: Probability and Statistics - Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml

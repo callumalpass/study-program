@@ -1,0 +1,280 @@
+# MATH302: Ordinary Differential Equations - Subject Specification
+# This spec guides content creation for a computational approach to ODEs.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: math302
+title: Ordinary Differential Equations
+category: math
+
+role:
+  level: intermediate
+  transformation: >
+    From "I can recognize differential equation types" to "I can solve ODEs
+    analytically and computationally, model real-world phenomena with differential
+    equations, and analyze solution behavior qualitatively."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Calculus I and II (derivatives, integrals, sequences, series)
+    - Basic linear algebra (matrices, eigenvalues, eigenvectors)
+    - Comfort with mathematical notation and manipulation
+    - Elementary programming experience (Python/NumPy helpful)
+
+  essential_concepts:
+    - Classification of differential equations (order, linearity, autonomy)
+    - First-order methods (separable, linear, exact, substitution)
+    - Existence and uniqueness theorems
+    - Second-order linear equations with constant coefficients
+    - Variation of parameters and undetermined coefficients
+    - Higher-order linear equations and operator methods
+    - Systems of differential equations and eigenvalue methods
+    - Phase portraits and qualitative analysis
+    - Laplace transforms and applications
+    - Series solutions and special functions
+    - Numerical methods (Euler, Runge-Kutta)
+    - Applications to physics, biology, and engineering
+
+  out_of_scope:
+    - Partial differential equations (separate course)
+    - Stochastic differential equations
+    - Control theory (specialized applications course)
+    - Measure-theoretic foundations
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Classifies ODEs by type and selects appropriate solution method
+    - Solves standard first-order and second-order ODEs correctly
+    - Applies eigenvalue methods to linear systems
+    - Uses Laplace transforms to solve initial value problems
+    - Implements numerical methods and interprets their accuracy
+    - Constructs phase portraits and analyzes equilibrium stability
+    - Models real-world problems as differential equations
+
+  common_struggles:
+    - Confusing particular and general solutions
+    - Algebraic errors in integrating factor and variation of parameters
+    - Eigenvalue computation mistakes for systems
+    - Misapplying initial conditions at wrong step
+    - Forgetting to check for extraneous solutions
+    - Partial fraction decomposition errors in inverse Laplace
+    - Phase portrait sketching without understanding equilibrium classification
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Each solution method introduced with worked example
+    - Show algebraic steps explicitly (don't skip)
+    - Include Python/NumPy implementations alongside analytical solutions
+    - Verify solutions by substitution back into original equation
+    - Connect theory to applications (physics, engineering, biology)
+
+  conventions:
+    - LaTeX for all mathematical expressions
+    - Use standard ODE notation (y', y'', dy/dx)
+    - Python 3 with NumPy/SciPy for computational examples
+    - Mermaid diagrams for phase portraits and classification trees
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    ODEs bridge pure mathematics and applications. Assessment combines analytical
+    solution skills with computational implementation. Students should demonstrate
+    both hand-solving ability (for conceptual understanding) and programming skills
+    (for practical application). Computational exercises provide immediate feedback
+    on correctness.
+
+  measures:
+    - Correct application of solution techniques
+    - Ability to set up equations from word problems
+    - Numerical implementation accuracy
+    - Qualitative analysis of solutions (stability, long-term behavior)
+    - Interpretation of results in application contexts
+
+  anti_patterns:
+    - Asking only for final answers without showing method
+    - Problems requiring only memorized formulas
+    - Overly complex algebra that obscures concepts
+    - Numerical exercises without analytical verification
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard passing threshold for intermediate mathematics. Computational
+    exercises allow immediate verification, so 70% is achievable. Quiz thresholds
+    slightly lower to account for conceptual questions that may have multiple
+    valid interpretations.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises combine analytical understanding with computational verification.
+    Python implementations test both correctness and understanding of the
+    solution structure. NumPy/SciPy provides real-world tools students will
+    use in scientific computing careers.
+
+  types:
+    coding_with_tests: "100%"
+    coding_ai_evaluated: "0%"
+    written: "0%"
+    justification: >
+      All exercises are Python implementations with automated testing. This
+      approach provides immediate feedback, verifies numerical correctness,
+      and builds computational skills alongside analytical understanding.
+      The solution code demonstrates the analytical solution.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Standard base count. ODEs require practice with variations of each
+      method (different coefficient types, initial conditions, etc.).
+      Computational exercises can be completed efficiently with feedback.
+
+  difficulty_distribution:
+    1: 3
+    2: 3
+    3: 4
+    4: 3
+    5: 3
+    justification: >
+      Standard distribution. Difficulty 1-2 for direct method application,
+      difficulty 3-4 for combining techniques or handling special cases,
+      difficulty 5 for modeling problems or challenging analytical work.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding and quick recall of methods without
+    extensive computation. They catch students who can copy code but don't
+    understand why it works.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes allow progression: Quiz A (definitions,
+      classification), Quiz B (method identification, short solutions),
+      Quiz C (edge cases, theoretical understanding).
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "20%"
+    fill_blank: "20%"
+    code_output: "10%"
+    coding: "0%"
+    written: "0%"
+    justification: >
+      Heavy on multiple choice for method selection and conceptual questions.
+      True/false for common misconceptions. Fill-blank for formulas and
+      definitions. Some code output for tracing numerical methods.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test understanding without computational aids. Mix of short
+    problems (classify and solve) with longer multi-step problems.
+    Students should spend 3-4 minutes on identification questions,
+    8-10 minutes on standard solution problems.
+
+  midterm:
+    questions:
+      minimum: 22
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      8-10 classification/short-answer questions (2-3 min each),
+      8-10 solution problems (5-7 min each), 4-6 application problems
+      (7-10 min each). Focus on first-order methods and second-order
+      constant coefficient equations.
+    coverage: "Topics 1-4: First-order, second-order, higher-order, systems"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 50
+    duration_minutes: 120
+    format: >
+      Comprehensive with emphasis on Topics 5-7 (Laplace transforms, series
+      solutions, applications). Include at least one problem from each topic.
+      Mix of short identification and full solution problems.
+    coverage: "Comprehensive: all 7 topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    Mathematics subjects traditionally assess via problem sets and exams.
+    The computational exercises effectively serve as ongoing mini-projects
+    building a toolkit for solving ODEs. No separate large projects needed.
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Solution uses SymPy when analytical method was required
+  - Test case expects specific float precision not mentioned in problem
+  - Exercise requires technique not yet covered in curriculum
+  - Phase portrait exercise but equilibrium classification not taught
+  - Numerical method exercise with insufficient stability discussion
+  - Application problem with unrealistic parameter values
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  MATH302 takes a computational approach to ODEs, reflecting modern practice
+  in applied mathematics and engineering. Students should be comfortable with
+  both pencil-and-paper solutions (for understanding) and computer implementation
+  (for practical application). The Python/NumPy exercises verify analytical work
+  and build skills for scientific computing. Phase portraits and stability
+  analysis prepare students for dynamical systems in upper-division courses.
