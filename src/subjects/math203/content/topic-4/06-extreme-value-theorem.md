@@ -133,6 +133,29 @@ Every absolute extremum on an open interval is also a local extremum. But on a c
 
 Together, these theorems show that continuous functions on closed intervals are "well-behaved."
 
+## Common Mistakes
+
+**Mistake 1: Forgetting to check endpoints**
+
+Even if a function has no critical points in the interior, the absolute extrema still exist—they'll be at the endpoints. Always evaluate at endpoints.
+
+**Mistake 2: Assuming the max/min is at a critical point**
+
+Just because $f'(c) = 0$ doesn't mean $c$ gives an extremum. The absolute max or min might be at an endpoint, especially if the function is monotonic.
+
+**Mistake 3: Applying EVT to open or unbounded intervals**
+
+EVT only applies to closed, bounded intervals $[a, b]$. For open intervals or unbounded domains, absolute extrema may not exist.
+
+## Why EVT Matters for Optimization
+
+Many real-world optimization problems have natural constraints that define a closed interval:
+- Production can't be negative or exceed capacity: $[0, M]$
+- Time is bounded: $[0, T]$
+- Physical dimensions have limits: $[a, b]$
+
+EVT guarantees that the optimal solution exists, which justifies using the closed interval method to find it.
+
 ## Summary
 
 - EVT: Continuous $f$ on $[a,b]$ has absolute max and min

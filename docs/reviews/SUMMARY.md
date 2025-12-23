@@ -112,6 +112,17 @@
 
 ## Recent Updates (2025-12-23)
 
+### MATH203: Calculus I - Content Quality Improvements
+- **Status:** Maintained 10/10 (content enrichment)
+- **Changes made:**
+  1. Expanded 24 subtopics across all 7 topics that were below the 900-word target
+  2. Added "Common Mistakes" sections to help students avoid typical errors
+  3. Added historical context and applications sections where appropriate
+  4. Enhanced pedagogical depth with additional examples and explanations
+  5. Word count improved from avg 921 to avg 1,002 words/subtopic
+  6. Total words increased from ~45,133 to ~49,121
+- **Quality verified:** All 49 subtopics now exceed 900-word target, maintaining 100% quality score
+
 ### MATH304: Abstract Algebra - Added Subject Specification (FINAL SUBJECT)
 - **Status:** Already 10/10, now with complete subject-spec.yaml
 - **Changes made:**

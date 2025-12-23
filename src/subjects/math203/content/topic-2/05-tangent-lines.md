@@ -34,6 +34,19 @@ $$y = f(a) + f'(a)(x - a)$$
 $$y - 9 = 6(x - 3)$$
 $$y = 6x - 9$$
 
+```plot
+{
+  "xAxis": { "domain": [0, 5], "label": "x" },
+  "yAxis": { "domain": [-5, 25], "label": "y" },
+  "data": [
+    { "fn": "x^2", "color": "#8b5cf6" },
+    { "fn": "6*x - 9", "color": "#22c55e" }
+  ]
+}
+```
+
+The purple curve is $f(x) = x^2$ and the green line is the tangent $y = 6x - 9$ at the point $(3, 9)$.
+
 **Example 2:** Find the tangent line to $f(x) = \sqrt{x}$ at $x = 4$.
 
 Point: $(4, 2)$
@@ -72,6 +85,19 @@ $f'(x) = \frac{1}{2\sqrt{x}}$, so $f'(4) = \frac{1}{4}$
 
 Linearization: $L(x) = 2 + \frac{1}{4}(x - 4)$
 
+```plot
+{
+  "xAxis": { "domain": [0, 9], "label": "x" },
+  "yAxis": { "domain": [0, 4], "label": "y" },
+  "data": [
+    { "fn": "sqrt(x)", "color": "#8b5cf6" },
+    { "fn": "2 + 0.25*(x - 4)", "color": "#22c55e" }
+  ]
+}
+```
+
+The purple curve is $f(x) = \sqrt{x}$ and the green line is the linearization $L(x) = 2 + \frac{1}{4}(x-4)$. Notice how close they are near $x = 4$.
+
 Approximation: $\sqrt{4.1} \approx L(4.1) = 2 + \frac{1}{4}(0.1) = 2.025$
 
 Actual value: $\sqrt{4.1} \approx 2.0248...$
@@ -86,6 +112,19 @@ $f(0) = 0$
 $f'(x) = \cos x$, so $f'(0) = 1$
 
 Linearization: $L(x) = 0 + 1(x - 0) = x$
+
+```plot
+{
+  "xAxis": { "domain": [-1, 1], "label": "x" },
+  "yAxis": { "domain": [-1, 1], "label": "y" },
+  "data": [
+    { "fn": "sin(x)", "color": "#8b5cf6" },
+    { "fn": "x", "color": "#22c55e" }
+  ]
+}
+```
+
+Near the origin, $\sin(x)$ (purple) and its linearization $y = x$ (green) are nearly indistinguishable.
 
 Approximation: $\sin(0.1) \approx 0.1$
 

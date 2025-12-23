@@ -122,6 +122,27 @@ $$\frac{\sin \theta_1}{v_1} = \frac{\sin \theta_2}{v_2}$$
 
 This leads to the **law of reflection:** angle of incidence = angle of reflection.
 
+## Common Mistakes
+
+**Mistake 1: Forgetting to minimize $D^2$ instead of $D$**
+
+Working with distance directly leads to messy square roots in the derivative. Always work with $D^2$ when possible—the minimum occurs at the same point.
+
+**Mistake 2: Incorrect parameterization**
+
+Make sure the point on the curve is correctly expressed. For $y = x^2$, a general point is $(x, x^2)$, not $(x, y)$.
+
+**Mistake 3: Not verifying the answer**
+
+After finding a critical point, verify it's a minimum (not maximum) using the second derivative test, and confirm the answer is physically reasonable.
+
+## When to Use Different Methods
+
+- **Point to line:** Use the distance formula directly, or the perpendicular distance formula
+- **Point to curve:** Parameterize and minimize $D^2$
+- **Travel problems with different speeds:** Minimize time using distance/speed
+- **Reflection problems:** Use the reflection principle to convert to a straight-line problem
+
 ## Summary
 
 - Minimize $D^2$ instead of $D$ to avoid square roots

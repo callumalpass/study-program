@@ -126,6 +126,35 @@ $y' = \frac{x^2\sqrt{x+1}}{(x-2)^3}\left(\frac{2}{x} + \frac{1}{2(x+1)} - \frac{
 | $e^{g(x)}$ | $e^{g(x)} \cdot g'(x)$ |
 | $\ln(g(x))$ | $\frac{g'(x)}{g(x)}$ |
 
+## Common Mistakes
+
+**Mistake 1: Confusing exponential and power rules**
+
+Wrong: $\frac{d}{dx}[2^x] = x \cdot 2^{x-1}$ (this would be the power rule)
+Correct: $\frac{d}{dx}[2^x] = 2^x \ln 2$ (exponential rule)
+
+Remember: Power rule is for $x^n$ (variable base, constant exponent). Exponential rule is for $a^x$ (constant base, variable exponent).
+
+**Mistake 2: Forgetting the chain rule inside logarithms**
+
+Wrong: $\frac{d}{dx}[\ln(x^2 + 1)] = \frac{1}{x^2 + 1}$
+Correct: $\frac{d}{dx}[\ln(x^2 + 1)] = \frac{2x}{x^2 + 1}$
+
+**Mistake 3: Domain issues with logarithms**
+
+$\ln x$ is only defined for $x > 0$. When differentiating $\ln|x|$:
+$$\frac{d}{dx}[\ln|x|] = \frac{1}{x}$$ (valid for $x \neq 0$)
+
+## Applications
+
+Exponential and logarithmic derivatives model:
+- **Radioactive decay:** $N(t) = N_0 e^{-\lambda t}$
+- **Population growth:** $P(t) = P_0 e^{kt}$
+- **Compound interest:** $A(t) = P e^{rt}$
+- **pH and sound levels:** Logarithmic scales and their rates of change
+
+The formula $\frac{d}{dx}[\ln u] = \frac{u'}{u}$ is especially important—it's the basis for "logarithmic differentiation," which simplifies many complex derivatives.
+
 ## Summary
 
 - $e^x$ is its own derivative

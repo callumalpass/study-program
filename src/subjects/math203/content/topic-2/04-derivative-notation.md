@@ -128,6 +128,34 @@ $$\frac{d}{dx}[\sin x] = \cos x$$
 
 $$\text{If } y = f(g(x)), \text{ then } y' = f'(g(x)) \cdot g'(x)$$
 
+## Historical Development
+
+The variety of notations reflects the independent development of calculus by different mathematicians:
+
+- **Leibniz (1684):** Introduced $\frac{dy}{dx}$, which emphasized the ratio-like nature of derivatives and worked well with his integral notation $\int$.
+- **Newton (c. 1666):** Used dot notation (fluxions) for time derivatives, which remains standard in physics.
+- **Lagrange (1797):** Introduced prime notation $f'$, which is cleaner and function-focused.
+- **Euler (1755):** Contributed operator notation $D$, treating differentiation algebraically.
+
+Each notation emerged from a different perspective on what a derivative represents, and each has strengths in different contexts.
+
+## Common Mistakes with Notation
+
+**Mistake 1: Treating $\frac{dy}{dx}$ as always separable**
+
+While $\frac{dy}{dx}$ often behaves like a fraction (especially in integration by substitution), it's technically a single symbol. In most contexts you can "multiply" or "divide" by $dx$, but this requires justification in rigorous mathematics.
+
+**Mistake 2: Forgetting the chain rule in Leibniz notation**
+
+When differentiating $y = f(u)$ where $u = g(x)$, write:
+$$\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}$$
+
+Not just $\frac{dy}{du}$, which would be incorrect for finding how $y$ changes with respect to $x$.
+
+**Mistake 3: Confusing $\frac{d^2y}{dx^2}$ with $\left(\frac{dy}{dx}\right)^2$**
+
+The second derivative $\frac{d^2y}{dx^2}$ means differentiating twice. The expression $\left(\frac{dy}{dx}\right)^2$ means squaring the first derivative. These are very different!
+
 ## Independent and Dependent Variables
 
 The notation makes clear which is which:

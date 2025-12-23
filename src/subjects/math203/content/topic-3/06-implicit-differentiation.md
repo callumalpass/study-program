@@ -144,6 +144,32 @@ $$= -\frac{\frac{y^2 + x^2}{y}}{y^2} = -\frac{y^2 + x^2}{y^3} = -\frac{25}{y^3}$
 
 3. **Algebra errors when solving for $\frac{dy}{dx}$**
 
+## Why Implicit Differentiation Works
+
+The key idea is that even though $y$ appears as a variable, it's secretly a function of $x$. Whenever we differentiate an expression involving $y$, we're really applying the chain rule:
+
+$$\frac{d}{dx}[f(y)] = f'(y) \cdot \frac{dy}{dx}$$
+
+This is because $y = y(x)$, so $f(y)$ is a composition of functions.
+
+## Applications
+
+Implicit differentiation is essential for:
+
+- **Conic sections:** Ellipses $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$, hyperbolas, parabolas
+- **Algebraic curves:** Like the folium of Descartes $x^3 + y^3 = 3xy$
+- **Level curves:** In multivariable calculus, $F(x, y) = c$
+- **Related rates problems:** Where multiple quantities change with respect to time
+- **Proving the power rule for rational exponents**
+
+## Connection to Related Rates
+
+Implicit differentiation is closely related to "related rates" problems. If both $x$ and $y$ depend on time $t$, differentiating $x^2 + y^2 = 25$ with respect to $t$ gives:
+
+$$2x\frac{dx}{dt} + 2y\frac{dy}{dt} = 0$$
+
+This is the same technique, just with $t$ as the independent variable instead of $x$.
+
 ## Summary
 
 - Use implicit differentiation when $y$ isn't isolated

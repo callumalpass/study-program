@@ -124,6 +124,24 @@ $f$ has a minimum at $x = 0$ where $f(0) = 0$.
 
 For $x \neq 0$: $f(x) > f(0) = 0$, so $e^x - 1 - x > 0$, meaning $e^x > 1 + x$.
 
+## Common Mistakes
+
+**Mistake 1: Including critical points in the wrong intervals**
+
+When stating intervals of increase/decrease, be careful about whether to include endpoints. At a critical point where $f'(c) = 0$, the function is neither increasing nor decreasing at that exact point.
+
+**Mistake 2: Ignoring points where $f'$ is undefined**
+
+If $f'$ is undefined at a point in the domain (like $x = 0$ for $f(x) = |x|$), that point is a critical point and should divide your intervals.
+
+**Mistake 3: Confusing local and global behavior**
+
+A function can be increasing on an interval but still have a smaller value later due to a decrease on another interval. "Increasing on $[1, 3]$" only means $f(1) < f(2) < f(3)$, not that these are the largest values overall.
+
+## Connection to Antiderivatives
+
+If you know $f'(x) > 0$ everywhere, then $f$ is increasing. This is one direction of the relationship between a function and its derivative. The reverse—reconstructing $f$ from $f'$—is the subject of integration, coming in Calculus II.
+
 ## Summary
 
 - $f'(x) > 0$ → $f$ is increasing

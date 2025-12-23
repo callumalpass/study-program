@@ -142,6 +142,35 @@ Method 1: Product rule gives $\cos^2 x - \sin^2 x = \cos(2x)$
 
 Method 2: Rewrite first as $\frac{1}{2}\sin(2x)$, then differentiate: $\frac{1}{2} \cdot 2\cos(2x) = \cos(2x)$ ✓
 
+## Common Mistakes
+
+**Mistake 1: Forgetting the negative sign for cosine**
+
+Wrong: $\frac{d}{dx}[\cos x] = \sin x$
+Correct: $\frac{d}{dx}[\cos x] = -\sin x$
+
+**Mistake 2: Getting powers of trig functions wrong**
+
+Wrong: $\frac{d}{dx}[\sin^2 x] = 2\sin x$
+Correct: $\frac{d}{dx}[\sin^2 x] = 2\sin x \cdot \cos x$
+
+The chain rule requires multiplying by the derivative of the inside ($\cos x$).
+
+**Mistake 3: Confusing $\sin^{-1} x$ with $(\sin x)^{-1}$**
+
+$\sin^{-1} x$ (arcsin) is the inverse function, covered in later courses.
+$(\sin x)^{-1} = \csc x$ is the reciprocal.
+
+## Applications in Physics
+
+Trigonometric derivatives are essential for analyzing:
+- **Simple harmonic motion:** Position $x(t) = A\sin(\omega t)$ gives velocity $v = A\omega\cos(\omega t)$
+- **Wave motion:** Phase and amplitude relationships
+- **Alternating current:** Voltage and current derivatives in AC circuits
+- **Pendulums:** Small-angle oscillations
+
+The cyclic nature of trig derivatives (returning to the original after 4 derivatives) reflects the periodic nature of oscillatory motion.
+
 ## Summary
 
 - Know the six basic trig derivatives

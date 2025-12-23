@@ -169,6 +169,27 @@ $\tanh x = \frac{\sinh x}{\cosh x}$: odd, horizontal asymptotes at $y = \pm 1$
 3. **Ignoring periodicity** when applicable
 4. **Not checking both $x \to +\infty$ and $x \to -\infty$**
 
+## Applications
+
+Special functions appear throughout science and engineering:
+
+- **Gaussian (bell curve):** Probability distributions, error analysis
+- **Logistic function:** Population growth, machine learning activation functions
+- **Damped oscillations:** Springs with friction, electrical circuits
+- **Hyperbolic functions:** Hanging cables (catenaries), relativistic physics
+
+Understanding how to sketch these functions helps in interpreting models and their behavior.
+
+## Connection to Later Courses
+
+In Calculus II and beyond, you'll encounter:
+- Integration of special functions
+- Taylor series approximations
+- Fourier series for periodic functions
+- Partial differential equations with exponential and trig solutions
+
+The sketching skills developed here provide essential geometric intuition for these advanced topics.
+
 ## Summary
 
 - Exponential functions: domain all reals, range $(0, \infty)$, horizontal asymptote

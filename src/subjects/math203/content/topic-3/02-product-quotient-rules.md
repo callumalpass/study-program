@@ -123,6 +123,37 @@ $$(fgh)' = f'gh + fg'h + fgh'$$
 $$= 2x \sin x \cos x + x^2 \cos x \cos x + x^2 \sin x (-\sin x)$$
 $$= 2x \sin x \cos x + x^2 \cos^2 x - x^2 \sin^2 x$$
 
+## Common Mistakes
+
+**Mistake 1: Thinking $(fg)' = f'g'$**
+
+This is perhaps the most common calculus error. Remember: $(fg)' = f'g + fg'$, not $f'g'$.
+
+**Mistake 2: Getting the quotient rule subtraction backwards**
+
+The quotient rule is $\frac{f'g - fg'}{g^2}$, NOT $\frac{fg' - f'g}{g^2}$. Think: "low d-high minus high d-low" (denominator times derivative of numerator, minus numerator times derivative of denominator).
+
+**Mistake 3: Forgetting to square the denominator**
+
+The denominator in the quotient rule is $[g(x)]^2$, not $g(x)$.
+
+**Mistake 4: Using quotient rule when unnecessary**
+
+Before applying the quotient rule, check if you can simplify the expression:
+- $\frac{x^5}{x^2} = x^3$ is easier than using the quotient rule
+- $\frac{1}{x^3} = x^{-3}$ can use the power rule directly
+
+## Applications
+
+The product and quotient rules appear constantly in applications:
+
+- **Physics:** Momentum $p = mv$ where both mass and velocity may change (rocket propulsion)
+- **Economics:** Revenue = Price × Quantity, where both may depend on time or other variables
+- **Biology:** Population models involving products of growth and decay factors
+- **Engineering:** Power = Voltage × Current, where both may vary
+
+These rules, combined with the chain rule (next section), allow you to differentiate virtually any combination of functions you'll encounter.
+
 ## Summary
 
 - **Product Rule:** $(fg)' = f'g + fg'$

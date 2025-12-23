@@ -115,6 +115,45 @@ Differentiate: $h'(x) = \frac{5}{2}x^{3/2}$
    Wrong: $\frac{d}{dx}\left[\frac{1}{x}\right] = \frac{1}{1} = 1$
    Correct: $\frac{d}{dx}[x^{-1}] = -x^{-2} = -\frac{1}{x^2}$
 
+4. **Confusing the power rule with exponential differentiation:**
+   Wrong: $\frac{d}{dx}[2^x] = x \cdot 2^{x-1}$
+   Correct: $\frac{d}{dx}[2^x] = 2^x \ln 2$ (exponential rule, covered later)
+
+The power rule $\frac{d}{dx}[x^n] = nx^{n-1}$ applies when the base is the variable and the exponent is a constant. When the base is constant and the exponent is the variable, you need the exponential rule.
+
+## Proof of the Power Rule (for positive integers)
+
+While we won't prove every case here, the power rule for positive integers can be proven using the limit definition and the binomial theorem:
+
+For $f(x) = x^n$:
+$$f'(x) = \lim_{h \to 0} \frac{(x+h)^n - x^n}{h}$$
+
+Using the binomial theorem: $(x+h)^n = x^n + nx^{n-1}h + \binom{n}{2}x^{n-2}h^2 + \cdots + h^n$
+
+Substituting:
+$$f'(x) = \lim_{h \to 0} \frac{nx^{n-1}h + \binom{n}{2}x^{n-2}h^2 + \cdots + h^n}{h}$$
+
+$$= \lim_{h \to 0} \left(nx^{n-1} + \binom{n}{2}x^{n-2}h + \cdots + h^{n-1}\right) = nx^{n-1}$$
+
+All terms except the first contain $h$ and vanish in the limit. The proof extends to negative integers via the quotient rule and to rational exponents via implicit differentiation.
+
+## Why These Rules Work Together
+
+The linearity of differentiation (sum rule and constant multiple rule) reflects a fundamental property: differentiation is a **linear operator**. This means:
+
+$$\frac{d}{dx}[af(x) + bg(x)] = a\frac{d}{dx}[f(x)] + b\frac{d}{dx}[g(x)]$$
+
+This property makes differentiating polynomials straightforward—just differentiate term by term and combine.
+
+## Connection to Physics
+
+These basic rules have immediate physical meaning. If position is a polynomial $s(t) = at^2 + bt + c$:
+- The constant $c$ represents initial position (derivative: 0—position doesn't change velocity)
+- The linear term $bt$ represents motion at constant velocity $b$
+- The quadratic term $at^2$ represents constant acceleration $2a$
+
+Understanding these rules is the first step toward modeling physical systems with calculus.
+
 ## Practice Pattern Recognition
 
 | Function | Rewritten | Derivative |

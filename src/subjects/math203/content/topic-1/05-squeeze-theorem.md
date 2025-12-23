@@ -137,6 +137,38 @@ Consider the Squeeze Theorem when:
 - $0 \leq |\sin(\text{anything})| \leq 1$
 - For integers: $x - 1 < \lfloor x \rfloor \leq x$
 
+## Common Mistakes to Avoid
+
+**Mistake 1: Forgetting the "near $a$" requirement**
+
+The inequalities $g(x) \leq f(x) \leq h(x)$ only need to hold in some interval around $a$, not everywhere. A squeeze that fails at distant points is still valid if it works near the limit point.
+
+**Mistake 2: Multiplying by a quantity that changes sign**
+
+When multiplying an inequality by a variable, check its sign! If $x$ can be negative, you may need to reverse the inequality or use absolute values.
+
+**Mistake 3: Using bounds that don't converge to the same limit**
+
+The squeeze only works when $\lim g(x) = \lim h(x)$. If your bounds approach different values, you cannot conclude anything about $f(x)$.
+
+**Mistake 4: Squeezing to the wrong limit**
+
+If both bounds approach $L$, the squeezed function approaches $L$ as well—not some other value. Check your bound computations carefully.
+
+## Applications Beyond Basic Limits
+
+The Squeeze Theorem extends to sequences and series. If $\{a_n\}$, $\{b_n\}$, $\{c_n\}$ are sequences with $a_n \leq b_n \leq c_n$ and $\lim a_n = \lim c_n = L$, then $\lim b_n = L$.
+
+**Example:** Show $\lim_{n \to \infty} \frac{n!}{n^n} = 0$.
+
+For $n \geq 1$:
+$$\frac{n!}{n^n} = \frac{1 \cdot 2 \cdot 3 \cdots n}{n \cdot n \cdot n \cdots n} = \frac{1}{n} \cdot \frac{2}{n} \cdot \frac{3}{n} \cdots \frac{n}{n}$$
+
+Each factor $\frac{k}{n} \leq 1$, and the first factor is $\frac{1}{n}$, so:
+$$0 < \frac{n!}{n^n} \leq \frac{1}{n}$$
+
+Since $\lim_{n \to \infty} \frac{1}{n} = 0$, by the Squeeze Theorem, $\lim_{n \to \infty} \frac{n!}{n^n} = 0$.
+
 ## Summary
 
 - The Squeeze Theorem traps a function between two bounds approaching the same limit

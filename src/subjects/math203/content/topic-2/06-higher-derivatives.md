@@ -146,6 +146,28 @@ Higher derivatives appear in:
 - **Differential equations:** Many involve second or higher derivatives
 - **Curve analysis:** Concavity, inflection points, rate of curvature change
 
+## Common Mistakes with Higher Derivatives
+
+**Mistake 1: Losing track of sign patterns**
+
+For trigonometric functions, the signs cycle: $\sin \to \cos \to -\sin \to -\cos \to \sin$. It's easy to lose track—write out a few terms systematically.
+
+**Mistake 2: Applying the second derivative test incorrectly**
+
+The second derivative test only applies at critical points where $f'(c) = 0$. If $f'(c) \neq 0$, there's no local extremum regardless of $f''(c)$.
+
+**Mistake 3: Confusing concavity with increasing/decreasing**
+
+A function can be concave up while decreasing (like the left side of a parabola $y = x^2$), and concave down while increasing. Concavity describes the curvature, not the direction of the function.
+
+## Preview: Taylor Series
+
+Higher derivatives are essential for approximating functions with polynomials. The Taylor series of $f$ centered at $a$ is:
+
+$$f(x) = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \frac{f'''(a)}{3!}(x-a)^3 + \cdots$$
+
+Each derivative contributes one term. This powerful technique is explored in Calculus II.
+
 ## Summary
 
 - The $n$-th derivative is obtained by differentiating $n$ times

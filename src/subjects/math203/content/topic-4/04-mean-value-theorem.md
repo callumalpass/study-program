@@ -114,6 +114,24 @@ Let $f(x) = x - \sin x$. Then $f(0) = 0$ and $f'(x) = 1 - \cos x \geq 0$.
 
 By MVT, for $x > 0$: $f(x) - f(0) = f'(c) \cdot x \geq 0$, so $f(x) \geq 0$, meaning $x \geq \sin x$.
 
+## Common Mistakes
+
+**Mistake 1: Forgetting to check hypotheses**
+
+Always verify that $f$ is continuous on the closed interval and differentiable on the open interval before applying MVT. The theorem fails if these conditions aren't met.
+
+**Mistake 2: Expecting a unique $c$**
+
+MVT guarantees *at least one* $c$, but there may be multiple values of $c$ that satisfy the equation. Don't stop after finding one.
+
+**Mistake 3: Confusing MVT with IVT**
+
+The Mean Value Theorem is about derivatives and rates of change. The Intermediate Value Theorem is about the function itself achieving intermediate values. They're related but distinct.
+
+## Historical Note
+
+The Mean Value Theorem was first stated rigorously by Augustin-Louis Cauchy in 1823, though special cases were known earlier. It's a cornerstone of analysis and is used to prove many other important results, including L'Hôpital's Rule and the Fundamental Theorem of Calculus.
+
 ## Summary
 
 - MVT: If $f$ is continuous on $[a,b]$ and differentiable on $(a,b)$, then $f'(c) = \frac{f(b)-f(a)}{b-a}$ for some $c \in (a,b)$

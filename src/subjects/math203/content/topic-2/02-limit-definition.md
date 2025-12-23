@@ -101,7 +101,26 @@ When using the definition, the goal is to:
 
 ## When the Derivative Doesn't Exist
 
-The limit might not exist at certain points. We'll explore this in the next section on differentiability.
+The limit might not exist at certain points. Common situations include:
+
+1. **Corner or cusp:** The function has a sharp corner (like $|x|$ at $x = 0$), where the left and right limits of the difference quotient are different.
+
+2. **Vertical tangent:** The slope becomes infinite, as with $f(x) = x^{1/3}$ at $x = 0$.
+
+3. **Discontinuity:** If $f$ is not continuous at $a$, the derivative cannot exist there.
+
+We'll explore differentiability in detail in the next section.
+
+## Why the Limit Definition Matters
+
+While shortcut rules (power rule, product rule, etc.) make computation easier, the limit definition is essential for:
+
+- **Proving the shortcut rules themselves**
+- **Understanding what a derivative actually means**
+- **Handling functions that don't fit standard patterns**
+- **Theoretical work in analysis**
+
+The limit definition is also the foundation for generalizations like directional derivatives and gradients in multivariable calculus.
 
 ## Derivative at a Specific Point
 

@@ -144,6 +144,28 @@ Long division: $\frac{x^2 + 1}{x - 1} = x + 1 + \frac{2}{x - 1}$
 
 As $x \to \pm\infty$, $\frac{2}{x-1} \to 0$, so the graph approaches the line $y = x + 1$.
 
+## Common Mistakes to Avoid
+
+**Mistake 1: Ignoring the sign when $x \to -\infty$**
+
+Remember that $\sqrt{x^2} = |x|$, not $x$. When $x$ is negative, $\sqrt{x^2} = -x$. This distinction is crucial for limits involving square roots.
+
+**Mistake 2: Assuming all rational functions have horizontal asymptotes**
+
+Only rational functions where the degree of the numerator is less than or equal to the degree of the denominator have horizontal asymptotes. If the numerator has higher degree, the function grows without bound.
+
+**Mistake 3: Confusing $\lim_{x \to \infty} f(x) = \infty$ with "limit does not exist"**
+
+When we write $\lim_{x \to \infty} f(x) = \infty$, we are describing specific behavior: the function grows without bound. This is different from a limit that oscillates or behaves chaotically. The notation is precise and meaningful, even though $\infty$ is not a real number.
+
+**Mistake 4: Forgetting to check both directions**
+
+A function might behave differently as $x \to \infty$ vs $x \to -\infty$. Always check both directions separately before concluding anything about the end behavior.
+
+## Connections to Curve Sketching
+
+Understanding limits at infinity is essential for accurately sketching graphs. The horizontal and oblique asymptotes tell us where the graph "levels off" or what line it approaches at the edges of the coordinate plane. Combined with vertical asymptotes (where the denominator equals zero), these asymptotes form a scaffold that guides the overall shape of the curve.
+
 ## Summary
 
 - Limits at infinity describe end behavior

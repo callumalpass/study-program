@@ -18,6 +18,14 @@ This notation reads as "the limit of $f(x)$ as $x$ approaches $a$ equals $L$."
 
 **Key insight:** The limit describes behavior *near* a point, not necessarily *at* the point. The function doesn't need to be defined at $a$ for the limit to exist, and even if $f(a)$ exists, it might differ from the limit.
 
+## Historical Context
+
+The concept of limits emerged from centuries of mathematical struggle. Ancient Greek mathematicians like Archimedes used "method of exhaustion" to calculate areas, essentially computing limits without the formal notation. However, the foundations remained shaky until the 19th century.
+
+Isaac Newton and Gottfried Leibniz independently invented calculus in the late 1600s, but both relied on vague notions of "infinitesimals"—quantities smaller than any positive number yet not zero. Critics like Bishop Berkeley attacked these foundations as logically unsound, famously calling infinitesimals "ghosts of departed quantities."
+
+It took nearly two centuries for mathematicians to resolve these issues. Augustin-Louis Cauchy in the 1820s and Karl Weierstrass in the 1870s developed the rigorous $\varepsilon$-$\delta$ definition of limits that we use today. This precise formulation finally placed calculus on solid logical ground.
+
 ## Why Limits Matter
 
 Consider trying to find the velocity of a falling object at exactly $t = 2$ seconds. If position is given by $s(t) = 16t^2$ feet, we can calculate average velocity over an interval:
@@ -35,6 +43,17 @@ As $h$ gets smaller, the average velocity approaches 64 ft/s. But we can't set $
 $$\lim_{h \to 0} \frac{s(2 + h) - s(2)}{h} = 64$$
 
 This is the instantaneous velocity at $t = 2$.
+
+## The Fundamental Role in Calculus
+
+Limits are not just a preliminary topic—they are the conceptual glue holding all of calculus together. Every major concept in calculus is defined using limits:
+
+1. **Derivatives**: The derivative $f'(x)$ is defined as $\lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$
+2. **Integrals**: The definite integral is defined as a limit of Riemann sums
+3. **Continuity**: A function is continuous at $a$ if $\lim_{x \to a} f(x) = f(a)$
+4. **Infinite Series**: The sum of a series is defined as the limit of its partial sums
+
+Without a solid understanding of limits, the rest of calculus remains mysterious. This is why we begin here.
 
 ## Limit Notation and Interpretation
 

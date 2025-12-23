@@ -104,6 +104,32 @@ $$= \lim_{h \to 0} \frac{9 + 6h + h^2 - 9}{h} = \lim_{h \to 0} \frac{6h + h^2}{h
 
 The tangent line to $y = x^2$ at $x = 3$ has slope 6.
 
+## Positive, Negative, and Zero Rates of Change
+
+The sign of the derivative provides important qualitative information:
+
+- **Positive derivative ($f'(x) > 0$):** The function is increasing at that point. As $x$ increases, $y$ increases too.
+- **Negative derivative ($f'(x) < 0$):** The function is decreasing. As $x$ increases, $y$ decreases.
+- **Zero derivative ($f'(x) = 0$):** The function has a horizontal tangent. This often indicates a local maximum, minimum, or inflection point.
+
+**Example:** For $f(x) = x^2$:
+- At $x = -2$: $f'(-2) = -4 < 0$ (decreasing)
+- At $x = 0$: $f'(0) = 0$ (horizontal tangent, minimum)
+- At $x = 2$: $f'(2) = 4 > 0$ (increasing)
+
+## Units of the Derivative
+
+The units of $\frac{dy}{dx}$ are the units of $y$ divided by the units of $x$. This makes physical interpretation clearer:
+
+| $y$ | $x$ | $\frac{dy}{dx}$ |
+|-----|-----|-----------------|
+| meters | seconds | m/s (velocity) |
+| dollars | units produced | $/unit (marginal cost) |
+| bacteria | hours | bacteria/hour (growth rate) |
+| temperature (°C) | position (m) | °C/m (temperature gradient) |
+
+Understanding units helps verify that your derivative makes sense and aids in interpreting results in applications.
+
 ## Summary
 
 - Average rate of change = slope of secant line = $\frac{\Delta y}{\Delta x}$
@@ -111,3 +137,4 @@ The tangent line to $y = x^2$ at $x = 3$ has slope 6.
 - The difference quotient $\frac{f(a+h) - f(a)}{h}$ connects average and instantaneous rates
 - Derivatives appear throughout science as rates of change
 - The derivative at a point is defined as a limit of difference quotients
+- The sign of the derivative indicates whether the function is increasing or decreasing

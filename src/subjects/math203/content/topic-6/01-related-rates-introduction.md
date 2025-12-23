@@ -121,6 +121,33 @@ $$\frac{dV}{dt} = \pi \left(2rh\frac{dr}{dt} + r^2\frac{dh}{dt}\right)$$
 
 This requires the product rule since both $r$ and $h$ depend on $t$.
 
+## Common Mistakes
+
+**Mistake 1: Substituting values before differentiating**
+
+If you plug in $r = 10$ before differentiating, you'll treat it as a constant and get $\frac{dA}{dt} = 0$. Always differentiate first, then substitute.
+
+**Mistake 2: Forgetting that all variables depend on time**
+
+Every variable that changes needs $\frac{d}{dt}$ applied to it. Constants (like fixed dimensions or $\pi$) don't get differentiated.
+
+**Mistake 3: Wrong sign for the rate**
+
+If a quantity is decreasing, its rate is negative. If a tank is draining, $\frac{dV}{dt} < 0$. Read the problem carefully.
+
+**Mistake 4: Using the wrong moment in time**
+
+The problem asks about a specific instant. Use the values at that instant, not at some other time.
+
+## Why Related Rates Matter
+
+Related rates problems model real situations where multiple quantities change together:
+- How fast is a shadow lengthening as you walk?
+- How fast must a camera pan to track a moving object?
+- How does changing one dimension affect volume?
+
+These skills prepare you for more advanced topics like differential equations and multivariable calculus.
+
 ## Summary
 
 - Related rates problems connect rates of change through equations

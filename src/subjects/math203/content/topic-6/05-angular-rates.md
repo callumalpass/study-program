@@ -157,6 +157,20 @@ $$\frac{d\theta}{dt} = \frac{800}{3000 + \frac{16000000}{3000}} = \frac{800}{300
 
 Same answer as before.
 
+## Common Mistakes
+
+**Mistake 1: Mixing units**
+
+Make sure all angles are in radians when differentiating, since the calculus formulas ($\frac{d}{d\theta}[\sin\theta] = \cos\theta$) assume radians. Convert at the end if degrees are needed.
+
+**Mistake 2: Forgetting the secant squared**
+
+When differentiating $\tan\theta$, you get $\sec^2\theta \cdot \frac{d\theta}{dt}$. Don't drop the $\sec^2\theta$ factor.
+
+**Mistake 3: Wrong trig identity**
+
+$\sec^2\theta = 1 + \tan^2\theta$, NOT $1 - \tan^2\theta$. This lets you find $\sec^2\theta$ from $\tan\theta$ without calculating the angle itself.
+
 ## Summary
 
 - Angular rates use trig functions to relate angles to distances

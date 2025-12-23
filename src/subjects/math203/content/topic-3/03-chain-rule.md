@@ -188,6 +188,16 @@ $$\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}$$
 
 With more links: $\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dv} \cdot \frac{dv}{dx}$
 
+## Physical Interpretation
+
+The chain rule has a natural interpretation in terms of rates of change. Suppose:
+- Temperature $T$ depends on altitude $h$: $T = f(h)$
+- Altitude $h$ depends on time $t$: $h = g(t)$
+
+Then $\frac{dT}{dt} = \frac{dT}{dh} \cdot \frac{dh}{dt}$
+
+In words: the rate at which temperature changes with time equals (rate of temperature change per unit altitude) times (rate of altitude change with time). The "intermediate" rates multiply.
+
 ## Summary
 
 - Chain rule: $(f(g(x)))' = f'(g(x)) \cdot g'(x)$

@@ -160,6 +160,20 @@ For cones filled with liquid: the ratio $r/h$ remains constant (equals the tank'
 | Cylinder volume | $V = \pi r^2 h$ | $\frac{dV}{dt} = \pi r^2 \frac{dh}{dt}$ (r const.) |
 | Cone volume | $V = \frac{1}{3}\pi r^2 h$ | Use similar triangles to eliminate $r$ |
 
+## Common Mistakes
+
+**Mistake 1: Not using similar triangles for cones**
+
+The water-in-cone problem is much harder if you keep both $r$ and $h$ as variables. Use the fixed ratio $r/h$ from the tank's shape to eliminate one variable.
+
+**Mistake 2: Forgetting the product rule**
+
+When two or more dimensions change (like both $r$ and $h$ in a cylinder), you need the product rule: $\frac{d}{dt}[r^2 h] = 2rh\frac{dr}{dt} + r^2\frac{dh}{dt}$.
+
+**Mistake 3: Confusing rate of change with value**
+
+$\frac{dV}{dt} = 5$ means volume changes at 5 units per time, not that $V = 5$.
+
 ## Summary
 
 - Geometric related rates use standard area/volume formulas

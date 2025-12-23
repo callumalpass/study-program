@@ -142,6 +142,28 @@ $x = \sqrt{10} \approx 3.16$ m
 6. **Apply calculus** — differentiate, find critical points
 7. **Check your answer** — does it make sense?
 
+## Common Mistakes
+
+**Mistake 1: Wrong sign in profit calculation**
+
+Profit = Revenue − Cost, not Cost − Revenue. A positive profit means you're making money.
+
+**Mistake 2: Ignoring domain restrictions**
+
+Physical quantities must be positive. If you get $x = -50$ units of production, that's not feasible. Check that your answer lies in the valid domain.
+
+**Mistake 3: Confusing marginal quantities**
+
+Marginal cost $C'(x)$ is the cost of producing one more unit, not the cost per unit. Similarly for marginal revenue and profit.
+
+**Mistake 4: Not checking endpoints**
+
+On a bounded domain $[0, M]$, the optimal value might be at an endpoint, not at a critical point. Always check.
+
+## The Power of Calculus in Applications
+
+These applications show why calculus was developed—to solve real-world optimization problems. From Newton analyzing planetary orbits to modern economists optimizing production, the same calculus framework applies: model the problem, differentiate, find critical points, and interpret the results.
+
 ## Summary
 
 - Economic optimization: maximize profit/revenue, minimize cost
