@@ -61,6 +61,20 @@ Consider the graph of $y = f(x)$:
 
 2. **Tangent line:** Touches the curve at exactly one point (locally). Slope = instantaneous rate of change.
 
+```plot
+{
+  "xAxis": { "domain": [0, 5], "label": "x" },
+  "yAxis": { "domain": [0, 25], "label": "y" },
+  "data": [
+    { "fn": "x^2", "color": "#8b5cf6" },
+    { "fn": "6*x - 9", "color": "#22c55e" },
+    { "fn": "4*x - 4", "color": "#f97316" }
+  ]
+}
+```
+
+The purple curve is $f(x) = x^2$. The green line is the tangent at $x = 3$ (slope = 6). The orange line is a secant connecting $(1,1)$ and $(3,9)$ (slope = 4). As secant points get closer together, the secant approaches the tangent.
+
 The derivative at a point is the slope of the tangent line at that point.
 
 ## Real-World Examples

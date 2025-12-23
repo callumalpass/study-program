@@ -32,10 +32,34 @@ $$\sum_{n=0}^{\infty} x^n = 1 + x + x^2 + x^3 + \cdots$$
 
 This has $c_n = 1$ for all $n$ and center $a = 0$. We know from geometric series that this converges to $\frac{1}{1-x}$ when $|x| < 1$.
 
+```plot
+{
+  "xAxis": { "domain": [-1.5, 1.5], "label": "x" },
+  "yAxis": { "domain": [-2, 5], "label": "y" },
+  "data": [
+    { "fn": "1/(1-x)", "color": "#8b5cf6" }
+  ]
+}
+```
+
+The function $f(x) = \frac{1}{1-x}$ equals the geometric series $\sum x^n$ for $|x| < 1$. The series diverges at and beyond $|x| = 1$ (vertical asymptote at $x = 1$).
+
 **Example 2:** The exponential series
 $$\sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \frac{x^4}{4!} + \cdots$$
 
 Here $c_n = \frac{1}{n!}$ and this converges to $e^x$ for all real $x$.
+
+```plot
+{
+  "xAxis": { "domain": [-3, 3], "label": "x" },
+  "yAxis": { "domain": [0, 10], "label": "y" },
+  "data": [
+    { "fn": "exp(x)", "color": "#8b5cf6" }
+  ]
+}
+```
+
+The exponential function $e^x$ equals its power series $\sum \frac{x^n}{n!}$ for all real $x$—the series has infinite radius of convergence.
 
 **Example 3:** A series centered at $a = 2$
 $$\sum_{n=0}^{\infty} \frac{(x - 2)^n}{2^n} = 1 + \frac{x-2}{2} + \frac{(x-2)^2}{4} + \frac{(x-2)^3}{8} + \cdots$$

@@ -40,6 +40,20 @@ $$F(x) = x^2 + C$$
 
 This represents an infinite family of functions, one for each value of $C$. Graphically, these are vertical translations of the parabola $y = x^2$.
 
+```plot
+{
+  "xAxis": { "domain": [-3, 3], "label": "x" },
+  "yAxis": { "domain": [-2, 10], "label": "y" },
+  "data": [
+    { "fn": "x^2 - 2", "color": "#8b5cf6" },
+    { "fn": "x^2", "color": "#22c55e" },
+    { "fn": "x^2 + 2", "color": "#f97316" }
+  ]
+}
+```
+
+Three antiderivatives of $f(x) = 2x$: $F(x) = x^2 - 2$ (purple), $F(x) = x^2$ (green), and $F(x) = x^2 + 2$ (orange). All have the same derivative but are shifted vertically.
+
 ## Notation: The Indefinite Integral
 
 The process of finding antiderivatives is called **integration**. We use the integral symbol $\int$ to denote this operation:

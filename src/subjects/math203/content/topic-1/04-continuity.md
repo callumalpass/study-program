@@ -37,6 +37,18 @@ $$\lim_{x \to 2} \frac{x^2 - 4}{x - 2} = \lim_{x \to 2} \frac{(x-2)(x+2)}{x-2} =
 
 This is a "hole" in the graph. We could "remove" the discontinuity by defining $f(2) = 4$.
 
+```plot
+{
+  "xAxis": { "domain": [0, 4], "label": "x" },
+  "yAxis": { "domain": [0, 6], "label": "y" },
+  "data": [
+    { "fn": "x + 2", "color": "#8b5cf6" }
+  ]
+}
+```
+
+The graph shows $f(x) = x + 2$ (after simplification), with a hole at $(2, 4)$ representing the removable discontinuity.
+
 ### Jump Discontinuity
 
 Both one-sided limits exist, but they're different.
@@ -51,6 +63,19 @@ At $x = 0$:
 
 The graph "jumps" from height 1 to height 0 at $x = 0$.
 
+```plot
+{
+  "xAxis": { "domain": [-2, 2], "label": "x" },
+  "yAxis": { "domain": [-1, 3], "label": "y" },
+  "data": [
+    { "fn": "x + 1", "color": "#8b5cf6", "range": [-2, 0] },
+    { "fn": "x^2", "color": "#22c55e", "range": [0, 2] }
+  ]
+}
+```
+
+The jump discontinuity is visible at $x = 0$: the function approaches 1 from the left but equals 0 at and to the right of $x = 0$.
+
 ### Infinite Discontinuity
 
 The function approaches $\pm\infty$ near the point.
@@ -58,6 +83,18 @@ The function approaches $\pm\infty$ near the point.
 **Example:** $f(x) = \frac{1}{x}$ at $x = 0$
 
 The function has a vertical asymptote. The limit does not exist (as a real number).
+
+```plot
+{
+  "xAxis": { "domain": [-3, 3], "label": "x" },
+  "yAxis": { "domain": [-5, 5], "label": "y" },
+  "data": [
+    { "fn": "1/x", "color": "#ef4444" }
+  ]
+}
+```
+
+The vertical asymptote at $x = 0$ represents an infinite discontinuity—the function grows without bound as it approaches the discontinuity.
 
 ### Oscillating Discontinuity
 

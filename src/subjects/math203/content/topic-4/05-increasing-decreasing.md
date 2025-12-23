@@ -52,6 +52,18 @@ Critical points: $x = 1$ and $x = 2$
 
 **Result:** Increasing on $(-\infty, 1]$ and $[2, \infty)$; decreasing on $[1, 2]$.
 
+```plot
+{
+  "xAxis": { "domain": [-1, 4], "label": "x" },
+  "yAxis": { "domain": [-5, 10], "label": "y" },
+  "data": [
+    { "fn": "2*x^3 - 9*x^2 + 12*x - 3", "color": "#8b5cf6" }
+  ]
+}
+```
+
+The graph of $f(x) = 2x^3 - 9x^2 + 12x - 3$ shows a local maximum at $x = 1$ and a local minimum at $x = 2$. The function increases, then decreases, then increases again.
+
 ## Example 2: With Undefined Derivative
 
 Find where $f(x) = x^{2/3}$ is increasing and decreasing.

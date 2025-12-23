@@ -36,6 +36,19 @@ This is arguably the most important differentiation rule.
 - $\frac{d}{dx}[x^{1/2}] = \frac{1}{2}x^{-1/2} = \frac{1}{2\sqrt{x}}$
 - $\frac{d}{dx}[x] = \frac{d}{dx}[x^1] = 1 \cdot x^0 = 1$
 
+```plot
+{
+  "xAxis": { "domain": [-2, 2], "label": "x" },
+  "yAxis": { "domain": [-2, 8], "label": "y" },
+  "data": [
+    { "fn": "x^3", "color": "#8b5cf6" },
+    { "fn": "3*x^2", "color": "#22c55e" }
+  ]
+}
+```
+
+The purple curve is $f(x) = x^3$ and the green curve is its derivative $f'(x) = 3x^2$. Notice how the derivative is positive where the function is increasing and zero where the function has a horizontal tangent.
+
 **Special case:** $\frac{d}{dx}[\sqrt{x}] = \frac{d}{dx}[x^{1/2}] = \frac{1}{2}x^{-1/2} = \frac{1}{2\sqrt{x}}$
 
 **For roots in general:** $\frac{d}{dx}[\sqrt[n]{x}] = \frac{d}{dx}[x^{1/n}] = \frac{1}{n}x^{(1/n)-1} = \frac{1}{n\sqrt[n]{x^{n-1}}}$

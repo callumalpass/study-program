@@ -13,6 +13,18 @@ A **sequence** is an ordered list of numbers that follows a specific pattern or 
 For example, the sequence $\{a_n\} = \left\{\frac{1}{n}\right\}$ gives us:
 $$a_1 = 1, \quad a_2 = \frac{1}{2}, \quad a_3 = \frac{1}{3}, \quad a_4 = \frac{1}{4}, \ldots$$
 
+```plot
+{
+  "xAxis": { "domain": [0, 10], "label": "n" },
+  "yAxis": { "domain": [0, 1.5], "label": "a_n" },
+  "data": [
+    { "fn": "1/x", "color": "#8b5cf6" }
+  ]
+}
+```
+
+The sequence $a_n = \frac{1}{n}$ converges to 0 as $n \to \infty$. The curve shows how the terms approach but never reach 0.
+
 ## Notation and Terminology
 
 The general term $a_n$ is called the **$n$-th term** of the sequence. The subscript $n$ is called the **index**, and it typically starts at $n = 1$, though it can start at any integer value depending on the context.

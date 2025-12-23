@@ -83,6 +83,18 @@ $$\frac{x^2 - 1}{x - 1} = \frac{(x-1)(x+1)}{x-1} = x + 1 \text{ for } x \neq 1$$
 
 As $x \to 1$, $x + 1 \to 2$.
 
+```plot
+{
+  "xAxis": { "domain": [-1, 3], "label": "x" },
+  "yAxis": { "domain": [0, 4], "label": "y" },
+  "data": [
+    { "fn": "x + 1", "color": "#8b5cf6" }
+  ]
+}
+```
+
+The graph shows $f(x) = \frac{x^2 - 1}{x - 1} = x + 1$ (for $x \neq 1$). There is a hole at $(1, 2)$ where the function is undefined, but the limit is 2.
+
 ## Limits That Don't Exist
 
 Not every function has a limit at every point. A limit fails to exist when:
@@ -94,6 +106,18 @@ Not every function has a limit at every point. A limit fails to exist when:
 **Example of oscillation:** $\lim_{x \to 0} \sin\left(\frac{1}{x}\right)$
 
 As $x \to 0$, $\frac{1}{x}$ grows without bound, causing $\sin\left(\frac{1}{x}\right)$ to oscillate infinitely between $-1$ and $1$. The limit does not exist.
+
+```plot
+{
+  "xAxis": { "domain": [-1, 1], "label": "x" },
+  "yAxis": { "domain": [-1.5, 1.5], "label": "y" },
+  "data": [
+    { "fn": "sin(1/x)", "color": "#8b5cf6" }
+  ]
+}
+```
+
+Notice how the function oscillates more and more rapidly as $x$ approaches 0, never settling on any particular value.
 
 ## Building Intuition
 

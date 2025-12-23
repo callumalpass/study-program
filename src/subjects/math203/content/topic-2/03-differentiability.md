@@ -43,6 +43,18 @@ Right derivative: $\lim_{h \to 0^+} \frac{|h| - 0}{h} = \lim_{h \to 0^+} \frac{h
 
 Since $-1 \neq 1$, the derivative doesn't exist at $x = 0$.
 
+```plot
+{
+  "xAxis": { "domain": [-3, 3], "label": "x" },
+  "yAxis": { "domain": [-1, 4], "label": "y" },
+  "data": [
+    { "fn": "abs(x)", "color": "#8b5cf6" }
+  ]
+}
+```
+
+The graph of $f(x) = |x|$ has a sharp corner at $x = 0$ where the slope abruptly changes from $-1$ to $+1$.
+
 **General pattern:** Functions with $|expression|$ often have corners where the expression equals zero.
 
 ### 2. Cusps
@@ -55,7 +67,17 @@ $$f'(x) = \frac{2}{3}x^{-1/3} = \frac{2}{3\sqrt[3]{x}}$$
 
 As $x \to 0$, $f'(x) \to \pm\infty$ (positive from right, negative from left).
 
-The graph comes to a sharp point with infinite slopes approaching from both sides.
+```plot
+{
+  "xAxis": { "domain": [-2, 2], "label": "x" },
+  "yAxis": { "domain": [-0.5, 2], "label": "y" },
+  "data": [
+    { "fn": "x^(2/3)", "color": "#ef4444" }
+  ]
+}
+```
+
+The graph comes to a sharp point with infinite slopes approaching from both sides—this is a cusp.
 
 ### 3. Vertical Tangent Lines
 
@@ -66,6 +88,18 @@ The tangent line exists but is vertical (infinite slope).
 $$f'(x) = \frac{1}{3}x^{-2/3} = \frac{1}{3x^{2/3}}$$
 
 As $x \to 0$, $f'(x) \to +\infty$. The tangent line is vertical.
+
+```plot
+{
+  "xAxis": { "domain": [-2, 2], "label": "x" },
+  "yAxis": { "domain": [-1.5, 1.5], "label": "y" },
+  "data": [
+    { "fn": "x^(1/3)", "color": "#22c55e" }
+  ]
+}
+```
+
+The graph of $f(x) = x^{1/3}$ passes through the origin with a vertical tangent—the slope is infinite at $x = 0$.
 
 The limit in the derivative definition is infinite, so the derivative doesn't exist (as a finite number).
 

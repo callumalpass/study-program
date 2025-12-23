@@ -45,6 +45,19 @@ $$\lim_{x \to 2^+} f(x) = \lim_{x \to 2^+} (3x - 1) = 6 - 1 = 5$$
 
 Since both one-sided limits equal 5, the two-sided limit exists: $\lim_{x \to 2} f(x) = 5$.
 
+```plot
+{
+  "xAxis": { "domain": [0, 4], "label": "x" },
+  "yAxis": { "domain": [0, 8], "label": "y" },
+  "data": [
+    { "fn": "x^2 + 1", "color": "#8b5cf6", "range": [0, 2] },
+    { "fn": "3*x - 1", "color": "#22c55e", "range": [2, 4] }
+  ]
+}
+```
+
+The purple curve ($x^2 + 1$ for $x < 2$) and green line ($3x - 1$ for $x \geq 2$) meet at the point $(2, 5)$, so the function is continuous there.
+
 **Example with different one-sided limits:**
 $$g(x) = \begin{cases} x + 1 & \text{if } x < 0 \\ x^2 & \text{if } x \geq 0 \end{cases}$$
 
@@ -52,6 +65,19 @@ $$\lim_{x \to 0^-} g(x) = 0 + 1 = 1$$
 $$\lim_{x \to 0^+} g(x) = 0^2 = 0$$
 
 Since $1 \neq 0$, the two-sided limit $\lim_{x \to 0} g(x)$ **does not exist**.
+
+```plot
+{
+  "xAxis": { "domain": [-2, 2], "label": "x" },
+  "yAxis": { "domain": [-1, 3], "label": "y" },
+  "data": [
+    { "fn": "x + 1", "color": "#8b5cf6", "range": [-2, 0] },
+    { "fn": "x^2", "color": "#22c55e", "range": [0, 2] }
+  ]
+}
+```
+
+The graph shows a **jump discontinuity** at $x = 0$. The left-hand limit is 1 (purple approaches $(0,1)$) while the right-hand limit is 0 (green starts at $(0,0)$).
 
 ## Absolute Value Functions
 
@@ -84,12 +110,36 @@ As $x$ approaches 0 from the left, $x$ is small and negative, so $\frac{1}{x}$ i
 
 The two-sided limit does not exist (the one-sided limits are not equal real numbers).
 
+```plot
+{
+  "xAxis": { "domain": [-3, 3], "label": "x" },
+  "yAxis": { "domain": [-5, 5], "label": "y" },
+  "data": [
+    { "fn": "1/x", "color": "#8b5cf6" }
+  ]
+}
+```
+
+The graph of $f(x) = \frac{1}{x}$ shows opposite behavior on each side of $x = 0$: approaching $+\infty$ from the right and $-\infty$ from the left.
+
 **Compare with:** $f(x) = \frac{1}{x^2}$
 
 $$\lim_{x \to 0^+} \frac{1}{x^2} = +\infty$$
 $$\lim_{x \to 0^-} \frac{1}{x^2} = +\infty$$
 
 Both approach $+\infty$, so we write $\lim_{x \to 0} \frac{1}{x^2} = +\infty$ (though technically the limit "does not exist" as a real number).
+
+```plot
+{
+  "xAxis": { "domain": [-3, 3], "label": "x" },
+  "yAxis": { "domain": [0, 10], "label": "y" },
+  "data": [
+    { "fn": "1/x^2", "color": "#22c55e" }
+  ]
+}
+```
+
+Compare with $f(x) = \frac{1}{x^2}$: both sides approach $+\infty$, so the one-sided limits agree (though both are infinite).
 
 ## Sign Analysis
 

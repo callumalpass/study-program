@@ -110,8 +110,72 @@ renderer.list = function(body: string, ordered: boolean, start: number): string 
   return `<${type} class="markdown-list"${startAttr}>${body}</${type}>`;
 };
 
-// Set custom renderer
-marked.use({ renderer });
+// Math block extension ($$...$$)
+const mathBlockExtension = {
+  name: 'mathBlock',
+  level: 'block' as const,
+  start(src: string) {
+    return src.match(/\$\$/)?.index;
+  },
+  tokenizer(src: string) {
+    const match = src.match(/^\$\$([\s\S]+?)\$\$/);
+    if (match) {
+      return {
+        type: 'mathBlock',
+        raw: match[0],
+        math: match[1].trim(),
+      };
+    }
+  },
+  renderer(token: { math: string }) {
+    return `<div class="math-display">${katex.renderToString(token.math, {
+      displayMode: true,
+      throwOnError: false,
+    })}</div>`;
+  },
+};
+
+// Math inline extension ($...$)
+const mathInlineExtension = {
+  name: 'mathInline',
+  level: 'inline' as const,
+  start(src: string) {
+    const match = src.match(/\$/);
+    if (match) {
+      // Don't match if it's the start of $$
+      if (src[match.index! + 1] === '$') {
+        return undefined;
+      }
+      return match.index;
+    }
+  },
+  tokenizer(src: string) {
+    // Don't match $$ (that's for block math)
+    if (src.startsWith('$$')) {
+      return undefined;
+    }
+    const match = src.match(/^\$([^\$\n]+?)\$/);
+    if (match) {
+      return {
+        type: 'mathInline',
+        raw: match[0],
+        math: match[1].trim(),
+      };
+    }
+  },
+  renderer(token: { math: string }) {
+    return `<span class="math-inline">${katex.renderToString(token.math, {
+      displayMode: false,
+      throwOnError: false,
+    })}</span>`;
+  },
+};
+
+// Set custom renderer and extensions
+marked.use({
+  renderer,
+  extensions: [mathBlockExtension, mathInlineExtension],
+});
 
 /**
  * Render markdown content to HTML with syntax highlighting.
@@ -128,10 +192,7 @@ export function renderMarkdown(content: string): string {
     // Strip frontmatter if present
     const { content: markdownContent } = parseFrontmatter(content);
 
-    let html = marked.parse(markdownContent) as string;
-
-    // Post-process for any additional features
-    html = processLatex(html);
+    const html = marked.parse(markdownContent) as string;
 
     return html;
   } catch (error) {
@@ -212,57 +273,6 @@ export function renderFunctionPlots(): void {
       element.innerHTML = `<div class="plot-error">Error rendering plot: ${error instanceof Error ? error.message : 'Unknown error'}</div>`;
     }
   });
-}
-
-/**
- * Unescape HTML entities that marked may have escaped in math content.
- */
-function unescapeHtmlEntities(text: string): string {
-  return text
-    .replace(/&#39;/g, "'")
-    .replace(/&quot;/g, '"')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&');
-}
-
-/**
- * Process LaTeX math expressions.
- * Uses delimiters: $...$ for inline math, $$...$$ for display math.
- * Note: This is a placeholder. Full LaTeX support requires KaTeX or MathJax.
- */
-function processLatex(html: string): string {
-  // Display math ($$...$$)
-  html = html.replace(/\$\$([\s\S]+?)\$\$/g, (match, math) => {
-    try {
-      // Unescape HTML entities that marked may have escaped
-      const unescapedMath = unescapeHtmlEntities(math.trim());
-      return `<div class="math-display">${katex.renderToString(unescapedMath, {
-        displayMode: true,
-        throwOnError: false,
-      })}</div>`;
-    } catch (error) {
-      console.error('KaTeX display render error:', error);
-      return match;
-    }
-  });
-
-  // Inline math ($...$)
-  html = html.replace(/\$([^\$\n]+?)\$/g, (match, math) => {
-    try {
-      // Unescape HTML entities that marked may have escaped
-      const unescapedMath = unescapeHtmlEntities(math.trim());
-      return `<span class="math-inline">${katex.renderToString(unescapedMath, {
-        displayMode: false,
-        throwOnError: false,
-      })}</span>`;
-    } catch (error) {
-      console.error('KaTeX inline render error:', error);
-      return match;
-    }
-  });
-
-  return html;
 }
 
 /**

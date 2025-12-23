@@ -14,6 +14,18 @@ Consider the problem of finding the area under the curve $f(x) = x^2$ from $x = 
 
 The key insight: as we use more rectangles (making them narrower), our approximation improves. The definite integral is the limit of these approximations as the number of rectangles approaches infinity.
 
+```plot
+{
+  "xAxis": { "domain": [0, 2.5], "label": "x" },
+  "yAxis": { "domain": [0, 5], "label": "y" },
+  "data": [
+    { "fn": "x^2", "color": "#8b5cf6" }
+  ]
+}
+```
+
+The curve $f(x) = x^2$ from $x = 0$ to $x = 2$. We want to find the area of the region under this curve.
+
 ## Partitions and Riemann Sums
 
 A **partition** of the interval $[a, b]$ divides it into $n$ subintervals. For simplicity, we typically use **regular partitions** where all subintervals have equal width:
@@ -40,6 +52,18 @@ $$= 0 \cdot 0.5 + 0.25 \cdot 0.5 + 1 \cdot 0.5 + 2.25 \cdot 0.5$$
 $$= 0 + 0.125 + 0.5 + 1.125 = 1.75$$
 
 For an increasing function like $f(x) = x^2$, the left Riemann sum **underestimates** the true area.
+
+```plot
+{
+  "xAxis": { "domain": [0, 2.5], "label": "x" },
+  "yAxis": { "domain": [0, 5], "label": "y" },
+  "data": [
+    { "fn": "x^2", "color": "#8b5cf6" }
+  ]
+}
+```
+
+Left Riemann sum with $n = 4$: rectangles have heights determined by the left endpoints (0, 0.5, 1, 1.5), giving an underestimate of $L_4 = 1.75$.
 
 ## Right Riemann Sum
 
