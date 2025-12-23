@@ -41,7 +41,7 @@ function formatReviewItemTitle(item: ReviewItem): string {
   } else {
     // Format: cs101-t1-ex01 -> CS101 Topic 1 Exercise 1
     const exMatch = id.match(/ex(\d+)/i);
-    const exNum = exMatch ? `Exercise ${parseInt(exMatch[1])}` : 'Exercise';
+    const exNum = exMatch ? `Exercise ${parseInt(exMatch[1], 10)}` : 'Exercise';
     return `${subjectCode} ${topicNum} ${exNum}`.trim();
   }
 }

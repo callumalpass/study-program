@@ -551,7 +551,7 @@ function attachEventListeners(container: HTMLElement): void {
 
   if (fontSizeSlider) {
     fontSizeSlider.addEventListener('input', (e) => {
-      const size = parseInt((e.target as HTMLInputElement).value);
+      const size = parseInt((e.target as HTMLInputElement).value, 10);
       updateFontSize(size);
     });
   }

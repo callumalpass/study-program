@@ -288,7 +288,7 @@ function calculateYearStatistics(subjects: Subject[], userProgress: UserProgress
 
   // Calculate percentages
   Object.keys(stats).forEach(year => {
-    const yearNum = parseInt(year);
+    const yearNum = parseInt(year, 10);
     stats[yearNum].percentComplete = stats[yearNum].total > 0
       ? Math.round((stats[yearNum].completed / stats[yearNum].total) * 100)
       : 0;
@@ -477,7 +477,7 @@ function attachEventListeners(container: HTMLElement, subjects: Subject[]): void
     header.addEventListener('click', () => {
       const yearStr = (header as HTMLElement).dataset.year;
       if (!yearStr) return;
-      const year = parseInt(yearStr);
+      const year = parseInt(yearStr, 10);
       expandedYears[year] = !expandedYears[year];
       renderProgressPage(container, subjects);
     });

@@ -293,7 +293,7 @@ function attachEventListeners(container: HTMLElement, allSubjects: Subject[], fi
   if (yearFilter) {
     yearFilter.addEventListener('change', (e) => {
       const value = (e.target as HTMLSelectElement).value;
-      currentFilters.selectedYear = value ? parseInt(value) : null;
+      currentFilters.selectedYear = value ? parseInt(value, 10) : null;
       renderCurriculumPage(container, allSubjects);
     });
   }

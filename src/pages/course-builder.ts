@@ -236,7 +236,7 @@ function attachEventHandlers(container: HTMLElement): void {
   const yearFilter = container.querySelector('#year-filter') as HTMLSelectElement;
   if (yearFilter) {
     yearFilter.addEventListener('change', () => {
-      currentFilters.year = yearFilter.value ? parseInt(yearFilter.value) : null;
+      currentFilters.year = yearFilter.value ? parseInt(yearFilter.value, 10) : null;
       renderCourseBuilderPage(container);
     });
   }

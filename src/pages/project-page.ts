@@ -395,7 +395,7 @@ function attachProjectEventListeners(container: HTMLElement, subjectId: string, 
       const selfAssessment: Record<string, number> = {};
       container.querySelectorAll('.self-assessment-select').forEach(select => {
         const criterion = (select as HTMLElement).dataset.criterion!;
-        const score = parseInt((select as HTMLSelectElement).value);
+        const score = parseInt((select as HTMLSelectElement).value, 10);
         selfAssessment[criterion] = score;
       });
 
