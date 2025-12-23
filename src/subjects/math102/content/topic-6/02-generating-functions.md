@@ -193,6 +193,46 @@ Generating functions elegantly count:
 - Permutations by cycles
 - Partitions by part size
 
+## Common Mistakes and Pitfalls
+
+### Mistake 1: Forgetting Initial Conditions
+
+When setting up the generating function equation, failing to properly account for initial conditions leads to incorrect results.
+
+**Wrong approach:**
+Setting up F(x) = xF(x) + x²F(x) without subtracting initial terms.
+
+**Correct approach:**
+$$F(x) - F_0 - F_1x = x(F(x) - F_0) + x^2F(x)$$
+
+Always carefully track which terms of the sum you're including on each side. The left side should account for all terms you're summing, minus the base cases.
+
+### Mistake 2: Confusing OGF and EGF
+
+Ordinary generating functions (OGFs) count unordered selections where order doesn't matter. Exponential generating functions (EGFs) count labeled/ordered structures.
+
+Using the wrong type gives incorrect counts:
+- Partitions (unordered) → use OGF
+- Labeled structures (permutations, arrangements) → use EGF
+- Compositions (ordered sums) → use OGF with different structure
+
+### Mistake 3: Incorrect Partial Fraction Decomposition
+
+When extracting coefficients, errors in partial fractions propagate to the final answer. For F(x) = x/(1-x-x²), the factorization involves irrational roots. Ensure you correctly identify the roots of the denominator, the form of the partial fraction expansion, and the signs in the final coefficient extraction.
+
+## Connection to Computer Science
+
+### Algorithm Design
+
+Generating functions directly connect to algorithm analysis:
+1. **Dynamic programming:** The recurrence structure mirrors DP transitions
+2. **Memoization:** Coefficient extraction is like looking up computed values
+3. **Divide and conquer:** Products of GFs model independent subproblems
+
+### Symbolic Computation
+
+Computer algebra systems like Mathematica, Sage, and SymPy can automatically expand generating functions, perform partial fraction decomposition, and extract coefficients symbolically—making generating functions practical for implementation.
+
 ## Summary
 
 Generating functions:
@@ -201,3 +241,5 @@ Generating functions:
 - OGFs for unordered selection, EGFs for labeled/ordered
 - Product corresponds to convolution/selection
 - Powerful for asymptotic analysis
+- Connect counting to algebraic techniques
+- Form a bridge between discrete mathematics and calculus

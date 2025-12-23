@@ -252,3 +252,29 @@ def all_topological_sorts(graph, vertices):
 **Dynamic programming on DAGs**: Topological order ensures subproblems are solved before dependent problems.
 
 **Critical path**: In project scheduling, the longest path determines minimum project duration.
+
+## Common Mistakes
+
+### Mistake 1: Forgetting Cycle Detection
+
+Both algorithms must detect cycles. Without cycle detection, Kahn's algorithm silently returns an incomplete ordering, while DFS may loop infinitely.
+
+**Always check:** len(result) == len(vertices) for Kahn's algorithm.
+
+### Mistake 2: Wrong DFS Order
+
+DFS topological sort requires appending vertices after processing all neighbors, then reversing. Appending before recursion gives incorrect order.
+
+### Mistake 3: Missing Vertices
+
+When building the graph from edge lists, ensure all vertices appear in the graph dictionary—even those with no outgoing edges. Otherwise, vertices may be excluded from the result.
+
+## Summary
+
+Topological sorting:
+- Orders DAG vertices respecting edge directions
+- Kahn's algorithm uses in-degree tracking (BFS-based)
+- DFS approach uses reverse finish times
+- Both run in O(V + E) time
+- Essential for scheduling, build systems, and DP on DAGs
+- Multiple valid orderings may exist for the same graph

@@ -205,6 +205,20 @@ $$f^\lambda = \frac{n!}{\prod_{(i,j) \in \lambda} h(i,j)}$$
 
 5. **Show:** Sum of all parts over all partitions of n equals sum of (largest part) × (number of such partitions).
 
+## Common Mistakes
+
+### Mistake 1: Confusing Partitions with Compositions
+
+Remember: partitions are unordered (3+1+1 = 1+3+1), while compositions are ordered. Using the wrong definition leads to different counts.
+
+### Mistake 2: Incorrect Conjugate Computation
+
+When computing conjugates, count columns carefully. The conjugate's kth part equals the number of parts in the original partition that are ≥ k.
+
+### Mistake 3: Misapplying Euler's Theorem
+
+Euler's theorem states that partitions into distinct parts equal partitions into odd parts—not that they are the same partitions. The bijection transforms one to the other.
+
 ## Summary
 
 Partition theory studies:
@@ -214,3 +228,4 @@ Partition theory studies:
 - Euler's theorem: distinct parts ↔ odd parts
 - Bijective proofs give combinatorial insight
 - Connections to algebra, physics, number theory
+- The pentagonal number theorem provides efficient recurrences

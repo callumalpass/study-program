@@ -229,6 +229,35 @@ To model a problem as a recurrence:
 5. **Solve:** Apply appropriate technique
 6. **Verify:** Check solution satisfies original problem
 
+## Common Mistakes in Recurrence Modeling
+
+### Mistake 1: Incorrect Base Cases
+
+The most frequent error is specifying wrong or missing base cases. For the Tower of Hanoi, forgetting H₀ = 0 leads to an undefined recurrence.
+
+**Always verify:** Does your solution satisfy the base case(s)?
+
+### Mistake 2: Off-by-One Errors
+
+When translating between 0-indexed and 1-indexed formulations, or when counting moves vs states, off-by-one errors are common.
+
+**Example:** Fibonacci
+- F₁ = 1, F₂ = 1 (1-indexed)
+- F₀ = 0, F₁ = 1 (0-indexed)
+
+Be consistent throughout your analysis.
+
+### Mistake 3: Ignoring the Non-Homogeneous Part
+
+When solving T(n) = 2T(n/2) + n, students often find only the homogeneous solution (powers of 2) and forget the particular solution (n log n contribution).
+
+### Mistake 4: Applying Master Theorem Incorrectly
+
+The Master Theorem has specific conditions. Verify that:
+- a ≥ 1 and b > 1
+- f(n) is asymptotically positive
+- The recurrence matches the standard form T(n) = aT(n/b) + f(n)
+
 ## Summary
 
 Recurrence relations model:
@@ -238,4 +267,4 @@ Recurrence relations model:
 - Random processes (walks, Markov chains)
 - Signal processing and cryptography
 
-The key is recognizing the recursive structure and formulating the appropriate recurrence.
+The key is recognizing the recursive structure and formulating the appropriate recurrence with correct base cases.

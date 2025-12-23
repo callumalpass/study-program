@@ -201,3 +201,29 @@ aₙ ~ C · ρⁿ · n^k
 ```
 
 For Fibonacci: singularity at x = 1/φ gives Fₙ ~ φⁿ/√5.
+
+## Common Mistakes
+
+### Mistake 1: Incorrect Initial Condition Handling
+
+When converting a recurrence to a GF equation, carefully track which terms appear on each side. The left side should be A(x) minus terms for indices below the recurrence's starting point.
+
+**Example error:** For aₙ = 2aₙ₋₁ + 1 starting at n=1, forgetting to subtract a₀ from the left side leads to an incorrect equation.
+
+### Mistake 2: Sign Errors in Partial Fractions
+
+When decomposing a rational function, sign errors are common. Always verify your decomposition by multiplying back and checking coefficient equality.
+
+### Mistake 3: Choosing Wrong Root
+
+When factoring quadratics, identify the correct root for the closed form. For Fibonacci, the dominant term involves φ (the golden ratio), while ψ contributes a decaying correction.
+
+## Summary
+
+Generating functions for recurrences:
+- Transform recurrence into algebraic equation
+- Solve algebraically for the generating function
+- Extract coefficients using partial fractions
+- Convolution corresponds to multiplication
+- Singularity analysis yields asymptotics
+- Powerful for non-standard recurrences

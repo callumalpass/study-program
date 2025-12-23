@@ -209,12 +209,49 @@ $$P\left(\lim_{n \to \infty} \bar{X}_n = \mu\right) = 1$$
 
 4. **Chebyshev:** For distribution with μ = 50, σ = 10, what's the bound on P(|X - 50| ≥ 25)?
 
+## Applications in Algorithm Analysis
+
+### Expected Running Time
+
+When analyzing randomized algorithms, expectation gives the average-case performance:
+
+**Quicksort:** Expected O(n log n) comparisons when pivots are chosen uniformly at random.
+
+**Randomized selection:** Expected O(n) time to find the kth smallest element.
+
+### Indicator Random Variables in Practice
+
+A powerful technique: let $I_A$ = 1 if event A occurs, 0 otherwise.
+
+Then: $E[I_A] = P(A)$
+
+**Application:** Expected inversions in random permutation
+- Let $X_{ij}$ = 1 if positions i and j are inverted
+- $E[X] = \sum_{i<j} P(X_{ij}=1) = \binom{n}{2} \cdot \frac{1}{2} = \frac{n(n-1)}{4}$
+
+## Common Mistakes
+
+### Mistake 1: Applying Linearity to Variance
+
+**Wrong:** Var(X + Y) = Var(X) + Var(Y) always
+
+**Correct:** This only holds when X and Y are independent. For dependent variables, you must include the covariance term.
+
+### Mistake 2: Confusing E[g(X)] with g(E[X])
+
+By Jensen's inequality, these are generally different. For convex functions like x², we have E[X²] ≥ (E[X])².
+
+### Mistake 3: Forgetting Independence Requirements
+
+E[XY] = E[X]·E[Y] requires independence. Without it, use E[XY] = E[X]E[Y] + Cov(X, Y).
+
 ## Summary
 
 Expectation and variance:
 - E[X] measures central tendency (mean)
 - Var(X) = E[X²] - (E[X])² measures spread
-- Linearity of expectation (works always)
-- Variance of sum requires independence or covariance
-- Chebyshev bounds tail probability
+- Linearity of expectation (works always, even for dependent variables)
+- Variance of sum requires independence or explicit covariance calculation
+- Chebyshev bounds tail probability using variance
 - Law of Large Numbers: sample mean → population mean
+- Indicator variables simplify expectation calculations

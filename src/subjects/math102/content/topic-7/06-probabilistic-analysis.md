@@ -219,6 +219,20 @@ Probabilistic set membership.
 
 4. **Hash tables:** With m slots, n keys, expected number of collisions?
 
+## Common Mistakes
+
+### Mistake 1: Confusing Expected and Worst-Case
+
+An algorithm with O(n) expected time may still have O(n²) worst-case. Randomization provides probabilistic guarantees, not deterministic ones.
+
+### Mistake 2: Forgetting Independence Requirements
+
+Chernoff bounds require independent random variables. Dependent variables need different tools (e.g., martingale methods).
+
+### Mistake 3: Misinterpreting "With High Probability"
+
+"With high probability" typically means probability ≥ 1 - 1/n^c for some constant c. This is different from "almost surely" (probability 1).
+
 ## Summary
 
 Probabilistic analysis provides:
@@ -227,3 +241,5 @@ Probabilistic analysis provides:
 - Randomized algorithms achieve good expected performance
 - Concentration inequalities give high-probability bounds
 - Essential for analyzing hash tables, sorting, selection
+- Las Vegas algorithms guarantee correctness; Monte Carlo algorithms bound error
+- The balls-and-bins model underlies many randomized structures

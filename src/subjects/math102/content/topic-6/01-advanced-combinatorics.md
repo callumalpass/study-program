@@ -206,3 +206,32 @@ For large n, exact formulas are often replaced by approximations.
 **Binomial coefficients**: C(2n,n) ~ 4ⁿ/√(πn)
 
 **Catalan numbers**: Cₙ ~ 4ⁿ/(n^(3/2)√π)
+
+## Common Mistakes
+
+### Mistake 1: Confusing Compositions and Partitions
+
+**Compositions** are ordered: 1+2 ≠ 2+1 (different compositions of 3)
+**Partitions** are unordered: 1+2 = 2+1 (same partition of 3)
+
+Using the wrong generating function leads to incorrect counts.
+
+### Mistake 2: Incorrect Stirling Number Recurrence
+
+The recurrence S(n,k) = k·S(n-1,k) + S(n-1,k-1) requires understanding:
+- k·S(n-1,k): element n joins one of k existing subsets
+- S(n-1,k-1): element n forms its own singleton subset
+
+### Mistake 3: Forgetting Catalan Number Base Case
+
+The Catalan recurrence Cₙ = Σᵢ₌₀ⁿ⁻¹ Cᵢ × Cₙ₋₁₋ᵢ requires C₀ = 1 as the base case. Without this, the recurrence is undefined.
+
+## Summary
+
+Advanced combinatorics provides tools for:
+- Integer partitions and their generating functions
+- Stirling and Bell numbers for set partitions
+- Catalan numbers counting diverse structures
+- Ballot problems and the reflection principle
+- Pólya enumeration under symmetry
+- Asymptotic analysis for large counts
