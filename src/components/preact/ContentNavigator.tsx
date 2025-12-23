@@ -281,9 +281,9 @@ export function ContentNavigator({
 
   // Render content based on current state
   const renderContent = () => {
-    if (currentSubtopic) {
-      // Render subtopic content with pagination
-      const subtopics = currentTopic!.subtopics!;
+    // Render subtopic content with pagination (requires both currentSubtopic and currentTopic with subtopics)
+    if (currentSubtopic && currentTopic?.subtopics) {
+      const subtopics = currentTopic.subtopics;
       const currentIndex = subtopics.findIndex(st => st.id === currentSubtopic.id);
       const prevSubtopic = currentIndex > 0 ? subtopics[currentIndex - 1] : null;
       const nextSubtopic = currentIndex < subtopics.length - 1 ? subtopics[currentIndex + 1] : null;
@@ -295,14 +295,14 @@ export function ContentNavigator({
             dangerouslySetInnerHTML={{ __html: renderMarkdown(currentSubtopic.content) }}
           />
           {/* Show readings for the current topic */}
-          {currentTopic?.readings && currentTopic.readings.length > 0 && (
+          {currentTopic.readings && currentTopic.readings.length > 0 && (
             <ReadingList readings={currentTopic.readings} topicTitle={currentTopic.title} />
           )}
           <nav class="content-pagination">
             <div class="pagination-left">
               {prevSubtopic && (
                 <a
-                  href={`#/subject/${subject.id}/topic/${currentTopic!.id}/subtopic/${prevSubtopic.slug}`}
+                  href={`#/subject/${subject.id}/topic/${currentTopic.id}/subtopic/${prevSubtopic.slug}`}
                   class="pagination-link prev"
                 >
                   <span class="pagination-icon" dangerouslySetInnerHTML={{ __html: Icons.ChevronLeft }} />
@@ -319,7 +319,7 @@ export function ContentNavigator({
             <div class="pagination-right">
               {nextSubtopic && (
                 <a
-                  href={`#/subject/${subject.id}/topic/${currentTopic!.id}/subtopic/${nextSubtopic.slug}`}
+                  href={`#/subject/${subject.id}/topic/${currentTopic.id}/subtopic/${nextSubtopic.slug}`}
                   class="pagination-link next"
                 >
                   <span class="pagination-text">
@@ -489,9 +489,9 @@ export function ContentNavigator({
                     </button>
 
                     {/* Subtopics (shown when topic is active) */}
-                    {isActive && hasSubtopics && (
+                    {isActive && hasSubtopics && topic.subtopics && (
                       <div class="subtopic-list">
-                        {topic.subtopics!.map((subtopic) => {
+                        {topic.subtopics.map((subtopic) => {
                           const isSubtopicActive = currentSubtopicSlug === subtopic.slug;
                           const isViewed = isSubtopicViewed(subtopic.id);
 
