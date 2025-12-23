@@ -3,7 +3,8 @@
  * Subject Import Validation Script
  *
  * Uses Vite SSR to validate that all subject TypeScript modules import correctly.
- * This catches broken imports, TypeScript errors, and missing exports.
+ * This catches broken imports, TypeScript errors, missing exports, and ensures
+ * curriculum.ts properly uses imported topics (not placeholder arrays).
  *
  * Usage:
  *   node scripts/validate-imports.mjs    # Validate all subjects
@@ -98,6 +99,90 @@ async function validateSubject(vite, subjectId, subjectsDir) {
   return result;
 }
 
+// Validate that curriculum.ts uses proper topic imports (not placeholders)
+async function validateCurriculum(vite) {
+  const results = [];
+
+  try {
+    const curriculumModule = await vite.ssrLoadModule('/src/data/curriculum.ts');
+    const { curriculum } = curriculumModule;
+
+    if (!Array.isArray(curriculum)) {
+      return { valid: false, error: 'curriculum is not an array', subjects: [] };
+    }
+
+    for (const subject of curriculum) {
+      const issues = [];
+
+      // Check if topics exist
+      if (!subject.topics || !Array.isArray(subject.topics)) {
+        issues.push('missing topics array');
+      } else if (subject.topics.length === 0) {
+        issues.push('empty topics array');
+      } else {
+        // Check for placeholder topics (empty content, no subtopics)
+        const hasPlaceholderTopics = subject.topics.every(topic => {
+          const hasEmptyContent = topic.content === '';
+          const hasNoSubtopics = !topic.subtopics || topic.subtopics.length === 0;
+          const hasEmptyQuizIds = !topic.quizIds || topic.quizIds.length === 0;
+          const hasEmptyExerciseIds = !topic.exerciseIds || topic.exerciseIds.length === 0;
+          return hasEmptyContent && hasNoSubtopics && hasEmptyQuizIds && hasEmptyExerciseIds;
+        });
+
+        if (hasPlaceholderTopics) {
+          issues.push('placeholder topics (no subtopics or content)');
+        }
+      }
+
+      results.push({
+        id: subject.id,
+        valid: issues.length === 0,
+        issues,
+      });
+    }
+  } catch (error) {
+    return { valid: false, error: error.message, subjects: [] };
+  }
+
+  return { valid: true, subjects: results };
+}
+
+// Print curriculum validation results
+function printCurriculumResults(curriculumResult) {
+  const validColor = '\x1b[32m';
+  const invalidColor = '\x1b[31m';
+  const reset = '\x1b[0m';
+
+  console.log(`\n${'═'.repeat(70)}`);
+  console.log('  CURRICULUM VALIDATION RESULTS');
+  console.log(`${'═'.repeat(70)}\n`);
+
+  if (curriculumResult.error) {
+    console.log(`  ${invalidColor}ERROR:${reset} ${curriculumResult.error}\n`);
+    return false;
+  }
+
+  const valid = curriculumResult.subjects.filter(s => s.valid);
+  const invalid = curriculumResult.subjects.filter(s => !s.valid);
+
+  console.log(`  Valid:   ${validColor}${valid.length}${reset}`);
+  console.log(`  Invalid: ${invalidColor}${invalid.length}${reset}`);
+  console.log(`  Total:   ${curriculumResult.subjects.length}\n`);
+
+  if (invalid.length > 0) {
+    console.log('  SUBJECTS WITH PLACEHOLDER TOPICS:');
+    for (const s of invalid.sort((a, b) => a.id.localeCompare(b.id))) {
+      console.log(`     ${invalidColor}✗${reset} ${s.id.padEnd(10)} ${s.issues.join(', ')}`);
+    }
+    console.log('');
+    console.log('  FIX: Import topics from subject files in src/data/curriculum.ts');
+    console.log('       e.g., import { math404Topics } from \'../subjects/math404/topics\';');
+    console.log('            then use: topics: math404Topics\n');
+  }
+
+  return invalid.length === 0;
+}
+
 // Print validation results
 function printResults(results) {
   const valid = results.filter(r => r.valid);
@@ -180,15 +265,22 @@ async function main() {
     }
   }
 
+  // Validate curriculum topics
+  console.log('  Validating curriculum topic connections...');
+  const curriculumResult = await validateCurriculum(vite);
+
   // Close Vite server
   await vite.close();
 
   // Print results
-  const allValid = printResults(results);
+  const importsValid = printResults(results);
+  const curriculumValid = printCurriculumResults(curriculumResult);
+
+  const allValid = importsValid && curriculumValid;
 
   if (allValid) {
     console.log(`${'═'.repeat(70)}`);
-    console.log('  VALIDATION PASSED');
+    console.log('  ALL VALIDATION PASSED');
     console.log(`${'═'.repeat(70)}\n`);
     process.exit(0);
   } else {

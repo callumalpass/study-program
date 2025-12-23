@@ -22,6 +22,22 @@ import { cs303Topics } from '../subjects/cs303/topics';
 import { cs304Topics } from '../subjects/cs304/topics';
 import { cs305Topics } from '../subjects/cs305/topics';
 import { cs306Topics } from '../subjects/cs306/topics';
+import { cs307Topics } from '../subjects/cs307/topics';
+import { cs301Topics } from '../subjects/cs301/topics';
+import { math301Topics } from '../subjects/math301/topics';
+import { math302Topics } from '../subjects/math302/topics';
+import { math303Topics } from '../subjects/math303/topics';
+import { math304Topics } from '../subjects/math304/topics';
+import { cs401Topics } from '../subjects/cs401/topics';
+import { cs402Topics } from '../subjects/cs402/topics';
+import { cs403Topics } from '../subjects/cs403/topics';
+import { cs404Topics } from '../subjects/cs404/topics';
+import { cs405Topics } from '../subjects/cs405/topics';
+import { cs406Topics } from '../subjects/cs406/topics';
+import { cs407Topics } from '../subjects/cs407/topics';
+import { math401Topics } from '../subjects/math401/topics';
+import { math402Topics } from '../subjects/math402/topics';
+import { math403Topics } from '../subjects/math403/topics';
 import { math404Topics } from '../subjects/math404/topics';
 
 /**
@@ -449,16 +465,9 @@ export const curriculum: Subject[] = [
       'Design file system structures and implement file operations'
     ],
     estimatedHours: 130,
-    topics: [
-      { id: 'cs301-1', title: 'Processes and Process Management', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs301-2', title: 'Threads and Concurrency', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs301-3', title: 'CPU Scheduling', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs301-4', title: 'Synchronization', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs301-5', title: 'Deadlock', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs301-6', title: 'Memory Management', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs301-7', title: 'Virtual Memory', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs301-8', title: 'File Systems', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs301Topics,
+    examIds: ['cs301-exam-midterm', 'cs301-exam-final'],
+    projectIds: ['cs301-project-1']
   },
 
   {
@@ -552,15 +561,8 @@ export const curriculum: Subject[] = [
       'Model physical phenomena using multivariable calculus'
     ],
     estimatedHours: 120,
-    topics: [
-      { id: 'math301-1', title: 'Vectors and Vector-Valued Functions', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math301-2', title: 'Partial Derivatives', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math301-3', title: 'Gradient, Directional Derivatives, and Tangent Planes', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math301-4', title: 'Optimization and Lagrange Multipliers', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math301-5', title: 'Multiple Integrals', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math301-6', title: 'Line Integrals and Surface Integrals', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math301-7', title: 'Vector Calculus Theorems', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math301Topics,
+    examIds: ['math301-exam-midterm', 'math301-exam-final']
   },
 
   {
@@ -582,15 +584,8 @@ export const curriculum: Subject[] = [
       'Model real-world phenomena including population dynamics, circuits, and mechanical systems'
     ],
     estimatedHours: 110,
-    topics: [
-      { id: 'math302-1', title: 'First-Order Differential Equations', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math302-2', title: 'Second-Order Linear Equations', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math302-3', title: 'Higher-Order Linear Equations', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math302-4', title: 'Systems of Differential Equations', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math302-5', title: 'Laplace Transforms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math302-6', title: 'Series Solutions', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math302-7', title: 'Applications and Modeling', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math302Topics,
+    examIds: ['math302-exam-midterm', 'math302-exam-final']
   },
 
   // ============================================================================
@@ -664,15 +659,9 @@ export const curriculum: Subject[] = [
       'Apply security principles to system design'
     ],
     estimatedHours: 110,
-    topics: [
-      { id: 'cs307-1', title: 'Security Principles', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs307-2', title: 'Cryptography Fundamentals', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs307-3', title: 'Authentication and Access Control', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs307-4', title: 'Common Vulnerabilities', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs307-5', title: 'Secure Coding Practices', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs307-6', title: 'Network Security', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs307-7', title: 'Security Testing', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs307Topics,
+    examIds: ['cs307-exam-midterm', 'cs307-exam-final'],
+    projectIds: ['cs307-project-1']
   },
 
   {
@@ -694,15 +683,8 @@ export const curriculum: Subject[] = [
       'Apply real analysis concepts to prove calculus theorems rigorously'
     ],
     estimatedHours: 130,
-    topics: [
-      { id: 'math303-1', title: 'The Real Number System', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math303-2', title: 'Sequences and Limits', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math303-3', title: 'Series', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math303-4', title: 'Continuity', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math303-5', title: 'Differentiation', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math303-6', title: 'Riemann Integration', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math303-7', title: 'Sequences and Series of Functions', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math303Topics,
+    examIds: ['math303-exam-midterm', 'math303-exam-final']
   },
 
   {
@@ -724,15 +706,8 @@ export const curriculum: Subject[] = [
       'Apply abstract algebra to cryptography and error-correcting codes'
     ],
     estimatedHours: 120,
-    topics: [
-      { id: 'math304-1', title: 'Groups and Subgroups', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math304-2', title: 'Cyclic Groups and Generators', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math304-3', title: 'Permutation Groups', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math304-4', title: 'Cosets and Lagrange\'s Theorem', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math304-5', title: 'Group Homomorphisms and Isomorphisms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math304-6', title: 'Rings and Fields', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math304-7', title: 'Applications to Cryptography', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math304Topics,
+    examIds: ['math304-exam-midterm', 'math304-exam-final']
   },
 
   // ============================================================================
@@ -758,15 +733,9 @@ export const curriculum: Subject[] = [
       'Apply distributed systems patterns to real-world problems'
     ],
     estimatedHours: 130,
-    topics: [
-      { id: 'cs401-1', title: 'Distributed Systems Fundamentals', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs401-2', title: 'Time and Coordination', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs401-3', title: 'Consensus Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs401-4', title: 'Replication and Consistency', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs401-5', title: 'Fault Tolerance', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs401-6', title: 'MapReduce and Big Data', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs401-7', title: 'Microservices Architecture', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs401Topics,
+    examIds: ['cs401-exam-midterm', 'cs401-exam-final'],
+    projectIds: ['cs401-project-1']
   },
 
   {
@@ -788,16 +757,9 @@ export const curriculum: Subject[] = [
       'Build end-to-end machine learning pipelines'
     ],
     estimatedHours: 140,
-    topics: [
-      { id: 'cs402-1', title: 'Machine Learning Overview', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs402-2', title: 'Linear and Logistic Regression', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs402-3', title: 'Classification Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs402-4', title: 'Neural Networks', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs402-5', title: 'Deep Learning Basics', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs402-6', title: 'Clustering and Unsupervised Learning', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs402-7', title: 'Model Evaluation and Selection', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs402-8', title: 'ML Engineering and Deployment', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs402Topics,
+    examIds: ['cs402-exam-midterm', 'cs402-exam-final'],
+    projectIds: ['cs402-project-1']
   },
 
   {
@@ -819,15 +781,9 @@ export const curriculum: Subject[] = [
       'Prove algorithm correctness and analyze complexity for advanced algorithms'
     ],
     estimatedHours: 120,
-    topics: [
-      { id: 'cs403-1', title: 'NP-Completeness Review', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs403-2', title: 'Approximation Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs403-3', title: 'Randomized Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs403-4', title: 'Online Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs403-5', title: 'Advanced Dynamic Programming', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs403-6', title: 'Network Flow Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs403-7', title: 'Computational Geometry', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs403Topics,
+    examIds: ['cs403-exam-midterm', 'cs403-exam-final'],
+    projectIds: ['cs403-project-1']
   },
 
   {
@@ -849,16 +805,9 @@ export const curriculum: Subject[] = [
       'Optimize cloud costs and performance'
     ],
     estimatedHours: 120,
-    topics: [
-      { id: 'cs405-1', title: 'Cloud Computing Fundamentals', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs405-2', title: 'Virtualization', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs405-3', title: 'Containers and Docker', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs405-4', title: 'Container Orchestration with Kubernetes', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs405-5', title: 'Serverless Computing', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs405-6', title: 'Cloud Storage and Databases', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs405-7', title: 'Cloud-Native Architectures', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs405-8', title: 'Infrastructure as Code', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs405Topics,
+    examIds: ['cs405-exam-midterm', 'cs405-exam-final'],
+    projectIds: ['cs405-project-1']
   },
 
   {
@@ -880,15 +829,8 @@ export const curriculum: Subject[] = [
       'Apply complex analysis to problems in physics and engineering'
     ],
     estimatedHours: 120,
-    topics: [
-      { id: 'math401-1', title: 'Complex Numbers and the Complex Plane', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math401-2', title: 'Analytic Functions', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math401-3', title: 'Complex Integration', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math401-4', title: 'Cauchy\'s Theorem and Integral Formula', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math401-5', title: 'Power Series and Taylor Series', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math401-6', title: 'Laurent Series and Residues', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math401-7', title: 'Conformal Mappings', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math401Topics,
+    examIds: ['math401-exam-midterm', 'math401-exam-final']
   },
 
   {
@@ -910,15 +852,8 @@ export const curriculum: Subject[] = [
       'Analyze convergence and stability of numerical algorithms'
     ],
     estimatedHours: 110,
-    topics: [
-      { id: 'math402-1', title: 'Error Analysis and Computer Arithmetic', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math402-2', title: 'Root-Finding Methods', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math402-3', title: 'Interpolation and Approximation', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math402-4', title: 'Numerical Differentiation and Integration', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math402-5', title: 'Direct Methods for Linear Systems', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math402-6', title: 'Iterative Methods for Linear Systems', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math402-7', title: 'Numerical ODEs', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math402Topics,
+    examIds: ['math402-exam-midterm', 'math402-exam-final']
   },
 
   // ============================================================================
@@ -944,16 +879,9 @@ export const curriculum: Subject[] = [
       'Present and defend technical design choices'
     ],
     estimatedHours: 150,
-    topics: [
-      { id: 'cs404-1', title: 'Project Planning and Requirements', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs404-2', title: 'Architecture and Design', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs404-3', title: 'Implementation Sprint 1', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs404-4', title: 'Implementation Sprint 2', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs404-5', title: 'Testing and Quality Assurance', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs404-6', title: 'Deployment and DevOps', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs404-7', title: 'Documentation and Presentation', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs404-8', title: 'Final Presentation and Defense', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs404Topics,
+    examIds: ['cs404-exam-midterm', 'cs404-exam-final'],
+    projectIds: ['cs404-project-1']
   },
 
   {
@@ -975,16 +903,9 @@ export const curriculum: Subject[] = [
       'Implement basic reinforcement learning algorithms'
     ],
     estimatedHours: 130,
-    topics: [
-      { id: 'cs406-1', title: 'AI Fundamentals and Intelligent Agents', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs406-2', title: 'Search Algorithms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs406-3', title: 'Adversarial Search and Game Playing', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs406-4', title: 'Constraint Satisfaction Problems', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs406-5', title: 'Planning and Reasoning', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs406-6', title: 'Knowledge Representation', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs406-7', title: 'Probabilistic Reasoning', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs406-8', title: 'Introduction to Reinforcement Learning', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs406Topics,
+    examIds: ['cs406-exam-midterm', 'cs406-exam-final'],
+    projectIds: ['cs406-project-1']
   },
 
   {
@@ -1006,16 +927,9 @@ export const curriculum: Subject[] = [
       'Apply ethical considerations in data collection and analysis'
     ],
     estimatedHours: 120,
-    topics: [
-      { id: 'cs407-1', title: 'Data Collection and APIs', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs407-2', title: 'Data Cleaning and Preprocessing', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs407-3', title: 'Exploratory Data Analysis', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs407-4', title: 'Feature Engineering', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs407-5', title: 'Data Visualization', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs407-6', title: 'Big Data Technologies', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs407-7', title: 'Data Science Workflows', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'cs407-8', title: 'Ethics in Data Science', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: cs407Topics,
+    examIds: ['cs407-exam-midterm', 'cs407-exam-final'],
+    projectIds: ['cs407-project-1']
   },
 
   {
@@ -1037,15 +951,8 @@ export const curriculum: Subject[] = [
       'Explore applications of topology to computer science and data analysis'
     ],
     estimatedHours: 110,
-    topics: [
-      { id: 'math403-1', title: 'Topological Spaces and Open Sets', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math403-2', title: 'Bases and Subbases', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math403-3', title: 'Continuity and Homeomorphisms', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math403-4', title: 'Connectedness', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math403-5', title: 'Compactness', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math403-6', title: 'Metric Spaces', content: '', quizIds: [], exerciseIds: [] },
-      { id: 'math403-7', title: 'Applications of Topology', content: '', quizIds: [], exerciseIds: [] }
-    ]
+    topics: math403Topics,
+    examIds: ['math403-exam-midterm', 'math403-exam-final']
   },
 
   {
