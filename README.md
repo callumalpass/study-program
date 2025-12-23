@@ -33,7 +33,7 @@ Subjects include:
 
 ## Progress Storage
 
-Progress saves to `localStorage` under the key `cs_degree_progress`. This includes quiz attempts, exercise completions, project submissions, and topic view history.
+Progress saves to `localStorage` under the key `study_program_progress`. This includes quiz attempts, exercise completions, project submissions, and topic view history.
 
 ### GitHub Gist Sync
 

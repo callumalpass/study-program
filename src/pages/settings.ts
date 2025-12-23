@@ -248,7 +248,7 @@ export function renderSettingsPage(container: HTMLElement): void {
             <div class="about-info">
               <div style="margin-bottom: var(--space-md);">${Mascots.Kinetic}</div>
               <h3>stu.p</h3>
-              <p>A comprehensive platform for tracking your progress through a computer science degree curriculum.</p>
+              <p>A self-study platform with structured readings, exercises, quizzes, and exams.</p>
               <div class="version-info">
                 <span>Version 1.0.0</span>
               </div>

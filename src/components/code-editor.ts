@@ -37,7 +37,7 @@ export interface CodeEditor {
 }
 
 // Local storage key prefix
-const STORAGE_PREFIX = 'cs_degree_editor_';
+const STORAGE_PREFIX = 'study_program_editor_';
 
 // Get the editor theme from the app's current theme
 function getEditorThemeFromApp(): 'vs-dark' | 'vs-light' {
@@ -57,7 +57,7 @@ export function createCodeEditor(
   let currentFontSize = config.fontSize || 14;
   let isFullscreen = false;
   let hintsRevealed = 0;
-  let vimModeEnabled = localStorage.getItem('cs_degree_vim_mode') === 'true';
+  let vimModeEnabled = localStorage.getItem('study_program_vim_mode') === 'true';
   let vimModeInstance: VimMode | null = null;
 
   // Apply light theme class if needed
@@ -426,7 +426,7 @@ export function createCodeEditor(
       vimModeInstance = initVimMode(editor, vimStatusBar);
     }
     vimModeEnabled = true;
-    localStorage.setItem('cs_degree_vim_mode', 'true');
+    localStorage.setItem('study_program_vim_mode', 'true');
     vimToggle.classList.add('active');
     vimStatusBar.style.display = 'block';
   }
@@ -437,7 +437,7 @@ export function createCodeEditor(
       vimModeInstance = null;
     }
     vimModeEnabled = false;
-    localStorage.setItem('cs_degree_vim_mode', 'false');
+    localStorage.setItem('study_program_vim_mode', 'false');
     vimToggle.classList.remove('active');
     vimStatusBar.style.display = 'none';
   }

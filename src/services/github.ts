@@ -1,7 +1,22 @@
-import { UserProgress } from '../core/types';
+import { UserProgress, UserSettings } from '../core/types';
 
-const GIST_FILENAME = 'cs-degree-progress.json';
-const GIST_DESCRIPTION = 'CS Degree Learning Platform Progress';
+const GIST_FILENAME = 'study-program-progress.json';
+const GIST_DESCRIPTION = 'Study Program Progress';
+
+// Settings that are safe to sync (non-sensitive)
+type SyncableSettings = Pick<UserSettings, 'theme' | 'codeEditorFontSize' | 'showCompletedItems' | 'studyPlan'>;
+
+/**
+ * Extract non-sensitive settings that are safe to sync to gist
+ */
+function getSyncableSettings(settings: UserSettings): SyncableSettings {
+  return {
+    theme: settings.theme,
+    codeEditorFontSize: settings.codeEditorFontSize,
+    showCompletedItems: settings.showCompletedItems,
+    studyPlan: settings.studyPlan,
+  };
+}
 
 /**
  * Minimal type for GitHub Gist API response.
@@ -63,7 +78,12 @@ export class GitHubService {
    */
   async createGist(token: string, progress: UserProgress): Promise<string | null> {
     try {
-      const { settings, ...progressToSave } = progress; // Exclude settings
+      const { settings, ...progressWithoutSettings } = progress;
+      // Include non-sensitive settings in sync
+      const progressToSave = {
+        ...progressWithoutSettings,
+        settings: getSyncableSettings(settings),
+      };
       const response = await fetch('https://api.github.com/gists', {
         method: 'POST',
         headers: {
@@ -97,7 +117,12 @@ export class GitHubService {
    */
   async updateGist(token: string, gistId: string, progress: UserProgress): Promise<boolean> {
     try {
-      const { settings, ...progressToSave } = progress; // Exclude settings
+      const { settings, ...progressWithoutSettings } = progress;
+      // Include non-sensitive settings in sync
+      const progressToSave = {
+        ...progressWithoutSettings,
+        settings: getSyncableSettings(settings),
+      };
       const response = await fetch(`https://api.github.com/gists/${gistId}`, {
         method: 'PATCH',
         headers: {

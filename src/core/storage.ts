@@ -14,7 +14,7 @@ import type {
 } from './types';
 import { githubService } from '../services/github';
 
-const STORAGE_KEY = 'cs_degree_progress';
+const STORAGE_KEY = 'study_program_progress';
 const CURRENT_VERSION = 4;
 
 // All subject IDs for migration (existing users get all subjects selected)
@@ -41,6 +41,21 @@ function calculateNextInterval(streak: number, passed: boolean): number {
   }
 }
 const SYNC_DEBOUNCE_MS = 5000; // Sync at most every 5 seconds
+
+// Settings that are safe to sync (non-sensitive)
+type SyncableSettings = Pick<UserSettings, 'theme' | 'codeEditorFontSize' | 'showCompletedItems' | 'studyPlan'>;
+
+/**
+ * Extract non-sensitive settings that are safe to sync to gist
+ */
+function getSyncableSettings(settings: UserSettings): SyncableSettings {
+  return {
+    theme: settings.theme,
+    codeEditorFontSize: settings.codeEditorFontSize,
+    showCompletedItems: settings.showCompletedItems,
+    studyPlan: settings.studyPlan,
+  };
+}
 
 export class ProgressStorage {
   private progress: UserProgress;
@@ -135,13 +150,17 @@ export class ProgressStorage {
     // Use sendBeacon for reliable delivery during page unload
     // Falls back to synchronous approach if sendBeacon unavailable
     try {
-      // Exclude settings (contains sensitive tokens) from sync
-      const { settings, ...progressToSave } = this.progress;
+      // Include non-sensitive settings in sync
+      const { settings, ...progressWithoutSettings } = this.progress;
+      const progressToSave = {
+        ...progressWithoutSettings,
+        settings: getSyncableSettings(settings),
+      };
       const payload = JSON.stringify(progressToSave);
       const url = `https://api.github.com/gists/${gistId}`;
       const body = JSON.stringify({
         files: {
-          'cs_degree_progress.json': {
+          'study-program-progress.json': {
             content: payload,
           },
         },
@@ -206,17 +225,19 @@ export class ProgressStorage {
       const remoteTimestamp = remoteProgress.lastUpdated ? new Date(remoteProgress.lastUpdated).getTime() : 0;
 
       if (remoteTimestamp > localTimestamp) {
-        // Remote is newer - import it but preserve local settings (token, gistId)
+        // Remote is newer - import it but preserve local sensitive settings
         const currentSettings = this.progress.settings;
         this.progress = remoteProgress.version !== CURRENT_VERSION
           ? this.migrate(remoteProgress)
           : remoteProgress;
 
-        // Preserve GitHub credentials from local settings
+        // Merge settings: use remote non-sensitive settings, preserve local sensitive ones
         this.progress.settings = {
           ...this.progress.settings,
+          // Preserve sensitive credentials from local settings
           githubToken: currentSettings.githubToken,
           gistId: currentSettings.gistId,
+          geminiApiKey: currentSettings.geminiApiKey,
         };
 
         // Save to localStorage without triggering sync back to Gist

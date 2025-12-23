@@ -55,7 +55,7 @@ export interface CodeEditorRef {
   reset: () => void;
 }
 
-const STORAGE_PREFIX = 'cs_degree_editor_';
+const STORAGE_PREFIX = 'study_program_editor_';
 
 function getEditorThemeFromApp(): 'vs-dark' | 'vs-light' {
   const appTheme = document.documentElement.getAttribute('data-theme');
@@ -92,7 +92,7 @@ export function CodeEditor({
   const [currentFontSize, setCurrentFontSize] = useState(initialFontSize);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [vimEnabled, setVimEnabled] = useState(() =>
-    localStorage.getItem('cs_degree_vim_mode') === 'true'
+    localStorage.getItem('study_program_vim_mode') === 'true'
   );
   const [hintsRevealed, setHintsRevealed] = useState(0);
   const [showSolution, setShowSolution] = useState(false);
@@ -210,11 +210,11 @@ export function CodeEditor({
 
     if (vimEnabled && !vimModeRef.current) {
       vimModeRef.current = initVimMode(editor, vimStatusRef.current);
-      localStorage.setItem('cs_degree_vim_mode', 'true');
+      localStorage.setItem('study_program_vim_mode', 'true');
     } else if (!vimEnabled && vimModeRef.current) {
       vimModeRef.current.dispose();
       vimModeRef.current = null;
-      localStorage.setItem('cs_degree_vim_mode', 'false');
+      localStorage.setItem('study_program_vim_mode', 'false');
     }
   }, [vimEnabled]);
 

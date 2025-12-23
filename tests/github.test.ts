@@ -30,9 +30,15 @@ describe('GitHubService', () => {
     },
     settings: {
       theme: 'dark',
-      studyPace: 'standard',
-      weeklyGoalHours: 10,
-      github: {},
+      codeEditorFontSize: 14,
+      showCompletedItems: true,
+      githubToken: 'secret_token',
+      gistId: 'secret_gist_id',
+      geminiApiKey: 'secret_api_key',
+      studyPlan: {
+        startDate: '2024-01-01',
+        pace: 'standard',
+      },
     },
   };
 
@@ -103,7 +109,7 @@ describe('GitHubService', () => {
     it('should find existing gist with correct filename', async () => {
       const mockGists = [
         { id: 'other123', files: { 'other-file.json': {} } },
-        { id: testGistId, files: { 'cs-degree-progress.json': {} } },
+        { id: testGistId, files: { 'study-program-progress.json': {} } },
         { id: 'another456', files: { 'notes.md': {} } },
       ];
 
@@ -176,7 +182,7 @@ describe('GitHubService', () => {
       const mockGists = [
         { id: 'broken1' },
         { id: 'broken2', files: null },
-        { id: testGistId, files: { 'cs-degree-progress.json': {} } },
+        { id: testGistId, files: { 'study-program-progress.json': {} } },
       ];
 
       mockFetch.mockResolvedValueOnce({
@@ -213,12 +219,12 @@ describe('GitHubService', () => {
       // Verify the body structure
       const callArgs = mockFetch.mock.calls[0];
       const body = JSON.parse(callArgs[1].body);
-      expect(body.description).toBe('CS Degree Learning Platform Progress');
+      expect(body.description).toBe('Study Program Progress');
       expect(body.public).toBe(false);
-      expect(body.files['cs-degree-progress.json']).toBeDefined();
+      expect(body.files['study-program-progress.json']).toBeDefined();
     });
 
-    it('should exclude settings from gist content', async () => {
+    it('should sync non-sensitive settings and exclude sensitive ones', async () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ({ id: testGistId }),
@@ -228,9 +234,23 @@ describe('GitHubService', () => {
 
       const callArgs = mockFetch.mock.calls[0];
       const body = JSON.parse(callArgs[1].body);
-      const savedProgress = JSON.parse(body.files['cs-degree-progress.json'].content);
+      const savedProgress = JSON.parse(body.files['study-program-progress.json'].content);
 
-      expect(savedProgress.settings).toBeUndefined();
+      // Non-sensitive settings should be synced
+      expect(savedProgress.settings).toBeDefined();
+      expect(savedProgress.settings.theme).toBe('dark');
+      expect(savedProgress.settings.codeEditorFontSize).toBe(14);
+      expect(savedProgress.settings.showCompletedItems).toBe(true);
+      expect(savedProgress.settings.studyPlan).toEqual({
+        startDate: '2024-01-01',
+        pace: 'standard',
+      });
+
+      // Sensitive settings should be excluded
+      expect(savedProgress.settings.githubToken).toBeUndefined();
+      expect(savedProgress.settings.gistId).toBeUndefined();
+      expect(savedProgress.settings.geminiApiKey).toBeUndefined();
+
       expect(savedProgress.subjects).toBeDefined();
       expect(savedProgress.version).toBe(1);
     });
@@ -263,7 +283,7 @@ describe('GitHubService', () => {
         version: 1,
         startedAt: '2024-01-01T00:00:00.000Z',
         subjects: {},
-        settings: { theme: 'light', studyPace: 'standard', weeklyGoalHours: 5, github: {} },
+        settings: { theme: 'light', codeEditorFontSize: 14, showCompletedItems: true },
       };
 
       mockFetch.mockResolvedValueOnce({
@@ -301,7 +321,7 @@ describe('GitHubService', () => {
       );
     });
 
-    it('should exclude settings from update', async () => {
+    it('should sync non-sensitive settings and exclude sensitive ones', async () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ({ id: testGistId }),
@@ -311,9 +331,18 @@ describe('GitHubService', () => {
 
       const callArgs = mockFetch.mock.calls[0];
       const body = JSON.parse(callArgs[1].body);
-      const savedProgress = JSON.parse(body.files['cs-degree-progress.json'].content);
+      const savedProgress = JSON.parse(body.files['study-program-progress.json'].content);
 
-      expect(savedProgress.settings).toBeUndefined();
+      // Non-sensitive settings should be synced
+      expect(savedProgress.settings).toBeDefined();
+      expect(savedProgress.settings.theme).toBe('dark');
+      expect(savedProgress.settings.studyPlan).toBeDefined();
+
+      // Sensitive settings should be excluded
+      expect(savedProgress.settings.githubToken).toBeUndefined();
+      expect(savedProgress.settings.gistId).toBeUndefined();
+      expect(savedProgress.settings.geminiApiKey).toBeUndefined();
+
       expect(savedProgress.subjects).toBeDefined();
     });
 
@@ -367,7 +396,7 @@ describe('GitHubService', () => {
         json: async () => ({
           id: testGistId,
           files: {
-            'cs-degree-progress.json': {
+            'study-program-progress.json': {
               content: JSON.stringify(progressWithoutSettings),
               truncated: false,
             },
@@ -401,7 +430,7 @@ describe('GitHubService', () => {
           json: async () => ({
             id: testGistId,
             files: {
-              'cs-degree-progress.json': {
+              'study-program-progress.json': {
                 content: '{}', // Truncated content
                 truncated: true,
                 raw_url: rawUrl,
@@ -430,7 +459,7 @@ describe('GitHubService', () => {
           json: async () => ({
             id: testGistId,
             files: {
-              'cs-degree-progress.json': {
+              'study-program-progress.json': {
                 content: '{}',
                 truncated: true,
                 raw_url: rawUrl,
@@ -493,7 +522,7 @@ describe('GitHubService', () => {
         json: async () => ({
           id: testGistId,
           files: {
-            'cs-degree-progress.json': {
+            'study-program-progress.json': {
               content: '',
               truncated: false,
             },
@@ -512,7 +541,7 @@ describe('GitHubService', () => {
         json: async () => ({
           id: testGistId,
           files: {
-            'cs-degree-progress.json': null,
+            'study-program-progress.json': null,
           },
         }),
       });
@@ -528,7 +557,7 @@ describe('GitHubService', () => {
         json: async () => ({
           id: testGistId,
           files: {
-            'cs-degree-progress.json': {
+            'study-program-progress.json': {
               content: 'invalid json {{{',
               truncated: false,
             },
@@ -552,7 +581,7 @@ describe('GitHubService', () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => [
-          { id: testGistId, files: { 'cs-degree-progress.json': {} } },
+          { id: testGistId, files: { 'study-program-progress.json': {} } },
         ],
       });
 
@@ -610,7 +639,7 @@ describe('GitHubService', () => {
         json: async () => ({
           id: testGistId,
           files: {
-            'cs-degree-progress.json': {
+            'study-program-progress.json': {
               content: JSON.stringify(remoteProgress),
               truncated: false,
             },
@@ -631,7 +660,7 @@ describe('GitHubService', () => {
         version: 1,
         startedAt: '2024-01-01T00:00:00.000Z',
         subjects: {},
-        settings: { theme: 'dark', studyPace: 'standard', weeklyGoalHours: 10, github: {} },
+        settings: { theme: 'dark', codeEditorFontSize: 14, showCompletedItems: true },
       };
 
       for (let i = 0; i < 100; i++) {
@@ -683,7 +712,7 @@ describe('GitHubService', () => {
             projectSubmissions: {},
           },
         },
-        settings: { theme: 'dark', studyPace: 'standard', weeklyGoalHours: 10, github: {} },
+        settings: { theme: 'dark', codeEditorFontSize: 14, showCompletedItems: true },
       };
 
       mockFetch.mockResolvedValueOnce({
@@ -696,7 +725,7 @@ describe('GitHubService', () => {
 
       const callArgs = mockFetch.mock.calls[0];
       const body = JSON.parse(callArgs[1].body);
-      const content = body.files['cs-degree-progress.json'].content;
+      const content = body.files['study-program-progress.json'].content;
       expect(content).toContain('cs-émoji-test-🎓');
     });
   });
