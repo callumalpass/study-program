@@ -64,7 +64,6 @@
 
 ### 1. Missing subject-spec.yaml
 Many subjects still need subject-spec.yaml files (required since 2025-12-20):
-- CS403
 - MATH101, MATH102, MATH201, MATH202
 - MATH302, MATH304
 
@@ -107,11 +106,22 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (7 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (6 subjects) |
 
-**Total Estimated:** ~3.5 hours for spec files.
+**Total Estimated:** ~3 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### CS403: Advanced Algorithms - Added Subject Specification
+- **Status:** Already 10/10, now with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: NP-completeness, approximation algorithms, randomized algorithms, online algorithms, advanced DP, network flow, computational geometry
+  3. Specified assessment philosophy balancing theoretical proofs and implementation
+  4. Defined exercise distribution (70% coding with tests, 15% AI-evaluated, 15% written)
+  5. Set project count to 3 (matching existing: SAT Solver, Approximation Library, Geometry Toolkit)
+  6. Set exam targets (28 midterm, 42 final) matching existing content
+- **Quality verified:** 66,213 total words (avg 1,351/subtopic), 112 exercises, 105 quiz questions, 70 exam questions, 3 projects
 
 ### CS405: Cloud Computing - Content Expansion and Final Exam Completion
 - **Status:** 10/10 (maintained, content expanded)

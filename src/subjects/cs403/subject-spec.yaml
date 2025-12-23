@@ -1,0 +1,287 @@
+# CS403: Advanced Algorithms - Subject Specification
+# This spec guides content creation for a senior-level algorithms course focusing on
+# computational complexity, approximation, randomization, and specialized algorithmic techniques.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: cs403
+title: Advanced Algorithms
+category: cs
+
+role:
+  level: advanced
+  transformation: >
+    From "I can implement standard algorithms" to "I can analyze computational hardness,
+    design approximation schemes, leverage randomization, and apply specialized techniques
+    (DP, flow, geometry) to solve complex optimization problems."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Data structures and basic algorithms (CS104, CS201)
+    - Algorithm analysis (asymptotic notation, recurrences)
+    - Graph algorithms (BFS, DFS, shortest paths, MST)
+    - Basic probability and expected value
+    - Discrete mathematics (sets, combinatorics)
+
+  essential_concepts:
+    - NP-completeness and computational intractability (reductions, Cook-Levin)
+    - Approximation algorithms (ratios, PTAS, FPTAS, LP relaxation)
+    - Randomized algorithms (Las Vegas, Monte Carlo, probabilistic analysis)
+    - Online algorithms and competitive analysis
+    - Advanced dynamic programming (matrix chain, optimal BST, bitmask DP)
+    - Network flow and matching (Ford-Fulkerson, max-flow min-cut, bipartite)
+    - Computational geometry (convex hull, sweep line, closest pair, Voronoi)
+
+  out_of_scope:
+    - Fixed-parameter tractability (FPT) and parameterized complexity
+    - Quantum algorithms
+    - External memory algorithms (beyond conceptual mention)
+    - Parallel and distributed algorithms (covered in CS401)
+    - Machine learning optimization (covered in CS402)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Constructs polynomial-time reductions between NP-complete problems
+    - Analyzes approximation ratios using charging arguments and lower bounds
+    - Applies probabilistic analysis to bound expected running time or error probability
+    - Designs online algorithms and proves competitive ratios
+    - Formulates problems as network flow and extracts solutions
+    - Implements geometric algorithms with correct handling of degenerate cases
+
+  common_struggles:
+    - Choosing the right reduction direction (A ≤p B means A is "easier")
+    - Confusing approximation ratio direction (OPT/ALG vs ALG/OPT)
+    - Misapplying probabilistic bounds (union bound, Markov, Chernoff)
+    - Forgetting to account for adversarial input in online algorithm analysis
+    - Off-by-one errors in DP state transitions and base cases
+    - Numerical precision issues in geometric predicates
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Include complexity analysis (time and space) for every algorithm
+    - Show reduction structure explicitly for NP-completeness proofs
+    - Provide working code implementations in TypeScript
+    - Include visual diagrams for graph algorithms and geometry
+    - State approximation guarantees formally with proof sketches
+
+  conventions:
+    - TypeScript for all code examples
+    - LaTeX for complexity expressions and mathematical proofs
+    - Mermaid diagrams for algorithm flowcharts and graph structures
+    - Consistent notation (OPT for optimal, ALG for algorithm output)
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Advanced algorithms requires both theoretical understanding and implementation skill.
+    Students must construct reductions, analyze probabilistic bounds, and prove approximation
+    ratios—not just recognize them. Coding exercises validate that students can translate
+    algorithmic ideas into correct, efficient implementations. The mix of proof-based and
+    implementation-based assessment reflects the dual nature of algorithm design.
+
+  measures:
+    - Ability to construct and verify polynomial-time reductions
+    - Correct analysis of approximation ratios with valid lower bound arguments
+    - Proper application of probabilistic techniques (expectation, concentration)
+    - Implementation correctness on standard and edge-case inputs
+    - Appropriate algorithm selection for problem characteristics
+
+  anti_patterns:
+    - Asking for memorization of specific reduction proofs
+    - Implementation exercises that test language syntax over algorithm design
+    - Problems with only brute-force solutions (defeats the "advanced" aspect)
+    - Approximation questions without access to verify ratio claims
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 70
+    exams: 65
+
+  rationale: >
+    Standard thresholds for a senior-level course. Slightly lower exam threshold
+    acknowledges the difficulty of constructing proofs under time pressure.
+    Exercises require higher threshold since students have time to iterate.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises combine implementation and analysis. Students must implement algorithms
+    correctly (tested automatically) and reason about their properties (proofs, analysis).
+    Approximation and complexity topics require more written exercises for reduction
+    proofs; geometric and flow topics emphasize implementation with visual output.
+
+  types:
+    coding_with_tests: "70%"
+    coding_ai_evaluated: "15%"
+    written: "15%"
+    justification: >
+      Implementation is central to understanding algorithms, so majority are coding.
+      Written exercises for reduction proofs, approximation ratio analysis, and
+      probabilistic arguments where automated testing cannot verify correctness.
+      AI-evaluated coding for open-ended optimizations where multiple valid approaches exist.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Standard base count. Each exercise focuses on a specific technique or algorithm.
+      Topics like NP-completeness have more written (reduction proofs); topics like
+      computational geometry have more coding (implementations).
+
+  difficulty_distribution:
+    1: 2
+    2: 3
+    3: 5
+    4: 4
+    5: 2
+    justification: >
+      Skewed toward medium-hard since this is an advanced course. Difficulty-1 exercises
+      are rare (basic API usage). Most exercises at difficulty 3-4 require applying
+      course techniques. Difficulty-5 exercises involve novel problem formulations
+      or combining multiple techniques.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test conceptual understanding: recognizing NP-complete problems, identifying
+    approximation ratios, understanding probabilistic guarantees, and tracing algorithm
+    behavior. Quick checks before diving into implementation exercises.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard 3 quizzes per topic with 5 questions each (base standard).
+      Quiz A: definitions and classifications. Quiz B: algorithm tracing and analysis.
+      Quiz C: problem-solving and edge cases.
+
+  question_types:
+    multiple_choice: "45%"
+    true_false: "15%"
+    fill_blank: "10%"
+    code_output: "20%"
+    coding: "0%"
+    written: "10%"
+    justification: >
+      Multiple-choice for complexity classifications and approximation ratios.
+      Code output for tracing DP recurrences, flow augmentations, and geometric predicates.
+      Written for short proof justifications. No full coding in quizzes—those are exercises.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams test synthesis: can students construct reductions, analyze algorithms, and
+    solve problems under time pressure? Mix of recognition (multiple choice) and
+    construction (written proofs, short code). Final is comprehensive with emphasis
+    on later topics that build on foundations.
+
+  midterm:
+    questions:
+      minimum: 25
+      target: 28
+      maximum: 35
+    duration_minutes: 75
+    format: >
+      10-12 multiple choice (complexity, approximation, randomization concepts),
+      5-7 true/false or fill-blank (common misconceptions, definitions),
+      6-8 short-answer or written (reduction sketches, ratio analysis),
+      3-5 code tracing or short implementation.
+    coverage: "Topics 1-4: NP-Completeness, Approximation, Randomization, Online Algorithms"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 50
+    duration_minutes: 120
+    format: >
+      15-18 multiple choice spanning all topics,
+      8-10 conceptual questions (true/false, fill-blank),
+      10-12 written problems (reduction proofs, approximation analysis, algorithm design),
+      5-7 code-based questions (tracing, implementation snippets).
+    coverage: "Comprehensive: all 7 topics with emphasis on Topics 5-7"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: true
+  count: 3
+  rationale: >
+    Three substantial projects let students deeply engage with major course themes:
+    (1) SAT solving combines complexity theory with practical implementation,
+    (2) Approximation library validates understanding of ratio guarantees,
+    (3) Computational geometry toolkit requires robust implementation with visualization.
+    Each project is independently substantial and builds portfolio-worthy artifacts.
+
+  goals:
+    - Implement and optimize a complete algorithmic system (not just textbook snippets)
+    - Validate theoretical guarantees empirically through benchmarking
+    - Handle edge cases and degeneracies that arise in real implementations
+    - Produce documented, tested, reusable code
+
+  estimated_hours: "12-15"
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Reduction proof that goes the wrong direction (proving A NP-hard by reducing A to B)
+  - Approximation exercise that can be solved exactly in polynomial time
+  - Randomized algorithm question without clarifying Las Vegas vs Monte Carlo
+  - DP exercise where the state space doesn't cover all subproblems
+  - Geometric algorithm that ignores degenerate cases (collinear points, duplicates)
+  - Flow problem with capacity/demand inconsistency
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  CS403 is the capstone algorithms course. Students should already be comfortable
+  with algorithm analysis and implementation; this course elevates them to analyze
+  hardness, design approximations, and apply sophisticated techniques. Content should
+  emphasize "why" (proof techniques, analysis frameworks) as much as "how" (implementations).
+  Projects are substantial—each is a mini research/engineering effort. Encourage
+  students to go beyond minimum requirements and explore extensions.
