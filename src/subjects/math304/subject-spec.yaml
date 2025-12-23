@@ -1,0 +1,290 @@
+# MATH304: Abstract Algebra - Subject Specification
+# This spec guides content creation for an advanced proof-based algebra course
+# covering groups, rings, fields, and cryptographic applications.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: math304
+title: Abstract Algebra
+category: math
+
+role:
+  level: advanced
+  transformation: >
+    From "algebra is solving equations" to "I understand the deep structures
+    underlying arithmetic and can construct proofs about groups, rings, and
+    fields." Students develop rigorous proof skills while seeing how abstract
+    structures connect to modern cryptography.
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - Linear algebra (vector spaces, matrices, linear transformations)
+    - Mathematical maturity and comfort with proofs
+    - Basic set theory and function properties
+    - Modular arithmetic fundamentals
+    - MATH303 Real Analysis or equivalent proof experience
+
+  essential_concepts:
+    - Groups and subgroups (axioms, examples, subgroup tests)
+    - Cyclic groups and generators (order, Euler phi function)
+    - Permutation groups (cycle notation, alternating group, dihedral groups)
+    - Cosets and Lagrange's Theorem (index, normal subgroups, quotient groups)
+    - Group homomorphisms and isomorphisms (kernels, First Isomorphism Theorem)
+    - Rings and fields (integral domains, ideals, polynomial rings)
+    - Applications to cryptography (RSA, Diffie-Hellman, elliptic curves)
+
+  out_of_scope:
+    - Galois theory (graduate-level topic)
+    - Advanced ring theory (Noetherian rings, localization)
+    - Representation theory
+    - Category theory perspective on algebra
+    - Algebraic geometry applications
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: proof-based
+
+  mastery_indicators:
+    - Verifies group axioms for novel algebraic structures
+    - Constructs subgroup lattices and identifies normal subgroups
+    - Computes with cycle notation and determines permutation parity
+    - Applies Lagrange's Theorem and its corollaries to deduce group properties
+    - Proves statements about homomorphisms and applies isomorphism theorems
+    - Identifies ring-theoretic properties (units, zero divisors, ideals)
+    - Applies number-theoretic results to cryptographic protocols
+
+  common_struggles:
+    - Verifying all four group axioms (especially associativity)
+    - Confusing subgroup with subset (forgetting closure under operation)
+    - Cycle multiplication direction (left-to-right vs right-to-left)
+    - Normal subgroup definition (gHg^-1 = H vs gH = Hg)
+    - Distinguishing isomorphism from homomorphism
+    - Ring axioms vs field axioms (when multiplicative inverses exist)
+    - Connecting abstract theory to concrete cryptographic algorithms
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Every definition accompanied by multiple examples (familiar and unfamiliar)
+    - Non-examples and counterexamples for major definitions
+    - Proof sketches before formal proofs for complex theorems
+    - Explicit statements of which proof technique is being used
+    - Connections between algebraic structures and prior knowledge
+    - Cryptographic applications shown with concrete numerical examples
+
+  conventions:
+    - LaTeX for all mathematical expressions
+    - Standard group notation (G, H, K for groups; e for identity; a^-1 for inverse)
+    - Cycle notation for permutations: (1 2 3) means 1 -> 2 -> 3 -> 1
+    - Ring notation (R, S for rings; 0, 1 for additive/multiplicative identities)
+    - Proofs begin with "Proof:" and end with box
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Abstract algebra mastery requires constructing proofs, not just recognizing
+    correct ones. Exams test both conceptual understanding (definitions, examples,
+    counterexamples) and proof construction. Cryptographic applications demonstrate
+    that abstract theory has concrete utility. Assessment rewards clear logical
+    structure even when conclusions aren't fully reached.
+
+  measures:
+    - Correct verification of algebraic structure axioms
+    - Construction of proofs using standard techniques
+    - Application of major theorems (Lagrange, Isomorphism Theorems)
+    - Recognition of structure-preserving maps
+    - Numerical computation in cryptographic contexts
+
+  anti_patterns:
+    - Asking students to reproduce specific textbook proofs verbatim
+    - Pure computation without conceptual justification
+    - Questions answerable by memorization rather than understanding
+    - Trick questions exploiting notational ambiguity
+    - Cryptography questions requiring implementation rather than math
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 65
+
+  thresholds:
+    exercises: 60
+    quizzes: 65
+    exams: 60
+
+  rationale: >
+    Slightly lower passing threshold than introductory courses because abstract
+    algebra proofs are challenging. A student who can construct 60% of proofs
+    correctly has demonstrated significant mathematical maturity. However, the
+    threshold ensures students engage seriously with the material.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Exercises develop proof construction skills through graduated difficulty.
+    Early exercises verify definitions with specific examples. Intermediate
+    exercises require short proofs. Advanced exercises require multi-step
+    arguments or creative problem-solving. Cryptography exercises include
+    numerical computation alongside theoretical justification.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      Pure mathematics subject. All exercises are proofs, verification of
+      axioms, counterexample construction, or cryptographic computation.
+      AI evaluation compares student proofs to reference solutions for
+      logical validity and completeness.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Standard base count appropriate for proof-based content. Each exercise
+      requires substantial thought and writing. 16 exercises per topic provides
+      sufficient variety across difficulty levels without overwhelming students.
+
+  difficulty_distribution:
+    1: 2
+    2: 3
+    3: 5
+    4: 4
+    5: 2
+    justification: >
+      Skewed toward medium difficulty because abstract algebra has a high floor.
+      Difficulty 1-2 exercises verify definitions and compute with examples.
+      Difficulty 3-4 require short proofs using standard techniques.
+      Difficulty 5 exercises require creative insight or multi-theorem arguments.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes assess definition recall, example recognition, and short reasoning
+    before students attempt full proof exercises. They catch gaps in foundational
+    understanding early and build confidence with algebraic structures.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard base count. Three quizzes per topic provide staged assessment:
+      fundamentals (definitions), application (examples/computations), and
+      mastery (short proofs/counterexamples). 15 questions per topic ensures
+      comprehensive coverage.
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "20%"
+    fill_blank: "15%"
+    code_output: "0%"
+    coding: "0%"
+    written: "15%"
+    justification: >
+      Heavy on multiple choice for conceptual testing (which structure is a
+      group, which function is a homomorphism). True/false for common
+      misconceptions. Fill-blank for precise definitions. Limited written
+      for very short proofs or justifications.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams require proof construction under time pressure, testing both speed
+    and understanding. Mix of question types: quick conceptual questions, medium
+    computation, and extended proof problems. Time allows 3-4 minutes per
+    question on average, with flexibility for longer proofs.
+
+  midterm:
+    questions:
+      minimum: 22
+      target: 26
+      maximum: 30
+    duration_minutes: 75
+    format: >
+      10-12 multiple choice conceptual questions, 4-6 true/false addressing
+      common misconceptions, 4-5 short computation or fill-blank, 4-6 short
+      proof or verification problems. Emphasis on group theory foundations.
+    coverage: "Topics 1-4: Groups, Cyclic Groups, Permutations, Cosets/Lagrange"
+
+  final:
+    questions:
+      minimum: 36
+      target: 42
+      maximum: 48
+    duration_minutes: 120
+    format: >
+      Comprehensive coverage of all topics. 16-18 multiple choice, 6-8 true/false,
+      6-8 fill-blank/computation, 10-12 proof problems. Ring and field theory
+      and cryptographic applications weighted appropriately in later sections.
+      At least one problem requiring synthesis of multiple concepts.
+    coverage: "Comprehensive: all 7 topics with emphasis on connections"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    Pure mathematics courses traditionally assess via problem sets and exams
+    rather than projects. The cryptography topic provides applied context without
+    requiring implementation. Students demonstrate mastery through proof
+    construction in exercises and exams.
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires theorem not yet proven in the curriculum
+  - Proof problem has unique "trick" not generalizable to other problems
+  - Cryptography problem requires programming rather than mathematical analysis
+  - Quiz question tests obscure result rather than fundamental concept
+  - Exercise asks for computation without theoretical understanding
+  - Content uses nonstandard notation without definition
+  - Proof in content uses hand-waving ("clearly", "obviously") without justification
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Abstract Algebra bridges pure mathematics and computer science applications.
+  Content should maintain rigor while showing why these structures matter:
+  groups arise in symmetry and error correction, rings in polynomial algebra,
+  fields in cryptography. The cryptography topic (Topic 7) is especially
+  important for CS students—show how RSA, Diffie-Hellman, and elliptic curves
+  rely on the algebraic foundations from earlier topics. Students should leave
+  understanding both the abstract beauty and practical utility of algebraic
+  structures.
