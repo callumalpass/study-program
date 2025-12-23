@@ -1,0 +1,278 @@
+# MATH201: Linear Algebra - Subject Specification
+# This spec guides content creation for a foundational, computationally-focused linear algebra course.
+
+# ==============================================================================
+# SUBJECT IDENTITY
+# ==============================================================================
+
+id: math201
+title: Linear Algebra
+category: math
+
+role:
+  level: intermediate
+  transformation: >
+    From "I can solve systems of equations by substitution" to "I understand the
+    geometric and algebraic structure underlying systems of linear equations,
+    and can apply matrix methods to solve practical problems in science and engineering."
+
+# ==============================================================================
+# CURRICULUM
+# ==============================================================================
+
+curriculum:
+  subtopic_word_target: 1000
+
+  prerequisite_knowledge:
+    - High school algebra (solving equations, basic manipulation)
+    - Familiarity with coordinate geometry (points, lines, planes)
+    - Basic understanding of functions and graphs
+    - Some exposure to vectors (magnitude, direction) is helpful but not required
+
+  essential_concepts:
+    - Systems of linear equations and Gaussian elimination
+    - Matrix operations (addition, multiplication, transpose, inverse)
+    - Vector spaces, subspaces, and spans
+    - Linear independence, basis, and dimension
+    - Determinants and their properties
+    - Eigenvalues, eigenvectors, and diagonalization
+    - Linear transformations and their matrix representations
+
+  out_of_scope:
+    - Abstract vector spaces over arbitrary fields (covered in Abstract Algebra)
+    - Inner product spaces and orthogonality (often a separate follow-up course)
+    - Singular Value Decomposition in depth (graduate-level treatment)
+    - Numerical stability and advanced computational methods (Numerical Methods course)
+    - Infinite-dimensional vector spaces (functional analysis)
+
+# ==============================================================================
+# PEDAGOGICAL APPROACH
+# ==============================================================================
+
+pedagogy:
+  knowledge_type: mixed
+
+  mastery_indicators:
+    - Performs Gaussian elimination correctly on 3×3 and larger systems
+    - Determines whether a set of vectors is linearly independent
+    - Computes determinants using cofactor expansion and row reduction
+    - Finds eigenvalues and eigenvectors for 2×2 and 3×3 matrices
+    - Determines whether a matrix is diagonalizable and computes the diagonalization
+    - Interprets linear transformations geometrically (rotations, reflections, projections)
+    - Applies matrix methods to solve real-world problems
+
+  common_struggles:
+    - Confusing row operations with column operations
+    - Forgetting that matrix multiplication is not commutative
+    - Mixing up row space, column space, and null space
+    - Errors in determinant computation (sign errors in cofactors)
+    - Difficulty with abstract vector space concepts beyond ℝⁿ
+    - Confusing eigenvalues with diagonal entries
+    - Not recognizing when a matrix is not diagonalizable
+
+# ==============================================================================
+# CONTENT STANDARDS
+# ==============================================================================
+
+content:
+  subtopic_requirements:
+    - Every algorithm (Gaussian elimination, determinant computation, etc.) shown step-by-step
+    - Include both computational examples and geometric interpretations
+    - Definitions followed by concrete examples in ℝ² and ℝ³ when possible
+    - Show common errors students make and how to avoid them
+    - Connect abstract concepts to practical applications
+
+  conventions:
+    - LaTeX for all mathematical expressions
+    - Matrices denoted with capital letters (A, B, C)
+    - Vectors as lowercase bold or with arrows (v, u) or column matrices
+    - Use augmented matrix notation for systems [A | b]
+    - Explicitly show row operations with notation (R₂ ← R₂ - 3R₁)
+
+# ==============================================================================
+# ASSESSMENT PHILOSOPHY
+# ==============================================================================
+
+assessment:
+  philosophy: >
+    Linear algebra requires both computational fluency and conceptual understanding.
+    Students must be able to perform matrix computations accurately AND understand
+    what those computations mean geometrically. Assessments balance computation
+    (can you do the algorithm?) with conceptual questions (what does this result mean?).
+
+  measures:
+    - Ability to perform matrix operations correctly
+    - Understanding of vector space structure (span, independence, basis)
+    - Computation of determinants, eigenvalues, and eigenvectors
+    - Application of concepts to solve systems and analyze transformations
+    - Geometric interpretation of algebraic results
+
+  anti_patterns:
+    - Asking for memorization of specific matrix entries
+    - Trick questions involving unusual edge cases
+    - Pure computation without requiring interpretation
+    - Problems that can be solved by calculator without understanding
+
+# ==============================================================================
+# GRADING THRESHOLDS
+# ==============================================================================
+
+grading:
+  passing_score: 70
+
+  thresholds:
+    exercises: 70
+    quizzes: 65
+    exams: 65
+
+  rationale: >
+    Standard passing threshold for a foundational math course. Computational
+    accuracy is important but some arithmetic errors are acceptable as long as
+    the method is correct. Quiz threshold slightly lower because multiple-choice
+    format can be tricky even with good understanding.
+
+# ==============================================================================
+# EXERCISE SPECIFICATIONS
+# ==============================================================================
+
+exercises:
+  rationale: >
+    Linear algebra exercises balance computation (performing algorithms) with
+    conceptual understanding (interpreting results). Students need practice with
+    both types. Written exercises allow for proof-style problems and short-answer
+    explanations that complement pure computation.
+
+  types:
+    coding_with_tests: "0%"
+    coding_ai_evaluated: "0%"
+    written: "100%"
+    justification: >
+      Pure mathematics subject. All exercises are written—either computational
+      (show all work) or conceptual (prove, explain, interpret). AI evaluation
+      checks both correctness of answers and validity of reasoning.
+
+  per_topic:
+    minimum: 14
+    target: 16
+    maximum: 18
+    justification: >
+      Standard exercise count. Linear algebra benefits from volume of practice
+      because computational fluency requires repetition. Each exercise can be
+      completed in 10-20 minutes on average.
+
+  difficulty_distribution:
+    1: 2
+    2: 4
+    3: 5
+    4: 3
+    5: 2
+    justification: >
+      Moderate skew toward middle difficulties. D1-D2 exercises are straightforward
+      computations. D3 exercises combine concepts or require interpretation.
+      D4-D5 exercises involve proofs or multi-step problems.
+
+# ==============================================================================
+# QUIZ SPECIFICATIONS
+# ==============================================================================
+
+quizzes:
+  rationale: >
+    Quizzes test both conceptual understanding and basic computational ability.
+    They catch students who can follow algorithms mechanically but don't understand
+    the underlying concepts. Quick recall of definitions and properties is essential.
+
+  per_topic:
+    count: 3
+    questions_each: 5
+    justification: >
+      Standard quiz count. Three quizzes per topic allows progression: Quiz A
+      (definitions and basic computations), Quiz B (applying concepts),
+      Quiz C (interpreting results and edge cases).
+
+  question_types:
+    multiple_choice: "50%"
+    true_false: "20%"
+    fill_blank: "20%"
+    code_output: "0%"
+    coding: "0%"
+    written: "10%"
+    justification: >
+      Heavy on multiple choice to test conceptual understanding and common
+      misconceptions. True/false to address frequent errors (matrix multiplication
+      commutativity, invertibility conditions). Fill-blank for key values
+      (determinants, eigenvalues). Some written for short computations.
+
+# ==============================================================================
+# EXAM SPECIFICATIONS
+# ==============================================================================
+
+exams:
+  rationale: >
+    Exams combine computational problems with conceptual questions. Students should
+    spend 2-4 minutes per question on average. Computation problems test fluency;
+    conceptual problems test understanding. Mix ensures students can't pass by
+    memorizing algorithms alone.
+
+  midterm:
+    questions:
+      minimum: 24
+      target: 28
+      maximum: 32
+    duration_minutes: 90
+    format: >
+      10-12 computational problems (row reduction, matrix operations, determinants),
+      10-12 conceptual multiple choice (definitions, properties, interpretations),
+      4-6 short answer (find basis, prove linear independence, explain result).
+    coverage: "Topics 1-4: Systems, matrices, vector spaces, linear independence"
+
+  final:
+    questions:
+      minimum: 38
+      target: 42
+      maximum: 46
+    duration_minutes: 120
+    format: >
+      15-18 computational problems (including eigenvalues/eigenvectors),
+      15-18 conceptual multiple choice (comprehensive),
+      8-10 short answer (transformations, diagonalization, applications).
+      At least one problem integrating multiple topics.
+    coverage: "Comprehensive: all 7 topics with emphasis on later topics"
+    cumulative: true
+
+# ==============================================================================
+# PROJECT SPECIFICATIONS
+# ==============================================================================
+
+projects:
+  required: false
+  count: 0
+  rationale: >
+    Linear algebra traditionally assesses via problem sets and exams rather than
+    projects. The computational exercises provide sufficient practice with
+    algorithms. Projects are optional enhancements (e.g., MATLAB/Python applications)
+    but not required for the core curriculum.
+
+# ==============================================================================
+# SUBJECT-SPECIFIC RED FLAGS
+# ==============================================================================
+
+red_flags:
+  - Exercise requires computing determinant of 5×5 or larger matrix by hand
+  - Quiz question asks to memorize specific matrix entries from an example
+  - Content shows row operations without clear notation of which operations were applied
+  - Proof exercise asks for verbatim reproduction of a theorem proof from content
+  - Exercise difficulty marked as 1-2 but requires understanding of eigenvalues/eigenvectors
+  - Eigenvalue problem with matrices larger than 4×4 (too computationally intensive)
+  - Geometric interpretation missing from transformation problems
+
+# ==============================================================================
+# NOTES
+# ==============================================================================
+
+notes: >
+  Linear algebra is a gateway to both abstract mathematics (vector spaces, operators)
+  and applied mathematics (data science, machine learning, graphics). Content should
+  emphasize both perspectives: the formal structure (axioms, proofs) and practical
+  applications (solving systems, data analysis). Students should finish understanding
+  both "how to compute" and "why the computation works." Geometric intuition in ℝ² and
+  ℝ³ helps motivate abstract definitions—use visualizations where appropriate.
