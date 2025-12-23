@@ -98,6 +98,22 @@ $$y = Ce^{kx}$$
 
 This is the general solution. Note that $y = 0$ is also a solution (a **singular solution** lost during division by $y$).
 
+The following plot shows solution curves for exponential growth ($k > 0$) and decay ($k < 0$):
+
+```plot
+{
+  "title": "Exponential Growth and Decay Solutions",
+  "xAxis": { "domain": [0, 3], "label": "t" },
+  "yAxis": { "domain": [0, 5], "label": "y" },
+  "data": [
+    { "fn": "exp(x)", "color": "#22c55e", "title": "y = eᵗ (k=1, growth)" },
+    { "fn": "2*exp(0.5*x)", "color": "#16a34a", "title": "y = 2e^(0.5t)" },
+    { "fn": "3*exp(-x)", "color": "#ef4444", "title": "y = 3e^(-t) (decay)" },
+    { "fn": "exp(-0.5*x)", "color": "#dc2626", "title": "y = e^(-0.5t)" }
+  ]
+}
+```
+
 ### Example 2: Polynomial Separation
 
 Solve $\frac{dy}{dx} = \frac{x^2}{y}$.
@@ -182,6 +198,23 @@ After solving for $P$:
 $$P(t) = \frac{K}{1 + Ae^{-rt}}$$
 
 where $A$ is determined by the initial condition.
+
+The logistic solution exhibits the characteristic S-shaped (sigmoid) curve:
+
+```plot
+{
+  "title": "Logistic Growth (K=100, r=1, P₀=10)",
+  "xAxis": { "domain": [0, 8], "label": "t" },
+  "yAxis": { "domain": [0, 110], "label": "P(t)" },
+  "data": [
+    { "fn": "100/(1+9*exp(-x))", "color": "#8b5cf6", "title": "Logistic: P = K/(1+Ae^(-rt))" },
+    { "fn": "10*exp(x)", "color": "#22c55e", "title": "Exponential (unlimited)" },
+    { "fn": "100", "color": "#6b7280", "title": "Carrying capacity K=100" }
+  ]
+}
+```
+
+The logistic curve starts growing like the exponential but then levels off as it approaches the carrying capacity $K$.
 
 ### Newton's Law of Cooling
 

@@ -140,6 +140,21 @@ So $\alpha = -1 < 0$, $\beta = 2$.
 
 **Classification**: **Spiral sink** (asymptotically stable)
 
+The following plot shows the x₁(t) component of a spiral sink solution (decaying oscillation):
+
+```plot
+{
+  "title": "Spiral Sink: x₁(t) = e^(-t)cos(2t)",
+  "xAxis": { "domain": [0, 8], "label": "t" },
+  "yAxis": { "domain": [-1.2, 1.2], "label": "x₁(t)" },
+  "data": [
+    { "fn": "exp(-x)*cos(2*x)", "color": "#3b82f6", "title": "Spiral sink component" },
+    { "fn": "exp(-x)", "color": "#94a3b8", "title": "Decay envelope" },
+    { "fn": "-exp(-x)", "color": "#94a3b8", "title": "Decay envelope" }
+  ]
+}
+```
+
 #### Example 4: Center
 
 $$A = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$$
@@ -147,6 +162,20 @@ $$A = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$$
 Eigenvalues: $\lambda = \pm i$ (purely imaginary: $\alpha = 0$, $\beta = 1$)
 
 **Classification**: **Center** (periodic orbits, neutrally stable)
+
+For a center, both components oscillate sinusoidally without decay:
+
+```plot
+{
+  "title": "Center: Perpetual Oscillations x₁(t) = cos(t), x₂(t) = sin(t)",
+  "xAxis": { "domain": [0, 12], "label": "t" },
+  "yAxis": { "domain": [-1.5, 1.5], "label": "x(t)" },
+  "data": [
+    { "fn": "cos(x)", "color": "#22c55e", "title": "x₁(t) = cos(t)" },
+    { "fn": "sin(x)", "color": "#8b5cf6", "title": "x₂(t) = sin(t)" }
+  ]
+}
+```
 
 ### Case 3: Repeated Eigenvalues
 

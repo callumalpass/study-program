@@ -31,7 +31,7 @@ MATH302 (Ordinary Differential Equations) is a complete, high-quality mathematic
 - **Comprehensive exam coverage**: Midterm covers topics 1-4 (26 questions) and final covers all topics 1-7 (68 questions)
 - **Excellent mathematical rigor**: Proper LaTeX notation, theorems with proofs, worked examples with step-by-step solutions
 - **Strong pedagogical design**: Clear progression from basic concepts to advanced applications, with consistent structure across all topics
-- **Rich visual aids**: 16 Mermaid diagrams for classification trees, domain mapping, and conceptual flows
+- **Rich visual aids**: 16 Mermaid diagrams for classification trees, domain mapping, and conceptual flows; 13 function plots visualizing solutions, oscillations, and equilibrium behavior
 - **Practical applications**: Real-world examples including population models, circuits, mechanical systems, and numerical methods
 - **Computational focus**: Python exercises using NumPy, SciPy, and symbolic computation, bridging theory and practice
 
@@ -43,7 +43,6 @@ MATH302 (Ordinary Differential Equations) is a complete, high-quality mathematic
 
 **None required.** The subject exceeds all quality standards. Optional enhancements for future iterations could include:
 
-- Additional interactive visualizations for phase portraits and direction fields
 - More boundary value problem examples
 - Extended applications in modern engineering contexts (control theory, signal processing)
 - Additional challenge exercises for advanced students
@@ -217,13 +216,35 @@ Both exams are well-structured with clear questions, appropriate difficulty prog
 
 1. **No immediate action required** - This subject is complete and production-ready
 2. **Future enhancements (optional)**:
-   - Consider adding interactive phase portrait visualizations using plotting libraries
    - Add more real-world application problems from current engineering contexts
    - Include optional challenge problems for advanced students
    - Consider adding brief historical notes about mathematicians (Euler, Laplace, Bessel, etc.)
 3. **Maintain as exemplar** - This subject demonstrates best practices for mathematics curriculum design and can serve as a template for other MATH subjects
 
 ## Recent Updates (2025-12-23)
+
+### Added Function Plots for Visual Learning
+- **Status:** Enhanced from 10/10 with 29 total visual aids (16 diagrams + 13 function plots)
+- **Changes made:**
+  1. **Topic 1** (First-Order ODEs): 2 plots added
+     - Exponential growth/decay curves showing solution families
+     - Logistic growth S-curve with carrying capacity comparison
+  2. **Topic 2** (Second-Order ODEs): 4 plots added
+     - Comparison of underdamped, overdamped, critically damped oscillations
+     - Underdamped oscillation with decaying envelope
+     - Resonance phenomenon with linearly growing amplitude
+     - Beats visualization showing two close frequencies
+  3. **Topic 4** (Systems): 2 plots added
+     - Spiral sink solution component with decay envelope
+     - Center solution showing perpetual sinusoidal oscillation
+  4. **Topic 5** (Laplace Transforms): 2 plots added
+     - Unit step function and shifted step u(t-2)
+     - Rectangular pulse function
+  5. **Topic 7** (Applications): 3 plots added
+     - Exponential growth vs decay comparison
+     - Logistic growth S-curve with inflection point
+     - Allee effect growth rate curve showing bistability
+- **Quality impact:** Function plots provide intuitive visual understanding of ODE solutions, complementing the existing Mermaid diagrams that show conceptual flowcharts and classification trees
 
 ### Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml

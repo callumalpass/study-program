@@ -22,6 +22,20 @@ $$u(t-a) = \begin{cases} 0 & t < a \\ 1 & t \geq a \end{cases}$$
 
 This function "turns on" at $t = a$.
 
+The following plots show the unit step function and a shifted step function:
+
+```plot
+{
+  "title": "Unit Step Function u(t) and Shifted u(t-2)",
+  "xAxis": { "domain": [-1, 5], "label": "t" },
+  "yAxis": { "domain": [-0.2, 1.5], "label": "u(t)" },
+  "data": [
+    { "fn": "x < 0 ? 0 : 1", "color": "#3b82f6", "title": "u(t) - step at t=0" },
+    { "fn": "x < 2 ? 0 : 1", "color": "#22c55e", "title": "u(t-2) - step at t=2" }
+  ]
+}
+```
+
 ### Properties
 
 1. $u(t-a) \cdot u(t-b) = u(t-\max(a,b))$
@@ -97,6 +111,17 @@ $$\text{pulse}(t) = u(t-a) - u(t-b)$$
 For a pulse of height $h$:
 
 $$f(t) = h[u(t-a) - u(t-b)]$$
+
+```plot
+{
+  "title": "Rectangular Pulse: u(t-1) - u(t-3)",
+  "xAxis": { "domain": [0, 5], "label": "t" },
+  "yAxis": { "domain": [-0.2, 1.5], "label": "pulse(t)" },
+  "data": [
+    { "fn": "(x >= 1 && x < 3) ? 1 : 0", "color": "#8b5cf6", "title": "Pulse: on for 1 ≤ t < 3" }
+  ]
+}
+```
 
 The Laplace transform is:
 

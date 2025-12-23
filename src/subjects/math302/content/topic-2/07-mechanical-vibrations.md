@@ -50,6 +50,21 @@ $$\Delta = 4\gamma^2 - 4\omega_0^2 = 4(\gamma^2 - \omega_0^2)$$
 
 The behavior depends on the sign of $\gamma^2 - \omega_0^2$, leading to three cases.
 
+The following plot compares all three damping cases for a mass-spring system with $\omega_0 = 1$:
+
+```plot
+{
+  "title": "Comparison of Damping Types (ω₀ = 1)",
+  "xAxis": { "domain": [0, 10], "label": "t" },
+  "yAxis": { "domain": [-0.5, 1.2], "label": "x(t)" },
+  "data": [
+    { "fn": "exp(-0.2*x)*cos(0.98*x)", "color": "#3b82f6", "title": "Underdamped (γ=0.2)" },
+    { "fn": "exp(-x)*(1+x)", "color": "#22c55e", "title": "Critically damped (γ=1)" },
+    { "fn": "1.25*exp(-0.27*x)-0.25*exp(-3.73*x)", "color": "#ef4444", "title": "Overdamped (γ=2)" }
+  ]
+}
+```
+
 ### Damping Classification Flowchart
 
 The following diagram shows how to classify damping behavior:
@@ -103,6 +118,21 @@ where $A = \sqrt{c_1^2 + c_2^2}$ and $\tan\phi = c_2/c_1$.
 - Oscillations with **exponentially decaying amplitude**
 - Period: $T = \frac{2\pi}{\omega_d}$
 - Envelope: $\pm Ae^{-\gamma t}$
+
+The following plot shows the underdamped solution with its exponential envelope:
+
+```plot
+{
+  "title": "Underdamped Oscillation with Decaying Envelope",
+  "xAxis": { "domain": [0, 15], "label": "t" },
+  "yAxis": { "domain": [-1.2, 1.2], "label": "x(t)" },
+  "data": [
+    { "fn": "exp(-0.15*x)*cos(x)", "color": "#3b82f6", "title": "x(t) = e^(-γt)cos(ωt)" },
+    { "fn": "exp(-0.15*x)", "color": "#94a3b8", "title": "Envelope: +e^(-γt)" },
+    { "fn": "-exp(-0.15*x)", "color": "#94a3b8", "title": "Envelope: -e^(-γt)" }
+  ]
+}
+```
 
 **Example 1**: A 2 kg mass is attached to a spring with $k = 50$ N/m and damping $c = 4$ N·s/m. The mass is displaced 0.1 m and released from rest. Find $x(t)$.
 
@@ -227,6 +257,21 @@ $$x_p(t) = \frac{F_0}{2m\omega_0}t\sin\omega_0 t$$
 
 **Amplitude grows linearly with time** → unbounded oscillations → catastrophic failure!
 
+The following plot illustrates resonance with linearly growing amplitude:
+
+```plot
+{
+  "title": "Undamped Resonance: Amplitude Grows with Time",
+  "xAxis": { "domain": [0, 20], "label": "t" },
+  "yAxis": { "domain": [-12, 12], "label": "x(t)" },
+  "data": [
+    { "fn": "0.5*x*sin(x)", "color": "#dc2626", "title": "x(t) = (t/2)sin(ωt) - resonance" },
+    { "fn": "0.5*x", "color": "#fca5a5", "title": "Envelope: t/2" },
+    { "fn": "-0.5*x", "color": "#fca5a5", "title": "Envelope: -t/2" }
+  ]
+}
+```
+
 **Example 4**: Tacoma Narrows Bridge collapse (1940) resulted from wind-induced resonance.
 
 **With damping**, resonance still occurs but amplitude remains bounded:
@@ -289,6 +334,19 @@ When two frequencies $\omega_1$ and $\omega_2$ are close but not equal, **beats*
 $$\cos\omega_1 t + \cos\omega_2 t = 2\cos\left(\frac{\omega_1 - \omega_2}{2}t\right)\cos\left(\frac{\omega_1 + \omega_2}{2}t\right)$$
 
 This appears as oscillations at the average frequency $\frac{\omega_1 + \omega_2}{2}$, modulated by a slow envelope at beat frequency $\frac{\omega_1 - \omega_2}{2}$.
+
+```plot
+{
+  "title": "Beats: Two Close Frequencies (ω₁=1.1, ω₂=0.9)",
+  "xAxis": { "domain": [0, 40], "label": "t" },
+  "yAxis": { "domain": [-2.5, 2.5], "label": "x(t)" },
+  "data": [
+    { "fn": "cos(1.1*x)+cos(0.9*x)", "color": "#8b5cf6", "title": "cos(1.1t) + cos(0.9t)" },
+    { "fn": "2*cos(0.1*x)", "color": "#c4b5fd", "title": "Beat envelope: 2cos(0.1t)" },
+    { "fn": "-2*cos(0.1*x)", "color": "#c4b5fd", "title": "Beat envelope" }
+  ]
+}
+```
 
 **Application**: Tuning musical instruments by listening for beats.
 

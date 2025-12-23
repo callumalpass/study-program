@@ -41,6 +41,18 @@ where $P_0 = P(0)$ is the initial population.
 - **Doubling time** (when $k > 0$): $T_d = \frac{\ln 2}{k}$
 - **Half-life** (when $k < 0$): $T_h = \frac{\ln 2}{|k|}$
 
+```plot
+{
+  "title": "Exponential Growth vs Decay",
+  "xAxis": { "domain": [0, 5], "label": "t" },
+  "yAxis": { "domain": [0, 8], "label": "P(t)" },
+  "data": [
+    { "fn": "exp(0.5*x)", "color": "#22c55e", "title": "Growth: P₀e^(0.5t)" },
+    { "fn": "5*exp(-0.5*x)", "color": "#ef4444", "title": "Decay: 5e^(-0.5t)" }
+  ]
+}
+```
+
 ### Limitations
 
 The exponential model is unrealistic for long-term prediction because:
@@ -98,6 +110,22 @@ $$P(t) = \frac{KP_0}{P_0 + (K-P_0)e^{-kt}}$$
    - $P = 0$ (unstable)
    - $P = K$ (stable)
 5. **Inflection point**: At $P = K/2$, where growth rate is maximum
+
+The logistic solution produces the characteristic S-shaped (sigmoid) curve:
+
+```plot
+{
+  "title": "Logistic Growth: S-Curve Approaching Carrying Capacity",
+  "xAxis": { "domain": [0, 10], "label": "t" },
+  "yAxis": { "domain": [0, 110], "label": "P(t)" },
+  "data": [
+    { "fn": "100/(1+9*exp(-x))", "color": "#8b5cf6", "title": "Logistic (K=100, P₀=10)" },
+    { "fn": "10*exp(x)", "color": "#22c55e", "title": "Exponential (unlimited)" },
+    { "fn": "100", "color": "#94a3b8", "title": "Carrying capacity K" },
+    { "fn": "50", "color": "#cbd5e1", "title": "Inflection point K/2" }
+  ]
+}
+```
 
 ### Phase Portrait
 
@@ -248,6 +276,21 @@ where $A$ is the **Allee threshold**.
 - $P = K$ (stable - survival)
 
 Populations below $A$ go extinct; above $A$, they grow toward $K$.
+
+The Allee effect creates two stable attractors (extinction and carrying capacity) with an unstable threshold:
+
+```plot
+{
+  "title": "Allee Effect: Growth Rate dP/dt vs Population P",
+  "xAxis": { "domain": [0, 1.1], "label": "P/K (normalized)" },
+  "yAxis": { "domain": [-0.15, 0.15], "label": "dP/dt" },
+  "data": [
+    { "fn": "x*(1-x)*(x-0.2)", "color": "#dc2626", "title": "Allee effect (A=0.2K)" },
+    { "fn": "0.3*x*(1-x)", "color": "#22c55e", "title": "Standard logistic (no Allee)" },
+    { "fn": "0", "color": "#94a3b8", "title": "Equilibrium line" }
+  ]
+}
+```
 
 ## Summary of Models
 
