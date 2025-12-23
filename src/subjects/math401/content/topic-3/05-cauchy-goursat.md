@@ -39,6 +39,17 @@ This version is often stated first because it's more intuitive: if $f$ is analyt
 
 We'll prove the theorem for a triangular contour, then extend to general contours.
 
+```mermaid
+graph TD
+    subgraph "Goursat's Subdivision"
+        A[Original triangle T] --> B[Subdivide into 4 triangles]
+        B --> C[Pick T₁ with largest integral]
+        C --> D[Subdivide T₁]
+        D --> E[Continue subdividing...]
+        E --> F[Converge to point z₀]
+    end
+```
+
 **Theorem**: If $f$ is analytic on and inside a triangle $T$, then:
 
 $$\oint_{\partial T} f(z) \, dz = 0$$

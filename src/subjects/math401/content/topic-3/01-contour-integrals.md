@@ -61,6 +61,18 @@ Curves have a direction determined by increasing parameter values. For closed cu
 - **Positively oriented** (counterclockwise): region enclosed is on the left as you traverse the curve
 - **Negatively oriented** (clockwise): region enclosed is on the right
 
+```mermaid
+graph TD
+    subgraph "Curve Types"
+        A[Simple open curve] --> B[Simple closed curve]
+        B --> C[Piecewise smooth contour]
+        C --> D[Positively oriented]
+        C --> E[Negatively oriented]
+    end
+    style D fill:#ccffcc
+    style E fill:#ffcccc
+```
+
 ### Reverse of a Curve
 
 The **reverse** of $\gamma: [a, b] \to \mathbb{C}$ is:

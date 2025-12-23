@@ -112,6 +112,29 @@
 
 ## Recent Updates (2025-12-23)
 
+### MATH401: Complex Analysis - Visual Content and Content Expansion
+- **Status:** Maintained 10/10 (enhanced with visual content and expanded subtopics)
+- **Changes made:**
+  1. Expanded 6 subtopics that were below the 1000-word target:
+     - topic-5/07-analytic-continuation.md: 417 → 1,350+ words (added identity theorem proof, monodromy, natural boundaries)
+     - topic-6/07-applications-residues.md: 188 → 1,295+ words (added series summation, Laplace transforms, argument principle, Rouché's theorem)
+     - topic-7/04-schwarz-christoffel.md: 808 → 1,400+ words (added derivation, examples, parameter determination)
+     - topic-7/05-riemann-mapping.md: 905 → 1,450+ words (added proof outline, explicit formulas, moduli)
+     - topic-7/06-applications-physics.md: 887 → 1,260+ words (added complex potential, Joukowski airfoil, examples)
+     - topic-7/07-boundary-problems.md: 911 → 1,350+ words (added Poisson kernel derivation, Green's functions, harmonic measure)
+  2. Added 10 Mermaid diagrams (previously 0):
+     - topic-3/01: Curve types classification
+     - topic-3/05: Goursat's subdivision proof visualization
+     - topic-5/07: Analytic continuation chain diagram
+     - topic-6/01: Residue theorem contour deformation
+     - topic-6/07: Bromwich contour for Laplace inversion
+     - topic-7/04: Schwarz-Christoffel mapping illustration
+     - topic-7/05: Riemann mapping universal model diagram
+     - topic-7/06: Conformal mapping solution workflow (2 diagrams)
+     - topic-7/07: Dirichlet problem solution strategy
+- **Quality verified:** 75,305 total words (avg 1,537/subtopic), all 49 subtopics now above 1,000-word target, 112 exercises, 105 quiz questions, 68 exam questions, 10 Mermaid diagrams
+- **Note:** Visual content addresses the subject-spec requirement "Visual intuition where applicable (complex plane diagrams)"
+
 ### MATH102: Discrete Mathematics II - Content Quality Improvements
 - **Status:** Maintained 10/10 (content enrichment)
 - **Changes made:**

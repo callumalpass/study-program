@@ -24,6 +24,19 @@ This theorem reduces contour integration to a purely algebraic problem: finding 
 
 The proof relies on several key ideas from earlier in complex analysis.
 
+```mermaid
+graph LR
+    subgraph "Residue Theorem Visualization"
+        A[Original contour γ] --> B[Deform to small circles]
+        B --> C[Circle C₁ around z₁]
+        B --> D[Circle C₂ around z₂]
+        B --> E[Circle Cₙ around zₙ]
+        C --> F[Sum of residues × 2πi]
+        D --> F
+        E --> F
+    end
+```
+
 **Step 1: Contour Deformation**
 
 By Cauchy's theorem and the deformation of contours principle, we can replace the contour $\gamma$ with a collection of small circles $C_1, \ldots, C_n$ around each singularity $z_k$, oriented counterclockwise. Since $f$ is analytic in the region between $\gamma$ and these circles, we have:
