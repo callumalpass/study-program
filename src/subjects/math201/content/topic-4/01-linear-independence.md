@@ -26,6 +26,37 @@ A set of vectors is linearly independent if and only if no vector in the set can
 
 ## Testing for Linear Independence
 
+The following flowchart summarizes the key methods for testing linear independence:
+
+```mermaid
+flowchart TD
+    Start([Given: vectors v₁, v₂, ..., vₙ in Rᵐ]) --> Check{n > m?}
+    Check -->|Yes| Dependent[Linearly Dependent<br/>More vectors than dimension]
+    Check -->|No| Method{Choose Method}
+
+    Method --> Matrix[Row Reduction Method]
+    Method --> Det[Determinant Method<br/>only if n = m]
+
+    Matrix --> Form[Form matrix A = [v₁ v₂ ... vₙ]]
+    Form --> Reduce[Row reduce to echelon form]
+    Reduce --> Pivot{Every column<br/>has pivot?}
+    Pivot -->|Yes| IndepM[Linearly Independent]
+    Pivot -->|No| DepM[Linearly Dependent]
+
+    Det --> Square[Form n×n matrix A]
+    Square --> CalcDet[Compute det A]
+    CalcDet --> NonZero{det A ≠ 0?}
+    NonZero -->|Yes| IndepD[Linearly Independent]
+    NonZero -->|No| DepD[Linearly Dependent]
+
+    style Start fill:#e1f5e1
+    style IndepM fill:#22c55e,color:#fff
+    style IndepD fill:#22c55e,color:#fff
+    style DepM fill:#ef4444,color:#fff
+    style DepD fill:#ef4444,color:#fff
+    style Dependent fill:#ef4444,color:#fff
+```
+
 ### Method 1: Setting up the Homogeneous System
 
 To test whether vectors $\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_n$ in $\mathbb{R}^m$ are linearly independent:
@@ -71,6 +102,22 @@ Since the determinant is non-zero, the vectors are **linearly independent**.
 ### In $\mathbb{R}^2$
 
 Two vectors in $\mathbb{R}^2$ are linearly independent if and only if they are not collinear (not on the same line through the origin). Geometrically, they point in different directions.
+
+```mermaid
+graph TB
+    subgraph "Linearly Independent (span R²)"
+        O1["Origin"] --> V1["v₁ = (1,0)"]
+        O1 --> V2["v₂ = (0,1)"]
+    end
+    subgraph "Linearly Dependent (span a line)"
+        O2["Origin"] --> U1["u₁ = (2,1)"]
+        O2 --> U2["u₂ = (4,2) = 2u₁"]
+    end
+    style V1 fill:#22c55e,color:#fff
+    style V2 fill:#8b5cf6,color:#fff
+    style U1 fill:#f59e0b,color:#fff
+    style U2 fill:#ef4444,color:#fff
+```
 
 **Example**: The vectors $\begin{bmatrix} 1 \\ 0 \end{bmatrix}$ and $\begin{bmatrix} 0 \\ 1 \end{bmatrix}$ are linearly independent - they point along different axes. However, $\begin{bmatrix} 2 \\ 1 \end{bmatrix}$ and $\begin{bmatrix} 4 \\ 2 \end{bmatrix}$ are linearly dependent because they lie on the same line.
 

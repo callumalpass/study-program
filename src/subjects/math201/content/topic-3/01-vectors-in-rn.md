@@ -67,6 +67,22 @@ $$\begin{bmatrix} 1 \\ -2 \\ 3 \end{bmatrix} + \begin{bmatrix} 4 \\ 5 \\ -1 \end
 
 **Geometric interpretation:** The parallelogram rule. Place the tail of $\mathbf{v}$ at the head of $\mathbf{u}$. The sum $\mathbf{u} + \mathbf{v}$ is the vector from the tail of $\mathbf{u}$ to the head of $\mathbf{v}$. Equivalently, $\mathbf{u} + \mathbf{v}$ is the diagonal of the parallelogram formed by $\mathbf{u}$ and $\mathbf{v}$.
 
+```mermaid
+graph LR
+    subgraph "Vector Addition: Parallelogram Rule"
+        O["Origin (0,0)"] --> U["u"]
+        O --> V["v"]
+        U -.-> UV["u + v"]
+        V -.-> UV
+    end
+    style O fill:#f5f5f5
+    style U fill:#8b5cf6,color:#fff
+    style V fill:#22c55e,color:#fff
+    style UV fill:#f59e0b,color:#fff
+```
+
+The diagram above illustrates how vectors **u** and **v** combine to form their sum. Starting from the origin, **u + v** is the diagonal of the parallelogram with sides **u** and **v**.
+
 **Properties:**
 - **Commutative:** $\mathbf{u} + \mathbf{v} = \mathbf{v} + \mathbf{u}$
 - **Associative:** $(\mathbf{u} + \mathbf{v}) + \mathbf{w} = \mathbf{u} + (\mathbf{v} + \mathbf{w})$
@@ -91,6 +107,20 @@ $$3\begin{bmatrix} 1 \\ -2 \\ 4 \end{bmatrix} = \begin{bmatrix} 3 \\ -6 \\ 12 \e
 - If $c < 0$: reflects and scales
 
 For example, $2\mathbf{v}$ points in the same direction as $\mathbf{v}$ but is twice as long. The vector $-\mathbf{v}$ points in the opposite direction with the same length.
+
+```mermaid
+graph LR
+    subgraph "Scalar Multiplication Effects"
+        direction LR
+        NV["-v (reversed)"] --- O["Origin"] --- V["v"] --- 2V["2v (stretched)"]
+    end
+    style NV fill:#ef4444,color:#fff
+    style O fill:#f5f5f5
+    style V fill:#8b5cf6,color:#fff
+    style 2V fill:#3b82f6,color:#fff
+```
+
+This diagram shows how scalar multiplication affects a vector: multiplying by 2 stretches it, while multiplying by -1 reverses its direction.
 
 **Properties:**
 - **Distributive over vector addition:** $c(\mathbf{u} + \mathbf{v}) = c\mathbf{u} + c\mathbf{v}$

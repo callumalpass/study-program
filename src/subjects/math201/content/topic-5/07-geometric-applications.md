@@ -8,6 +8,27 @@ order: 7
 
 Determinants have profound geometric interpretations that connect linear algebra with geometry. They measure volumes, compute cross products, determine orientations, and solve geometric problems elegantly.
 
+```mermaid
+graph TB
+    subgraph "Geometric Interpretations of Determinants"
+        Det["det(A)"] --> Area["2D: Parallelogram Area"]
+        Det --> Volume["3D: Parallelepiped Volume"]
+        Det --> Orient["Orientation (sign)"]
+        Det --> Scale["Transformation Scaling"]
+    end
+    Area --> Triangle["Triangle = ½ · |det|"]
+    Volume --> Cross["Cross Product: |u × v|"]
+    Orient --> RH["+ : Right-handed"]
+    Orient --> LH["- : Left-handed"]
+    Scale --> Transform["New Vol = |det(A)| × Old Vol"]
+
+    style Det fill:#8b5cf6,color:#fff
+    style Area fill:#22c55e,color:#fff
+    style Volume fill:#3b82f6,color:#fff
+    style Orient fill:#f59e0b,color:#fff
+    style Scale fill:#ec4899,color:#fff
+```
+
 ## Volume of a Parallelepiped
 
 The absolute value of the determinant of a matrix whose columns are vectors in $\mathbb{R}^3$ gives the volume of the parallelepiped spanned by those vectors.
@@ -109,6 +130,23 @@ $$= -3\mathbf{i} + 6\mathbf{j} - 3\mathbf{k} = \begin{bmatrix} -3 \\ 6 \\ -3 \en
 - $\mathbf{u} \times \mathbf{v}$ is perpendicular to both $\mathbf{u}$ and $\mathbf{v}$
 - $|\mathbf{u} \times \mathbf{v}|$ equals the area of the parallelogram spanned by $\mathbf{u}$ and $\mathbf{v}$
 - Direction follows the right-hand rule
+
+```mermaid
+graph TB
+    subgraph "Cross Product Properties"
+        UV["u × v"] --> Perp["⊥ to both u and v"]
+        UV --> Mag["|u × v| = Area of parallelogram"]
+        UV --> Dir["Direction: Right-hand rule"]
+    end
+    subgraph "Right-Hand Rule"
+        Fingers["Curl fingers: u → v"] --> Thumb["Thumb points: u × v"]
+    end
+
+    style UV fill:#8b5cf6,color:#fff
+    style Perp fill:#22c55e,color:#fff
+    style Mag fill:#3b82f6,color:#fff
+    style Dir fill:#f59e0b,color:#fff
+```
 
 ### Cross Product Magnitude and Area
 

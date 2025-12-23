@@ -10,6 +10,33 @@ order: 7
 
 Linear transformations have concrete geometric interpretations in $\mathbb{R}^2$ and $\mathbb{R}^3$. Understanding these geometric perspectives helps build intuition about abstract linear algebra concepts and provides tools for computer graphics, robotics, and physics applications.
 
+```mermaid
+graph TB
+    subgraph "Types of 2D Linear Transformations"
+        Transform["Linear Transformation T"] --> Scale["Scaling"]
+        Transform --> Reflect["Reflection"]
+        Transform --> Rotate["Rotation"]
+        Transform --> Shear["Shear"]
+        Transform --> Project["Projection"]
+    end
+    Scale --> Uniform["Uniform: kI"]
+    Scale --> NonUniform["Non-uniform: diag(a,b)"]
+    Reflect --> Axis["Across axes"]
+    Reflect --> Line["Across arbitrary line"]
+    Rotate --> CCW["Counterclockwise by θ"]
+    Shear --> Horiz["Horizontal"]
+    Shear --> Vert["Vertical"]
+    Project --> ProjX["Onto x-axis"]
+    Project --> ProjL["Onto line"]
+
+    style Transform fill:#8b5cf6,color:#fff
+    style Scale fill:#22c55e,color:#fff
+    style Reflect fill:#3b82f6,color:#fff
+    style Rotate fill:#f59e0b,color:#fff
+    style Shear fill:#ec4899,color:#fff
+    style Project fill:#06b6d4,color:#fff
+```
+
 ## Transformations in R²
 
 ### Scaling
@@ -98,6 +125,21 @@ $$R = \begin{bmatrix} -3/5 & 4/5 \\ 4/5 & 3/5 \end{bmatrix}, \quad \begin{bmatri
 **Counterclockwise rotation by angle $\theta$**:
 
 $$R_\theta = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix}$$
+
+The rotation matrix transforms points by rotating them around the origin. The following plot shows the sine and cosine functions that form the basis of rotation transformations:
+
+```plot
+{
+  "xAxis": { "domain": [0, 6.28] },
+  "yAxis": { "domain": [-1.5, 1.5] },
+  "data": [
+    { "fn": "cos(x)", "color": "#8b5cf6", "title": "cos θ" },
+    { "fn": "sin(x)", "color": "#22c55e", "title": "sin θ" }
+  ]
+}
+```
+
+The rotation matrix uses these trigonometric functions: $\cos\theta$ appears on the diagonal (determining how much of the original $x$ and $y$ components are preserved), while $\sin\theta$ appears off-diagonal (determining how much the components mix).
 
 **Clockwise rotation by angle $\theta$**: This is $R_{-\theta}$:
 
@@ -287,6 +329,36 @@ $$\det\begin{bmatrix} 2 & 0 \\ 0 & 3 \end{bmatrix} = 6$$
 The image is an ellipse with area $6\pi$.
 
 This demonstrates that $|\det(A)|$ gives the area scaling factor.
+
+## Transformation Matrix Classification
+
+The following diagram summarizes how to identify transformation types from their matrix properties:
+
+```mermaid
+flowchart TB
+    Matrix["2×2 Matrix A"] --> DetCheck{det A = ?}
+
+    DetCheck -->|det = 0| Singular["Singular<br/>(projection/collapse)"]
+    DetCheck -->|det ≠ 0| Invertible["Invertible"]
+
+    Invertible --> OrthoCheck{A^T A = I?}
+    OrthoCheck -->|Yes| Orthogonal["Orthogonal<br/>(preserves lengths)"]
+    OrthoCheck -->|No| General["General invertible"]
+
+    Orthogonal --> DetSign{det A = ?}
+    DetSign -->|det = 1| Rotation["Rotation"]
+    DetSign -->|det = -1| Reflection["Reflection"]
+
+    General --> DiagCheck{Diagonal?}
+    DiagCheck -->|Yes| Scaling["Scaling"]
+    DiagCheck -->|No| Mixed["Shear or<br/>combined transform"]
+
+    style Matrix fill:#8b5cf6,color:#fff
+    style Rotation fill:#22c55e,color:#fff
+    style Reflection fill:#3b82f6,color:#fff
+    style Scaling fill:#f59e0b,color:#fff
+    style Singular fill:#ef4444,color:#fff
+```
 
 ## Summary
 

@@ -112,6 +112,20 @@
 
 ## Recent Updates (2025-12-23)
 
+### MATH201: Linear Algebra - Visual Content Enhancement
+- **Status:** Maintained 10/10 (enhanced with visual content)
+- **Changes made:**
+  1. Added 8 new Mermaid diagrams (6 → 14 total):
+     - **Topic 3** (Vectors in Rⁿ): 2 diagrams - parallelogram rule for vector addition, scalar multiplication effects
+     - **Topic 4** (Linear Independence): 2 diagrams - linearly independent vs dependent vectors visualization, independence testing flowchart
+     - **Topic 5** (Geometric Applications): 2 diagrams - determinant interpretations overview, cross product properties
+     - **Topic 7** (Geometric Transformations): 2 diagrams - transformation types classification, matrix classification flowchart
+  2. Added 1 function plot (0 → 1 total):
+     - **Topic 7**: Sine and cosine functions for rotation matrix visualization
+  3. Total visual content: 15 elements (14 Mermaid diagrams + 1 function plot)
+- **Quality verified:** 82,412 total words (avg 1,682/subtopic), 112 exercises, 105 quiz questions, 70 exam questions
+- **Note:** Visual content addresses the subject-spec requirement "use visualizations where appropriate"
+
 ### MATH302: Ordinary Differential Equations - Visual Content Enhancement
 - **Status:** Maintained 10/10 (enhanced with 13 function plots)
 - **Changes made:**
