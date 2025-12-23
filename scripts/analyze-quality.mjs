@@ -159,6 +159,21 @@ function countWords(content) {
   return words.length;
 }
 
+// Count visual content (mermaid diagrams and function plots) in markdown
+function countVisualContent(content) {
+  if (!content || typeof content !== 'string') return { mermaid: 0, plots: 0 };
+
+  // Count ```mermaid blocks
+  const mermaidMatches = content.match(/```mermaid/g);
+  const mermaid = mermaidMatches ? mermaidMatches.length : 0;
+
+  // Count ```plot blocks
+  const plotMatches = content.match(/```plot/g);
+  const plots = plotMatches ? plotMatches.length : 0;
+
+  return { mermaid, plots };
+}
+
 // Read JSON file safely
 async function readJson(filePath) {
   try {
@@ -227,10 +242,14 @@ async function loadSubjectData(subjectId, subjectsDir) {
           const titleMatch = content.match(/^#\s+(.+)$/m) || content.match(/title:\s*["']?(.+?)["']?\s*$/m);
           if (titleMatch) title = titleMatch[1];
 
+          const visuals = countVisualContent(content);
+
           return {
             id: basename(mdFile, '.md'),
             title,
             wordCount: countWords(content),
+            mermaidCount: visuals.mermaid,
+            plotCount: visuals.plots,
           };
         })
       );
@@ -253,6 +272,8 @@ async function loadSubjectData(subjectId, subjectsDir) {
         subtopics,
         subtopicCount: subtopics.length,
         totalWords: subtopics.reduce((sum, s) => sum + s.wordCount, 0),
+        mermaidCount: subtopics.reduce((sum, s) => sum + s.mermaidCount, 0),
+        plotCount: subtopics.reduce((sum, s) => sum + s.plotCount, 0),
       };
     })
   );
@@ -468,6 +489,8 @@ function analyzeSubject(subjectId, data) {
 
   const totalSubtopics = topicData.reduce((sum, t) => sum + t.subtopicCount, 0);
   const totalContentWords = topicData.reduce((sum, t) => sum + t.totalWords, 0);
+  const totalMermaid = topicData.reduce((sum, t) => sum + (t.mermaidCount || 0), 0);
+  const totalPlots = topicData.reduce((sum, t) => sum + (t.plotCount || 0), 0);
 
   // Exam analysis
   const midterm = exams.find(e => e.id?.includes('midterm'));
@@ -510,6 +533,9 @@ function analyzeSubject(subjectId, data) {
     expectedProjects,
     totalContentWords,
     avgWordsPerSubtopic: totalSubtopics > 0 ? totalContentWords / totalSubtopics : 0,
+    totalMermaid,
+    totalPlots,
+    totalVisuals: totalMermaid + totalPlots,
     overallScore: 0,
     readingsApplicable,
   };
@@ -712,6 +738,25 @@ function printSubjectReport(quality) {
     }
   }
 
+  // Visual content
+  const totalVisuals = quality.totalVisuals || 0;
+  const totalMermaid = quality.totalMermaid || 0;
+  const totalPlots = quality.totalPlots || 0;
+  if (totalVisuals > 0 || id.startsWith('math')) {
+    console.log(`\n  VISUAL CONTENT`);
+    console.log(`     Mermaid diagrams: ${totalMermaid}  |  Function plots: ${totalPlots}  |  Total: ${totalVisuals}`);
+    // Show per-topic breakdown if there are visuals
+    if (totalVisuals > 0) {
+      for (const topic of topics) {
+        const tm = topic.mermaidCount || 0;
+        const tp = topic.plotCount || 0;
+        if (tm > 0 || tp > 0) {
+          console.log(`     T${topic.number}: ${tm} diagrams, ${tp} plots`);
+        }
+      }
+    }
+  }
+
   // Quizzes
   console.log(`\n  QUIZZES (target: ${targets.quizzesPerTopic}/topic, ${targets.questionsPerQuiz} questions each)`);
   console.log(`     Total:     ${totalQuizzes}/${totalTopics * targets.quizzesPerTopic}  ${progressBar(totalQuizzes, totalTopics * targets.quizzesPerTopic, 15)}`);
@@ -885,10 +930,16 @@ function printSummaryTable(subjects) {
   const totalAiEval = subjects.reduce((sum, s) => sum + (s.exerciseBreakdown?.codingAiEval || 0), 0);
   const totalTestCases = subjects.reduce((sum, s) => sum + (s.exerciseBreakdown?.totalTestCases || 0), 0);
 
+  // Aggregate visual content
+  const totalMermaid = subjects.reduce((sum, s) => sum + (s.totalMermaid || 0), 0);
+  const totalPlots = subjects.reduce((sum, s) => sum + (s.totalPlots || 0), 0);
+  const totalVisuals = totalMermaid + totalPlots;
+
   console.log(`\n  TOTALS`);
   console.log(`     Average Score: ${avgScore}%`);
   console.log(`     Topics: ${totalTopics}  |  Subtopics: ${totalSubtopics}  |  Quizzes: ${totalQuizzes}  |  Exercises: ${totalExercises}`);
   console.log(`     Content: ${totalWords.toLocaleString()} words`);
+  console.log(`     Visual content: ${totalVisuals} (${totalMermaid} diagrams, ${totalPlots} plots)`);
   console.log(`\n  EXERCISE BREAKDOWN (all subjects)`);
   console.log(`     Coding: ${totalCoding}  |  Written: ${totalWritten}`);
   console.log(`     Coding with tests: ${totalWithTests}  |  AI evaluation: ${totalAiEval}  |  Test cases: ${totalTestCases}`);
@@ -970,6 +1021,8 @@ function buildJsonOutput(subjects) {
     totalQuizzes: subjects.reduce((sum, s) => sum + s.totalQuizzes, 0),
     totalExercises: subjects.reduce((sum, s) => sum + s.totalExercises, 0),
     totalContentWords: subjects.reduce((sum, s) => sum + s.totalContentWords, 0),
+    totalMermaidDiagrams: subjects.reduce((sum, s) => sum + (s.totalMermaid || 0), 0),
+    totalFunctionPlots: subjects.reduce((sum, s) => sum + (s.totalPlots || 0), 0),
     subjectsMeetingStandard: subjects.filter(s => s.overallScore >= 80).map(s => s.id),
     subjectsInProgress: subjects.filter(s => s.overallScore >= 50 && s.overallScore < 80).map(s => s.id),
     subjectsNeedingWork: subjects.filter(s => s.overallScore < 50).map(s => s.id),

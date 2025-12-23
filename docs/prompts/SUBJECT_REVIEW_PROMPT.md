@@ -101,6 +101,12 @@ All subject content is colocated in a single directory:
 - Are quiz/exam answers accurate?
 - Is mathematical notation correct (using LaTeX/KaTeX where appropriate)?
 
+### 7. Visual Content (Rate 1-10)
+- Are Mermaid diagrams used to illustrate algorithms, workflows, and architecture?
+- Are function plots used for mathematical concepts? (especially important for MATH subjects)
+- Do visualizations enhance understanding rather than just decorate?
+- Are graphs properly labeled and use appropriate domains?
+
 ## Output Format
 
 Write a markdown file with this exact structure:
@@ -128,6 +134,7 @@ Write a markdown file with this exact structure:
 | Exam Quality | X/10 | |
 | Project Quality | X/10 or N/A | |
 | Technical Correctness | X/10 | |
+| Visual Content | X/10 | Diagrams, plots |
 | **Overall** | X/10 | |
 
 ## Executive Summary

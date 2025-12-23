@@ -119,6 +119,25 @@ order: 1
 ---
 ```
 
+**Use Visual Content:** Enhance understanding with diagrams and graphs where appropriate:
+
+- **Mermaid diagrams** for flowcharts, algorithms, system architecture, ER diagrams
+- **Function plots** for mathematical functions, derivatives, curves (especially for MATH subjects)
+
+Example function plot for a calculus topic:
+````markdown
+```plot
+{
+  "xAxis": { "domain": [-3, 3] },
+  "yAxis": { "domain": [-1, 10] },
+  "data": [
+    { "fn": "x^2", "color": "#8b5cf6" },
+    { "fn": "2*x", "color": "#22c55e", "title": "derivative" }
+  ]
+}
+```
+````
+
 ### 3.2 Exercises
 
 Create exercises with proper difficulty distribution (3×D1, 3×D2, 4×D3, 3×D4, 3×D5 per topic).
@@ -580,6 +599,7 @@ Before marking upgrade complete:
 - [ ] **subject-spec.yaml exists** with pedagogical justifications
 - [ ] 7 topics with 7 subtopics each (49 total, 800+ words each)
 - [ ] All subtopic markdown files have frontmatter (id, title, order)
+- [ ] Visual content used where appropriate (Mermaid diagrams, function plots)
 - [ ] Exercises in each `content/topic-N/exercises.json` (per spec, default 16/topic)
 - [ ] Quizzes in each `content/topic-N/quizzes.json` (per spec, default 3×5 questions)
 - [ ] 2 exams in exams.json (per spec, default ~30 midterm, ~45 final)
@@ -602,6 +622,7 @@ Each subject's `subject-spec.yaml` defines its specific requirements. Common pat
 - All exercises are `written` type (proofs)
 - Fewer exam questions with more depth
 - Projects typically not required
+- **Use function plots** to visualize functions, derivatives, integrals, and optimization
 
 **CS programming subjects:**
 - High volume of `coding_with_tests` exercises

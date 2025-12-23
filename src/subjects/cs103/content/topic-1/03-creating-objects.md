@@ -6,7 +6,9 @@ order: 3
 
 ## Creating Objects: Instances in Action
 
-An **object** (or **instance**) is a specific realization of a class. While the class defines the structure, each object has its own identity and state. Creating an object is called **instantiation**.
+An **object** (or **instance**) is a specific realization of a class. While the class defines the structure, each object has its own identity and state. Creating an object is called **instantiation**—you're creating an "instance" of the class.
+
+Think of it this way: if `Dog` is the concept of a dog (the class), then `buddy` and `max_dog` are actual, specific dogs (objects). The class tells us that dogs have names, ages, and can bark. Each object fills in those details with specific values.
 
 ---
 
@@ -29,16 +31,23 @@ max_dog = Dog("Max", 5)
 luna = Dog("Luna", 2)
 ```
 
-Each call to `Dog(...)` creates a new, independent object with its own state.
+Each call to `Dog(...)` creates a new, independent object with its own state. Here's what happens behind the scenes when you write `buddy = Dog("Buddy", 3)`:
+
+1. Python creates a new, empty object
+2. Python calls `__init__(self, "Buddy", 3)` with the new object as `self`
+3. `__init__` sets up the object's attributes
+4. The finished object is assigned to `buddy`
+
+You never call `__init__` directly—Python handles that automatically.
 
 ---
 
 ## Object Identity and State
 
-Every object has:
+Every object has three fundamental characteristics:
 
-1. **Identity:** A unique identifier (memory address)
-2. **State:** The values of its attributes
+1. **Identity:** A unique identifier (memory address) that distinguishes it from all other objects
+2. **State:** The values of its attributes at any given moment
 3. **Behavior:** The methods it can perform
 
 ```python
@@ -55,6 +64,19 @@ print(id(max_dog))         # Different address
 print(buddy.bark())        # "Buddy says woof!"
 print(max_dog.bark())      # "Max says woof!"
 ```
+
+The `id()` function returns an object's unique identifier (its memory address in CPython). Two objects created separately will always have different identities, even if their attribute values are the same:
+
+```python
+dog1 = Dog("Buddy", 3)
+dog2 = Dog("Buddy", 3)
+
+print(dog1.name == dog2.name)  # True - same value
+print(dog1 == dog2)            # False (by default) - different objects
+print(dog1 is dog2)            # False - different identities
+```
+
+This distinction between **value equality** (`==`) and **identity** (`is`) is crucial in Python.
 
 ---
 
@@ -208,11 +230,48 @@ print(isinstance(buddy, object))  # True (everything is an object)
 
 ---
 
+## Common Mistakes
+
+**Forgetting that variables hold references:**
+```python
+dog1 = Dog("Buddy", 3)
+dog2 = dog1  # Not a copy!
+dog2.age = 10
+print(dog1.age)  # 10 - oops, we changed dog1 too!
+```
+
+**Comparing with `==` when you mean `is` (or vice versa):**
+```python
+dog1 = Dog("Buddy", 3)
+dog2 = Dog("Buddy", 3)
+
+# These two dogs have the same values but are different objects
+if dog1 == dog2:  # False by default
+    print("Same dog")  # Won't print
+
+# To compare values, you'd need to implement __eq__ (covered later)
+```
+
+**Adding attributes outside `__init__`:**
+```python
+buddy = Dog("Buddy", 3)
+buddy.breed = "Golden"  # Works, but not recommended
+
+max_dog = Dog("Max", 5)
+print(max_dog.breed)  # AttributeError! Max doesn't have breed
+```
+
+Always define all expected attributes in `__init__` for consistency.
+
+---
+
 ## Key Takeaways
 
 - Objects are created by calling the class: `obj = ClassName(args)`
 - Each object has its own identity, state (attributes), and behavior (methods)
 - Instance variables are independent per object
 - Variables hold references to objects, not the objects themselves
-- Use `isinstance()` to check object types
+- Use `isinstance()` to check object types (preferred over `type()`)
 - Objects can be stored in any collection (lists, dicts, sets)
+- Understand the difference between value equality (`==`) and identity (`is`)
+- When you assign one object variable to another, both point to the same object

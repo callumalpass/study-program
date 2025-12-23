@@ -10,7 +10,7 @@ import {
   navigateToExam,
   navigateToProject,
 } from '@/core/router';
-import { renderMarkdown, renderMermaidDiagrams } from '@/components/markdown';
+import { renderMarkdown, renderMermaidDiagrams, renderFunctionPlots } from '@/components/markdown';
 import { ReadingList } from './ReadingList';
 import { progressStorage } from '@/core/storage';
 
@@ -166,9 +166,10 @@ export function ContentNavigator({
     }
   }, [dependencyGraph]);
 
-  // Render Mermaid diagrams after content updates
+  // Render Mermaid diagrams and function plots after content updates
   useEffect(() => {
     renderMermaidDiagrams();
+    renderFunctionPlots();
   }, [currentSubtopic?.id, currentTopic?.id]);
 
   // Progress helpers

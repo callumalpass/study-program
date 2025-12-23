@@ -414,6 +414,43 @@ Each rubric criterion must have:
 - Block math: `$$expression$$`
 - All notation must render correctly
 
+### Visual Content
+Use diagrams and graphs to enhance understanding. Two visualization tools are available:
+
+**Mermaid Diagrams** — For flowcharts, sequence diagrams, state machines, ER diagrams:
+````markdown
+```mermaid
+graph TD
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Action]
+    B -->|No| D[End]
+```
+````
+
+**Function Plots** — For mathematical functions, derivatives, curves (especially useful for MATH subjects):
+````markdown
+```plot
+{
+  "xAxis": { "domain": [-5, 5] },
+  "yAxis": { "domain": [-5, 25] },
+  "data": [
+    { "fn": "x^2", "color": "#8b5cf6" },
+    { "fn": "2*x", "color": "#22c55e" }
+  ]
+}
+```
+````
+
+**When to use visualizations:**
+| Content Type | Recommended Tool |
+|--------------|------------------|
+| Algorithms, workflows | Mermaid flowchart |
+| System architecture | Mermaid graph/C4 |
+| Database relationships | Mermaid ER diagram |
+| Mathematical functions | Function plot |
+| Derivatives and integrals | Function plot |
+| Optimization problems | Function plot |
+
 ### Markdown Formatting
 - Use proper heading hierarchy (H1 → H2 → H3)
 - Code blocks with language specification

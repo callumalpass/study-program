@@ -101,6 +101,10 @@ Fix ALL gaps found (using spec targets), including quality issues:
 2. Expand subtopics to meet spec.curriculum.subtopic_word_target (default: 1000 words)
 3. Ensure content covers all spec.curriculum.essential_concepts
 3a. Improve content quality (clarity, correctness, depth, cohesion) wherever it falls short
+3b. Add visual content where appropriate:
+    - Mermaid diagrams for algorithms, workflows, architecture, ER diagrams
+    - Function plots for mathematical functions (especially MATH subjects)
+    - Example: \`\`\`plot with JSON config for function graphs
 4. Add exercises to content/topic-N/exercises.json (per spec.exercises.per_topic.target)
 5. Add quizzes to content/topic-N/quizzes.json (per spec.quizzes.per_topic)
 6. Add/complete exams in exams.json (per spec.exams targets)

@@ -2651,6 +2651,43 @@
   padding-bottom: var(--space-xl);
 }
 
+/* Function Plot Graphs */
+.function-plot {
+  margin: var(--space-lg) auto;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.function-plot svg {
+  display: block;
+  margin: 0 auto;
+  background: transparent !important;
+}
+
+.function-plot svg text {
+  fill: var(--color-text-secondary) !important;
+  font-size: var(--font-size-sm);
+}
+
+.function-plot svg .axis path,
+.function-plot svg .axis line {
+  stroke: var(--color-border-default);
+}
+
+.function-plot svg .grid line {
+  stroke: var(--color-border-subtle);
+  opacity: 0.5;
+}
+
+.plot-error {
+  padding: var(--space-md);
+  background: var(--color-bg-error);
+  color: var(--color-text-error);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
 /* Content Pagination */
 .content-navigator .content-pagination {
   display: flex;

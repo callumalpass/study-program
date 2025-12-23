@@ -45,7 +45,7 @@ for ((i=1; i<=MAX_ITERATIONS; i++)); do
 
     # Create the upgrade prompt
     PROMPT=$(cat <<'EOF'
-You are a Senior Software Engineer acting as the "Code Janitor." Your goal is to pay down technical debt by refactoring code to be cleaner, safer, and more idiomatic.
+Your goal is to pay down technical debt by refactoring code to be cleaner, safer, and more idiomatic.
 
 ## Context
 - **Language:** TypeScript

@@ -112,6 +112,18 @@
 
 ## Recent Updates (2025-12-23)
 
+### CS103: Object-Oriented Programming - Content Quality Improvements
+- **Status:** Maintained 10/10 (content enrichment)
+- **Changes made:**
+  1. Expanded Topic 1 subtopics below 850-word target:
+     - 01-introduction.md: 507 → 1252 words (historical context, real-world applications, common misconceptions)
+     - 02-defining-classes.md: 612 → 1063 words (expanded explanations, common mistakes section)
+     - 03-creating-objects.md: 642 → 998 words (instantiation details, identity vs equality, common mistakes)
+  2. Expanded Topic 2 introduction: 492 → 938 words (encapsulation vs information hiding, common mistakes preview)
+  3. Expanded Topic 4 introduction: 571 → 874 words (Open/Closed Principle preview, polymorphism vs conditionals analysis)
+  4. All subtopics now exceed 850-word target
+- **Quality verified:** 44,873 total words (avg 916/subtopic), 112 exercises, 105 quiz questions, 73 exam questions, 2 projects
+
 ### MATH203: Calculus I - Content Quality Improvements
 - **Status:** Maintained 10/10 (content enrichment)
 - **Changes made:**

@@ -8,11 +8,15 @@ order: 1
 
 The word "polymorphism" comes from Greek, meaning "many forms." In programming, it means that the same interface can work with objects of different types. When you call `len()` on a string, list, or dictionary, you're using polymorphism—the same function adapts to different types.
 
+Polymorphism is perhaps the most powerful concept in object-oriented programming. While encapsulation protects data and inheritance provides code reuse, polymorphism is what enables truly flexible, extensible designs. It's the reason you can write code that works with objects you haven't even created yet.
+
+Consider Python's built-in `print()` function. It can print integers, strings, lists, dictionaries, and custom objects. It doesn't know about all possible types—it just calls `str()` on whatever you pass it, and your object's `__str__` method determines how it appears. That's polymorphism in action.
+
 ---
 
 ## Why Polymorphism Matters
 
-Polymorphism is what makes object-oriented code truly flexible:
+Polymorphism is what makes object-oriented code truly flexible and maintainable:
 
 ### 1. Generic Code
 Write once, work with many types:
@@ -160,7 +164,7 @@ notify_user(PushNotification("device-abc"), "Hello!")
 
 ## Polymorphism vs Conditional Logic
 
-Without polymorphism, you'd need conditionals:
+Without polymorphism, you'd need conditionals everywhere:
 
 ```python
 # WITHOUT polymorphism - fragile, hard to extend
@@ -179,18 +183,38 @@ def process_shape(shape):
     return shape.area()  # Each shape knows its own area
 ```
 
+The conditional approach has serious problems:
+- **Every function** that works with shapes needs all those conditionals
+- **Adding a new shape** means finding and updating every such function
+- **Missing a case** causes runtime errors that might not surface until production
+
+Polymorphism inverts this: instead of the caller knowing about every type, each type knows how to perform its own operations. The knowledge is where it belongs—inside the class itself.
+
 ---
 
 ## What You'll Learn
 
 In this topic, you'll master:
 
-1. **Method overriding** for subtype polymorphism
-2. **Duck typing** for structural polymorphism
-3. **Operator overloading** with special methods
-4. **Callable and iterable objects**
-5. **Protocols** for typed duck typing
-6. **Best practices** for polymorphic design
+1. **Method overriding** for subtype polymorphism—how child classes customize parent behavior
+2. **Duck typing** for structural polymorphism—Python's "if it looks like a duck" philosophy
+3. **Operator overloading** with special methods—making `+`, `==`, `<` work with your objects
+4. **Callable and iterable objects**—making objects behave like functions and sequences
+5. **Protocols** for typed duck typing—combining duck typing with type hints
+6. **Best practices** for polymorphic design—when to use each approach
+
+By the end of this topic, you'll understand how to design classes that can be used interchangeably, enabling flexible architectures that are easy to extend.
+
+---
+
+## The Open/Closed Principle Preview
+
+Polymorphism is key to the Open/Closed Principle, which states that software should be open for extension but closed for modification. With polymorphic code:
+
+- **Open for extension:** Add new types that implement the same interface
+- **Closed for modification:** Existing code that uses that interface doesn't need to change
+
+We'll explore this principle in detail in Topic 7 (Design Principles).
 
 ---
 
@@ -200,3 +224,5 @@ In this topic, you'll master:
 - Python supports subtype, duck typing, and operator polymorphism
 - Polymorphic code is more flexible and extensible
 - Design around interfaces/behaviors, not specific types
+- Duck typing is Python's primary polymorphism mechanism—inheritance is optional
+- Polymorphism eliminates the need for type-checking conditionals
