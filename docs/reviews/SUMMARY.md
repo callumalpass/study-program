@@ -64,7 +64,7 @@
 
 ### 1. Missing subject-spec.yaml
 Many subjects still need subject-spec.yaml files (required since 2025-12-20):
-- MATH101, MATH102, MATH201, MATH202
+- MATH102, MATH201, MATH202
 - MATH302, MATH304
 
 ### 2. Exercise Shortages
@@ -106,11 +106,22 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (6 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (5 subjects) |
 
-**Total Estimated:** ~3 hours for spec files.
+**Total Estimated:** ~2.5 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### MATH101: Discrete Mathematics I - Added Subject Specification
+- **Status:** Already 10/10, now with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: propositional logic, proof techniques, sets, relations, functions, predicate logic, sequences
+  3. Specified assessment philosophy for foundational discrete math with CS applications
+  4. Defined exercise distribution (100% written) with 20 exercises per topic target
+  5. Set exam targets (26 midterm, 44 final) matching existing content
+  6. Documented that projects are not required (exam-only math subject)
+- **Quality verified:** 49,973 total words (avg 1,020/subtopic), 140 exercises, 105 quiz questions, 70 exam questions
 
 ### CS403: Advanced Algorithms - Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml
