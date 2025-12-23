@@ -9,6 +9,40 @@ Gaussian quadrature achieves maximum accuracy by optimally choosing both evaluat
 
 ## Introduction
 
+The following diagram compares Newton-Cotes (equally-spaced points) with Gaussian quadrature (optimally-placed points):
+
+```mermaid
+graph LR
+    subgraph "Newton-Cotes"
+        NC["n points equally spaced"]
+        NC --> NC_ACC["Exact for polynomials<br/>degree ≤ n-1 or n"]
+    end
+
+    subgraph "Gaussian Quadrature"
+        GQ["n optimal points + weights"]
+        GQ --> GQ_ACC["Exact for polynomials<br/>degree ≤ 2n-1"]
+    end
+
+    NC_ACC --> COMP["2× polynomial degree<br/>improvement!"]
+    GQ_ACC --> COMP
+```
+
+Visual comparison of integration point placement:
+
+```plot
+{
+  "xAxis": { "domain": [-1.2, 1.2] },
+  "yAxis": { "domain": [-0.2, 1.2] },
+  "grid": true,
+  "data": [
+    { "fn": "1 - x^2", "color": "#3b82f6" },
+    { "fn": "0", "color": "#6b7280" }
+  ]
+}
+```
+
+This shows $f(x) = 1 - x^2$ on $[-1, 1]$. Gauss-Legendre 2-point quadrature evaluates at $x = \pm 1/\sqrt{3}$ (optimal), not at $x = \pm 1$ (Newton-Cotes endpoints).
+
 Newton-Cotes formulas use **equally-spaced points**, which is convenient but suboptimal. For $n$ points, we have $2n$ degrees of freedom:
 - $n$ evaluation points $x_i$
 - $n$ weights $w_i$

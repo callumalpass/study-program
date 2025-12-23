@@ -112,6 +112,37 @@
 
 ## Recent Updates (2025-12-23)
 
+### MATH402: Numerical Methods - Visual Content Enhancement
+- **Status:** Maintained 10/10 (enhanced with 20 visual elements)
+- **Changes made:**
+  1. Added 12 Mermaid diagrams across all 7 topics:
+     - **Topic 1** (Error Analysis): IEEE 754 format structure, stability type relationships
+     - **Topic 2** (Root-Finding): Bisection algorithm flowchart, Newton's method flowchart, method selection decision tree
+     - **Topic 3** (Interpolation): Lagrange construction diagram, cubic spline structure
+     - **Topic 4** (Integration): Newton-Cotes vs Gaussian quadrature comparison
+     - **Topic 5** (Direct Methods): Gaussian elimination algorithm flowchart
+     - **Topic 6** (Iterative Methods): Conjugate gradient algorithm flowchart
+     - **Topic 7** (ODEs): Euler method step diagram, RK4 slope evaluation diagram
+  2. Added 8 function plots:
+     - **Topic 2**: Bisection target function, Newton tangent line visualization, convergence rate comparison
+     - **Topic 3**: Lagrange interpolation example, Runge phenomenon illustration
+     - **Topic 4**: Gaussian quadrature function visualization
+     - **Topic 6**: CG quadratic function minimization
+     - **Topic 7**: Euler method tangent approximation
+  3. Total visual content: 20 elements (12 Mermaid diagrams + 8 function plots)
+- **Quality verified:** TypeScript builds without errors
+- **Note:** MATH402 previously had 0 visual elements; now has comprehensive visualizations for algorithms and mathematical functions
+
+### MATH404: Optimization Theory - Content Expansion
+- **Status:** Maintained 10/10 (expanded content in Topics 4-7)
+- **Changes made:**
+  1. Expanded 28 subtopics with enhanced mathematical content (~4,800 lines added)
+  2. Topic 4 (Convexity): Added diagrams, expanded proofs and examples
+  3. Topic 5 (Convex Programs): Enhanced SDP, SOCP, geometric programming coverage
+  4. Topic 6 (Unconstrained): Expanded gradient descent, Newton, quasi-Newton, SGD
+  5. Topic 7 (Constrained): Expanded KKT conditions, augmented Lagrangian, SQP
+- **Quality verified:** TypeScript builds without errors
+
 ### MATH201: Linear Algebra - Visual Content Enhancement
 - **Status:** Maintained 10/10 (enhanced with visual content)
 - **Changes made:**

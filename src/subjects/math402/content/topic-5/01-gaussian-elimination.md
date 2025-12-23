@@ -11,6 +11,25 @@ The algorithm transforms an augmented matrix $[A|b]$ into an upper triangular fo
 
 ## The Algorithm
 
+The following flowchart illustrates the Gaussian elimination algorithm:
+
+```mermaid
+flowchart TD
+    A[Input: Matrix A, vector b] --> B[Form augmented matrix A|b]
+    B --> C[k = 1]
+    C --> D{k < n?}
+    D -->|No| E[Back Substitution]
+    D -->|Yes| F[Find pivot in column k]
+    F --> G{Pivot = 0?}
+    G -->|Yes| H[Matrix singular or<br/>needs pivoting]
+    G -->|No| I[Eliminate entries below pivot]
+    I --> J["Row i: R_i = R_i - m_ik × R_k<br/>where m_ik = a_ik/a_kk"]
+    J --> K[k = k + 1]
+    K --> D
+    E --> L["Solve for x_n, x_{n-1}, ..., x_1"]
+    L --> M[Output: Solution x]
+```
+
 Gaussian elimination consists of two main phases: forward elimination and back substitution.
 
 ### Forward Elimination

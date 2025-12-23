@@ -15,6 +15,44 @@ $$P_n(x_i) = y_i, \quad i = 0, 1, \ldots, n$$
 
 **Existence and Uniqueness**: Such a polynomial exists and is unique.
 
+The following diagram illustrates the interpolation problem:
+
+```mermaid
+graph LR
+    subgraph "Data Points"
+        P0["(x₀, y₀)"]
+        P1["(x₁, y₁)"]
+        P2["..."]
+        Pn["(xₙ, yₙ)"]
+    end
+
+    subgraph "Polynomial Construction"
+        L["Lagrange Basis<br/>L₀(x), L₁(x), ..., Lₙ(x)"]
+        P["P(x) = Σ yᵢ Lᵢ(x)"]
+    end
+
+    P0 --> L
+    P1 --> L
+    Pn --> L
+    L --> P
+```
+
+Example of Lagrange interpolation through 4 points:
+
+```plot
+{
+  "xAxis": { "domain": [-2, 4] },
+  "yAxis": { "domain": [-5, 15] },
+  "grid": true,
+  "data": [
+    { "fn": "x^3 - 3*x^2 + 2*x + 1", "color": "#3b82f6" },
+    { "fn": "0", "color": "#e5e7eb" }
+  ]
+}
+```
+
+This shows a cubic polynomial passing through points at $x = 0, 1, 2, 3$.
+
 ## Lagrange Basis Polynomials
 
 Define the $i$-th Lagrange basis polynomial:

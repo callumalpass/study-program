@@ -23,6 +23,17 @@ The idea is to evaluate the slope at the midpoint of the interval using a half-s
 
 ## Fourth-Order Runge-Kutta (RK4)
 
+The following diagram illustrates how RK4 evaluates slopes at multiple points:
+
+```mermaid
+flowchart TD
+    A["Start: (tₙ, yₙ)"] --> B["k₁ = f(tₙ, yₙ)<br/>slope at start"]
+    B --> C["k₂ = f(tₙ + h/2, yₙ + hk₁/2)<br/>slope at midpoint using k₁"]
+    C --> D["k₃ = f(tₙ + h/2, yₙ + hk₂/2)<br/>slope at midpoint using k₂"]
+    D --> E["k₄ = f(tₙ + h, yₙ + hk₃)<br/>slope at end using k₃"]
+    E --> F["yₙ₊₁ = yₙ + h/6 · (k₁ + 2k₂ + 2k₃ + k₄)"]
+```
+
 The classical fourth-order Runge-Kutta method is the most popular choice for solving ODEs. It evaluates the derivative at four carefully chosen points and combines them with specific weights:
 
 $$k_1 = f(t_n, y_n)$$

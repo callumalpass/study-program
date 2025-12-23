@@ -9,6 +9,25 @@ Stability is a fundamental property of numerical algorithms, determining whether
 
 ## Types of Stability
 
+The following diagram illustrates the relationships between different types of stability:
+
+```mermaid
+graph LR
+    subgraph "Algorithm Properties"
+        A[Algorithm] --> BS[Backward Stable?]
+        BS -->|Yes| BW[Produces exact solution<br/>to perturbed input]
+        BS -->|No| NS[Numerically Stable?]
+        NS -->|Yes| NS1[Errors bounded<br/>but may grow slowly]
+        NS -->|No| US[Unstable:<br/>errors grow uncontrollably]
+    end
+
+    subgraph "Error Analysis"
+        BW --> FS[Forward Stable<br/>if problem well-conditioned]
+        NS1 --> MA[May be acceptable<br/>for some applications]
+        US --> AV[Avoid: use different algorithm]
+    end
+```
+
 ### Forward Stability
 
 An algorithm is **forward stable** if the forward error is bounded by a small multiple of machine epsilon times the condition number:

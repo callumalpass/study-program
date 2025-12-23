@@ -7,6 +7,37 @@ description: "Comprehensive guide to conjugate gradient with theoretical foundat
 
 ## Introduction
 
+The following diagram illustrates the conjugate gradient algorithm:
+
+```mermaid
+flowchart TD
+    A["Initialize: x⁽⁰⁾, r⁽⁰⁾ = b - Ax⁽⁰⁾, p⁽⁰⁾ = r⁽⁰⁾"] --> B[k = 0]
+    B --> C{||r⁽ᵏ⁾|| < tol?}
+    C -->|Yes| D[Return x⁽ᵏ⁾]
+    C -->|No| E["Compute α_k = (r⁽ᵏ⁾ᵀr⁽ᵏ⁾)/(p⁽ᵏ⁾ᵀAp⁽ᵏ⁾)"]
+    E --> F["x⁽ᵏ⁺¹⁾ = x⁽ᵏ⁾ + α_k p⁽ᵏ⁾"]
+    F --> G["r⁽ᵏ⁺¹⁾ = r⁽ᵏ⁾ - α_k Ap⁽ᵏ⁾"]
+    G --> H["β_k = (r⁽ᵏ⁺¹⁾ᵀr⁽ᵏ⁺¹⁾)/(r⁽ᵏ⁾ᵀr⁽ᵏ⁾)"]
+    H --> I["p⁽ᵏ⁺¹⁾ = r⁽ᵏ⁺¹⁾ + β_k p⁽ᵏ⁾"]
+    I --> J[k = k + 1]
+    J --> C
+```
+
+The following shows the quadratic function $f(x) = \frac{1}{2}x^T A x - b^T x$ that CG minimizes:
+
+```plot
+{
+  "xAxis": { "domain": [-2, 4] },
+  "yAxis": { "domain": [-5, 15] },
+  "grid": true,
+  "data": [
+    { "fn": "0.5*x^2 - 2*x + 3", "color": "#3b82f6" }
+  ]
+}
+```
+
+This shows a 1D quadratic with minimum at $x = 2$. In higher dimensions, CG moves along conjugate directions to efficiently reach the minimum.
+
 The Conjugate Gradient (CG) method is one of the most important iterative algorithms for solving large-scale systems of linear equations. Developed by Magnus Hestenes and Eduard Stiefel in the 1950s, this method represents a significant departure from classical iterative methods like Jacobi and Gauss-Seidel. Rather than being a simple fixed-point iteration, CG is based on optimization theory and generates search directions that are mutually conjugate with respect to the coefficient matrix.
 
 The method is specifically designed for systems where the coefficient matrix is symmetric positive definite (SPD). For such systems, solving $Ax = b$ is equivalent to minimizing the quadratic function $f(x) = \frac{1}{2}x^T A x - b^T x$. The CG method efficiently minimizes this function by moving along carefully chosen conjugate directions. Remarkably, in exact arithmetic, CG converges to the exact solution in at most $n$ iterations for an $n \times n$ system, making it a direct method in theory but typically used as an iterative method in practice.

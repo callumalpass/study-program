@@ -118,6 +118,25 @@ Floating-point numbers are:
 - **Denser** near zero
 - **Sparser** near the overflow threshold
 
+The following diagram illustrates the structure of IEEE 754 floating-point representation:
+
+```mermaid
+graph TB
+    subgraph "64-bit Double Precision Format"
+        S[Sign<br/>1 bit] --> V[Value]
+        E[Exponent<br/>11 bits<br/>bias 1023] --> V
+        M[Mantissa<br/>52 bits<br/>implicit 1.xxx] --> V
+    end
+
+    subgraph "Value Interpretation"
+        V --> N[Normalized<br/>1 ≤ exp ≤ 2046]
+        V --> D[Denormalized<br/>exp = 0, mantissa ≠ 0]
+        V --> Z[Zero<br/>exp = 0, mantissa = 0]
+        V --> I[Infinity<br/>exp = 2047, mantissa = 0]
+        V --> NaN[NaN<br/>exp = 2047, mantissa ≠ 0]
+    end
+```
+
 ## Python Implementation
 
 ```python

@@ -18,6 +18,46 @@ Splines solve these problems by using **low-degree polynomials on each subinterv
 
 ## Piecewise Polynomial Functions
 
+The following diagram illustrates the structure of a cubic spline:
+
+```mermaid
+graph TB
+    subgraph "Cubic Spline Structure"
+        K0["Knot x₀"] --> S0["S₀(x)<br/>cubic on [x₀,x₁]"]
+        S0 --> K1["Knot x₁"]
+        K1 --> S1["S₁(x)<br/>cubic on [x₁,x₂]"]
+        S1 --> K2["Knot x₂"]
+        K2 --> S2["..."]
+        S2 --> Kn["Knot xₙ"]
+    end
+
+    subgraph "Smoothness at Knots"
+        C0["C⁰: S continuous"]
+        C1["C¹: S' continuous"]
+        C2["C²: S'' continuous"]
+    end
+
+    K1 --> C0
+    K1 --> C1
+    K1 --> C2
+```
+
+Comparison of polynomial interpolation vs cubic spline - splines avoid oscillations:
+
+```plot
+{
+  "xAxis": { "domain": [-1.5, 1.5] },
+  "yAxis": { "domain": [-0.5, 1.5] },
+  "grid": true,
+  "data": [
+    { "fn": "1/(1 + 25*x^2)", "color": "#3b82f6" },
+    { "fn": "1 - 12.5*x^2 + 26*x^4", "color": "#ef4444", "range": [-0.8, 0.8] }
+  ]
+}
+```
+
+This shows the Runge function $f(x) = 1/(1+25x^2)$ (blue) and a polynomial approximation (red) that oscillates wildly near the boundaries.
+
 Given data points $(x_0, f_0), (x_1, f_1), \ldots, (x_n, f_n)$ with $x_0 < x_1 < \cdots < x_n$, a **spline of degree $k$** is a function $S(x)$ such that:
 
 1. On each subinterval $[x_i, x_{i+1}]$, $S(x)$ is a polynomial of degree at most $k$

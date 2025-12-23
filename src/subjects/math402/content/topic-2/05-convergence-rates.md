@@ -29,6 +29,44 @@ where $0 < \lambda < \infty$ is the **asymptotic error constant**.
 | Newton | 2 | Simple root, $f' \neq 0$ | 2 (f and f') |
 | Halley | 3 | Simple root | 3 (f, f', f'') |
 
+The following diagram illustrates how to select the appropriate root-finding method:
+
+```mermaid
+flowchart TD
+    A[Root-Finding Problem] --> B{Bracketing interval<br/>available?}
+    B -->|Yes| C{Need guaranteed<br/>convergence?}
+    B -->|No| D{Derivative<br/>available?}
+
+    C -->|Yes| E[Bisection<br/>α=1, guaranteed]
+    C -->|No| F{Derivative<br/>available?}
+
+    F -->|Yes| G[Safeguarded Newton<br/>α=2, robust]
+    F -->|No| H[Secant with bounds<br/>α≈1.618]
+
+    D -->|Yes| I{Good initial guess?}
+    D -->|No| J[Secant Method<br/>α≈1.618]
+
+    I -->|Yes| K[Newton's Method<br/>α=2, fast]
+    I -->|No| L[Find bracket first<br/>then use hybrid]
+```
+
+Visual comparison of convergence rates:
+
+```plot
+{
+  "xAxis": { "domain": [0, 10], "label": "Iteration" },
+  "yAxis": { "domain": [1e-12, 1] },
+  "grid": true,
+  "data": [
+    { "fn": "0.1 * 0.5^x", "color": "#3b82f6" },
+    { "fn": "0.1 * (1/x)^1.618", "color": "#22c55e", "range": [1, 10] },
+    { "fn": "0.1^(2^x)", "color": "#ef4444", "range": [0, 4] }
+  ]
+}
+```
+
+This shows the error decay patterns: bisection (blue, linear), secant (green, superlinear), and Newton (red, quadratic). Notice how quickly quadratic convergence achieves machine precision.
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt

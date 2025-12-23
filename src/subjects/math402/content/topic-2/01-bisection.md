@@ -21,6 +21,41 @@ If $f$ is continuous on $[a, b]$ and $f(a) \cdot f(b) < 0$, then there exists $c
    - Otherwise, set $[a_{n+1}, b_{n+1}] = [c_n, b_n]$
 4. Repeat until $|b_n - a_n| < \epsilon$
 
+The following flowchart illustrates the bisection algorithm:
+
+```mermaid
+flowchart TD
+    A[Start: interval a, b<br/>with f a · f b < 0] --> B[Compute midpoint<br/>c = a + b / 2]
+    B --> C[Evaluate f c]
+    C --> D{f c = 0?}
+    D -->|Yes| E[Root found: c]
+    D -->|No| F{b - a < ε?}
+    F -->|Yes| G[Return c as root]
+    F -->|No| H{f a · f c < 0?}
+    H -->|Yes| I[Set b = c]
+    H -->|No| J[Set a = c]
+    I --> B
+    J --> B
+    E --> K[Done]
+    G --> K
+```
+
+The method's visual behavior on a sample function:
+
+```plot
+{
+  "xAxis": { "domain": [0, 3] },
+  "yAxis": { "domain": [-5, 10] },
+  "grid": true,
+  "data": [
+    { "fn": "x^2 - 2", "color": "#3b82f6" },
+    { "fn": "0", "color": "#6b7280" }
+  ]
+}
+```
+
+This shows $f(x) = x^2 - 2$, where the root $\sqrt{2} \approx 1.414$ lies between 1 and 2.
+
 ## Convergence Analysis
 
 After $n$ iterations, the interval width is:

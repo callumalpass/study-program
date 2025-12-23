@@ -26,6 +26,37 @@ $$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
    $$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$$
 3. Stop when $|x_{n+1} - x_n| < \epsilon$ or $|f(x_{n+1})| < \epsilon$
 
+```mermaid
+flowchart TD
+    A[Start: initial guess x₀] --> B[Evaluate f x_n and f' x_n]
+    B --> C{f' x_n ≈ 0?}
+    C -->|Yes| D[Derivative too small: fail or restart]
+    C -->|No| E["Compute x_{n+1} = x_n - f(x_n)/f'(x_n)"]
+    E --> F{Converged?<br/>|x_{n+1} - x_n| < ε}
+    F -->|Yes| G[Return x_{n+1} as root]
+    F -->|No| H{Max iterations?}
+    H -->|Yes| I[Return current estimate]
+    H -->|No| J[n = n + 1]
+    J --> B
+```
+
+The geometric interpretation shows how Newton's method uses tangent lines to find roots:
+
+```plot
+{
+  "xAxis": { "domain": [0, 3] },
+  "yAxis": { "domain": [-2, 8] },
+  "grid": true,
+  "data": [
+    { "fn": "x^2 - 2", "color": "#3b82f6" },
+    { "fn": "0", "color": "#6b7280" },
+    { "fn": "4*(x - 2)", "color": "#ef4444" }
+  ]
+}
+```
+
+This shows $f(x) = x^2 - 2$ and a tangent line at $x = 2$. The tangent intersects the x-axis at $x = 1.5$, giving the next Newton iterate.
+
 ## Convergence Analysis
 
 **Theorem**: If $f$ is twice continuously differentiable, $f(r) = 0$, and $f'(r) \neq 0$, then Newton's method converges **quadratically** from sufficiently close initial guesses:

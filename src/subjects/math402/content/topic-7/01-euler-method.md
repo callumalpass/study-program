@@ -13,6 +13,37 @@ While the Euler method is rarely used in production scientific computing due to 
 
 ## Mathematical Formulation
 
+The Euler method follows the tangent line at each step:
+
+```mermaid
+flowchart LR
+    subgraph "Euler Step"
+        A["(tₙ, yₙ)"] --> |"slope = f(tₙ, yₙ)"| B["Tangent line"]
+        B --> |"step h"| C["(tₙ₊₁, yₙ₊₁)"]
+    end
+
+    subgraph "Formula"
+        F["yₙ₊₁ = yₙ + h·f(tₙ, yₙ)"]
+    end
+```
+
+Visualization of Euler's method showing tangent line approximation:
+
+```plot
+{
+  "xAxis": { "domain": [0, 2] },
+  "yAxis": { "domain": [0, 1.5] },
+  "grid": true,
+  "data": [
+    { "fn": "exp(-x)", "color": "#3b82f6" },
+    { "fn": "1 - x", "color": "#ef4444", "range": [0, 0.5] },
+    { "fn": "0.5 - 0.6065*(x-0.5)", "color": "#ef4444", "range": [0.5, 1] }
+  ]
+}
+```
+
+This shows $y' = -y$ with $y(0) = 1$. The blue curve is the exact solution $e^{-t}$, while the red lines show Euler steps. Each step follows the tangent but accumulates error.
+
 Consider the initial value problem:
 
 $$y' = f(t, y), \quad y(t_0) = y_0$$
