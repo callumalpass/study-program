@@ -1,7 +1,9 @@
-# stu.p
+# [stu.p](https://callumalpass.github.io/study-program/)
 
 <p align="center">
-  <img src="public/brick-guy-pondering.svg" alt="stu.p Brick Mascot Pondering" width="150" height="150">
+  <a href="https://callumalpass.github.io/study-program/">
+    <img src="public/brick-guy-pondering.svg" alt="stu.p Brick Mascot Pondering" width="150" height="150">
+  </a>
 </p>
 
 **stu.p** is a **stu**dy **p**rogram: a computer science oriented self-study platform with readings, exercises, quizzes, and exams.
