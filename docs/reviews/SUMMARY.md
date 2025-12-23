@@ -113,6 +113,15 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 ## Recent Updates (2025-12-23)
 
+### CS405: Cloud Computing - Content Expansion and Final Exam Completion
+- **Status:** 10/10 (maintained, content expanded)
+- **Changes made:**
+  1. Expanded Topic 5 (Serverless Computing) - All 7 subtopics expanded from avg 353 to avg 1660 words
+  2. Expanded Topic 6 (Cloud Storage) - All 7 subtopics expanded from avg 194 to avg 2522 words
+  3. Added 7 final exam questions (35 → 42) to meet spec target
+  4. Quality score improved from 96% to 100%
+- **Quality verified:** 92,613 total words (avg 1,890/subtopic), 112 exercises, 105 quiz questions, 72 exam questions, 4 projects
+
 ### CS307: Security Fundamentals - Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml
 - **Changes made:**

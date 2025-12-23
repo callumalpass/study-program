@@ -1,3 +1,9 @@
+---
+id: cs405-t5-serverless-intro
+title: "Introduction to Serverless Computing"
+order: 1
+---
+
 # Introduction to Serverless Computing
 
 Serverless computing allows developers to build and run applications without managing servers. Despite the name, servers still exist, but cloud providers handle all server management, allowing developers to focus purely on code.
@@ -78,13 +84,23 @@ Serverless computing allows developers to build and run applications without man
 
 **Cold Starts**:
 - Initial latency when function hasn't run recently
-- Can be 100ms-5s depending on runtime
-- Mitigations: provisioned concurrency, keep-warm patterns
+- **Performance Impact**:
+  - Node.js/Python: 100-300ms for simple functions
+  - Java/.NET: 500ms-3s due to runtime initialization
+  - Large dependencies: Can add 1-5s additional latency
+  - VPC-enabled functions: Additional 5-10s on first invocation
+- **Mitigations**:
+  - Provisioned concurrency (keep instances warm)
+  - Keep-warm patterns (scheduled pings)
+  - Minimize package size and dependencies
+  - Use interpreted languages for faster startup
+  - Lambda SnapStart for Java (reduces cold start by up to 90%)
 
 **Execution Limits**:
 - Maximum execution time (AWS Lambda: 15 minutes)
-- Memory limits
-- Payload size limits
+- Memory limits (AWS: up to 10GB)
+- Payload size limits (6MB synchronous, 256KB asynchronous)
+- Concurrent execution limits (1,000 default, can request increase)
 
 **Vendor Lock-in**:
 - Provider-specific APIs and services
@@ -102,13 +118,71 @@ Serverless computing allows developers to build and run applications without man
 
 ## Use Cases
 
-**Web APIs**: RESTful APIs, GraphQL
-**Data Processing**: ETL, real-time stream processing
-**Automation**: Scheduled tasks, workflows
-**Mobile/IoT Backends**: Authentication, data sync
-**Chatbots**: Conversational interfaces
-**Image/Video Processing**: Thumbnails, transcoding
-**Machine Learning Inference**: Model serving
+**Web APIs**:
+- RESTful APIs serving mobile/web applications
+- GraphQL endpoints with dynamic scaling
+- Microservices architecture with independent deployment
+
+**Data Processing**:
+- ETL pipelines transforming data on upload
+- Real-time stream processing from IoT devices
+- Log analysis and aggregation
+- Data validation and enrichment
+
+**Automation**:
+- Scheduled tasks (daily reports, cleanup jobs)
+- Workflow orchestration using Step Functions
+- Infrastructure automation (backup, scaling)
+- CI/CD pipeline automation
+
+**Mobile/IoT Backends**:
+- User authentication and authorization
+- Real-time data synchronization
+- Push notification delivery
+- Device management and telemetry
+
+**Chatbots**:
+- Conversational interfaces for customer service
+- Natural language processing
+- Integration with messaging platforms (Slack, Teams)
+
+**Image/Video Processing**:
+- Automatic thumbnail generation on upload
+- Video transcoding to multiple formats
+- Image recognition and tagging
+- Watermarking and resizing
+
+**Machine Learning Inference**:
+- Model serving with auto-scaling
+- Real-time predictions
+- A/B testing of models
+- Feature extraction pipelines
+
+## Pricing Models
+
+**AWS Lambda**:
+- **Requests**: $0.20 per 1M requests
+- **Duration**: $0.0000166667 per GB-second
+- **Free Tier**: 1M requests + 400,000 GB-seconds/month (perpetual)
+- **Provisioned Concurrency**: Additional $0.0000041667 per GB-second
+- **Example Cost**: 1M requests, 512MB, 100ms avg = $8.33/month
+
+**Azure Functions**:
+- **Consumption Plan**: $0.20 per 1M executions
+- **Duration**: $0.000016 per GB-second
+- **Free Tier**: 1M requests + 400,000 GB-seconds/month
+- **Premium Plan**: Fixed cost starting at $161/month for reserved capacity
+
+**Google Cloud Functions**:
+- **Invocations**: $0.40 per 1M invocations
+- **Compute Time**: $0.0000025 per GB-second
+- **Free Tier**: 2M invocations + 400,000 GB-seconds/month
+- **Network Egress**: Additional charges apply
+
+**Cost Comparison Scenario** (10M requests/month, 128MB, 200ms):
+- AWS Lambda: ~$41/month
+- Azure Functions: ~$41/month
+- Google Cloud Functions: ~$44/month
 
 ## Example: AWS Lambda
 
@@ -187,4 +261,4 @@ Resources:
 
 ## Summary
 
-Serverless computing abstracts infrastructure management, enabling rapid development with automatic scaling and pay-per-use pricing. While challenges like cold starts and execution limits exist, benefits often outweigh drawbacks for event-driven, variable-load workloads.
+Serverless computing abstracts infrastructure management, enabling rapid development with automatic scaling and pay-per-use pricing. While challenges like cold starts and execution limits exist, benefits often outweigh drawbacks for event-driven, variable-load workloads. Understanding pricing models across providers helps optimize costs, while proper architecture patterns mitigate common challenges.

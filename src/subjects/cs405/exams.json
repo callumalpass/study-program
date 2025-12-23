@@ -718,6 +718,80 @@
         ],
         "correctAnswer": 2,
         "explanation": "Distributed tracing follows requests through microservices, showing the path, timing, and dependencies. Metrics show aggregates, logs show events, but traces show request flows."
+      },
+      {
+        "id": "final-q36",
+        "type": "multiple_choice",
+        "prompt": "In AWS API Gateway, what is the main difference between REST API and HTTP API?",
+        "options": [
+          "REST API is free, HTTP API is paid",
+          "HTTP API has lower latency and cost but fewer features",
+          "REST API only supports GET requests",
+          "HTTP API requires Cognito authentication"
+        ],
+        "correctAnswer": 1,
+        "explanation": "HTTP API is ~70% cheaper with lower latency (~50ms vs ~100ms) but lacks features like caching, request validation, and usage plans. Choose REST API when you need full features, HTTP API for simple use cases with cost optimization."
+      },
+      {
+        "id": "final-q37",
+        "type": "true_false",
+        "prompt": "Provisioned concurrency in AWS Lambda eliminates cold starts by keeping function instances pre-initialized.",
+        "correctAnswer": true,
+        "explanation": "Provisioned concurrency keeps a specified number of function instances initialized and ready to respond immediately, eliminating cold start latency for those instances. This is useful for latency-sensitive applications."
+      },
+      {
+        "id": "final-q38",
+        "type": "multiple_choice",
+        "prompt": "What is the purpose of DynamoDB Streams?",
+        "options": [
+          "To improve read performance",
+          "To capture item-level changes for real-time processing",
+          "To compress data for storage",
+          "To replicate data across regions automatically"
+        ],
+        "correctAnswer": 1,
+        "explanation": "DynamoDB Streams capture item-level changes (INSERT, MODIFY, REMOVE) in real-time, allowing you to trigger Lambda functions for replication, analytics, or updating other systems based on database changes."
+      },
+      {
+        "id": "final-q39",
+        "type": "multiple_choice",
+        "prompt": "Which S3 storage class automatically moves objects between access tiers based on usage patterns?",
+        "options": [
+          "S3 Standard",
+          "S3 Glacier",
+          "S3 Intelligent-Tiering",
+          "S3 One Zone-IA"
+        ],
+        "correctAnswer": 2,
+        "explanation": "S3 Intelligent-Tiering automatically monitors access patterns and moves objects between frequent and infrequent access tiers, optimizing costs without retrieval fees when access patterns change."
+      },
+      {
+        "id": "final-q40",
+        "type": "fill_blank",
+        "prompt": "The AWS service that manages database connection pooling for Lambda functions, reducing connection overhead, is called RDS ____.",
+        "correctAnswer": "proxy",
+        "explanation": "RDS Proxy manages connection pooling for Lambda, allowing thousands of concurrent function executions to share a pool of database connections, preventing connection exhaustion and improving scalability."
+      },
+      {
+        "id": "final-q41",
+        "type": "multiple_choice",
+        "prompt": "When would you use AWS Snowball instead of online data transfer?",
+        "options": [
+          "For small datasets under 1GB",
+          "When you need real-time synchronization",
+          "For large datasets (TB to PB) where network transfer would take weeks",
+          "For frequently changing data"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Snowball is ideal for large-scale migrations (10TB+) where network transfer would be impractical. The break-even point is typically around 10TB - below that, network transfer is usually faster and cheaper."
+      },
+      {
+        "id": "final-q42",
+        "type": "written",
+        "prompt": "Explain the fan-out pattern in event-driven serverless architecture and provide an example use case.",
+        "correctAnswer": "parallel",
+        "explanation": "The fan-out pattern publishes a single event to an SNS topic that triggers multiple independent Lambda functions in parallel. Each function processes the event for a different purpose without blocking others.",
+        "modelAnswer": "The fan-out pattern occurs when a single event triggers multiple independent consumers that process the event in parallel. In serverless architectures, this is commonly implemented using SNS (Simple Notification Service) where one publisher sends an event to a topic, and multiple Lambda functions subscribe to process it simultaneously. Example: When a new order is placed, an 'OrderCreated' event is published to SNS. Multiple subscribers react in parallel: (1) an inventory function reserves stock, (2) a payment function processes the charge, (3) a notification function sends a confirmation email, (4) an analytics function records metrics. Each function runs independently, so failure in one doesn't affect others. This provides loose coupling, better fault isolation, and horizontal scalability."
       }
     ]
   }

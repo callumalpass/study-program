@@ -1,3 +1,9 @@
+---
+id: cs405-t5-serverless-architectures
+title: "Serverless Architectures"
+order: 3
+---
+
 # Serverless Architectures
 
 Serverless architectures combine FaaS, managed services, and event-driven patterns to build scalable, cost-effective applications without managing infrastructure.
@@ -117,6 +123,91 @@ def get_orders(event, context):
     return elasticsearch.search(index='orders')
 ```
 
+**When to Use CQRS**:
+
+CQRS (Command Query Responsibility Segregation) is particularly valuable in serverless architectures when:
+
+**Use CQRS When**:
+- **High read/write ratio**: Different scaling requirements for reads vs writes (e.g., 1000:1 read/write ratio)
+- **Complex queries**: Need denormalized data or multiple indexes for efficient queries
+- **Event sourcing**: Building audit trails or need to replay events
+- **Different consistency requirements**: Writes need strong consistency, reads can be eventually consistent
+- **Performance optimization**: Reads from optimized read models (Elasticsearch, Redis) while writes go to source of truth
+
+**Example Scenario**:
+```python
+# E-commerce order system
+# Command: Create order (write-optimized)
+def create_order_command(event, context):
+    order = {
+        'order_id': generate_id(),
+        'user_id': event['user_id'],
+        'items': event['items'],
+        'timestamp': datetime.now().isoformat()
+    }
+
+    # Write to source of truth (DynamoDB)
+    dynamodb.put_item(Table='Orders', Item=order)
+
+    # Publish event for read model updates
+    sns.publish(
+        TopicArn='order-events',
+        Message=json.dumps({
+            'type': 'OrderCreated',
+            'order': order
+        })
+    )
+
+    return {'statusCode': 201, 'order_id': order['order_id']}
+
+# Query: Search orders (read-optimized)
+def search_orders_query(event, context):
+    # Query from Elasticsearch (optimized for search)
+    results = elasticsearch.search(
+        index='orders',
+        body={
+            'query': {
+                'bool': {
+                    'must': [
+                        {'match': {'user_id': event['user_id']}},
+                        {'range': {'timestamp': {'gte': event['start_date']}}}
+                    ]
+                }
+            }
+        }
+    )
+    return {'statusCode': 200, 'orders': results['hits']['hits']}
+
+# Read model updater (eventual consistency)
+def update_read_model(event, context):
+    for record in event['Records']:
+        message = json.loads(record['Sns']['Message'])
+
+        if message['type'] == 'OrderCreated':
+            # Update Elasticsearch
+            elasticsearch.index(
+                index='orders',
+                id=message['order']['order_id'],
+                body=message['order']
+            )
+
+            # Update user statistics cache
+            redis.hincrby(f"user:{message['order']['user_id']}", 'order_count', 1)
+```
+
+**Benefits in This Example**:
+- Writes go directly to DynamoDB (fast, strongly consistent)
+- Reads come from Elasticsearch (full-text search, aggregations)
+- User stats cached in Redis (instant access)
+- Each store optimized for its purpose
+- Scales independently based on load
+
+**Avoid CQRS When**:
+- Simple CRUD applications with similar read/write patterns
+- Small-scale applications where complexity outweighs benefits
+- Strong consistency required for all operations
+- Team lacks experience with eventual consistency
+
 ## Fan-Out Pattern
 
 Single event triggers multiple functions:
@@ -164,6 +255,60 @@ def create_order_saga(event, context):
         compensate_payment(order)
         raise
 ```
+
+## Choosing the Right Pattern
+
+**API Backend Pattern**:
+- **Use for**: RESTful APIs, CRUD operations, mobile/web backends
+- **Benefits**: Simple to implement, auto-scaling, pay-per-request
+- **Considerations**: Cold starts may affect latency (use provisioned concurrency for critical paths)
+
+**Event-Driven Processing Pattern**:
+- **Use for**: File processing, ETL pipelines, reactive workflows
+- **Benefits**: Decoupled components, automatic retry, parallel processing
+- **Considerations**: Eventual consistency, potential for duplicate events (design for idempotency)
+
+**Stream Processing Pattern**:
+- **Use for**: Real-time analytics, IoT data, log processing, clickstream analysis
+- **Benefits**: Real-time processing, ordered records, built-in checkpointing
+- **Considerations**: Batch size tuning needed, error handling affects entire batch
+
+**Microservices Pattern**:
+- **Use for**: Complex applications, independent team ownership, polyglot requirements
+- **Benefits**: Independent deployment, technology flexibility, team autonomy
+- **Considerations**: Distributed system complexity, inter-service communication overhead
+
+**Async Queue Pattern**:
+- **Use for**: Background jobs, email sending, report generation, rate-limited APIs
+- **Benefits**: Decouples producer/consumer, handles load spikes, built-in retry
+- **Considerations**: Eventual processing, message ordering (FIFO queues available)
+
+**CQRS Pattern**:
+- **Use for**: High-read systems, complex queries, audit requirements, event sourcing
+- **Benefits**: Optimized read/write models, independent scaling, flexible queries
+- **Considerations**: Eventual consistency, increased complexity, multiple data stores
+
+**Fan-Out Pattern**:
+- **Use for**: Notifications, multi-step workflows, parallel processing
+- **Benefits**: Parallel execution, failure isolation, easy to add subscribers
+- **Considerations**: No guaranteed ordering, duplicate events possible
+
+**Saga Pattern**:
+- **Use for**: Distributed transactions, multi-step business processes, compensating actions
+- **Benefits**: Eventual consistency, failure recovery, long-running processes
+- **Considerations**: Complex compensation logic, increased latency
+
+**Decision Matrix**:
+| Requirement | Recommended Pattern |
+|-------------|-------------------|
+| Simple API | API Backend |
+| File upload triggers processing | Event-Driven |
+| Real-time data streams | Stream Processing |
+| Independent services | Microservices |
+| Background tasks | Async Queue |
+| High read/write ratio | CQRS |
+| Multiple downstream actions | Fan-Out |
+| Multi-step transactions | Saga |
 
 ## Best Practices
 
@@ -325,4 +470,4 @@ resources:
 
 ## Summary
 
-Serverless architectures leverage FaaS and managed services to build scalable, event-driven systems. Key patterns include API backends, event processing, CQRS, fan-out, and sagas. Best practices ensure reliability through idempotency, circuit breakers, retries, and proper error handling.
+Serverless architectures leverage FaaS and managed services to build scalable, event-driven systems. Key patterns include API backends, event processing, CQRS, fan-out, and sagas. Choosing the right pattern depends on your specific requirements: consistency needs, scaling characteristics, complexity tolerance, and team expertise. Best practices ensure reliability through idempotency, circuit breakers, retries, and proper error handling.
