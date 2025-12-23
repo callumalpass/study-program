@@ -141,9 +141,9 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
                   <div class="achievement-content">
                     <h3>${achievement.title}</h3>
                     <p>${achievement.description}</p>
-                    ${achievement.unlocked ? `
-                      <span class="achievement-date">Unlocked ${formatDate(achievement.unlockedDate!)}</span>
-                    ` : `
+                    ${achievement.unlocked && achievement.unlockedDate ? `
+                      <span class="achievement-date">Unlocked ${formatDate(achievement.unlockedDate)}</span>
+                    ` : achievement.unlocked ? '' : `
                       <div class="achievement-progress">
                         <div class="progress-bar-small">
                           <div class="progress-bar" style="width: ${achievement.progress}%"></div>
@@ -198,7 +198,8 @@ function renderSubjectBreakdown(
 
   return years.map(year => {
     const isExpanded = expandedYears[year];
-    const semesters = groupedSubjects.get(year)!;
+    const semesters = groupedSubjects.get(year);
+    if (!semesters) return '';
 
     return `
       <div class="year-breakdown-section">
@@ -210,7 +211,7 @@ function renderSubjectBreakdown(
         </div>
         <div class="year-breakdown-content" style="display: ${isExpanded ? 'block' : 'none'}">
           ${Array.from(semesters.keys()).sort().map(semester => {
-            const subjects = semesters.get(semester)!;
+            const subjects = semesters.get(semester) ?? [];
             return `
               <div class="semester-breakdown">
                 <h4>Semester ${semester}</h4>
@@ -474,7 +475,9 @@ function attachEventListeners(container: HTMLElement, subjects: Subject[]): void
   // Year breakdown toggle
   container.querySelectorAll('.year-breakdown-header').forEach(header => {
     header.addEventListener('click', () => {
-      const year = parseInt((header as HTMLElement).dataset.year!);
+      const yearStr = (header as HTMLElement).dataset.year;
+      if (!yearStr) return;
+      const year = parseInt(yearStr);
       expandedYears[year] = !expandedYears[year];
       renderProgressPage(container, subjects);
     });
