@@ -64,7 +64,6 @@
 
 ### 1. Missing subject-spec.yaml
 Many subjects still need subject-spec.yaml files (required since 2025-12-20):
-- CS307
 - CS403
 - MATH101, MATH102, MATH201, MATH202
 - MATH302, MATH304
@@ -108,11 +107,23 @@ Many subjects still need subject-spec.yaml files (required since 2025-12-20):
 
 | Subject | Estimated Hours | Work Needed |
 |---------|-----------------|-------------|
-| Various | 0.5 each | Create subject-spec.yaml files (8 subjects) |
+| Various | 0.5 each | Create subject-spec.yaml files (7 subjects) |
 
-**Total Estimated:** ~4 hours for spec files.
+**Total Estimated:** ~3.5 hours for spec files.
 
 ## Recent Updates (2025-12-23)
+
+### CS307: Security Fundamentals - Added Subject Specification
+- **Status:** Already 10/10, now with complete subject-spec.yaml
+- **Changes made:**
+  1. Created `subject-spec.yaml` with full pedagogical documentation
+  2. Documented curriculum requirements: CIA triad, cryptography, authentication, vulnerabilities, secure coding, network security, security testing
+  3. Specified assessment philosophy emphasizing defensive security and ethical considerations
+  4. Defined exercise distribution (85% coding with tests, 10% AI-evaluated, 5% written)
+  5. Set project count to 3 (matching existing: Password Manager, Secure REST API, Security Audit Tool)
+  6. Set exam targets (26 midterm, 52 final) matching existing content
+  7. Fixed topics.ts configuration for proper topic structure
+- **Quality verified:** 110,918 total words (avg 2,264/subtopic), 112 exercises, 105 quiz questions, 78 exam questions, 3 projects
 
 ### CS306: Computer Graphics - Added Subject Specification
 - **Status:** Already 10/10, now with complete subject-spec.yaml

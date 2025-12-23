@@ -19,233 +19,79 @@ const topicConfigs = [
   {
     number: 1,
     title: 'Security Principles',
-  },
-  {
-    number: 1,
-    title: 'Security Overview',
-  },
-  {
-    number: 1,
-    title: 'Introduction to Cryptography',
-  },
-  {
-    number: 1,
-    title: 'Authentication Fundamentals',
-  },
-  {
-    number: 1,
-    title: 'Vulnerability Overview',
-  },
-  {
-    number: 1,
-    title: 'Secure Coding Principles',
-  },
-  {
-    number: 1,
-    title: 'Network Security Fundamentals',
-  },
-  {
-    number: 1,
-    title: 'Security Testing Overview',
-  },
-  {
-    number: 2,
-    title: 'The CIA Triad',
+    quizIds: ['cs307-quiz-1-1', 'cs307-quiz-1-2', 'cs307-quiz-1-3'],
+    exerciseIds: [
+      'cs307-t1-ex01', 'cs307-t1-ex02', 'cs307-t1-ex03', 'cs307-t1-ex04',
+      'cs307-t1-ex05', 'cs307-t1-ex06', 'cs307-t1-ex07', 'cs307-t1-ex08',
+      'cs307-t1-ex09', 'cs307-t1-ex10', 'cs307-t1-ex11', 'cs307-t1-ex12',
+      'cs307-t1-ex13', 'cs307-t1-ex14', 'cs307-t1-ex15', 'cs307-t1-ex16',
+    ],
   },
   {
     number: 2,
     title: 'Cryptography Fundamentals',
-  },
-  {
-    number: 2,
-    title: 'Symmetric Encryption',
-  },
-  {
-    number: 2,
-    title: 'Password Security',
-  },
-  {
-    number: 2,
-    title: 'Injection Attacks',
-  },
-  {
-    number: 2,
-    title: 'Input Validation',
-  },
-  {
-    number: 2,
-    title: 'TLS and SSL',
-  },
-  {
-    number: 2,
-    title: 'Vulnerability Scanning',
-  },
-  {
-    number: 3,
-    title: 'Threat Modeling',
-  },
-  {
-    number: 3,
-    title: 'Asymmetric Encryption',
+    quizIds: ['cs307-quiz-2-1', 'cs307-quiz-2-2', 'cs307-quiz-2-3'],
+    exerciseIds: [
+      'cs307-t2-ex01', 'cs307-t2-ex02', 'cs307-t2-ex03', 'cs307-t2-ex04',
+      'cs307-t2-ex05', 'cs307-t2-ex06', 'cs307-t2-ex07', 'cs307-t2-ex08',
+      'cs307-t2-ex09', 'cs307-t2-ex10', 'cs307-t2-ex11', 'cs307-t2-ex12',
+      'cs307-t2-ex13', 'cs307-t2-ex14', 'cs307-t2-ex15', 'cs307-t2-ex16',
+    ],
   },
   {
     number: 3,
     title: 'Authentication and Access Control',
-  },
-  {
-    number: 3,
-    title: 'Multi-Factor Authentication',
-  },
-  {
-    number: 3,
-    title: 'XSS and CSRF',
-  },
-  {
-    number: 3,
-    title: 'Output Encoding',
-  },
-  {
-    number: 3,
-    title: 'Firewalls and IDS',
-  },
-  {
-    number: 3,
-    title: 'Penetration Testing',
-  },
-  {
-    number: 4,
-    title: 'Defense in Depth',
-  },
-  {
-    number: 4,
-    title: 'Hash Functions',
-  },
-  {
-    number: 4,
-    title: 'OAuth and OpenID Connect',
+    quizIds: ['cs307-quiz-3-1', 'cs307-quiz-3-2', 'cs307-quiz-3-3'],
+    exerciseIds: [
+      'cs307-t3-ex01', 'cs307-t3-ex02', 'cs307-t3-ex03', 'cs307-t3-ex04',
+      'cs307-t3-ex05', 'cs307-t3-ex06', 'cs307-t3-ex07', 'cs307-t3-ex08',
+      'cs307-t3-ex09', 'cs307-t3-ex10', 'cs307-t3-ex11', 'cs307-t3-ex12',
+      'cs307-t3-ex13', 'cs307-t3-ex14', 'cs307-t3-ex15', 'cs307-t3-ex16',
+    ],
   },
   {
     number: 4,
     title: 'Common Vulnerabilities',
-  },
-  {
-    number: 4,
-    title: 'Buffer Overflows',
-  },
-  {
-    number: 4,
-    title: 'Secure Error Handling',
-  },
-  {
-    number: 4,
-    title: 'VPN and Tunneling',
-  },
-  {
-    number: 4,
-    title: 'Static Analysis',
-  },
-  {
-    number: 5,
-    title: 'Principle of Least Privilege',
-  },
-  {
-    number: 5,
-    title: 'Digital Signatures',
-  },
-  {
-    number: 5,
-    title: 'Access Control Models',
-  },
-  {
-    number: 5,
-    title: 'Broken Access Control',
+    quizIds: ['cs307-quiz-4-1', 'cs307-quiz-4-2', 'cs307-quiz-4-3'],
+    exerciseIds: [
+      'cs307-t4-ex01', 'cs307-t4-ex02', 'cs307-t4-ex03', 'cs307-t4-ex04',
+      'cs307-t4-ex05', 'cs307-t4-ex06', 'cs307-t4-ex07', 'cs307-t4-ex08',
+      'cs307-t4-ex09', 'cs307-t4-ex10', 'cs307-t4-ex11', 'cs307-t4-ex12',
+      'cs307-t4-ex13', 'cs307-t4-ex14', 'cs307-t4-ex15', 'cs307-t4-ex16',
+    ],
   },
   {
     number: 5,
     title: 'Secure Coding Practices',
-  },
-  {
-    number: 5,
-    title: 'Memory Safety',
-  },
-  {
-    number: 5,
-    title: 'DNS Security',
-  },
-  {
-    number: 5,
-    title: 'Dynamic Analysis',
-  },
-  {
-    number: 6,
-    title: 'Security Policies',
-  },
-  {
-    number: 6,
-    title: 'Key Management',
-  },
-  {
-    number: 6,
-    title: 'RBAC and ABAC',
-  },
-  {
-    number: 6,
-    title: 'Security Misconfiguration',
-  },
-  {
-    number: 6,
-    title: 'Secure Dependencies',
+    quizIds: ['cs307-quiz-5-1', 'cs307-quiz-5-2', 'cs307-quiz-5-3'],
+    exerciseIds: [
+      'cs307-t5-ex01', 'cs307-t5-ex02', 'cs307-t5-ex03', 'cs307-t5-ex04',
+      'cs307-t5-ex05', 'cs307-t5-ex06', 'cs307-t5-ex07', 'cs307-t5-ex08',
+      'cs307-t5-ex09', 'cs307-t5-ex10', 'cs307-t5-ex11', 'cs307-t5-ex12',
+      'cs307-t5-ex13', 'cs307-t5-ex14', 'cs307-t5-ex15', 'cs307-t5-ex16',
+    ],
   },
   {
     number: 6,
     title: 'Network Security',
-  },
-  {
-    number: 6,
-    title: 'Wireless Security',
-  },
-  {
-    number: 6,
-    title: 'Fuzzing',
-  },
-  {
-    number: 7,
-    title: 'Risk Assessment',
-    quizIds: ['cs307-quiz-1-1', 'cs307-quiz-1-2', 'cs307-quiz-1-3'],
-  },
-  {
-    number: 7,
-    title: 'Cryptographic Protocols',
-    quizIds: ['cs307-quiz-2-1', 'cs307-quiz-2-2', 'cs307-quiz-2-3'],
-  },
-  {
-    number: 7,
-    title: 'Session Management',
-    quizIds: ['cs307-quiz-3-1', 'cs307-quiz-3-2', 'cs307-quiz-3-3'],
-  },
-  {
-    number: 7,
-    title: 'Vulnerable Components',
-    quizIds: ['cs307-quiz-4-1', 'cs307-quiz-4-2', 'cs307-quiz-4-3'],
-  },
-  {
-    number: 7,
-    title: 'Code Review and Analysis',
-    quizIds: ['cs307-quiz-5-1', 'cs307-quiz-5-2', 'cs307-quiz-5-3'],
-  },
-  {
-    number: 7,
-    title: 'Network Monitoring',
     quizIds: ['cs307-quiz-6-1', 'cs307-quiz-6-2', 'cs307-quiz-6-3'],
+    exerciseIds: [
+      'cs307-t6-ex01', 'cs307-t6-ex02', 'cs307-t6-ex03', 'cs307-t6-ex04',
+      'cs307-t6-ex05', 'cs307-t6-ex06', 'cs307-t6-ex07', 'cs307-t6-ex08',
+      'cs307-t6-ex09', 'cs307-t6-ex10', 'cs307-t6-ex11', 'cs307-t6-ex12',
+      'cs307-t6-ex13', 'cs307-t6-ex14', 'cs307-t6-ex15', 'cs307-t6-ex16',
+    ],
   },
   {
     number: 7,
     title: 'Security Testing',
-  },
-  {
-    number: 7,
-    title: 'Incident Response',
     quizIds: ['cs307-quiz-7-1', 'cs307-quiz-7-2', 'cs307-quiz-7-3'],
+    exerciseIds: [
+      'cs307-t7-ex01', 'cs307-t7-ex02', 'cs307-t7-ex03', 'cs307-t7-ex04',
+      'cs307-t7-ex05', 'cs307-t7-ex06', 'cs307-t7-ex07', 'cs307-t7-ex08',
+      'cs307-t7-ex09', 'cs307-t7-ex10', 'cs307-t7-ex11', 'cs307-t7-ex12',
+      'cs307-t7-ex13', 'cs307-t7-ex14', 'cs307-t7-ex15', 'cs307-t7-ex16',
+    ],
   },
 ];
 
