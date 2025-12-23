@@ -41,7 +41,7 @@ export class CurriculumGraph {
   private userProgress: UserProgress;
   private nodes: Map<string, Node> = new Map();
   private svg: SVGSVGElement | null = null;
-  private colors: ReturnType<typeof getThemeColors> | null = null;
+  private colors: ReturnType<typeof getThemeColors>;
 
   // Storage for interactivity
   private nodeElements: Map<string, SVGGElement> = new Map();
@@ -57,19 +57,20 @@ export class CurriculumGraph {
   constructor(subjects: Subject[], userProgress: UserProgress) {
     this.subjects = subjects;
     this.userProgress = userProgress;
+    this.colors = getThemeColors();
     this.container = document.createElement('div');
     this.container.className = 'curriculum-graph-container';
     this.container.style.overflow = 'auto';
     this.container.style.width = '100%';
     this.container.style.height = '100%';
-    
+
     this.calculateLayout();
   }
 
   public render(): HTMLElement {
     this.container.innerHTML = '';
 
-    // Get theme colors
+    // Refresh theme colors (in case theme changed since construction)
     this.colors = getThemeColors();
 
     // Calculate SVG dimensions
@@ -205,7 +206,7 @@ export class CurriculumGraph {
         const d = `M ${start.x} ${start.y} C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${end.x} ${end.y}`;
         
         const isMet = sourceNode.status === 'completed';
-        const strokeColor = isMet ? this.colors!.success : this.colors!.borderDefault;
+        const strokeColor = isMet ? this.colors.success : this.colors.borderDefault;
 
         path.setAttribute('d', d);
         path.setAttribute('fill', 'none');
@@ -238,20 +239,20 @@ export class CurriculumGraph {
       g.style.transition = 'opacity 0.2s ease';
       
       // Determine colors based on status (theme-aware)
-      let strokeColor = this.colors!.borderDefault;
-      let fillColor = this.colors!.bgSurface;
-      let textColor = this.colors!.textPrimary;
+      let strokeColor = this.colors.borderDefault;
+      let fillColor = this.colors.bgSurface;
+      let textColor = this.colors.textPrimary;
 
       if (node.status === 'completed') {
-        strokeColor = this.colors!.success;
-        fillColor = this.colors!.bgElevated;
+        strokeColor = this.colors.success;
+        fillColor = this.colors.bgElevated;
       } else if (node.status === 'in-progress') {
-        strokeColor = this.colors!.accentPrimary;
-        fillColor = this.colors!.bgElevated;
+        strokeColor = this.colors.accentPrimary;
+        fillColor = this.colors.bgElevated;
       } else {
         // Not started but available
-        strokeColor = this.colors!.textMuted;
-        fillColor = this.colors!.bgSurface;
+        strokeColor = this.colors.textMuted;
+        fillColor = this.colors.bgSurface;
       }
 
       // Rectangle
@@ -325,7 +326,7 @@ export class CurriculumGraph {
       // An edge is relevant if both its source and target are in the relevant set
       if (relevantNodes.has(edge.source) && relevantNodes.has(edge.target)) {
         edge.element.style.opacity = '1';
-        edge.element.setAttribute('stroke', this.colors!.accentPrimary);
+        edge.element.setAttribute('stroke', this.colors.accentPrimary);
         edge.element.setAttribute('stroke-width', '3');
         edge.element.setAttribute('marker-end', 'url(#arrowhead-highlight)');
         // Ensure highlighted edges are on top
@@ -334,7 +335,7 @@ export class CurriculumGraph {
         }
       } else {
         edge.element.style.opacity = '0.1';
-        edge.element.setAttribute('stroke', edge.element.dataset.originalStroke || this.colors!.borderDefault);
+        edge.element.setAttribute('stroke', edge.element.dataset.originalStroke || this.colors.borderDefault);
         edge.element.setAttribute('stroke-width', '2');
         edge.element.setAttribute('marker-end', edge.element.dataset.originalMarker || 'url(#arrowhead)');
       }
@@ -358,7 +359,7 @@ export class CurriculumGraph {
     // Reset edges
     this.edgeElements.forEach(edge => {
       edge.element.style.opacity = '1';
-      edge.element.setAttribute('stroke', edge.element.dataset.originalStroke || this.colors!.borderDefault);
+      edge.element.setAttribute('stroke', edge.element.dataset.originalStroke || this.colors.borderDefault);
       edge.element.setAttribute('stroke-width', '2');
       edge.element.setAttribute('marker-end', edge.element.dataset.originalMarker || 'url(#arrowhead)');
     });
@@ -388,7 +389,7 @@ export class CurriculumGraph {
     return visited;
   }
 
-  private truncate(str: string, n: number){
-    return (str.length > n) ? str.substr(0, n-1) + '...' : str;
+  private truncate(str: string, n: number): string {
+    return (str.length > n) ? str.substring(0, n - 1) + '...' : str;
   }
 }
