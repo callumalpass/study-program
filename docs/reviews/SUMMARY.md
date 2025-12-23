@@ -112,6 +112,20 @@
 
 ## Recent Updates (2025-12-23)
 
+### MATH204: Calculus II - Visual Content Enhancement
+- **Status:** Maintained 10/10 (enhanced with 10 additional function plots)
+- **Changes made:**
+  1. Added 10 new function plots (6 → 16 total):
+     - **Topic 2** (Definite Integrals): 2 plots - area between x² and x curves, area between x² and linear function
+     - **Topic 3** (Integration Techniques): 1 plot - trigonometric substitution functions √(9−x²) and √(4+x²)
+     - **Topic 4** (Applications): 2 plots - arc length curve y=(2/3)x^(3/2), surface area curve y=√x
+     - **Topic 5** (Improper Integrals): 2 plots - convergent vs divergent comparison (1/x² vs 1/x), exponential decay e^(-2x)
+     - **Topic 6** (Sequences/Series): 1 plot - alternating series term decay |aₙ| = 1/n
+     - **Topic 7** (Taylor Series): 2 plots - Taylor polynomial approximations for eˣ (T₁, T₂, T₃), Taylor approximations for sin(x) (T₁, T₃, T₅)
+  2. Total visual content: 24 elements (16 function plots + 8 Mermaid diagrams)
+- **Quality verified:** TypeScript builds without errors
+- **Note:** MATH204 now has comprehensive visualizations illustrating integration concepts, improper integral convergence, and Taylor series polynomial approximations
+
 ### CS306: Computer Graphics - Visual Content Enhancement
 - **Status:** Maintained 10/10 (enhanced with visual content)
 - **Changes made:**

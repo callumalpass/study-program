@@ -34,6 +34,18 @@ The expression $\sqrt{1 + [f'(x)]^2}$ is the length of the hypotenuse when the h
 
 ## Examples in Rectangular Coordinates
 
+The following plot shows a typical curve $y = \frac{2}{3}x^{3/2}$ whose arc length we'll compute. Notice how the curve becomes steeper as $x$ increases, making the actual path longer than the horizontal distance.
+
+```plot
+{
+  "xAxis": { "domain": [-0.5, 4], "label": "x" },
+  "yAxis": { "domain": [-0.5, 4], "label": "y" },
+  "data": [
+    { "fn": "(2/3)*x^(3/2)", "color": "#8b5cf6", "title": "y = (2/3)x^(3/2)" }
+  ]
+}
+```
+
 **Example 1:** Find the length of the curve $y = \frac{2}{3}x^{3/2}$ from $x = 0$ to $x = 3$.
 
 **Solution:** First, find the derivative:

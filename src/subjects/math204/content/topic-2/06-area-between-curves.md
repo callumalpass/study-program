@@ -26,6 +26,17 @@ $$A = \int_a^b [\text{upper curve} - \text{lower curve}] \, dx$$
 
 **Example 1:** Find the area between $f(x) = x^2$ and $g(x) = x$ from $x = 0$ to $x = 1$.
 
+```plot
+{
+  "xAxis": { "domain": [-0.2, 1.3], "label": "x" },
+  "yAxis": { "domain": [-0.1, 1.2], "label": "y" },
+  "data": [
+    { "fn": "x^2", "color": "#8b5cf6", "title": "y = x²" },
+    { "fn": "x", "color": "#22c55e", "title": "y = x" }
+  ]
+}
+```
+
 First, determine which function is on top. At $x = 0.5$: $f(0.5) = 0.25$ and $g(0.5) = 0.5$, so $g(x) \geq f(x)$ on this interval.
 
 $$A = \int_0^1 [x - x^2] \, dx = \left[ \frac{x^2}{2} - \frac{x^3}{3} \right]_0^1 = \frac{1}{2} - \frac{1}{3} = \frac{3 - 2}{6} = \frac{1}{6}$$
@@ -42,6 +53,17 @@ $$= \left[ \frac{2x^{3/2}}{3} - \frac{x^3}{3} \right]_0^1 = \frac{2}{3} - \frac{
 Often, the limits of integration are determined by where the curves intersect. To find intersection points, solve $f(x) = g(x)$.
 
 **Example 3:** Find the area between $y = x^2$ and $y = 2x + 3$.
+
+```plot
+{
+  "xAxis": { "domain": [-2, 4], "label": "x" },
+  "yAxis": { "domain": [-1, 12], "label": "y" },
+  "data": [
+    { "fn": "x^2", "color": "#8b5cf6", "title": "y = x²" },
+    { "fn": "2*x + 3", "color": "#f59e0b", "title": "y = 2x + 3" }
+  ]
+}
+```
 
 Find intersections:
 $$x^2 = 2x + 3$$

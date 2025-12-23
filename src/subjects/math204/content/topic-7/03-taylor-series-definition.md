@@ -109,6 +109,21 @@ graph TD
 
 ### Example 1: Maclaurin Series for $e^x$
 
+The following plot shows how the Taylor polynomial approximations $T_n(x)$ converge to $e^x$ as $n$ increases:
+
+```plot
+{
+  "xAxis": { "domain": [-3, 3], "label": "x" },
+  "yAxis": { "domain": [-1, 10], "label": "y" },
+  "data": [
+    { "fn": "exp(x)", "color": "#8b5cf6", "title": "eˣ" },
+    { "fn": "1 + x", "color": "#22c55e", "title": "T₁(x)" },
+    { "fn": "1 + x + x^2/2", "color": "#f59e0b", "title": "T₂(x)" },
+    { "fn": "1 + x + x^2/2 + x^3/6", "color": "#ef4444", "title": "T₃(x)" }
+  ]
+}
+```
+
 **Step 1:** Compute derivatives:
 - $f(x) = e^x$
 - $f'(x) = e^x$
@@ -128,6 +143,21 @@ $$\lim_{n \to \infty} \left|\frac{x^{n+1}/(n+1)!}{x^n/n!}\right| = \lim_{n \to \
 This converges for all $x$, so $R = \infty$.
 
 ### Example 2: Maclaurin Series for $\sin x$
+
+The plot shows the sine function and its Taylor polynomial approximations. Note how the approximations become more accurate over a wider range as we add more terms:
+
+```plot
+{
+  "xAxis": { "domain": [-6.5, 6.5], "label": "x" },
+  "yAxis": { "domain": [-1.5, 1.5], "label": "y" },
+  "data": [
+    { "fn": "sin(x)", "color": "#8b5cf6", "title": "sin(x)" },
+    { "fn": "x", "color": "#22c55e", "title": "T₁(x) = x" },
+    { "fn": "x - x^3/6", "color": "#f59e0b", "title": "T₃(x)" },
+    { "fn": "x - x^3/6 + x^5/120", "color": "#ef4444", "title": "T₅(x)" }
+  ]
+}
+```
 
 **Step 1:** Compute derivatives:
 - $f(x) = \sin x$

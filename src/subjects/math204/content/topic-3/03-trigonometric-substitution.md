@@ -18,6 +18,19 @@ Trigonometric substitution works because the Pythagorean identities relate squar
 
 By choosing appropriate substitutions, we can transform expressions like $\sqrt{a^2 - x^2}$ into forms involving $\cos\theta$ or $\sin\theta$, which are easier to integrate.
 
+The following visualization shows the three key functions that arise from completing the square in integrals:
+
+```plot
+{
+  "xAxis": { "domain": [-4, 4], "label": "x" },
+  "yAxis": { "domain": [-0.5, 5], "label": "y" },
+  "data": [
+    { "fn": "sqrt(9 - x^2)", "color": "#8b5cf6", "title": "√(9−x²)" },
+    { "fn": "sqrt(4 + x^2)", "color": "#22c55e", "title": "√(4+x²)" }
+  ]
+}
+```
+
 ## The Three Standard Forms
 
 ### Form 1: $\sqrt{a^2 - x^2}$

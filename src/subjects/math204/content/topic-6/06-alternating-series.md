@@ -46,6 +46,18 @@ The series **converges** if:
 
 The alternating series can be visualized as a "back and forth" process on the number line. If the steps get progressively smaller and approach zero, the series converges to a specific value.
 
+The plot below shows how alternating terms of $\frac{(-1)^n}{n}$ decrease in absolute value as $n$ increases:
+
+```plot
+{
+  "xAxis": { "domain": [0, 12], "label": "n" },
+  "yAxis": { "domain": [-0.3, 1.2], "label": "aₙ" },
+  "data": [
+    { "fn": "1/x", "color": "#22c55e", "title": "|aₙ| = 1/n" }
+  ]
+}
+```
+
 ### Example 1: The Alternating Harmonic Series
 
 Show that $\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}$ converges.

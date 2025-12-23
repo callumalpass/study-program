@@ -31,6 +31,19 @@ An improper integral is:
 - **Convergent** if the defining limit exists and is a finite real number
 - **Divergent** if the limit does not exist, is infinite, or oscillates
 
+The following plots illustrate the difference between convergent and divergent improper integrals. The function $\frac{1}{x^2}$ decays fast enough for the area under its curve to be finite, while $\frac{1}{x}$ decays too slowly.
+
+```plot
+{
+  "xAxis": { "domain": [0.5, 8], "label": "x" },
+  "yAxis": { "domain": [0, 2], "label": "y" },
+  "data": [
+    { "fn": "1/x^2", "color": "#22c55e", "title": "1/x² (converges)" },
+    { "fn": "1/x", "color": "#ef4444", "title": "1/x (diverges)" }
+  ]
+}
+```
+
 **Example 1: Convergent integral**
 
 Evaluate $\int_1^\infty \frac{1}{x^2}\,dx$.
@@ -94,6 +107,18 @@ We already showed $\int_1^\infty \frac{1}{x}\,dx$ diverges.
 4. Take the limit as $t \to \infty$ (or $t \to -\infty$)
 
 **Example 3: Exponential decay**
+
+Exponential functions decay very rapidly, making their integrals over infinite intervals converge quickly:
+
+```plot
+{
+  "xAxis": { "domain": [-0.5, 4], "label": "x" },
+  "yAxis": { "domain": [0, 1.2], "label": "y" },
+  "data": [
+    { "fn": "exp(-2*x)", "color": "#8b5cf6", "title": "e^(-2x)" }
+  ]
+}
+```
 
 Evaluate $\int_0^\infty e^{-2x}\,dx$.
 

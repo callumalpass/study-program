@@ -63,6 +63,18 @@ Integrating yields the surface area formula.
 
 ## Examples: Rotation About the x-axis
 
+The following plot shows the curve $y = \sqrt{x}$ which, when rotated about the x-axis, creates a surface of revolution:
+
+```plot
+{
+  "xAxis": { "domain": [-0.5, 5], "label": "x" },
+  "yAxis": { "domain": [-0.5, 2.5], "label": "y" },
+  "data": [
+    { "fn": "sqrt(x)", "color": "#8b5cf6", "title": "y = √x" }
+  ]
+}
+```
+
 **Example 1:** Find the surface area when $y = \sqrt{x}$ from $x = 0$ to $x = 4$ is rotated about the x-axis.
 
 **Solution:**
