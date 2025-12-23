@@ -47,6 +47,34 @@ Light Source → Surface A → Surface B → Surface C → Eye
 
 Most illumination models decompose surface reflection into three components:
 
+```mermaid
+flowchart LR
+    subgraph Input["Incoming Light"]
+        L[Light Source]
+    end
+
+    subgraph Surface["Surface Interaction"]
+        A["Ambient<br/>(constant base)"]
+        D["Diffuse<br/>(matte scattering)"]
+        S["Specular<br/>(mirror-like)"]
+    end
+
+    subgraph Output["To Viewer"]
+        E[Eye/Camera]
+    end
+
+    L --> A
+    L --> D
+    L --> S
+    A --> E
+    D --> E
+    S --> E
+
+    style A fill:#ffe4b5
+    style D fill:#90ee90
+    style S fill:#87ceeb
+```
+
 ### 1. Ambient Reflection
 
 Represents indirect light scattered throughout the environment. This is a crude approximation of global illumination, providing a constant base illumination to prevent completely black shadows.
@@ -102,6 +130,36 @@ r = 2(n · l)n - l
 ## Light-Matter Interaction
 
 When light hits a surface, several phenomena occur:
+
+```mermaid
+flowchart TD
+    subgraph Incident["Incident Light"]
+        I[Incoming Ray]
+    end
+
+    subgraph Material["Surface Material"]
+        direction TB
+        M[Material Surface]
+    end
+
+    subgraph Outcomes["Light Interactions"]
+        R[Reflection<br/>↗]
+        A[Absorption<br/>→ Heat]
+        T[Transmission<br/>↘]
+        SS[Subsurface<br/>Scattering]
+    end
+
+    I --> M
+    M --> R
+    M --> A
+    M --> T
+    M --> SS
+
+    style R fill:#87ceeb
+    style A fill:#ff6b6b
+    style T fill:#90ee90
+    style SS fill:#dda0dd
+```
 
 **Absorption**: Light energy converted to heat. Determines surface color—red objects absorb green/blue light, reflecting red.
 

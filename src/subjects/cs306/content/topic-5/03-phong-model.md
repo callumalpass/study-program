@@ -10,6 +10,48 @@ The Phong model decomposes reflected light into three components: ambient, diffu
 
 The Phong illumination model combines three reflection components:
 
+```mermaid
+flowchart TD
+    subgraph Inputs["Input Vectors"]
+        N[Surface Normal n]
+        L[Light Direction l]
+        V[View Direction v]
+    end
+
+    subgraph Compute["Calculations"]
+        NL["n · l<br/>(Lambert term)"]
+        R["r = 2(n·l)n - l<br/>(Reflection)"]
+        RV["r · v<br/>(Specular term)"]
+    end
+
+    subgraph Components["Phong Components"]
+        A["Ambient<br/>Iₐ × kₐ"]
+        D["Diffuse<br/>I × kd × (n·l)"]
+        S["Specular<br/>I × ks × (r·v)ᵅ"]
+    end
+
+    subgraph Result["Final Color"]
+        F["I = Ambient + Diffuse + Specular"]
+    end
+
+    N --> NL
+    L --> NL
+    N --> R
+    L --> R
+    R --> RV
+    V --> RV
+    NL --> D
+    RV --> S
+    A --> F
+    D --> F
+    S --> F
+
+    style A fill:#ffe4b5
+    style D fill:#90ee90
+    style S fill:#87ceeb
+    style F fill:#dda0dd
+```
+
 $$I = I_a k_a + \sum_{lights} I_l \left( k_d (\mathbf{n} \cdot \mathbf{l}) + k_s (\mathbf{r} \cdot \mathbf{v})^{\alpha} \right)$$
 
 Where:
@@ -194,6 +236,21 @@ def visualize_lambert_law():
 - Zero when light parallel to or behind surface ($\mathbf{n} \cdot \mathbf{l} \leq 0$)
 - Defines the base color of the object
 
+**Lambert's Cosine Law Visualization:**
+
+```plot
+{
+  "title": "Lambert's Cosine Law: Diffuse Brightness vs Angle",
+  "xAxis": {"domain": [0, 90], "label": "Angle from Normal (degrees)"},
+  "yAxis": {"domain": [0, 1.1], "label": "Brightness (n·l)"},
+  "data": [
+    {"fn": "cos(x * PI / 180)", "color": "#22c55e", "title": "cos(θ)"}
+  ]
+}
+```
+
+This shows how diffuse brightness falls off as the light angle increases from perpendicular (0°) to grazing (90°).
+
 ## Specular Component (Phong Specular)
 
 The specular component models shiny, mirror-like reflections that create bright highlights.
@@ -282,6 +339,23 @@ def visualize_shininess_effect():
   - Low $\alpha$ (1-10): Large, soft highlights (rough surfaces)
   - Medium $\alpha$ (10-100): Moderate highlights (plastic, painted surfaces)
   - High $\alpha$ (100-1000): Small, sharp highlights (polished metal, glass)
+
+**Shininess Exponent Effect:**
+
+```plot
+{
+  "title": "Specular Highlight Falloff by Shininess",
+  "xAxis": {"domain": [0, 90], "label": "Angle from Reflection (degrees)"},
+  "yAxis": {"domain": [0, 1.1], "label": "Specular Intensity"},
+  "data": [
+    {"fn": "pow(cos(x * PI / 180), 5)", "color": "#ef4444", "title": "α = 5 (matte)"},
+    {"fn": "pow(cos(x * PI / 180), 32)", "color": "#f97316", "title": "α = 32 (plastic)"},
+    {"fn": "pow(cos(x * PI / 180), 128)", "color": "#22c55e", "title": "α = 128 (metal)"}
+  ]
+}
+```
+
+Higher shininess values create sharper, more concentrated highlights while lower values produce broader, softer reflections.
 
 ## Material Presets
 

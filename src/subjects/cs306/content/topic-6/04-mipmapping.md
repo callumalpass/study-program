@@ -29,6 +29,30 @@ where A is the area covered by the pixel. This integral is expensive to compute 
 
 A mipmap chain is a sequence of textures, each half the resolution of the previous level:
 
+```mermaid
+flowchart LR
+    subgraph MipChain["Mipmap Chain"]
+        L0["Level 0<br/>1024×1024<br/>(Full Resolution)"]
+        L1["Level 1<br/>512×512"]
+        L2["Level 2<br/>256×256"]
+        L3["Level 3<br/>128×128"]
+        L4["...<br/>64→32→16→8→4→2"]
+        L5["Level N<br/>1×1"]
+    end
+
+    L0 --> L1
+    L1 --> L2
+    L2 --> L3
+    L3 --> L4
+    L4 --> L5
+
+    style L0 fill:#22c55e
+    style L1 fill:#84cc16
+    style L2 fill:#eab308
+    style L3 fill:#f97316
+    style L5 fill:#ef4444
+```
+
 - **Level 0**: Full resolution (e.g., 1024×1024)
 - **Level 1**: Half resolution (512×512)
 - **Level 2**: Quarter resolution (256×256)

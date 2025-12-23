@@ -112,6 +112,18 @@
 
 ## Recent Updates (2025-12-23)
 
+### CS306: Computer Graphics - Visual Content Enhancement
+- **Status:** Maintained 10/10 (enhanced with visual content)
+- **Changes made:**
+  1. Added 6 Mermaid diagrams (6 → 12 total):
+     - **Topic 5** (Shading/Lighting): 3 diagrams - reflection components flowchart, light-matter interaction visualization, Phong equation calculation workflow
+     - **Topic 6** (Texture Mapping): 3 diagrams - texture map types overview, texture mapping pipeline, mipmap chain structure
+  2. Added 2 function plots (0 → 2 total):
+     - **Topic 5**: Lambert's cosine law visualization, shininess exponent effect on specular highlights
+  3. Total visual content: 14 elements (12 Mermaid diagrams + 2 function plots)
+- **Quality verified:** TypeScript builds without errors
+- **Note:** CS306 previously had only 6 diagrams; now has comprehensive visualizations for lighting equations and texture mapping processes
+
 ### MATH402: Numerical Methods - Visual Content Enhancement
 - **Status:** Maintained 10/10 (enhanced with 20 visual elements)
 - **Changes made:**

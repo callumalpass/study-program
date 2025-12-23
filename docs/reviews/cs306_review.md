@@ -25,7 +25,8 @@ CS306 (Computer Graphics) is a Year 3 Computer Science subject that is fully com
 ## Strengths
 
 - **Complete Subject Specification**: Full subject-spec.yaml with curriculum requirements, pedagogical approach, assessment philosophy, and grading thresholds
-- **Complete Content Coverage**: All 49 subtopics present with substantial content (average 2,160 words per subtopic, well above the 1,000-word target)
+- **Complete Content Coverage**: All 49 subtopics present with substantial content (average 2,173 words per subtopic, well above the 1,000-word target)
+- **Rich Visual Content**: 12 Mermaid diagrams and 2 function plots illustrating key concepts (pipeline flows, lighting equations, texture mapping processes)
 - **Comprehensive Exercises**: Exactly 16 exercises per topic (112 total), all with starter code, solutions, test cases, and hints
 - **Excellent Quiz Quality**: All topics have 15 questions (105 total) with good question type variety (multiple choice, true/false, code output) and detailed explanations
 - **Strong Exam Coverage**: Midterm exam with 26 questions and final exam with 42 questions covering all topics comprehensively
@@ -43,7 +44,6 @@ None identified. The subject is complete and ready for production use.
 
 None critical. The subject meets or exceeds all quality requirements. Minor enhancements could include:
 
-- **Optional**: Add more diagram illustrations to complement the text (though current Mermaid diagrams and ASCII art are effective)
 - **Optional**: Consider adding WebGL/Three.js examples for interactive demonstrations
 - **Optional**: Add references to additional learning resources (textbooks, papers)
 
@@ -253,7 +253,7 @@ Reviewed subtopics demonstrate:
 - **Working code examples** in multiple languages (Python, C++, GLSL)
 - **Mathematical rigor** with proper equations and notation
 - **Practical applications** showing real-world usage
-- **Visual aids** including ASCII diagrams and Mermaid flowcharts
+- **Rich visual aids** including Mermaid flowcharts (12 diagrams), function plots (2 for lighting equations), and ASCII diagrams
 - **Best practices** and common pitfalls highlighted
 - **Performance considerations** discussed where relevant
 
@@ -269,7 +269,6 @@ All sampled content significantly exceeds the 800-word minimum requirement.
 1. **Maintain Current Quality**: This subject sets a high standard and should serve as a reference for other subjects
 2. **Consider Enhancements**: While not necessary, could add:
    - Interactive WebGL demonstrations for key concepts
-   - Additional visual diagrams for complex 3D concepts
    - Links to external resources (textbooks, research papers, tutorials)
 3. **Use as Template**: The structure and quality of CS306 could serve as a template for other graphics-related subjects
 4. **Keep Updated**: As graphics APIs and techniques evolve, ensure content stays current (though fundamentals are timeless)

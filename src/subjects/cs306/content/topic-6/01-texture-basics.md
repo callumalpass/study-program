@@ -14,6 +14,38 @@ Textures are stored as regular 2D images with dimensions typically in powers of 
 
 ### Types of Textures
 
+```mermaid
+flowchart TD
+    subgraph TextureTypes["Common Texture Map Types"]
+        direction TB
+        D["Diffuse/Albedo<br/>Base Color"]
+        N["Normal Map<br/>Surface Detail"]
+        S["Specular/Roughness<br/>Reflectivity"]
+        M["Metallic Map<br/>Metal vs Dielectric"]
+        AO["Ambient Occlusion<br/>Shadowing"]
+        DISP["Displacement<br/>Geometry Mod"]
+        E["Emissive<br/>Self-illumination"]
+    end
+
+    subgraph Shader["Fragment Shader"]
+        COMBINE["Combine Maps<br/>for Final Color"]
+    end
+
+    D --> COMBINE
+    N --> COMBINE
+    S --> COMBINE
+    M --> COMBINE
+    AO --> COMBINE
+    E --> COMBINE
+
+    style D fill:#90ee90
+    style N fill:#87ceeb
+    style S fill:#ffe4b5
+    style M fill:#c0c0c0
+    style AO fill:#808080
+    style E fill:#ffff99
+```
+
 **Diffuse/Albedo Maps**: Define the base color of the surface
 **Normal Maps**: Encode surface normal perturbations for lighting
 **Specular Maps**: Control shininess and reflectivity
@@ -90,6 +122,37 @@ class TextureCoordinate:
 ## Texture Mapping Process
 
 The process of applying a texture to a surface involves several steps:
+
+```mermaid
+flowchart LR
+    subgraph Model["3D Model"]
+        V[Vertices with<br/>UV Coordinates]
+    end
+
+    subgraph Rasterize["Rasterization"]
+        I[Interpolate UVs<br/>per Fragment]
+    end
+
+    subgraph Sample["Texture Lookup"]
+        T[Sample Texture<br/>at (u, v)]
+        F[Apply Filtering<br/>Bilinear/Trilinear]
+    end
+
+    subgraph Result["Output"]
+        C[Fragment Color]
+    end
+
+    V --> I
+    I --> T
+    T --> F
+    F --> C
+
+    style V fill:#87ceeb
+    style I fill:#ffe4b5
+    style T fill:#90ee90
+    style F fill:#dda0dd
+    style C fill:#ff9999
+```
 
 1. **Vertex UV Assignment**: Each vertex in the 3D model has UV coordinates
 2. **Interpolation**: UV coordinates are interpolated across triangle faces
