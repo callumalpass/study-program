@@ -2,16 +2,15 @@
 import type {
   Subject,
   ReviewItem,
-  SubjectProgress,
   UserProgress,
   QuizAttempt,
-  ExamAttempt,
   ExerciseCompletion,
   ProjectSubmission,
 } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import {
   calculateOverallProgress,
+  calculateSubjectCompletion,
   getInProgressSubjects,
   getNextRecommendedSubject,
 } from '@/core/progress';
@@ -273,65 +272,6 @@ export function renderHomePage(container: HTMLElement, subjects: Subject[]): voi
 
   // Attach event listeners
   attachEventListeners(container);
-}
-
-/**
- * Calculate completion percentage for a subject (helper function)
- */
-function calculateSubjectCompletion(subject: Subject, progress: SubjectProgress): number {
-  if (!progress || progress.status === 'not_started') return 0;
-  if (progress.status === 'completed') return 100;
-
-  let totalItems = 0;
-  let completedItems = 0;
-
-  subject.topics.forEach(topic => {
-    topic.quizIds.forEach(quizId => {
-      totalItems++;
-      const attempts = progress.quizAttempts[quizId];
-      if (attempts && attempts.length > 0) {
-        const bestScore = Math.max(...attempts.map((a: QuizAttempt) => a.score));
-        if (bestScore >= 70) completedItems++;
-      }
-    });
-
-    topic.exerciseIds.forEach(exerciseId => {
-      totalItems++;
-      const completion = progress.exerciseCompletions[exerciseId];
-      if (completion?.passed) completedItems++;
-    });
-  });
-
-  const examIds = subject.examIds || [];
-  examIds.forEach(examId => {
-    totalItems++;
-    const attempts = progress.examAttempts?.[examId];
-    if (attempts && attempts.length > 0) {
-      const bestScore = Math.max(...attempts.map((a: ExamAttempt) => a.score));
-      if (bestScore >= 70) completedItems++;
-    }
-  });
-
-  const projectIds = subject.projectIds || [];
-  projectIds.forEach(projectId => {
-    totalItems++;
-    const submissions = progress.projectSubmissions?.[projectId];
-    if (submissions && submissions.length > 0) {
-      const bestSubmission = submissions.reduce((best: ProjectSubmission, sub: ProjectSubmission) => {
-        const score = sub.aiEvaluation?.score ?? 0;
-        const bestScore = best.aiEvaluation?.score ?? 0;
-        return score > bestScore ? sub : best;
-      });
-
-      if (bestSubmission.aiEvaluation) {
-        if (bestSubmission.aiEvaluation.score >= 70) completedItems++;
-      } else {
-        completedItems++;
-      }
-    }
-  });
-
-  return totalItems === 0 ? 0 : Math.round((completedItems / totalItems) * 100);
 }
 
 /**
