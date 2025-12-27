@@ -474,6 +474,26 @@ export async function runCTests(
 }
 
 /**
+ * Get the printf format specifier for a C type.
+ * @param cType - The C type (int, float, char, etc.)
+ * @returns The corresponding printf format specifier
+ */
+function getPrintfFormatSpecifier(cType: string): string {
+  switch (cType) {
+    case 'int':
+    case 'long':
+    case 'short':
+      return '%d';
+    case 'char':
+      return '%c';
+    case 'float':
+    case 'double':
+    default:
+      return '%f';
+  }
+}
+
+/**
  * Prepare C code for function-based testing.
  * Creates a main function that calls the target function with test input.
  */
@@ -487,11 +507,16 @@ function prepareCFunctionTestCode(code: string, funcName: string, input: string)
   const funcMatch = code.match(new RegExp(`(int|void|float|double|char|long|short)\\s+${funcName}\\s*\\(`));
   const returnType = funcMatch ? funcMatch[1] : 'int';
 
+  // Build the function call statement based on return type
+  const functionCall = `${funcName}(${input})`;
+  const printStatement = returnType === 'void'
+    ? `${functionCall};`
+    : `printf("${getPrintfFormatSpecifier(returnType)}", ${functionCall});`;
+
   // Create a main function that calls the target function
-  // For simplicity, assume the input is comma-separated arguments
   const mainCode = `
 int main() {
-    ${returnType === 'void' ? '' : `printf("%${returnType === 'int' || returnType === 'long' || returnType === 'short' ? 'd' : returnType === 'char' ? 'c' : 'f'}", `}${funcName}(${input})${returnType === 'void' ? ';' : ');'}
+    ${printStatement}
     return 0;
 }
 `;
