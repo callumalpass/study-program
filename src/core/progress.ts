@@ -1,7 +1,36 @@
 // Progress calculation and subject availability logic
 
-import type { Subject, SubjectProgress, UserProgress, SubjectStatus } from './types';
+import type {
+  Subject,
+  SubjectProgress,
+  UserProgress,
+  SubjectStatus,
+  QuizAttempt,
+  ExamAttempt,
+  ProjectSubmission,
+} from './types';
 import { progressStorage } from './storage';
+
+/**
+ * Get the best (highest) score from a list of quiz or exam attempts.
+ * Returns 0 if the array is empty.
+ */
+function getBestScore(attempts: QuizAttempt[] | ExamAttempt[]): number {
+  if (attempts.length === 0) return 0;
+  return Math.max(...attempts.map(a => a.score));
+}
+
+/**
+ * Get the best project submission by AI evaluation score.
+ * Returns the submission with the highest AI score, or the first submission if none have AI evaluations.
+ */
+function getBestProjectSubmission(submissions: ProjectSubmission[]): ProjectSubmission {
+  return submissions.reduce((best, sub) => {
+    const score = sub.aiEvaluation?.score ?? 0;
+    const bestScore = best.aiEvaluation?.score ?? 0;
+    return score > bestScore ? sub : best;
+  });
+}
 
 /**
  * Calculate completion percentage for a subject
@@ -29,11 +58,8 @@ export function calculateSubjectCompletion(
       totalItems++;
       const attempts = progress.quizAttempts[quizId];
       // Consider quiz completed if best score is >= 70%
-      if (attempts && attempts.length > 0) {
-        const bestScore = Math.max(...attempts.map(a => a.score));
-        if (bestScore >= 70) {
-          completedItems++;
-        }
+      if (attempts && attempts.length > 0 && getBestScore(attempts) >= 70) {
+        completedItems++;
       }
     });
 
@@ -53,11 +79,8 @@ export function calculateSubjectCompletion(
   examIds.forEach(examId => {
     totalItems++;
     const attempts = progress.examAttempts?.[examId];
-    if (attempts && attempts.length > 0) {
-      const bestScore = Math.max(...attempts.map(a => a.score));
-      if (bestScore >= 70) {
-        completedItems++;
-      }
+    if (attempts && attempts.length > 0 && getBestScore(attempts) >= 70) {
+      completedItems++;
     }
   });
 
@@ -67,12 +90,7 @@ export function calculateSubjectCompletion(
     totalItems++;
     const submissions = progress.projectSubmissions?.[projectId];
     if (submissions && submissions.length > 0) {
-      // Find best submission by AI score (or any submission if no AI eval)
-      const bestSubmission = submissions.reduce((best, sub) => {
-        const score = sub.aiEvaluation?.score ?? 0;
-        const bestScore = best.aiEvaluation?.score ?? 0;
-        return score > bestScore ? sub : best;
-      });
+      const bestSubmission = getBestProjectSubmission(submissions);
 
       if (bestSubmission.aiEvaluation) {
         // Has AI evaluation - require >= 70%
@@ -351,11 +369,8 @@ export function getSubjectProgressDetails(subject: Subject): {
       // Count completed quizzes (>= 70% score)
       topic.quizIds.forEach(quizId => {
         const attempts = progress.quizAttempts[quizId];
-        if (attempts && attempts.length > 0) {
-          const bestScore = Math.max(...attempts.map(a => a.score));
-          if (bestScore >= 70) {
-            quizzesCompleted++;
-          }
+        if (attempts && attempts.length > 0 && getBestScore(attempts) >= 70) {
+          quizzesCompleted++;
         }
       });
 
@@ -373,11 +388,8 @@ export function getSubjectProgressDetails(subject: Subject): {
   if (progress && subject.examIds) {
     subject.examIds.forEach(examId => {
       const attempts = progress.examAttempts?.[examId];
-      if (attempts && attempts.length > 0) {
-        const bestScore = Math.max(...attempts.map(a => a.score));
-        if (bestScore >= 70) {
-          examsCompleted++;
-        }
+      if (attempts && attempts.length > 0 && getBestScore(attempts) >= 70) {
+        examsCompleted++;
       }
     });
   }
@@ -387,11 +399,7 @@ export function getSubjectProgressDetails(subject: Subject): {
     subject.projectIds.forEach(projectId => {
       const submissions = progress.projectSubmissions?.[projectId];
       if (submissions && submissions.length > 0) {
-        const bestSubmission = submissions.reduce((best, sub) => {
-          const score = sub.aiEvaluation?.score ?? 0;
-          const bestScore = best.aiEvaluation?.score ?? 0;
-          return score > bestScore ? sub : best;
-        });
+        const bestSubmission = getBestProjectSubmission(submissions);
 
         if (bestSubmission.aiEvaluation) {
           if (bestSubmission.aiEvaluation.score >= 70) {
@@ -431,8 +439,7 @@ export function isQuizCompleted(
   if (!progress) return false;
   const attempts = progress.quizAttempts[quizId];
   if (!attempts || attempts.length === 0) return false;
-  const bestScore = Math.max(...attempts.map(a => a.score));
-  return bestScore >= 70;
+  return getBestScore(attempts) >= 70;
 }
 
 /**
@@ -445,7 +452,7 @@ export function getQuizBestScore(
   if (!progress) return null;
   const attempts = progress.quizAttempts[quizId];
   if (!attempts || attempts.length === 0) return null;
-  return Math.max(...attempts.map(a => a.score));
+  return getBestScore(attempts);
 }
 
 /**
