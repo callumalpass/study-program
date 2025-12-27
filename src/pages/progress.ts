@@ -9,6 +9,12 @@ import {
 import { navigateToSubject } from '@/core/router';
 import { Icons } from '@/components/icons';
 
+// Progress ring SVG constants
+const PROGRESS_RING_SIZE = 200;
+const PROGRESS_RING_RADIUS = 80;
+const PROGRESS_RING_CENTER = PROGRESS_RING_SIZE / 2;
+const PROGRESS_RING_CIRCUMFERENCE = 2 * Math.PI * PROGRESS_RING_RADIUS;
+
 interface ExpandedYears {
   [key: number]: boolean;
 }
@@ -55,29 +61,29 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
           <h2>Overall Degree Progress</h2>
           <div class="progress-overview-card">
             <div class="circular-progress">
-              <svg class="progress-ring" width="200" height="200">
+              <svg class="progress-ring" width="${PROGRESS_RING_SIZE}" height="${PROGRESS_RING_SIZE}">
                 <circle
                   class="progress-ring-circle-bg"
                   stroke="#e5e7eb"
                   stroke-width="20"
                   fill="transparent"
-                  r="80"
-                  cx="100"
-                  cy="100"
+                  r="${PROGRESS_RING_RADIUS}"
+                  cx="${PROGRESS_RING_CENTER}"
+                  cy="${PROGRESS_RING_CENTER}"
                 />
                 <circle
                   class="progress-ring-circle"
                   stroke="#3b82f6"
                   stroke-width="20"
                   fill="transparent"
-                  r="80"
-                  cx="100"
-                  cy="100"
-                  stroke-dasharray="${2 * Math.PI * 80}"
-                  stroke-dashoffset="${2 * Math.PI * 80 * (1 - overallProgress.percentageComplete / 100)}"
-                  transform="rotate(-90 100 100)"
+                  r="${PROGRESS_RING_RADIUS}"
+                  cx="${PROGRESS_RING_CENTER}"
+                  cy="${PROGRESS_RING_CENTER}"
+                  stroke-dasharray="${PROGRESS_RING_CIRCUMFERENCE}"
+                  stroke-dashoffset="${PROGRESS_RING_CIRCUMFERENCE * (1 - overallProgress.percentageComplete / 100)}"
+                  transform="rotate(-90 ${PROGRESS_RING_CENTER} ${PROGRESS_RING_CENTER})"
                 />
-                <text x="100" y="100" class="progress-text" text-anchor="middle" dy=".3em">
+                <text x="${PROGRESS_RING_CENTER}" y="${PROGRESS_RING_CENTER}" class="progress-text" text-anchor="middle" dy=".3em">
                   ${overallProgress.percentageComplete}%
                 </text>
               </svg>
