@@ -1,6 +1,29 @@
 import { jsPDF } from 'jspdf';
 import type { Subject, Quiz, Exercise, Project, CodingExercise, WrittenExercise } from '../core/types';
 
+// RGB color tuples for PDF styling
+type RgbColor = [number, number, number];
+
+const PDF_COLORS = {
+  // Primary/accent colors
+  primaryIndigo: [99, 102, 241] as RgbColor,
+
+  // Text colors
+  black: [0, 0, 0] as RgbColor,
+  darkBlue: [30, 30, 60] as RgbColor,
+  darkBlueGray: [50, 50, 80] as RgbColor,
+  darkGray: [50, 50, 50] as RgbColor,
+  gray: [100, 100, 100] as RgbColor,
+  purpleGray: [100, 100, 140] as RgbColor,
+
+  // Code block colors
+  codeBackground: [240, 240, 240] as RgbColor,
+  codeBorder: [200, 200, 200] as RgbColor,
+
+  // Status colors
+  success: [34, 139, 34] as RgbColor,
+} as const;
+
 export interface PDFExportOptions {
   includeSolutions: boolean;
 }
@@ -99,13 +122,13 @@ export async function generateSubjectPDF(
     y += 5;
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(99, 102, 241); // Indigo color
+    doc.setTextColor(...PDF_COLORS.primaryIndigo);
     doc.text(title, margin, y);
     y += 8;
-    doc.setDrawColor(99, 102, 241);
+    doc.setDrawColor(...PDF_COLORS.primaryIndigo);
     doc.line(margin, y, pageWidth - margin, y);
     y += 8;
-    doc.setTextColor(0, 0, 0);
+    doc.setTextColor(...PDF_COLORS.black);
   };
 
   // Helper to add a subsection header
@@ -114,19 +137,19 @@ export async function generateSubjectPDF(
     y += 3;
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(30, 30, 60);
+    doc.setTextColor(...PDF_COLORS.darkBlue);
     doc.text(title, margin, y);
     y += 6;
-    doc.setTextColor(0, 0, 0);
+    doc.setTextColor(...PDF_COLORS.black);
   };
 
   // Helper to add a styled code block
   const addCodeBlock = (code: string, language?: string) => {
     // Add language label if provided
     if (language) {
-      doc.setTextColor(100, 100, 140);
+      doc.setTextColor(...PDF_COLORS.purpleGray);
       addText(`[${language.toUpperCase()}]`, 8, true);
-      doc.setTextColor(0, 0, 0);
+      doc.setTextColor(...PDF_COLORS.black);
     }
 
     // Switch to monospace font
@@ -150,11 +173,11 @@ export async function generateSubjectPDF(
         checkNewPage(lineHeight);
         
         // Background
-        doc.setFillColor(240, 240, 240); // Clearly visible light gray
+        doc.setFillColor(...PDF_COLORS.codeBackground);
         doc.rect(margin, y - 1, contentWidth, lineHeight, 'F');
-        
+
         // Left accent border (darker gray)
-        doc.setFillColor(200, 200, 200);
+        doc.setFillColor(...PDF_COLORS.codeBorder);
         doc.rect(margin, y - 1, 1, lineHeight, 'F');
         
         y += lineHeight;
@@ -171,34 +194,34 @@ export async function generateSubjectPDF(
 
       for (const wLine of wrappedLines) {
          checkNewPage(lineHeight);
-         
+
          // 1. Draw Background
-         doc.setFillColor(240, 240, 240);
+         doc.setFillColor(...PDF_COLORS.codeBackground);
          doc.rect(margin, y - 1, contentWidth, lineHeight, 'F');
 
          // 2. Draw Left Accent Border
-         doc.setFillColor(200, 200, 200);
+         doc.setFillColor(...PDF_COLORS.codeBorder);
          doc.rect(margin, y - 1, 1, lineHeight, 'F');
 
          // 3. Draw Text
-         const displayText = (wLine === wrappedLines[0]) 
-           ? indentString + wLine 
+         const displayText = (wLine === wrappedLines[0])
+           ? indentString + wLine
            : indentString + '  ' + wLine;
 
          doc.setFont('courier', 'normal'); // Re-apply font
          doc.setFontSize(9);
-         doc.setTextColor(50, 50, 80); // Dark blue-gray text
-         
+         doc.setTextColor(...PDF_COLORS.darkBlueGray);
+
          // Offset x by 3mm (1mm border + 2mm padding)
-         doc.text(displayText, margin + 3, y + 2.5); 
-         
+         doc.text(displayText, margin + 3, y + 2.5);
+
          y += lineHeight;
       }
     }
 
     // Revert to standard font
     doc.setFont('helvetica', 'normal');
-    doc.setTextColor(0, 0, 0);
+    doc.setTextColor(...PDF_COLORS.black);
     y += 4; // Add some space after the block
   };
 
@@ -209,12 +232,12 @@ export async function generateSubjectPDF(
   y = 60;
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(99, 102, 241);
+  doc.setTextColor(...PDF_COLORS.primaryIndigo);
   doc.text(subject.code, pageWidth / 2, y, { align: 'center' });
 
   y += 15;
   doc.setFontSize(28);
-  doc.setTextColor(30, 30, 60);
+  doc.setTextColor(...PDF_COLORS.darkBlue);
   const titleLines = doc.splitTextToSize(subject.title, contentWidth);
   doc.text(titleLines, pageWidth / 2, y, { align: 'center' });
   y += titleLines.length * 12;
@@ -222,13 +245,13 @@ export async function generateSubjectPDF(
   y += 10;
   doc.setFontSize(11);
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor(100, 100, 100);
+  doc.setTextColor(...PDF_COLORS.gray);
   doc.text(`Year ${subject.year} • Semester ${subject.semester} • ${subject.estimatedHours} hours`, pageWidth / 2, y, { align: 'center' });
 
   // Description
   y += 20;
   doc.setFontSize(10);
-  doc.setTextColor(50, 50, 50);
+  doc.setTextColor(...PDF_COLORS.darkGray);
   const descLines = wrapText(doc, subject.description, contentWidth - 20);
   for (const line of descLines) {
     doc.text(line, margin + 10, y);
@@ -239,13 +262,13 @@ export async function generateSubjectPDF(
   y += 15;
   doc.setFontSize(12);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(30, 30, 60);
+  doc.setTextColor(...PDF_COLORS.darkBlue);
   doc.text('Learning Objectives', margin, y);
   y += 8;
 
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor(50, 50, 50);
+  doc.setTextColor(...PDF_COLORS.darkGray);
   for (const objective of subject.learningObjectives) {
     const objLines = wrapText(doc, `• ${objective}`, contentWidth - 10);
     for (const line of objLines) {
@@ -312,13 +335,13 @@ export async function generateSubjectPDF(
               answer = String(q.correctAnswer);
             }
 
-            doc.setTextColor(34, 139, 34); // Green
+            doc.setTextColor(...PDF_COLORS.success);
             addText(`Answer: ${answer}`, 10, true);
-            doc.setTextColor(0, 0, 0);
+            doc.setTextColor(...PDF_COLORS.black);
 
-            doc.setTextColor(100, 100, 100);
+            doc.setTextColor(...PDF_COLORS.gray);
             addText(q.explanation, 9);
-            doc.setTextColor(0, 0, 0);
+            doc.setTextColor(...PDF_COLORS.black);
             y += 5;
           }
         }
@@ -347,9 +370,9 @@ export async function generateSubjectPDF(
 
       if (isCodingExercise(exercise)) {
         // Language
-        doc.setTextColor(100, 100, 100);
+        doc.setTextColor(...PDF_COLORS.gray);
         addText(`Language: ${exercise.language}`, 9);
-        doc.setTextColor(0, 0, 0);
+        doc.setTextColor(...PDF_COLORS.black);
 
         // Test cases (visible ones only)
         const visibleTests = exercise.testCases.filter(tc => !tc.isHidden);
@@ -364,9 +387,9 @@ export async function generateSubjectPDF(
         // Solution if enabled
         if (options.includeSolutions) {
           y += 5;
-          doc.setTextColor(34, 139, 34);
+          doc.setTextColor(...PDF_COLORS.success);
           addText('Solution:', 10, true);
-          doc.setTextColor(0, 0, 0);
+          doc.setTextColor(...PDF_COLORS.black);
           y += 2;
           addCodeBlock(exercise.solution, exercise.language);
         }
@@ -375,9 +398,9 @@ export async function generateSubjectPDF(
         const written = exercise as WrittenExercise;
         if (options.includeSolutions && written.solution) {
           y += 5;
-          doc.setTextColor(34, 139, 34);
+          doc.setTextColor(...PDF_COLORS.success);
           addText('Solution:', 10, true);
-          doc.setTextColor(0, 0, 0);
+          doc.setTextColor(...PDF_COLORS.black);
           addText(stripMarkdown(written.solution), 10);
         }
       }
@@ -399,9 +422,9 @@ export async function generateSubjectPDF(
       checkNewPage(50);
 
       addSubsectionHeader(`${i + 1}. ${project.title}`);
-      doc.setTextColor(100, 100, 100);
+      doc.setTextColor(...PDF_COLORS.gray);
       addText(`Estimated time: ${project.estimatedHours} hours`, 9);
-      doc.setTextColor(0, 0, 0);
+      doc.setTextColor(...PDF_COLORS.black);
       y += 3;
 
       addText(stripMarkdown(project.description), 10);
