@@ -12,6 +12,90 @@ export interface EvaluationResult {
 
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent';
 
+/** Response structure from Gemini API */
+interface GeminiResponse {
+  candidates?: Array<{
+    content?: {
+      parts?: Array<{ text?: string }>;
+    };
+  }>;
+}
+
+/** Configuration options for Gemini API calls */
+interface GeminiCallOptions {
+  thinkingLevel?: 'high' | 'medium' | 'low';
+  maxOutputTokens?: number;
+}
+
+/**
+ * Make a request to the Gemini API with the given prompt.
+ * Handles all HTTP-level concerns: headers, body formatting, and error handling.
+ */
+async function callGeminiApi(
+  apiKey: string,
+  prompt: string,
+  options: GeminiCallOptions = {}
+): Promise<GeminiResponse> {
+  const { thinkingLevel = 'high', maxOutputTokens } = options;
+
+  const generationConfig: Record<string, unknown> = {
+    thinkingConfig: { thinkingLevel },
+    responseMimeType: 'application/json',
+  };
+
+  if (maxOutputTokens !== undefined) {
+    generationConfig.maxOutputTokens = maxOutputTokens;
+    delete generationConfig.thinkingConfig;
+    delete generationConfig.responseMimeType;
+  }
+
+  const response = await fetch(GEMINI_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-goog-api-key': apiKey,
+    },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Gemini API error: ${response.status} - ${errorText}`);
+  }
+
+  return response.json() as Promise<GeminiResponse>;
+}
+
+/**
+ * Extract text content from a Gemini API response.
+ * Throws if no text content is found.
+ */
+function extractGeminiTextContent(data: GeminiResponse): string {
+  const textContent = data.candidates?.[0]?.content?.parts?.find(
+    (part) => part.text
+  )?.text;
+
+  if (!textContent) {
+    throw new Error('No text content in Gemini response');
+  }
+
+  return textContent;
+}
+
+/**
+ * Parse JSON from Gemini response text with a descriptive error message.
+ */
+function parseGeminiJson<T>(text: string, context: string): T {
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    throw new Error(`Failed to parse ${context} response`);
+  }
+}
+
 /**
  * Evaluate a written exercise submission using Gemini AI
  */
@@ -22,51 +106,17 @@ export async function evaluateWrittenExercise(
   studentAnswer: string
 ): Promise<EvaluationResult> {
   const prompt = buildEvaluationPrompt(problem, referenceSolution, studentAnswer);
+  const data = await callGeminiApi(apiKey, prompt);
+  const textContent = extractGeminiTextContent(data);
+  const result = parseGeminiJson<EvaluationResult>(textContent, 'Gemini evaluation');
 
-  const response = await fetch(GEMINI_API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-goog-api-key': apiKey,
-    },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        thinkingConfig: { thinkingLevel: 'high' },
-        responseMimeType: 'application/json',
-      },
-    }),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Gemini API error: ${response.status} - ${errorText}`);
-  }
-
-  const data = await response.json();
-
-  // Extract the text content from Gemini's response
-  const textContent = data.candidates?.[0]?.content?.parts?.find(
-    (part: { text?: string }) => part.text
-  )?.text;
-
-  if (!textContent) {
-    throw new Error('No text content in Gemini response');
-  }
-
-  // Parse the JSON response
-  try {
-    const result = JSON.parse(textContent) as EvaluationResult;
-    return {
-      passed: result.passed ?? false,
-      score: Math.max(0, Math.min(100, result.score ?? 0)),
-      feedback: result.feedback ?? 'Unable to evaluate.',
-      strengths: result.strengths ?? [],
-      improvements: result.improvements ?? [],
-    };
-  } catch {
-    throw new Error('Failed to parse Gemini evaluation response');
-  }
+  return {
+    passed: result.passed ?? false,
+    score: Math.max(0, Math.min(100, result.score ?? 0)),
+    feedback: result.feedback ?? 'Unable to evaluate.',
+    strengths: result.strengths ?? [],
+    improvements: result.improvements ?? [],
+  };
 }
 
 /**
@@ -133,49 +183,17 @@ export async function evaluateCodeExercise(
   language: string
 ): Promise<EvaluationResult> {
   const prompt = buildCodeEvaluationPrompt(problem, referenceSolution, studentCode, language);
+  const data = await callGeminiApi(apiKey, prompt);
+  const textContent = extractGeminiTextContent(data);
+  const result = parseGeminiJson<EvaluationResult>(textContent, 'Gemini code evaluation');
 
-  const response = await fetch(GEMINI_API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-goog-api-key': apiKey,
-    },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        thinkingConfig: { thinkingLevel: 'high' },
-        responseMimeType: 'application/json',
-      },
-    }),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Gemini API error: ${response.status} - ${errorText}`);
-  }
-
-  const data = await response.json();
-
-  const textContent = data.candidates?.[0]?.content?.parts?.find(
-    (part: { text?: string }) => part.text
-  )?.text;
-
-  if (!textContent) {
-    throw new Error('No text content in Gemini response');
-  }
-
-  try {
-    const result = JSON.parse(textContent) as EvaluationResult;
-    return {
-      passed: result.passed ?? false,
-      score: Math.max(0, Math.min(100, result.score ?? 0)),
-      feedback: result.feedback ?? 'Unable to evaluate.',
-      strengths: result.strengths ?? [],
-      improvements: result.improvements ?? [],
-    };
-  } catch {
-    throw new Error('Failed to parse Gemini code evaluation response');
-  }
+  return {
+    passed: result.passed ?? false,
+    score: Math.max(0, Math.min(100, result.score ?? 0)),
+    feedback: result.feedback ?? 'Unable to evaluate.',
+    strengths: result.strengths ?? [],
+    improvements: result.improvements ?? [],
+  };
 }
 
 /**
@@ -268,21 +286,8 @@ function getLanguageSpecificNotes(language: string): string {
  */
 export async function validateGeminiApiKey(apiKey: string): Promise<boolean> {
   try {
-    const response = await fetch(GEMINI_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': apiKey,
-      },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: 'Hello' }] }],
-        generationConfig: {
-          maxOutputTokens: 10,
-        },
-      }),
-    });
-
-    return response.ok;
+    await callGeminiApi(apiKey, 'Hello', { maxOutputTokens: 10 });
+    return true;
   } catch {
     return false;
   }
@@ -298,57 +303,24 @@ export async function generatePracticeQuestion(
   previousQuestions: QuizQuestion[]
 ): Promise<QuizQuestion> {
   const prompt = buildPracticeQuestionPrompt(originalQuestion, subjectContext, previousQuestions);
+  const data = await callGeminiApi(apiKey, prompt);
+  const textContent = extractGeminiTextContent(data);
+  const result = parseGeminiJson<QuizQuestion>(textContent, 'practice question');
 
-  const response = await fetch(GEMINI_API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-goog-api-key': apiKey,
-    },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        thinkingConfig: { thinkingLevel: 'high' },
-        responseMimeType: 'application/json',
-      },
-    }),
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Gemini API error: ${response.status} - ${errorText}`);
-  }
-
-  const data = await response.json();
-
-  const textContent = data.candidates?.[0]?.content?.parts?.find(
-    (part: { text?: string }) => part.text
-  )?.text;
-
-  if (!textContent) {
-    throw new Error('No text content in Gemini response');
-  }
-
-  try {
-    const result = JSON.parse(textContent) as QuizQuestion;
-    // Ensure required fields are present
-    return {
-      id: `practice-${Date.now()}`,
-      type: result.type || originalQuestion.type,
-      prompt: result.prompt || '',
-      correctAnswer: result.correctAnswer,
-      explanation: result.explanation || '',
-      options: result.options,
-      codeSnippet: result.codeSnippet,
-      starterCode: result.starterCode,
-      testCases: result.testCases,
-      language: result.language,
-      solution: result.solution,
-      modelAnswer: result.modelAnswer,
-    };
-  } catch {
-    throw new Error('Failed to parse practice question response');
-  }
+  return {
+    id: `practice-${Date.now()}`,
+    type: result.type || originalQuestion.type,
+    prompt: result.prompt || '',
+    correctAnswer: result.correctAnswer,
+    explanation: result.explanation || '',
+    options: result.options,
+    codeSnippet: result.codeSnippet,
+    starterCode: result.starterCode,
+    testCases: result.testCases,
+    language: result.language,
+    solution: result.solution,
+    modelAnswer: result.modelAnswer,
+  };
 }
 
 /**
@@ -458,6 +430,18 @@ export interface ProjectFile {
   content: string;
 }
 
+/** Raw response structure from Gemini for project evaluation */
+interface ProjectEvaluationResponse {
+  rubricScores?: Record<string, {
+    score?: number;
+    level?: string;
+    justification?: string;
+  }>;
+  feedback?: string;
+  strengths?: string[];
+  improvements?: string[];
+}
+
 /**
  * Evaluate a project submission using Gemini AI
  */
@@ -467,66 +451,33 @@ export async function evaluateProject(
   files: ProjectFile[]
 ): Promise<ProjectAiEvaluation> {
   const prompt = buildProjectEvaluationPrompt(project, files);
+  const data = await callGeminiApi(apiKey, prompt);
+  const textContent = extractGeminiTextContent(data);
+  const result = parseGeminiJson<ProjectEvaluationResponse>(textContent, 'project evaluation');
 
-  const response = await fetch(GEMINI_API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-goog-api-key': apiKey,
-    },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        thinkingConfig: { thinkingLevel: 'high' },
-        responseMimeType: 'application/json',
-      },
-    }),
-  });
+  // Calculate weighted overall score from rubric scores
+  let weightedScore = 0;
+  const rubricScores: ProjectAiEvaluation['rubricScores'] = {};
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Gemini API error: ${response.status} - ${errorText}`);
-  }
-
-  const data = await response.json();
-
-  const textContent = data.candidates?.[0]?.content?.parts?.find(
-    (part: { text?: string }) => part.text
-  )?.text;
-
-  if (!textContent) {
-    throw new Error('No text content in Gemini response');
-  }
-
-  try {
-    const result = JSON.parse(textContent);
-
-    // Calculate weighted overall score from rubric scores
-    let weightedScore = 0;
-    const rubricScores: ProjectAiEvaluation['rubricScores'] = {};
-
-    for (const criterion of project.rubric) {
-      const criterionResult = result.rubricScores?.[criterion.name];
-      if (criterionResult) {
-        rubricScores[criterion.name] = {
-          score: criterionResult.score ?? 0,
-          level: criterionResult.level ?? 'Unknown',
-          justification: criterionResult.justification ?? '',
-        };
-        weightedScore += (criterionResult.score ?? 0) * (criterion.weight / 100);
-      }
+  for (const criterion of project.rubric) {
+    const criterionResult = result.rubricScores?.[criterion.name];
+    if (criterionResult) {
+      rubricScores[criterion.name] = {
+        score: criterionResult.score ?? 0,
+        level: criterionResult.level ?? 'Unknown',
+        justification: criterionResult.justification ?? '',
+      };
+      weightedScore += (criterionResult.score ?? 0) * (criterion.weight / 100);
     }
-
-    return {
-      score: Math.round(weightedScore),
-      feedback: result.feedback ?? 'Unable to generate feedback.',
-      rubricScores,
-      strengths: result.strengths ?? [],
-      improvements: result.improvements ?? [],
-    };
-  } catch {
-    throw new Error('Failed to parse project evaluation response');
   }
+
+  return {
+    score: Math.round(weightedScore),
+    feedback: result.feedback ?? 'Unable to generate feedback.',
+    rubricScores,
+    strengths: result.strengths ?? [],
+    improvements: result.improvements ?? [],
+  };
 }
 
 /**
