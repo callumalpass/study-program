@@ -39,6 +39,15 @@ export interface CodeEditor {
 // Local storage key prefix
 const STORAGE_PREFIX = 'study_program_editor_';
 
+// Font size constraints
+const MIN_FONT_SIZE = 10;
+const MAX_FONT_SIZE = 24;
+const FONT_SIZE_STEP = 2;
+
+// UI timing constants (in milliseconds)
+const COPY_FEEDBACK_DURATION_MS = 2000;
+const AUTOSAVE_DEBOUNCE_MS = 1000;
+
 // Get the editor theme from the app's current theme
 function getEditorThemeFromApp(): 'vs-dark' | 'vs-light' {
   const appTheme = document.documentElement.getAttribute('data-theme');
@@ -145,7 +154,7 @@ export function createCodeEditor(
       copyButton.innerHTML = `<span class="btn-icon">${Icons.Check}</span> Copied!`;
       setTimeout(() => {
         copyButton.innerHTML = `<span class="btn-icon">${Icons.Export}</span> Copy`;
-      }, 2000);
+      }, COPY_FEEDBACK_DURATION_MS);
     } catch (err) {
       console.error('Failed to copy:', err);
     }
@@ -184,8 +193,8 @@ export function createCodeEditor(
   fontDecreaseBtn.innerHTML = 'A-';
   fontDecreaseBtn.title = 'Decrease font size';
   fontDecreaseBtn.onclick = () => {
-    if (currentFontSize > 10) {
-      setFontSize(currentFontSize - 2);
+    if (currentFontSize > MIN_FONT_SIZE) {
+      setFontSize(currentFontSize - FONT_SIZE_STEP);
     }
   };
 
@@ -198,8 +207,8 @@ export function createCodeEditor(
   fontIncreaseBtn.innerHTML = 'A+';
   fontIncreaseBtn.title = 'Increase font size';
   fontIncreaseBtn.onclick = () => {
-    if (currentFontSize < 24) {
-      setFontSize(currentFontSize + 2);
+    if (currentFontSize < MAX_FONT_SIZE) {
+      setFontSize(currentFontSize + FONT_SIZE_STEP);
     }
   };
 
@@ -413,7 +422,7 @@ export function createCodeEditor(
       clearTimeout(saveTimeout);
       saveTimeout = setTimeout(() => {
         localStorage.setItem(storageKey, editor.getValue());
-      }, 1000); // Debounce save
+      }, AUTOSAVE_DEBOUNCE_MS);
     });
   }
 
