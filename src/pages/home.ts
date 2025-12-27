@@ -7,6 +7,7 @@ import type {
   ExerciseCompletion,
   ProjectSubmission,
 } from '@/core/types';
+import { QUIZ_PASSING_SCORE } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import {
   calculateOverallProgress,
@@ -294,7 +295,7 @@ function calculateStats(subjects: Subject[], userProgress: UserProgress): {
     Object.values(progress.quizAttempts).forEach((attempts: QuizAttempt[]) => {
       if (attempts && attempts.length > 0) {
         const bestScore = Math.max(...attempts.map((a: QuizAttempt) => a.score));
-        if (bestScore >= 70) quizzesCompleted++;
+        if (bestScore >= QUIZ_PASSING_SCORE) quizzesCompleted++;
 
         // Add to average calculation
         attempts.forEach((attempt: QuizAttempt) => {

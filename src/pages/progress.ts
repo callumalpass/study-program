@@ -1,5 +1,6 @@
 // Progress/Statistics page
 import type { Subject, UserProgress, SubjectProgress, QuizAttempt, ExerciseCompletion } from '@/core/types';
+import { QUIZ_PASSING_SCORE } from '@/core/types';
 import { progressStorage, exportProgress, importProgress } from '@/core/storage';
 import {
   calculateOverallProgress,
@@ -327,7 +328,7 @@ function calculateAchievements(subjects: Subject[], userProgress: UserProgress):
     Object.values(subjectProgress.quizAttempts).forEach((attempts: QuizAttempt[]) => {
       if (attempts && attempts.length > 0) {
         const bestScore = Math.max(...attempts.map((a: QuizAttempt) => a.score));
-        if (bestScore >= 70) totalQuizzesPassed++;
+        if (bestScore >= QUIZ_PASSING_SCORE) totalQuizzesPassed++;
       }
     });
 

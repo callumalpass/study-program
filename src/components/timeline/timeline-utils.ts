@@ -1,4 +1,5 @@
 import type { Subject, UserProgress, StudyPace, SubjectScheduleOverride } from '@/core/types';
+import { QUIZ_PASSING_SCORE } from '@/core/types';
 
 // Weeks per topic based on pace
 export const PACE_WEEKS_PER_TOPIC: Record<StudyPace, number> = {
@@ -106,7 +107,7 @@ function calculateSubjectCompletion(
     for (const quizId of topic.quizIds) {
       total++;
       const attempts = subjectProgress.quizAttempts[quizId];
-      if (attempts && attempts.some(a => a.score >= 70)) {
+      if (attempts && attempts.some(a => a.score >= QUIZ_PASSING_SCORE)) {
         completed++;
       }
     }
@@ -126,7 +127,7 @@ function calculateSubjectCompletion(
     for (const examId of subject.examIds) {
       total++;
       const attempts = subjectProgress.examAttempts[examId];
-      if (attempts && attempts.some(a => a.score >= 70)) {
+      if (attempts && attempts.some(a => a.score >= QUIZ_PASSING_SCORE)) {
         completed++;
       }
     }

@@ -1,5 +1,8 @@
 // Core type definitions for stu.p Learning Platform
 
+/** Minimum quiz score (0-100) required to count as "passed" for achievements and progress tracking */
+export const QUIZ_PASSING_SCORE = 70;
+
 export type SubjectStatus = 'not_started' | 'in_progress' | 'completed';
 export type QuestionType = 'multiple_choice' | 'fill_blank' | 'true_false' | 'code_output' | 'coding' | 'written';
 export type ProgrammingLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'cpp' | 'c' | 'rust' | 'go' | 'sql' | 'bash' | 'yaml' | 'dockerfile';
