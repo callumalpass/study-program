@@ -22,25 +22,31 @@ import { Icons } from '../components/icons';
  * Format a review item ID into a human-readable title
  * e.g., "cs101-t1-quiz-a" -> "CS101 Topic 1 Quiz A"
  */
+// Regex patterns for parsing review item IDs
+// Item IDs follow the format: {subjectCode}-t{topicNum}-{type}
+// Examples: "cs101-t1-quiz-a", "math201-t3-ex02"
+const SUBJECT_CODE_PATTERN = /^([a-z]+\d+)/i; // Matches subject code at start (e.g., "cs101", "math201")
+const TOPIC_NUMBER_PATTERN = /-t(\d+)-/; // Matches "-t{number}-" to extract topic number
+const QUIZ_LEVEL_PATTERN = /quiz-([abc])/i; // Matches "quiz-{a|b|c}" for difficulty level
+const EXERCISE_NUMBER_PATTERN = /ex(\d+)/i; // Matches "ex{number}" for exercise number (e.g., "ex01")
+
 function formatReviewItemTitle(item: ReviewItem): string {
   const id = item.itemId;
 
-  // Extract subject code (e.g., "cs101" or "math201")
-  const subjectMatch = id.match(/^([a-z]+\d+)/i);
+  const subjectMatch = id.match(SUBJECT_CODE_PATTERN);
   const subjectCode = subjectMatch ? subjectMatch[1].toUpperCase() : '';
 
-  // Extract topic number
-  const topicMatch = id.match(/-t(\d+)-/);
+  const topicMatch = id.match(TOPIC_NUMBER_PATTERN);
   const topicNum = topicMatch ? `Topic ${topicMatch[1]}` : '';
 
   if (item.itemType === 'quiz') {
     // Format: cs101-t1-quiz-a -> CS101 Topic 1 Quiz A
-    const quizMatch = id.match(/quiz-([abc])/i);
+    const quizMatch = id.match(QUIZ_LEVEL_PATTERN);
     const quizLevel = quizMatch ? `Quiz ${quizMatch[1].toUpperCase()}` : 'Quiz';
     return `${subjectCode} ${topicNum} ${quizLevel}`.trim();
   } else {
     // Format: cs101-t1-ex01 -> CS101 Topic 1 Exercise 1
-    const exMatch = id.match(/ex(\d+)/i);
+    const exMatch = id.match(EXERCISE_NUMBER_PATTERN);
     const exNum = exMatch ? `Exercise ${parseInt(exMatch[1], 10)}` : 'Exercise';
     return `${subjectCode} ${topicNum} ${exNum}`.trim();
   }
