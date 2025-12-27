@@ -23,6 +23,15 @@ import { renderTimelinePage } from './pages/timeline';
 import { renderCourseBuilderPage } from './pages/course-builder';
 import { updateMermaidTheme } from './components/markdown';
 
+/** Delay before closing mobile menu after navigation click (ms) */
+const MENU_CLOSE_DELAY_MS = 100;
+
+/** Debounce delay for window resize handler (ms) */
+const RESIZE_DEBOUNCE_MS = 100;
+
+/** Breakpoint width below which mobile navigation is used (px) */
+const MOBILE_BREAKPOINT_PX = 768;
+
 // Import all subject content from central registry
 import { allQuizzes, allExercises, allProjects, allExams } from './subjects';
 
@@ -186,7 +195,7 @@ function initMobileNav(): void {
       target.closest('.subject-header-new')
     ) {
       // Small delay to allow navigation to start
-      setTimeout(closeMenu, 100);
+      setTimeout(closeMenu, MENU_CLOSE_DELAY_MS);
     }
   });
 
@@ -195,10 +204,10 @@ function initMobileNav(): void {
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(() => {
-      if (window.innerWidth > 768 && sidebar.classList.contains('open')) {
+      if (window.innerWidth > MOBILE_BREAKPOINT_PX && sidebar.classList.contains('open')) {
         closeMenu();
       }
-    }, 100);
+    }, RESIZE_DEBOUNCE_MS);
   });
 }
 
