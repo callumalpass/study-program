@@ -166,35 +166,18 @@ export class ProgressStorage {
         },
       });
 
-      // sendBeacon is more reliable during page unload
-      if (typeof navigator.sendBeacon === 'function') {
-        const blob = new Blob([body], { type: 'application/json' });
-        // Note: sendBeacon doesn't support custom headers, so we use fetch with keepalive
-        fetch(url, {
-          method: 'PATCH',
-          headers: {
-            'Authorization': `Bearer ${githubToken}`,
-            'Content-Type': 'application/json',
-          },
-          body,
-          keepalive: true, // Allows request to outlive the page
-        }).catch(() => {
-          // Silent fail - we're unloading anyway
-        });
-      } else {
-        // Fallback for older browsers
-        fetch(url, {
-          method: 'PATCH',
-          headers: {
-            'Authorization': `Bearer ${githubToken}`,
-            'Content-Type': 'application/json',
-          },
-          body,
-          keepalive: true,
-        }).catch(() => {
-          // Silent fail
-        });
-      }
+      // Use fetch with keepalive to allow request to complete during page unload
+      fetch(url, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${githubToken}`,
+          'Content-Type': 'application/json',
+        },
+        body,
+        keepalive: true,
+      }).catch(() => {
+        // Silent fail - we're unloading anyway
+      });
     } catch {
       // Silent fail during unload
     }
