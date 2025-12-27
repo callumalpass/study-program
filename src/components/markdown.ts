@@ -58,7 +58,10 @@ renderer.code = function(code: string, language: string | undefined): string {
   // Handle function plots - output as <div class="function-plot"> for client-side rendering
   // Use base64 encoding to avoid HTML attribute escaping issues with JSON
   if (language === 'plot') {
-    const encoded = btoa(unescape(encodeURIComponent(code)));
+    // Convert string to UTF-8 bytes, then to base64
+    const bytes = new TextEncoder().encode(code);
+    const binary = Array.from(bytes, byte => String.fromCharCode(byte)).join('');
+    const encoded = btoa(binary);
     return `<div class="function-plot" data-plot-b64="${encoded}"></div>`;
   }
 
@@ -227,8 +230,10 @@ export function renderFunctionPlots(): void {
     }
 
     try {
-      // Decode base64 to get the original JSON
-      const plotData = decodeURIComponent(escape(atob(encodedData)));
+      // Decode base64 to UTF-8 string
+      const binary = atob(encodedData);
+      const bytes = Uint8Array.from(binary, char => char.charCodeAt(0));
+      const plotData = new TextDecoder().decode(bytes);
       const config = JSON.parse(plotData);
 
       // Get theme colors from CSS variables
