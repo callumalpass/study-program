@@ -61,6 +61,54 @@ const SPRING_CONFIG = {
   damping: 0.75,
 };
 
+// Animation timing constants (in ms)
+const TIMING = {
+  // Entrance animation
+  ENTRANCE_DELAY: 600,
+
+  // Blinking behavior
+  BLINK_MIN_INTERVAL: 3000,
+  BLINK_RANDOM_RANGE: 5000,
+  BLINK_DURATION: 150,
+  WINK_DURATION: 200,
+  DOUBLE_BLINK_GAP: 250,
+
+  // Mouse interaction
+  DOUBLE_CLICK_WINDOW: 300,
+  SPIN_DURATION: 450,
+  DIZZY_RECOVERY: 3000,
+
+  // Click reactions
+  CLICK_DECAY_DELAY: 10000,
+  REACTION_DURATION_NORMAL: 1000,
+  REACTION_DURATION_ANNOYED: 1500,
+  REACTION_DURATION_VERY_ANNOYED: 300,
+
+  // Forward glances
+  FORWARD_GLANCE_MIN_DELAY: 1400,
+  FORWARD_GLANCE_RANDOM_RANGE: 2200,
+  FORWARD_GLANCE_MIN_DURATION: 220,
+  FORWARD_GLANCE_RANDOM_DURATION: 720,
+
+  // Boredom system
+  BOREDOM_CHECK_INTERVAL: 1000,
+  YAWN_TO_SLEEP_TRANSITION: 1200,
+
+  // Hover behaviors
+  CURIOSITY_TILT_DELAY: 2000,
+  SHY_TRIGGER_DELAY: 4000,
+  SHY_RECOVERY: 2000,
+
+  // Easter eggs
+  KONAMI_DURATION: 5000,
+  SPARKLE_DURATION: 1000,
+
+  // Success animation
+  JUMP_DURATION: 650,
+  SUCCESS_MOOD_DURATION: 2200,
+  DEFAULT_REACTION_DURATION: 2000,
+};
+
 /**
  * Interactive Mascot Component
  *
@@ -135,7 +183,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
 
   // --- Entrance Animation ---
   useEffect(() => {
-    const timeout = setTimeout(() => setIsEntering(false), 600);
+    const timeout = setTimeout(() => setIsEntering(false), TIMING.ENTRANCE_DELAY);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -180,29 +228,29 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
     let timeoutId: number;
 
     const scheduleBlink = () => {
-      const nextBlink = 3000 + Math.random() * 5000;
+      const nextBlink = TIMING.BLINK_MIN_INTERVAL + Math.random() * TIMING.BLINK_RANDOM_RANGE;
 
       timeoutId = window.setTimeout(() => {
         const rand = Math.random();
-        
+
         if (rand > 0.9) {
           // Wink (10%)
           setWinkState(Math.random() > 0.5 ? 'left' : 'right');
-          setTimeout(() => setWinkState('none'), 200);
+          setTimeout(() => setWinkState('none'), TIMING.WINK_DURATION);
         } else if (rand > 0.7) {
           // Double blink (20%)
            setBlinkState(true);
-           setTimeout(() => setBlinkState(false), 150);
+           setTimeout(() => setBlinkState(false), TIMING.BLINK_DURATION);
            setTimeout(() => {
              setBlinkState(true);
-             setTimeout(() => setBlinkState(false), 150);
-           }, 250);
+             setTimeout(() => setBlinkState(false), TIMING.BLINK_DURATION);
+           }, TIMING.DOUBLE_BLINK_GAP);
         } else {
           // Normal blink
           setBlinkState(true);
-          setTimeout(() => setBlinkState(false), 150);
+          setTimeout(() => setBlinkState(false), TIMING.BLINK_DURATION);
         }
-        
+
         scheduleBlink();
       }, nextBlink);
     };
@@ -248,11 +296,11 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
         setIsDizzy(true);
         shakeScore.current = 0; // Reset score
         onEvent?.({ type: 'dizzy' });
-        
-        // Recover after 3 seconds
+
+        // Recover after dizzy period
         setTimeout(() => {
            setIsDizzy(false);
-        }, 3000);
+        }, TIMING.DIZZY_RECOVERY);
       }
     };
 
@@ -312,7 +360,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
         setIsYawning(true);
         onEvent?.({ type: 'boredom', level: 'yawning' });
       }
-    }, 1000);
+    }, TIMING.BOREDOM_CHECK_INTERVAL);
 
     return () => clearInterval(interval);
   }, [boredomLevel, onEvent]);
@@ -325,7 +373,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
         setIsYawning(false);
         setIsIdle(true);
         setBoredomLevel('sleeping');
-      }, 1200);
+      }, TIMING.YAWN_TO_SLEEP_TRANSITION);
 
       return () => clearTimeout(timeout);
     }
@@ -347,14 +395,14 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
     let nextTimer: number;
 
     const scheduleGlance = () => {
-      const delay = 1400 + Math.random() * 2200;
+      const delay = TIMING.FORWARD_GLANCE_MIN_DELAY + Math.random() * TIMING.FORWARD_GLANCE_RANDOM_RANGE;
       nextTimer = window.setTimeout(() => {
         const effectiveMood = overrideMood || (isIdle ? 'Sleeping' : mood);
         if (effectiveMood !== 'Pondering' && effectiveMood !== 'Sleeping') {
           setDistraction({ x: 0, y: 0 });
           const timerId = window.setTimeout(() => {
             setDistraction(null);
-          }, 220 + Math.random() * 720);
+          }, TIMING.FORWARD_GLANCE_MIN_DURATION + Math.random() * TIMING.FORWARD_GLANCE_RANDOM_DURATION);
           forwardGlanceTimersRef.current.push(timerId);
         }
         scheduleGlance();
@@ -465,7 +513,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
     return () => document.removeEventListener('mousemove', handleMouseMove);
   }, [isHovering]);
 
-  // --- Curiosity Head Tilt (after 2s hover) ---
+  // --- Curiosity Head Tilt (after hover delay) ---
   useEffect(() => {
     let tiltTimer: number;
 
@@ -473,7 +521,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
       tiltTimer = window.setTimeout(() => {
         // Tilt opposite to lean direction for curious look
         setHeadTilt(leanAngle > 0 ? -12 : 12);
-      }, 2000);
+      }, TIMING.CURIOSITY_TILT_DELAY);
     } else {
       setHeadTilt(0);
     }
@@ -481,7 +529,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
     return () => clearTimeout(tiltTimer);
   }, [isHovering, isShy, leanAngle]);
 
-  // --- Shy Look-Away (after 4s direct stare) ---
+  // --- Shy Look-Away (after direct stare) ---
   useEffect(() => {
     let shyTimer: number;
 
@@ -492,12 +540,12 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
         // Look down and away (bashful)
         setDistraction({ x: -1.5, y: 1.5 });
 
-        // Reset after 2 seconds
+        // Reset after shy recovery period
         setTimeout(() => {
           setIsShy(false);
           setDistraction(null);
-        }, 2000);
-      }, 4000);
+        }, TIMING.SHY_RECOVERY);
+      }, TIMING.SHY_TRIGGER_DELAY);
     }
 
     return () => clearTimeout(shyTimer);
@@ -517,11 +565,11 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
           setOverrideMood('Confident');
           onEvent?.({ type: 'konami' });
 
-          // Reset after 5 seconds
+          // Reset after konami duration
           setTimeout(() => {
             setKonamiActive(false);
             setOverrideMood(null);
-          }, 5000);
+          }, TIMING.KONAMI_DURATION);
 
           konamiIndex.current = 0;
         }
@@ -550,11 +598,11 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
 
     jumpTimerRef.current = window.setTimeout(() => {
       setIsJumping(false);
-    }, 650);
+    }, TIMING.JUMP_DURATION);
 
     successTimerRef.current = window.setTimeout(() => {
       setOverrideMood(null);
-    }, 2200);
+    }, TIMING.SUCCESS_MOOD_DURATION);
   }, []);
 
   useEffect(() => {
@@ -587,12 +635,12 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
     const timeSinceLastClick = now - lastClickTime.current;
     lastClickTime.current = now;
 
-    // Double-click detection (within 300ms)
-    if (timeSinceLastClick < 300) {
+    // Double-click detection
+    if (timeSinceLastClick < TIMING.DOUBLE_CLICK_WINDOW) {
       // Spin!
       setIsSpinning(true);
       onEvent?.({ type: 'double-click' });
-      setTimeout(() => setIsSpinning(false), 450);
+      setTimeout(() => setIsSpinning(false), TIMING.SPIN_DURATION);
       return;
     }
 
@@ -606,10 +654,10 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
       clearTimeout(clickDecayTimer.current);
     }
 
-    // Decay click count after 10 seconds of no clicks
+    // Decay click count after period of no clicks
     clickDecayTimer.current = window.setTimeout(() => {
       clickCount.current = Math.max(0, clickCount.current - 3);
-    }, 10000);
+    }, TIMING.CLICK_DECAY_DELAY);
 
     // Vary reaction based on click count
     let reaction: MascotMood;
@@ -619,7 +667,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
       // Very annoyed - just sighs, barely reacts
       reaction = 'Pensive'; // Returns to neutral quickly
       onEvent?.({ type: 'annoyed' });
-      setTimeout(() => setOverrideMood(null), 300);
+      setTimeout(() => setOverrideMood(null), TIMING.REACTION_DURATION_VERY_ANNOYED);
       return;
     } else if (clicks >= 7) {
       // Annoyed - exasperated look
@@ -638,7 +686,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
     setOverrideMood(reaction);
 
     // Reaction duration also varies
-    const duration = clicks >= 7 ? 1500 : 1000;
+    const duration = clicks >= 7 ? TIMING.REACTION_DURATION_ANNOYED : TIMING.REACTION_DURATION_NORMAL;
     setTimeout(() => {
       setOverrideMood(null);
     }, duration);
@@ -647,7 +695,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
   // --- Trigger Sparkles (can be called externally via ref or context) ---
   const triggerSparkles = useCallback(() => {
     setShowSparkles(true);
-    setTimeout(() => setShowSparkles(false), 1000);
+    setTimeout(() => setShowSparkles(false), TIMING.SPARKLE_DURATION);
   }, []);
 
   // Show sparkles when delighted
@@ -920,7 +968,7 @@ export function InteractiveMascot({ mood, size = 64, onEvent }: InteractiveMasco
 export function useMascotController() {
   const [mood, setMood] = useState<MascotMood>('Pensive');
 
-  const triggerReaction = useCallback((newMood: MascotMood, duration = 2000) => {
+  const triggerReaction = useCallback((newMood: MascotMood, duration = TIMING.DEFAULT_REACTION_DURATION) => {
     setMood(newMood);
     setTimeout(() => setMood('Pensive'), duration);
   }, []);
