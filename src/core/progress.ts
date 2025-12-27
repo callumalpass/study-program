@@ -1,5 +1,11 @@
 // Progress calculation and subject availability logic
 
+/**
+ * The minimum score percentage required to pass a quiz, exam, or project.
+ * Used consistently across all completion checks.
+ */
+const PASSING_SCORE_THRESHOLD = 70;
+
 import type {
   Subject,
   SubjectProgress,
@@ -18,6 +24,13 @@ import { progressStorage } from './storage';
 function getBestScore(attempts: QuizAttempt[] | ExamAttempt[]): number {
   if (attempts.length === 0) return 0;
   return Math.max(...attempts.map(a => a.score));
+}
+
+/**
+ * Check if a score meets the passing threshold.
+ */
+function isScorePassing(score: number): boolean {
+  return score >= PASSING_SCORE_THRESHOLD;
 }
 
 /**
@@ -57,8 +70,8 @@ export function calculateSubjectCompletion(
     topic.quizIds.forEach(quizId => {
       totalItems++;
       const attempts = progress.quizAttempts[quizId];
-      // Consider quiz completed if best score is >= 70%
-      if (attempts && attempts.length > 0 && getBestScore(attempts) >= 70) {
+      // Consider quiz completed if best score meets passing threshold
+      if (attempts && attempts.length > 0 && isScorePassing(getBestScore(attempts))) {
         completedItems++;
       }
     });
@@ -79,7 +92,7 @@ export function calculateSubjectCompletion(
   examIds.forEach(examId => {
     totalItems++;
     const attempts = progress.examAttempts?.[examId];
-    if (attempts && attempts.length > 0 && getBestScore(attempts) >= 70) {
+    if (attempts && attempts.length > 0 && isScorePassing(getBestScore(attempts))) {
       completedItems++;
     }
   });
@@ -93,8 +106,8 @@ export function calculateSubjectCompletion(
       const bestSubmission = getBestProjectSubmission(submissions);
 
       if (bestSubmission.aiEvaluation) {
-        // Has AI evaluation - require >= 70%
-        if (bestSubmission.aiEvaluation.score >= 70) {
+        // Has AI evaluation - require passing score
+        if (isScorePassing(bestSubmission.aiEvaluation.score)) {
           completedItems++;
         }
       } else {
@@ -366,10 +379,10 @@ export function getSubjectProgressDetails(subject: Subject): {
     totalExercises += topic.exerciseIds.length;
 
     if (progress) {
-      // Count completed quizzes (>= 70% score)
+      // Count completed quizzes (passing score)
       topic.quizIds.forEach(quizId => {
         const attempts = progress.quizAttempts[quizId];
-        if (attempts && attempts.length > 0 && getBestScore(attempts) >= 70) {
+        if (attempts && attempts.length > 0 && isScorePassing(getBestScore(attempts))) {
           quizzesCompleted++;
         }
       });
@@ -388,7 +401,7 @@ export function getSubjectProgressDetails(subject: Subject): {
   if (progress && subject.examIds) {
     subject.examIds.forEach(examId => {
       const attempts = progress.examAttempts?.[examId];
-      if (attempts && attempts.length > 0 && getBestScore(attempts) >= 70) {
+      if (attempts && attempts.length > 0 && isScorePassing(getBestScore(attempts))) {
         examsCompleted++;
       }
     });
@@ -402,7 +415,7 @@ export function getSubjectProgressDetails(subject: Subject): {
         const bestSubmission = getBestProjectSubmission(submissions);
 
         if (bestSubmission.aiEvaluation) {
-          if (bestSubmission.aiEvaluation.score >= 70) {
+          if (isScorePassing(bestSubmission.aiEvaluation.score)) {
             projectsCompleted++;
           }
         } else {
@@ -430,7 +443,7 @@ export function getSubjectProgressDetails(subject: Subject): {
 }
 
 /**
- * Check if a quiz is completed (passed with >= 70% score)
+ * Check if a quiz is completed (passed with a passing score)
  */
 export function isQuizCompleted(
   quizId: string,
@@ -439,7 +452,7 @@ export function isQuizCompleted(
   if (!progress) return false;
   const attempts = progress.quizAttempts[quizId];
   if (!attempts || attempts.length === 0) return false;
-  return getBestScore(attempts) >= 70;
+  return isScorePassing(getBestScore(attempts));
 }
 
 /**
