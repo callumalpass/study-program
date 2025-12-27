@@ -9,25 +9,11 @@ import { CodeEditor } from './CodeEditor';
 import { ProofEditor } from './ProofEditor';
 import type { TestResult } from '@/components/code-runner';
 import type { EvaluationResult } from '@/utils/gemini-eval';
+import { formatLanguage } from '@/pages/assessment-utils';
 
 // Type guard for CodingExercise
 function isCodingExercise(exercise: Exercise): exercise is CodingExercise {
   return 'testCases' in exercise && 'starterCode' in exercise;
-}
-
-// Format language for display
-function formatLanguage(lang: string): string {
-  const langMap: Record<string, string> = {
-    python: 'Python',
-    javascript: 'JavaScript',
-    typescript: 'TypeScript',
-    java: 'Java',
-    cpp: 'C++',
-    c: 'C',
-    rust: 'Rust',
-    go: 'Go',
-  };
-  return langMap[lang] || lang;
 }
 
 function formatAiHistory(records: AiEvaluationRecord[], maxEntries = 3): string {
