@@ -40,7 +40,8 @@ test.describe('Screenshots', () => {
   });
 
   test('capture subject page', async ({ page }) => {
-    await page.goto('/#/subject/cs101');
+    // Use CS304 (Compilers) - 3rd year subject
+    await page.goto('/#/subject/cs304');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
     await page.screenshot({ path: `${SCREENSHOT_DIR}/subject.png`, fullPage: false });
@@ -58,16 +59,16 @@ test.describe('Screenshots', () => {
   });
 
   test('capture reading material', async ({ page }) => {
-    // Navigate to actual subtopic content (reading material)
-    // Topic ID format is: {subjectId}-topic-{number}
-    await page.goto('/#/subject/cs101/topic/cs101-topic-1/subtopic/introduction');
+    // Navigate to CS304 (Compilers) - Introduction to Compilers
+    await page.goto('/#/subject/cs304/topic/cs304-topic-1/subtopic/introduction-compilers');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(1000); // Wait for markdown/code highlighting to render
     await page.screenshot({ path: `${SCREENSHOT_DIR}/reading.png`, fullPage: true });
   });
 
   test('capture quiz page', async ({ page }) => {
-    await page.goto('/#/subject/cs101/quiz/cs101-quiz-1');
+    // CS304 (Compilers) quiz
+    await page.goto('/#/subject/cs304/quiz/cs304-t1-quiz-1');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
 
@@ -78,14 +79,16 @@ test.describe('Screenshots', () => {
   });
 
   test('capture exercise page', async ({ page }) => {
-    await page.goto('/#/subject/cs101/exercise/cs101-exercise-1');
+    // CS304 (Compilers) exercise
+    await page.goto('/#/subject/cs304/exercise/cs304-t1-ex01');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(1000); // Wait for Monaco editor to load
     await page.screenshot({ path: `${SCREENSHOT_DIR}/exercise.png`, fullPage: true });
   });
 
   test('capture exam page', async ({ page }) => {
-    await page.goto('/#/subject/cs101/exam/cs101-exam-midterm');
+    // CS304 (Compilers) midterm exam
+    await page.goto('/#/subject/cs304/exam/cs304-exam-midterm');
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
 
