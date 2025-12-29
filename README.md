@@ -14,6 +14,62 @@ A structured learning environment covering computer science and mathematics. Eac
 
 The content is written by AI. The prompts and quality standards used to generate it are in `docs/`. You can also use AI (via your own Gemini API key) to get feedback on written exercises and projects.
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/home.png" alt="Home Dashboard" width="100%">
+</p>
+
+<details>
+<summary>More Screenshots</summary>
+
+### Reading Material
+<p align="center">
+  <img src="docs/screenshots/reading.png" alt="Reading Material" width="100%">
+</p>
+
+### Quiz
+<p align="center">
+  <img src="docs/screenshots/quiz.png" alt="Quiz Page" width="100%">
+</p>
+
+### Coding Exercise
+<p align="center">
+  <img src="docs/screenshots/exercise.png" alt="Coding Exercise" width="100%">
+</p>
+
+### Exam
+<p align="center">
+  <img src="docs/screenshots/exam.png" alt="Exam Page" width="100%">
+</p>
+
+### Curriculum Overview
+<p align="center">
+  <img src="docs/screenshots/curriculum.png" alt="Curriculum Page" width="100%">
+</p>
+
+### Subject Page
+<p align="center">
+  <img src="docs/screenshots/subject.png" alt="Subject Page" width="100%">
+</p>
+
+### Progress Tracking
+<p align="center">
+  <img src="docs/screenshots/progress.png" alt="Progress Page" width="100%">
+</p>
+
+### Settings
+<p align="center">
+  <img src="docs/screenshots/settings.png" alt="Settings Page" width="100%">
+</p>
+
+### Dark Mode
+<p align="center">
+  <img src="docs/screenshots/home-dark.png" alt="Dark Mode" width="100%">
+</p>
+
+</details>
+
 ## Content Structure
 
 Each subject is divided into 7 topics. Topics are further divided into subtopics (separate markdown pages of ~1000 words each). This allows incremental reading rather than scrolling through monolithic documents.
