@@ -170,7 +170,7 @@ export class ProgressStorage {
       fetch(url, {
         method: 'PATCH',
         headers: {
-          'Authorization': `Bearer ${githubToken}`,
+          'Authorization': `token ${githubToken}`,
           'Content-Type': 'application/json',
         },
         body,
