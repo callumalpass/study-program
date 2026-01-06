@@ -328,16 +328,22 @@ export function generateTableOfContents(markdown: string): Array<{
 }> {
   const toc: Array<{ level: number; text: string; id: string }> = [];
   const lines = markdown.split('\n');
+  const idCounts: Record<string, number> = {};
 
   lines.forEach((line) => {
     const match = line.match(/^(#{1,6})\s+(.+)$/);
     if (match) {
       const level = match[1].length;
       const text = match[2].trim();
-      const id = text
+      const baseId = text
         .toLowerCase()
         .replace(/[^\w\s-]/g, '')
         .replace(/\s+/g, '-');
+
+      // Track duplicate IDs and append suffix for uniqueness
+      const count = idCounts[baseId] ?? 0;
+      idCounts[baseId] = count + 1;
+      const id = count === 0 ? baseId : `${baseId}-${count}`;
 
       toc.push({ level, text, id });
     }

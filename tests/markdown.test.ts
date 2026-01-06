@@ -449,6 +449,51 @@ This is not a header # just has hash
       const result = generateTableOfContents('## Using `console.log`');
       expect(result[0].text).toBe('Using `console.log`');
     });
+
+    it('generates unique IDs for duplicate headers', () => {
+      const markdown = `# Introduction
+## Section
+## Section
+## Section`;
+      const result = generateTableOfContents(markdown);
+
+      expect(result).toHaveLength(4);
+      expect(result[0].id).toBe('introduction');
+      expect(result[1].id).toBe('section');
+      expect(result[2].id).toBe('section-1');
+      expect(result[3].id).toBe('section-2');
+    });
+
+    it('generates unique IDs for multiple duplicate groups', () => {
+      const markdown = `# Title
+## FAQ
+### Question 1
+## FAQ
+### Question 1`;
+      const result = generateTableOfContents(markdown);
+
+      expect(result).toHaveLength(5);
+      expect(result[0].id).toBe('title');
+      expect(result[1].id).toBe('faq');
+      expect(result[2].id).toBe('question-1');
+      expect(result[3].id).toBe('faq-1');
+      expect(result[4].id).toBe('question-1-1');
+    });
+
+    it('handles many duplicate headers correctly', () => {
+      const markdown = Array(10).fill('## Item').join('\n');
+      const result = generateTableOfContents(markdown);
+
+      expect(result).toHaveLength(10);
+      expect(result[0].id).toBe('item');
+      expect(result[1].id).toBe('item-1');
+      expect(result[9].id).toBe('item-9');
+
+      // Verify all IDs are unique
+      const ids = result.map(item => item.id);
+      const uniqueIds = new Set(ids);
+      expect(uniqueIds.size).toBe(10);
+    });
   });
 
   describe('extractPlainText', () => {
