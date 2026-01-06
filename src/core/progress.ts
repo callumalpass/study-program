@@ -36,8 +36,12 @@ function isScorePassing(score: number): boolean {
 /**
  * Get the best project submission by AI evaluation score.
  * Returns the submission with the highest AI score, or the first submission if none have AI evaluations.
+ * Returns undefined if the submissions array is empty.
  */
-function getBestProjectSubmission(submissions: ProjectSubmission[]): ProjectSubmission {
+function getBestProjectSubmission(submissions: ProjectSubmission[]): ProjectSubmission | undefined {
+  if (submissions.length === 0) {
+    return undefined;
+  }
   return submissions.reduce((best, sub) => {
     const score = sub.aiEvaluation?.score ?? 0;
     const bestScore = best.aiEvaluation?.score ?? 0;
@@ -105,14 +109,16 @@ export function calculateSubjectCompletion(
     if (submissions && submissions.length > 0) {
       const bestSubmission = getBestProjectSubmission(submissions);
 
-      if (bestSubmission.aiEvaluation) {
-        // Has AI evaluation - require passing score
-        if (isScorePassing(bestSubmission.aiEvaluation.score)) {
+      if (bestSubmission) {
+        if (bestSubmission.aiEvaluation) {
+          // Has AI evaluation - require passing score
+          if (isScorePassing(bestSubmission.aiEvaluation.score)) {
+            completedItems++;
+          }
+        } else {
+          // No AI evaluation - count submission as complete
           completedItems++;
         }
-      } else {
-        // No AI evaluation - count submission as complete
-        completedItems++;
       }
     }
   });
@@ -414,13 +420,15 @@ export function getSubjectProgressDetails(subject: Subject): {
       if (submissions && submissions.length > 0) {
         const bestSubmission = getBestProjectSubmission(submissions);
 
-        if (bestSubmission.aiEvaluation) {
-          if (isScorePassing(bestSubmission.aiEvaluation.score)) {
+        if (bestSubmission) {
+          if (bestSubmission.aiEvaluation) {
+            if (isScorePassing(bestSubmission.aiEvaluation.score)) {
+              projectsCompleted++;
+            }
+          } else {
+            // No AI evaluation - count submission as complete
             projectsCompleted++;
           }
-        } else {
-          // No AI evaluation - count submission as complete
-          projectsCompleted++;
         }
       }
     });
