@@ -827,6 +827,197 @@ describe('CPU Scheduling Algorithms', () => {
       expect(result.timeline[0].process).toBe('P1');
     });
   });
+
+  describe('Priority Scheduling', () => {
+    // Priority scheduling implementation
+    function priorityScheduling(
+      processes: Array<{ id: string; arrivalTime: number; burstTime: number; priority: number }>
+    ): SchedulingResult {
+      const remaining = [...processes];
+      const timeline: SchedulingResult['timeline'] = [];
+      const completionTimes: Record<string, number> = {};
+      let currentTime = 0;
+
+      while (remaining.length > 0) {
+        // Get processes that have arrived
+        const available = remaining.filter(p => p.arrivalTime <= currentTime);
+
+        if (available.length === 0) {
+          // Jump to next arrival
+          currentTime = Math.min(...remaining.map(p => p.arrivalTime));
+          continue;
+        }
+
+        // Select highest priority (lower number = higher priority)
+        available.sort((a, b) => a.priority - b.priority);
+        const process = available[0];
+
+        const start = currentTime;
+        const end = start + process.burstTime;
+        timeline.push({ process: process.id, start, end });
+        completionTimes[process.id] = end;
+        currentTime = end;
+
+        // Remove from remaining
+        const idx = remaining.findIndex(p => p.id === process.id);
+        remaining.splice(idx, 1);
+      }
+
+      return calculateMetrics(
+        processes.map(p => ({ id: p.id, arrivalTime: p.arrivalTime, burstTime: p.burstTime })),
+        completionTimes,
+        timeline
+      );
+    }
+
+    it('selects highest priority process (lower number = higher priority)', () => {
+      const processes = [
+        { id: 'P1', arrivalTime: 0, burstTime: 5, priority: 3 },
+        { id: 'P2', arrivalTime: 0, burstTime: 3, priority: 1 },
+        { id: 'P3', arrivalTime: 0, burstTime: 4, priority: 2 },
+      ];
+
+      const result = priorityScheduling(processes);
+
+      // Order should be: P2 (priority 1), P3 (priority 2), P1 (priority 3)
+      expect(result.timeline.map(t => t.process)).toEqual(['P2', 'P3', 'P1']);
+    });
+
+    it('handles processes arriving at different times', () => {
+      const processes = [
+        { id: 'P1', arrivalTime: 0, burstTime: 4, priority: 2 },
+        { id: 'P2', arrivalTime: 1, burstTime: 2, priority: 1 },
+        { id: 'P3', arrivalTime: 2, burstTime: 3, priority: 3 },
+      ];
+
+      const result = priorityScheduling(processes);
+
+      // P1 starts first (only one at time 0)
+      // At time 4, P2 has higher priority than P3
+      expect(result.timeline[0].process).toBe('P1');
+      expect(result.timeline[1].process).toBe('P2');
+      expect(result.timeline[2].process).toBe('P3');
+    });
+
+    it('calculates correct waiting times', () => {
+      const processes = [
+        { id: 'P1', arrivalTime: 0, burstTime: 6, priority: 3 },
+        { id: 'P2', arrivalTime: 0, burstTime: 3, priority: 1 },
+        { id: 'P3', arrivalTime: 0, burstTime: 4, priority: 2 },
+      ];
+
+      const result = priorityScheduling(processes);
+
+      // Order: P2(3), P3(4), P1(6)
+      // P2 waits 0, P3 waits 3, P1 waits 7
+      expect(result.waitingTimes['P2']).toBe(0);
+      expect(result.waitingTimes['P3']).toBe(3);
+      expect(result.waitingTimes['P1']).toBe(7);
+    });
+  });
+});
+
+// ============================================================================
+// Clock Page Replacement Algorithm
+// ============================================================================
+
+/**
+ * Clock (Second Chance) Page Replacement Algorithm
+ * Uses a reference bit to give pages a "second chance" before replacement.
+ */
+function clockPageReplacement(references: number[], numFrames: number): PageReplacementResult {
+  const frames: (number | null)[] = Array(numFrames).fill(null);
+  const refBits: boolean[] = Array(numFrames).fill(false);
+  const trace: PageReplacementResult['trace'] = [];
+  let faults = 0;
+  let clockHand = 0;
+
+  for (const ref of references) {
+    const framesCopy = [...frames];
+    const frameIndex = frames.indexOf(ref);
+
+    if (frameIndex !== -1) {
+      // Page hit - set reference bit
+      refBits[frameIndex] = true;
+      trace.push({ ref, frames: framesCopy, fault: false });
+    } else {
+      // Page fault
+      faults++;
+
+      const emptyIndex = frames.indexOf(null);
+      if (emptyIndex !== -1) {
+        // Empty frame available
+        frames[emptyIndex] = ref;
+        refBits[emptyIndex] = true;
+        trace.push({ ref, frames: [...frames], fault: true });
+      } else {
+        // Find victim using clock algorithm
+        while (refBits[clockHand]) {
+          refBits[clockHand] = false; // Give second chance
+          clockHand = (clockHand + 1) % numFrames;
+        }
+
+        const victim = frames[clockHand]!;
+        frames[clockHand] = ref;
+        refBits[clockHand] = true;
+        clockHand = (clockHand + 1) % numFrames;
+        trace.push({ ref, frames: [...frames], fault: true, victim });
+      }
+    }
+  }
+
+  return { frames, faults, trace };
+}
+
+describe('Clock Page Replacement Algorithm', () => {
+  it('gives pages a second chance before replacement', () => {
+    const references = [1, 2, 3, 1, 4];
+    const result = clockPageReplacement(references, 3);
+
+    // 1: [1,-,-] Fault, refBits=[1,0,0], clockHand=0
+    // 2: [1,2,-] Fault, refBits=[1,1,0], clockHand=0
+    // 3: [1,2,3] Fault, refBits=[1,1,1], clockHand=0
+    // 1: [1,2,3] Hit (ref bit for 1 is already set)
+    // 4: Need to replace. clockHand=0:
+    //    - Frame 0 (page 1): refBit=1 -> clear, move to 1
+    //    - Frame 1 (page 2): refBit=1 -> clear, move to 2
+    //    - Frame 2 (page 3): refBit=1 -> clear, move to 0
+    //    - Frame 0: refBit=0 -> replace page 1
+    //    Result: [4,2,3]
+
+    expect(result.faults).toBe(4);
+    expect(result.trace[4].victim).toBe(1);
+  });
+
+  it('handles reference string with repeated pages', () => {
+    const references = [1, 2, 3, 1, 2, 1, 2, 3, 4];
+    const result = clockPageReplacement(references, 3);
+
+    // Most references are hits after initial load
+    expect(result.faults).toBe(4); // Initial 3 + 1 for page 4
+  });
+
+  it('approximates LRU behavior', () => {
+    // Clock should perform better than FIFO but similar to LRU
+    const references = [1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5];
+
+    const clockResult = clockPageReplacement(references, 3);
+    const fifoResult = fifoPageReplacement(references, 3);
+
+    // Clock often performs better than FIFO
+    expect(clockResult.faults).toBeLessThanOrEqual(fifoResult.faults);
+  });
+
+  it('handles all frames with reference bit set', () => {
+    // When all frames have reference bit set, clock will clear all and replace first
+    const references = [1, 2, 3, 1, 2, 3, 4];
+    const result = clockPageReplacement(references, 3);
+
+    // After refs 1,2,3,1,2,3 all frames have ref bit set
+    // When 4 comes in, clock clears all bits and replaces frame 0 (page 1)
+    expect(result.faults).toBe(4);
+    expect(result.trace[6].victim).toBe(1);
+  });
 });
 
 // ============================================================================
