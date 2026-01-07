@@ -1,6 +1,7 @@
 import { h, Fragment, ComponentChildren } from 'preact';
 import { useState, useCallback, useMemo, useEffect, useRef } from 'preact/hooks';
 import type { Subject, Topic, SubjectProgress, Quiz, Exercise, Exam, Project } from '@/core/types';
+import { QUIZ_PASSING_SCORE } from '@/core/types';
 import { Icons } from '@/components/icons';
 import {
   navigateToTopic,
@@ -177,7 +178,8 @@ export function ContentNavigator({
     if (!progress) return false;
     const quizzesComplete = topic.quizIds.every(qid => {
       const attempts = progress.quizAttempts?.[qid];
-      return attempts && attempts.length > 0;
+      // Check if any attempt has a passing score
+      return attempts && attempts.some(a => a.score >= QUIZ_PASSING_SCORE);
     });
     const exercisesComplete = topic.exerciseIds.every(eid => {
       const completion = progress.exerciseCompletions?.[eid];
@@ -191,7 +193,8 @@ export function ContentNavigator({
 
     const quizzesCompleted = topic.quizIds.filter(qid => {
       const attempts = progress.quizAttempts?.[qid];
-      return attempts && attempts.length > 0;
+      // Check if any attempt has a passing score
+      return attempts && attempts.some(a => a.score >= QUIZ_PASSING_SCORE);
     }).length;
 
     const exercisesCompleted = topic.exerciseIds.filter(eid => {
@@ -705,17 +708,13 @@ export function ContentNavigator({
                 <h3>Prerequisites Required</h3>
                 <p>Complete these subjects first:</p>
                 <ul class="prerequisite-list">
-                  {prerequisiteSubjects.map(prereq => {
-                    const prereqProgress = progress;
-                    const isCompleted = false; // We know it's not completed since prerequisites aren't met
-                    return (
-                      <li key={prereq.id} class={isCompleted ? 'completed' : ''}>
-                        <a href={`#/subject/${prereq.id}`} class="prereq-link">
-                          {prereq.title} ({prereq.code})
-                        </a>
-                      </li>
-                    );
-                  })}
+                  {prerequisiteSubjects.map(prereq => (
+                    <li key={prereq.id}>
+                      <a href={`#/subject/${prereq.id}`} class="prereq-link">
+                        {prereq.title} ({prereq.code})
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </section>
             )}
