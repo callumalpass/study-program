@@ -1058,3 +1058,691 @@ describe('Memory Management Algorithms', () => {
     });
   });
 });
+
+// ============================================================================
+// Deadlock Algorithm Implementations
+// ============================================================================
+
+/**
+ * Check if all four necessary conditions for deadlock are present.
+ */
+function checkDeadlockConditions(
+  mutualExclusion: boolean,
+  holdAndWait: boolean,
+  noPreemption: boolean,
+  circularWait: boolean
+): boolean {
+  return mutualExclusion && holdAndWait && noPreemption && circularWait;
+}
+
+/**
+ * Build wait-for graph from allocation and request matrices.
+ * Returns adjacency list: {process: [processes it waits for]}
+ */
+function buildWaitForGraph(
+  allocation: number[][],
+  request: number[][]
+): Record<number, number[]> {
+  const n = allocation.length;
+  const m = allocation[0]?.length || 0;
+  const graph: Record<number, number[]> = {};
+
+  for (let i = 0; i < n; i++) {
+    graph[i] = [];
+  }
+
+  for (let p1 = 0; p1 < n; p1++) {
+    for (let r = 0; r < m; r++) {
+      if (request[p1][r] > 0) {
+        for (let p2 = 0; p2 < n; p2++) {
+          if (allocation[p2][r] > 0 && p1 !== p2) {
+            if (!graph[p1].includes(p2)) {
+              graph[p1].push(p2);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return graph;
+}
+
+/**
+ * Detect cycle in wait-for graph (single instance resources).
+ */
+function hasCycleInWaitForGraph(graph: Record<number, number[]>): boolean {
+  const visited = new Set<number>();
+  const recStack = new Set<number>();
+
+  function dfs(node: number): boolean {
+    visited.add(node);
+    recStack.add(node);
+
+    for (const neighbor of graph[node] || []) {
+      if (!visited.has(neighbor)) {
+        if (dfs(neighbor)) return true;
+      } else if (recStack.has(neighbor)) {
+        return true;
+      }
+    }
+
+    recStack.delete(node);
+    return false;
+  }
+
+  for (const node of Object.keys(graph).map(Number)) {
+    if (!visited.has(node)) {
+      if (dfs(node)) return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Banker's Algorithm - Safety Check
+ * Returns [isSafe, safeSequence]
+ */
+function bankersSafetyCheck(
+  available: number[],
+  maxNeed: number[][],
+  allocation: number[][]
+): [boolean, number[]] {
+  const n = allocation.length;
+  const m = available.length;
+
+  // Calculate Need matrix
+  const need: number[][] = [];
+  for (let i = 0; i < n; i++) {
+    need[i] = [];
+    for (let j = 0; j < m; j++) {
+      need[i][j] = maxNeed[i][j] - allocation[i][j];
+    }
+  }
+
+  const work = [...available];
+  const finish = new Array(n).fill(false);
+  const sequence: number[] = [];
+
+  while (sequence.length < n) {
+    let found = false;
+
+    for (let i = 0; i < n; i++) {
+      if (!finish[i]) {
+        // Check if need[i] <= work
+        let canRun = true;
+        for (let j = 0; j < m; j++) {
+          if (need[i][j] > work[j]) {
+            canRun = false;
+            break;
+          }
+        }
+
+        if (canRun) {
+          // Process i can complete
+          for (let j = 0; j < m; j++) {
+            work[j] += allocation[i][j];
+          }
+          finish[i] = true;
+          sequence.push(i);
+          found = true;
+          break;
+        }
+      }
+    }
+
+    if (!found) {
+      return [false, []];
+    }
+  }
+
+  return [true, sequence];
+}
+
+/**
+ * Banker's Algorithm - Resource Request
+ * Returns true if request can be granted safely
+ */
+function bankersResourceRequest(
+  processId: number,
+  request: number[],
+  available: number[],
+  maxNeed: number[][],
+  allocation: number[][]
+): boolean {
+  const n = allocation.length;
+  const m = available.length;
+
+  // Calculate Need matrix
+  const need: number[][] = [];
+  for (let i = 0; i < n; i++) {
+    need[i] = [];
+    for (let j = 0; j < m; j++) {
+      need[i][j] = maxNeed[i][j] - allocation[i][j];
+    }
+  }
+
+  // Check if request <= need
+  for (let j = 0; j < m; j++) {
+    if (request[j] > need[processId][j]) {
+      return false; // Exceeded maximum claim
+    }
+  }
+
+  // Check if request <= available
+  for (let j = 0; j < m; j++) {
+    if (request[j] > available[j]) {
+      return false; // Resources not available
+    }
+  }
+
+  // Tentatively allocate
+  const newAvailable = available.map((a, j) => a - request[j]);
+  const newAllocation = allocation.map(row => [...row]);
+  for (let j = 0; j < m; j++) {
+    newAllocation[processId][j] += request[j];
+  }
+
+  // Check if resulting state is safe
+  const [isSafe] = bankersSafetyCheck(newAvailable, maxNeed, newAllocation);
+  return isSafe;
+}
+
+/**
+ * Deadlock Detection Algorithm
+ * Returns list of deadlocked process indices
+ */
+function detectDeadlock(
+  available: number[],
+  allocation: number[][],
+  request: number[][]
+): number[] {
+  const n = allocation.length;
+  const m = available.length;
+
+  const work = [...available];
+  const finish: boolean[] = [];
+
+  // Initially, processes with no allocation are "finished"
+  for (let i = 0; i < n; i++) {
+    finish[i] = allocation[i].every(a => a === 0);
+  }
+
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (let i = 0; i < n; i++) {
+      if (!finish[i]) {
+        // Check if request[i] <= work
+        let canProceed = true;
+        for (let j = 0; j < m; j++) {
+          if (request[i][j] > work[j]) {
+            canProceed = false;
+            break;
+          }
+        }
+
+        if (canProceed) {
+          // Process i can proceed - release its resources
+          for (let j = 0; j < m; j++) {
+            work[j] += allocation[i][j];
+          }
+          finish[i] = true;
+          changed = true;
+        }
+      }
+    }
+  }
+
+  // Processes that couldn't finish are deadlocked
+  const deadlocked: number[] = [];
+  for (let i = 0; i < n; i++) {
+    if (!finish[i]) {
+      deadlocked.push(i);
+    }
+  }
+
+  return deadlocked;
+}
+
+/**
+ * Check if resource ordering is violated (for circular wait prevention).
+ */
+function violatesResourceOrdering(heldResources: number[], requestedResource: number): boolean {
+  if (heldResources.length === 0) return false;
+  const maxHeld = Math.max(...heldResources);
+  return requestedResource <= maxHeld;
+}
+
+/**
+ * Select victim process for deadlock recovery based on cost.
+ * Cost = priority + timeRunning + resourcesHeld
+ */
+function selectVictim(
+  processes: Array<{ pid: number; priority: number; timeRunning: number; resourcesHeld: number }>
+): number {
+  let minCost = Infinity;
+  let victim = -1;
+
+  for (const p of processes) {
+    const cost = p.priority + p.timeRunning + p.resourcesHeld;
+    if (cost < minCost) {
+      minCost = cost;
+      victim = p.pid;
+    }
+  }
+
+  return victim;
+}
+
+// ============================================================================
+// Deadlock Algorithm Tests
+// ============================================================================
+
+describe('Deadlock Algorithms', () => {
+  describe('Deadlock Conditions', () => {
+    it('returns true when all four conditions are present', () => {
+      expect(checkDeadlockConditions(true, true, true, true)).toBe(true);
+    });
+
+    it('returns false when mutual exclusion is missing', () => {
+      expect(checkDeadlockConditions(false, true, true, true)).toBe(false);
+    });
+
+    it('returns false when hold and wait is missing', () => {
+      expect(checkDeadlockConditions(true, false, true, true)).toBe(false);
+    });
+
+    it('returns false when no preemption is missing', () => {
+      expect(checkDeadlockConditions(true, true, false, true)).toBe(false);
+    });
+
+    it('returns false when circular wait is missing', () => {
+      expect(checkDeadlockConditions(true, true, true, false)).toBe(false);
+    });
+
+    it('returns false when multiple conditions are missing', () => {
+      expect(checkDeadlockConditions(false, false, true, true)).toBe(false);
+      expect(checkDeadlockConditions(true, false, false, true)).toBe(false);
+    });
+  });
+
+  describe('Wait-For Graph', () => {
+    it('builds correct wait-for graph with circular wait', () => {
+      const allocation = [
+        [1, 0],
+        [0, 1],
+      ];
+      const request = [
+        [0, 1],
+        [1, 0],
+      ];
+
+      const graph = buildWaitForGraph(allocation, request);
+
+      expect(graph[0]).toContain(1); // P0 waits for P1
+      expect(graph[1]).toContain(0); // P1 waits for P0
+    });
+
+    it('builds correct wait-for graph with linear wait', () => {
+      const allocation = [
+        [1, 0],
+        [0, 0],
+      ];
+      const request = [
+        [0, 0],
+        [1, 0],
+      ];
+
+      const graph = buildWaitForGraph(allocation, request);
+
+      expect(graph[0]).toEqual([]);
+      expect(graph[1]).toContain(0);
+    });
+
+    it('handles no requests', () => {
+      const allocation = [
+        [1, 0],
+        [0, 1],
+      ];
+      const request = [
+        [0, 0],
+        [0, 0],
+      ];
+
+      const graph = buildWaitForGraph(allocation, request);
+
+      expect(graph[0]).toEqual([]);
+      expect(graph[1]).toEqual([]);
+    });
+  });
+
+  describe('Cycle Detection in Wait-For Graph', () => {
+    it('detects cycle in circular wait', () => {
+      const graph = {
+        0: [1],
+        1: [0],
+      };
+
+      expect(hasCycleInWaitForGraph(graph)).toBe(true);
+    });
+
+    it('detects cycle in longer chain', () => {
+      const graph = {
+        0: [1],
+        1: [2],
+        2: [0],
+      };
+
+      expect(hasCycleInWaitForGraph(graph)).toBe(true);
+    });
+
+    it('returns false for linear chain', () => {
+      const graph = {
+        0: [1],
+        1: [2],
+        2: [],
+      };
+
+      expect(hasCycleInWaitForGraph(graph)).toBe(false);
+    });
+
+    it('returns false for empty graph', () => {
+      const graph = {
+        0: [],
+        1: [],
+      };
+
+      expect(hasCycleInWaitForGraph(graph)).toBe(false);
+    });
+
+    it('handles disconnected components', () => {
+      const graph = {
+        0: [1],
+        1: [0],
+        2: [],
+        3: [],
+      };
+
+      expect(hasCycleInWaitForGraph(graph)).toBe(true);
+    });
+  });
+
+  describe("Banker's Algorithm - Safety Check", () => {
+    it('correctly identifies safe state (textbook example)', () => {
+      // Example from topic-5.md
+      const available = [3, 3, 2];
+      const maxNeed = [
+        [7, 5, 3],
+        [3, 2, 2],
+        [9, 0, 2],
+        [2, 2, 2],
+        [4, 3, 3],
+      ];
+      const allocation = [
+        [0, 1, 0],
+        [2, 0, 0],
+        [3, 0, 2],
+        [2, 1, 1],
+        [0, 0, 2],
+      ];
+
+      const [isSafe, sequence] = bankersSafetyCheck(available, maxNeed, allocation);
+
+      expect(isSafe).toBe(true);
+      // Safe sequence should start with P1 (only one that can run initially)
+      expect(sequence[0]).toBe(1);
+      expect(sequence.length).toBe(5);
+    });
+
+    it('correctly identifies safe state with sequence [1, 0, 2]', () => {
+      // Corrected exercise test case
+      const available = [2, 1, 1];
+      const maxNeed = [
+        [4, 2, 1],
+        [2, 1, 1],
+        [4, 3, 2],
+      ];
+      const allocation = [
+        [1, 0, 0],
+        [1, 1, 0],
+        [2, 1, 1],
+      ];
+
+      const [isSafe, sequence] = bankersSafetyCheck(available, maxNeed, allocation);
+
+      expect(isSafe).toBe(true);
+      expect(sequence).toEqual([1, 0, 2]);
+    });
+
+    it('correctly identifies unsafe state', () => {
+      const available = [0, 0, 0];
+      const maxNeed = [
+        [7, 5, 3],
+        [3, 2, 2],
+      ];
+      const allocation = [
+        [0, 1, 0],
+        [2, 0, 0],
+      ];
+
+      const [isSafe, sequence] = bankersSafetyCheck(available, maxNeed, allocation);
+
+      expect(isSafe).toBe(false);
+      expect(sequence).toEqual([]);
+    });
+
+    it('handles single process that can complete', () => {
+      const available = [3, 3, 3];
+      const maxNeed = [[2, 2, 2]];
+      const allocation = [[1, 1, 1]];
+
+      const [isSafe, sequence] = bankersSafetyCheck(available, maxNeed, allocation);
+
+      expect(isSafe).toBe(true);
+      expect(sequence).toEqual([0]);
+    });
+
+    it('handles all processes with zero need', () => {
+      const available = [5, 5, 5];
+      const maxNeed = [
+        [1, 0, 0],
+        [0, 1, 0],
+      ];
+      const allocation = [
+        [1, 0, 0],
+        [0, 1, 0],
+      ];
+
+      const [isSafe, sequence] = bankersSafetyCheck(available, maxNeed, allocation);
+
+      expect(isSafe).toBe(true);
+      expect(sequence.length).toBe(2);
+    });
+  });
+
+  describe("Banker's Algorithm - Resource Request", () => {
+    it('grants safe request', () => {
+      const available = [3, 3, 2];
+      const maxNeed = [
+        [7, 5, 3],
+        [3, 2, 2],
+        [9, 0, 2],
+        [2, 2, 2],
+        [4, 3, 3],
+      ];
+      const allocation = [
+        [0, 1, 0],
+        [2, 0, 0],
+        [3, 0, 2],
+        [2, 1, 1],
+        [0, 0, 2],
+      ];
+
+      // P1 requests [1, 0, 2]
+      const result = bankersResourceRequest(1, [1, 0, 2], available, maxNeed, allocation);
+
+      expect(result).toBe(true);
+    });
+
+    it('denies request that exceeds available', () => {
+      const available = [1, 1, 1];
+      const maxNeed = [[3, 3, 3]];
+      const allocation = [[0, 0, 0]];
+
+      // Request more than available
+      const result = bankersResourceRequest(0, [2, 2, 2], available, maxNeed, allocation);
+
+      expect(result).toBe(false);
+    });
+
+    it('denies request that exceeds maximum claim', () => {
+      const available = [5, 5, 5];
+      const maxNeed = [[3, 3, 3]];
+      const allocation = [[0, 0, 0]];
+
+      // Request more than max need
+      const result = bankersResourceRequest(0, [4, 4, 4], available, maxNeed, allocation);
+
+      expect(result).toBe(false);
+    });
+
+    it('denies request that leads to unsafe state', () => {
+      const available = [2, 0, 0];
+      const maxNeed = [
+        [5, 5, 5],
+        [3, 3, 3],
+      ];
+      const allocation = [
+        [2, 0, 0],
+        [1, 0, 0],
+      ];
+
+      // This request would leave the system in an unsafe state
+      const result = bankersResourceRequest(0, [2, 0, 0], available, maxNeed, allocation);
+
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('Deadlock Detection', () => {
+    it('detects deadlocked processes', () => {
+      const available = [0, 0, 0];
+      const allocation = [
+        [0, 1, 0],
+        [2, 0, 0],
+      ];
+      const request = [
+        [0, 0, 0],
+        [0, 0, 2],
+      ];
+
+      const deadlocked = detectDeadlock(available, allocation, request);
+
+      expect(deadlocked).toContain(1);
+    });
+
+    it('returns empty array when no deadlock', () => {
+      const available = [1, 1, 1];
+      const allocation = [
+        [0, 0, 0],
+        [0, 0, 0],
+      ];
+      const request = [
+        [0, 0, 0],
+        [0, 0, 0],
+      ];
+
+      const deadlocked = detectDeadlock(available, allocation, request);
+
+      expect(deadlocked).toEqual([]);
+    });
+
+    it('handles processes with no allocation as finished', () => {
+      const available = [0, 0, 0];
+      const allocation = [
+        [0, 0, 0],
+        [1, 0, 0],
+      ];
+      const request = [
+        [0, 0, 0],
+        [0, 1, 0],
+      ];
+
+      const deadlocked = detectDeadlock(available, allocation, request);
+
+      // P0 is finished (no allocation), P1 is deadlocked
+      expect(deadlocked).toEqual([1]);
+    });
+
+    it('releases resources as processes complete', () => {
+      const available = [1, 0, 0];
+      const allocation = [
+        [0, 1, 0],
+        [0, 0, 1],
+      ];
+      const request = [
+        [1, 0, 0],
+        [0, 1, 0],
+      ];
+
+      const deadlocked = detectDeadlock(available, allocation, request);
+
+      // P0 can proceed (request <= available), releases [0,1,0]
+      // P1 can then proceed (request [0,1,0] <= work [1,1,0])
+      expect(deadlocked).toEqual([]);
+    });
+  });
+
+  describe('Resource Ordering (Circular Wait Prevention)', () => {
+    it('returns false when no resources held', () => {
+      expect(violatesResourceOrdering([], 5)).toBe(false);
+    });
+
+    it('returns false when requesting higher numbered resource', () => {
+      expect(violatesResourceOrdering([1, 2, 3], 5)).toBe(false);
+    });
+
+    it('returns true when requesting lower numbered resource', () => {
+      expect(violatesResourceOrdering([1, 5, 3], 4)).toBe(true);
+    });
+
+    it('returns true when requesting same numbered resource', () => {
+      expect(violatesResourceOrdering([1, 2, 3], 3)).toBe(true);
+    });
+  });
+
+  describe('Victim Selection for Recovery', () => {
+    it('selects process with lowest cost', () => {
+      const processes = [
+        { pid: 1, priority: 5, timeRunning: 10, resourcesHeld: 3 },
+        { pid: 2, priority: 1, timeRunning: 2, resourcesHeld: 1 },
+      ];
+
+      const victim = selectVictim(processes);
+
+      expect(victim).toBe(2); // Cost: 1+2+1=4 vs 5+10+3=18
+    });
+
+    it('handles single process', () => {
+      const processes = [{ pid: 1, priority: 10, timeRunning: 10, resourcesHeld: 10 }];
+
+      const victim = selectVictim(processes);
+
+      expect(victim).toBe(1);
+    });
+
+    it('handles tied costs', () => {
+      const processes = [
+        { pid: 1, priority: 1, timeRunning: 1, resourcesHeld: 1 },
+        { pid: 2, priority: 1, timeRunning: 1, resourcesHeld: 1 },
+      ];
+
+      const victim = selectVictim(processes);
+
+      // Should select first one found
+      expect(victim).toBe(1);
+    });
+  });
+});
