@@ -2145,3 +2145,187 @@ describe('Deadlock Algorithms', () => {
     });
   });
 });
+
+// ============================================================================
+// Exercise Test Case Verification
+// ============================================================================
+
+describe('Exercise Test Case Verification', () => {
+  describe('Topic 7 Page Replacement Exercises', () => {
+    it('cs301-ex-7-1: LRU page fault count standard reference string', () => {
+      // Exercise expects 10 faults with LRU for [1,2,3,4,1,2,5,1,2,3,4,5] with 3 frames
+      const result = lruPageReplacement([1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5], 3);
+      expect(result.faults).toBe(10);
+    });
+
+    it('cs301-ex-7-1: LRU page fault count repeated page', () => {
+      // Exercise expects 1 fault for [1,1,1,1] with 1 frame
+      const result = lruPageReplacement([1, 1, 1, 1], 1);
+      expect(result.faults).toBe(1);
+    });
+
+    it('cs301-ex-7-2: FIFO eviction sequence', () => {
+      // Exercise expects evictions [1, 2, 3] for [1,2,3,4,1,2] with 3 frames
+      const result = fifoPageReplacement([1, 2, 3, 4, 1, 2], 3);
+      const evicted = result.trace.filter(t => t.victim !== undefined).map(t => t.victim);
+      expect(evicted).toEqual([1, 2, 3]);
+    });
+
+    it('cs301-ex-7-2: FIFO no evictions when all fit', () => {
+      // Exercise expects no evictions for [1,2,1,2] with 2 frames
+      const result = fifoPageReplacement([1, 2, 1, 2], 2);
+      const evicted = result.trace.filter(t => t.victim !== undefined).map(t => t.victim);
+      expect(evicted).toEqual([]);
+    });
+
+    it('cs301-ex-7-3: LRU replacement result', () => {
+      // Exercise expects (7 faults, final frames [1,2,5]) for [1,2,3,4,1,2,5] with 3 frames
+      const result = lruPageReplacement([1, 2, 3, 4, 1, 2, 5], 3);
+      expect(result.faults).toBe(7);
+      // Final frames should contain 1, 2, 5 (order depends on implementation)
+      expect(result.frames.sort()).toEqual([1, 2, 5]);
+    });
+
+    it('cs301-ex-7-3: LRU high locality', () => {
+      // Exercise expects (2 faults, final frames [1,2]) for [1,2,1,2] with 2 frames
+      const result = lruPageReplacement([1, 2, 1, 2], 2);
+      expect(result.faults).toBe(2);
+      expect(result.frames.sort()).toEqual([1, 2]);
+    });
+
+    it('cs301-ex-7-4: Optimal replacement fault count', () => {
+      // Exercise expects 7 faults for [1,2,3,4,1,2,5,1,2,3,4,5] with 3 frames
+      const result = optimalPageReplacement([1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5], 3);
+      expect(result.faults).toBe(7);
+    });
+
+    it('cs301-ex-7-4: Optimal perfect fit', () => {
+      // Exercise expects 3 faults for [1,2,3,1,2,3] with 3 frames
+      const result = optimalPageReplacement([1, 2, 3, 1, 2, 3], 3);
+      expect(result.faults).toBe(3);
+    });
+
+    it('cs301-ex-7-5: Clock algorithm fault count (corrected)', () => {
+      // Exercise expects 9 faults for [1,2,3,4,1,2,5,1,2,3,4,5] with 3 frames
+      const result = clockPageReplacement([1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5], 3);
+      expect(result.faults).toBe(9);
+    });
+
+    it('cs301-ex-7-5: Clock no evictions needed', () => {
+      // Exercise expects 3 faults for [1,2,3,1,2] with 3 frames
+      const result = clockPageReplacement([1, 2, 3, 1, 2], 3);
+      expect(result.faults).toBe(3);
+    });
+  });
+
+  describe('Topic 6 Memory Management Exercises', () => {
+    it('cs301-ex-6-1: Valid address translation', () => {
+      // Exercise expects physical address 5100 for logical 100, base 5000, limit 1000
+      expect(translateAddress(100, 5000, 1000)).toBe(5100);
+    });
+
+    it('cs301-ex-6-1: Out of bounds address', () => {
+      // Exercise expects -1 for logical 1500, base 5000, limit 1000
+      expect(translateAddress(1500, 5000, 1000)).toBe(-1);
+    });
+
+    it('cs301-ex-6-6: Page table lookup', () => {
+      // Exercise expects 13192 for logical 5000, page_table=[(2,true),(3,true)], page_size=4096
+      // 5000 / 4096 = 1 (page 1), 5000 % 4096 = 904 (offset)
+      // page_table[1] = (3, true), so frame 3
+      // physical = 3 * 4096 + 904 = 12288 + 904 = 13192
+      const pageTable: [number, boolean][] = [
+        [2, true],
+        [3, true],
+      ];
+      expect(pageTranslate(5000, pageTable, 4096)).toBe(13192);
+    });
+
+    it('cs301-ex-6-7: Internal fragmentation calculation', () => {
+      // Exercise expects 2288 for process_size=10000, page_size=4096
+      // 10000 / 4096 = 2.44, need 3 pages = 12288 bytes
+      // waste = 12288 - 10000 = 2288
+      expect(internalFragmentation(10000, 4096)).toBe(2288);
+    });
+
+    it('cs301-ex-6-8: TLB simulation hits and misses', () => {
+      // Exercise expects (3 hits, 4 misses, 0.43) for [1,2,3,1,2,4,1] with tlb_size=3
+      const [hits, misses, hitRate] = tlbSimulation([1, 2, 3, 1, 2, 4, 1], 3);
+      expect(hits).toBe(3);
+      expect(misses).toBe(4);
+      expect(hitRate).toBe(0.43);
+    });
+
+    it('cs301-ex-6-9: Effective access time with 90% hit rate', () => {
+      // Exercise expects 120.0 for 90% hit rate, tlb_time=10, memory_time=100
+      // EAT = 0.9 * (10 + 100) + 0.1 * (10 + 200) = 0.9 * 110 + 0.1 * 210 = 99 + 21 = 120
+      expect(effectiveAccessTime(0.9, 10, 100)).toBe(120);
+    });
+
+    it('cs301-ex-6-10: Two-level page table bits 32-bit', () => {
+      // Exercise expects (10, 10, 12) for 32-bit, 4KB pages, 4-byte PTE
+      const [outer, inner, offset] = twoLevelBits(32, 4, 4);
+      expect(outer).toBe(10);
+      expect(inner).toBe(10);
+      expect(offset).toBe(12);
+    });
+
+    it('cs301-ex-6-11: Segmentation translation', () => {
+      // Exercise expects 1500 for segment 0, offset 500, table=[(1000,1000),(2000,500)]
+      const segmentTable: [number, number][] = [
+        [1000, 1000],
+        [2000, 500],
+      ];
+      expect(segmentTranslate(0, 500, segmentTable)).toBe(1500);
+    });
+
+    it('cs301-ex-6-13: Page table size 32-bit', () => {
+      // Exercise expects 4194304 (4MB) for 32-bit, 4KB pages, 4-byte PTE
+      expect(pageTableSize(32, 4, 4)).toBe(4194304);
+    });
+  });
+
+  describe('Topic 5 Deadlock Exercises - Bankers Algorithm', () => {
+    it('cs301-ex-5-2: Bankers algorithm safe state textbook example', () => {
+      // Classic textbook example from topic-5.md
+      const available = [3, 3, 2];
+      const maxNeed = [
+        [7, 5, 3],
+        [3, 2, 2],
+        [9, 0, 2],
+        [2, 2, 2],
+        [4, 3, 3],
+      ];
+      const allocation = [
+        [0, 1, 0],
+        [2, 0, 0],
+        [3, 0, 2],
+        [2, 1, 1],
+        [0, 0, 2],
+      ];
+
+      const [isSafe, sequence] = bankersSafetyCheck(available, maxNeed, allocation);
+
+      expect(isSafe).toBe(true);
+      // Valid safe sequence starts with P1 (index 1)
+      expect(sequence[0]).toBe(1);
+    });
+
+    it('cs301-ex-5-2: Bankers algorithm identifies unsafe state', () => {
+      // No process can complete with 0 available resources
+      const available = [0, 0, 0];
+      const maxNeed = [
+        [7, 5, 3],
+        [3, 2, 2],
+      ];
+      const allocation = [
+        [0, 1, 0],
+        [2, 0, 0],
+      ];
+
+      const [isSafe] = bankersSafetyCheck(available, maxNeed, allocation);
+
+      expect(isSafe).toBe(false);
+    });
+  });
+});
