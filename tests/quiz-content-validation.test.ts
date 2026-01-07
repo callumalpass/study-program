@@ -517,6 +517,69 @@ describe('Quiz Structure Validation', () => {
   });
 });
 
+describe('Duplicate Options Validation', () => {
+  const quizFiles = findQuizFiles(SUBJECTS_DIR);
+  const examFiles = findExamFiles(SUBJECTS_DIR);
+
+  it('multiple_choice quiz questions should not have duplicate options', () => {
+    const duplicates: string[] = [];
+
+    for (const filePath of quizFiles) {
+      const quizzes = loadJsonFile<Quiz[]>(filePath);
+
+      for (const quiz of quizzes) {
+        for (const question of quiz.questions) {
+          if (question.type === 'multiple_choice' && question.options) {
+            const optionSet = new Set<string>();
+            for (const option of question.options) {
+              if (optionSet.has(option)) {
+                duplicates.push(
+                  `${filePath.replace(SUBJECTS_DIR, '')} - ${quiz.id}/${question.id}: duplicate option "${option}"`
+                );
+              }
+              optionSet.add(option);
+            }
+          }
+        }
+      }
+    }
+
+    expect(
+      duplicates,
+      `Found ${duplicates.length} questions with duplicate options:\n${duplicates.join('\n')}`
+    ).toHaveLength(0);
+  });
+
+  it('multiple_choice exam questions should not have duplicate options', () => {
+    const duplicates: string[] = [];
+
+    for (const filePath of examFiles) {
+      const exams = loadJsonFile<{ id: string; questions: QuizQuestion[] }[]>(filePath);
+
+      for (const exam of exams) {
+        for (const question of exam.questions) {
+          if (question.type === 'multiple_choice' && question.options) {
+            const optionSet = new Set<string>();
+            for (const option of question.options) {
+              if (optionSet.has(option)) {
+                duplicates.push(
+                  `${filePath.replace(SUBJECTS_DIR, '')} - ${exam.id}/${question.id}: duplicate option "${option}"`
+                );
+              }
+              optionSet.add(option);
+            }
+          }
+        }
+      }
+    }
+
+    expect(
+      duplicates,
+      `Found ${duplicates.length} exam questions with duplicate options:\n${duplicates.join('\n')}`
+    ).toHaveLength(0);
+  });
+});
+
 describe('Exam Structure Validation', () => {
   const examFiles = findExamFiles(SUBJECTS_DIR);
 
