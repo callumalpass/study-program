@@ -19,11 +19,39 @@ function isCodingAnswer(answer: QuizAnswer | undefined): answer is CodingAnswer 
   return typeof answer === 'object' && answer !== null && 'code' in answer;
 }
 
+/**
+ * Get the correct option index for a multiple choice question.
+ * Handles both numeric indices and string values that match an option.
+ */
+function getCorrectOptionIndex(question: QuizQuestion): number {
+  const correctAnswer = question.correctAnswer;
+
+  // If already a number, return it directly
+  if (typeof correctAnswer === 'number') {
+    return correctAnswer;
+  }
+
+  // If a string, find the matching option index
+  if (typeof correctAnswer === 'string' && question.options) {
+    const index = question.options.indexOf(correctAnswer);
+    if (index !== -1) {
+      return index;
+    }
+  }
+
+  // Fallback: return -1 to indicate no valid answer found
+  return -1;
+}
+
 function checkAnswer(question: QuizQuestion, answer: QuizAnswer | undefined): boolean {
   if (answer === undefined) return false;
 
   switch (question.type) {
-    case 'multiple_choice':
+    case 'multiple_choice': {
+      // For multiple choice, compare the selected index to the correct index
+      const correctIndex = getCorrectOptionIndex(question);
+      return answer === correctIndex;
+    }
     case 'true_false':
       return answer === question.correctAnswer;
     case 'fill_blank':
@@ -139,6 +167,144 @@ describe('Quiz Answer Checking', () => {
 
     it('returns false for string answer (wrong type)', () => {
       expect(checkAnswer(question, '4')).toBe(false);
+    });
+  });
+
+  describe('checkAnswer - multiple_choice with string correctAnswer', () => {
+    // Tests for multiple_choice questions where correctAnswer is a string (option text)
+    // instead of a numeric index - common in math/science quizzes
+
+    const questionWithStringAnswer: QuizQuestion = {
+      id: 'q-string',
+      type: 'multiple_choice',
+      prompt: 'What is the dot product of u = <2, -3, 1> and v = <1, 4, -2>?',
+      options: ['-12', '-8', '8', '12'],
+      correctAnswer: '-12', // String value matching first option
+      explanation: 'The dot product is -12',
+    };
+
+    it('returns true when user selects the index matching the string correctAnswer', () => {
+      // '-12' is at index 0, so selecting index 0 should be correct
+      expect(checkAnswer(questionWithStringAnswer, 0)).toBe(true);
+    });
+
+    it('returns false when user selects wrong index', () => {
+      expect(checkAnswer(questionWithStringAnswer, 1)).toBe(false);
+      expect(checkAnswer(questionWithStringAnswer, 2)).toBe(false);
+      expect(checkAnswer(questionWithStringAnswer, 3)).toBe(false);
+    });
+
+    it('returns false for undefined answer', () => {
+      expect(checkAnswer(questionWithStringAnswer, undefined)).toBe(false);
+    });
+
+    const questionWithComplexStringAnswer: QuizQuestion = {
+      id: 'q-complex',
+      type: 'multiple_choice',
+      prompt: 'Which equation represents a line through (1, 2, 3)?',
+      options: [
+        'r(t) = <1+2t, 2-t, 3+4t>',
+        'r(t) = <2+t, -1+2t, 4+3t>',
+        'r(t) = <1, 2, 3> + t',
+        'r(t) = t<2, -1, 4>',
+      ],
+      correctAnswer: 'r(t) = <1+2t, 2-t, 3+4t>', // String matching first option
+      explanation: 'The parametric equation',
+    };
+
+    it('handles complex string correctAnswers with special characters', () => {
+      // 'r(t) = <1+2t, 2-t, 3+4t>' is at index 0
+      expect(checkAnswer(questionWithComplexStringAnswer, 0)).toBe(true);
+      expect(checkAnswer(questionWithComplexStringAnswer, 1)).toBe(false);
+    });
+
+    const questionWithNumericStringAnswer: QuizQuestion = {
+      id: 'q-numeric-string',
+      type: 'multiple_choice',
+      prompt: 'What is cos(60°)?',
+      options: ['0', '0.5', '0.866', '1'],
+      correctAnswer: '0.5', // String value at index 1
+      explanation: 'cos(60°) = 0.5',
+    };
+
+    it('handles numeric string correctAnswers', () => {
+      // '0.5' is at index 1
+      expect(checkAnswer(questionWithNumericStringAnswer, 1)).toBe(true);
+      expect(checkAnswer(questionWithNumericStringAnswer, 0)).toBe(false);
+      expect(checkAnswer(questionWithNumericStringAnswer, 2)).toBe(false);
+    });
+  });
+
+  describe('getCorrectOptionIndex', () => {
+    it('returns the index directly when correctAnswer is a number', () => {
+      const question: QuizQuestion = {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'Test',
+        options: ['A', 'B', 'C'],
+        correctAnswer: 2,
+        explanation: '',
+      };
+      expect(getCorrectOptionIndex(question)).toBe(2);
+    });
+
+    it('finds the matching index when correctAnswer is a string', () => {
+      const question: QuizQuestion = {
+        id: 'q2',
+        type: 'multiple_choice',
+        prompt: 'Test',
+        options: ['Alpha', 'Beta', 'Gamma'],
+        correctAnswer: 'Beta',
+        explanation: '',
+      };
+      expect(getCorrectOptionIndex(question)).toBe(1);
+    });
+
+    it('returns -1 when string correctAnswer does not match any option', () => {
+      const question: QuizQuestion = {
+        id: 'q3',
+        type: 'multiple_choice',
+        prompt: 'Test',
+        options: ['A', 'B', 'C'],
+        correctAnswer: 'Delta', // Not in options
+        explanation: '',
+      };
+      expect(getCorrectOptionIndex(question)).toBe(-1);
+    });
+
+    it('returns -1 when options are undefined', () => {
+      const question: QuizQuestion = {
+        id: 'q4',
+        type: 'multiple_choice',
+        prompt: 'Test',
+        correctAnswer: 'A',
+        explanation: '',
+      };
+      expect(getCorrectOptionIndex(question)).toBe(-1);
+    });
+
+    it('handles first option as correctAnswer', () => {
+      const question: QuizQuestion = {
+        id: 'q5',
+        type: 'multiple_choice',
+        prompt: 'Test',
+        options: ['-12', '-8', '8', '12'],
+        correctAnswer: '-12',
+        explanation: '',
+      };
+      expect(getCorrectOptionIndex(question)).toBe(0);
+    });
+
+    it('handles last option as correctAnswer', () => {
+      const question: QuizQuestion = {
+        id: 'q6',
+        type: 'multiple_choice',
+        prompt: 'Test',
+        options: ['A', 'B', 'C', 'D'],
+        correctAnswer: 'D',
+        explanation: '',
+      };
+      expect(getCorrectOptionIndex(question)).toBe(3);
     });
   });
 

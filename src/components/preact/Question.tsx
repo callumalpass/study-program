@@ -23,6 +23,30 @@ function normalizeAnswer(value: string | number | boolean | undefined): string {
   return String(value).trim().toLowerCase();
 }
 
+/**
+ * Get the correct option index for a multiple choice question.
+ * Handles both numeric indices and string values that match an option.
+ */
+function getCorrectOptionIndex(question: QuizQuestion): number {
+  const correctAnswer = question.correctAnswer;
+
+  // If already a number, return it directly
+  if (typeof correctAnswer === 'number') {
+    return correctAnswer;
+  }
+
+  // If a string, find the matching option index
+  if (typeof correctAnswer === 'string' && question.options) {
+    const index = question.options.indexOf(correctAnswer);
+    if (index !== -1) {
+      return index;
+    }
+  }
+
+  // Fallback: return -1 to indicate no valid answer found
+  return -1;
+}
+
 export function Question({
   question,
   index,
@@ -80,12 +104,13 @@ export function Question({
 
   const renderAnswerInput = () => {
     switch (question.type) {
-      case 'multiple_choice':
+      case 'multiple_choice': {
+        const correctIndex = getCorrectOptionIndex(question);
         return (
           <div class="answer-container">
             {question.options?.map((option, i) => {
               const isSelected = answer === i;
-              const isCorrectOption = i === question.correctAnswer;
+              const isCorrectOption = i === correctIndex;
               let labelClass = 'option-label';
 
               if (showFeedback) {
@@ -108,6 +133,7 @@ export function Question({
             })}
           </div>
         );
+      }
 
       case 'true_false':
         return (
