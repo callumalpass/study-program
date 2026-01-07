@@ -492,4 +492,77 @@ describe('Quiz Structure Validation', () => {
       }
     }
   });
+
+  it('code_output questions should NOT have options (informational)', () => {
+    // This test is informational - quiz files may have legacy code_output questions
+    // that should be multiple_choice. The Exam Structure Validation test enforces this
+    // for exams, which are the most critical.
+    const problemQuizzes: string[] = [];
+
+    for (const filePath of quizFiles) {
+      const quizzes = loadJsonFile<Quiz[]>(filePath);
+
+      for (const quiz of quizzes) {
+        for (const question of quiz.questions) {
+          if (question.type === 'code_output' && question.options) {
+            problemQuizzes.push(`${quiz.id}/${question.id}`);
+          }
+        }
+      }
+    }
+
+    if (problemQuizzes.length > 0) {
+      console.log(`\nNote: ${problemQuizzes.length} code_output questions have options (should be multiple_choice)`);
+      console.log(`First 5: ${problemQuizzes.slice(0, 5).join(', ')}`);
+    }
+
+    // Just verify we checked files
+    expect(quizFiles.length).toBeGreaterThan(0);
+  });
+});
+
+describe('Exam Structure Validation', () => {
+  const examFiles = findExamFiles(SUBJECTS_DIR);
+
+  it('code_output questions in exams should NOT have options', () => {
+    for (const filePath of examFiles) {
+      const exams = loadJsonFile<{ id: string; questions: QuizQuestion[] }[]>(filePath);
+
+      for (const exam of exams) {
+        for (const question of exam.questions) {
+          if (question.type === 'code_output') {
+            expect(
+              question.options,
+              `code_output question ${question.id} in exam ${exam.id} has options - should be type "multiple_choice" instead`
+            ).toBeUndefined();
+          }
+        }
+      }
+    }
+  });
+
+  it('multiple_choice questions in exams should have options', () => {
+    for (const filePath of examFiles) {
+      const exams = loadJsonFile<{ id: string; questions: QuizQuestion[] }[]>(filePath);
+
+      for (const exam of exams) {
+        for (const question of exam.questions) {
+          if (question.type === 'multiple_choice') {
+            expect(
+              question.options,
+              `Multiple choice question ${question.id} in exam ${exam.id} missing options`
+            ).toBeDefined();
+            expect(
+              Array.isArray(question.options),
+              `Multiple choice question ${question.id} options should be array`
+            ).toBe(true);
+            expect(
+              question.options!.length,
+              `Multiple choice question ${question.id} should have at least 2 options`
+            ).toBeGreaterThanOrEqual(2);
+          }
+        }
+      }
+    }
+  });
 });

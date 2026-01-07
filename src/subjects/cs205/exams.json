@@ -92,7 +92,7 @@
       },
       {
         "id": "mid-q8",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What does this query return?",
         "codeSnippet": "SELECT COUNT(DISTINCT Department) FROM Employees;",
         "options": [
@@ -126,7 +126,7 @@
       },
       {
         "id": "mid-q11",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What is wrong with this query?",
         "codeSnippet": "SELECT Department, Name, AVG(Salary)\nFROM Employees\nGROUP BY Department;",
         "options": [
@@ -173,7 +173,7 @@
       },
       {
         "id": "mid-q15",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What does this query find?",
         "codeSnippet": "SELECT * FROM Employees E\nWHERE NOT EXISTS (\n    SELECT 1 FROM Orders O\n    WHERE O.SalesRepID = E.EmployeeID\n);",
         "options": [
@@ -220,7 +220,7 @@
       },
       {
         "id": "mid-q19",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What does PARTITION BY do in this query?",
         "codeSnippet": "SELECT Name, Department,\n       AVG(Salary) OVER (PARTITION BY Department)\nFROM Employees;",
         "options": [
@@ -394,7 +394,7 @@
       },
       {
         "id": "fin-q8",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What type of subquery is this?",
         "codeSnippet": "SELECT Name FROM Employees E\nWHERE Salary > (\n    SELECT AVG(Salary) FROM Employees\n    WHERE DeptID = E.DeptID\n);",
         "options": [
@@ -481,7 +481,7 @@
       },
       {
         "id": "fin-q16",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What problem does this scenario illustrate?\nT1: Read X (balance=100)\nT2: Read X (balance=100)\nT1: Write X = 100 - 50 = 50\nT2: Write X = 100 - 30 = 70",
         "options": [
           "Dirty read",
@@ -587,7 +587,7 @@
       },
       {
         "id": "fin-q26",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "For index IDX(Status, OrderDate), which query can use the index efficiently?",
         "codeSnippet": "A) WHERE OrderDate > '2024-01-01'\nB) WHERE Status = 'Active'\nC) WHERE OrderDate > '2024-01-01' AND Status = 'Active'\nD) WHERE Status = 'Active' AND OrderDate > '2024-01-01'",
         "options": [
@@ -681,7 +681,7 @@
       },
       {
         "id": "fin-q35",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What execution plan issue does \"Seq Scan\" on a 10 million row table with a selective WHERE suggest?",
         "codeSnippet": "Seq Scan on orders (rows=10000000)\n  Filter: (customer_id = 123)",
         "options": [
@@ -735,7 +735,7 @@
       },
       {
         "id": "fin-q40",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What does this execution plan hint suggest?",
         "codeSnippet": "Sort Method: external merge  Disk: 50000kB",
         "options": [

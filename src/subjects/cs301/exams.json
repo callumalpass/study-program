@@ -145,7 +145,7 @@
       },
       {
         "id": "mid-q13",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "Given processes P1(burst=8), P2(burst=4), P3(burst=2) arriving at time 0, what is the average waiting time using SJF?",
         "codeSnippet": "Order: P3(2) → P2(4) → P1(8)\nP3 waits: 0\nP2 waits: 2\nP1 waits: 6\nAverage = ?",
         "options": [
@@ -284,7 +284,7 @@
       },
       {
         "id": "mid-q25",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What is the turnaround time for P2 using Round Robin (quantum=3) for: P1(burst=5), P2(burst=3), P3(burst=4) all arriving at time 0?",
         "codeSnippet": "Timeline:\n0-3: P1 (2 remaining)\n3-6: P2 (done)\n6-9: P3 (1 remaining)\n9-11: P1 (done)\n11-12: P3 (done)",
         "options": [
@@ -444,7 +444,7 @@
       },
       {
         "id": "fin-q12",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "Given: Available = [3,3,2], Max = [[7,5,3],[3,2,2],[9,0,2],[2,2,2],[4,3,3]], Allocation = [[0,1,0],[2,0,0],[3,0,2],[2,1,1],[0,0,2]]. Is the system in a safe state?",
         "codeSnippet": "Need = Max - Allocation\nProcess  Need\nP0      [7,4,3]\nP1      [1,2,2]\nP2      [6,0,0]\nP3      [0,1,1]\nP4      [4,3,1]\n\nAvailable = [3,3,2]",
         "options": [
@@ -505,7 +505,7 @@
       },
       {
         "id": "fin-q18",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "Given page size = 4KB, how many bits are needed for the page offset?",
         "codeSnippet": "Page size = 4KB = 4 × 1024 = 4096 bytes\n4096 = 2^?",
         "options": [
@@ -602,7 +602,7 @@
       },
       {
         "id": "fin-q25",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "Using LRU page replacement with 3 frames, how many page faults occur for reference string: 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5?",
         "codeSnippet": "Reference: 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5\nFrames: 3\n\nTrack LRU order after each reference...",
         "options": [
@@ -677,7 +677,7 @@
       },
       {
         "id": "fin-q32",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "If a file system uses 4KB blocks and 32-bit block pointers, how much data can be addressed with one level of indirection?",
         "codeSnippet": "Block size = 4KB = 4096 bytes\nPointer size = 4 bytes\nPointers per block = 4096 / 4 = 1024\nSingle indirect block = 1024 × 4KB = ?",
         "options": [
