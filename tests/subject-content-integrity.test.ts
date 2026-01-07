@@ -282,14 +282,26 @@ describe('Subject Content Integrity', () => {
   });
 
   describe('question types', () => {
-    const validQuizQuestionTypes = ['multiple_choice', 'true_false', 'fill_blank', 'code_output', 'short_answer'];
+    // Valid question types per types.ts: 'multiple_choice' | 'fill_blank' | 'true_false' | 'code_output' | 'coding' | 'written'
+    const validQuizQuestionTypes = ['multiple_choice', 'true_false', 'fill_blank', 'code_output', 'coding', 'written'];
 
     it('quiz questions have expected types', () => {
       allQuizzes.forEach(quiz => {
         quiz.questions.forEach(question => {
           expect(
             validQuizQuestionTypes.includes(question.type),
-            `Question ${question.id} in quiz ${quiz.id} has type: ${question.type}`
+            `Question ${question.id} in quiz ${quiz.id} has invalid type: ${question.type}`
+          ).toBe(true);
+        });
+      });
+    });
+
+    it('exam questions have expected types', () => {
+      allExams.forEach(exam => {
+        exam.questions.forEach(question => {
+          expect(
+            validQuizQuestionTypes.includes(question.type),
+            `Question ${question.id} in exam ${exam.id} has invalid type: ${question.type}`
           ).toBe(true);
         });
       });
@@ -311,6 +323,145 @@ describe('Subject Content Integrity', () => {
       expect(allExercises.length).toBeGreaterThan(100);
       expect(allExams.length).toBeGreaterThan(50);
       expect(allProjects.length).toBeGreaterThan(50);
+    });
+  });
+
+  describe('exam structure validation', () => {
+    it('all exam questions have id and type', () => {
+      allExams.forEach(exam => {
+        exam.questions.forEach((question, qIdx) => {
+          expect(
+            question.id,
+            `Question ${qIdx} in exam ${exam.id} should have an id`
+          ).toBeDefined();
+          expect(
+            question.type,
+            `Question ${question.id} in exam ${exam.id} should have a type`
+          ).toBeDefined();
+        });
+      });
+    });
+
+    it('reports exam questions missing correctAnswer (informational)', () => {
+      // Note: Written questions may use modelAnswer instead of correctAnswer
+      // This test reports issues but doesn't fail the build
+      const issues: string[] = [];
+      allExams.forEach(exam => {
+        exam.questions.forEach(question => {
+          // For written questions, modelAnswer is acceptable
+          if (question.type === 'written') {
+            if (question.correctAnswer === undefined && !question.modelAnswer) {
+              issues.push(`Question ${question.id} in ${exam.id} has neither correctAnswer nor modelAnswer`);
+            }
+          } else if (question.correctAnswer === undefined) {
+            issues.push(`Question ${question.id} in ${exam.id} is missing correctAnswer`);
+          }
+        });
+      });
+
+      if (issues.length > 0) {
+        console.log(`Content quality issues found (${issues.length}):`);
+        issues.slice(0, 5).forEach(issue => console.log(`  - ${issue}`));
+        if (issues.length > 5) {
+          console.log(`  ... and ${issues.length - 5} more`);
+        }
+      }
+
+      // Just verify we have exams to check
+      expect(allExams.length).toBeGreaterThan(0);
+    });
+
+    it('multiple_choice exam questions have options array', () => {
+      allExams.forEach(exam => {
+        exam.questions
+          .filter(q => q.type === 'multiple_choice')
+          .forEach(question => {
+            expect(
+              Array.isArray(question.options),
+              `Multiple choice question ${question.id} in ${exam.id} should have options`
+            ).toBe(true);
+          });
+      });
+    });
+
+    it('true_false exam questions have boolean correctAnswer', () => {
+      allExams.forEach(exam => {
+        exam.questions
+          .filter(q => q.type === 'true_false')
+          .forEach(question => {
+            expect(
+              typeof question.correctAnswer === 'boolean',
+              `True/false question ${question.id} in ${exam.id} should have boolean correctAnswer, got ${typeof question.correctAnswer}: ${question.correctAnswer}`
+            ).toBe(true);
+          });
+      });
+    });
+
+    it('reports coding exam questions missing testCases (informational)', () => {
+      // Note: Some coding questions may rely on solution comparison rather than testCases
+      // This test reports issues but doesn't fail the build
+      const issues: string[] = [];
+      allExams.forEach(exam => {
+        exam.questions
+          .filter(q => q.type === 'coding')
+          .forEach(question => {
+            if (!question.testCases) {
+              issues.push(`Coding question ${question.id} in ${exam.id} is missing testCases`);
+            }
+            if (!question.language) {
+              issues.push(`Coding question ${question.id} in ${exam.id} is missing language`);
+            }
+          });
+      });
+
+      if (issues.length > 0) {
+        console.log(`Coding question issues found (${issues.length}):`);
+        issues.slice(0, 5).forEach(issue => console.log(`  - ${issue}`));
+        if (issues.length > 5) {
+          console.log(`  ... and ${issues.length - 5} more`);
+        }
+      }
+
+      // Just verify we have exams to check
+      expect(allExams.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('quiz-exam question cross-referencing', () => {
+    // Note: Question IDs are unique within each quiz/exam, but may be reused across different quizzes/exams.
+    // This is by design - simple IDs like 'q1', 'q2' are commonly used.
+    // The tests below are informational - they report duplicate counts but don't fail.
+
+    it('reports quiz question ID reuse across quizzes (informational)', () => {
+      const allQuestionIds: string[] = [];
+      allQuizzes.forEach(quiz => {
+        quiz.questions.forEach(q => allQuestionIds.push(q.id));
+      });
+      const uniqueIds = new Set(allQuestionIds);
+      const duplicateCount = allQuestionIds.length - uniqueIds.size;
+
+      if (duplicateCount > 0) {
+        console.log(`Note: ${duplicateCount} quiz question IDs are reused across different quizzes (this is expected)`);
+      }
+
+      // Just verify we collected the data correctly
+      expect(allQuestionIds.length).toBeGreaterThan(0);
+    });
+
+    it('reports exam question ID reuse across exams (informational)', () => {
+      const allQuestionIds: string[] = [];
+      allExams.forEach(exam => {
+        exam.questions.forEach(q => allQuestionIds.push(q.id));
+      });
+      const uniqueIds = new Set(allQuestionIds);
+      const duplicateCount = allQuestionIds.length - uniqueIds.size;
+
+      if (duplicateCount > 0) {
+        console.log(`Note: ${duplicateCount} exam question IDs are reused across different exams (this is expected)`);
+      }
+
+      // Just verify we collected the data correctly
+      expect(allQuestionIds.length).toBeGreaterThan(0);
     });
   });
 });

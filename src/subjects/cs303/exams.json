@@ -265,6 +265,19 @@
         "correctAnswer": "def compose(f, g): return lambda x: f(g(x))",
         "solution": "def compose(f, g):\n    return lambda x: f(g(x))\n\n# Test\nadd1 = lambda x: x + 1\ndouble = lambda x: x * 2\nadd1_then_double = compose(double, add1)\nprint(add1_then_double(3))  # 8",
         "language": "python",
+        "testCases": [
+          {
+            "input": "3",
+            "description": "compose(double, add1)(3) should return 8",
+            "isHidden": false
+          },
+          {
+            "input": "0",
+            "description": "compose(double, add1)(0) should return 2",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "def compose(f, g):\n    # Return a new function that applies g then f\n    pass\n\n# Test functions\nadd1 = lambda x: x + 1\ndouble = lambda x: x * 2\n\n# Your compose function should work like this:\nresult = compose(double, add1)\nprint(result(3))  # Should print 8",
         "explanation": "Function composition applies g first, then f to the result, creating a pipeline of transformations."
       },
       {
