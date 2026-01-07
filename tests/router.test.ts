@@ -244,3 +244,165 @@ describe('isCurrentPath', () => {
     expect(isCurrentPath('/curric')).toBe(false);
   });
 });
+
+describe('router edge cases', () => {
+  beforeEach(() => {
+    window.location.hash = '#/';
+    window.scrollTo = vi.fn();
+  });
+
+  it('handles empty hash as home route', async () => {
+    window.location.hash = '';
+    await flushHashChange();
+    const route = getCurrentRoute();
+    expect(route?.path).toBe('/');
+    expect(route?.params).toEqual({});
+  });
+
+  it('handles hash with only # as home route', async () => {
+    window.location.hash = '#';
+    await flushHashChange();
+    const route = getCurrentRoute();
+    expect(route?.path).toBe('/');
+  });
+
+  it('decodes URL-encoded characters in subject IDs', async () => {
+    navigateToSubject('cs%20101');
+    await flushHashChange();
+    const route = getCurrentRoute();
+    expect(route?.params.id).toBe('cs 101');
+  });
+
+  it('handles deeply nested subtopic routes', async () => {
+    navigateToSubtopic('cs101', 'topic-1', 'intro-to-programming');
+    await flushHashChange();
+    const route = getCurrentRoute();
+    expect(route?.path).toBe('/subject/cs101/topic/topic-1/subtopic/intro-to-programming');
+    expect(route?.params).toEqual({
+      id: 'cs101',
+      topicId: 'topic-1',
+      subtopicSlug: 'intro-to-programming',
+    });
+  });
+
+  it('handles IDs with dashes', async () => {
+    navigateToSubject('cs-101');
+    await flushHashChange();
+    expect(getCurrentRoute()?.params.id).toBe('cs-101');
+  });
+
+  it('handles IDs with numbers', async () => {
+    navigateToExam('cs101', 'midterm-2024');
+    await flushHashChange();
+    const route = getCurrentRoute();
+    expect(route?.params.id).toBe('cs101');
+    expect(route?.params.examId).toBe('midterm-2024');
+  });
+
+  it('handles plus signs in encoded URLs', async () => {
+    // Plus signs in URLs can be ambiguous (space or literal +)
+    window.location.hash = '#/subject/c%2B%2B101';
+    await flushHashChange();
+    expect(getCurrentRoute()?.params.id).toBe('c++101');
+  });
+
+  it('handles hash signs in encoded URLs', async () => {
+    window.location.hash = '#/subject/c%23-sharp';
+    await flushHashChange();
+    expect(getCurrentRoute()?.params.id).toBe('c#-sharp');
+  });
+
+  it('handles consecutive route changes rapidly', async () => {
+    const paths: string[] = [];
+    const unsubscribe = onRouteChange(route => {
+      paths.push(route.path);
+    });
+
+    navigateToSubject('cs101');
+    navigateToSubject('cs102');
+    navigateToSubject('cs103');
+    await flushHashChange();
+
+    // Should have captured all navigations
+    expect(paths.length).toBeGreaterThan(0);
+    // Final route should be cs103
+    expect(getCurrentRoute()?.params.id).toBe('cs103');
+
+    unsubscribe();
+  });
+
+  it('handles exercise route correctly', async () => {
+    navigateToExercise('math201', 'ex-derivatives-1');
+    await flushHashChange();
+    const route = getCurrentRoute();
+    expect(route?.path).toBe('/subject/math201/exercise/ex-derivatives-1');
+    expect(route?.params.id).toBe('math201');
+    expect(route?.params.exId).toBe('ex-derivatives-1');
+  });
+
+  it('handles project route correctly', async () => {
+    navigateToProject('cs401', 'capstone-project');
+    await flushHashChange();
+    const route = getCurrentRoute();
+    expect(route?.path).toBe('/subject/cs401/project/capstone-project');
+    expect(route?.params.id).toBe('cs401');
+    expect(route?.params.projId).toBe('capstone-project');
+  });
+});
+
+describe('router multiple handlers', () => {
+  beforeEach(() => {
+    window.location.hash = '#/';
+    window.scrollTo = vi.fn();
+  });
+
+  it('notifies multiple handlers on route change', async () => {
+    let handler1Called = false;
+    let handler2Called = false;
+
+    const unsubscribe1 = onRouteChange(() => {
+      handler1Called = true;
+    });
+    const unsubscribe2 = onRouteChange(() => {
+      handler2Called = true;
+    });
+
+    navigate('/progress');
+    await flushHashChange();
+
+    expect(handler1Called).toBe(true);
+    expect(handler2Called).toBe(true);
+
+    unsubscribe1();
+    unsubscribe2();
+  });
+
+  it('allows unsubscribing individual handlers', async () => {
+    let handler1Count = 0;
+    let handler2Count = 0;
+
+    const unsubscribe1 = onRouteChange(() => {
+      handler1Count++;
+    });
+    const unsubscribe2 = onRouteChange(() => {
+      handler2Count++;
+    });
+
+    await flushHashChange();
+    const initialCount1 = handler1Count;
+    const initialCount2 = handler2Count;
+
+    // Unsubscribe handler 1
+    unsubscribe1();
+
+    navigate('/settings');
+    await flushHashChange();
+
+    // Handler 1 should not have been called again
+    expect(handler1Count).toBe(initialCount1);
+    // Handler 2 should have been called
+    expect(handler2Count).toBeGreaterThan(initialCount2);
+
+    unsubscribe2();
+  });
+});
