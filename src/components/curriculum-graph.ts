@@ -73,9 +73,14 @@ export class CurriculumGraph {
     // Refresh theme colors (in case theme changed since construction)
     this.colors = getThemeColors();
 
-    // Calculate SVG dimensions
-    const maxX = Math.max(...Array.from(this.nodes.values()).map(n => n.x + n.width)) + this.PADDING;
-    const maxY = Math.max(...Array.from(this.nodes.values()).map(n => n.y + n.height)) + this.PADDING;
+    // Calculate SVG dimensions (handle empty nodes case to avoid Math.max(...[]) returning -Infinity)
+    const nodeValues = Array.from(this.nodes.values());
+    const maxX = nodeValues.length > 0
+      ? Math.max(...nodeValues.map(n => n.x + n.width)) + this.PADDING
+      : this.PADDING * 2;
+    const maxY = nodeValues.length > 0
+      ? Math.max(...nodeValues.map(n => n.y + n.height)) + this.PADDING
+      : this.PADDING * 2;
 
     this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     this.svg.setAttribute('width', `${maxX}`);
