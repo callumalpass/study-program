@@ -287,6 +287,19 @@
         "correctAnswer": "def memoize(f):\n  cache = {}\n  def wrapper(*args):\n    if args not in cache:\n      cache[args] = f(*args)\n    return cache[args]\n  return wrapper",
         "solution": "def memoize(f):\n    cache = {}\n    def wrapper(*args):\n        if args not in cache:\n            cache[args] = f(*args)\n        return cache[args]\n    return wrapper\n\n@memoize\ndef fib(n):\n    return n if n < 2 else fib(n-1) + fib(n-2)\n\nprint(fib(30))  # Fast due to memoization",
         "language": "python",
+        "testCases": [
+          {
+            "input": "10",
+            "description": "memoized fib(10) should return 55",
+            "isHidden": false
+          },
+          {
+            "input": "0",
+            "description": "memoized fib(0) should return 0",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "def memoize(f):\n    # Create a cache dictionary\n    # Return a wrapper function that checks the cache\n    pass\n\n@memoize\ndef fib(n):\n    return n if n < 2 else fib(n-1) + fib(n-2)\n\nprint(fib(10))",
         "explanation": "Memoization caches function results to avoid redundant computation for repeated inputs."
       },
       {
@@ -296,6 +309,19 @@
         "correctAnswer": "def curry_add(a): return lambda b: lambda c: a + b + c",
         "solution": "def curry_add(a):\n    return lambda b: lambda c: a + b + c\n\n# Usage\nadd5 = curry_add(5)\nadd5and3 = add5(3)\nresult = add5and3(2)  # 10\n\n# Or call directly\nresult = curry_add(1)(2)(3)  # 6",
         "language": "python",
+        "testCases": [
+          {
+            "input": "1, 2, 3",
+            "description": "curry_add(1)(2)(3) should return 6",
+            "isHidden": false
+          },
+          {
+            "input": "5, 3, 2",
+            "description": "curry_add(5)(3)(2) should return 10",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "def curry_add(a):\n    # Return a function that takes b\n    # which returns a function that takes c\n    # and returns a + b + c\n    pass\n\nprint(curry_add(1)(2)(3))  # Should print 6",
         "explanation": "Currying allows partial application, fixing arguments one at a time."
       },
       {
@@ -305,6 +331,19 @@
         "correctAnswer": "from functools import reduce\ndef map_reduce(f, lst): return reduce(lambda acc, x: acc + [f(x)], lst, [])",
         "solution": "from functools import reduce\n\ndef map_reduce(f, lst):\n    return reduce(lambda acc, x: acc + [f(x)], lst, [])\n\n# Test\nresult = map_reduce(lambda x: x * 2, [1, 2, 3, 4])\nprint(result)  # [2, 4, 6, 8]",
         "language": "python",
+        "testCases": [
+          {
+            "input": "[1, 2, 3, 4]",
+            "description": "map_reduce(double, [1,2,3,4]) should return [2,4,6,8]",
+            "isHidden": false
+          },
+          {
+            "input": "[]",
+            "description": "map_reduce on empty list should return []",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "from functools import reduce\n\ndef map_reduce(f, lst):\n    # Use reduce to apply f to each element\n    # Accumulate results into a new list\n    pass\n\nprint(map_reduce(lambda x: x * 2, [1, 2, 3, 4]))  # Should print [2, 4, 6, 8]",
         "explanation": "Map can be expressed as a fold/reduce that accumulates transformed elements into a new list."
       },
       {
@@ -314,6 +353,19 @@
         "correctAnswer": "def type_check(e): return \"int\" if isinstance(e, int) or (isinstance(e, tuple) and e[0] in [\"+\",\"-\"] and type_check(e[1]) == type_check(e[2]) == \"int\") else None",
         "solution": "def type_check(e):\n    if isinstance(e, int):\n        return \"int\"\n    if isinstance(e, tuple) and e[0] in [\"+\", \"-\", \"*\"]:\n        t1 = type_check(e[1])\n        t2 = type_check(e[2])\n        if t1 == \"int\" and t2 == \"int\":\n            return \"int\"\n    return None\n\n# Test\nprint(type_check((\"+\", 1, 2)))           # int\nprint(type_check((\"+\", 1, (\"+\", 2, 3)))) # int\nprint(type_check((\"+\", 1, \"x\")))         # None",
         "language": "python",
+        "testCases": [
+          {
+            "input": "(\"+\", 1, 2)",
+            "description": "type_check(('+', 1, 2)) should return 'int'",
+            "isHidden": false
+          },
+          {
+            "input": "(\"+\", 1, \"x\")",
+            "description": "type_check(('+', 1, 'x')) should return None for invalid expression",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "def type_check(e):\n    # Return 'int' if e is a valid integer expression\n    # Return None otherwise\n    # Handle: integers, and tuples like ('+', e1, e2)\n    pass\n\nprint(type_check((\"+\", 1, 2)))  # Should print 'int'",
         "explanation": "A simple type checker recursively validates that operations are applied to correctly typed operands."
       }
     ]
@@ -686,6 +738,19 @@
         "correctAnswer": "def eval(e): return e if isinstance(e, int) else eval(e[1]) + eval(e[2]) if e[0] == \"+\" else eval(e[1]) * eval(e[2])",
         "solution": "def evaluate(e):\n    if isinstance(e, int):\n        return e\n    op, left, right = e\n    l = evaluate(left)\n    r = evaluate(right)\n    if op == \"+\": return l + r\n    if op == \"-\": return l - r\n    if op == \"*\": return l * r\n    if op == \"/\": return l // r\n\n# Test\nexpr = (\"+\", 1, (\"*\", 2, 3))  # 1 + (2 * 3)\nprint(evaluate(expr))  # 7",
         "language": "python",
+        "testCases": [
+          {
+            "input": "(\"+\", 1, (\"*\", 2, 3))",
+            "description": "evaluate(('+', 1, ('*', 2, 3))) should return 7",
+            "isHidden": false
+          },
+          {
+            "input": "5",
+            "description": "evaluate(5) should return 5 (literal)",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "def evaluate(e):\n    # If e is an integer, return it\n    # If e is a tuple (op, left, right), evaluate recursively\n    pass\n\nprint(evaluate((\"+\", 1, (\"*\", 2, 3))))  # Should print 7",
         "explanation": "Big-step semantics directly evaluates expressions to values by recursively evaluating subexpressions."
       },
       {
@@ -695,6 +760,19 @@
         "correctAnswer": "Y = lambda f: (lambda x: f(lambda v: x(x)(v)))(lambda x: f(lambda v: x(x)(v)))",
         "solution": "Y = lambda f: (lambda x: f(lambda v: x(x)(v)))(lambda x: f(lambda v: x(x)(v)))\n\n# Usage: define factorial without explicit recursion\nfact = Y(lambda f: lambda n: 1 if n <= 1 else n * f(n - 1))\nprint(fact(5))  # 120\n\n# Fibonacci\nfib = Y(lambda f: lambda n: n if n < 2 else f(n-1) + f(n-2))\nprint(fib(10))  # 55",
         "language": "python",
+        "testCases": [
+          {
+            "input": "5",
+            "description": "Y-combinator factorial of 5 should return 120",
+            "isHidden": false
+          },
+          {
+            "input": "10",
+            "description": "Y-combinator fibonacci of 10 should return 55",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "# The Y combinator enables recursion without explicit self-reference\nY = lambda f: # Implement the Y combinator\n\n# Test: factorial using Y combinator\nfact = Y(lambda f: lambda n: 1 if n <= 1 else n * f(n - 1))\nprint(fact(5))  # Should print 120",
         "explanation": "The Y combinator enables recursion without named self-reference by finding fixed points."
       },
       {
@@ -704,6 +782,19 @@
         "correctAnswer": "def mark(roots, heap):\n  marked = set()\n  worklist = list(roots)\n  while worklist:\n    addr = worklist.pop()\n    if addr not in marked:\n      marked.add(addr)\n      for ref in heap.get(addr, []):\n        worklist.append(ref)\n  return marked",
         "solution": "def mark(roots, heap):\n    \"\"\"Mark all reachable objects from roots.\n    heap: dict mapping addresses to list of referenced addresses\n    \"\"\"\n    marked = set()\n    worklist = list(roots)\n    \n    while worklist:\n        addr = worklist.pop()\n        if addr not in marked:\n            marked.add(addr)\n            for ref in heap.get(addr, []):\n                worklist.append(ref)\n    \n    return marked\n\n# Test\nheap = {0: [1, 2], 1: [3], 2: [], 3: [], 4: [5], 5: []}\nroots = [0]\nreachable = mark(roots, heap)\nprint(reachable)  # {0, 1, 2, 3} - objects 4,5 are garbage",
         "language": "python",
+        "testCases": [
+          {
+            "input": "roots=[0], heap={0: [1, 2], 1: [3], 2: [], 3: [], 4: [5], 5: []}",
+            "description": "mark should return {0, 1, 2, 3} - objects 4,5 are garbage",
+            "isHidden": false
+          },
+          {
+            "input": "roots=[], heap={0: [1]}",
+            "description": "mark with empty roots should return empty set",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "def mark(roots, heap):\n    # Use a worklist algorithm to traverse from roots\n    # Mark all reachable addresses\n    pass\n\nheap = {0: [1, 2], 1: [3], 2: [], 3: [], 4: [5], 5: []}\nprint(mark([0], heap))  # Should print {0, 1, 2, 3}",
         "explanation": "The mark phase traces from roots to find all reachable objects using a worklist algorithm."
       },
       {
@@ -713,6 +804,19 @@
         "correctAnswer": "class Thunk:\n  def __init__(self, f, *a): self.f, self.a = f, a\ndef fact(n, acc=1): return acc if n<=1 else Thunk(fact, n-1, acc*n)\ndef run(x):\n  while isinstance(x, Thunk): x = x.f(*x.a)\n  return x",
         "solution": "class Thunk:\n    def __init__(self, f, *args):\n        self.f = f\n        self.args = args\n\ndef trampoline(result):\n    while isinstance(result, Thunk):\n        result = result.f(*result.args)\n    return result\n\ndef factorial(n, acc=1):\n    if n <= 1:\n        return acc\n    return Thunk(factorial, n - 1, acc * n)\n\n# Usage\nresult = trampoline(factorial(10000))\nprint(len(str(result)))  # Number of digits - works without stack overflow",
         "language": "python",
+        "testCases": [
+          {
+            "input": "5",
+            "description": "trampoline(factorial(5)) should return 120",
+            "isHidden": false
+          },
+          {
+            "input": "10",
+            "description": "trampoline(factorial(10)) should return 3628800",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "class Thunk:\n    def __init__(self, f, *args):\n        self.f = f\n        self.args = args\n\ndef trampoline(result):\n    # Unwrap thunks until we get a final value\n    pass\n\ndef factorial(n, acc=1):\n    # Return Thunk for tail call, or final value\n    pass\n\nprint(trampoline(factorial(5)))  # Should print 120",
         "explanation": "Trampolining converts tail recursion to iteration, enabling deep recursion without stack overflow."
       },
       {
@@ -722,6 +826,19 @@
         "correctAnswer": "def fib():\n  a, b = 0, 1\n  while True:\n    yield a\n    a, b = b, a + b",
         "solution": "def fib():\n    a, b = 0, 1\n    while True:\n        yield a\n        a, b = b, a + b\n\n# Usage\ngen = fib()\nfirst_ten = [next(gen) for _ in range(10)]\nprint(first_ten)  # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\n\n# Take until condition\nfrom itertools import takewhile\nunder_100 = list(takewhile(lambda x: x < 100, fib()))\nprint(under_100)  # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]",
         "language": "python",
+        "testCases": [
+          {
+            "input": "10",
+            "description": "First 10 fibonacci numbers should be [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]",
+            "isHidden": false
+          },
+          {
+            "input": "1",
+            "description": "First fibonacci number should be 0",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "def fib():\n    # Use yield to generate fibonacci numbers infinitely\n    pass\n\ngen = fib()\nprint([next(gen) for _ in range(10)])  # Should print [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]",
         "explanation": "Generators provide lazy infinite sequences by yielding values on demand without storing them all."
       },
       {
@@ -731,6 +848,19 @@
         "correctAnswer": "def typed(*types):\n  def dec(f):\n    def wrapper(*args):\n      for a, t in zip(args, types):\n        if not isinstance(a, t): raise TypeError\n      return f(*args)\n    return wrapper\n  return dec",
         "solution": "def typed(*types):\n    def decorator(f):\n        def wrapper(*args):\n            for arg, expected_type in zip(args, types):\n                if not isinstance(arg, expected_type):\n                    raise TypeError(f\"Expected {expected_type}, got {type(arg)}\")\n            return f(*args)\n        return wrapper\n    return decorator\n\n@typed(int, int)\ndef add(a, b):\n    return a + b\n\nprint(add(1, 2))  # 3\n# add(\"1\", 2)  # TypeError",
         "language": "python",
+        "testCases": [
+          {
+            "input": "1, 2",
+            "description": "typed(int, int) add(1, 2) should return 3",
+            "isHidden": false
+          },
+          {
+            "input": "\"1\", 2",
+            "description": "typed(int, int) add('1', 2) should raise TypeError",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "def typed(*types):\n    # Return a decorator that checks argument types\n    pass\n\n@typed(int, int)\ndef add(a, b):\n    return a + b\n\nprint(add(1, 2))  # Should print 3",
         "explanation": "Decorators can add runtime type checking to dynamically typed languages."
       },
       {
@@ -740,6 +870,19 @@
         "correctAnswer": "def match(pat, val, bindings=None):\n  if bindings is None: bindings = {}\n  if isinstance(pat, str) and pat.startswith(\"_\"): bindings[pat] = val; return bindings\n  if isinstance(pat, tuple) and isinstance(val, tuple) and len(pat) == len(val):\n    for p, v in zip(pat, val):\n      if not match(p, v, bindings): return None\n    return bindings\n  return bindings if pat == val else None",
         "solution": "def match(pattern, value, bindings=None):\n    if bindings is None:\n        bindings = {}\n    \n    # Variable pattern (starts with _)\n    if isinstance(pattern, str) and pattern.startswith(\"_\"):\n        bindings[pattern] = value\n        return bindings\n    \n    # Tuple pattern\n    if isinstance(pattern, tuple) and isinstance(value, tuple):\n        if len(pattern) != len(value):\n            return None\n        for p, v in zip(pattern, value):\n            if match(p, v, bindings) is None:\n                return None\n        return bindings\n    \n    # Literal match\n    return bindings if pattern == value else None\n\n# Test\nprint(match((\"_x\", \"_y\"), (1, 2)))  # {\"_x\": 1, \"_y\": 2}\nprint(match((1, \"_y\"), (1, 2)))     # {\"_y\": 2}\nprint(match((1, 2), (1, 3)))        # None",
         "language": "python",
+        "testCases": [
+          {
+            "input": "(\"_x\", \"_y\"), (1, 2)",
+            "description": "match(('_x', '_y'), (1, 2)) should return {'_x': 1, '_y': 2}",
+            "isHidden": false
+          },
+          {
+            "input": "(1, 2), (1, 3)",
+            "description": "match((1, 2), (1, 3)) should return None (mismatch)",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "def match(pattern, value, bindings=None):\n    # Match pattern against value\n    # Variables start with '_' and bind to values\n    # Tuples match element-by-element\n    pass\n\nprint(match((\"_x\", \"_y\"), (1, 2)))  # Should print {'_x': 1, '_y': 2}",
         "explanation": "Pattern matching destructures data and binds variables in a declarative way."
       },
       {
@@ -749,6 +892,19 @@
         "correctAnswer": "def compile(e):\n  if isinstance(e, int): return [(\"PUSH\", e)]\n  op = {\"+\" : \"ADD\", \"*\": \"MUL\"}[e[0]]\n  return compile(e[1]) + compile(e[2]) + [(op,)]",
         "solution": "def compile_expr(e):\n    if isinstance(e, int):\n        return [(\"PUSH\", e)]\n    \n    op_map = {\"+\": \"ADD\", \"-\": \"SUB\", \"*\": \"MUL\", \"/\": \"DIV\"}\n    op, left, right = e\n    \n    return compile_expr(left) + compile_expr(right) + [(op_map[op],)]\n\ndef execute(bytecode):\n    stack = []\n    for instr in bytecode:\n        if instr[0] == \"PUSH\":\n            stack.append(instr[1])\n        elif instr[0] == \"ADD\":\n            stack.append(stack.pop() + stack.pop())\n        elif instr[0] == \"MUL\":\n            stack.append(stack.pop() * stack.pop())\n    return stack[0]\n\n# Test\nexpr = (\"+\", 1, (\"*\", 2, 3))  # 1 + 2 * 3 = 7\nbytecode = compile_expr(expr)\nprint(bytecode)  # [(\"PUSH\", 1), (\"PUSH\", 2), (\"PUSH\", 3), (\"MUL\",), (\"ADD\",)]\nprint(execute(bytecode))  # 7",
         "language": "python",
+        "testCases": [
+          {
+            "input": "(\"+\", 1, (\"*\", 2, 3))",
+            "description": "compile_expr(('+', 1, ('*', 2, 3))) should produce correct bytecode",
+            "isHidden": false
+          },
+          {
+            "input": "5",
+            "description": "compile_expr(5) should return [('PUSH', 5)]",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "def compile_expr(e):\n    # Return list of bytecode instructions\n    # Literals become ('PUSH', value)\n    # Operations become compile(left) + compile(right) + [(OP,)]\n    pass\n\nprint(compile_expr((\"+\", 1, (\"*\", 2, 3))))  # Should print bytecode",
         "explanation": "A bytecode compiler translates high-level expressions into stack-based virtual machine instructions."
       },
       {
@@ -758,6 +914,19 @@
         "correctAnswer": "class Rc:\n  def __init__(self, v): self.v, self.count = v, 1\n  def clone(self): self.count += 1; return self\n  def drop(self): self.count -= 1; return self.count == 0",
         "solution": "class Rc:\n    \"\"\"Reference-counted smart pointer\"\"\"\n    def __init__(self, value):\n        self.value = value\n        self.count = 1\n    \n    def clone(self):\n        \"\"\"Create another reference (increment count)\"\"\"\n        self.count += 1\n        return self\n    \n    def drop(self):\n        \"\"\"Release a reference (decrement count).\n        Returns True if value should be deallocated.\"\"\"\n        self.count -= 1\n        return self.count == 0\n    \n    def get(self):\n        return self.value\n\n# Usage\nptr1 = Rc([1, 2, 3])\nptr2 = ptr1.clone()  # count = 2\nprint(ptr2.get())    # [1, 2, 3]\nptr1.drop()          # count = 1\nprint(ptr2.drop())   # True - ready to deallocate",
         "language": "python",
+        "testCases": [
+          {
+            "input": "clone and drop sequence",
+            "description": "Rc should track reference count correctly",
+            "isHidden": false
+          },
+          {
+            "input": "single reference",
+            "description": "drop() on single reference should return True",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "class Rc:\n    def __init__(self, value):\n        # Initialize with count = 1\n        pass\n    \n    def clone(self):\n        # Increment count and return self\n        pass\n    \n    def drop(self):\n        # Decrement count, return True if count reaches 0\n        pass\n\nptr1 = Rc([1, 2, 3])\nptr2 = ptr1.clone()\nptr1.drop()\nprint(ptr2.drop())  # Should print True",
         "explanation": "Reference counting tracks how many pointers reference an object, deallocating when count reaches zero."
       },
       {
@@ -767,6 +936,19 @@
         "correctAnswer": "def sign(n): return \"+\" if n > 0 else \"-\" if n < 0 else \"0\"\ndef abs_add(a, b):\n  if a == b and a in [\"+\", \"-\"]: return a\n  if a == \"0\": return b\n  if b == \"0\": return a\n  return \"?\"",
         "solution": "def sign(n):\n    \"\"\"Concrete to abstract\"\"\"\n    return \"+\" if n > 0 else \"-\" if n < 0 else \"0\"\n\ndef abs_add(a, b):\n    \"\"\"Abstract addition in sign domain\"\"\"\n    if a == b and a in [\"+\", \"-\"]:\n        return a  # + + + = +, - + - = -\n    if a == \"0\":\n        return b\n    if b == \"0\":\n        return a\n    return \"?\"  # + + - or - + + = unknown\n\ndef abs_mul(a, b):\n    \"\"\"Abstract multiplication in sign domain\"\"\"\n    if \"0\" in (a, b):\n        return \"0\"\n    if a == b:\n        return \"+\"\n    if \"?\" in (a, b):\n        return \"?\"\n    return \"-\"\n\n# Test\nprint(abs_add(\"+\", \"+\"))  # +\nprint(abs_add(\"+\", \"-\"))  # ?\nprint(abs_mul(\"-\", \"-\"))  # +",
         "language": "python",
+        "testCases": [
+          {
+            "input": "\"+\", \"+\"",
+            "description": "abs_add('+', '+') should return '+'",
+            "isHidden": false
+          },
+          {
+            "input": "\"+\", \"-\"",
+            "description": "abs_add('+', '-') should return '?' (unknown)",
+            "isHidden": false
+          }
+        ],
+        "starterCode": "def sign(n):\n    # Return '+', '-', or '0' based on sign of n\n    pass\n\ndef abs_add(a, b):\n    # Abstract addition in sign domain\n    # + + + = +, - + - = -, + + - = ?\n    pass\n\nprint(abs_add(\"+\", \"+\"))  # Should print '+'",
         "explanation": "Abstract interpretation analyzes programs using simplified abstract domains for sound approximation."
       },
       {
