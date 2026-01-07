@@ -8,7 +8,7 @@
  * - Mathematical explanations accuracy
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import math201Quizzes from '../src/subjects/math201/content/topic-1/quizzes.json';
 import math202Quizzes from '../src/subjects/math202/content/topic-1/quizzes.json';
 import math102Quizzes from '../src/subjects/math102/content/topic-1/quizzes.json';
@@ -247,6 +247,129 @@ describe('Math102 - Combinatorics Content', () => {
       expect(q5).toBeDefined();
       expect(q5!.correctAnswer).toBe(1); // 20
       expect((6 * 5 * 4) / (3 * 2 * 1)).toBe(20);
+    });
+  });
+});
+
+describe('Math204 - Calculus II Exam Content', () => {
+  // Import Math204 exams
+  let math204Exams: any[] = [];
+
+  beforeAll(async () => {
+    const module = await import('../src/subjects/math204/exams.json');
+    math204Exams = module.default;
+  });
+
+  describe('Midterm Exam - Integration Calculations', () => {
+    it('Q11: ∫₀² x(x²+1)² dx should equal 62/3, not 31/3', () => {
+      const midterm = math204Exams.find((e: any) => e.id === 'math204-exam-midterm');
+      expect(midterm).toBeDefined();
+
+      const q11 = midterm.questions.find((q: any) => q.id === 'math204-mid-q11');
+      expect(q11).toBeDefined();
+      expect(q11.type).toBe('multiple_choice');
+
+      // Verify the calculation:
+      // Let u = x²+1, du = 2x dx
+      // When x=0, u=1; when x=2, u=5
+      // ∫₀² x(x²+1)² dx = (1/2)∫₁⁵ u² du = (1/2)[u³/3]₁⁵ = (1/6)(125-1) = 124/6 = 62/3
+      const correctValue = 62 / 3;
+      expect(q11.options[q11.correctAnswer]).toMatch(/62.*3|62\/3/);
+
+      // Verify 62/3 ≈ 20.67
+      expect(correctValue).toBeCloseTo(20.67, 1);
+    });
+
+    it('Q7: ∫₀^π sin(x) dx should equal 2', () => {
+      const midterm = math204Exams.find((e: any) => e.id === 'math204-exam-midterm');
+      const q7 = midterm.questions.find((q: any) => q.id === 'math204-mid-q7');
+      expect(q7).toBeDefined();
+
+      // ∫₀^π sin(x) dx = [-cos(x)]₀^π = -cos(π) - (-cos(0)) = 1 + 1 = 2
+      expect(q7.options[q7.correctAnswer]).toBe('$2$');
+    });
+
+    it('Q9: Average value of x² on [1,3] should be 13/3', () => {
+      const midterm = math204Exams.find((e: any) => e.id === 'math204-exam-midterm');
+      const q9 = midterm.questions.find((q: any) => q.id === 'math204-mid-q9');
+      expect(q9).toBeDefined();
+
+      // Average = (1/(3-1)) ∫₁³ x² dx = (1/2)[x³/3]₁³ = (1/2)((27-1)/3) = (1/2)(26/3) = 13/3
+      expect(q9.options[q9.correctAnswer]).toMatch(/13.*3|13\/3/);
+    });
+
+    it('Q22: Volume with disk method should be 8π/3', () => {
+      const midterm = math204Exams.find((e: any) => e.id === 'math204-exam-midterm');
+      const q22 = midterm.questions.find((q: any) => q.id === 'math204-mid-q22');
+      expect(q22).toBeDefined();
+
+      // V = ∫₀² π x² dx = π[x³/3]₀² = π(8/3) = 8π/3
+      // LaTeX format: $\frac{8\pi}{3}$
+      expect(q22.options[q22.correctAnswer]).toContain('8');
+      expect(q22.options[q22.correctAnswer]).toContain('pi');
+      expect(q22.options[q22.correctAnswer]).toContain('3');
+    });
+  });
+
+  describe('Final Exam - Volume Calculations', () => {
+    it('Q22: Shell method volume rotating y=x² about y-axis from 0 to 2 should be 8π', () => {
+      const final = math204Exams.find((e: any) => e.id === 'math204-exam-final');
+      expect(final).toBeDefined();
+
+      const q22 = final.questions.find((q: any) => q.id === 'math204-final-q22');
+      expect(q22).toBeDefined();
+      expect(q22.type).toBe('written');
+
+      // Shell method: V = ∫₀² 2πx · x² dx = 2π∫₀² x³ dx = 2π[x⁴/4]₀² = 2π(16/4) = 2π(4) = 8π
+      expect(q22.correctAnswer).toBe('8π');
+
+      // Verify the calculation mathematically
+      const volume = 2 * Math.PI * (Math.pow(2, 4) / 4);
+      expect(volume).toBeCloseTo(8 * Math.PI, 10);
+    });
+
+    it('Q19: Arc length of y = (2/3)x^(3/2) from 0 to 3 should be 14/3', () => {
+      const final = math204Exams.find((e: any) => e.id === 'math204-exam-final');
+      const q19 = final.questions.find((q: any) => q.id === 'math204-final-q19');
+      expect(q19).toBeDefined();
+
+      // y' = x^(1/2), so L = ∫₀³ √(1+x) dx = (2/3)[(1+x)^(3/2)]₀³ = (2/3)(8-1) = 14/3
+      expect(q19.options[q19.correctAnswer]).toMatch(/14.*3|14\/3/);
+    });
+
+    it('Q23: ∫₁^∞ 1/x³ dx should converge to 1/2', () => {
+      const final = math204Exams.find((e: any) => e.id === 'math204-exam-final');
+      const q23 = final.questions.find((q: any) => q.id === 'math204-final-q23');
+      expect(q23).toBeDefined();
+
+      // ∫₁^∞ x^(-3) dx = lim[t→∞] [-1/(2x²)]₁^t = lim[t→∞] (-1/(2t²) + 1/2) = 1/2
+      expect(q23.options[q23.correctAnswer]).toMatch(/1.*2|1\/2|0\.5/);
+    });
+
+    it('Q17: Area between y=x² and y=2x should be 4/3', () => {
+      const final = math204Exams.find((e: any) => e.id === 'math204-exam-final');
+      const q17 = final.questions.find((q: any) => q.id === 'math204-final-q17');
+      expect(q17).toBeDefined();
+
+      // Intersection: x² = 2x → x = 0, 2
+      // Area = ∫₀² (2x - x²) dx = [x² - x³/3]₀² = 4 - 8/3 = 4/3
+      expect(q17.options[q17.correctAnswer]).toMatch(/4.*3|4\/3/);
+    });
+  });
+
+  describe('Verify integration formulas are used correctly', () => {
+    it('should have proper antiderivative explanations', () => {
+      const midterm = math204Exams.find((e: any) => e.id === 'math204-exam-midterm');
+
+      // Q1: ∫ 6x⁵ dx = x⁶ + C
+      const q1 = midterm.questions.find((q: any) => q.id === 'math204-mid-q1');
+      expect(q1.explanation).toContain('power rule');
+
+      // Q13: ∫ x e^x dx uses integration by parts (check for u and dv setup)
+      const q13 = midterm.questions.find((q: any) => q.id === 'math204-mid-q13');
+      // The explanation shows the parts technique with u = x and dv = e^x dx
+      expect(q13.explanation).toContain('u = x');
+      expect(q13.explanation).toContain('dv = e^x');
     });
   });
 });
