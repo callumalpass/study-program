@@ -92,9 +92,9 @@
         "id": "cs105-q1b-3",
         "type": "code_output",
         "prompt": "What does this code print?",
-        "codeSnippet": "int x = 5;\nprintf(\"%d %d\", x++, ++x);",
-        "correctAnswer": "5 7",
-        "explanation": "x++ returns 5 then increments to 6. ++x increments to 7 then returns 7. (Note: behavior may vary due to sequence points)"
+        "codeSnippet": "int x = 5;\nint y = x++;\nprintf(\"%d %d\", y, x);",
+        "correctAnswer": "5 6",
+        "explanation": "x++ returns the current value (5, assigned to y) then increments x to 6. So y is 5 and x is 6."
       },
       {
         "id": "cs105-q1b-4",

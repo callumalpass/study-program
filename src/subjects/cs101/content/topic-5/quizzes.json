@@ -167,10 +167,10 @@
       {
         "id": "q5c-5",
         "type": "code_output",
-        "prompt": "What will json.dumps({\"a\": 1}, indent=2) output (first 3 chars)?",
-        "codeSnippet": "import json\noutput = json.dumps({\"a\": 1}, indent=2)\nprint(output[:3])",
-        "correctAnswer": "{\\n ",
-        "explanation": "json.dumps() with indent=2 produces formatted JSON. It starts with \"{\", then newline, then 2 spaces for indentation."
+        "prompt": "What will json.dumps([1, 2]) return?",
+        "codeSnippet": "import json\nresult = json.dumps([1, 2])\nprint(result)",
+        "correctAnswer": "[1, 2]",
+        "explanation": "json.dumps() converts a Python object to a JSON-formatted string. A Python list [1, 2] becomes the JSON array string \"[1, 2]\"."
       }
     ]
   }
