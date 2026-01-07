@@ -6,61 +6,13 @@
  * - Multiple choice questions with string correctAnswers
  * - Proper handling of correct option index resolution
  * - Edge cases in answer display
+ *
+ * These tests use the shared quiz-utils functions that PracticeMode.tsx imports.
  */
 
 import { describe, it, expect } from 'vitest';
-import type { QuizQuestion, QuizAnswer, CodingAnswer } from '@/core/types';
-
-// Helper functions mirroring PracticeMode.tsx implementation
-
-function isCodingAnswer(answer: QuizAnswer | undefined): answer is CodingAnswer {
-  return typeof answer === 'object' && answer !== null && 'code' in answer;
-}
-
-/**
- * Get the correct option index for a multiple choice question.
- * Handles both numeric indices and string values that match an option.
- */
-function getCorrectOptionIndex(question: QuizQuestion): number {
-  const correctAnswer = question.correctAnswer;
-
-  // If already a number, return it directly
-  if (typeof correctAnswer === 'number') {
-    return correctAnswer;
-  }
-
-  // If a string, find the matching option index
-  if (typeof correctAnswer === 'string' && question.options) {
-    const index = question.options.indexOf(correctAnswer);
-    if (index !== -1) {
-      return index;
-    }
-  }
-
-  // Fallback: return -1 to indicate no valid answer found
-  return -1;
-}
-
-function checkSimpleAnswer(question: QuizQuestion, answer: QuizAnswer | undefined): boolean {
-  if (answer === undefined) return false;
-
-  switch (question.type) {
-    case 'multiple_choice': {
-      // For multiple choice, compare the selected index to the correct index
-      const correctIndex = getCorrectOptionIndex(question);
-      return answer === correctIndex;
-    }
-    case 'true_false':
-      return answer === question.correctAnswer;
-    case 'fill_blank':
-    case 'code_output': {
-      const textAnswer = typeof answer === 'string' ? answer : '';
-      return textAnswer.trim().toLowerCase() === String(question.correctAnswer).trim().toLowerCase();
-    }
-    default:
-      return false;
-  }
-}
+import type { QuizQuestion, CodingAnswer } from '@/core/types';
+import { isCodingAnswer, getCorrectOptionIndex, checkAnswer } from '@/utils/quiz-utils';
 
 /**
  * Get the correct answer text for display in feedback.
@@ -185,7 +137,7 @@ describe('Practice Mode Answer Checking', () => {
     });
   });
 
-  describe('checkSimpleAnswer - multiple_choice with string correctAnswer', () => {
+  describe('checkAnswer - multiple_choice with string correctAnswer', () => {
     const questionWithStringAnswer: QuizQuestion = {
       id: 'q-string',
       type: 'multiple_choice',
@@ -196,17 +148,17 @@ describe('Practice Mode Answer Checking', () => {
     };
 
     it('returns true when user selects the index matching the string correctAnswer', () => {
-      expect(checkSimpleAnswer(questionWithStringAnswer, 1)).toBe(true);
+      expect(checkAnswer(questionWithStringAnswer, 1)).toBe(true);
     });
 
     it('returns false when user selects wrong index', () => {
-      expect(checkSimpleAnswer(questionWithStringAnswer, 0)).toBe(false);
-      expect(checkSimpleAnswer(questionWithStringAnswer, 2)).toBe(false);
-      expect(checkSimpleAnswer(questionWithStringAnswer, 3)).toBe(false);
+      expect(checkAnswer(questionWithStringAnswer, 0)).toBe(false);
+      expect(checkAnswer(questionWithStringAnswer, 2)).toBe(false);
+      expect(checkAnswer(questionWithStringAnswer, 3)).toBe(false);
     });
 
     it('returns false for undefined answer', () => {
-      expect(checkSimpleAnswer(questionWithStringAnswer, undefined)).toBe(false);
+      expect(checkAnswer(questionWithStringAnswer, undefined)).toBe(false);
     });
 
     const questionWithNumericIndex: QuizQuestion = {
@@ -219,12 +171,12 @@ describe('Practice Mode Answer Checking', () => {
     };
 
     it('works correctly with numeric index correctAnswer', () => {
-      expect(checkSimpleAnswer(questionWithNumericIndex, 1)).toBe(true);
-      expect(checkSimpleAnswer(questionWithNumericIndex, 0)).toBe(false);
+      expect(checkAnswer(questionWithNumericIndex, 1)).toBe(true);
+      expect(checkAnswer(questionWithNumericIndex, 0)).toBe(false);
     });
   });
 
-  describe('checkSimpleAnswer - true_false', () => {
+  describe('checkAnswer - true_false', () => {
     const trueQuestion: QuizQuestion = {
       id: 'q-true',
       type: 'true_false',
@@ -242,27 +194,27 @@ describe('Practice Mode Answer Checking', () => {
     };
 
     it('returns true for correct true answer', () => {
-      expect(checkSimpleAnswer(trueQuestion, true)).toBe(true);
+      expect(checkAnswer(trueQuestion, true)).toBe(true);
     });
 
     it('returns false for incorrect answer to true question', () => {
-      expect(checkSimpleAnswer(trueQuestion, false)).toBe(false);
+      expect(checkAnswer(trueQuestion, false)).toBe(false);
     });
 
     it('returns true for correct false answer', () => {
-      expect(checkSimpleAnswer(falseQuestion, false)).toBe(true);
+      expect(checkAnswer(falseQuestion, false)).toBe(true);
     });
 
     it('returns false for incorrect answer to false question', () => {
-      expect(checkSimpleAnswer(falseQuestion, true)).toBe(false);
+      expect(checkAnswer(falseQuestion, true)).toBe(false);
     });
 
     it('returns false for undefined', () => {
-      expect(checkSimpleAnswer(trueQuestion, undefined)).toBe(false);
+      expect(checkAnswer(trueQuestion, undefined)).toBe(false);
     });
   });
 
-  describe('checkSimpleAnswer - fill_blank and code_output', () => {
+  describe('checkAnswer - fill_blank and code_output', () => {
     const fillBlankQuestion: QuizQuestion = {
       id: 'q-fill',
       type: 'fill_blank',
@@ -280,25 +232,25 @@ describe('Practice Mode Answer Checking', () => {
     };
 
     it('fill_blank: returns true for case-insensitive match', () => {
-      expect(checkSimpleAnswer(fillBlankQuestion, 'paris')).toBe(true);
-      expect(checkSimpleAnswer(fillBlankQuestion, 'PARIS')).toBe(true);
-      expect(checkSimpleAnswer(fillBlankQuestion, 'Paris')).toBe(true);
+      expect(checkAnswer(fillBlankQuestion, 'paris')).toBe(true);
+      expect(checkAnswer(fillBlankQuestion, 'PARIS')).toBe(true);
+      expect(checkAnswer(fillBlankQuestion, 'Paris')).toBe(true);
     });
 
     it('fill_blank: returns true with extra whitespace', () => {
-      expect(checkSimpleAnswer(fillBlankQuestion, '  Paris  ')).toBe(true);
+      expect(checkAnswer(fillBlankQuestion, '  Paris  ')).toBe(true);
     });
 
     it('fill_blank: returns false for wrong answer', () => {
-      expect(checkSimpleAnswer(fillBlankQuestion, 'London')).toBe(false);
+      expect(checkAnswer(fillBlankQuestion, 'London')).toBe(false);
     });
 
     it('code_output: returns true for exact match', () => {
-      expect(checkSimpleAnswer(codeOutputQuestion, '4')).toBe(true);
+      expect(checkAnswer(codeOutputQuestion, '4')).toBe(true);
     });
 
     it('code_output: returns true with whitespace', () => {
-      expect(checkSimpleAnswer(codeOutputQuestion, ' 4 ')).toBe(true);
+      expect(checkAnswer(codeOutputQuestion, ' 4 ')).toBe(true);
     });
   });
 
@@ -426,9 +378,9 @@ describe('Practice Mode Answer Checking', () => {
         correctAnswer: 0,
         explanation: '',
       };
-      expect(checkSimpleAnswer(question, 0)).toBe(true);
-      expect(checkSimpleAnswer(question, 1)).toBe(false);
-      expect(checkSimpleAnswer(question, -1)).toBe(false);
+      expect(checkAnswer(question, 0)).toBe(true);
+      expect(checkAnswer(question, 1)).toBe(false);
+      expect(checkAnswer(question, -1)).toBe(false);
     });
   });
 });

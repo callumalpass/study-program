@@ -6,6 +6,7 @@ import { Icons } from '@/components/icons';
 import { Question } from './Question';
 import { generatePracticeQuestion, evaluateWrittenExercise } from '@/utils/gemini-eval';
 import { runTests } from '@/components/code-runner';
+import { isCodingAnswer, getCorrectOptionIndex, checkAnswer } from '@/utils/quiz-utils';
 
 interface PracticeModeProps {
   subject: Subject;
@@ -29,55 +30,6 @@ interface FeedbackState {
   isCorrect: boolean;
   message: string;
   details?: string;
-}
-
-function isCodingAnswer(answer: QuizAnswer | undefined): answer is CodingAnswer {
-  return typeof answer === 'object' && answer !== null && 'code' in answer;
-}
-
-/**
- * Get the correct option index for a multiple choice question.
- * Handles both numeric indices and string values that match an option.
- */
-function getCorrectOptionIndex(question: QuizQuestion): number {
-  const correctAnswer = question.correctAnswer;
-
-  // If already a number, return it directly
-  if (typeof correctAnswer === 'number') {
-    return correctAnswer;
-  }
-
-  // If a string, find the matching option index
-  if (typeof correctAnswer === 'string' && question.options) {
-    const index = question.options.indexOf(correctAnswer);
-    if (index !== -1) {
-      return index;
-    }
-  }
-
-  // Fallback: return -1 to indicate no valid answer found
-  return -1;
-}
-
-function checkSimpleAnswer(question: QuizQuestion, answer: QuizAnswer | undefined): boolean {
-  if (answer === undefined) return false;
-
-  switch (question.type) {
-    case 'multiple_choice': {
-      // For multiple choice, compare the selected index to the correct index
-      const correctIndex = getCorrectOptionIndex(question);
-      return answer === correctIndex;
-    }
-    case 'true_false':
-      return answer === question.correctAnswer;
-    case 'fill_blank':
-    case 'code_output': {
-      const textAnswer = typeof answer === 'string' ? answer : '';
-      return textAnswer.trim().toLowerCase() === String(question.correctAnswer).trim().toLowerCase();
-    }
-    default:
-      return false;
-  }
 }
 
 export function PracticeMode({ subject, exam, onExit }: PracticeModeProps) {
@@ -221,7 +173,7 @@ export function PracticeMode({ subject, exam, onExit }: PracticeModeProps) {
         }
       } else {
         // Simple answer checking
-        isCorrect = checkSimpleAnswer(currentQuestion, answer);
+        isCorrect = checkAnswer(currentQuestion, answer);
         message = isCorrect ? 'Correct!' : 'Incorrect';
 
         if (!isCorrect) {
