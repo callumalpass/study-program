@@ -22,7 +22,7 @@
         "id": "cs307-q77",
         "type": "true_false",
         "prompt": "A firewall can prevent all types of cyber attacks by inspecting and blocking malicious traffic.",
-        "correctAnswer": "false",
+        "correctAnswer": false,
         "explanation": "Firewalls are essential but not sufficient. They filter traffic based on rules (ports, IPs, protocols) but cannot detect attacks within allowed traffic like SQL injection in HTTPS requests, or social engineering attacks. Defense in depth requires multiple security layers."
       },
       {
@@ -55,7 +55,7 @@
         "id": "cs307-q80",
         "type": "true_false",
         "prompt": "DNSSEC helps prevent DNS cache poisoning by using cryptographic signatures to verify DNS responses.",
-        "correctAnswer": "true",
+        "correctAnswer": true,
         "explanation": "DNSSEC (DNS Security Extensions) adds cryptographic signatures to DNS records, allowing resolvers to verify that responses are authentic and haven't been tampered with. This prevents cache poisoning attacks where attackers inject false DNS records to redirect traffic."
       }
     ]
@@ -83,7 +83,7 @@
         "id": "cs307-q82",
         "type": "true_false",
         "prompt": "HTTP Strict Transport Security (HSTS) forces browsers to use HTTPS connections even if users type http:// in the address bar.",
-        "correctAnswer": "true",
+        "correctAnswer": true,
         "explanation": "HSTS is a security header that tells browsers to only connect via HTTPS for a specified period. Once set, browsers automatically upgrade HTTP requests to HTTPS and refuse connections if the certificate is invalid, preventing SSL stripping attacks and accidental insecure connections."
       },
       {
@@ -116,7 +116,7 @@
         "id": "cs307-q85",
         "type": "true_false",
         "prompt": "Certificate pinning can help prevent MITM attacks by validating that the server certificate matches an expected certificate or public key.",
-        "correctAnswer": "true",
+        "correctAnswer": true,
         "explanation": "Certificate pinning validates that the server's certificate matches a known certificate or public key, preventing attacks where attackers install rogue CA certificates. This adds security beyond normal certificate validation but requires careful management to avoid breaking connectivity during certificate rotation."
       }
     ]
@@ -144,7 +144,7 @@
         "id": "cs307-q87",
         "type": "true_false",
         "prompt": "Using public Wi-Fi without VPN is safe because websites use HTTPS encryption.",
-        "correctAnswer": "false",
+        "correctAnswer": false,
         "explanation": "While HTTPS encrypts content, public Wi-Fi has risks: attackers can perform MITM attacks to intercept non-HTTPS traffic, see which sites you visit (DNS queries), create fake hotspots, or exploit vulnerabilities. VPNs add a layer of protection by encrypting all traffic."
       },
       {
@@ -177,7 +177,7 @@
         "id": "cs307-q90",
         "type": "true_false",
         "prompt": "Port scanning is an attack technique used to discover which network services are running on a target system.",
-        "correctAnswer": "true",
+        "correctAnswer": true,
         "explanation": "Port scanning identifies open ports and running services on a target. While it's a reconnaissance technique used by attackers, it's also used legitimately by security professionals for vulnerability assessment. Firewalls and IDS can detect and block suspicious port scanning activity."
       }
     ]

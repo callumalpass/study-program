@@ -22,7 +22,7 @@
         "id": "cs307-q47",
         "type": "true_false",
         "prompt": "Cross-Site Scripting (XSS) attacks allow attackers to execute malicious scripts in victims' browsers.",
-        "correctAnswer": "true",
+        "correctAnswer": true,
         "explanation": "XSS vulnerabilities allow attackers to inject malicious JavaScript into web pages viewed by other users. This can steal cookies, session tokens, or sensitive data, perform actions on behalf of users, or redirect to malicious sites."
       },
       {
@@ -55,7 +55,7 @@
         "id": "cs307-q50",
         "type": "true_false",
         "prompt": "Buffer overflow vulnerabilities only affect interpreted languages like Python and JavaScript.",
-        "correctAnswer": "false",
+        "correctAnswer": false,
         "explanation": "Buffer overflow vulnerabilities primarily affect compiled languages like C and C++ that don't perform automatic bounds checking. When programs write more data to a buffer than it can hold, they can overwrite adjacent memory, potentially allowing code execution. Modern languages like Python and Java are not susceptible to traditional buffer overflows."
       }
     ]
@@ -83,7 +83,7 @@
         "id": "cs307-q52",
         "type": "true_false",
         "prompt": "Security misconfiguration vulnerabilities can result from leaving default credentials, unnecessary features enabled, or verbose error messages.",
-        "correctAnswer": "true",
+        "correctAnswer": true,
         "explanation": "Security misconfiguration is one of the most common vulnerabilities. It includes default passwords, unnecessary services, overly permissive file permissions, detailed error messages that leak information, and outdated software. Proper hardening and configuration management are essential."
       },
       {
@@ -116,7 +116,7 @@
         "id": "cs307-q55",
         "type": "true_false",
         "prompt": "XML External Entity (XXE) attacks can allow attackers to read local files, perform SSRF attacks, or cause denial of service.",
-        "correctAnswer": "true",
+        "correctAnswer": true,
         "explanation": "XXE vulnerabilities occur when XML parsers process external entity references. Attackers can use this to read local files, scan internal networks (SSRF), consume resources (DoS), or execute remote code. Disabling external entity processing in XML parsers prevents XXE attacks."
       }
     ]
@@ -144,7 +144,7 @@
         "id": "cs307-q57",
         "type": "true_false",
         "prompt": "Server-Side Request Forgery (SSRF) allows attackers to make the server perform requests to arbitrary destinations, potentially accessing internal systems.",
-        "correctAnswer": "true",
+        "correctAnswer": true,
         "explanation": "SSRF vulnerabilities occur when applications fetch remote resources based on user input without validation. Attackers can make servers access internal services, cloud metadata endpoints (like AWS metadata at 169.254.169.254), or perform port scanning. Whitelist validation and network segmentation mitigate SSRF."
       },
       {
@@ -177,7 +177,7 @@
         "id": "cs307-q60",
         "type": "true_false",
         "prompt": "Race condition vulnerabilities can occur when multiple processes access shared resources without proper synchronization.",
-        "correctAnswer": "true",
+        "correctAnswer": true,
         "explanation": "Race conditions occur when the outcome depends on the sequence or timing of uncontrollable events. In security, this can lead to privilege escalation, authentication bypasses, or data corruption. Proper locking mechanisms, atomic operations, and secure design prevent race conditions."
       }
     ]

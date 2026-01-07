@@ -22,7 +22,7 @@
         "id": "cs307-q32",
         "type": "true_false",
         "prompt": "Multi-factor authentication (MFA) significantly increases security even if one factor is compromised.",
-        "correctAnswer": "true",
+        "correctAnswer": true,
         "explanation": "MFA requires multiple independent factors for authentication. Even if an attacker obtains your password (something you know), they still need your second factor (like a phone or biometric), making unauthorized access much more difficult."
       },
       {
@@ -55,7 +55,7 @@
         "id": "cs307-q35",
         "type": "true_false",
         "prompt": "Password complexity requirements (special characters, numbers) are more important than password length for security.",
-        "correctAnswer": "false",
+        "correctAnswer": false,
         "explanation": "Modern security guidance emphasizes password length over complexity. A long passphrase like \"correct-horse-battery-staple\" is more secure and memorable than complex but short passwords like \"P@ssw0rd!\". Length exponentially increases the keyspace."
       }
     ]
@@ -83,7 +83,7 @@
         "id": "cs307-q37",
         "type": "true_false",
         "prompt": "ABAC (Attribute-Based Access Control) makes access decisions based on attributes of users, resources, and environment.",
-        "correctAnswer": "true",
+        "correctAnswer": true,
         "explanation": "ABAC evaluates multiple attributes to make access decisions. For example, access might be granted if: user.department=\"Finance\" AND resource.classification=\"Confidential\" AND time.hour < 18 AND location=\"Office\". This provides more granular control than RBAC."
       },
       {
@@ -116,7 +116,7 @@
         "id": "cs307-q40",
         "type": "true_false",
         "prompt": "Session tokens should be stored in browser localStorage for easy access across tabs.",
-        "correctAnswer": "false",
+        "correctAnswer": false,
         "explanation": "Session tokens should not be stored in localStorage because they are accessible to any JavaScript on the page, including malicious scripts (XSS attacks). HttpOnly cookies are more secure because they cannot be accessed by JavaScript, only sent automatically with requests."
       }
     ]
@@ -144,7 +144,7 @@
         "id": "cs307-q42",
         "type": "true_false",
         "prompt": "Account lockout mechanisms that permanently disable accounts after failed login attempts improve security without drawbacks.",
-        "correctAnswer": "false",
+        "correctAnswer": false,
         "explanation": "While account lockout can prevent brute force attacks, permanent lockouts create a denial-of-service vulnerability where attackers can lock out legitimate users. Better approaches include temporary lockouts, rate limiting, CAPTCHA, or alerting users of suspicious activity."
       },
       {
@@ -177,7 +177,7 @@
         "id": "cs307-q45",
         "type": "true_false",
         "prompt": "Biometric authentication factors (like fingerprints) should be used as passwords that are transmitted to servers for verification.",
-        "correctAnswer": "false",
+        "correctAnswer": false,
         "explanation": "Biometric data should never be transmitted or stored as passwords because you can't change your fingerprints if they're compromised. Instead, biometrics should unlock local devices which then use cryptographic keys for authentication, or be processed locally to generate authentication tokens."
       }
     ]
