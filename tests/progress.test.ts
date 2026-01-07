@@ -535,3 +535,213 @@ describe('prerequisite chain validation', () => {
     expect(canStartSubject(subject, progress)).toBe(true);
   });
 });
+
+describe('QUIZ_PASSING_SCORE threshold consistency', () => {
+  // These tests verify that the passing score threshold (70%) is consistently
+  // applied across all completion checks, using the shared QUIZ_PASSING_SCORE constant
+
+  it('uses 70% as the passing threshold for quizzes', () => {
+    const progress69 = makeProgress({
+      quizAttempts: { q1: [makeQuizAttempt(69)] },
+    });
+    const progress70 = makeProgress({
+      quizAttempts: { q1: [makeQuizAttempt(70)] },
+    });
+
+    expect(isQuizCompleted('q1', progress69)).toBe(false);
+    expect(isQuizCompleted('q1', progress70)).toBe(true);
+  });
+
+  it('uses 70% as the passing threshold for exams in subject completion', () => {
+    const subject = subjectTemplate({
+      topics: [],
+      projectIds: [],
+      examIds: ['exam1'],
+    });
+
+    const progress69 = makeProgress({
+      status: 'in_progress',
+      examAttempts: { exam1: [makeExamAttempt(69)] },
+    });
+    const progress70 = makeProgress({
+      status: 'in_progress',
+      examAttempts: { exam1: [makeExamAttempt(70)] },
+    });
+
+    expect(calculateSubjectCompletion(subject, progress69)).toBe(0);
+    expect(calculateSubjectCompletion(subject, progress70)).toBe(100);
+  });
+
+  it('uses 70% as the passing threshold for projects with AI evaluation', () => {
+    const subject = subjectTemplate({
+      topics: [],
+      examIds: [],
+      projectIds: ['proj1'],
+    });
+
+    const progress69 = makeProgress({
+      status: 'in_progress',
+      projectSubmissions: { proj1: [makeProjectSubmission(69)] },
+    });
+    const progress70 = makeProgress({
+      status: 'in_progress',
+      projectSubmissions: { proj1: [makeProjectSubmission(70)] },
+    });
+
+    expect(calculateSubjectCompletion(subject, progress69)).toBe(0);
+    expect(calculateSubjectCompletion(subject, progress70)).toBe(100);
+  });
+
+  it('considers best score across multiple attempts for quizzes', () => {
+    const subject = subjectTemplate({
+      topics: [{
+        id: 't1',
+        title: 'Topic 1',
+        content: '',
+        quizIds: ['q1'],
+        exerciseIds: [],
+      }],
+      examIds: [],
+      projectIds: [],
+    });
+
+    const progress = makeProgress({
+      status: 'in_progress',
+      quizAttempts: {
+        q1: [makeQuizAttempt(50), makeQuizAttempt(65), makeQuizAttempt(75), makeQuizAttempt(60)],
+      },
+    });
+
+    // Best score is 75, which passes
+    expect(calculateSubjectCompletion(subject, progress)).toBe(100);
+    expect(isQuizCompleted('q1', progress)).toBe(true);
+    expect(getQuizBestScore('q1', progress)).toBe(75);
+  });
+
+  it('considers best score across multiple attempts for exams', () => {
+    const subject = subjectTemplate({
+      topics: [],
+      projectIds: [],
+      examIds: ['exam1'],
+    });
+
+    const progress = makeProgress({
+      status: 'in_progress',
+      examAttempts: {
+        exam1: [makeExamAttempt(55), makeExamAttempt(68), makeExamAttempt(72)],
+      },
+    });
+
+    // Best score is 72, which passes
+    expect(calculateSubjectCompletion(subject, progress)).toBe(100);
+  });
+
+  it('considers best AI score across multiple project submissions', () => {
+    const subject = subjectTemplate({
+      topics: [],
+      examIds: [],
+      projectIds: ['proj1'],
+    });
+
+    const progress = makeProgress({
+      status: 'in_progress',
+      projectSubmissions: {
+        proj1: [
+          makeProjectSubmission(50),
+          makeProjectSubmission(65),
+          makeProjectSubmission(80),
+          makeProjectSubmission(55),
+        ],
+      },
+    });
+
+    // Best AI score is 80, which passes
+    expect(calculateSubjectCompletion(subject, progress)).toBe(100);
+  });
+});
+
+describe('getNextRecommendedSubject edge cases', () => {
+  it('returns null when all subjects are completed', () => {
+    const subjectA = subjectTemplate({ id: 'a', year: 1, semester: 1 });
+    const subjectB = subjectTemplate({ id: 'b', year: 1, semester: 2, prerequisites: ['a'] });
+
+    const progress = makeUserProgress({
+      a: makeProgress({ status: 'completed' }),
+      b: makeProgress({ status: 'completed' }),
+    });
+
+    expect(getNextRecommendedSubject([subjectA, subjectB], progress)).toBeNull();
+  });
+
+  it('returns null when all remaining subjects are blocked by prerequisites', () => {
+    const subjectA = subjectTemplate({ id: 'a', year: 1, semester: 1 });
+    const subjectB = subjectTemplate({ id: 'b', year: 1, semester: 2, prerequisites: ['a'] });
+    const subjectC = subjectTemplate({ id: 'c', year: 2, semester: 1, prerequisites: ['b'] });
+
+    const progress = makeUserProgress({
+      a: makeProgress({ status: 'in_progress' }),
+      // b and c are blocked because a is not completed
+    });
+
+    // Should return the in-progress subject
+    expect(getNextRecommendedSubject([subjectA, subjectB, subjectC], progress)).toEqual(subjectA);
+  });
+
+  it('returns null when no subjects are provided', () => {
+    const progress = makeUserProgress({});
+    expect(getNextRecommendedSubject([], progress)).toBeNull();
+  });
+});
+
+describe('empty and edge case handling', () => {
+  it('handles subject with undefined examIds', () => {
+    const subject = subjectTemplate({
+      examIds: undefined,
+      projectIds: [],
+    });
+
+    const progress = makeProgress({
+      status: 'in_progress',
+      quizAttempts: { q1: [makeQuizAttempt(80)] },
+      exerciseCompletions: { e1: makeExerciseCompletion(true) },
+    });
+
+    // Should not crash and should calculate based on quiz and exercise only
+    expect(calculateSubjectCompletion(subject, progress)).toBe(100);
+  });
+
+  it('handles subject with undefined projectIds', () => {
+    const subject = subjectTemplate({
+      examIds: [],
+      projectIds: undefined,
+    });
+
+    const progress = makeProgress({
+      status: 'in_progress',
+      quizAttempts: { q1: [makeQuizAttempt(80)] },
+      exerciseCompletions: { e1: makeExerciseCompletion(true) },
+    });
+
+    // Should not crash
+    expect(calculateSubjectCompletion(subject, progress)).toBe(100);
+  });
+
+  it('handles progress with undefined examAttempts', () => {
+    const subject = subjectTemplate({
+      examIds: ['exam1'],
+      projectIds: [],
+    });
+
+    const progress: SubjectProgress = {
+      status: 'in_progress',
+      quizAttempts: { q1: [makeQuizAttempt(80)] },
+      exerciseCompletions: { e1: makeExerciseCompletion(true) },
+      examAttempts: undefined as unknown as Record<string, ExamAttempt[]>,
+      projectSubmissions: {},
+    };
+
+    // Should not crash, exam should count as not completed
+    // 2 items completed (quiz, exercise) out of 3 (quiz, exercise, exam) = 67%
+    expect(calculateSubjectCompletion(subject, progress)).toBe(67);
+  });
+});

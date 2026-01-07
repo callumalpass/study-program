@@ -1,11 +1,5 @@
 // Progress calculation and subject availability logic
 
-/**
- * The minimum score percentage required to pass a quiz, exam, or project.
- * Used consistently across all completion checks.
- */
-const PASSING_SCORE_THRESHOLD = 70;
-
 import type {
   Subject,
   SubjectProgress,
@@ -15,6 +9,7 @@ import type {
   ExamAttempt,
   ProjectSubmission,
 } from './types';
+import { QUIZ_PASSING_SCORE } from './types';
 import { progressStorage } from './storage';
 
 /**
@@ -30,7 +25,7 @@ function getBestScore(attempts: QuizAttempt[] | ExamAttempt[]): number {
  * Check if a score meets the passing threshold.
  */
 function isScorePassing(score: number): boolean {
-  return score >= PASSING_SCORE_THRESHOLD;
+  return score >= QUIZ_PASSING_SCORE;
 }
 
 /**
