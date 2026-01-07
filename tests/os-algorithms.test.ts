@@ -2329,3 +2329,533 @@ describe('Exercise Test Case Verification', () => {
     });
   });
 });
+
+// ============================================================================
+// Additional Algorithm Implementations for Comprehensive Testing
+// ============================================================================
+
+/**
+ * Working Set algorithm - Calculate working set at a given time.
+ * Returns the set of pages in the working set window.
+ */
+function workingSet(referenceString: number[], time: number, windowSize: number): Set<number> {
+  const start = Math.max(0, time - windowSize + 1);
+  const end = time + 1;
+  const window = referenceString.slice(start, end);
+  return new Set(window);
+}
+
+/**
+ * Preemptive Priority Scheduling
+ * Higher priority processes can preempt lower priority running processes.
+ */
+function preemptivePriorityScheduling(
+  processes: Array<{ id: string; arrivalTime: number; burstTime: number; priority: number }>
+): SchedulingResult {
+  const remaining = processes.map(p => ({ ...p, remainingTime: p.burstTime }));
+  const timeline: SchedulingResult['timeline'] = [];
+  const completionTimes: Record<string, number> = {};
+  let currentTime = 0;
+
+  while (remaining.some(p => p.remainingTime > 0)) {
+    // Get processes that have arrived and have remaining time
+    const available = remaining.filter(p => p.arrivalTime <= currentTime && p.remainingTime > 0);
+
+    if (available.length === 0) {
+      // Jump to next arrival
+      const nextArrival = remaining
+        .filter(p => p.remainingTime > 0 && p.arrivalTime > currentTime)
+        .reduce((min, p) => (p.arrivalTime < min ? p.arrivalTime : min), Infinity);
+
+      if (nextArrival === Infinity) break;
+      currentTime = nextArrival;
+      continue;
+    }
+
+    // Select process with highest priority (lower number = higher priority)
+    available.sort((a, b) => a.priority - b.priority);
+    const process = available[0];
+
+    // Find next preemption point (next arrival of higher or equal priority)
+    const nextPreemption = remaining
+      .filter(p => p.arrivalTime > currentTime && p.remainingTime > 0)
+      .reduce((min, p) => (p.arrivalTime < min ? p.arrivalTime : min), Infinity);
+
+    // Run until completion or next arrival
+    const runTime =
+      nextPreemption === Infinity
+        ? process.remainingTime
+        : Math.min(process.remainingTime, nextPreemption - currentTime);
+
+    const start = currentTime;
+    const end = start + runTime;
+
+    // Merge with previous timeline entry if same process
+    if (
+      timeline.length > 0 &&
+      timeline[timeline.length - 1].process === process.id &&
+      timeline[timeline.length - 1].end === start
+    ) {
+      timeline[timeline.length - 1].end = end;
+    } else {
+      timeline.push({ process: process.id, start, end });
+    }
+
+    process.remainingTime -= runTime;
+    currentTime = end;
+
+    if (process.remainingTime === 0) {
+      completionTimes[process.id] = end;
+    }
+  }
+
+  return calculateMetrics(
+    processes.map(p => ({ id: p.id, arrivalTime: p.arrivalTime, burstTime: p.burstTime })),
+    completionTimes,
+    timeline
+  );
+}
+
+/**
+ * Calculate page fault rate.
+ */
+function pageFaultRate(faults: number, totalReferences: number): number {
+  if (totalReferences === 0) return 0;
+  return Math.round((faults / totalReferences) * 100) / 100;
+}
+
+/**
+ * Detect thrashing based on page fault rate.
+ */
+function isThrashing(pageFaults: number, totalReferences: number, threshold: number): boolean {
+  if (totalReferences === 0) return false;
+  const faultRate = pageFaults / totalReferences;
+  return faultRate > threshold;
+}
+
+/**
+ * Memory compaction - relocate processes to eliminate fragmentation.
+ */
+function compactMemory(
+  allocations: Array<{ name: string; start: number; size: number }>
+): Array<{ name: string; start: number; size: number }> {
+  const sorted = [...allocations].sort((a, b) => a.start - b.start);
+  const result: Array<{ name: string; start: number; size: number }> = [];
+  let currentAddr = 0;
+
+  for (const alloc of sorted) {
+    result.push({ name: alloc.name, start: currentAddr, size: alloc.size });
+    currentAddr += alloc.size;
+  }
+
+  return result;
+}
+
+// ============================================================================
+// Additional Comprehensive Tests
+// ============================================================================
+
+describe('Working Set Algorithm', () => {
+  it('calculates working set at specific time', () => {
+    // From exercise cs301-ex-7-6
+    const refs = [1, 2, 3, 1, 2, 4, 5, 3, 4, 5];
+    const ws = workingSet(refs, 7, 4);
+    // Window at time 7 with size 4: positions 4,5,6,7 -> refs[4]=2, refs[5]=4, refs[6]=5, refs[7]=3
+    expect(ws).toEqual(new Set([2, 4, 5, 3]));
+  });
+
+  it('calculates working set for first few pages', () => {
+    const refs = [1, 2, 3, 4, 5];
+    const ws = workingSet(refs, 2, 3);
+    // Window at time 2 with size 3: positions 0,1,2 -> 1,2,3
+    expect(ws).toEqual(new Set([1, 2, 3]));
+  });
+
+  it('handles window larger than references', () => {
+    const refs = [1, 2];
+    const ws = workingSet(refs, 1, 10);
+    expect(ws).toEqual(new Set([1, 2]));
+  });
+
+  it('handles single page reference', () => {
+    const refs = [1, 1, 1, 1];
+    const ws = workingSet(refs, 3, 3);
+    expect(ws).toEqual(new Set([1]));
+  });
+
+  it('handles time at beginning', () => {
+    const refs = [1, 2, 3, 4, 5];
+    const ws = workingSet(refs, 0, 3);
+    expect(ws).toEqual(new Set([1]));
+  });
+});
+
+describe('Preemptive Priority Scheduling', () => {
+  it('preempts lower priority process when higher priority arrives', () => {
+    const processes = [
+      { id: 'P1', arrivalTime: 0, burstTime: 6, priority: 3 },
+      { id: 'P2', arrivalTime: 2, burstTime: 4, priority: 1 },
+      { id: 'P3', arrivalTime: 4, burstTime: 2, priority: 2 },
+    ];
+
+    const result = preemptivePriorityScheduling(processes);
+
+    // P1 starts at 0, P2 arrives at 2 with higher priority -> preempt
+    // P2 runs 2-6, P3 arrives at 4 but lower priority than P2
+    // P2 completes at 6, P3 runs 6-8, P1 resumes 8-12
+    expect(result.timeline[0]).toEqual({ process: 'P1', start: 0, end: 2 });
+    expect(result.timeline[1]).toEqual({ process: 'P2', start: 2, end: 6 });
+  });
+
+  it('does not preempt when new arrival has lower priority', () => {
+    const processes = [
+      { id: 'P1', arrivalTime: 0, burstTime: 4, priority: 1 },
+      { id: 'P2', arrivalTime: 2, burstTime: 2, priority: 3 },
+    ];
+
+    const result = preemptivePriorityScheduling(processes);
+
+    // P1 has higher priority, continues without preemption
+    expect(result.timeline[0]).toEqual({ process: 'P1', start: 0, end: 4 });
+    expect(result.timeline[1]).toEqual({ process: 'P2', start: 4, end: 6 });
+  });
+
+  it('handles multiple preemptions', () => {
+    const processes = [
+      { id: 'P1', arrivalTime: 0, burstTime: 10, priority: 3 },
+      { id: 'P2', arrivalTime: 2, burstTime: 2, priority: 1 },
+      { id: 'P3', arrivalTime: 5, burstTime: 2, priority: 2 },
+    ];
+
+    const result = preemptivePriorityScheduling(processes);
+
+    // P1: 0-2, P2: 2-4 (completes), P1: 4-5, P3: 5-7, P1: 7-15
+    expect(result.timeline[0]).toEqual({ process: 'P1', start: 0, end: 2 });
+    expect(result.timeline[1]).toEqual({ process: 'P2', start: 2, end: 4 });
+  });
+
+  it('calculates correct waiting times with preemption', () => {
+    const processes = [
+      { id: 'P1', arrivalTime: 0, burstTime: 6, priority: 3 },
+      { id: 'P2', arrivalTime: 2, burstTime: 4, priority: 1 },
+    ];
+
+    const result = preemptivePriorityScheduling(processes);
+
+    // P1: runs 0-2 (2 done), preempted, resumes 6-10 (completes at 10)
+    // P2: runs 2-6 (completes at 6)
+    // P1 waiting = 10-0-6 = 4 (waited while P2 ran)
+    // P2 waiting = 6-2-4 = 0
+    expect(result.waitingTimes['P2']).toBe(0);
+    expect(result.waitingTimes['P1']).toBe(4);
+  });
+});
+
+describe('Thrashing Detection', () => {
+  it('detects thrashing when fault rate exceeds threshold', () => {
+    // 80% fault rate with 50% threshold
+    expect(isThrashing(80, 100, 0.5)).toBe(true);
+  });
+
+  it('returns false when fault rate is below threshold', () => {
+    // 10% fault rate with 50% threshold
+    expect(isThrashing(10, 100, 0.5)).toBe(false);
+  });
+
+  it('handles zero total references', () => {
+    expect(isThrashing(0, 0, 0.5)).toBe(false);
+  });
+
+  it('handles exact threshold', () => {
+    // 50% fault rate with 50% threshold - should not be thrashing (> not >=)
+    expect(isThrashing(50, 100, 0.5)).toBe(false);
+  });
+});
+
+describe('Page Fault Rate Calculation', () => {
+  it('calculates correct fault rate', () => {
+    expect(pageFaultRate(10, 100)).toBe(0.1);
+  });
+
+  it('handles 100% fault rate', () => {
+    expect(pageFaultRate(100, 100)).toBe(1);
+  });
+
+  it('handles 0% fault rate', () => {
+    expect(pageFaultRate(0, 100)).toBe(0);
+  });
+
+  it('handles zero references', () => {
+    expect(pageFaultRate(0, 0)).toBe(0);
+  });
+});
+
+describe('Memory Compaction', () => {
+  it('compacts fragmented memory', () => {
+    const allocations = [
+      { name: 'A', start: 100, size: 50 },
+      { name: 'B', start: 0, size: 30 },
+      { name: 'C', start: 200, size: 40 },
+    ];
+
+    const compacted = compactMemory(allocations);
+
+    expect(compacted).toEqual([
+      { name: 'B', start: 0, size: 30 },
+      { name: 'A', start: 30, size: 50 },
+      { name: 'C', start: 80, size: 40 },
+    ]);
+  });
+
+  it('handles already compact memory', () => {
+    const allocations = [{ name: 'X', start: 0, size: 100 }];
+
+    const compacted = compactMemory(allocations);
+
+    expect(compacted).toEqual([{ name: 'X', start: 0, size: 100 }]);
+  });
+
+  it('handles multiple allocations at same start', () => {
+    const allocations = [
+      { name: 'A', start: 0, size: 50 },
+      { name: 'B', start: 0, size: 30 },
+    ];
+
+    const compacted = compactMemory(allocations);
+
+    // Order preserved when start is same
+    expect(compacted[0].start).toBe(0);
+    expect(compacted[1].start).toBe(compacted[0].size);
+  });
+});
+
+describe('Additional Page Replacement Edge Cases', () => {
+  describe('FIFO Edge Cases', () => {
+    it('handles single frame', () => {
+      const refs = [1, 2, 3, 1, 2, 3];
+      const result = fifoPageReplacement(refs, 1);
+      expect(result.faults).toBe(6); // Every access is a fault
+    });
+
+    it('handles all same pages', () => {
+      const refs = [1, 1, 1, 1, 1];
+      const result = fifoPageReplacement(refs, 2);
+      expect(result.faults).toBe(1);
+    });
+
+    it('handles more frames than unique pages', () => {
+      const refs = [1, 2, 3];
+      const result = fifoPageReplacement(refs, 5);
+      expect(result.faults).toBe(3);
+    });
+  });
+
+  describe('LRU Edge Cases', () => {
+    it('handles single frame', () => {
+      const refs = [1, 2, 3, 1, 2, 3];
+      const result = lruPageReplacement(refs, 1);
+      expect(result.faults).toBe(6);
+    });
+
+    it('correctly updates LRU order on multiple accesses', () => {
+      const refs = [1, 2, 3, 2, 1, 4];
+      const result = lruPageReplacement(refs, 3);
+      // After 1,2,3: frames=[1,2,3]
+      // After 2: frames=[1,3,2] (2 moved to most recent)
+      // After 1: frames=[3,2,1] (1 moved to most recent)
+      // 4: replace 3 (LRU) -> frames=[2,1,4]
+      expect(result.trace[5].victim).toBe(3);
+    });
+  });
+
+  describe('Optimal Edge Cases', () => {
+    it('handles page never used again', () => {
+      const refs = [1, 2, 3, 4];
+      const result = optimalPageReplacement(refs, 3);
+      // At step 4, must replace 1 (never used again)
+      expect(result.trace[3].victim).toBe(1);
+    });
+
+    it('handles all pages used again at same distance', () => {
+      const refs = [1, 2, 3, 1, 2, 3, 4];
+      const result = optimalPageReplacement(refs, 3);
+      // At step 7 (page 4), all of 1,2,3 are used at positions 4,5,6
+      // Should replace 3 (furthest: position 6)
+      expect(result.faults).toBe(4);
+    });
+  });
+
+  describe('Clock Edge Cases', () => {
+    it('handles immediate re-reference after fault', () => {
+      const refs = [1, 1, 2, 2, 3, 3];
+      const result = clockPageReplacement(refs, 2);
+      // 1 fault, hit, 1 fault, hit, 1 fault (replaces 1), hit
+      expect(result.faults).toBe(3);
+    });
+
+    it('clears all reference bits before finding victim', () => {
+      const refs = [1, 2, 1, 2, 3];
+      const result = clockPageReplacement(refs, 2);
+      // After 1,2 both have ref bits set
+      // After hits on 1,2 ref bits still set
+      // 3 arrives: clock must clear all bits and replace first (1)
+      expect(result.trace[4].victim).toBe(1);
+    });
+  });
+});
+
+describe('Additional Scheduling Edge Cases', () => {
+  describe('FCFS Edge Cases', () => {
+    it('handles gap in arrivals', () => {
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 2 },
+        { id: 'P2', arrivalTime: 5, burstTime: 3 },
+      ];
+
+      const result = fcfsScheduling(processes);
+
+      expect(result.timeline[0]).toEqual({ process: 'P1', start: 0, end: 2 });
+      expect(result.timeline[1]).toEqual({ process: 'P2', start: 5, end: 8 });
+    });
+
+    it('handles single process', () => {
+      const processes: Process[] = [{ id: 'P1', arrivalTime: 0, burstTime: 5 }];
+
+      const result = fcfsScheduling(processes);
+
+      expect(result.timeline.length).toBe(1);
+      expect(result.averageWaitingTime).toBe(0);
+    });
+  });
+
+  describe('SJF Edge Cases', () => {
+    it('handles tie in burst times', () => {
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 5 },
+        { id: 'P2', arrivalTime: 0, burstTime: 5 },
+      ];
+
+      const result = sjfScheduling(processes);
+
+      // First one in list should run first on tie
+      expect(result.timeline[0].process).toBe('P1');
+    });
+
+    it('handles late arrival of shortest job', () => {
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 10 },
+        { id: 'P2', arrivalTime: 15, burstTime: 1 },
+      ];
+
+      const result = sjfScheduling(processes);
+
+      // P1 runs first (only one available), P2 runs after
+      expect(result.timeline[0]).toEqual({ process: 'P1', start: 0, end: 10 });
+      expect(result.timeline[1]).toEqual({ process: 'P2', start: 15, end: 16 });
+    });
+  });
+
+  describe('Round Robin Edge Cases', () => {
+    it('handles quantum of 1', () => {
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 3 },
+        { id: 'P2', arrivalTime: 0, burstTime: 2 },
+      ];
+
+      const result = roundRobinScheduling(processes, 1);
+
+      // Should alternate each time unit
+      expect(result.timeline.length).toBe(5); // 3 for P1, 2 for P2
+    });
+
+    it('handles processes arriving during execution', () => {
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 8 },
+        { id: 'P2', arrivalTime: 3, burstTime: 4 },
+      ];
+
+      const result = roundRobinScheduling(processes, 4);
+
+      // P1: 0-4, P2: 4-8, P1: 8-12
+      expect(result.timeline[0]).toEqual({ process: 'P1', start: 0, end: 4 });
+      expect(result.timeline[1]).toEqual({ process: 'P2', start: 4, end: 8 });
+      expect(result.timeline[2]).toEqual({ process: 'P1', start: 8, end: 12 });
+    });
+  });
+});
+
+describe('Additional Deadlock Edge Cases', () => {
+  describe('Resource Allocation Graph', () => {
+    it('handles multiple resources requested by same process', () => {
+      const allocation = [
+        [1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+      ];
+      const request = [
+        [0, 1, 1],
+        [0, 0, 0],
+        [0, 0, 0],
+      ];
+
+      const graph = buildWaitForGraph(allocation, request);
+
+      // P0 waits for P1 (resource 1) and P2 (resource 2)
+      expect(graph[0]).toContain(1);
+      expect(graph[0]).toContain(2);
+    });
+
+    it('handles no allocations', () => {
+      const allocation = [
+        [0, 0],
+        [0, 0],
+      ];
+      const request = [
+        [1, 0],
+        [0, 1],
+      ];
+
+      const graph = buildWaitForGraph(allocation, request);
+
+      // No one waits for anyone (resources not held)
+      expect(graph[0]).toEqual([]);
+      expect(graph[1]).toEqual([]);
+    });
+  });
+
+  describe('Deadlock Detection', () => {
+    it('handles chain of dependencies that resolves', () => {
+      const available = [1, 0, 0];
+      const allocation = [
+        [0, 1, 0],
+        [0, 0, 1],
+      ];
+      const request = [
+        [1, 0, 0],
+        [0, 1, 0],
+      ];
+
+      const deadlocked = detectDeadlock(available, allocation, request);
+
+      // P0 gets its request, releases [0,1,0]
+      // P1 can now proceed
+      expect(deadlocked).toEqual([]);
+    });
+
+    it('handles all processes deadlocked', () => {
+      const available = [0, 0];
+      const allocation = [
+        [1, 0],
+        [0, 1],
+      ];
+      const request = [
+        [0, 1],
+        [1, 0],
+      ];
+
+      const deadlocked = detectDeadlock(available, allocation, request);
+
+      expect(deadlocked).toEqual([0, 1]);
+    });
+  });
+});
