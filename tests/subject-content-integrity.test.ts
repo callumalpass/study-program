@@ -1,0 +1,316 @@
+import { describe, it, expect } from 'vitest';
+import { allQuizzes, allExercises, allExams, allProjects } from '../src/subjects';
+import { curriculum } from '../src/data/curriculum';
+import type { Quiz, Exercise, Exam, Project } from '../src/core/types';
+
+/**
+ * Subject Content Integrity Tests
+ *
+ * These tests validate the structural integrity of subject content data,
+ * ensuring that:
+ * 1. All content has required identifying fields
+ * 2. IDs are unique within their respective collections
+ * 3. Question types are valid
+ * 4. Content arrays are properly structured
+ */
+
+// Create lookup maps for efficient access
+const quizById = new Map<string, Quiz>(allQuizzes.map(q => [q.id, q]));
+const exerciseById = new Map<string, Exercise>(allExercises.map(e => [e.id, e]));
+const examById = new Map<string, Exam>(allExams.map(e => [e.id, e]));
+const projectById = new Map<string, Project>(allProjects.map(p => [p.id, p]));
+
+describe('Subject Content Integrity', () => {
+  describe('quiz structure validation', () => {
+    it('all quizzes have an id and title', () => {
+      allQuizzes.forEach(quiz => {
+        expect(quiz.id, `Quiz should have an id`).toBeDefined();
+        expect(quiz.title, `Quiz ${quiz.id} should have a title`).toBeDefined();
+      });
+    });
+
+    it('all quizzes have questions array', () => {
+      allQuizzes.forEach(quiz => {
+        expect(
+          Array.isArray(quiz.questions),
+          `Quiz ${quiz.id} should have questions array`
+        ).toBe(true);
+      });
+    });
+
+    it('all quiz questions have id and type', () => {
+      allQuizzes.forEach(quiz => {
+        quiz.questions.forEach((question, qIdx) => {
+          expect(
+            question.id,
+            `Question ${qIdx} in quiz ${quiz.id} should have an id`
+          ).toBeDefined();
+          expect(
+            question.type,
+            `Question ${question.id} in quiz ${quiz.id} should have a type`
+          ).toBeDefined();
+        });
+      });
+    });
+
+    it('all quiz questions have correctAnswer defined', () => {
+      allQuizzes.forEach(quiz => {
+        quiz.questions.forEach(question => {
+          expect(
+            question.correctAnswer !== undefined,
+            `Question ${question.id} in quiz ${quiz.id} should have a correctAnswer`
+          ).toBe(true);
+        });
+      });
+    });
+
+    it('multiple_choice questions have options array', () => {
+      allQuizzes.forEach(quiz => {
+        quiz.questions
+          .filter(q => q.type === 'multiple_choice')
+          .forEach(question => {
+            expect(
+              Array.isArray(question.options),
+              `Multiple choice question ${question.id} in ${quiz.id} should have options`
+            ).toBe(true);
+          });
+      });
+    });
+
+    it('true_false questions have boolean correctAnswer', () => {
+      allQuizzes.forEach(quiz => {
+        quiz.questions
+          .filter(q => q.type === 'true_false')
+          .forEach(question => {
+            expect(
+              typeof question.correctAnswer === 'boolean',
+              `True/false question ${question.id} in ${quiz.id} should have boolean correctAnswer, got ${typeof question.correctAnswer}: ${question.correctAnswer}`
+            ).toBe(true);
+          });
+      });
+    });
+
+    it('all quiz IDs are unique globally', () => {
+      const quizIds = allQuizzes.map(q => q.id);
+      const uniqueIds = new Set(quizIds);
+      expect(
+        uniqueIds.size,
+        `Quiz IDs should be unique (found ${quizIds.length - uniqueIds.size} duplicates)`
+      ).toBe(quizIds.length);
+    });
+
+    it('quizzes have at least one question', () => {
+      allQuizzes.forEach(quiz => {
+        expect(
+          quiz.questions.length,
+          `Quiz ${quiz.id} should have at least one question`
+        ).toBeGreaterThan(0);
+      });
+    });
+  });
+
+  describe('exercise structure validation', () => {
+    it('all exercises have id and title', () => {
+      allExercises.forEach(exercise => {
+        expect(exercise.id, `Exercise should have an id`).toBeDefined();
+        expect(exercise.title, `Exercise ${exercise.id} should have a title`).toBeDefined();
+      });
+    });
+
+    it('all exercises have difficulty defined', () => {
+      allExercises.forEach(exercise => {
+        expect(
+          exercise.difficulty !== undefined,
+          `Exercise ${exercise.id} should have a difficulty`
+        ).toBe(true);
+      });
+    });
+
+    it('coding exercises have language defined', () => {
+      allExercises
+        .filter(ex => ex.type === 'coding')
+        .forEach(exercise => {
+          expect(
+            exercise.language,
+            `Coding exercise ${exercise.id} should have a language`
+          ).toBeDefined();
+        });
+    });
+
+    it('all exercise IDs are unique globally', () => {
+      const exerciseIds = allExercises.map(ex => ex.id);
+      const uniqueIds = new Set(exerciseIds);
+      expect(
+        uniqueIds.size,
+        `Exercise IDs should be unique (found ${exerciseIds.length - uniqueIds.size} duplicates)`
+      ).toBe(exerciseIds.length);
+    });
+  });
+
+  describe('exam structure validation', () => {
+    it('all exams have id and title', () => {
+      allExams.forEach(exam => {
+        expect(exam.id, `Exam should have an id`).toBeDefined();
+        expect(exam.title, `Exam ${exam.id} should have a title`).toBeDefined();
+      });
+    });
+
+    it('all exams have questions array', () => {
+      allExams.forEach(exam => {
+        expect(
+          Array.isArray(exam.questions),
+          `Exam ${exam.id} should have questions array`
+        ).toBe(true);
+      });
+    });
+
+    it('all exam question IDs are unique within each exam', () => {
+      allExams.forEach(exam => {
+        const questionIds = exam.questions.map(q => q.id);
+        const uniqueIds = new Set(questionIds);
+        expect(
+          uniqueIds.size,
+          `Question IDs in exam ${exam.id} should be unique`
+        ).toBe(questionIds.length);
+      });
+    });
+
+    it('exams have at least one question', () => {
+      allExams.forEach(exam => {
+        expect(
+          exam.questions.length,
+          `Exam ${exam.id} should have at least one question`
+        ).toBeGreaterThan(0);
+      });
+    });
+
+    it('all exam IDs are unique globally', () => {
+      const examIds = allExams.map(e => e.id);
+      const uniqueIds = new Set(examIds);
+      expect(
+        uniqueIds.size,
+        `Exam IDs should be unique (found ${examIds.length - uniqueIds.size} duplicates)`
+      ).toBe(examIds.length);
+    });
+  });
+
+  describe('project structure validation', () => {
+    it('all projects have id and title', () => {
+      allProjects.forEach(project => {
+        expect(project.id, `Project should have an id`).toBeDefined();
+        expect(project.title, `Project ${project.id} should have a title`).toBeDefined();
+      });
+    });
+
+    it('all projects have description', () => {
+      allProjects.forEach(project => {
+        expect(
+          project.description,
+          `Project ${project.id} should have a description`
+        ).toBeDefined();
+      });
+    });
+
+    it('all project IDs are unique globally', () => {
+      const projectIds = allProjects.map(p => p.id);
+      const uniqueIds = new Set(projectIds);
+      expect(
+        uniqueIds.size,
+        `Project IDs should be unique (found ${projectIds.length - uniqueIds.size} duplicates)`
+      ).toBe(projectIds.length);
+    });
+  });
+
+  describe('quiz question ID uniqueness', () => {
+    it('quiz question IDs are unique within each quiz', () => {
+      allQuizzes.forEach(quiz => {
+        const questionIds = quiz.questions.map(q => q.id);
+        const uniqueIds = new Set(questionIds);
+        expect(
+          uniqueIds.size,
+          `Question IDs in quiz ${quiz.id} should be unique (found ${questionIds.length - uniqueIds.size} duplicates)`
+        ).toBe(questionIds.length);
+      });
+    });
+  });
+
+  describe('content collection existence', () => {
+    it('has quizzes', () => {
+      expect(allQuizzes.length).toBeGreaterThan(0);
+    });
+
+    it('has exercises', () => {
+      expect(allExercises.length).toBeGreaterThan(0);
+    });
+
+    it('has exams', () => {
+      expect(allExams.length).toBeGreaterThan(0);
+    });
+
+    it('has projects', () => {
+      expect(allProjects.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('curriculum subjects have content', () => {
+    it('curriculum subjects count matches expected', () => {
+      // Verify that we have the expected number of subjects
+      expect(curriculum.length).toBeGreaterThan(30);
+    });
+
+    it('all curriculum subjects have topics', () => {
+      curriculum.forEach(subject => {
+        expect(
+          Array.isArray(subject.topics),
+          `Subject ${subject.id} should have topics array`
+        ).toBe(true);
+      });
+    });
+
+    it('all curriculum subjects have valid year and semester', () => {
+      curriculum.forEach(subject => {
+        expect(
+          subject.year >= 1 && subject.year <= 4,
+          `Subject ${subject.id} should have valid year (1-4), got ${subject.year}`
+        ).toBe(true);
+        expect(
+          subject.semester >= 1 && subject.semester <= 2,
+          `Subject ${subject.id} should have valid semester (1-2), got ${subject.semester}`
+        ).toBe(true);
+      });
+    });
+  });
+
+  describe('question types', () => {
+    const validQuizQuestionTypes = ['multiple_choice', 'true_false', 'fill_blank', 'code_output', 'short_answer'];
+
+    it('quiz questions have expected types', () => {
+      allQuizzes.forEach(quiz => {
+        quiz.questions.forEach(question => {
+          expect(
+            validQuizQuestionTypes.includes(question.type),
+            `Question ${question.id} in quiz ${quiz.id} has type: ${question.type}`
+          ).toBe(true);
+        });
+      });
+    });
+  });
+
+  describe('content statistics', () => {
+    it('reports content counts', () => {
+      console.log(`Total quizzes: ${allQuizzes.length}`);
+      console.log(`Total quiz questions: ${allQuizzes.reduce((sum, q) => sum + q.questions.length, 0)}`);
+      console.log(`Total exercises: ${allExercises.length}`);
+      console.log(`Total exams: ${allExams.length}`);
+      console.log(`Total exam questions: ${allExams.reduce((sum, e) => sum + e.questions.length, 0)}`);
+      console.log(`Total projects: ${allProjects.length}`);
+      console.log(`Total curriculum subjects: ${curriculum.length}`);
+
+      // Basic sanity checks
+      expect(allQuizzes.length).toBeGreaterThan(100);
+      expect(allExercises.length).toBeGreaterThan(100);
+      expect(allExams.length).toBeGreaterThan(50);
+      expect(allProjects.length).toBeGreaterThan(50);
+    });
+  });
+});
