@@ -160,6 +160,75 @@ describe('Quiz Content Validation', () => {
     });
   });
 
+  describe('CS305 quizzes should have proper true_false boolean values', () => {
+    // CS305 has been fixed - these tests ensure the fixes are maintained
+    const cs305QuizDir = join(SUBJECTS_DIR, 'cs305', 'content');
+    const cs305QuizFiles = findQuizFiles(cs305QuizDir);
+
+    it('should find CS305 quiz files', () => {
+      expect(cs305QuizFiles.length).toBe(7); // 7 topics
+    });
+
+    it.each(cs305QuizFiles)('validates %s', (filePath) => {
+      const quizzes = loadJsonFile<Quiz[]>(filePath);
+      const errors: string[] = [];
+
+      for (const quiz of quizzes) {
+        for (const question of quiz.questions) {
+          errors.push(...validateQuestionAnswerType(question, filePath));
+        }
+      }
+
+      if (errors.length > 0) {
+        throw new Error(`Found ${errors.length} validation error(s):\n${errors.join('\n')}`);
+      }
+    });
+  });
+
+  describe('CS305 exams should have proper true_false boolean values', () => {
+    const cs305ExamsFile = join(SUBJECTS_DIR, 'cs305', 'exams.json');
+
+    it('validates CS305 exams', () => {
+      const exams = loadJsonFile<{ questions: QuizQuestion[] }[]>(cs305ExamsFile);
+      const errors: string[] = [];
+
+      for (const exam of exams) {
+        for (const question of exam.questions) {
+          errors.push(...validateQuestionAnswerType(question, cs305ExamsFile));
+        }
+      }
+
+      if (errors.length > 0) {
+        throw new Error(`Found ${errors.length} validation error(s):\n${errors.join('\n')}`);
+      }
+    });
+  });
+
+  describe('CS306 quizzes should have proper true_false boolean values', () => {
+    // CS306 has been fixed - these tests ensure the fixes are maintained
+    const cs306QuizDir = join(SUBJECTS_DIR, 'cs306', 'content');
+    const cs306QuizFiles = findQuizFiles(cs306QuizDir);
+
+    it('should find CS306 quiz files', () => {
+      expect(cs306QuizFiles.length).toBe(7); // 7 topics
+    });
+
+    it.each(cs306QuizFiles)('validates %s', (filePath) => {
+      const quizzes = loadJsonFile<Quiz[]>(filePath);
+      const errors: string[] = [];
+
+      for (const quiz of quizzes) {
+        for (const question of quiz.questions) {
+          errors.push(...validateQuestionAnswerType(question, filePath));
+        }
+      }
+
+      if (errors.length > 0) {
+        throw new Error(`Found ${errors.length} validation error(s):\n${errors.join('\n')}`);
+      }
+    });
+  });
+
   describe('true_false questions should have boolean correctAnswer values (informational)', () => {
     const allQuizFiles = findQuizFiles(SUBJECTS_DIR);
 
