@@ -64,7 +64,7 @@ export function Question({
     if (codeRef.current && question.codeSnippet) {
       Prism.highlightElement(codeRef.current);
     }
-  }, [question.codeSnippet]);
+  }, [question.codeSnippet, question.language]);
 
   const handleMultipleChoice = (optionIndex: number) => {
     if (!showFeedback) {
@@ -279,7 +279,7 @@ export function Question({
 
       {question.codeSnippet && (
         <pre class="code-snippet">
-          <code ref={codeRef} class="language-python">
+          <code ref={codeRef} class={`language-${question.language || 'python'}`}>
             {escapeHtml(question.codeSnippet)}
           </code>
         </pre>
