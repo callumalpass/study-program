@@ -133,6 +133,18 @@ describe('ProgressStorage flushSync', () => {
     expect(options.headers['Authorization']).not.toContain('Bearer');
   });
 
+  it('includes Accept header for GitHub API compatibility', () => {
+    const storage = makeStorage();
+    storage.updateSettings({ githubToken: 'token', gistId: 'gist' });
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true });
+    globalThis.fetch = fetchMock;
+
+    storage.flushSync();
+
+    const [, options] = fetchMock.mock.calls[0];
+    expect(options.headers['Accept']).toBe('application/vnd.github.v3+json');
+  });
+
   it('sets keepalive option for reliable delivery during unload', () => {
     const storage = makeStorage();
     storage.updateSettings({ githubToken: 'token', gistId: 'gist' });

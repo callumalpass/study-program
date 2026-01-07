@@ -171,6 +171,7 @@ export class ProgressStorage {
         method: 'PATCH',
         headers: {
           'Authorization': `token ${githubToken}`,
+          'Accept': 'application/vnd.github.v3+json',
           'Content-Type': 'application/json',
         },
         body,
