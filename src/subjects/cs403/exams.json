@@ -495,9 +495,30 @@
         "id": "cs403-final-q18",
         "type": "coding",
         "prompt": "Write a function `pickPivot(arr)` that returns a uniformly random element of `arr` (assume `arr.length > 0`). Use Python.",
-        "correctAnswer": "import random\n\ndef pickPivot(arr):\n    return random.choice(arr)",
-        "solution": "import random\n\ndef pickPivot(arr):\n    return random.choice(arr)\n\n# Example\nprint(pickPivot([1, 2, 3]))",
+        "correctAnswer": "",
+        "starterCode": "import random\n\ndef pickPivot(arr):\n    # Return a uniformly random element from arr\n    pass",
+        "solution": "import random\n\ndef pickPivot(arr):\n    return random.choice(arr)",
         "language": "python",
+        "testCases": [
+          {
+            "input": "result = pickPivot([42])\nprint(result)",
+            "expectedOutput": "42",
+            "isHidden": false,
+            "description": "Single element array"
+          },
+          {
+            "input": "arr = [1, 2, 3, 4, 5]\nresult = pickPivot(arr)\nprint(result in arr)",
+            "expectedOutput": "True",
+            "isHidden": false,
+            "description": "Result is in array"
+          },
+          {
+            "input": "results = set(pickPivot([1, 2]) for _ in range(100))\nprint(len(results) >= 1)",
+            "expectedOutput": "True",
+            "isHidden": true,
+            "description": "Returns valid elements"
+          }
+        ],
         "explanation": "Uniformly choosing a pivot is a core ingredient in randomized quicksort/quickselect to avoid adversarial inputs."
       },
       {
@@ -618,9 +639,30 @@
         "id": "cs403-final-q30",
         "type": "coding",
         "prompt": "Implement `lcs_length(a, b)` returning the length of the longest common subsequence. Use Python and a DP table.",
-        "correctAnswer": "def lcs_length(a, b):\n    m, n = len(a), len(b)\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    return dp[m][n]",
-        "solution": "def lcs_length(a, b):\n    m, n = len(a), len(b)\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    return dp[m][n]\n\nprint(lcs_length(\"abcde\", \"ace\"))  # 3",
+        "correctAnswer": "",
+        "starterCode": "def lcs_length(a, b):\n    # Return the length of the longest common subsequence\n    # Use dynamic programming\n    pass",
+        "solution": "def lcs_length(a, b):\n    m, n = len(a), len(b)\n    dp = [[0] * (n + 1) for _ in range(m + 1)]\n    for i in range(1, m + 1):\n        for j in range(1, n + 1):\n            if a[i - 1] == b[j - 1]:\n                dp[i][j] = dp[i - 1][j - 1] + 1\n            else:\n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])\n    return dp[m][n]",
         "language": "python",
+        "testCases": [
+          {
+            "input": "print(lcs_length('abcde', 'ace'))",
+            "expectedOutput": "3",
+            "isHidden": false,
+            "description": "LCS of 'abcde' and 'ace' is 'ace' (length 3)"
+          },
+          {
+            "input": "print(lcs_length('abc', 'def'))",
+            "expectedOutput": "0",
+            "isHidden": false,
+            "description": "No common subsequence"
+          },
+          {
+            "input": "print(lcs_length('AGGTAB', 'GXTXAYB'))",
+            "expectedOutput": "4",
+            "isHidden": true,
+            "description": "LCS is 'GTAB' (length 4)"
+          }
+        ],
         "explanation": "Standard LCS DP uses dp[i][j] as LCS length of prefixes and fills the table in O(mn)."
       },
       {

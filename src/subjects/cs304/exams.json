@@ -62,7 +62,30 @@
         "id": "cs304-mid-q5",
         "type": "coding",
         "prompt": "Write a Python function that tokenizes a simple arithmetic expression into NUMBER, PLUS, MINUS, TIMES, DIVIDE, LPAREN, and RPAREN tokens.",
-        "correctAnswer": "def tokenize(expr):\n    tokens = []\n    i = 0\n    while i < len(expr):\n        if expr[i].isspace():\n            i += 1\n        elif expr[i].isdigit():\n            j = i\n            while j < len(expr) and expr[j].isdigit():\n                j += 1\n            tokens.append(('NUMBER', expr[i:j]))\n            i = j\n        elif expr[i] == '+':\n            tokens.append(('PLUS', '+'))\n            i += 1\n        elif expr[i] == '-':\n            tokens.append(('MINUS', '-'))\n            i += 1\n        elif expr[i] == '*':\n            tokens.append(('TIMES', '*'))\n            i += 1\n        elif expr[i] == '/':\n            tokens.append(('DIVIDE', '/'))\n            i += 1\n        elif expr[i] == '(':\n            tokens.append(('LPAREN', '('))\n            i += 1\n        elif expr[i] == ')':\n            tokens.append(('RPAREN', ')'))\n            i += 1\n        else:\n            raise ValueError(f\"Unknown character: {expr[i]}\")\n    return tokens",
+        "language": "python",
+        "starterCode": "def tokenize(expr):\n    # Return a list of (TOKEN_TYPE, value) tuples\n    tokens = []\n    # Your code here\n    return tokens",
+        "solution": "def tokenize(expr):\n    tokens = []\n    i = 0\n    while i < len(expr):\n        if expr[i].isspace():\n            i += 1\n        elif expr[i].isdigit():\n            j = i\n            while j < len(expr) and expr[j].isdigit():\n                j += 1\n            tokens.append(('NUMBER', expr[i:j]))\n            i = j\n        elif expr[i] == '+':\n            tokens.append(('PLUS', '+'))\n            i += 1\n        elif expr[i] == '-':\n            tokens.append(('MINUS', '-'))\n            i += 1\n        elif expr[i] == '*':\n            tokens.append(('TIMES', '*'))\n            i += 1\n        elif expr[i] == '/':\n            tokens.append(('DIVIDE', '/'))\n            i += 1\n        elif expr[i] == '(':\n            tokens.append(('LPAREN', '('))\n            i += 1\n        elif expr[i] == ')':\n            tokens.append(('RPAREN', ')'))\n            i += 1\n        else:\n            raise ValueError(f\"Unknown character: {expr[i]}\")\n    return tokens",
+        "correctAnswer": "",
+        "testCases": [
+          {
+            "input": "print(tokenize('1+2'))",
+            "expectedOutput": "[('NUMBER', '1'), ('PLUS', '+'), ('NUMBER', '2')]",
+            "isHidden": false,
+            "description": "Simple addition"
+          },
+          {
+            "input": "print(tokenize('3 * 4'))",
+            "expectedOutput": "[('NUMBER', '3'), ('TIMES', '*'), ('NUMBER', '4')]",
+            "isHidden": false,
+            "description": "Multiplication with spaces"
+          },
+          {
+            "input": "print(tokenize('(10+20)*5'))",
+            "expectedOutput": "[('LPAREN', '('), ('NUMBER', '10'), ('PLUS', '+'), ('NUMBER', '20'), ('RPAREN', ')'), ('TIMES', '*'), ('NUMBER', '5')]",
+            "isHidden": true,
+            "description": "Expression with parentheses"
+          }
+        ],
         "explanation": "A simple tokenizer processes input character by character, building tokens."
       },
       {
@@ -275,7 +298,30 @@
         "id": "cs304-mid-q26",
         "type": "coding",
         "prompt": "Write a Python class representing a simple symbol table with insert and lookup methods supporting scopes.",
-        "correctAnswer": "class SymbolTable:\n    def __init__(self):\n        self.scopes = [{}]  # Stack of scopes\n\n    def enter_scope(self):\n        self.scopes.append({})\n\n    def exit_scope(self):\n        if len(self.scopes) > 1:\n            self.scopes.pop()\n\n    def insert(self, name, info):\n        self.scopes[-1][name] = info\n\n    def lookup(self, name):\n        for scope in reversed(self.scopes):\n            if name in scope:\n                return scope[name]\n        return None",
+        "language": "python",
+        "starterCode": "class SymbolTable:\n    def __init__(self):\n        # Initialize your scope stack\n        pass\n\n    def enter_scope(self):\n        # Enter a new scope\n        pass\n\n    def exit_scope(self):\n        # Exit current scope\n        pass\n\n    def insert(self, name, info):\n        # Insert symbol in current scope\n        pass\n\n    def lookup(self, name):\n        # Look up symbol, searching from innermost to outermost scope\n        pass",
+        "solution": "class SymbolTable:\n    def __init__(self):\n        self.scopes = [{}]  # Stack of scopes\n\n    def enter_scope(self):\n        self.scopes.append({})\n\n    def exit_scope(self):\n        if len(self.scopes) > 1:\n            self.scopes.pop()\n\n    def insert(self, name, info):\n        self.scopes[-1][name] = info\n\n    def lookup(self, name):\n        for scope in reversed(self.scopes):\n            if name in scope:\n                return scope[name]\n        return None",
+        "correctAnswer": "",
+        "testCases": [
+          {
+            "input": "st = SymbolTable()\nst.insert('x', 'int')\nprint(st.lookup('x'))",
+            "expectedOutput": "int",
+            "isHidden": false,
+            "description": "Insert and lookup in global scope"
+          },
+          {
+            "input": "st = SymbolTable()\nst.insert('x', 'int')\nst.enter_scope()\nst.insert('x', 'float')\nprint(st.lookup('x'))",
+            "expectedOutput": "float",
+            "isHidden": false,
+            "description": "Inner scope shadows outer"
+          },
+          {
+            "input": "st = SymbolTable()\nst.insert('x', 'int')\nst.enter_scope()\nst.insert('y', 'float')\nst.exit_scope()\nprint(st.lookup('y'))",
+            "expectedOutput": "None",
+            "isHidden": true,
+            "description": "Symbol not found after exiting scope"
+          }
+        ],
         "explanation": "A scoped symbol table uses a stack of hash tables for nested scopes."
       }
     ]
@@ -556,8 +602,31 @@
       {
         "id": "cs304-final-q27",
         "type": "coding",
-        "prompt": "Write a Python function that performs constant folding on a simple expression tree.",
-        "correctAnswer": "def constant_fold(node):\n    if node['type'] == 'num':\n        return node\n    elif node['type'] == 'binop':\n        left = constant_fold(node['left'])\n        right = constant_fold(node['right'])\n        if left['type'] == 'num' and right['type'] == 'num':\n            op = node['op']\n            if op == '+':\n                return {'type': 'num', 'value': left['value'] + right['value']}\n            elif op == '*':\n                return {'type': 'num', 'value': left['value'] * right['value']}\n        return {'type': 'binop', 'op': node['op'], 'left': left, 'right': right}\n    return node",
+        "prompt": "Write a Python function that performs constant folding on a simple expression tree. The tree nodes are dictionaries with 'type' (either 'num' or 'binop'), 'value' for num nodes, and 'op', 'left', 'right' for binop nodes.",
+        "language": "python",
+        "starterCode": "def constant_fold(node):\n    # Recursively fold constant expressions\n    # node['type'] is 'num' or 'binop'\n    # For 'num': node has 'value'\n    # For 'binop': node has 'op', 'left', 'right'\n    pass",
+        "solution": "def constant_fold(node):\n    if node['type'] == 'num':\n        return node\n    elif node['type'] == 'binop':\n        left = constant_fold(node['left'])\n        right = constant_fold(node['right'])\n        if left['type'] == 'num' and right['type'] == 'num':\n            op = node['op']\n            if op == '+':\n                return {'type': 'num', 'value': left['value'] + right['value']}\n            elif op == '*':\n                return {'type': 'num', 'value': left['value'] * right['value']}\n        return {'type': 'binop', 'op': node['op'], 'left': left, 'right': right}\n    return node",
+        "correctAnswer": "",
+        "testCases": [
+          {
+            "input": "print(constant_fold({'type': 'num', 'value': 5}))",
+            "expectedOutput": "{'type': 'num', 'value': 5}",
+            "isHidden": false,
+            "description": "Number node unchanged"
+          },
+          {
+            "input": "tree = {'type': 'binop', 'op': '+', 'left': {'type': 'num', 'value': 2}, 'right': {'type': 'num', 'value': 3}}\nprint(constant_fold(tree))",
+            "expectedOutput": "{'type': 'num', 'value': 5}",
+            "isHidden": false,
+            "description": "Fold 2 + 3 to 5"
+          },
+          {
+            "input": "tree = {'type': 'binop', 'op': '*', 'left': {'type': 'num', 'value': 4}, 'right': {'type': 'num', 'value': 5}}\nprint(constant_fold(tree))",
+            "expectedOutput": "{'type': 'num', 'value': 20}",
+            "isHidden": true,
+            "description": "Fold 4 * 5 to 20"
+          }
+        ],
         "explanation": "Constant folding recursively evaluates constant subexpressions."
       },
       {
