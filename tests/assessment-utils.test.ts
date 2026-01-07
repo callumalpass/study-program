@@ -42,6 +42,22 @@ describe('assessment-utils', () => {
       it('formats go to Go', () => {
         expect(formatLanguage('go')).toBe('Go');
       });
+
+      it('formats sql to SQL', () => {
+        expect(formatLanguage('sql')).toBe('SQL');
+      });
+
+      it('formats bash to Bash', () => {
+        expect(formatLanguage('bash')).toBe('Bash');
+      });
+
+      it('formats yaml to YAML', () => {
+        expect(formatLanguage('yaml')).toBe('YAML');
+      });
+
+      it('formats dockerfile to Dockerfile', () => {
+        expect(formatLanguage('dockerfile')).toBe('Dockerfile');
+      });
     });
 
     describe('unknown languages', () => {

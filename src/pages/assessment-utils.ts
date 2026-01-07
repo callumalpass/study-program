@@ -40,6 +40,10 @@ export function formatLanguage(lang: string): string {
     c: 'C',
     rust: 'Rust',
     go: 'Go',
+    sql: 'SQL',
+    bash: 'Bash',
+    yaml: 'YAML',
+    dockerfile: 'Dockerfile',
   };
   return languageMap[lang] || lang;
 }
