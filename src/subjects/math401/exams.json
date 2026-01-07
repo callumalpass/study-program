@@ -15,7 +15,12 @@
         "id": "math401-mid-q1",
         "type": "multiple_choice",
         "prompt": "Compute (3 + 4i)(2 - i) and express in standard form.",
-        "options": ["6 - 4i", "10 + 5i", "6 + 11i", "10 - 11i"],
+        "options": [
+          "6 - 4i",
+          "10 + 5i",
+          "6 + 11i",
+          "10 - 11i"
+        ],
         "correctAnswer": "10 + 5i",
         "explanation": "(3 + 4i)(2 - i) = 6 - 3i + 8i - 4i² = 6 + 5i + 4 = 10 + 5i (since i² = -1)"
       },
@@ -23,7 +28,12 @@
         "id": "math401-mid-q2",
         "type": "multiple_choice",
         "prompt": "Find all cube roots of 8i.",
-        "options": ["2i, 2e^(i5π/6), 2e^(-iπ/6)", "2e^(iπ/6), 2e^(i5π/6), 2e^(-iπ/2)", "2i, -2i, 2", "2e^(iπ/6), 2e^(i5π/6), 2e^(i3π/2)"],
+        "options": [
+          "2i, 2e^(i5π/6), 2e^(-iπ/6)",
+          "2e^(iπ/6), 2e^(i5π/6), 2e^(-iπ/2)",
+          "2i, -2i, 2",
+          "2e^(iπ/6), 2e^(i5π/6), 2e^(i3π/2)"
+        ],
         "correctAnswer": "2e^(iπ/6), 2e^(i5π/6), 2e^(i3π/2)",
         "explanation": "8i = 8e^(iπ/2). Cube roots: 2e^(i(π/2 + 2πk)/3) for k=0,1,2, giving 2e^(iπ/6), 2e^(i5π/6), 2e^(i3π/2)"
       },
@@ -31,7 +41,12 @@
         "id": "math401-mid-q3",
         "type": "multiple_choice",
         "prompt": "Which set is NOT open in ℂ?",
-        "options": ["{z : |z| < 1}", "{z : |z - i| ≤ 2}", "{z : Re(z) > 0}", "{z : 1 < |z| < 2}"],
+        "options": [
+          "{z : |z| < 1}",
+          "{z : |z - i| ≤ 2}",
+          "{z : Re(z) > 0}",
+          "{z : 1 < |z| < 2}"
+        ],
         "correctAnswer": "{z : |z - i| ≤ 2}",
         "explanation": "The set {z : |z - i| ≤ 2} includes its boundary (≤ not <), so it is closed, not open."
       },
@@ -39,7 +54,12 @@
         "id": "math401-mid-q4",
         "type": "multiple_choice",
         "prompt": "For f(z) = z³, what is ∂u/∂x where u = Re(f)?",
-        "options": ["3x²", "3x² - 3y²", "x³ - 3xy²", "3x² - y²"],
+        "options": [
+          "3x²",
+          "3x² - 3y²",
+          "x³ - 3xy²",
+          "3x² - y²"
+        ],
         "correctAnswer": "3x² - 3y²",
         "explanation": "z³ = (x+iy)³ = x³ - 3xy² + i(3x²y - y³). So u = x³ - 3xy², and ∂u/∂x = 3x² - 3y²"
       },
@@ -47,7 +67,12 @@
         "id": "math401-mid-q5",
         "type": "multiple_choice",
         "prompt": "Is the function f(z) = |z|² analytic anywhere?",
-        "options": ["Yes, everywhere", "Yes, only at z = 0", "No, nowhere", "Yes, on the real axis"],
+        "options": [
+          "Yes, everywhere",
+          "Yes, only at z = 0",
+          "No, nowhere",
+          "Yes, on the real axis"
+        ],
         "correctAnswer": "Yes, only at z = 0",
         "explanation": "f(z) = x² + y², so u = x² + y², v = 0. C-R equations are satisfied only at (0,0)"
       },
@@ -55,7 +80,12 @@
         "id": "math401-mid-q6",
         "type": "multiple_choice",
         "prompt": "What is the derivative of f(z) = e^(z²)?",
-        "options": ["e^(z²)", "2ze^(z²)", "z²e^(z²)", "2e^(z²)"],
+        "options": [
+          "e^(z²)",
+          "2ze^(z²)",
+          "z²e^(z²)",
+          "2e^(z²)"
+        ],
         "correctAnswer": "2ze^(z²)",
         "explanation": "Using chain rule: f'(z) = e^(z²) · d/dz(z²) = 2ze^(z²)"
       },
@@ -63,7 +93,12 @@
         "id": "math401-mid-q7",
         "type": "multiple_choice",
         "prompt": "What is the modulus of z = -3 + 4i?",
-        "options": ["1", "5", "7", "25"],
+        "options": [
+          "1",
+          "5",
+          "7",
+          "25"
+        ],
         "correctAnswer": "5",
         "explanation": "|z| = √((-3)² + 4²) = √(9 + 16) = √25 = 5"
       },
@@ -71,15 +106,19 @@
         "id": "math401-mid-q8",
         "type": "true_false",
         "prompt": "Every analytic function is infinitely differentiable.",
-        "options": ["True", "False"],
-        "correctAnswer": "True",
+        "correctAnswer": true,
         "explanation": "This is a fundamental property of analytic functions, following from Cauchy's integral formula."
       },
       {
         "id": "math401-mid-q9",
         "type": "multiple_choice",
         "prompt": "The principal argument of z = -1 - i is:",
-        "options": ["π/4", "-3π/4", "3π/4", "-π/4"],
+        "options": [
+          "π/4",
+          "-3π/4",
+          "3π/4",
+          "-π/4"
+        ],
         "correctAnswer": "-3π/4",
         "explanation": "z = -1 - i is in the third quadrant. arg(z) = arctan(-1/-1) + π adjusted = -3π/4 (principal value in (-π, π])"
       },
@@ -87,7 +126,12 @@
         "id": "math401-mid-q10",
         "type": "multiple_choice",
         "prompt": "Which of the following is NOT a Cauchy-Riemann equation?",
-        "options": ["∂u/∂x = ∂v/∂y", "∂u/∂y = -∂v/∂x", "∂u/∂x = -∂v/∂y", "∂v/∂x = -∂u/∂y"],
+        "options": [
+          "∂u/∂x = ∂v/∂y",
+          "∂u/∂y = -∂v/∂x",
+          "∂u/∂x = -∂v/∂y",
+          "∂v/∂x = -∂u/∂y"
+        ],
         "correctAnswer": "∂u/∂x = -∂v/∂y",
         "explanation": "The Cauchy-Riemann equations are: ∂u/∂x = ∂v/∂y and ∂u/∂y = -∂v/∂x. The third option reverses the sign incorrectly."
       },
@@ -95,7 +139,12 @@
         "id": "math401-mid-q11",
         "type": "multiple_choice",
         "prompt": "Use Cauchy's integral formula to evaluate ∫_{|z|=1} e^z/z dz.",
-        "options": ["0", "e", "2πi", "2πie"],
+        "options": [
+          "0",
+          "e",
+          "2πi",
+          "2πie"
+        ],
         "correctAnswer": "2πi",
         "explanation": "By Cauchy's formula with f(z) = e^z, a = 0: ∫ = 2πi·f(0) = 2πi·1 = 2πi"
       },
@@ -103,7 +152,12 @@
         "id": "math401-mid-q12",
         "type": "multiple_choice",
         "prompt": "Which statement about Liouville's theorem is correct?",
-        "options": ["Every entire function is bounded", "Every bounded entire function is constant", "Every entire function has a zero", "Every constant function is entire"],
+        "options": [
+          "Every entire function is bounded",
+          "Every bounded entire function is constant",
+          "Every entire function has a zero",
+          "Every constant function is entire"
+        ],
         "correctAnswer": "Every bounded entire function is constant",
         "explanation": "Liouville's theorem: If f is entire and bounded, then f is constant."
       },
@@ -111,7 +165,12 @@
         "id": "math401-mid-q13",
         "type": "multiple_choice",
         "prompt": "Apply the maximum modulus principle: if f is analytic on |z| ≤ 1 and |f(z)| ≤ 3 for |z| = 1, what is max|f(z)| for |z| ≤ 1?",
-        "options": ["0", "1", "3", "Cannot determine"],
+        "options": [
+          "0",
+          "1",
+          "3",
+          "Cannot determine"
+        ],
         "correctAnswer": "3",
         "explanation": "Maximum modulus principle: maximum of |f| on a closed bounded domain is attained on the boundary."
       },
@@ -119,15 +178,19 @@
         "id": "math401-mid-q14",
         "type": "true_false",
         "prompt": "The function f(z) = z̄ (complex conjugate) is analytic everywhere.",
-        "options": ["True", "False"],
-        "correctAnswer": "False",
+        "correctAnswer": false,
         "explanation": "f(z) = z̄ does not satisfy the Cauchy-Riemann equations anywhere, so it is nowhere analytic."
       },
       {
         "id": "math401-mid-q15",
         "type": "multiple_choice",
         "prompt": "What is e^(iπ) equal to?",
-        "options": ["1", "-1", "i", "-i"],
+        "options": [
+          "1",
+          "-1",
+          "i",
+          "-i"
+        ],
         "correctAnswer": "-1",
         "explanation": "By Euler's formula: e^(iπ) = cos(π) + i·sin(π) = -1 + 0 = -1"
       },
@@ -135,7 +198,12 @@
         "id": "math401-mid-q16",
         "type": "multiple_choice",
         "prompt": "Evaluate ∫_{|z|=2} dz/(z²+1).",
-        "options": ["0", "πi", "2πi", "4πi"],
+        "options": [
+          "0",
+          "πi",
+          "2πi",
+          "4πi"
+        ],
         "correctAnswer": "0",
         "explanation": "Poles at z = ±i. Residues sum to 0: Res(f,i) = 1/(2i), Res(f,-i) = -1/(2i). Total = 0."
       },
@@ -143,7 +211,12 @@
         "id": "math401-mid-q17",
         "type": "multiple_choice",
         "prompt": "State the Cauchy-Goursat theorem.",
-        "options": ["If f is analytic on and inside γ, then ∫_γ f = 0", "If f is continuous on γ, then ∫_γ f = 0", "If f has a pole inside γ, then ∫_γ f = 2πi", "The integral depends only on endpoints"],
+        "options": [
+          "If f is analytic on and inside γ, then ∫_γ f = 0",
+          "If f is continuous on γ, then ∫_γ f = 0",
+          "If f has a pole inside γ, then ∫_γ f = 2πi",
+          "The integral depends only on endpoints"
+        ],
         "correctAnswer": "If f is analytic on and inside γ, then ∫_γ f = 0",
         "explanation": "Cauchy-Goursat: If f is analytic on a simply connected domain containing γ, then ∫_γ f(z)dz = 0"
       },
@@ -151,7 +224,12 @@
         "id": "math401-mid-q18",
         "type": "multiple_choice",
         "prompt": "Find the radius of convergence of Σ(n!z^n).",
-        "options": ["0", "1", "e", "∞"],
+        "options": [
+          "0",
+          "1",
+          "e",
+          "∞"
+        ],
         "correctAnswer": "0",
         "explanation": "Using ratio test: |aₙ₊₁/aₙ| = (n+1)|z| → ∞ for any z ≠ 0. So R = 0."
       },
@@ -159,7 +237,12 @@
         "id": "math401-mid-q19",
         "type": "multiple_choice",
         "prompt": "Find the radius of convergence of Σ(z^n/n!).",
-        "options": ["0", "1", "e", "∞"],
+        "options": [
+          "0",
+          "1",
+          "e",
+          "∞"
+        ],
         "correctAnswer": "∞",
         "explanation": "This is the series for e^z. The ratio test gives R = ∞."
       },
@@ -167,7 +250,12 @@
         "id": "math401-mid-q20",
         "type": "multiple_choice",
         "prompt": "Classify the singularity of f(z) = sin(z)/z at z = 0.",
-        "options": ["Removable", "Pole of order 1", "Pole of order 2", "Essential"],
+        "options": [
+          "Removable",
+          "Pole of order 1",
+          "Pole of order 2",
+          "Essential"
+        ],
         "correctAnswer": "Removable",
         "explanation": "sin(z)/z = 1 - z²/6 + ... has no negative powers. lim_{z→0} sin(z)/z = 1, so removable."
       },
@@ -175,7 +263,12 @@
         "id": "math401-mid-q21",
         "type": "multiple_choice",
         "prompt": "What is the formula for f^(n)(a) using Cauchy's integral formula?",
-        "options": ["(1/2πi)∫_γ f(z)/(z-a)^n dz", "(n!/2πi)∫_γ f(z)/(z-a)^(n+1) dz", "(1/n!)∫_γ f(z)/(z-a)^n dz", "n!∫_γ f(z)/(z-a) dz"],
+        "options": [
+          "(1/2πi)∫_γ f(z)/(z-a)^n dz",
+          "(n!/2πi)∫_γ f(z)/(z-a)^(n+1) dz",
+          "(1/n!)∫_γ f(z)/(z-a)^n dz",
+          "n!∫_γ f(z)/(z-a) dz"
+        ],
         "correctAnswer": "(n!/2πi)∫_γ f(z)/(z-a)^(n+1) dz",
         "explanation": "Cauchy's generalized formula: f^(n)(a) = (n!/2πi)∫_γ f(z)/(z-a)^(n+1) dz"
       },
@@ -183,15 +276,19 @@
         "id": "math401-mid-q22",
         "type": "true_false",
         "prompt": "If f is entire (analytic everywhere in ℂ), then f has a Taylor series that converges for all z ∈ ℂ.",
-        "options": ["True", "False"],
-        "correctAnswer": "True",
+        "correctAnswer": true,
         "explanation": "An entire function's Taylor series has infinite radius of convergence."
       },
       {
         "id": "math401-mid-q23",
         "type": "multiple_choice",
         "prompt": "Which function is NOT entire?",
-        "options": ["e^z", "sin(z)", "1/z", "z^10 + 3z - 2"],
+        "options": [
+          "e^z",
+          "sin(z)",
+          "1/z",
+          "z^10 + 3z - 2"
+        ],
         "correctAnswer": "1/z",
         "explanation": "1/z has a pole at z = 0, so it is not analytic at the origin and hence not entire."
       },
@@ -199,7 +296,12 @@
         "id": "math401-mid-q24",
         "type": "multiple_choice",
         "prompt": "What is ∫_γ z dz where γ is any closed contour?",
-        "options": ["0", "2πi", "πi", "Depends on γ"],
+        "options": [
+          "0",
+          "2πi",
+          "πi",
+          "Depends on γ"
+        ],
         "correctAnswer": "0",
         "explanation": "z is entire with antiderivative z²/2. For any closed contour, ∫_γ z dz = 0 by Cauchy-Goursat."
       },
@@ -207,7 +309,12 @@
         "id": "math401-mid-q25",
         "type": "multiple_choice",
         "prompt": "Using De Moivre's theorem, what is (1 + i)^8?",
-        "options": ["16", "-16", "16i", "-16i"],
+        "options": [
+          "16",
+          "-16",
+          "16i",
+          "-16i"
+        ],
         "correctAnswer": "16",
         "explanation": "1 + i = √2 e^(iπ/4), so (1+i)^8 = (√2)^8 e^(i8π/4) = 16e^(i2π) = 16"
       },
@@ -215,7 +322,12 @@
         "id": "math401-mid-q26",
         "type": "multiple_choice",
         "prompt": "The mean value property states that for analytic f, f(a) equals:",
-        "options": ["The maximum of f on any circle around a", "The average of f on any circle around a", "The minimum of f on any circle around a", "The derivative at a"],
+        "options": [
+          "The maximum of f on any circle around a",
+          "The average of f on any circle around a",
+          "The minimum of f on any circle around a",
+          "The derivative at a"
+        ],
         "correctAnswer": "The average of f on any circle around a",
         "explanation": "Mean value property: f(a) = (1/2π)∫₀^{2π} f(a + re^{iθ}) dθ for any r where f is analytic."
       }
@@ -238,7 +350,12 @@
         "id": "math401-final-q1",
         "type": "multiple_choice",
         "prompt": "Find the residue of f(z) = z/(z²+1)² at z = i.",
-        "options": ["0", "i/4", "-i/4", "1/4"],
+        "options": [
+          "0",
+          "i/4",
+          "-i/4",
+          "1/4"
+        ],
         "correctAnswer": "-i/4",
         "explanation": "Pole of order 2. Using the formula for order-2 poles: Res(f, i) = -i/4."
       },
@@ -246,7 +363,12 @@
         "id": "math401-final-q2",
         "type": "multiple_choice",
         "prompt": "Evaluate ∫_{-∞}^∞ dx/(x⁴+1) using the residue theorem.",
-        "options": ["π/√2", "π", "2π/√2", "π/2"],
+        "options": [
+          "π/√2",
+          "π",
+          "2π/√2",
+          "π/2"
+        ],
         "correctAnswer": "π/√2",
         "explanation": "Poles in upper half-plane at e^(iπ/4) and e^(i3π/4). Computing residues gives π/√2."
       },
@@ -254,7 +376,12 @@
         "id": "math401-final-q3",
         "type": "multiple_choice",
         "prompt": "Use residues to evaluate ∫_0^{2π} dθ/(5 + 3cos(θ)).",
-        "options": ["π/2", "π/4", "π/3", "2π/3"],
+        "options": [
+          "π/2",
+          "π/4",
+          "π/3",
+          "2π/3"
+        ],
         "correctAnswer": "π/2",
         "explanation": "Substitute z = e^(iθ), cos(θ) = (z + 1/z)/2. Find poles inside |z|=1, compute residues."
       },
@@ -262,7 +389,12 @@
         "id": "math401-final-q4",
         "type": "multiple_choice",
         "prompt": "State Jordan's Lemma.",
-        "options": ["Semicircular arc integral vanishes for f→0", "All contour integrals are zero", "Residues sum to zero", "Poles must be simple"],
+        "options": [
+          "Semicircular arc integral vanishes for f→0",
+          "All contour integrals are zero",
+          "Residues sum to zero",
+          "Poles must be simple"
+        ],
         "correctAnswer": "Semicircular arc integral vanishes for f→0",
         "explanation": "Jordan's Lemma: If f→0 uniformly on semicircle C_R and a>0, then ∫_{C_R} f(z)e^(iaz)dz → 0 as R→∞."
       },
@@ -270,7 +402,12 @@
         "id": "math401-final-q5",
         "type": "multiple_choice",
         "prompt": "Compute ∫_{-∞}^∞ (cos(x))/(x²+1) dx using residues.",
-        "options": ["π/e", "π", "2π/e", "e/π"],
+        "options": [
+          "π/e",
+          "π",
+          "2π/e",
+          "e/π"
+        ],
         "correctAnswer": "π/e",
         "explanation": "Consider ∫ e^(ix)/(x²+1) dx. Pole at z=i. Res = e^(-1)/(2i). Real part gives π/e."
       },
@@ -278,7 +415,12 @@
         "id": "math401-final-q6",
         "type": "multiple_choice",
         "prompt": "Show that f(z) = z² is conformal except at z = 0. At critical points, angles are:",
-        "options": ["Preserved", "Doubled", "Halved", "Tripled"],
+        "options": [
+          "Preserved",
+          "Doubled",
+          "Halved",
+          "Tripled"
+        ],
         "correctAnswer": "Doubled",
         "explanation": "f'(z) = 2z = 0 at z=0. At critical point, angles are multiplied by 2."
       },
@@ -286,7 +428,12 @@
         "id": "math401-final-q7",
         "type": "multiple_choice",
         "prompt": "The map w = e^z sends horizontal lines to:",
-        "options": ["Vertical lines", "Rays from origin", "Circles", "Hyperbolas"],
+        "options": [
+          "Vertical lines",
+          "Rays from origin",
+          "Circles",
+          "Hyperbolas"
+        ],
         "correctAnswer": "Rays from origin",
         "explanation": "Horizontal line y=c maps to: |w| = e^x varies, arg(w) = c constant, giving a ray."
       },
@@ -294,7 +441,12 @@
         "id": "math401-final-q8",
         "type": "multiple_choice",
         "prompt": "State the Riemann Mapping Theorem.",
-        "options": ["All domains are conformally equivalent", "Simply connected domain (≠ℂ) maps conformally to unit disk", "Every function has a conformal extension", "Möbius maps are the only conformal maps"],
+        "options": [
+          "All domains are conformally equivalent",
+          "Simply connected domain (≠ℂ) maps conformally to unit disk",
+          "Every function has a conformal extension",
+          "Möbius maps are the only conformal maps"
+        ],
         "correctAnswer": "Simply connected domain (≠ℂ) maps conformally to unit disk",
         "explanation": "Any simply connected proper subdomain of ℂ is conformally equivalent to the unit disk."
       },
@@ -302,7 +454,12 @@
         "id": "math401-final-q9",
         "type": "multiple_choice",
         "prompt": "Which kernel solves the Dirichlet problem in the half-plane?",
-        "options": ["Cauchy kernel", "Poisson kernel", "Dirichlet kernel", "Fejér kernel"],
+        "options": [
+          "Cauchy kernel",
+          "Poisson kernel",
+          "Dirichlet kernel",
+          "Fejér kernel"
+        ],
         "correctAnswer": "Poisson kernel",
         "explanation": "The Poisson kernel for the half-plane solves Laplace's equation with given boundary values."
       },
@@ -310,7 +467,12 @@
         "id": "math401-final-q10",
         "type": "multiple_choice",
         "prompt": "Classify the singularity of f(z) = (e^z - 1)/z³ at z = 0.",
-        "options": ["Removable", "Pole of order 2", "Pole of order 3", "Essential"],
+        "options": [
+          "Removable",
+          "Pole of order 2",
+          "Pole of order 3",
+          "Essential"
+        ],
         "correctAnswer": "Pole of order 2",
         "explanation": "e^z - 1 = z + z²/2 + ... So f(z) = 1/z² + 1/(2z) + ... Pole of order 2."
       },
@@ -318,7 +480,12 @@
         "id": "math401-final-q11",
         "type": "multiple_choice",
         "prompt": "Find the Laurent series of f(z) = e^(1/z) about z = 0.",
-        "options": ["Σ z^n/n!", "Σ 1/(n!z^n)", "1 + 1/z + 1/(2!z²) + ...", "Does not exist"],
+        "options": [
+          "Σ z^n/n!",
+          "Σ 1/(n!z^n)",
+          "1 + 1/z + 1/(2!z²) + ...",
+          "Does not exist"
+        ],
         "correctAnswer": "1 + 1/z + 1/(2!z²) + ...",
         "explanation": "e^(1/z) = 1 + 1/z + 1/(2!z²) + ... (infinitely many negative powers, essential singularity)"
       },
@@ -326,7 +493,12 @@
         "id": "math401-final-q12",
         "type": "multiple_choice",
         "prompt": "Which is NOT a property of Möbius transformations?",
-        "options": ["Maps circles to circles", "Preserves angles", "Preserves distances", "Forms a group under composition"],
+        "options": [
+          "Maps circles to circles",
+          "Preserves angles",
+          "Preserves distances",
+          "Forms a group under composition"
+        ],
         "correctAnswer": "Preserves distances",
         "explanation": "Möbius transformations preserve angles and map circles to circles, but do NOT preserve distances."
       },
@@ -334,7 +506,12 @@
         "id": "math401-final-q13",
         "type": "multiple_choice",
         "prompt": "To evaluate ∫_0^∞ (sin(x))/x dx using residues, integrate which function?",
-        "options": ["sin(z)/z", "e^(iz)/z", "(e^(iz) - e^(-iz))/(2iz)", "cos(z)/z"],
+        "options": [
+          "sin(z)/z",
+          "e^(iz)/z",
+          "(e^(iz) - e^(-iz))/(2iz)",
+          "cos(z)/z"
+        ],
         "correctAnswer": "e^(iz)/z",
         "explanation": "Consider ∫ e^(iz)/z dz. By Jordan's lemma and semicircular contour with indent at origin."
       },
@@ -342,7 +519,12 @@
         "id": "math401-final-q14",
         "type": "multiple_choice",
         "prompt": "Find the residue of f(z) = 1/(z²-1) at z = 1.",
-        "options": ["1/2", "-1/2", "1", "-1"],
+        "options": [
+          "1/2",
+          "-1/2",
+          "1",
+          "-1"
+        ],
         "correctAnswer": "1/2",
         "explanation": "f(z) = 1/[(z-1)(z+1)]. Simple pole at z=1. Res = lim_{z→1} (z-1)f(z) = 1/2."
       },
@@ -350,7 +532,12 @@
         "id": "math401-final-q15",
         "type": "multiple_choice",
         "prompt": "What is the order of the pole of f(z) = 1/(z³sin(z)) at z = 0?",
-        "options": ["1", "2", "3", "4"],
+        "options": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
         "correctAnswer": "4",
         "explanation": "sin(z) has a simple zero at 0, so 1/sin(z) has order-1 pole. Combined with 1/z³, total order is 4."
       },
@@ -358,7 +545,12 @@
         "id": "math401-final-q16",
         "type": "multiple_choice",
         "prompt": "Use Rouché's theorem: How many roots does z^5 + 3z + 1 have in |z| < 2?",
-        "options": ["1", "3", "5", "0"],
+        "options": [
+          "1",
+          "3",
+          "5",
+          "0"
+        ],
         "correctAnswer": "5",
         "explanation": "Let f(z) = z^5, g(z) = 3z+1. On |z|=2: |f| = 32, |g| ≤ 7 < 32. Same roots as z^5, which has 5."
       },
@@ -366,7 +558,12 @@
         "id": "math401-final-q17",
         "type": "multiple_choice",
         "prompt": "The argument principle relates ∫_γ f'/f dz to:",
-        "options": ["The sum of residues", "N - P (zeros minus poles)", "The winding number", "The maximum modulus"],
+        "options": [
+          "The sum of residues",
+          "N - P (zeros minus poles)",
+          "The winding number",
+          "The maximum modulus"
+        ],
         "correctAnswer": "N - P (zeros minus poles)",
         "explanation": "Argument principle: (1/2πi)∫_γ f'/f dz = N - P, where N = zeros, P = poles inside γ."
       },
@@ -374,15 +571,19 @@
         "id": "math401-final-q18",
         "type": "true_false",
         "prompt": "Every Möbius transformation can be written as a composition of translations, rotations, dilations, and inversions.",
-        "options": ["True", "False"],
-        "correctAnswer": "True",
+        "correctAnswer": true,
         "explanation": "Any Möbius transformation (az+b)/(cz+d) decomposes into elementary transformations."
       },
       {
         "id": "math401-final-q19",
         "type": "multiple_choice",
         "prompt": "Find the image of the upper half-plane under w = (z-i)/(z+i).",
-        "options": ["Upper half-plane", "Unit disk", "Lower half-plane", "Exterior of unit disk"],
+        "options": [
+          "Upper half-plane",
+          "Unit disk",
+          "Lower half-plane",
+          "Exterior of unit disk"
+        ],
         "correctAnswer": "Unit disk",
         "explanation": "This Möbius transformation maps the upper half-plane to the unit disk, with i → 0."
       },
@@ -390,7 +591,12 @@
         "id": "math401-final-q20",
         "type": "multiple_choice",
         "prompt": "The Schwarz-Christoffel formula is used to map:",
-        "options": ["Disk to disk", "Half-plane to polygon", "Annulus to strip", "Circle to line"],
+        "options": [
+          "Disk to disk",
+          "Half-plane to polygon",
+          "Annulus to strip",
+          "Circle to line"
+        ],
         "correctAnswer": "Half-plane to polygon",
         "explanation": "Schwarz-Christoffel provides explicit conformal maps from upper half-plane to polygonal domains."
       },
@@ -398,7 +604,12 @@
         "id": "math401-final-q21",
         "type": "multiple_choice",
         "prompt": "Find the radius of convergence of Σ z^n/n² around z = 0.",
-        "options": ["0", "1", "2", "∞"],
+        "options": [
+          "0",
+          "1",
+          "2",
+          "∞"
+        ],
         "correctAnswer": "1",
         "explanation": "Using root test: |a_n|^(1/n) = 1/n^(2/n) → 1 as n → ∞. So R = 1."
       },
@@ -406,7 +617,12 @@
         "id": "math401-final-q22",
         "type": "multiple_choice",
         "prompt": "If f is analytic at z₀ with f(z₀) = 0 and f'(z₀) ≠ 0, then z₀ is:",
-        "options": ["A removable singularity", "A simple zero", "A zero of order 2", "A pole"],
+        "options": [
+          "A removable singularity",
+          "A simple zero",
+          "A zero of order 2",
+          "A pole"
+        ],
         "correctAnswer": "A simple zero",
         "explanation": "f(z₀) = 0 means z₀ is a zero. f'(z₀) ≠ 0 means the zero has order exactly 1 (simple)."
       },
@@ -414,7 +630,12 @@
         "id": "math401-final-q23",
         "type": "multiple_choice",
         "prompt": "What is the cross-ratio (z₁, z₂; z₃, z₄)?",
-        "options": ["(z₁-z₃)(z₂-z₄)/[(z₁-z₄)(z₂-z₃)]", "(z₁+z₂)/(z₃+z₄)", "z₁z₂/(z₃z₄)", "(z₁-z₂)(z₃-z₄)"],
+        "options": [
+          "(z₁-z₃)(z₂-z₄)/[(z₁-z₄)(z₂-z₃)]",
+          "(z₁+z₂)/(z₃+z₄)",
+          "z₁z₂/(z₃z₄)",
+          "(z₁-z₂)(z₃-z₄)"
+        ],
         "correctAnswer": "(z₁-z₃)(z₂-z₄)/[(z₁-z₄)(z₂-z₃)]",
         "explanation": "The cross-ratio is preserved by Möbius transformations and defined by this formula."
       },
@@ -422,15 +643,19 @@
         "id": "math401-final-q24",
         "type": "true_false",
         "prompt": "Two annuli with different moduli (ratio of radii) cannot be conformally equivalent.",
-        "options": ["True", "False"],
-        "correctAnswer": "True",
+        "correctAnswer": true,
         "explanation": "The modulus of an annulus is a conformal invariant. Different moduli ⟹ not conformally equivalent."
       },
       {
         "id": "math401-final-q25",
         "type": "multiple_choice",
         "prompt": "Find ∫_{|z|=1} (z + 1/z) dz.",
-        "options": ["0", "2πi", "4πi", "-2πi"],
+        "options": [
+          "0",
+          "2πi",
+          "4πi",
+          "-2πi"
+        ],
         "correctAnswer": "2πi",
         "explanation": "∫ z dz = 0 (entire). ∫ dz/z = 2πi. Total = 2πi."
       },
@@ -438,7 +663,12 @@
         "id": "math401-final-q26",
         "type": "multiple_choice",
         "prompt": "What type of singularity does f(z) = e^(1/z) have at z = 0?",
-        "options": ["Removable", "Simple pole", "Pole of order 2", "Essential"],
+        "options": [
+          "Removable",
+          "Simple pole",
+          "Pole of order 2",
+          "Essential"
+        ],
         "correctAnswer": "Essential",
         "explanation": "The Laurent series has infinitely many negative powers, indicating an essential singularity."
       },
@@ -446,7 +676,12 @@
         "id": "math401-final-q27",
         "type": "multiple_choice",
         "prompt": "The Joukowski transformation w = z + 1/z maps the unit circle to:",
-        "options": ["Another circle", "An ellipse", "The segment [-2, 2]", "A parabola"],
+        "options": [
+          "Another circle",
+          "An ellipse",
+          "The segment [-2, 2]",
+          "A parabola"
+        ],
         "correctAnswer": "The segment [-2, 2]",
         "explanation": "For |z| = 1: w = e^(iθ) + e^(-iθ) = 2cos(θ), tracing [-2, 2] twice."
       },
@@ -454,7 +689,12 @@
         "id": "math401-final-q28",
         "type": "multiple_choice",
         "prompt": "If f is conformal at z₀, which condition must hold?",
-        "options": ["f(z₀) = 0", "f'(z₀) = 0", "f'(z₀) ≠ 0", "f is entire"],
+        "options": [
+          "f(z₀) = 0",
+          "f'(z₀) = 0",
+          "f'(z₀) ≠ 0",
+          "f is entire"
+        ],
         "correctAnswer": "f'(z₀) ≠ 0",
         "explanation": "Conformality requires f to be analytic with non-zero derivative."
       },
@@ -462,7 +702,12 @@
         "id": "math401-final-q29",
         "type": "multiple_choice",
         "prompt": "Evaluate ∫_{|z|=2} dz/[(z-1)(z-3)].",
-        "options": ["0", "πi", "-πi", "2πi"],
+        "options": [
+          "0",
+          "πi",
+          "-πi",
+          "2πi"
+        ],
         "correctAnswer": "-πi",
         "explanation": "Only z=1 is inside |z|=2. Res = 1/(1-3) = -1/2. Integral = 2πi(-1/2) = -πi."
       },
@@ -470,7 +715,12 @@
         "id": "math401-final-q30",
         "type": "multiple_choice",
         "prompt": "What is the residue of f(z) = cot(z) at z = 0?",
-        "options": ["0", "1", "-1", "π"],
+        "options": [
+          "0",
+          "1",
+          "-1",
+          "π"
+        ],
         "correctAnswer": "1",
         "explanation": "cot(z) = cos(z)/sin(z). Simple pole at 0. Res = cos(0)/[d/dz sin(z)]_{z=0} = 1/1 = 1."
       },
@@ -478,7 +728,12 @@
         "id": "math401-final-q31",
         "type": "multiple_choice",
         "prompt": "Find the Laurent series of 1/(z(z-1)) for 0 < |z| < 1.",
-        "options": ["-1/z - 1 - z - z² - ...", "1/z + 1 + z + z² + ...", "-1/z + 1 + z + z² + ...", "1/z - 1 - z - z² - ..."],
+        "options": [
+          "-1/z - 1 - z - z² - ...",
+          "1/z + 1 + z + z² + ...",
+          "-1/z + 1 + z + z² + ...",
+          "1/z - 1 - z - z² - ..."
+        ],
         "correctAnswer": "-1/z - 1 - z - z² - ...",
         "explanation": "Partial fractions: -1/z + 1/(z-1) = -1/z - 1/(1-z) = -1/z - (1 + z + z² + ...)"
       },
@@ -486,15 +741,19 @@
         "id": "math401-final-q32",
         "type": "true_false",
         "prompt": "The identity theorem states that if two analytic functions agree on a set with a limit point in their domain, they are identical.",
-        "options": ["True", "False"],
-        "correctAnswer": "True",
+        "correctAnswer": true,
         "explanation": "The identity theorem is fundamental: agreement on a convergent sequence implies agreement everywhere in the connected domain."
       },
       {
         "id": "math401-final-q33",
         "type": "multiple_choice",
         "prompt": "All conformal automorphisms of the unit disk have the form:",
-        "options": ["az + b", "e^(iθ)(z-a)/(1-āz)", "1/z", "e^z"],
+        "options": [
+          "az + b",
+          "e^(iθ)(z-a)/(1-āz)",
+          "1/z",
+          "e^z"
+        ],
         "correctAnswer": "e^(iθ)(z-a)/(1-āz)",
         "explanation": "Automorphisms of the unit disk are Blaschke factors composed with rotations."
       },
@@ -502,7 +761,12 @@
         "id": "math401-final-q34",
         "type": "multiple_choice",
         "prompt": "The exponential map w = e^z maps vertical lines to:",
-        "options": ["Rays from origin", "Circles centered at origin", "Vertical lines", "Horizontal lines"],
+        "options": [
+          "Rays from origin",
+          "Circles centered at origin",
+          "Vertical lines",
+          "Horizontal lines"
+        ],
         "correctAnswer": "Circles centered at origin",
         "explanation": "Vertical line x = c: w = e^c e^(iy) traces a circle of radius e^c."
       },
@@ -510,7 +774,12 @@
         "id": "math401-final-q35",
         "type": "multiple_choice",
         "prompt": "Evaluate ∫_0^∞ dx/(1+x²)² using residues.",
-        "options": ["π/4", "π/2", "π", "2π"],
+        "options": [
+          "π/4",
+          "π/2",
+          "π",
+          "2π"
+        ],
         "correctAnswer": "π/4",
         "explanation": "Double pole at z=i. Res = d/dz[1/(z+i)²] at z=i = -1/(4i). Integral = πi·(-1/(4i)) = π/4."
       },
@@ -518,7 +787,12 @@
         "id": "math401-final-q36",
         "type": "multiple_choice",
         "prompt": "What does Morera's theorem state?",
-        "options": ["If f is continuous and ∫_γ f = 0 for all closed γ, then f is analytic", "Every analytic function is continuous", "Bounded entire functions are constant", "Analytic functions have antiderivatives"],
+        "options": [
+          "If f is continuous and ∫_γ f = 0 for all closed γ, then f is analytic",
+          "Every analytic function is continuous",
+          "Bounded entire functions are constant",
+          "Analytic functions have antiderivatives"
+        ],
         "correctAnswer": "If f is continuous and ∫_γ f = 0 for all closed γ, then f is analytic",
         "explanation": "Morera's theorem is the converse of Cauchy-Goursat."
       },
@@ -526,7 +800,12 @@
         "id": "math401-final-q37",
         "type": "multiple_choice",
         "prompt": "Find the image of the first quadrant under w = z².",
-        "options": ["First quadrant", "Upper half-plane", "Right half-plane", "Entire plane"],
+        "options": [
+          "First quadrant",
+          "Upper half-plane",
+          "Right half-plane",
+          "Entire plane"
+        ],
         "correctAnswer": "Upper half-plane",
         "explanation": "z² doubles angles. First quadrant (0 to π/2) maps to upper half-plane (0 to π)."
       },
@@ -534,7 +813,12 @@
         "id": "math401-final-q38",
         "type": "multiple_choice",
         "prompt": "If f has a pole of order n at z₀, what is the order of the pole of f² at z₀?",
-        "options": ["n", "2n", "n²", "n/2"],
+        "options": [
+          "n",
+          "2n",
+          "n²",
+          "n/2"
+        ],
         "correctAnswer": "2n",
         "explanation": "If f ~ 1/(z-z₀)^n near z₀, then f² ~ 1/(z-z₀)^(2n)."
       },
@@ -542,15 +826,19 @@
         "id": "math401-final-q39",
         "type": "true_false",
         "prompt": "The sum of all residues of a rational function (including at infinity) is zero.",
-        "options": ["True", "False"],
-        "correctAnswer": "True",
+        "correctAnswer": true,
         "explanation": "This follows from the residue theorem applied to a large contour containing all finite poles."
       },
       {
         "id": "math401-final-q40",
         "type": "multiple_choice",
         "prompt": "What is the Casorati-Weierstrass theorem about essential singularities?",
-        "options": ["f is bounded near essential singularity", "f takes every value infinitely often", "The image of any punctured neighborhood is dense in ℂ", "f has a Laurent series"],
+        "options": [
+          "f is bounded near essential singularity",
+          "f takes every value infinitely often",
+          "The image of any punctured neighborhood is dense in ℂ",
+          "f has a Laurent series"
+        ],
         "correctAnswer": "The image of any punctured neighborhood is dense in ℂ",
         "explanation": "Near an essential singularity, f comes arbitrarily close to every complex value."
       },
@@ -558,7 +846,12 @@
         "id": "math401-final-q41",
         "type": "multiple_choice",
         "prompt": "Find the principal part of the Laurent series of f(z) = 1/(z²(z-1)) at z = 0.",
-        "options": ["1/z² + 1/z", "-1/z² - 1/z", "1/z²", "-1/z² + 1/z"],
+        "options": [
+          "1/z² + 1/z",
+          "-1/z² - 1/z",
+          "1/z²",
+          "-1/z² + 1/z"
+        ],
         "correctAnswer": "-1/z² - 1/z",
         "explanation": "f(z) = -1/z² · 1/(1-z) = -1/z² (1 + z + z² + ...) = -1/z² - 1/z - 1 - ..."
       },
@@ -566,7 +859,12 @@
         "id": "math401-final-q42",
         "type": "multiple_choice",
         "prompt": "What is the winding number of the circle |z| = 2 (counterclockwise) about z = 1?",
-        "options": ["0", "1", "2", "-1"],
+        "options": [
+          "0",
+          "1",
+          "2",
+          "-1"
+        ],
         "correctAnswer": "1",
         "explanation": "z = 1 is inside |z| = 2. The winding number is 1 for counterclockwise traversal."
       }
