@@ -10,7 +10,7 @@ export interface EvaluationResult {
   improvements: string[];
 }
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
 
 /** Response structure from Gemini API */
 interface GeminiResponse {

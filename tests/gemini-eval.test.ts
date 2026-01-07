@@ -43,6 +43,27 @@ function createErrorResponse(status: number, message: string): Response {
   return new Response(message, { status });
 }
 
+describe('Gemini API URL configuration', () => {
+  it('uses the correct Gemini model (gemini-1.5-pro)', async () => {
+    mockFetch.mockResolvedValueOnce(
+      createGeminiResponse({
+        passed: true,
+        score: 80,
+        feedback: 'Good',
+        strengths: [],
+        improvements: [],
+      })
+    );
+
+    await evaluateWrittenExercise('test-key', 'problem', 'solution', 'answer');
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining('gemini-1.5-pro'),
+      expect.any(Object)
+    );
+  });
+});
+
 describe('evaluateWrittenExercise', () => {
   const apiKey = 'test-api-key';
   const problem = 'Explain the difference between a stack and a queue.';
