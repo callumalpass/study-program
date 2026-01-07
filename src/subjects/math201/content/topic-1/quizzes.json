@@ -158,7 +158,7 @@
         "type": "true_false",
         "prompt": "If $Ax = b$ is consistent for every vector $b$, then $A$ must be square.",
         "correctAnswer": false,
-        "explanation": "False. The statement is true only if we require a unique solution for every $b$. For consistency alone, $A$ could have more rows than columns."
+        "explanation": "False. For $Ax = b$ to be consistent for every $b$, $A$ must have full row rank (columns span $\\mathbb{R}^m$). This requires at least as many columns as rows, so $A$ could be wide (more columns than rows) or square, but not tall. A tall matrix cannot span all possible $b$ vectors."
       },
       {
         "id": "math201-q1c-4",
