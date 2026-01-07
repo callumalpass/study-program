@@ -249,6 +249,71 @@ function sjfScheduling(processes: Process[]): SchedulingResult {
 }
 
 /**
+ * SRTF (Shortest Remaining Time First) Preemptive Scheduling
+ * Preempts current process if a new arrival has shorter remaining time.
+ */
+function srtfScheduling(processes: Process[]): SchedulingResult {
+  const remaining = processes.map(p => ({ ...p, remainingTime: p.burstTime }));
+  const timeline: SchedulingResult['timeline'] = [];
+  const completionTimes: Record<string, number> = {};
+  let currentTime = 0;
+
+  // Get all unique event times (arrivals)
+  const arrivals = [...new Set(processes.map(p => p.arrivalTime))].sort((a, b) => a - b);
+  let arrivalIndex = 0;
+
+  while (remaining.some(p => p.remainingTime > 0)) {
+    // Get processes that have arrived and have remaining time
+    const available = remaining.filter(p => p.arrivalTime <= currentTime && p.remainingTime > 0);
+
+    if (available.length === 0) {
+      // Jump to next arrival
+      const nextArrival = remaining
+        .filter(p => p.remainingTime > 0 && p.arrivalTime > currentTime)
+        .reduce((min, p) => (p.arrivalTime < min ? p.arrivalTime : min), Infinity);
+
+      if (nextArrival === Infinity) break;
+      currentTime = nextArrival;
+      continue;
+    }
+
+    // Select process with shortest remaining time
+    available.sort((a, b) => a.remainingTime - b.remainingTime);
+    const process = available[0];
+
+    // Find next preemption point (next arrival)
+    const nextPreemption = remaining
+      .filter(p => p.arrivalTime > currentTime && p.remainingTime > 0)
+      .reduce((min, p) => (p.arrivalTime < min ? p.arrivalTime : min), Infinity);
+
+    // Run until completion or next arrival
+    const runTime =
+      nextPreemption === Infinity
+        ? process.remainingTime
+        : Math.min(process.remainingTime, nextPreemption - currentTime);
+
+    const start = currentTime;
+    const end = start + runTime;
+
+    // Merge with previous timeline entry if same process
+    if (timeline.length > 0 && timeline[timeline.length - 1].process === process.id && timeline[timeline.length - 1].end === start) {
+      timeline[timeline.length - 1].end = end;
+    } else {
+      timeline.push({ process: process.id, start, end });
+    }
+
+    process.remainingTime -= runTime;
+    currentTime = end;
+
+    if (process.remainingTime === 0) {
+      completionTimes[process.id] = end;
+    }
+  }
+
+  return calculateMetrics(processes, completionTimes, timeline);
+}
+
+/**
  * Round Robin Scheduling
  */
 function roundRobinScheduling(processes: Process[], quantum: number): SchedulingResult {
@@ -617,6 +682,149 @@ describe('CPU Scheduling Algorithms', () => {
       const p2Slots = result.timeline.filter(t => t.process === 'P2').length;
 
       expect(p1Slots).toBe(p2Slots);
+    });
+  });
+
+  describe('SRTF (Shortest Remaining Time First) Scheduling', () => {
+    it('preempts when shorter process arrives (topic-3.md example)', () => {
+      // Example from topic-3.md lines 159-180
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 8 },
+        { id: 'P2', arrivalTime: 1, burstTime: 4 },
+        { id: 'P3', arrivalTime: 2, burstTime: 9 },
+        { id: 'P4', arrivalTime: 3, burstTime: 5 },
+      ];
+
+      const result = srtfScheduling(processes);
+
+      // Timeline should be:
+      // Time 0-1: P1 runs (remaining 7)
+      // Time 1: P2 arrives (4 < 7), preempt
+      // Time 1-5: P2 runs to completion
+      // Time 5-10: P4 runs (5 < 7 < 9)
+      // Time 10-17: P1 runs to completion
+      // Time 17-26: P3 runs to completion
+
+      expect(result.timeline[0]).toEqual({ process: 'P1', start: 0, end: 1 });
+      expect(result.timeline[1]).toEqual({ process: 'P2', start: 1, end: 5 });
+      expect(result.timeline[2]).toEqual({ process: 'P4', start: 5, end: 10 });
+      expect(result.timeline[3]).toEqual({ process: 'P1', start: 10, end: 17 });
+      expect(result.timeline[4]).toEqual({ process: 'P3', start: 17, end: 26 });
+    });
+
+    it('does not preempt when current process has shorter remaining time', () => {
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 3 },
+        { id: 'P2', arrivalTime: 1, burstTime: 5 },
+      ];
+
+      const result = srtfScheduling(processes);
+
+      // P1 starts, has 2 remaining at time 1
+      // P2 arrives with burst 5 > 2, no preemption
+      expect(result.timeline[0]).toEqual({ process: 'P1', start: 0, end: 3 });
+      expect(result.timeline[1]).toEqual({ process: 'P2', start: 3, end: 8 });
+    });
+
+    it('behaves like SJF when all processes arrive at same time', () => {
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 6 },
+        { id: 'P2', arrivalTime: 0, burstTime: 8 },
+        { id: 'P3', arrivalTime: 0, burstTime: 7 },
+        { id: 'P4', arrivalTime: 0, burstTime: 3 },
+      ];
+
+      const srtfResult = srtfScheduling(processes);
+      const sjfResult = sjfScheduling(processes);
+
+      // Same order as SJF when all arrive at time 0
+      expect(srtfResult.timeline.map(t => t.process)).toEqual(
+        sjfResult.timeline.map(t => t.process)
+      );
+    });
+
+    it('calculates correct waiting times with preemption', () => {
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 8 },
+        { id: 'P2', arrivalTime: 1, burstTime: 4 },
+        { id: 'P3', arrivalTime: 2, burstTime: 9 },
+        { id: 'P4', arrivalTime: 3, burstTime: 5 },
+      ];
+
+      const result = srtfScheduling(processes);
+
+      // P1: arrives 0, completes 17, turnaround 17, wait 17-8=9
+      // P2: arrives 1, completes 5, turnaround 4, wait 4-4=0
+      // P3: arrives 2, completes 26, turnaround 24, wait 24-9=15
+      // P4: arrives 3, completes 10, turnaround 7, wait 7-5=2
+
+      expect(result.waitingTimes['P1']).toBe(9);
+      expect(result.waitingTimes['P2']).toBe(0);
+      expect(result.waitingTimes['P3']).toBe(15);
+      expect(result.waitingTimes['P4']).toBe(2);
+    });
+
+    it('achieves optimal average waiting time', () => {
+      // SRTF is optimal for minimizing average waiting time
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 8 },
+        { id: 'P2', arrivalTime: 1, burstTime: 4 },
+        { id: 'P3', arrivalTime: 2, burstTime: 9 },
+        { id: 'P4', arrivalTime: 3, burstTime: 5 },
+      ];
+
+      const srtfResult = srtfScheduling(processes);
+      const fcfsResult = fcfsScheduling(processes);
+      const sjfResult = sjfScheduling(processes);
+
+      // SRTF should have lower or equal average wait time than FCFS and non-preemptive SJF
+      expect(srtfResult.averageWaitingTime).toBeLessThanOrEqual(fcfsResult.averageWaitingTime);
+      expect(srtfResult.averageWaitingTime).toBeLessThanOrEqual(sjfResult.averageWaitingTime);
+    });
+
+    it('handles gap between process arrivals', () => {
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 2 },
+        { id: 'P2', arrivalTime: 5, burstTime: 3 },
+      ];
+
+      const result = srtfScheduling(processes);
+
+      // P1 runs 0-2, gap 2-5, P2 runs 5-8
+      expect(result.timeline[0]).toEqual({ process: 'P1', start: 0, end: 2 });
+      expect(result.timeline[1]).toEqual({ process: 'P2', start: 5, end: 8 });
+    });
+
+    it('handles multiple preemptions for same process', () => {
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 10 },
+        { id: 'P2', arrivalTime: 2, burstTime: 2 },
+        { id: 'P3', arrivalTime: 4, burstTime: 2 },
+      ];
+
+      const result = srtfScheduling(processes);
+
+      // P1: 0-2 (8 remaining)
+      // P2: 2-4 (preempts P1, completes)
+      // P3: 4-6 (preempts P1, completes)
+      // P1: 6-14 (resumes and completes)
+
+      expect(result.timeline[0]).toEqual({ process: 'P1', start: 0, end: 2 });
+      expect(result.timeline[1]).toEqual({ process: 'P2', start: 2, end: 4 });
+      expect(result.timeline[2]).toEqual({ process: 'P3', start: 4, end: 6 });
+      expect(result.timeline[3]).toEqual({ process: 'P1', start: 6, end: 14 });
+    });
+
+    it('handles tie-breaking by selecting first in list', () => {
+      const processes: Process[] = [
+        { id: 'P1', arrivalTime: 0, burstTime: 3 },
+        { id: 'P2', arrivalTime: 0, burstTime: 3 },
+      ];
+
+      const result = srtfScheduling(processes);
+
+      // Both have same burst, P1 should run first (appears first in list)
+      expect(result.timeline[0].process).toBe('P1');
     });
   });
 });
