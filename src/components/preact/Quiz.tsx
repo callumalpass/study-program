@@ -1,8 +1,9 @@
 import { h, Fragment } from 'preact';
 import { useState, useEffect, useCallback, useRef } from 'preact/hooks';
-import type { Quiz as QuizType, Exam, QuizQuestion, QuizAttempt, QuizAnswer, CodingAnswer } from '@/core/types';
+import type { Quiz as QuizType, Exam, QuizAttempt, QuizAnswer } from '@/core/types';
 import { Icons } from '@/components/icons';
 import { Question } from './Question';
+import { checkAnswer, calculateScore } from '@/utils/quiz-utils';
 
 interface QuizProps {
   quiz: QuizType | Exam;
@@ -21,74 +22,6 @@ function formatTimeRemaining(seconds: number): string {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
   return `${mins}:${secs.toString().padStart(2, '0')}`;
-}
-
-function isCodingAnswer(answer: QuizAnswer | undefined): answer is CodingAnswer {
-  return typeof answer === 'object' && answer !== null && 'code' in answer;
-}
-
-/**
- * Get the correct option index for a multiple choice question.
- * Handles both numeric indices and string values that match an option.
- */
-function getCorrectOptionIndex(question: QuizQuestion): number {
-  const correctAnswer = question.correctAnswer;
-
-  // If already a number, return it directly
-  if (typeof correctAnswer === 'number') {
-    return correctAnswer;
-  }
-
-  // If a string, find the matching option index
-  if (typeof correctAnswer === 'string' && question.options) {
-    const index = question.options.indexOf(correctAnswer);
-    if (index !== -1) {
-      return index;
-    }
-  }
-
-  // Fallback: return -1 to indicate no valid answer found
-  return -1;
-}
-
-function checkAnswer(question: QuizQuestion, answer: QuizAnswer | undefined): boolean {
-  if (answer === undefined) return false;
-
-  switch (question.type) {
-    case 'multiple_choice': {
-      // For multiple choice, compare the selected index to the correct index
-      const correctIndex = getCorrectOptionIndex(question);
-      return answer === correctIndex;
-    }
-    case 'true_false':
-      return answer === question.correctAnswer;
-    case 'fill_blank':
-    case 'code_output':
-    case 'written': {
-      const textAnswer = typeof answer === 'string' ? answer : '';
-      return normalizeAnswer(textAnswer) === normalizeAnswer(question.correctAnswer);
-    }
-    case 'coding':
-      return isCodingAnswer(answer) && answer.passed === true;
-    default:
-      return false;
-  }
-}
-
-function normalizeAnswer(value: string | number | boolean | undefined): string {
-  if (value === undefined) return '';
-  return String(value).trim().toLowerCase();
-}
-
-function calculateScore(quiz: QuizType | Exam, answers: Record<string, QuizAnswer>): number {
-  if (quiz.questions.length === 0) return 0;
-  let correct = 0;
-  quiz.questions.forEach((question) => {
-    if (checkAnswer(question, answers[question.id])) {
-      correct++;
-    }
-  });
-  return Math.round((correct / quiz.questions.length) * 100);
 }
 
 export function Quiz({ quiz, onComplete, durationMinutes, isExam = false }: QuizProps) {
@@ -114,7 +47,7 @@ export function Quiz({ quiz, onComplete, durationMinutes, isExam = false }: Quiz
     if (state.submitted) return;
 
     const timeSpent = Math.floor((Date.now() - startTimeRef.current) / 1000);
-    const score = calculateScore(quiz, state.answers);
+    const score = calculateScore(quiz.questions, state.answers);
 
     setState((prev) => ({
       ...prev,
@@ -155,7 +88,7 @@ export function Quiz({ quiz, onComplete, durationMinutes, isExam = false }: Quiz
     return () => clearInterval(interval);
   }, [durationMinutes, state.submitted, handleSubmit]);
 
-  const score = state.submitted ? calculateScore(quiz, state.answers) : 0;
+  const score = state.submitted ? calculateScore(quiz.questions, state.answers) : 0;
   const correctCount = state.submitted
     ? quiz.questions.filter((q) => checkAnswer(q, state.answers[q.id])).length
     : 0;

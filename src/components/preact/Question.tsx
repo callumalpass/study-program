@@ -7,6 +7,7 @@ import { Icons } from '@/components/icons';
 import { CompactCodeEditor } from './CodeEditor';
 import type { TestResult } from '@/components/code-runner';
 import Prism from 'prismjs';
+import { normalizeAnswer, getCorrectOptionIndex, isCodingAnswer as isCodingAnswerUtil } from '@/utils/quiz-utils';
 
 interface QuestionProps {
   question: QuizQuestion;
@@ -16,35 +17,6 @@ interface QuestionProps {
   isExam: boolean;
   onAnswerChange: (questionId: string, answer: QuizAnswer) => void;
   isCorrect?: boolean;
-}
-
-function normalizeAnswer(value: string | number | boolean | undefined): string {
-  if (value === undefined) return '';
-  return String(value).trim().toLowerCase();
-}
-
-/**
- * Get the correct option index for a multiple choice question.
- * Handles both numeric indices and string values that match an option.
- */
-function getCorrectOptionIndex(question: QuizQuestion): number {
-  const correctAnswer = question.correctAnswer;
-
-  // If already a number, return it directly
-  if (typeof correctAnswer === 'number') {
-    return correctAnswer;
-  }
-
-  // If a string, find the matching option index
-  if (typeof correctAnswer === 'string' && question.options) {
-    const index = question.options.indexOf(correctAnswer);
-    if (index !== -1) {
-      return index;
-    }
-  }
-
-  // Fallback: return -1 to indicate no valid answer found
-  return -1;
 }
 
 export function Question({
@@ -91,13 +63,10 @@ export function Question({
     }
   }, [question.id, showFeedback, codingTestsPassed, onAnswerChange]);
 
-  const isCodingAnswer = (ans: QuizAnswer | undefined): ans is CodingAnswer =>
-    typeof ans === 'object' && ans !== null && 'code' in ans;
-
   const handleTestResults = useCallback((results: TestResult[], allPassed: boolean) => {
     setCodingTestsPassed(allPassed);
     // Update answer with test results
-    const currentCode = isCodingAnswer(answer) ? answer.code : (typeof answer === 'string' ? answer : question.starterCode || '');
+    const currentCode = isCodingAnswerUtil(answer) ? answer.code : (typeof answer === 'string' ? answer : question.starterCode || '');
     const codingAnswer: CodingAnswer = { code: currentCode, passed: allPassed };
     onAnswerChange(question.id, codingAnswer);
   }, [question.id, question.starterCode, answer, onAnswerChange]);
@@ -218,8 +187,8 @@ export function Question({
       }
 
       case 'coding': {
-        const currentCode = isCodingAnswer(answer) ? answer.code : (typeof answer === 'string' ? answer : question.starterCode || '');
-        const testsPassed = isCodingAnswer(answer) ? answer.passed : null;
+        const currentCode = isCodingAnswerUtil(answer) ? answer.code : (typeof answer === 'string' ? answer : question.starterCode || '');
+        const testsPassed = isCodingAnswerUtil(answer) ? answer.passed : null;
 
         return (
           <div class="answer-container coding-container">
