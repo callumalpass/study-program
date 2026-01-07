@@ -230,21 +230,25 @@ export const router = new Router();
 // Convenience navigation functions
 export const navigate = (path: string) => router.navigate(path);
 
+// Helper to encode URL path segments
+const encodePathSegment = (segment: string): string => encodeURIComponent(segment);
+
 export const navigateToHome = () => navigate('/');
 export const navigateToCurriculum = () => navigate('/curriculum');
-export const navigateToSubject = (id: string) => navigate(`/subject/${id}`);
+export const navigateToSubject = (id: string) =>
+  navigate(`/subject/${encodePathSegment(id)}`);
 export const navigateToTopic = (subjectId: string, topicId: string) =>
-  navigate(`/subject/${subjectId}/topic/${topicId}`);
+  navigate(`/subject/${encodePathSegment(subjectId)}/topic/${encodePathSegment(topicId)}`);
 export const navigateToSubtopic = (subjectId: string, topicId: string, subtopicSlug: string) =>
-  navigate(`/subject/${subjectId}/topic/${topicId}/subtopic/${subtopicSlug}`);
+  navigate(`/subject/${encodePathSegment(subjectId)}/topic/${encodePathSegment(topicId)}/subtopic/${encodePathSegment(subtopicSlug)}`);
 export const navigateToQuiz = (subjectId: string, quizId: string) =>
-  navigate(`/subject/${subjectId}/quiz/${quizId}`);
+  navigate(`/subject/${encodePathSegment(subjectId)}/quiz/${encodePathSegment(quizId)}`);
 export const navigateToExam = (subjectId: string, examId: string) =>
-  navigate(`/subject/${subjectId}/exam/${examId}`);
+  navigate(`/subject/${encodePathSegment(subjectId)}/exam/${encodePathSegment(examId)}`);
 export const navigateToExercise = (subjectId: string, exId: string) =>
-  navigate(`/subject/${subjectId}/exercise/${exId}`);
+  navigate(`/subject/${encodePathSegment(subjectId)}/exercise/${encodePathSegment(exId)}`);
 export const navigateToProject = (subjectId: string, projId: string) =>
-  navigate(`/subject/${subjectId}/project/${projId}`);
+  navigate(`/subject/${encodePathSegment(subjectId)}/project/${encodePathSegment(projId)}`);
 export const navigateToProgress = () => navigate('/progress');
 export const navigateToSettings = () => navigate('/settings');
 export const navigateToExport = () => navigate('/export');

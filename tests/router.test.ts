@@ -266,11 +266,14 @@ describe('router edge cases', () => {
     expect(route?.path).toBe('/');
   });
 
-  it('decodes URL-encoded characters in subject IDs', async () => {
-    navigateToSubject('cs%20101');
+  it('encodes and decodes special characters in subject IDs correctly', async () => {
+    // The navigate function should encode special characters
+    // and the router should decode them back
+    navigateToSubject('cs 101');
     await flushHashChange();
     const route = getCurrentRoute();
     expect(route?.params.id).toBe('cs 101');
+    expect(route?.path).toBe('/subject/cs%20101');
   });
 
   it('handles deeply nested subtopic routes', async () => {
