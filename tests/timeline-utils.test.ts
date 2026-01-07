@@ -158,6 +158,31 @@ describe('topologicalSort', () => {
     expect(sorted.map(s => s.id)).toContain('b');
   });
 
+  it('handles subject where all prerequisites are filtered out (not in input)', () => {
+    // This tests the fix for Math.max(...[]) returning -Infinity
+    const subjects = [
+      makeSubject({ id: 'a', prerequisites: [] }),
+      makeSubject({ id: 'b', prerequisites: ['missing1', 'missing2', 'missing3'] }),
+    ];
+
+    // Should treat 'b' as level 0 (no valid prerequisites)
+    const sorted = topologicalSort(subjects);
+    expect(sorted.map(s => s.id)).toEqual(['a', 'b']);
+  });
+
+  it('handles mixed valid and invalid prerequisites', () => {
+    const subjects = [
+      makeSubject({ id: 'a', prerequisites: [] }),
+      makeSubject({ id: 'b', prerequisites: ['a', 'missing'] }),
+    ];
+
+    const sorted = topologicalSort(subjects);
+    const order = sorted.map(s => s.id);
+
+    // 'a' should come before 'b' since 'a' is a valid prerequisite
+    expect(order.indexOf('a')).toBeLessThan(order.indexOf('b'));
+  });
+
   it('handles circular dependencies gracefully (guard against infinite loop)', () => {
     // This tests the circular dependency guard in the code
     const subjects = [

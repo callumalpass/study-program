@@ -53,11 +53,12 @@ export function topologicalSort(subjects: Subject[]): Subject[] {
       return 0;
     }
 
-    const maxPrereqLevel = Math.max(
-      ...subject.prerequisites
-        .filter(p => subjectMap.has(p))
-        .map(p => getLevel(p))
-    );
+    const validPrereqs = subject.prerequisites
+      .filter(p => subjectMap.has(p))
+      .map(p => getLevel(p));
+
+    // If all prerequisites are filtered out (not in subjectMap), treat as level 0
+    const maxPrereqLevel = validPrereqs.length > 0 ? Math.max(...validPrereqs) : -1;
     const level = maxPrereqLevel + 1;
 
     levels.set(subjectId, level);
