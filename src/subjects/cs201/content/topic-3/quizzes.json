@@ -68,7 +68,7 @@
     "questions": [
       {
         "id": "q1",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What does this modified binary search return?",
         "codeSnippet": "def search(arr, target):\n    low, high = 0, len(arr) - 1\n    result = -1\n    while low <= high:\n        mid = (low + high) // 2\n        if arr[mid] == target:\n            result = mid\n            high = mid - 1  # Keep searching left\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return result",
         "options": [
@@ -169,7 +169,7 @@
       },
       {
         "id": "q4",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What is wrong with this Binary Search?",
         "codeSnippet": "def search(arr, target):\n    low, high = 0, len(arr) - 1\n    while low < high:  # Bug here\n        mid = (low + high) // 2\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1",
         "options": [

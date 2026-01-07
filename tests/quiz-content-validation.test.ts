@@ -493,10 +493,9 @@ describe('Quiz Structure Validation', () => {
     }
   });
 
-  it('code_output questions should NOT have options (informational)', () => {
-    // This test is informational - quiz files may have legacy code_output questions
-    // that should be multiple_choice. The Exam Structure Validation test enforces this
-    // for exams, which are the most critical.
+  it('code_output questions should NOT have options', () => {
+    // code_output questions are for typing the expected output, not selecting from options.
+    // Questions with options should be type "multiple_choice" instead.
     const problemQuizzes: string[] = [];
 
     for (const filePath of quizFiles) {
@@ -511,13 +510,10 @@ describe('Quiz Structure Validation', () => {
       }
     }
 
-    if (problemQuizzes.length > 0) {
-      console.log(`\nNote: ${problemQuizzes.length} code_output questions have options (should be multiple_choice)`);
-      console.log(`First 5: ${problemQuizzes.slice(0, 5).join(', ')}`);
-    }
-
-    // Just verify we checked files
-    expect(quizFiles.length).toBeGreaterThan(0);
+    expect(
+      problemQuizzes,
+      `Found ${problemQuizzes.length} code_output questions with options (should be multiple_choice): ${problemQuizzes.slice(0, 5).join(', ')}`
+    ).toHaveLength(0);
   });
 });
 

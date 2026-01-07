@@ -101,7 +101,7 @@
       },
       {
         "id": "q4",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "This greedy approach fails for which coin set?",
         "codeSnippet": "def min_coins(coins, amount):\n    coins.sort(reverse=True)\n    count = 0\n    for coin in coins:\n        while amount >= coin:\n            amount -= coin\n            count += 1\n    return count",
         "options": [

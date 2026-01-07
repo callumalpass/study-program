@@ -81,7 +81,7 @@
       },
       {
         "id": "q2",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What problem does this DP solve?",
         "codeSnippet": "dp[i][j] = dp[i-1][j-1] + 1 if s1[i-1] == s2[j-1]\n         else max(dp[i-1][j], dp[i][j-1])",
         "options": [
@@ -169,7 +169,7 @@
       },
       {
         "id": "q4",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What is the space complexity of this optimized Fibonacci?",
         "codeSnippet": "def fib(n):\n    if n <= 1: return n\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b",
         "options": [

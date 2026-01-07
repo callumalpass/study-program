@@ -155,7 +155,7 @@
       },
       {
         "id": "q3",
-        "type": "code_output",
+        "type": "multiple_choice",
         "prompt": "What does this code compute?",
         "codeSnippet": "def traverse(graph, start):\n    visited = set()\n    queue = deque([start])\n    visited.add(start)\n    dist = {start: 0}\n    while queue:\n        node = queue.popleft()\n        for neighbor in graph[node]:\n            if neighbor not in visited:\n                visited.add(neighbor)\n                dist[neighbor] = dist[node] + 1\n                queue.append(neighbor)\n    return dist",
         "options": [
