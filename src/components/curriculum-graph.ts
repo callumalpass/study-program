@@ -133,7 +133,13 @@ export class CurriculumGraph {
         return 0;
       }
 
-      const maxPrereqLevel = Math.max(...subject.prerequisites.map(p => getLevel(p)));
+      // Filter to only prerequisites that exist in subjects list to avoid -Infinity from Math.max(...[])
+      const validPrereqLevels = subject.prerequisites
+        .filter(p => this.subjects.some(s => s.id === p))
+        .map(p => getLevel(p));
+
+      // If no valid prerequisites exist, treat as level 0
+      const maxPrereqLevel = validPrereqLevels.length > 0 ? Math.max(...validPrereqLevels) : -1;
       const level = maxPrereqLevel + 1;
       
       levels.set(subjectId, level);

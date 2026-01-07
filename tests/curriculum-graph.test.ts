@@ -284,6 +284,39 @@ describe('CurriculumGraph', () => {
 
       expect(() => graph.render()).not.toThrow();
     });
+
+    it('places subject at level 0 when all prerequisites are non-existent', () => {
+      // This tests the fix for Math.max(...[]) returning -Infinity
+      const subjects = [
+        makeSubject({ id: 'cs101', prerequisites: [] }),
+        makeSubject({ id: 'cs102', prerequisites: ['missing1', 'missing2'] }),
+      ];
+      const graph = new CurriculumGraph(subjects, makeUserProgress());
+      const element = graph.render();
+
+      // Both subjects should be at level 0 (same x position) since cs102's
+      // prerequisites don't exist, treating it as having no valid prerequisites
+      const rects = element.querySelectorAll('svg rect');
+      const xPositions = Array.from(rects).map(r => parseFloat(r.getAttribute('x') || '0'));
+
+      expect(xPositions[0]).toBe(xPositions[1]);
+    });
+
+    it('handles mix of valid and invalid prerequisites', () => {
+      const subjects = [
+        makeSubject({ id: 'cs101', prerequisites: [] }),
+        makeSubject({ id: 'cs102', prerequisites: ['cs101', 'non-existent'] }),
+      ];
+      const graph = new CurriculumGraph(subjects, makeUserProgress());
+      const element = graph.render();
+
+      // cs102 should be at level 1 (to the right of cs101) because cs101 is valid
+      const groups = element.querySelectorAll('svg g');
+      const rects = Array.from(groups).map(g => g.querySelector('rect'));
+      const xPositions = rects.filter(r => r).map(r => parseFloat(r!.getAttribute('x') || '0'));
+
+      expect(xPositions[1]).toBeGreaterThan(xPositions[0]);
+    });
   });
 
   describe('edge rendering', () => {
