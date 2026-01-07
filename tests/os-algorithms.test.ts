@@ -3249,3 +3249,230 @@ describe('Exercise Test Case Verification - Scheduling', () => {
     });
   });
 });
+
+// ============================================================================
+// Course Content Verification Tests
+// ============================================================================
+
+describe('Course Content Verification - Topic 3 SRTF', () => {
+  it('verifies topic-3/02-fcfs-sjf.md SRTF example', () => {
+    // From topic-3/02-fcfs-sjf.md SRTF Example section
+    // | P1 | 0 | 8 |
+    // | P2 | 1 | 4 |
+    // | P3 | 2 | 9 |
+    // | P4 | 3 | 5 |
+    //
+    // Expected Gantt: |P1|-- P2 --|-- P4 --|---- P1 ----|---- P3 ----|
+    //                 0  1        5       10           17           26
+    const processes: Process[] = [
+      { id: 'P1', arrivalTime: 0, burstTime: 8 },
+      { id: 'P2', arrivalTime: 1, burstTime: 4 },
+      { id: 'P3', arrivalTime: 2, burstTime: 9 },
+      { id: 'P4', arrivalTime: 3, burstTime: 5 },
+    ];
+
+    const result = srtfScheduling(processes);
+
+    // Verify timeline matches course content
+    expect(result.timeline[0]).toEqual({ process: 'P1', start: 0, end: 1 });
+    expect(result.timeline[1]).toEqual({ process: 'P2', start: 1, end: 5 });
+    expect(result.timeline[2]).toEqual({ process: 'P4', start: 5, end: 10 });
+    expect(result.timeline[3]).toEqual({ process: 'P1', start: 10, end: 17 });
+    expect(result.timeline[4]).toEqual({ process: 'P3', start: 17, end: 26 });
+
+    // Verify average waiting time matches course content (6.5)
+    // P1: completes at 17, arrived 0, burst 8 -> wait = 17 - 0 - 8 = 9
+    // P2: completes at 5, arrived 1, burst 4 -> wait = 5 - 1 - 4 = 0
+    // P3: completes at 26, arrived 2, burst 9 -> wait = 26 - 2 - 9 = 15
+    // P4: completes at 10, arrived 3, burst 5 -> wait = 10 - 3 - 5 = 2
+    // Average = (9 + 0 + 15 + 2) / 4 = 26 / 4 = 6.5
+    expect(result.averageWaitingTime).toBe(6.5);
+  });
+
+  it('verifies topic-3/02-fcfs-sjf.md FCFS example', () => {
+    // From topic-3/02-fcfs-sjf.md FCFS Example
+    // | P1 | 0 | 24 |
+    // | P2 | 1 | 3 |
+    // | P3 | 2 | 3 |
+    //
+    // Average waiting time = 16 ms (from course)
+    const processes: Process[] = [
+      { id: 'P1', arrivalTime: 0, burstTime: 24 },
+      { id: 'P2', arrivalTime: 1, burstTime: 3 },
+      { id: 'P3', arrivalTime: 2, burstTime: 3 },
+    ];
+
+    const result = fcfsScheduling(processes);
+
+    // P1: waits 0-0=0, P2: waits 24-1=23, P3: waits 27-2=25
+    // Average = (0 + 23 + 25) / 3 = 16
+    expect(result.waitingTimes['P1']).toBe(0);
+    expect(result.waitingTimes['P2']).toBe(23);
+    expect(result.waitingTimes['P3']).toBe(25);
+    expect(result.averageWaitingTime).toBe(16);
+  });
+
+  it('verifies topic-3/02-fcfs-sjf.md non-preemptive SJF example', () => {
+    // From topic-3/02-fcfs-sjf.md Non-preemptive SJF Example
+    // | P1 | 0 | 7 |
+    // | P2 | 2 | 4 |
+    // | P3 | 4 | 1 |
+    // | P4 | 5 | 4 |
+    //
+    // At t=7: P1 completes. Available: P2, P3, P4. Select P3 (shortest)
+    // At t=8: P3 completes. Select P2 (arrived first among equal)
+    const processes: Process[] = [
+      { id: 'P1', arrivalTime: 0, burstTime: 7 },
+      { id: 'P2', arrivalTime: 2, burstTime: 4 },
+      { id: 'P3', arrivalTime: 4, burstTime: 1 },
+      { id: 'P4', arrivalTime: 5, burstTime: 4 },
+    ];
+
+    const result = sjfScheduling(processes);
+
+    // P1 runs first (only one at time 0)
+    // At time 7, P3 has shortest burst (1)
+    // At time 8, P2 and P4 both have burst 4, P2 arrived first
+    expect(result.timeline[0].process).toBe('P1');
+    expect(result.timeline[1].process).toBe('P3');
+    expect(result.timeline[2].process).toBe('P2');
+    expect(result.timeline[3].process).toBe('P4');
+
+    // Verify average waiting time = 4 ms (from course)
+    expect(result.averageWaitingTime).toBe(4);
+  });
+});
+
+describe('Course Content Verification - Topic 5 Bankers Algorithm', () => {
+  it('verifies topic-5.md Bankers Algorithm textbook example', () => {
+    // From topic-5.md Banker's Algorithm example
+    // 5 processes (P0-P4), 3 resource types (A, B, C)
+    // Available: [3, 3, 2]
+    //
+    //        Allocation    Max        Need
+    //        A  B  C    A  B  C    A  B  C
+    // P0     0  1  0    7  5  3    7  4  3
+    // P1     2  0  0    3  2  2    1  2  2
+    // P2     3  0  2    9  0  2    6  0  0
+    // P3     2  1  1    2  2  2    0  1  1
+    // P4     0  0  2    4  3  3    4  3  1
+    //
+    // Safe sequence exists: P1, P3, P4, P2, P0
+
+    const available = [3, 3, 2];
+    const maxNeed = [
+      [7, 5, 3], // P0
+      [3, 2, 2], // P1
+      [9, 0, 2], // P2
+      [2, 2, 2], // P3
+      [4, 3, 3], // P4
+    ];
+    const allocation = [
+      [0, 1, 0], // P0
+      [2, 0, 0], // P1
+      [3, 0, 2], // P2
+      [2, 1, 1], // P3
+      [0, 0, 2], // P4
+    ];
+
+    const [isSafe, sequence] = bankersSafetyCheck(available, maxNeed, allocation);
+
+    expect(isSafe).toBe(true);
+    expect(sequence).toHaveLength(5);
+    // P1 should be first in sequence (only one that can run with available [3,3,2])
+    expect(sequence[0]).toBe(1);
+  });
+});
+
+describe('Course Content Verification - Topic 6 Memory Management', () => {
+  it('verifies topic-6.md address translation example', () => {
+    // From topic-6.md Address Translation section
+    // Page size: 8KB = 2^13 bytes
+    // Virtual address: 0x2A5E0
+    //
+    // Page number = 0x2A5E0 / 0x2000 = 21 (0x15)
+    // Offset = 0x2A5E0 % 0x2000 = 0x5E0
+    //
+    // If page table[21] = frame 7:
+    // Physical address = 7 × 0x2000 + 0x5E0 = 0xE5E0
+
+    const virtualAddr = 0x2a5e0;
+    const pageSize = 0x2000; // 8KB
+
+    const pageNum = Math.floor(virtualAddr / pageSize);
+    const offset = virtualAddr % pageSize;
+
+    expect(pageNum).toBe(21);
+    expect(offset).toBe(0x5e0);
+
+    // If frame 7 is assigned
+    const frameNum = 7;
+    const physicalAddr = frameNum * pageSize + offset;
+
+    expect(physicalAddr).toBe(0xe5e0);
+  });
+
+  it('verifies topic-6.md page table size calculation', () => {
+    // From topic-6.md Common Calculations section
+    // Virtual address space: 32 bits (4GB)
+    // Page size: 4KB (2^12)
+    // PTE size: 4 bytes
+    //
+    // Number of pages = 2^32 / 2^12 = 2^20 = 1M pages
+    // Page table size = 1M × 4 bytes = 4MB per process
+
+    expect(pageTableSize(32, 4, 4)).toBe(4 * 1024 * 1024); // 4MB
+  });
+
+  it('verifies topic-6.md internal fragmentation example', () => {
+    // From exercise cs301-ex-6-7
+    // Process size: 10000 bytes
+    // Page size: 4096 bytes
+    //
+    // Pages needed = ceil(10000 / 4096) = 3
+    // Allocated = 3 * 4096 = 12288
+    // Waste = 12288 - 10000 = 2288
+
+    expect(internalFragmentation(10000, 4096)).toBe(2288);
+  });
+});
+
+describe('Course Content Verification - Topic 7 Page Replacement', () => {
+  it('verifies FIFO page replacement Belady anomaly example', () => {
+    // Classic Belady's anomaly demonstration
+    // With 3 frames: 9 faults
+    // With 4 frames: 10 faults (more frames = more faults!)
+    const references = [1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5];
+
+    const result3 = fifoPageReplacement(references, 3);
+    const result4 = fifoPageReplacement(references, 4);
+
+    expect(result3.faults).toBe(9);
+    expect(result4.faults).toBe(10);
+    expect(result4.faults).toBeGreaterThan(result3.faults);
+  });
+
+  it('verifies LRU never exhibits Belady anomaly', () => {
+    // LRU is a stack algorithm - more frames never increases faults
+    const references = [1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5];
+
+    for (let frames = 2; frames <= 5; frames++) {
+      const resultSmaller = lruPageReplacement(references, frames);
+      const resultLarger = lruPageReplacement(references, frames + 1);
+      expect(resultLarger.faults).toBeLessThanOrEqual(resultSmaller.faults);
+    }
+  });
+
+  it('verifies Optimal algorithm achieves minimum faults', () => {
+    const references = [1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5];
+
+    const optResult = optimalPageReplacement(references, 3);
+    const fifoResult = fifoPageReplacement(references, 3);
+    const lruResult = lruPageReplacement(references, 3);
+
+    // OPT should be <= both FIFO and LRU
+    expect(optResult.faults).toBeLessThanOrEqual(fifoResult.faults);
+    expect(optResult.faults).toBeLessThanOrEqual(lruResult.faults);
+    expect(optResult.faults).toBe(7); // Known optimal for this sequence
+  });
+});
