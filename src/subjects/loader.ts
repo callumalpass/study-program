@@ -252,7 +252,10 @@ export function loadQuizzesFromGlob(
 }
 
 /**
- * Group item IDs by numeric topic suffix in topicId (e.g., "cs303-topic-4").
+ * Group item IDs by numeric topic suffix in topicId.
+ * Supports both formats:
+ *   - Long format: "cs303-topic-4" (preferred)
+ *   - Short format: "cs205-1" (legacy)
  */
 export function groupIdsByTopic<T extends { id: string; topicId?: string }>(
   items: T[]
@@ -261,7 +264,12 @@ export function groupIdsByTopic<T extends { id: string; topicId?: string }>(
 
   items.forEach(item => {
     if (!item.topicId) return;
-    const match = item.topicId.match(/-topic-(\d+)$/);
+    // Try long format first: "cs303-topic-4"
+    let match = item.topicId.match(/-topic-(\d+)$/);
+    // Fall back to short format: "cs205-1"
+    if (!match) {
+      match = item.topicId.match(/-(\d+)$/);
+    }
     if (!match) return;
     const topicNumber = Number(match[1]);
     if (!grouped[topicNumber]) {

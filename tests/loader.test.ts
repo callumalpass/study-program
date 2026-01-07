@@ -706,5 +706,32 @@ No frontmatter here.`,
       expect(grouped[1]).toEqual(['item1', 'item2']);
       expect(grouped[2]).toEqual(['item3']);
     });
+
+    it('handles short format topicId (legacy format)', () => {
+      const items = [
+        { id: 'item1', topicId: 'cs205-1' },
+        { id: 'item2', topicId: 'cs205-2' },
+        { id: 'item3', topicId: 'math102-1' },
+      ];
+
+      const grouped = groupIdsByTopic(items);
+
+      expect(grouped[1]).toEqual(['item1', 'item3']);
+      expect(grouped[2]).toEqual(['item2']);
+    });
+
+    it('handles mixed long and short format topicIds', () => {
+      const items = [
+        { id: 'item1', topicId: 'cs404-topic-1' },  // long format
+        { id: 'item2', topicId: 'cs205-1' },         // short format
+        { id: 'item3', topicId: 'cs404-topic-2' },  // long format
+        { id: 'item4', topicId: 'math102-2' },       // short format
+      ];
+
+      const grouped = groupIdsByTopic(items);
+
+      expect(grouped[1]).toEqual(['item1', 'item2']);
+      expect(grouped[2]).toEqual(['item3', 'item4']);
+    });
   });
 });
