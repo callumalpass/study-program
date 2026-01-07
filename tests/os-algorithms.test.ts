@@ -620,3 +620,441 @@ describe('CPU Scheduling Algorithms', () => {
     });
   });
 });
+
+// ============================================================================
+// Memory Management Algorithm Implementations
+// ============================================================================
+
+/**
+ * Translate logical address to physical using base and limit registers.
+ */
+function translateAddress(logicalAddr: number, base: number, limit: number): number {
+  if (logicalAddr < 0 || logicalAddr >= limit) {
+    return -1; // Address out of bounds
+  }
+  return base + logicalAddr;
+}
+
+/**
+ * First Fit memory allocation.
+ */
+function firstFit(memoryBlocks: [number, number, boolean][], processSize: number): number {
+  for (const [start, size, isFree] of memoryBlocks) {
+    if (isFree && size >= processSize) {
+      return start;
+    }
+  }
+  return -1;
+}
+
+/**
+ * Best Fit memory allocation (smallest adequate block).
+ */
+function bestFit(memoryBlocks: [number, number, boolean][], processSize: number): number {
+  let bestStart = -1;
+  let bestSize = Infinity;
+
+  for (const [start, size, isFree] of memoryBlocks) {
+    if (isFree && size >= processSize) {
+      if (size < bestSize) {
+        bestSize = size;
+        bestStart = start;
+      }
+    }
+  }
+  return bestStart;
+}
+
+/**
+ * Worst Fit memory allocation (largest adequate block).
+ */
+function worstFit(memoryBlocks: [number, number, boolean][], processSize: number): number {
+  let worstStart = -1;
+  let worstSize = -1;
+
+  for (const [start, size, isFree] of memoryBlocks) {
+    if (isFree && size >= processSize) {
+      if (size > worstSize) {
+        worstSize = size;
+        worstStart = start;
+      }
+    }
+  }
+  return worstStart;
+}
+
+/**
+ * Calculate external fragmentation (free but unusable memory).
+ */
+function externalFragmentation(
+  memoryBlocks: [number, number, boolean][],
+  minUsefulSize: number
+): number {
+  let fragmented = 0;
+  for (const [, size, isFree] of memoryBlocks) {
+    if (isFree && size < minUsefulSize) {
+      fragmented += size;
+    }
+  }
+  return fragmented;
+}
+
+/**
+ * Page table lookup - translate logical address using page table.
+ */
+function pageTranslate(
+  logicalAddr: number,
+  pageTable: [number, boolean][],
+  pageSize: number
+): number {
+  const pageNum = Math.floor(logicalAddr / pageSize);
+  const pageOffset = logicalAddr % pageSize;
+
+  if (pageNum >= pageTable.length) {
+    return -1;
+  }
+
+  const [frameNum, valid] = pageTable[pageNum];
+  if (!valid) {
+    return -1;
+  }
+
+  return frameNum * pageSize + pageOffset;
+}
+
+/**
+ * Calculate internal fragmentation for a process.
+ */
+function internalFragmentation(processSize: number, pageSize: number): number {
+  const pagesNeeded = Math.ceil(processSize / pageSize);
+  const allocated = pagesNeeded * pageSize;
+  return allocated - processSize;
+}
+
+/**
+ * Calculate page table size in bytes.
+ */
+function pageTableSize(virtualAddrBits: number, pageSizeKb: number, pteBytes: number): number {
+  const pageSize = pageSizeKb * 1024;
+  const offsetBits = Math.log2(pageSize);
+  const pageNumberBits = virtualAddrBits - offsetBits;
+  const numPages = Math.pow(2, pageNumberBits);
+  return numPages * pteBytes;
+}
+
+/**
+ * Segment translation - translate segment:offset address.
+ */
+function segmentTranslate(
+  segmentNum: number,
+  offset: number,
+  segmentTable: [number, number][]
+): number {
+  if (segmentNum >= segmentTable.length) {
+    return -1;
+  }
+
+  const [base, limit] = segmentTable[segmentNum];
+  if (offset >= limit) {
+    return -1;
+  }
+
+  return base + offset;
+}
+
+/**
+ * TLB simulation - returns [hits, misses, hitRate].
+ */
+function tlbSimulation(pageReferences: number[], tlbSize: number): [number, number, number] {
+  const tlb: number[] = []; // LRU order
+  let hits = 0;
+  let misses = 0;
+
+  for (const page of pageReferences) {
+    const index = tlb.indexOf(page);
+    if (index !== -1) {
+      hits++;
+      tlb.splice(index, 1);
+      tlb.push(page); // Move to end (most recent)
+    } else {
+      misses++;
+      if (tlb.length >= tlbSize) {
+        tlb.shift(); // Remove LRU
+      }
+      tlb.push(page);
+    }
+  }
+
+  const total = hits + misses;
+  const hitRate = total > 0 ? Math.round((hits / total) * 100) / 100 : 0;
+  return [hits, misses, hitRate];
+}
+
+/**
+ * Calculate effective access time with TLB.
+ */
+function effectiveAccessTime(tlbHitRatio: number, tlbTime: number, memoryTime: number): number {
+  // TLB hit: TLB + memory (for data)
+  // TLB miss: TLB + memory (page table) + memory (data)
+  const eat =
+    tlbHitRatio * (tlbTime + memoryTime) + (1 - tlbHitRatio) * (tlbTime + 2 * memoryTime);
+  return Math.round(eat * 100) / 100;
+}
+
+/**
+ * Calculate address bits for two-level page table.
+ */
+function twoLevelBits(
+  addrBits: number,
+  pageSizeKb: number,
+  pteSizeBytes: number
+): [number, number, number] {
+  const pageSize = pageSizeKb * 1024;
+  const offsetBits = Math.log2(pageSize);
+
+  // PTEs per page
+  const ptesPerPage = pageSize / pteSizeBytes;
+  const innerBits = Math.log2(ptesPerPage);
+
+  // Remaining bits for outer
+  const outerBits = addrBits - offsetBits - innerBits;
+
+  return [outerBits, innerBits, offsetBits];
+}
+
+// ============================================================================
+// Memory Management Tests
+// ============================================================================
+
+describe('Memory Management Algorithms', () => {
+  describe('Address Translation', () => {
+    it('translates valid logical address', () => {
+      // From exercise cs301-ex-6-1
+      expect(translateAddress(100, 5000, 1000)).toBe(5100);
+    });
+
+    it('rejects address out of bounds', () => {
+      expect(translateAddress(1500, 5000, 1000)).toBe(-1);
+    });
+
+    it('handles edge case at limit boundary', () => {
+      expect(translateAddress(999, 5000, 1000)).toBe(5999);
+      expect(translateAddress(1000, 5000, 1000)).toBe(-1);
+    });
+  });
+
+  describe('Memory Allocation Strategies', () => {
+    describe('First Fit', () => {
+      it('finds first adequate free block', () => {
+        // From exercise cs301-ex-6-2
+        const blocks: [number, number, boolean][] = [
+          [0, 100, true],
+          [100, 200, false],
+          [300, 150, true],
+        ];
+        expect(firstFit(blocks, 120)).toBe(300);
+      });
+
+      it('returns -1 when no fit exists', () => {
+        const blocks: [number, number, boolean][] = [[0, 50, true]];
+        expect(firstFit(blocks, 100)).toBe(-1);
+      });
+
+      it('selects first block even if not optimal', () => {
+        const blocks: [number, number, boolean][] = [
+          [0, 200, true],
+          [200, 100, true],
+        ];
+        expect(firstFit(blocks, 90)).toBe(0); // Takes 200-size block, not 100
+      });
+    });
+
+    describe('Best Fit', () => {
+      it('finds smallest adequate free block', () => {
+        // From exercise cs301-ex-6-3
+        const blocks: [number, number, boolean][] = [
+          [0, 200, true],
+          [200, 100, true],
+          [300, 150, true],
+        ];
+        expect(bestFit(blocks, 90)).toBe(200); // 100 is smallest fit
+      });
+
+      it('handles exact fit', () => {
+        const blocks: [number, number, boolean][] = [
+          [0, 100, true],
+          [100, 100, true],
+        ];
+        expect(bestFit(blocks, 100)).toBe(0);
+      });
+    });
+
+    describe('Worst Fit', () => {
+      it('finds largest adequate free block', () => {
+        // From exercise cs301-ex-6-4
+        const blocks: [number, number, boolean][] = [
+          [0, 100, true],
+          [100, 200, true],
+          [300, 150, true],
+        ];
+        expect(worstFit(blocks, 50)).toBe(100); // 200 is largest
+      });
+
+      it('returns -1 when no fit exists', () => {
+        const blocks: [number, number, boolean][] = [[0, 50, true]];
+        expect(worstFit(blocks, 100)).toBe(-1);
+      });
+    });
+  });
+
+  describe('Fragmentation', () => {
+    it('calculates external fragmentation', () => {
+      // From exercise cs301-ex-6-5
+      const blocks: [number, number, boolean][] = [
+        [0, 50, true],
+        [50, 200, false],
+        [250, 30, true],
+      ];
+      expect(externalFragmentation(blocks, 100)).toBe(80); // 50 + 30
+    });
+
+    it('returns 0 when all free blocks are large enough', () => {
+      const blocks: [number, number, boolean][] = [[0, 200, true]];
+      expect(externalFragmentation(blocks, 100)).toBe(0);
+    });
+
+    it('calculates internal fragmentation', () => {
+      // From exercise cs301-ex-6-7
+      expect(internalFragmentation(10000, 4096)).toBe(2288);
+    });
+
+    it('returns 0 for exact fit', () => {
+      expect(internalFragmentation(8192, 4096)).toBe(0);
+    });
+  });
+
+  describe('Paging', () => {
+    describe('Page Table Lookup', () => {
+      it('translates logical address correctly', () => {
+        // From exercise cs301-ex-6-6 (corrected)
+        // 5000 / 4096 = 1 (page 1), 5000 % 4096 = 904 (offset)
+        // page_table[1] = (3, true), so frame 3
+        // physical = 3 * 4096 + 904 = 13192
+        const pageTable: [number, boolean][] = [
+          [2, true],
+          [3, true],
+        ];
+        expect(pageTranslate(5000, pageTable, 4096)).toBe(13192);
+      });
+
+      it('returns -1 for invalid page', () => {
+        const pageTable: [number, boolean][] = [[5, false]];
+        expect(pageTranslate(1000, pageTable, 4096)).toBe(-1);
+      });
+
+      it('returns -1 for page number out of range', () => {
+        const pageTable: [number, boolean][] = [[5, true]];
+        expect(pageTranslate(8192, pageTable, 4096)).toBe(-1); // Page 2 doesn't exist
+      });
+    });
+
+    describe('Page Table Size', () => {
+      it('calculates page table size for 32-bit system', () => {
+        // From exercise cs301-ex-6-13
+        // 32-bit, 4KB pages (12 offset bits), 4-byte PTE
+        // 2^20 pages * 4 bytes = 4MB
+        expect(pageTableSize(32, 4, 4)).toBe(4194304);
+      });
+
+      it('calculates page table size for 20-bit address space', () => {
+        // 20-bit, 4KB pages (12 offset bits), 4-byte PTE
+        // 2^8 pages * 4 bytes = 1024
+        expect(pageTableSize(20, 4, 4)).toBe(1024);
+      });
+    });
+
+    describe('Two-Level Page Table Bits', () => {
+      it('calculates bits for 32-bit system with 4KB pages', () => {
+        // From exercise cs301-ex-6-10
+        const [outer, inner, offset] = twoLevelBits(32, 4, 4);
+        expect(outer).toBe(10);
+        expect(inner).toBe(10);
+        expect(offset).toBe(12);
+      });
+
+      it('calculates bits for 64-bit system with 4KB pages', () => {
+        const [outer, inner, offset] = twoLevelBits(64, 4, 8);
+        expect(outer).toBe(43);
+        expect(inner).toBe(9);
+        expect(offset).toBe(12);
+      });
+    });
+  });
+
+  describe('Segmentation', () => {
+    it('translates valid segment address', () => {
+      // From exercise cs301-ex-6-11
+      const segmentTable: [number, number][] = [
+        [1000, 1000],
+        [2000, 500],
+      ];
+      expect(segmentTranslate(0, 500, segmentTable)).toBe(1500);
+    });
+
+    it('rejects offset exceeding limit', () => {
+      const segmentTable: [number, number][] = [
+        [1000, 1000],
+        [2000, 500],
+      ];
+      expect(segmentTranslate(1, 600, segmentTable)).toBe(-1);
+    });
+
+    it('rejects invalid segment number', () => {
+      const segmentTable: [number, number][] = [[1000, 1000]];
+      expect(segmentTranslate(2, 100, segmentTable)).toBe(-1);
+    });
+  });
+
+  describe('TLB Simulation', () => {
+    it('simulates TLB with mixed hits and misses', () => {
+      // From exercise cs301-ex-6-8
+      const [hits, misses, hitRate] = tlbSimulation([1, 2, 3, 1, 2, 4, 1], 3);
+      expect(hits).toBe(3);
+      expect(misses).toBe(4);
+      expect(hitRate).toBe(0.43);
+    });
+
+    it('handles high locality', () => {
+      const [hits, misses, hitRate] = tlbSimulation([1, 1, 1, 1], 1);
+      expect(hits).toBe(3);
+      expect(misses).toBe(1);
+      expect(hitRate).toBe(0.75);
+    });
+
+    it('handles no hits when TLB is too small', () => {
+      const [hits, misses] = tlbSimulation([1, 2, 3, 4, 5], 1);
+      expect(hits).toBe(0);
+      expect(misses).toBe(5);
+    });
+  });
+
+  describe('Effective Access Time', () => {
+    it('calculates EAT with 90% hit rate', () => {
+      // From exercise cs301-ex-6-9
+      expect(effectiveAccessTime(0.9, 10, 100)).toBe(120);
+    });
+
+    it('calculates EAT with 98% hit rate', () => {
+      // EAT = 0.98 × (10 + 100) + 0.02 × (10 + 200) = 107.8 + 4.2 = 112
+      expect(effectiveAccessTime(0.98, 10, 100)).toBe(112);
+    });
+
+    it('calculates EAT with 100% hit rate', () => {
+      expect(effectiveAccessTime(1.0, 10, 100)).toBe(110);
+    });
+
+    it('calculates EAT with 0% hit rate', () => {
+      expect(effectiveAccessTime(0, 10, 100)).toBe(210);
+    });
+  });
+});
