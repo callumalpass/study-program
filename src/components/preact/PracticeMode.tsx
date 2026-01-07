@@ -35,11 +35,39 @@ function isCodingAnswer(answer: QuizAnswer | undefined): answer is CodingAnswer 
   return typeof answer === 'object' && answer !== null && 'code' in answer;
 }
 
+/**
+ * Get the correct option index for a multiple choice question.
+ * Handles both numeric indices and string values that match an option.
+ */
+function getCorrectOptionIndex(question: QuizQuestion): number {
+  const correctAnswer = question.correctAnswer;
+
+  // If already a number, return it directly
+  if (typeof correctAnswer === 'number') {
+    return correctAnswer;
+  }
+
+  // If a string, find the matching option index
+  if (typeof correctAnswer === 'string' && question.options) {
+    const index = question.options.indexOf(correctAnswer);
+    if (index !== -1) {
+      return index;
+    }
+  }
+
+  // Fallback: return -1 to indicate no valid answer found
+  return -1;
+}
+
 function checkSimpleAnswer(question: QuizQuestion, answer: QuizAnswer | undefined): boolean {
   if (answer === undefined) return false;
 
   switch (question.type) {
-    case 'multiple_choice':
+    case 'multiple_choice': {
+      // For multiple choice, compare the selected index to the correct index
+      const correctIndex = getCorrectOptionIndex(question);
+      return answer === correctIndex;
+    }
     case 'true_false':
       return answer === question.correctAnswer;
     case 'fill_blank':
@@ -89,6 +117,16 @@ export function PracticeMode({ subject, exam, onExit }: PracticeModeProps) {
         ...prev,
         isLoading: false,
         error: 'Gemini API key not configured.',
+      }));
+      return;
+    }
+
+    // Check for empty exam
+    if (exam.questions.length === 0) {
+      setState(prev => ({
+        ...prev,
+        isLoading: false,
+        error: 'No questions available for practice.',
       }));
       return;
     }
@@ -188,8 +226,13 @@ export function PracticeMode({ subject, exam, onExit }: PracticeModeProps) {
 
         if (!isCorrect) {
           if (currentQuestion.type === 'multiple_choice' && currentQuestion.options) {
-            const correctIndex = currentQuestion.correctAnswer as number;
-            details = `Correct answer: ${currentQuestion.options[correctIndex]}`;
+            const correctIndex = getCorrectOptionIndex(currentQuestion);
+            if (correctIndex >= 0 && correctIndex < currentQuestion.options.length) {
+              details = `Correct answer: ${currentQuestion.options[correctIndex]}`;
+            } else {
+              // Fallback if correctAnswer is the actual option text
+              details = `Correct answer: ${currentQuestion.correctAnswer}`;
+            }
           } else if (currentQuestion.type === 'true_false') {
             details = `Correct answer: ${currentQuestion.correctAnswer ? 'True' : 'False'}`;
           } else {

@@ -68,6 +68,7 @@ function checkAnswer(question: QuizQuestion, answer: QuizAnswer | undefined): bo
 }
 
 function calculateScore(questions: QuizQuestion[], answers: Record<string, QuizAnswer>): number {
+  if (questions.length === 0) return 0;
   let correct = 0;
   questions.forEach((question) => {
     if (checkAnswer(question, answers[question.id])) {
@@ -640,6 +641,14 @@ describe('Quiz Answer Checking', () => {
 
     it('handles empty answers object', () => {
       expect(calculateScore(questions, {})).toBe(0);
+    });
+
+    it('handles empty questions array without division by zero', () => {
+      expect(calculateScore([], {})).toBe(0);
+    });
+
+    it('handles empty questions array with some answers', () => {
+      expect(calculateScore([], { q1: 1, q2: 'test' })).toBe(0);
     });
   });
 

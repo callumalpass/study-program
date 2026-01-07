@@ -81,6 +81,7 @@ function normalizeAnswer(value: string | number | boolean | undefined): string {
 }
 
 function calculateScore(quiz: QuizType | Exam, answers: Record<string, QuizAnswer>): number {
+  if (quiz.questions.length === 0) return 0;
   let correct = 0;
   quiz.questions.forEach((question) => {
     if (checkAnswer(question, answers[question.id])) {
