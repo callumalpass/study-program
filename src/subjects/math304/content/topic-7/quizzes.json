@@ -15,7 +15,7 @@
           "The sum of divisors of n",
           "The largest prime less than n"
         ],
-        "correctAnswer": "The number of integers between 1 and n that are coprime to n",
+        "correctAnswer": 1,
         "explanation": "φ(n) = |{k : 1 ≤ k ≤ n and gcd(k,n) = 1}|. This counts the units in Zₙ."
       },
       {
@@ -28,7 +28,7 @@
           "6",
           "12"
         ],
-        "correctAnswer": "4",
+        "correctAnswer": 1,
         "explanation": "The integers coprime to 12 between 1 and 12 are: 1, 5, 7, 11. So φ(12) = 4. Alternatively, φ(12) = φ(4)φ(3) = 2·2 = 4."
       },
       {
@@ -41,7 +41,7 @@
           "a ≡ 1 (mod n)",
           "φ(a) ≡ 1 (mod n)"
         ],
-        "correctAnswer": "a^φ(n) ≡ 1 (mod n)",
+        "correctAnswer": 1,
         "explanation": "Euler's Theorem: If gcd(a,n) = 1, then a^φ(n) ≡ 1 (mod n). This generalizes Fermat's Little Theorem."
       },
       {
@@ -54,7 +54,7 @@
           "a ≡ p (mod p)",
           "Both A and B"
         ],
-        "correctAnswer": "Both A and B",
+        "correctAnswer": 3,
         "explanation": "Fermat's Little Theorem has two forms: a^(p-1) ≡ 1 (mod p) when gcd(a,p)=1, and a^p ≡ a (mod p) for all a. Both are equivalent."
       },
       {
@@ -67,7 +67,7 @@
           "7 + x ≡ 1 (mod 26)",
           "x/7 ≡ 1 (mod 26)"
         ],
-        "correctAnswer": "7x ≡ 1 (mod 26)",
+        "correctAnswer": 1,
         "explanation": "The multiplicative inverse of a mod n is the value x such that ax ≡ 1 (mod n). For 7 mod 26, we solve 7x ≡ 1 (mod 26), giving x = 15."
       }
     ]
@@ -88,7 +88,7 @@
           "(n, d) where d is the decryption exponent",
           "φ(n) only"
         ],
-        "correctAnswer": "(n, e) where n = pq and e is the encryption exponent",
+        "correctAnswer": 0,
         "explanation": "The RSA public key is (n, e) where n = pq for primes p, q, and e is chosen coprime to φ(n). The private key is (n, d) where ed ≡ 1 (mod φ(n))."
       },
       {
@@ -101,7 +101,7 @@
           "n = 33, φ(n) = 32",
           "n = 8, φ(n) = 4"
         ],
-        "correctAnswer": "n = 33, φ(n) = 20",
+        "correctAnswer": 0,
         "explanation": "n = pq = 3·11 = 33. φ(n) = φ(pq) = (p-1)(q-1) = 2·10 = 20."
       },
       {
@@ -114,7 +114,7 @@
           "e = d",
           "d = e^(-1) in R"
         ],
-        "correctAnswer": "ed ≡ 1 (mod φ(n))",
+        "correctAnswer": 1,
         "explanation": "The decryption exponent d is the multiplicative inverse of e modulo φ(n): ed ≡ 1 (mod φ(n))."
       },
       {
@@ -127,7 +127,7 @@
           "c = m^e (mod n)",
           "c = e^m (mod n)"
         ],
-        "correctAnswer": "c = m^e (mod n)",
+        "correctAnswer": 2,
         "explanation": "RSA encryption: c ≡ m^e (mod n). Decryption: m ≡ c^d (mod n)."
       },
       {
@@ -140,7 +140,7 @@
           "Computing discrete logarithms",
           "Both A and B"
         ],
-        "correctAnswer": "Both A and B",
+        "correctAnswer": 3,
         "explanation": "RSA security relies on the difficulty of factoring n = pq and computing φ(n) without knowing the prime factors. These are computationally equivalent problems."
       }
     ]
@@ -161,7 +161,7 @@
           "Factor large numbers",
           "Verify digital signatures"
         ],
-        "correctAnswer": "Agree on a shared secret key over an insecure channel",
+        "correctAnswer": 1,
         "explanation": "Diffie-Hellman enables two parties to establish a shared secret key over a public channel, without transmitting the key itself."
       },
       {
@@ -174,7 +174,7 @@
           "ab mod p",
           "a + b mod p"
         ],
-        "correctAnswer": "g^(ab) mod p",
+        "correctAnswer": 0,
         "explanation": "Alice computes K = B^a = (g^b)^a = g^(ab) mod p. Bob computes K = A^b = (g^a)^b = g^(ab) mod p. Both get the same shared secret."
       },
       {
@@ -187,7 +187,7 @@
           "Computing square roots",
           "Prime number generation"
         ],
-        "correctAnswer": "The discrete logarithm problem",
+        "correctAnswer": 1,
         "explanation": "Diffie-Hellman security relies on the difficulty of computing a from g^a mod p (the discrete logarithm problem)."
       },
       {
@@ -200,7 +200,7 @@
           "Complex numbers",
           "Polynomial rings"
         ],
-        "correctAnswer": "Points on an elliptic curve over a finite field",
+        "correctAnswer": 0,
         "explanation": "ECC uses points on curves of the form y² = x³ + ax + b over finite fields like Z_p for prime p. The group operation is point addition."
       },
       {
@@ -213,7 +213,7 @@
           "Is less secure",
           "Cannot be used for encryption"
         ],
-        "correctAnswer": "Provides equivalent security with smaller key sizes",
+        "correctAnswer": 1,
         "explanation": "ECC provides equivalent security to RSA with much smaller key sizes (e.g., 256-bit ECC ≈ 3072-bit RSA), making it more efficient."
       }
     ]

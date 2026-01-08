@@ -15,7 +15,7 @@
           "φ(a) = a for all a ∈ G",
           "φ maps the identity to the identity"
         ],
-        "correctAnswer": "φ(ab) = φ(a)φ(b) for all a, b ∈ G",
+        "correctAnswer": 1,
         "explanation": "A homomorphism preserves the group operation: φ(ab) = φ(a)φ(b). This automatically implies φ(e_G) = e_H and φ(a⁻¹) = φ(a)⁻¹."
       },
       {
@@ -28,7 +28,7 @@
           "0",
           "Depends on φ"
         ],
-        "correctAnswer": "e_H",
+        "correctAnswer": 1,
         "explanation": "Every homomorphism maps the identity of G to the identity of H. This follows from φ(e_G) = φ(e_G · e_G) = φ(e_G)φ(e_G)."
       },
       {
@@ -41,7 +41,7 @@
           "Both injective and surjective",
           "Neither injective nor surjective"
         ],
-        "correctAnswer": "Both injective and surjective",
+        "correctAnswer": 2,
         "explanation": "An isomorphism is a bijective homomorphism. Two groups are isomorphic if there exists an isomorphism between them."
       },
       {
@@ -54,7 +54,7 @@
           "φ(n) = n + 1",
           "φ(n) = |n|"
         ],
-        "correctAnswer": "φ(n) = 2n",
+        "correctAnswer": 1,
         "explanation": "φ(n) = 2n is a homomorphism since φ(m+n) = 2(m+n) = 2m + 2n = φ(m) + φ(n). The others fail the homomorphism property."
       },
       {
@@ -67,7 +67,7 @@
           "A multiple of n",
           "No relation to n"
         ],
-        "correctAnswer": "A divisor of n",
+        "correctAnswer": 1,
         "explanation": "If |a| = n, then φ(a)ⁿ = φ(aⁿ) = φ(e) = e, so |φ(a)| divides n. The order can be less than n (e.g., if a is in the kernel)."
       }
     ]
@@ -88,7 +88,7 @@
           "{h ∈ H : φ⁻¹(h) exists}",
           "The range of φ"
         ],
-        "correctAnswer": "{g ∈ G : φ(g) = e_H}",
+        "correctAnswer": 1,
         "explanation": "The kernel is ker(φ) = {g ∈ G : φ(g) = e_H}. It is always a normal subgroup of G."
       },
       {
@@ -101,7 +101,7 @@
           "im(φ) = H",
           "φ is surjective"
         ],
-        "correctAnswer": "ker(φ) = {e_G}",
+        "correctAnswer": 0,
         "explanation": "φ is injective (one-to-one) if and only if its kernel is trivial: ker(φ) = {e_G}."
       },
       {
@@ -114,7 +114,7 @@
           "ker(φ) ≅ im(φ)",
           "G ≅ ker(φ)"
         ],
-        "correctAnswer": "G/ker(φ) ≅ im(φ)",
+        "correctAnswer": 1,
         "explanation": "The First Isomorphism Theorem: If φ: G → H is a homomorphism, then G/ker(φ) ≅ im(φ)."
       },
       {
@@ -127,7 +127,7 @@
           "Z₆",
           "Z"
         ],
-        "correctAnswer": "6Z = {..., -12, -6, 0, 6, 12, ...}",
+        "correctAnswer": 1,
         "explanation": "ker(φ) = {n ∈ Z : n ≡ 0 (mod 6)} = 6Z, the set of all multiples of 6."
       },
       {
@@ -140,7 +140,7 @@
           "Always equal to ker(φ)",
           "Never a proper subgroup"
         ],
-        "correctAnswer": "Always a subgroup of H",
+        "correctAnswer": 1,
         "explanation": "The image im(φ) = {φ(g) : g ∈ G} is always a subgroup of H, though not necessarily all of H."
       }
     ]
@@ -161,7 +161,7 @@
           "g · x ≠ x for all g ≠ e",
           "X ⊆ G"
         ],
-        "correctAnswer": "e · x = x and (gh) · x = g · (h · x) for all g, h ∈ G and x ∈ X",
+        "correctAnswer": 0,
         "explanation": "A group action satisfies: (1) the identity acts trivially: e·x = x, and (2) the action respects composition: (gh)·x = g·(h·x)."
       },
       {
@@ -174,7 +174,7 @@
           "{g ∈ G : g · x = x}",
           "The identity element"
         ],
-        "correctAnswer": "{g · x : g ∈ G}",
+        "correctAnswer": 1,
         "explanation": "The orbit of x is Orb(x) = {g·x : g ∈ G}, the set of all elements that x can be moved to by the group action."
       },
       {
@@ -187,7 +187,7 @@
           "{x}",
           "All of G"
         ],
-        "correctAnswer": "{g ∈ G : g · x = x}",
+        "correctAnswer": 1,
         "explanation": "The stabilizer of x is Stab(x) = {g ∈ G : g·x = x}, the subgroup of elements that fix x."
       },
       {
@@ -200,7 +200,7 @@
           "|Orb(x)| + |Stab(x)| = |G|",
           "|Orb(x)| = |G|/|Stab(x)|"
         ],
-        "correctAnswer": "|G| = |Orb(x)| · |Stab(x)|",
+        "correctAnswer": 1,
         "explanation": "The Orbit-Stabilizer Theorem: For a finite group G acting on X, |G| = |Orb(x)| · |Stab(x)| for any x ∈ X. Equivalently, |Orb(x)| = [G : Stab(x)]."
       },
       {
@@ -213,7 +213,7 @@
           "A subgroup of G",
           "The identity map only"
         ],
-        "correctAnswer": "An isomorphism from G to itself",
+        "correctAnswer": 1,
         "explanation": "An automorphism is an isomorphism φ: G → G. The set of all automorphisms forms a group Aut(G) under composition."
       }
     ]

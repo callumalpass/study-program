@@ -15,7 +15,7 @@
           "{a⁻¹h : h ∈ H}",
           "{h : ah ∈ H}"
         ],
-        "correctAnswer": "{ah : h ∈ H}",
+        "correctAnswer": 0,
         "explanation": "The left coset of H containing a is aH = {ah : h ∈ H}. Similarly, the right coset is Ha = {ha : h ∈ H}."
       },
       {
@@ -28,7 +28,7 @@
           "ab ∈ H",
           "a and b commute"
         ],
-        "correctAnswer": "a⁻¹b ∈ H",
+        "correctAnswer": 1,
         "explanation": "aH = bH if and only if a⁻¹b ∈ H (equivalently, b ∈ aH). This is a fundamental property of cosets."
       },
       {
@@ -41,7 +41,7 @@
           "3Z only",
           "Infinitely many distinct cosets"
         ],
-        "correctAnswer": "3Z, 1+3Z, 2+3Z",
+        "correctAnswer": 0,
         "explanation": "The cosets of 3Z in Z are: 0+3Z = 3Z = {...,-3,0,3,6,...}, 1+3Z = {...,-2,1,4,7,...}, and 2+3Z = {...,-1,2,5,8,...}. These three cosets partition Z."
       },
       {
@@ -54,7 +54,7 @@
           "Size equal to |G|/|H|",
           "At most 2 elements"
         ],
-        "correctAnswer": "The same size as H",
+        "correctAnswer": 1,
         "explanation": "Every coset of H has exactly |H| elements. The map h ↦ ah is a bijection from H to aH."
       },
       {
@@ -67,7 +67,7 @@
           "A subgroup of G",
           "Always equals G"
         ],
-        "correctAnswer": "A partition of G",
+        "correctAnswer": 1,
         "explanation": "The left cosets of H partition G: every element of G is in exactly one left coset. However, they don't always form a group under coset multiplication (only when H is normal)."
       }
     ]
@@ -88,7 +88,7 @@
           "|H| = |G|",
           "|H| and |G| are coprime"
         ],
-        "correctAnswer": "|H| divides |G|",
+        "correctAnswer": 0,
         "explanation": "Lagrange's Theorem: If G is a finite group and H ≤ G, then |H| divides |G|. Moreover, |G| = |H| · [G:H], where [G:H] is the index (number of cosets)."
       },
       {
@@ -101,7 +101,7 @@
           "1, 5, 35",
           "1, 35"
         ],
-        "correctAnswer": "1, 5, 7, 35",
+        "correctAnswer": 0,
         "explanation": "By Lagrange's Theorem, subgroup orders must divide |G| = 35 = 5·7. The divisors of 35 are 1, 5, 7, and 35."
       },
       {
@@ -114,7 +114,7 @@
           "Can be any positive integer",
           "Must be a prime number"
         ],
-        "correctAnswer": "Must divide |G|",
+        "correctAnswer": 0,
         "explanation": "The order of element a equals the order of the cyclic subgroup ⟨a⟩. By Lagrange's Theorem, |⟨a⟩| divides |G|, so |a| divides |G|."
       },
       {
@@ -127,7 +127,7 @@
           "Isomorphic to S₁₇",
           "The trivial group"
         ],
-        "correctAnswer": "Cyclic",
+        "correctAnswer": 0,
         "explanation": "If |G| = p where p is prime, then G is cyclic (and isomorphic to Zₚ). Any non-identity element generates the entire group."
       },
       {
@@ -140,7 +140,7 @@
           "The order of G",
           "Always equal to 2"
         ],
-        "correctAnswer": "The number of distinct left (or right) cosets of H in G",
+        "correctAnswer": 1,
         "explanation": "The index [G:H] is the number of distinct left cosets of H in G. By Lagrange's Theorem, [G:H] = |G|/|H|."
       }
     ]
@@ -161,7 +161,7 @@
           "H = G",
           "H has index 2"
         ],
-        "correctAnswer": "gH = Hg for all g ∈ G",
+        "correctAnswer": 1,
         "explanation": "H is normal in G if the left and right cosets coincide for all g ∈ G. Equivalently, gHg⁻¹ = H for all g ∈ G."
       },
       {
@@ -174,7 +174,7 @@
           "Trivial",
           "Of prime order"
         ],
-        "correctAnswer": "Normal",
+        "correctAnswer": 0,
         "explanation": "In an abelian group, gH = Hg for all g and H, since gh = hg for all elements. Thus every subgroup is normal."
       },
       {
@@ -187,7 +187,7 @@
           "All subgroups of G",
           "Elements of G that commute with H"
         ],
-        "correctAnswer": "The set of all cosets of H with operation (aH)(bH) = abH",
+        "correctAnswer": 1,
         "explanation": "When H ⊴ G, the set of cosets G/H = {aH : a ∈ G} forms a group under coset multiplication (aH)(bH) = abH."
       },
       {
@@ -200,7 +200,7 @@
           "No, normality depends on more than just the order",
           "No, H cannot exist by Lagrange's Theorem"
         ],
-        "correctAnswer": "Yes, because [G:H] = 2",
+        "correctAnswer": 1,
         "explanation": "Any subgroup of index 2 is normal. Here [G:H] = 30/15 = 2, so H ⊴ G."
       },
       {
@@ -213,7 +213,7 @@
           "6",
           "12"
         ],
-        "correctAnswer": "4",
+        "correctAnswer": 1,
         "explanation": "⟨4⟩ = {0, 4, 8} has order 3. By Lagrange's Theorem, |Z₁₂/⟨4⟩| = |Z₁₂|/|⟨4⟩| = 12/3 = 4."
       }
     ]

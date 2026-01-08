@@ -52,7 +52,8 @@ describe('Math304 Abstract Algebra Quiz Validation', () => {
       // |1| in Z₄ is 4 (since 1 generates Z₄)
       // |1| in Z₆ is 6 (since 1 generates Z₆)
       // lcm(4,6) = 12
-      expect(question?.correctAnswer).toBe('12');
+      // correctAnswer is index 3, which corresponds to "12"
+      expect(question?.correctAnswer).toBe(3);
     });
 
     it('validates the mathematical explanation is correct', () => {
@@ -118,7 +119,8 @@ describe('Math304 Abstract Algebra Quiz Validation', () => {
       if (question) {
         // φ(12) = φ(4)·φ(3) = 2·2 = 4
         // Generators of Z₁₂ are: 1, 5, 7, 11 (elements coprime to 12)
-        expect(question.correctAnswer).toBe('4');
+        // correctAnswer is index 1, which corresponds to "4"
+        expect(question.correctAnswer).toBe(1);
       }
     });
   });
@@ -131,7 +133,8 @@ describe('Math304 Abstract Algebra Quiz Validation', () => {
 
       if (question) {
         // Since gcd(2,3) = 1, the direct product is cyclic and isomorphic to Z₆
-        expect(question.correctAnswer).toBe('Z₆');
+        // correctAnswer is index 1, which corresponds to "Z₆"
+        expect(question.correctAnswer).toBe(1);
       }
     });
 
