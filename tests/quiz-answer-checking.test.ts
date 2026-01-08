@@ -3,80 +3,20 @@
  *
  * These tests verify the correctness of quiz answer validation logic,
  * ensuring that all question types are scored correctly.
+ *
+ * NOTE: This file imports helper functions directly from the source to ensure
+ * tests stay in sync with the actual implementation.
  */
 
 import { describe, it, expect } from 'vitest';
 import type { QuizQuestion, QuizAnswer, CodingAnswer } from '@/core/types';
-
-// Helper functions mirroring Quiz.tsx implementation
-
-function normalizeAnswer(value: string | number | boolean | undefined): string {
-  if (value === undefined) return '';
-  return String(value).trim().toLowerCase();
-}
-
-function isCodingAnswer(answer: QuizAnswer | undefined): answer is CodingAnswer {
-  return typeof answer === 'object' && answer !== null && 'code' in answer;
-}
-
-/**
- * Get the correct option index for a multiple choice question.
- * Handles both numeric indices and string values that match an option.
- */
-function getCorrectOptionIndex(question: QuizQuestion): number {
-  const correctAnswer = question.correctAnswer;
-
-  // If already a number, return it directly
-  if (typeof correctAnswer === 'number') {
-    return correctAnswer;
-  }
-
-  // If a string, find the matching option index
-  if (typeof correctAnswer === 'string' && question.options) {
-    const index = question.options.indexOf(correctAnswer);
-    if (index !== -1) {
-      return index;
-    }
-  }
-
-  // Fallback: return -1 to indicate no valid answer found
-  return -1;
-}
-
-function checkAnswer(question: QuizQuestion, answer: QuizAnswer | undefined): boolean {
-  if (answer === undefined) return false;
-
-  switch (question.type) {
-    case 'multiple_choice': {
-      // For multiple choice, compare the selected index to the correct index
-      const correctIndex = getCorrectOptionIndex(question);
-      return answer === correctIndex;
-    }
-    case 'true_false':
-      return answer === question.correctAnswer;
-    case 'fill_blank':
-    case 'code_output':
-    case 'written': {
-      const textAnswer = typeof answer === 'string' ? answer : '';
-      return normalizeAnswer(textAnswer) === normalizeAnswer(question.correctAnswer);
-    }
-    case 'coding':
-      return isCodingAnswer(answer) && answer.passed === true;
-    default:
-      return false;
-  }
-}
-
-function calculateScore(questions: QuizQuestion[], answers: Record<string, QuizAnswer>): number {
-  if (questions.length === 0) return 0;
-  let correct = 0;
-  questions.forEach((question) => {
-    if (checkAnswer(question, answers[question.id])) {
-      correct++;
-    }
-  });
-  return Math.round((correct / questions.length) * 100);
-}
+import {
+  normalizeAnswer,
+  isCodingAnswer,
+  getCorrectOptionIndex,
+  checkAnswer,
+  calculateScore,
+} from '@/utils/quiz-utils';
 
 describe('Quiz Answer Checking', () => {
   describe('normalizeAnswer', () => {
@@ -653,15 +593,18 @@ describe('Quiz Answer Checking', () => {
   });
 
   describe('edge cases', () => {
-    it('handles question with no options (should not crash)', () => {
+    it('handles question with no options (should not crash, returns false)', () => {
+      // A multiple choice question with no options is invalid -
+      // the answer should be false because there's no valid option at index 0
       const question: QuizQuestion = {
         id: 'q1',
         type: 'multiple_choice',
         prompt: 'Test',
         correctAnswer: 0,
         explanation: '',
+        // options is undefined
       };
-      expect(checkAnswer(question, 0)).toBe(true);
+      expect(checkAnswer(question, 0)).toBe(false);
     });
 
     it('handles empty string correct answer', () => {
@@ -697,6 +640,77 @@ describe('Quiz Answer Checking', () => {
       };
       expect(checkAnswer(question, '25')).toBe(true);
       expect(checkAnswer(question, ' 25 ')).toBe(true);
+    });
+
+    it('handles out-of-bounds correctAnswer index', () => {
+      // When correctAnswer is a numeric index that's out of bounds
+      const question: QuizQuestion = {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'Test',
+        options: ['A', 'B', 'C'],
+        correctAnswer: 5, // Out of bounds (only indices 0-2 are valid)
+        explanation: '',
+      };
+      // getCorrectOptionIndex should return -1, so no answer can be correct
+      expect(getCorrectOptionIndex(question)).toBe(-1);
+      expect(checkAnswer(question, 5)).toBe(false);
+      expect(checkAnswer(question, 0)).toBe(false);
+    });
+
+    it('handles negative correctAnswer index', () => {
+      const question: QuizQuestion = {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'Test',
+        options: ['A', 'B', 'C'],
+        correctAnswer: -1, // Negative index is invalid
+        explanation: '',
+      };
+      expect(getCorrectOptionIndex(question)).toBe(-1);
+      expect(checkAnswer(question, -1)).toBe(false);
+      expect(checkAnswer(question, 0)).toBe(false);
+    });
+
+    it('returns false for multiple choice when getCorrectOptionIndex returns -1', () => {
+      // This tests the safeguard in checkAnswer that prevents
+      // false positives when correctIndex is -1
+      const question: QuizQuestion = {
+        id: 'q1',
+        type: 'multiple_choice',
+        prompt: 'Test',
+        options: ['A', 'B', 'C'],
+        correctAnswer: 'NonExistentOption', // String that doesn't match any option
+        explanation: '',
+      };
+      expect(getCorrectOptionIndex(question)).toBe(-1);
+      // Even though user might answer with -1 (invalid), it shouldn't be "correct"
+      expect(checkAnswer(question, -1)).toBe(false);
+    });
+
+    it('handles coding answer with passed=false', () => {
+      const question: QuizQuestion = {
+        id: 'q1',
+        type: 'coding',
+        prompt: 'Write code',
+        correctAnswer: '',
+        explanation: '',
+        starterCode: 'def foo(): pass',
+        testCases: [],
+      };
+      const answer: CodingAnswer = { code: 'def foo(): return 1', passed: false };
+      expect(checkAnswer(question, answer)).toBe(false);
+    });
+
+    it('handles unknown question type gracefully', () => {
+      const question = {
+        id: 'q1',
+        type: 'unknown_type' as any,
+        prompt: 'Test',
+        correctAnswer: 'answer',
+        explanation: '',
+      };
+      expect(checkAnswer(question, 'answer')).toBe(false);
     });
   });
 });
