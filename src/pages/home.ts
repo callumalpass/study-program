@@ -43,12 +43,12 @@ function formatReviewItemTitle(item: ReviewItem): string {
     // Format: cs101-t1-quiz-a -> CS101 Topic 1 Quiz A
     const quizMatch = id.match(QUIZ_LEVEL_PATTERN);
     const quizLevel = quizMatch ? `Quiz ${quizMatch[1].toUpperCase()}` : 'Quiz';
-    return `${subjectCode} ${topicNum} ${quizLevel}`.trim();
+    return [subjectCode, topicNum, quizLevel].filter(Boolean).join(' ');
   } else {
     // Format: cs101-t1-ex01 -> CS101 Topic 1 Exercise 1
     const exMatch = id.match(EXERCISE_NUMBER_PATTERN);
     const exNum = exMatch ? `Exercise ${parseInt(exMatch[1], 10)}` : 'Exercise';
-    return `${subjectCode} ${topicNum} ${exNum}`.trim();
+    return [subjectCode, topicNum, exNum].filter(Boolean).join(' ');
   }
 }
 
