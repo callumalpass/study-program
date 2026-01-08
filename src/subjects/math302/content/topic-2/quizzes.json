@@ -15,7 +15,7 @@
           "r² - 5r - 6 = 0",
           "5r² - 6r + 1 = 0"
         ],
-        "correctAnswer": "r² - 5r + 6 = 0",
+        "correctAnswer": 0,
         "explanation": "For ay″ + by′ + cy = 0, the characteristic equation is ar² + br + c = 0. Here: r² - 5r + 6 = 0, giving r = 2, 3."
       },
       {
@@ -28,7 +28,7 @@
           "y = e^(3x)(C₁cos(2x) + C₂sin(2x))",
           "y = C₁cos(3x) + C₂sin(3x)"
         ],
-        "correctAnswer": "y = e^(-2x)(C₁cos(3x) + C₂sin(3x))",
+        "correctAnswer": 0,
         "explanation": "For complex roots α ± βi, the solution is y = e^(αx)(C₁cos(βx) + C₂sin(βx)). Here α = -2, β = 3."
       },
       {
@@ -41,7 +41,7 @@
           "y = C₁cos(3x) + C₂sin(3x)",
           "y = C₁e^(3x) + C₂e^(9x)"
         ],
-        "correctAnswer": "y = (C₁ + C₂x)e^(3x)",
+        "correctAnswer": 0,
         "explanation": "The characteristic equation r² - 6r + 9 = (r - 3)² = 0 has a repeated root r = 3. For repeated roots, y = (C₁ + C₂x)e^(rx)."
       },
       {
@@ -54,7 +54,7 @@
           "Exponential growth",
           "Overdamped decay"
         ],
-        "correctAnswer": "Damped oscillation",
+        "correctAnswer": 0,
         "explanation": "Characteristic equation: r² + 4r + 5 = 0 gives r = -2 ± i. Complex roots with negative real part indicate damped oscillation."
       },
       {
@@ -67,7 +67,7 @@
           "y″ + 4y′ + 4y = 0",
           "y″ + y′ + y = 0"
         ],
-        "correctAnswer": "y″ - 4y = 0",
+        "correctAnswer": 0,
         "explanation": "Characteristic equation r² - 4 = 0 gives r = ±2. The positive root r = 2 produces an e^(2x) term that grows exponentially."
       }
     ]
@@ -88,7 +88,7 @@
           "Ae^(2x)",
           "Acos(2x) + Bsin(2x)"
         ],
-        "correctAnswer": "Ax² + Bx + C",
+        "correctAnswer": 0,
         "explanation": "For a polynomial forcing function of degree n, try a polynomial of the same degree. For 8x², use Ax² + Bx + C."
       },
       {
@@ -101,7 +101,7 @@
           "Ax²e^(3x)",
           "Ae^(3x) + Bx"
         ],
-        "correctAnswer": "Axe^(3x)",
+        "correctAnswer": 0,
         "explanation": "Since e^(3x) is a solution to the homogeneous equation (r = 0, 3), we multiply by x to get the particular solution form Axe^(3x)."
       },
       {
@@ -114,7 +114,7 @@
           "Asin(3x)",
           "Ae^(3x)"
         ],
-        "correctAnswer": "x(Acos(3x) + Bsin(3x))",
+        "correctAnswer": 0,
         "explanation": "The characteristic equation r² + 9 = 0 gives r = ±3i, so sin(3x) is in the homogeneous solution. Multiply by x."
       },
       {
@@ -127,7 +127,7 @@
           "Ae^x",
           "x²e^x"
         ],
-        "correctAnswer": "(Ax + B)e^x",
+        "correctAnswer": 0,
         "explanation": "For a product of polynomial and exponential, use (polynomial of same degree) × exponential. For xe^x, try (Ax + B)e^x."
       },
       {
@@ -140,7 +140,7 @@
           "Only polynomial functions",
           "Any differentiable function"
         ],
-        "correctAnswer": "A combination of polynomials, exponentials, sines, and cosines",
+        "correctAnswer": 0,
         "explanation": "Undetermined coefficients applies to forcing functions that are linear combinations of polynomials, e^(ax), cos(bx), and sin(bx)."
       }
     ]
@@ -161,7 +161,7 @@
           "The forcing function is polynomial",
           "The equation is homogeneous"
         ],
-        "correctAnswer": "Undetermined coefficients doesn't apply",
+        "correctAnswer": 0,
         "explanation": "Variation of parameters works for any continuous forcing function, making it more general than undetermined coefficients."
       },
       {
@@ -174,7 +174,7 @@
           "W = y₁′y₂′",
           "W = y₁ + y₂"
         ],
-        "correctAnswer": "W = y₁y₂′ - y₁′y₂",
+        "correctAnswer": 0,
         "explanation": "The Wronskian is defined as W(y₁, y₂) = y₁y₂′ - y₁′y₂. It determines if solutions are linearly independent (W ≠ 0)."
       },
       {
@@ -187,7 +187,7 @@
           "y_p = y₁ + y₂",
           "y_p = xy₁ + xy₂"
         ],
-        "correctAnswer": "y_p = u₁y₁ + u₂y₂ where u₁ and u₂ are functions",
+        "correctAnswer": 0,
         "explanation": "Variation of parameters replaces constants C₁, C₂ with functions u₁(x), u₂(x), giving y_p = u₁y₁ + u₂y₂."
       },
       {
@@ -200,7 +200,7 @@
           "u₁′ = f/W",
           "u₁′ = -y₁f/W"
         ],
-        "correctAnswer": "u₁′ = -y₂f/W",
+        "correctAnswer": 0,
         "explanation": "The formulas for variation of parameters are u₁′ = -y₂f/W and u₂′ = y₁f/W, where W is the Wronskian."
       },
       {
@@ -213,7 +213,7 @@
           "Orthogonal",
           "Equal"
         ],
-        "correctAnswer": "Linearly dependent",
+        "correctAnswer": 0,
         "explanation": "When the Wronskian is zero everywhere, the solutions are linearly dependent, meaning one is a constant multiple of the other."
       }
     ]

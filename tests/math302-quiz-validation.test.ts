@@ -209,7 +209,9 @@ describe('Math302 Topic 2 - Second-Order Linear ODEs', () => {
     it('math302-q16: Characteristic equation for y″ - 5y′ + 6y = 0', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q16');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('r² - 5r + 6 = 0');
+      // correctAnswer is numeric index (0 = "r² - 5r + 6 = 0")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('r² - 5r + 6 = 0');
       // Verify: For ay″ + by′ + cy = 0, char eq is ar² + br + c = 0
       // Here: r² - 5r + 6 = 0, roots are r = 2, 3
     });
@@ -217,14 +219,18 @@ describe('Math302 Topic 2 - Second-Order Linear ODEs', () => {
     it('math302-q17: Complex roots r = -2 ± 3i give damped oscillation', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q17');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('y = e^(-2x)(C₁cos(3x) + C₂sin(3x))');
+      // correctAnswer is numeric index (0 = "y = e^(-2x)(C₁cos(3x) + C₂sin(3x))")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('y = e^(-2x)(C₁cos(3x) + C₂sin(3x))');
       // Verify: For roots α ± βi, solution is y = e^(αx)(C₁cos(βx) + C₂sin(βx))
     });
 
     it('math302-q18: Repeated root r = 3 for y″ - 6y′ + 9y = 0', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q18');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('y = (C₁ + C₂x)e^(3x)');
+      // correctAnswer is numeric index (0 = "y = (C₁ + C₂x)e^(3x)")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('y = (C₁ + C₂x)e^(3x)');
       // Verify: r² - 6r + 9 = (r-3)² = 0, repeated root r = 3
       // For repeated roots: y = (C₁ + C₂x)e^(rx)
     });
@@ -232,7 +238,9 @@ describe('Math302 Topic 2 - Second-Order Linear ODEs', () => {
     it('math302-q19: y″ + 4y′ + 5y = 0 exhibits damped oscillation', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q19');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('Damped oscillation');
+      // correctAnswer is numeric index (0 = "Damped oscillation")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('Damped oscillation');
       // Verify: r² + 4r + 5 = 0 → r = (-4 ± √(16-20))/2 = -2 ± i
       // Complex roots with negative real part = damped oscillation
     });
@@ -240,7 +248,9 @@ describe('Math302 Topic 2 - Second-Order Linear ODEs', () => {
     it('math302-q20: y″ - 4y = 0 grows without bound', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q20');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('y″ - 4y = 0');
+      // correctAnswer is numeric index (0 = "y″ - 4y = 0")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('y″ - 4y = 0');
       // Verify: r² - 4 = 0 → r = ±2
       // Positive root r = 2 gives e^(2x) which grows
     });
@@ -256,21 +266,27 @@ describe('Math302 Topic 2 - Second-Order Linear ODEs', () => {
     it('math302-q21: Particular solution form for 8x²', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q21');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('Ax² + Bx + C');
+      // correctAnswer is numeric index (0 = "Ax² + Bx + C")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('Ax² + Bx + C');
       // For polynomial forcing function of degree n, try polynomial of same degree
     });
 
     it('math302-q22: Particular solution form when e^(3x) is homogeneous solution', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q22');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('Axe^(3x)');
+      // correctAnswer is numeric index (0 = "Axe^(3x)")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('Axe^(3x)');
       // When forcing function is part of homogeneous solution, multiply by x
     });
 
     it('math302-q23: Resonance case for y″ + 9y = sin(3x)', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q23');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('x(Acos(3x) + Bsin(3x))');
+      // correctAnswer is numeric index (0 = "x(Acos(3x) + Bsin(3x))")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('x(Acos(3x) + Bsin(3x))');
       // r² + 9 = 0 → r = ±3i, so sin(3x) is in homogeneous solution
       // Must multiply by x
     });
@@ -286,19 +302,25 @@ describe('Math302 Topic 2 - Second-Order Linear ODEs', () => {
     it('math302-q27: Wronskian definition', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q27');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('W = y₁y₂′ - y₁′y₂');
+      // correctAnswer is numeric index (0 = "W = y₁y₂′ - y₁′y₂")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('W = y₁y₂′ - y₁′y₂');
     });
 
     it('math302-q29: Formula for u₁′ in variation of parameters', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q29');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe("u₁′ = -y₂f/W");
+      // correctAnswer is numeric index (0 = "u₁′ = -y₂f/W")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe("u₁′ = -y₂f/W");
     });
 
     it('math302-q30: W = 0 implies linear dependence', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q30');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('Linearly dependent');
+      // correctAnswer is numeric index (0 = "Linearly dependent")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('Linearly dependent');
     });
   });
 });
