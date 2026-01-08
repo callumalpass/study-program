@@ -745,3 +745,179 @@ describe('empty and edge case handling', () => {
     expect(calculateSubjectCompletion(subject, progress)).toBe(67);
   });
 });
+
+describe('completion percentage boundary conditions', () => {
+  it('handles exactly 70% quiz score as passing', () => {
+    const subject = subjectTemplate({
+      topics: [{
+        id: 't1',
+        title: 'Topic 1',
+        content: '',
+        quizIds: ['q1'],
+        exerciseIds: [],
+      }],
+      examIds: [],
+      projectIds: [],
+    });
+    const progress = makeProgress({
+      status: 'in_progress',
+      quizAttempts: { q1: [makeQuizAttempt(70)] },
+    });
+
+    expect(calculateSubjectCompletion(subject, progress)).toBe(100);
+  });
+
+  it('handles 69% quiz score as failing', () => {
+    const subject = subjectTemplate({
+      topics: [{
+        id: 't1',
+        title: 'Topic 1',
+        content: '',
+        quizIds: ['q1'],
+        exerciseIds: [],
+      }],
+      examIds: [],
+      projectIds: [],
+    });
+    const progress = makeProgress({
+      status: 'in_progress',
+      quizAttempts: { q1: [makeQuizAttempt(69)] },
+    });
+
+    expect(calculateSubjectCompletion(subject, progress)).toBe(0);
+  });
+
+  it('handles exactly 70% project AI score as passing', () => {
+    const subject = subjectTemplate({
+      topics: [],
+      examIds: [],
+      projectIds: ['proj1'],
+    });
+    const progress = makeProgress({
+      status: 'in_progress',
+      projectSubmissions: { proj1: [makeProjectSubmission(70)] },
+    });
+
+    expect(calculateSubjectCompletion(subject, progress)).toBe(100);
+  });
+
+  it('handles 69% project AI score as failing', () => {
+    const subject = subjectTemplate({
+      topics: [],
+      examIds: [],
+      projectIds: ['proj1'],
+    });
+    const progress = makeProgress({
+      status: 'in_progress',
+      projectSubmissions: { proj1: [makeProjectSubmission(69)] },
+    });
+
+    expect(calculateSubjectCompletion(subject, progress)).toBe(0);
+  });
+
+  it('handles exactly 70% exam score as passing', () => {
+    const subject = subjectTemplate({
+      topics: [],
+      examIds: ['exam1'],
+      projectIds: [],
+    });
+    const progress = makeProgress({
+      status: 'in_progress',
+      examAttempts: { exam1: [makeExamAttempt(70)] },
+    });
+
+    expect(calculateSubjectCompletion(subject, progress)).toBe(100);
+  });
+
+  it('handles 69% exam score as failing', () => {
+    const subject = subjectTemplate({
+      topics: [],
+      examIds: ['exam1'],
+      projectIds: [],
+    });
+    const progress = makeProgress({
+      status: 'in_progress',
+      examAttempts: { exam1: [makeExamAttempt(69)] },
+    });
+
+    expect(calculateSubjectCompletion(subject, progress)).toBe(0);
+  });
+
+  it('handles a combination of passing and failing scores at boundary', () => {
+    const subject = subjectTemplate({
+      topics: [{
+        id: 't1',
+        title: 'Topic 1',
+        content: '',
+        quizIds: ['q1', 'q2'],
+        exerciseIds: [],
+      }],
+      examIds: ['exam1'],
+      projectIds: ['proj1'],
+    });
+    const progress = makeProgress({
+      status: 'in_progress',
+      quizAttempts: {
+        q1: [makeQuizAttempt(70)],  // exactly passing
+        q2: [makeQuizAttempt(69)],  // exactly failing
+      },
+      examAttempts: { exam1: [makeExamAttempt(70)] },  // exactly passing
+      projectSubmissions: { proj1: [makeProjectSubmission(69)] },  // exactly failing
+    });
+
+    // 4 total items: q1(pass), q2(fail), exam1(pass), proj1(fail) = 2/4 = 50%
+    expect(calculateSubjectCompletion(subject, progress)).toBe(50);
+  });
+});
+
+describe('exercise completion edge cases', () => {
+  it('handles exercise marked as failed', () => {
+    const subject = subjectTemplate({
+      topics: [{
+        id: 't1',
+        title: 'Topic 1',
+        content: '',
+        quizIds: [],
+        exerciseIds: ['e1'],
+      }],
+      examIds: [],
+      projectIds: [],
+    });
+    const progress = makeProgress({
+      status: 'in_progress',
+      exerciseCompletions: { e1: makeExerciseCompletion(false) },
+    });
+
+    expect(calculateSubjectCompletion(subject, progress)).toBe(0);
+    expect(isExerciseCompleted('e1', progress)).toBe(false);
+  });
+
+  it('handles exercise marked as passed', () => {
+    const subject = subjectTemplate({
+      topics: [{
+        id: 't1',
+        title: 'Topic 1',
+        content: '',
+        quizIds: [],
+        exerciseIds: ['e1'],
+      }],
+      examIds: [],
+      projectIds: [],
+    });
+    const progress = makeProgress({
+      status: 'in_progress',
+      exerciseCompletions: { e1: makeExerciseCompletion(true) },
+    });
+
+    expect(calculateSubjectCompletion(subject, progress)).toBe(100);
+    expect(isExerciseCompleted('e1', progress)).toBe(true);
+  });
+
+  it('handles missing exercise completion entry', () => {
+    const progress = makeProgress({
+      exerciseCompletions: {},
+    });
+
+    expect(isExerciseCompleted('nonexistent', progress)).toBe(false);
+  });
+});
