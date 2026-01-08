@@ -14,7 +14,7 @@
           "Availability",
           "Authentication"
         ],
-        "correctAnswer": "Integrity",
+        "correctAnswer": 1,
         "explanation": "Integrity ensures that data remains accurate and unaltered except by authorized parties. Confidentiality prevents unauthorized access, while availability ensures systems remain accessible."
       },
       {
@@ -27,7 +27,7 @@
           "To encrypt all data at rest and in transit",
           "To establish user authentication mechanisms"
         ],
-        "correctAnswer": "To identify and prioritize potential security threats before implementation",
+        "correctAnswer": 0,
         "explanation": "Threat modeling is a proactive approach used during design phase to identify potential threats, assess risks, and determine appropriate countermeasures before the system is built."
       },
       {
@@ -40,7 +40,7 @@
           "Separation of duties",
           "Fail-safe defaults"
         ],
-        "correctAnswer": "Defense in depth",
+        "correctAnswer": 1,
         "explanation": "Defense in depth is a layered security approach where multiple independent security controls are implemented so that if one fails, others still provide protection."
       },
       {
@@ -53,7 +53,7 @@
           "Administrative access to all systems they use",
           "Permission to delegate their access rights to others"
         ],
-        "correctAnswer": "Only the minimum permissions necessary to perform their job functions",
+        "correctAnswer": 1,
         "explanation": "Least privilege minimizes the potential damage from accidents or malicious actions by granting users only the minimum access required for their legitimate tasks."
       },
       {
@@ -66,7 +66,7 @@
           "Systems maintain functionality even when security controls fail",
           "Systems revert to backup authentication methods automatically"
         ],
-        "correctAnswer": "Systems deny access by default unless explicitly granted",
+        "correctAnswer": 1,
         "explanation": "Fail-safe defaults ensure that when something goes wrong or is undefined, the system defaults to a secure state (deny access) rather than an insecure one."
       },
       {
@@ -79,7 +79,7 @@
           "Security controls must completely prevent all types of attacks",
           "All users must complete security training before system access"
         ],
-        "correctAnswer": "Every access to every object must be checked for authorization",
+        "correctAnswer": 1,
         "explanation": "Complete mediation requires that all accesses to objects are checked to ensure they are allowed, preventing unauthorized access through cached or outdated permissions."
       },
       {
@@ -92,7 +92,7 @@
           "Symmetric encryption uses public keys while asymmetric uses private keys",
           "Asymmetric encryption cannot be used for data confidentiality"
         ],
-        "correctAnswer": "Symmetric encryption is faster but uses the same key for encryption and decryption",
+        "correctAnswer": 0,
         "explanation": "Symmetric encryption uses a single shared key for both operations and is computationally faster. Asymmetric encryption uses a key pair (public and private) and is slower but solves the key distribution problem."
       },
       {
@@ -105,7 +105,7 @@
           "SHA-256",
           "CRC32"
         ],
-        "correctAnswer": "SHA-256",
+        "correctAnswer": 2,
         "explanation": "SHA-256 (part of SHA-2 family) is currently considered secure. MD5 and SHA-1 have known collision vulnerabilities, and CRC32 is not cryptographically secure."
       },
       {
@@ -118,7 +118,7 @@
           "To compress data for efficient transmission",
           "To generate random keys for encryption"
         ],
-        "correctAnswer": "To verify the authenticity and integrity of a message",
+        "correctAnswer": 1,
         "explanation": "Digital signatures use asymmetric cryptography to prove that a message came from a specific sender (authenticity) and has not been altered (integrity)."
       },
       {
@@ -131,7 +131,7 @@
           "The sender's private key",
           "A shared symmetric key"
         ],
-        "correctAnswer": "Alice's public key",
+        "correctAnswer": 1,
         "explanation": "To send a confidential message to Alice, you encrypt it with her public key. Only Alice can decrypt it using her corresponding private key, ensuring confidentiality."
       },
       {
@@ -144,7 +144,7 @@
           "Second pre-image resistance",
           "Avalanche effect"
         ],
-        "correctAnswer": "Collision resistance",
+        "correctAnswer": 1,
         "explanation": "Collision resistance means it should be computationally infeasible to find two different inputs that hash to the same output. This is crucial for digital signatures and integrity verification."
       },
       {
@@ -157,7 +157,7 @@
           "To encrypt the password before hashing",
           "To reduce the storage size of the hash"
         ],
-        "correctAnswer": "To prevent rainbow table attacks and make each hash unique",
+        "correctAnswer": 1,
         "explanation": "Salt is random data added to passwords before hashing. This ensures that identical passwords produce different hashes and makes precomputed hash tables (rainbow tables) ineffective."
       },
       {
@@ -170,7 +170,7 @@
           "Security token",
           "Smart card"
         ],
-        "correctAnswer": "Password",
+        "correctAnswer": 1,
         "explanation": "Authentication factors are categorized as: something you know (passwords, PINs), something you have (tokens, cards), and something you are (biometrics)."
       },
       {
@@ -183,7 +183,7 @@
           "It eliminates the need for password complexity requirements",
           "It allows users to share credentials safely"
         ],
-        "correctAnswer": "It provides protection even if one factor is compromised",
+        "correctAnswer": 1,
         "explanation": "MFA requires multiple independent factors, so an attacker who compromises one factor (e.g., steals a password) still cannot authenticate without the other factors."
       },
       {
@@ -196,7 +196,7 @@
           "To host the protected resources that clients want to access",
           "To encrypt all communications between client and server"
         ],
-        "correctAnswer": "To issue access tokens after authenticating the resource owner",
+        "correctAnswer": 1,
         "explanation": "The Authorization Server authenticates the resource owner (user) and issues access tokens to clients, which can then be used to access protected resources."
       },
       {
@@ -209,7 +209,7 @@
           "ABAC only works with file system permissions",
           "RBAC requires multi-factor authentication while ABAC does not"
         ],
-        "correctAnswer": "RBAC uses user roles while ABAC uses attributes and policies for access decisions",
+        "correctAnswer": 0,
         "explanation": "RBAC grants permissions based on assigned roles. ABAC evaluates multiple attributes (user, resource, environment) against policies, providing more fine-grained and flexible access control."
       },
       {
@@ -222,7 +222,7 @@
           "To generate one-time passwords for MFA",
           "To hash user passwords before storage"
         ],
-        "correctAnswer": "To identify and track authenticated user sessions",
+        "correctAnswer": 1,
         "explanation": "After successful authentication, a session token is issued to maintain the user's authenticated state across multiple requests without requiring re-authentication for each request."
       },
       {
@@ -235,7 +235,7 @@
           "Store passwords hashed with a slow algorithm like bcrypt and a unique salt",
           "Store passwords using Base64 encoding"
         ],
-        "correctAnswer": "Store passwords hashed with a slow algorithm like bcrypt and a unique salt",
+        "correctAnswer": 2,
         "explanation": "Passwords should be hashed (not encrypted or encoded) using algorithms designed for passwords (bcrypt, scrypt, Argon2) that are intentionally slow to resist brute-force attacks, with unique salts per password."
       },
       {
@@ -248,7 +248,7 @@
           "Stealing database credentials; prevented by encryption",
           "Overloading the database; prevented by rate limiting"
         ],
-        "correctAnswer": "Injecting SQL commands through user input; prevented by using prepared statements",
+        "correctAnswer": 0,
         "explanation": "SQL injection occurs when attackers insert malicious SQL code through input fields. Prepared statements (parameterized queries) separate SQL code from data, preventing injection."
       },
       {
@@ -261,7 +261,7 @@
           "Breaking SSL/TLS encryption on websites",
           "Bypassing same-origin policy restrictions"
         ],
-        "correctAnswer": "Injecting malicious scripts into web pages viewed by other users",
+        "correctAnswer": 0,
         "explanation": "XSS allows attackers to inject malicious scripts (usually JavaScript) into web pages. When other users view the page, the script executes in their browser, potentially stealing data or performing actions on their behalf."
       },
       {
@@ -274,7 +274,7 @@
           "It injects malicious scripts into trusted websites",
           "It intercepts network traffic between client and server"
         ],
-        "correctAnswer": "It tricks authenticated users into executing unwanted actions on a web application",
+        "correctAnswer": 0,
         "explanation": "CSRF exploits the trust a web application has in an authenticated user's browser by tricking the browser into sending unauthorized requests using the user's existing session."
       },
       {
@@ -287,7 +287,7 @@
           "Using weak encryption algorithms",
           "Failing to validate SSL certificates"
         ],
-        "correctAnswer": "Writing data beyond the boundaries of allocated memory",
+        "correctAnswer": 1,
         "explanation": "Buffer overflows occur when a program writes more data to a buffer than it can hold, overwriting adjacent memory. This can lead to crashes or arbitrary code execution if exploited."
       },
       {
@@ -300,7 +300,7 @@
           "Denial of service",
           "Man-in-the-middle"
         ],
-        "correctAnswer": "Information disclosure",
+        "correctAnswer": 0,
         "explanation": "Information disclosure vulnerabilities leak sensitive data (database structure, file paths, system details) through error messages, stack traces, or other outputs, helping attackers plan further attacks."
       },
       {
@@ -313,7 +313,7 @@
           "Authentication systems that fail to verify passwords",
           "Network connections that are not encrypted"
         ],
-        "correctAnswer": "Users able to access resources or perform actions outside their permissions",
+        "correctAnswer": 1,
         "explanation": "Broken access control occurs when applications fail to properly enforce restrictions on what authenticated users can do, allowing unauthorized access to data or functionality."
       },
       {
@@ -326,7 +326,7 @@
           "Output encoding/escaping user-supplied data before rendering",
           "Requiring multi-factor authentication"
         ],
-        "correctAnswer": "Output encoding/escaping user-supplied data before rendering",
+        "correctAnswer": 2,
         "explanation": "Properly encoding/escaping user-supplied data before outputting it to HTML, JavaScript, or other contexts prevents browsers from interpreting it as executable code."
       },
       {
@@ -339,7 +339,7 @@
           "Attackers can exploit publicly disclosed vulnerabilities to compromise the system",
           "Higher cloud hosting costs"
         ],
-        "correctAnswer": "Attackers can exploit publicly disclosed vulnerabilities to compromise the system",
+        "correctAnswer": 2,
         "explanation": "When applications use libraries, frameworks, or components with known vulnerabilities, attackers can use publicly available exploits to compromise the system. Regular updates and dependency scanning are essential."
       }
     ]
@@ -359,7 +359,7 @@
           "Availability",
           "Integrity"
         ],
-        "correctAnswer": "Accountability",
+        "correctAnswer": 1,
         "explanation": "Accountability (often considered alongside the CIA triad) ensures that actions can be traced to responsible parties through logging, auditing, and non-repudiation mechanisms."
       },
       {
@@ -372,7 +372,7 @@
           "System, Threat, Risk, Impact, Detection, Elimination",
           "Secure, Tested, Reliable, Integrated, Defended, Encrypted"
         ],
-        "correctAnswer": "Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege",
+        "correctAnswer": 1,
         "explanation": "STRIDE is a threat modeling framework developed by Microsoft that categorizes threats into six types to help identify security vulnerabilities in system design."
       },
       {
@@ -385,7 +385,7 @@
           "To separate development and production environments",
           "To isolate network segments using firewalls"
         ],
-        "correctAnswer": "To prevent any single person from having complete control over critical operations",
+        "correctAnswer": 1,
         "explanation": "Separation of duties requires multiple people to complete critical tasks, reducing the risk of fraud, errors, or malicious actions by ensuring no single individual has end-to-end control."
       },
       {
@@ -398,7 +398,7 @@
           "RSA encryption",
           "Hash-based encryption"
         ],
-        "correctAnswer": "CBC (Cipher Block Chaining)",
+        "correctAnswer": 1,
         "explanation": "CBC mode uses an IV to XOR with the first plaintext block, and each subsequent block is XORed with the previous ciphertext block. This ensures identical plaintexts produce different ciphertexts. ECB does not use an IV and has this weakness."
       },
       {
@@ -411,7 +411,7 @@
           "Diffie-Hellman",
           "MD5"
         ],
-        "correctAnswer": "Diffie-Hellman",
+        "correctAnswer": 2,
         "explanation": "Diffie-Hellman is a cryptographic protocol that allows two parties to establish a shared secret key over an insecure channel without ever transmitting the key itself."
       },
       {
@@ -424,7 +424,7 @@
           "Offline brute-force attacks if the database is compromised",
           "Man-in-the-middle attacks"
         ],
-        "correctAnswer": "Offline brute-force attacks if the database is compromised",
+        "correctAnswer": 2,
         "explanation": "A pepper is a secret value added to all passwords before hashing (in addition to unique salts). If the database is stolen but the pepper is stored separately, attackers cannot effectively brute-force the hashes without the pepper."
       },
       {
@@ -437,7 +437,7 @@
           "To encrypt data during transmission",
           "To validate user credentials"
         ],
-        "correctAnswer": "To obtain new access tokens without requiring user re-authentication",
+        "correctAnswer": 1,
         "explanation": "Refresh tokens are long-lived credentials used to obtain new access tokens when they expire, without requiring the user to re-authenticate. Access tokens are short-lived for security."
       },
       {
@@ -450,7 +450,7 @@
           "Increasing server capacity to handle more users",
           "Promoting users to administrator roles through proper authorization"
         ],
-        "correctAnswer": "Exploiting vulnerabilities to gain higher access privileges than intended",
+        "correctAnswer": 1,
         "explanation": "Privilege escalation occurs when attackers exploit bugs or misconfigurations to gain elevated access rights, either horizontally (accessing other users' resources) or vertically (gaining admin rights)."
       },
       {
@@ -463,7 +463,7 @@
           "Accept-Encoding",
           "User-Agent"
         ],
-        "correctAnswer": "X-Frame-Options",
+        "correctAnswer": 1,
         "explanation": "X-Frame-Options (or newer Content-Security-Policy frame-ancestors) prevents clickjacking by controlling whether a page can be embedded in frames/iframes, preventing attackers from overlaying invisible frames."
       },
       {
@@ -476,7 +476,7 @@
           "Encrypting all form data",
           "Requiring strong passwords"
         ],
-        "correctAnswer": "Implementing anti-CSRF tokens that are validated on state-changing requests",
+        "correctAnswer": 1,
         "explanation": "Anti-CSRF tokens are unique, unpredictable values embedded in forms and validated server-side. Since attackers cannot access these tokens due to same-origin policy, they cannot forge valid requests."
       },
       {
@@ -489,7 +489,7 @@
           "DOM-based XSS",
           "Server-side XSS"
         ],
-        "correctAnswer": "Stored XSS",
+        "correctAnswer": 1,
         "explanation": "Stored (or persistent) XSS occurs when malicious scripts are saved on the server and later served to users. This is more dangerous than reflected XSS as it affects all users who view the compromised content."
       },
       {
@@ -502,7 +502,7 @@
           "Cross-site scripting using XML data",
           "Denying service by sending large XML files"
         ],
-        "correctAnswer": "Exploiting XML parsers to access local files or internal systems",
+        "correctAnswer": 1,
         "explanation": "XXE attacks exploit XML parsers that process external entity references, allowing attackers to read local files, perform SSRF attacks, or cause denial of service."
       },
       {
@@ -515,7 +515,7 @@
           "Storing data in inefficient formats",
           "Converting data between incompatible formats"
         ],
-        "correctAnswer": "Processing untrusted serialized objects that can lead to remote code execution",
+        "correctAnswer": 1,
         "explanation": "Insecure deserialization occurs when applications deserialize untrusted data without proper validation. Attackers can craft malicious serialized objects that execute arbitrary code when deserialized."
       },
       {
@@ -528,7 +528,7 @@
           "Encrypting user input before storage",
           "Logging all user inputs for audit purposes"
         ],
-        "correctAnswer": "Verifying that all input data meets expected criteria before processing",
+        "correctAnswer": 1,
         "explanation": "Input validation ensures that data conforms to expected format, type, length, and range before processing. This is a fundamental defense against injection attacks and other vulnerabilities."
       },
       {
@@ -541,7 +541,7 @@
           "Removing suspicious characters",
           "Converting all inputs to lowercase"
         ],
-        "correctAnswer": "Whitelisting known good inputs",
+        "correctAnswer": 1,
         "explanation": "Whitelisting (allowing only known good inputs) is more secure than blacklisting because it's impossible to enumerate all bad inputs. Whitelisting defines what is acceptable and rejects everything else."
       },
       {
@@ -554,7 +554,7 @@
           "Encrypting data before transmission",
           "Formatting output for better readability"
         ],
-        "correctAnswer": "Converting output to appropriate format to prevent interpretation as code",
+        "correctAnswer": 1,
         "explanation": "Output encoding transforms special characters into safe representations for the output context (HTML, JavaScript, SQL, etc.), preventing data from being interpreted as executable code."
       },
       {
@@ -567,7 +567,7 @@
           "Generic messages that don't reveal system internals",
           "Database query details that failed"
         ],
-        "correctAnswer": "Generic messages that don't reveal system internals",
+        "correctAnswer": 2,
         "explanation": "User-facing error messages should be generic to avoid information disclosure. Detailed errors should be logged securely for administrators while users see only what they need to know."
       },
       {
@@ -580,7 +580,7 @@
           "Include them in configuration files committed to version control",
           "Encrypt them with a key stored in the same repository"
         ],
-        "correctAnswer": "Store them in environment variables or secure secret management systems",
+        "correctAnswer": 1,
         "explanation": "Secrets should never be hardcoded or committed to version control. Use environment variables, secret management systems (like HashiCorp Vault), or cloud provider secret services."
       },
       {
@@ -593,7 +593,7 @@
           "To compress content for faster delivery",
           "To cache content on CDN servers"
         ],
-        "correctAnswer": "To specify which sources of content browsers should allow to load",
+        "correctAnswer": 1,
         "explanation": "CSP is a security header that controls which sources can load scripts, styles, images, etc. This helps prevent XSS attacks by blocking inline scripts and unauthorized external sources."
       },
       {
@@ -606,7 +606,7 @@
           "They use less memory",
           "They automatically create database indexes"
         ],
-        "correctAnswer": "They prevent SQL injection by separating SQL code from data",
+        "correctAnswer": 1,
         "explanation": "Parameterized queries (prepared statements) treat user input as data, not executable code. The database knows which parts are SQL structure and which are data, preventing injection."
       },
       {
@@ -619,7 +619,7 @@
           "Default passwords should be complex and random",
           "Security features should be disabled by default for performance"
         ],
-        "correctAnswer": "Systems should be configured securely out of the box without requiring user action",
+        "correctAnswer": 1,
         "explanation": "Secure by default means systems ship with secure configurations enabled, rather than requiring users to manually enable security features. This reduces the risk of insecure deployments."
       },
       {
@@ -632,7 +632,7 @@
           "ORMs eliminate the need for input validation",
           "ORMs prevent all types of database attacks"
         ],
-        "correctAnswer": "ORMs typically use parameterized queries, reducing SQL injection risk",
+        "correctAnswer": 1,
         "explanation": "ORMs generally use parameterized queries internally, which helps prevent SQL injection. However, they don't eliminate all risks - raw queries and other vulnerabilities can still exist."
       },
       {
@@ -645,7 +645,7 @@
           "When database queries compete for resources",
           "When network latency causes delays"
         ],
-        "correctAnswer": "When multiple threads access shared resources in an uncontrolled way, causing security issues",
+        "correctAnswer": 1,
         "explanation": "Race conditions occur when multiple threads/processes access shared data concurrently without proper synchronization. This can lead to security vulnerabilities like privilege escalation or data corruption."
       },
       {
@@ -658,7 +658,7 @@
           "Server-side validation is only needed for performance",
           "Both are equally important for security"
         ],
-        "correctAnswer": "Client-side validation improves UX; server-side validation provides security",
+        "correctAnswer": 0,
         "explanation": "Client-side validation can be bypassed by attackers, so it only improves user experience. Server-side validation is essential for security as it cannot be bypassed and enforces security policies."
       },
       {
@@ -671,7 +671,7 @@
           "Only check file extensions",
           "Store all uploads in the public web directory"
         ],
-        "correctAnswer": "Validate file type, size, scan for malware, and store outside web root",
+        "correctAnswer": 1,
         "explanation": "Secure file upload requires: validating actual file content (not just extension), limiting size, scanning for malware, storing outside the web root, and generating random filenames to prevent path traversal."
       },
       {
@@ -684,7 +684,7 @@
           "To route traffic through multiple servers",
           "To block malicious IP addresses"
         ],
-        "correctAnswer": "To provide encryption, authentication, and integrity for network communications",
+        "correctAnswer": 1,
         "explanation": "TLS (Transport Layer Security) provides confidentiality through encryption, authentication via certificates, and integrity through message authentication codes to secure network communications."
       },
       {
@@ -697,7 +697,7 @@
           "Scans files for viruses",
           "Backs up network data"
         ],
-        "correctAnswer": "Filters network traffic based on security rules",
+        "correctAnswer": 1,
         "explanation": "Firewalls monitor and control network traffic based on predetermined security rules, allowing or blocking traffic between trusted and untrusted networks."
       },
       {
@@ -710,7 +710,7 @@
           "IDS monitors internal networks while IPS monitors external networks",
           "There is no difference; they are the same thing"
         ],
-        "correctAnswer": "IDS detects threats while IPS detects and actively prevents/blocks threats",
+        "correctAnswer": 0,
         "explanation": "Intrusion Detection Systems (IDS) monitor and alert on suspicious activity. Intrusion Prevention Systems (IPS) also actively block or prevent detected threats from causing harm."
       },
       {
@@ -723,7 +723,7 @@
           "Free access to premium content",
           "Automatic malware scanning"
         ],
-        "correctAnswer": "Encrypted tunnel for secure communication over untrusted networks",
+        "correctAnswer": 1,
         "explanation": "VPNs create encrypted tunnels between endpoints, protecting data confidentiality and integrity when communicating over untrusted networks like public WiFi or the internet."
       },
       {
@@ -736,7 +736,7 @@
           "Stealing DNS server credentials",
           "Encrypting DNS records"
         ],
-        "correctAnswer": "Corrupting DNS cache to redirect users to malicious sites",
+        "correctAnswer": 1,
         "explanation": "DNS poisoning involves inserting false DNS records into cache, causing DNS queries to return incorrect IP addresses and redirecting users to malicious sites instead of legitimate ones."
       },
       {
@@ -749,7 +749,7 @@
           "Faster DNS resolution",
           "Automatic DNS caching"
         ],
-        "correctAnswer": "Authentication and integrity of DNS responses",
+        "correctAnswer": 1,
         "explanation": "DNSSEC (DNS Security Extensions) uses digital signatures to verify that DNS responses are authentic and have not been tampered with. It does not provide confidentiality (encryption)."
       },
       {
@@ -762,7 +762,7 @@
           "An attacker guesses passwords through brute force",
           "An attacker injects code into web applications"
         ],
-        "correctAnswer": "An attacker intercepts and potentially alters communications between two parties",
+        "correctAnswer": 0,
         "explanation": "In MITM attacks, attackers position themselves between two communicating parties to intercept, read, or modify data. TLS/SSL with proper certificate validation helps prevent these attacks."
       },
       {
@@ -775,7 +775,7 @@
           "To reduce hardware costs",
           "To simplify network management"
         ],
-        "correctAnswer": "To isolate different parts of the network and limit breach impact",
+        "correctAnswer": 1,
         "explanation": "Network segmentation divides networks into isolated zones, limiting lateral movement during breaches. If one segment is compromised, attackers cannot easily access other segments."
       },
       {
@@ -788,7 +788,7 @@
           "Encrypting files and demanding ransom",
           "Injecting malicious code into multiple websites"
         ],
-        "correctAnswer": "Overwhelming a target with traffic from multiple sources to make it unavailable",
+        "correctAnswer": 1,
         "explanation": "DDoS attacks use multiple compromised systems to flood a target with traffic, exhausting resources and making the service unavailable to legitimate users."
       },
       {
@@ -801,7 +801,7 @@
           "Encryption and authentication using TLS/SSL",
           "Automatic content compression"
         ],
-        "correctAnswer": "Encryption and authentication using TLS/SSL",
+        "correctAnswer": 2,
         "explanation": "HTTPS uses TLS/SSL to encrypt data in transit, authenticate the server (via certificates), and ensure data integrity, protecting against eavesdropping and tampering."
       },
       {
@@ -814,7 +814,7 @@
           "Rotating certificates frequently",
           "Using self-signed certificates"
         ],
-        "correctAnswer": "Hardcoding or caching expected certificates to prevent MITM attacks",
+        "correctAnswer": 1,
         "explanation": "Certificate pinning involves embedding or caching the expected certificate or public key in the application. This prevents MITM attacks using fraudulent certificates, even from compromised CAs."
       },
       {
@@ -827,7 +827,7 @@
           "To encrypt web application data",
           "To cache web application content"
         ],
-        "correctAnswer": "To filter and monitor HTTP/HTTPS traffic to protect web applications",
+        "correctAnswer": 1,
         "explanation": "WAFs inspect HTTP/HTTPS traffic to web applications, filtering malicious requests and protecting against attacks like SQL injection, XSS, and other OWASP Top 10 vulnerabilities."
       },
       {
@@ -840,7 +840,7 @@
           "Vulnerability scanning is only for networks; penetration testing is only for applications",
           "Penetration testing is automated while vulnerability scanning is manual"
         ],
-        "correctAnswer": "Vulnerability scanning is automated detection; penetration testing is manual exploitation",
+        "correctAnswer": 0,
         "explanation": "Vulnerability scanning uses automated tools to identify potential vulnerabilities. Penetration testing involves manual exploitation attempts to validate vulnerabilities and assess real-world impact."
       },
       {
@@ -853,7 +853,7 @@
           "Testing network security configurations",
           "Scanning for malware in deployed applications"
         ],
-        "correctAnswer": "Analyzing source code for security vulnerabilities without executing it",
+        "correctAnswer": 1,
         "explanation": "SAST analyzes source code, bytecode, or binaries without executing the program to identify potential security vulnerabilities like SQL injection, buffer overflows, or insecure cryptography."
       },
       {
@@ -866,7 +866,7 @@
           "Reviewing code during development",
           "Static analysis of configuration files"
         ],
-        "correctAnswer": "Testing running applications by simulating attacks",
+        "correctAnswer": 1,
         "explanation": "DAST tests running applications from the outside by sending various inputs and analyzing responses, similar to how an attacker would probe for vulnerabilities without access to source code."
       },
       {
@@ -879,7 +879,7 @@
           "Obfuscating code to prevent reverse engineering",
           "Testing with incomplete or partial data"
         ],
-        "correctAnswer": "Providing invalid, unexpected, or random data as input to find vulnerabilities",
+        "correctAnswer": 1,
         "explanation": "Fuzzing involves automatically generating and submitting malformed, unexpected, or random data to applications to discover crashes, memory leaks, or security vulnerabilities."
       },
       {
@@ -892,7 +892,7 @@
           "To optimize code performance",
           "To document code functionality"
         ],
-        "correctAnswer": "To manually examine code for security vulnerabilities and insecure practices",
+        "correctAnswer": 1,
         "explanation": "Security code review involves manual inspection of source code by security experts to identify vulnerabilities, insecure patterns, and violations of secure coding practices that automated tools might miss."
       },
       {
@@ -905,7 +905,7 @@
           "Automated bug detection software",
           "A training program for security testers"
         ],
-        "correctAnswer": "A program that rewards external researchers for finding and reporting vulnerabilities",
+        "correctAnswer": 1,
         "explanation": "Bug bounty programs incentivize external security researchers to find and responsibly disclose vulnerabilities in exchange for rewards, leveraging the broader security community."
       },
       {
@@ -918,7 +918,7 @@
           "Selling vulnerability information to the highest bidder",
           "Never disclosing vulnerabilities publicly"
         ],
-        "correctAnswer": "Reporting vulnerabilities to vendors privately and allowing time to fix before public disclosure",
+        "correctAnswer": 1,
         "explanation": "Responsible disclosure involves privately informing vendors of vulnerabilities and giving them reasonable time to develop and deploy fixes before making the vulnerability public."
       },
       {
@@ -931,7 +931,7 @@
           "Automating security scans",
           "Certifying security professionals"
         ],
-        "correctAnswer": "Providing a comprehensive framework for web application security testing",
+        "correctAnswer": 1,
         "explanation": "The OWASP Testing Guide is a comprehensive resource that provides methodologies, techniques, and best practices for testing web application security across various vulnerability categories."
       },
       {
@@ -944,7 +944,7 @@
           "Testing for performance degradation",
           "Reverting to previous software versions"
         ],
-        "correctAnswer": "Verifying that security fixes don't introduce new vulnerabilities or break functionality",
+        "correctAnswer": 1,
         "explanation": "Security regression testing ensures that security patches and updates don't introduce new vulnerabilities or break existing functionality, and that previously fixed vulnerabilities remain fixed."
       },
       {
@@ -957,7 +957,7 @@
           "To automate security scans",
           "To generate test cases automatically"
         ],
-        "correctAnswer": "To inform testing strategies with knowledge of current threats and attack techniques",
+        "correctAnswer": 1,
         "explanation": "Threat intelligence provides information about current threats, attack patterns, and vulnerabilities in the wild, allowing security testing to focus on the most relevant and likely attack vectors."
       },
       {
@@ -970,7 +970,7 @@
           "Scheduling security tests",
           "Prioritizing vulnerability fixes"
         ],
-        "correctAnswer": "Coordinating multiple security tools and processes to work together efficiently",
+        "correctAnswer": 0,
         "explanation": "Security orchestration involves integrating and coordinating various security tools, processes, and workflows to automate responses and improve efficiency in detecting, analyzing, and responding to threats."
       },
       {
@@ -983,7 +983,7 @@
           "To develop new security tools",
           "To audit compliance requirements"
         ],
-        "correctAnswer": "To simulate real-world attacks and test an organization's detection and response capabilities",
+        "correctAnswer": 1,
         "explanation": "Red team exercises involve skilled security professionals simulating sophisticated attacks to test how well an organization can detect, respond to, and recover from real-world threats."
       },
       {
@@ -996,7 +996,7 @@
           "To develop new applications",
           "To manage security budgets"
         ],
-        "correctAnswer": "To defend against attacks and improve security posture",
+        "correctAnswer": 1,
         "explanation": "Blue teams are responsible for defending the organization's systems, detecting attacks (including red team exercises), responding to incidents, and continuously improving security controls."
       },
       {
@@ -1009,7 +1009,7 @@
           "Reduced infrastructure costs",
           "Simplified code review process"
         ],
-        "correctAnswer": "Early detection of vulnerabilities before production deployment",
+        "correctAnswer": 1,
         "explanation": "Integrating security testing into CI/CD (DevSecOps) catches vulnerabilities early in the development cycle when they're cheaper and easier to fix, preventing insecure code from reaching production."
       },
       {
@@ -1022,7 +1022,7 @@
           "To determine maximum system capacity",
           "To optimize application performance"
         ],
-        "correctAnswer": "To establish minimum acceptable security configurations and verify compliance",
+        "correctAnswer": 0,
         "explanation": "Security baseline testing verifies that systems meet minimum security configuration standards (hardening guides, CIS benchmarks) and helps maintain consistent security posture across the organization."
       }
     ]

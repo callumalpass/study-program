@@ -15,7 +15,7 @@
           "<DOCTYPE html5>",
           "<!DOCTYPE HTML5>"
         ],
-        "correctAnswer": "<!DOCTYPE html>",
+        "correctAnswer": 0,
         "explanation": "HTML5 uses the simplified DOCTYPE declaration: <!DOCTYPE html>. This is much simpler than previous HTML versions."
       },
       {
@@ -28,7 +28,7 @@
           "<h1>",
           "<heading>"
         ],
-        "correctAnswer": "<h1>",
+        "correctAnswer": 2,
         "explanation": "<h1> represents the highest level heading, with <h6> being the smallest. Headings range from <h1> to <h6>."
       },
       {
@@ -48,7 +48,7 @@
           "To set the image alignment",
           "To define the image dimensions"
         ],
-        "correctAnswer": "To provide alternative text if the image cannot be displayed",
+        "correctAnswer": 1,
         "explanation": "The alt attribute provides alternative text for screen readers and displays when images fail to load, improving accessibility."
       },
       {
@@ -61,7 +61,7 @@
           "new=\"true\"",
           "tab=\"new\""
         ],
-        "correctAnswer": "target=\"_blank\"",
+        "correctAnswer": 1,
         "explanation": "The target=\"_blank\" attribute on an <a> tag opens the link in a new browser tab or window."
       },
       {
@@ -88,7 +88,7 @@
           "ID selector (#id)",
           "Universal selector (*)"
         ],
-        "correctAnswer": "ID selector (#id)",
+        "correctAnswer": 2,
         "explanation": "CSS specificity hierarchy: inline styles > IDs > classes/attributes/pseudo-classes > elements/pseudo-elements > universal selector."
       },
       {
@@ -101,7 +101,7 @@
           "Content, Border, Padding, Margin",
           "Margin, Border, Padding, Content"
         ],
-        "correctAnswer": "Content, Padding, Border, Margin",
+        "correctAnswer": 0,
         "explanation": "The CSS box model layers from inside out: content area, padding (inside border), border, and margin (outside border)."
       },
       {
@@ -128,7 +128,7 @@
           "color",
           "bg-color"
         ],
-        "correctAnswer": "background-color",
+        "correctAnswer": 1,
         "explanation": "The background-color property sets the background color of an element. The color property sets text color."
       },
       {
@@ -155,7 +155,7 @@
           "const",
           "Both let and const"
         ],
-        "correctAnswer": "Both let and const",
+        "correctAnswer": 3,
         "explanation": "Both let and const are block-scoped. let allows reassignment while const does not. var is function-scoped."
       },
       {
@@ -182,7 +182,7 @@
           "Error",
           "undefined"
         ],
-        "correctAnswer": "4",
+        "correctAnswer": 1,
         "explanation": "const prevents reassignment of the variable, but the array itself is mutable. push() adds an element, making length 4."
       },
       {
@@ -209,7 +209,7 @@
           "Both are correct",
           "document.getElement(\"id\")"
         ],
-        "correctAnswer": "Both are correct",
+        "correctAnswer": 2,
         "explanation": "Both document.getElementById(\"id\") and document.querySelector(\"#id\") can select an element by ID, though getElementById is more specific."
       },
       {
@@ -222,7 +222,7 @@
           "Removes an element from the DOM",
           "Modifies element attributes"
         ],
-        "correctAnswer": "Attaches an event handler to an element",
+        "correctAnswer": 1,
         "explanation": "addEventListener() registers an event handler for a specific event type on an element, allowing response to user interactions."
       },
       {
@@ -271,7 +271,7 @@
           "<article>",
           "<aside>"
         ],
-        "correctAnswer": "<article>",
+        "correctAnswer": 2,
         "explanation": "<article> represents independent, self-contained content that could be distributed separately, like blog posts or news articles."
       },
       {
@@ -291,7 +291,7 @@
           "<css src=\"styles.css\">",
           "<stylesheet>styles.css</stylesheet>"
         ],
-        "correctAnswer": "<link rel=\"stylesheet\" href=\"styles.css\">",
+        "correctAnswer": 1,
         "explanation": "The <link> tag with rel=\"stylesheet\" is used to include external CSS files in the <head> section."
       },
       {
@@ -311,7 +311,7 @@
           "<input type=\"palette\">",
           "<color-input>"
         ],
-        "correctAnswer": "<input type=\"color\">",
+        "correctAnswer": 1,
         "explanation": "HTML5 introduced type=\"color\" which provides a native color picker interface in supporting browsers."
       },
       {
@@ -324,7 +324,7 @@
           "static",
           "fixed"
         ],
-        "correctAnswer": "static",
+        "correctAnswer": 2,
         "explanation": "static is the default positioning. Elements with static positioning follow the normal document flow."
       },
       {
@@ -344,7 +344,7 @@
           "layer",
           "depth"
         ],
-        "correctAnswer": "z-index",
+        "correctAnswer": 1,
         "explanation": "z-index determines the stack order of positioned elements. Higher values appear in front of lower values."
       },
       {
@@ -378,7 +378,7 @@
           "\"15\"",
           "Error"
         ],
-        "correctAnswer": "\"123\"",
+        "correctAnswer": 1,
         "explanation": "JavaScript converts 1 to string and concatenates: \"1\" + \"2\" = \"12\", then \"12\" + \"3\" = \"123\". Type coercion in action."
       },
       {
@@ -398,7 +398,7 @@
           "reduce()",
           "forEach()"
         ],
-        "correctAnswer": "filter()",
+        "correctAnswer": 1,
         "explanation": "filter() returns a new array containing only elements that satisfy the provided testing function. map() transforms, reduce() accumulates."
       },
       {
@@ -432,7 +432,7 @@
           "querySelectorAll() only works with classes",
           "They are the same"
         ],
-        "correctAnswer": "querySelector() returns one element, querySelectorAll() returns a NodeList",
+        "correctAnswer": 1,
         "explanation": "querySelector() returns the first matching element or null. querySelectorAll() returns a NodeList of all matches."
       },
       {
@@ -459,7 +459,7 @@
           "innerText",
           "nodeValue"
         ],
-        "correctAnswer": "textContent",
+        "correctAnswer": 1,
         "explanation": "textContent returns all text content. innerText is aware of styling (hidden elements). innerHTML includes HTML tags."
       },
       {
@@ -479,7 +479,7 @@
           "To include external CSS",
           "To define SEO keywords"
         ],
-        "correctAnswer": "To control the page dimensions and scaling on mobile devices",
+        "correctAnswer": 1,
         "explanation": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> ensures proper rendering on mobile devices."
       },
       {
@@ -492,7 +492,7 @@
           "Both work the same",
           "Neither uses media queries"
         ],
-        "correctAnswer": "Mobile-first (min-width media queries)",
+        "correctAnswer": 0,
         "explanation": "Mobile-first uses min-width to progressively enhance for larger screens. Desktop-first uses max-width to adapt down to smaller screens."
       },
       {
@@ -533,7 +533,7 @@
           "A type of loop",
           "A data structure"
         ],
-        "correctAnswer": "An object representing the eventual completion or failure of an asynchronous operation",
+        "correctAnswer": 1,
         "explanation": "Promises represent async operations that will either resolve (success) or reject (failure) in the future."
       },
       {
@@ -546,7 +546,7 @@
           "finally()",
           "reject()"
         ],
-        "correctAnswer": "catch()",
+        "correctAnswer": 1,
         "explanation": "catch() handles rejected promises. then() handles resolution, finally() runs regardless of outcome."
       },
       {
@@ -587,7 +587,7 @@
           "A callback function",
           "An XMLHttpRequest object"
         ],
-        "correctAnswer": "A Promise that resolves to a Response object",
+        "correctAnswer": 1,
         "explanation": "fetch() returns a Promise that resolves to a Response object. You need to call .json() or .text() to extract the data."
       },
       {
@@ -600,7 +600,7 @@
           "To test code",
           "To deploy applications"
         ],
-        "correctAnswer": "To bundle and optimize JavaScript, CSS, and assets for production",
+        "correctAnswer": 1,
         "explanation": "Bundlers combine multiple files, optimize code, handle dependencies, and prepare assets for production deployment."
       },
       {
@@ -620,7 +620,7 @@
           "To store user data",
           "To handle routing"
         ],
-        "correctAnswer": "To efficiently update the UI by comparing changes before updating the real DOM",
+        "correctAnswer": 1,
         "explanation": "Virtual DOM is an in-memory representation. Frameworks diff changes and update only what changed in the real DOM for performance."
       },
       {
@@ -647,7 +647,7 @@
           "To store cookies",
           "To cache API responses"
         ],
-        "correctAnswer": "To store data persistently in the browser with no expiration",
+        "correctAnswer": 1,
         "explanation": "localStorage persists data even after browser closes. sessionStorage clears on session end. Both store key-value pairs (strings only)."
       },
       {

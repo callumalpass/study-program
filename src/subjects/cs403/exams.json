@@ -21,7 +21,7 @@
           "P = NP",
           "P ∩ NP = ∅"
         ],
-        "correctAnswer": "P ⊆ NP",
+        "correctAnswer": 0,
         "explanation": "Any polynomial-time solvable problem can be verified in polynomial time (with a trivial certificate), so P is contained in NP."
       },
       {
@@ -34,7 +34,7 @@
           "X ∉ NP and A ≤p X",
           "X has an exponential-time algorithm"
         ],
-        "correctAnswer": "X ∈ NP and A ≤p X for some known NP-complete A",
+        "correctAnswer": 0,
         "explanation": "NP-completeness requires membership in NP plus NP-hardness. NP-hardness is typically shown by reducing a known NP-complete problem A to X."
       },
       {
@@ -61,7 +61,7 @@
           "Hamiltonian Cycle (decision)",
           "Vertex Cover (decision)"
         ],
-        "correctAnswer": "TSP optimization",
+        "correctAnswer": 0,
         "explanation": "Optimization versions of NP-complete decision problems are typically NP-hard, but the “in NP” notion applies to decision languages."
       },
       {
@@ -90,7 +90,7 @@
           "ALG = OPT",
           "OPT ≤ ρ·ALG"
         ],
-        "correctAnswer": "ALG ≤ ρ·OPT",
+        "correctAnswer": 0,
         "explanation": "For minimization, approximation factor ρ means the algorithm’s cost is at most ρ times optimal."
       },
       {
@@ -103,7 +103,7 @@
           "Knapsack",
           "Metric TSP"
         ],
-        "correctAnswer": "Vertex Cover",
+        "correctAnswer": 0,
         "explanation": "A maximal matching yields a set of disjoint edges. Any vertex cover must hit each edge, so taking both endpoints gives a 2-approximation."
       },
       {
@@ -123,7 +123,7 @@
           "Euclidean TSP in 1D only",
           "TSP with negative edges"
         ],
-        "correctAnswer": "Metric TSP",
+        "correctAnswer": 0,
         "explanation": "Christofides requires the triangle inequality to relate MST + matching to an optimal tour."
       },
       {
@@ -143,7 +143,7 @@
           "Using max flow",
           "Enumerating all subsets"
         ],
-        "correctAnswer": "Scaling item values and running a DP over total value",
+        "correctAnswer": 0,
         "explanation": "Value scaling reduces the DP state space to be polynomial in n and 1/ε, giving a fully polynomial approximation scheme."
       },
       {
@@ -164,7 +164,7 @@
           "Always correct and always polynomial time",
           "No randomness in execution"
         ],
-        "correctAnswer": "Bounded runtime but probabilistic correctness",
+        "correctAnswer": 0,
         "explanation": "Monte Carlo algorithms may err with small probability but have guaranteed (usually polynomial) runtime."
       },
       {
@@ -177,7 +177,7 @@
           "O(log n)",
           "O(n)"
         ],
-        "correctAnswer": "O(n log n)",
+        "correctAnswer": 0,
         "explanation": "The expected number of comparisons in randomized quicksort is O(n log n)."
       },
       {
@@ -197,7 +197,7 @@
           "It uses BFS to find cuts",
           "It enumerates all cuts"
         ],
-        "correctAnswer": "It must avoid contracting any edge in a fixed min-cut throughout n−2 contractions",
+        "correctAnswer": 0,
         "explanation": "If you never contract an edge in a particular min-cut, that min-cut survives to the end; the probability of avoiding those edges yields the bound."
       },
       {
@@ -225,7 +225,7 @@
           "Find shortest paths in graphs",
           "Derandomize quicksort"
         ],
-        "correctAnswer": "Sample uniformly from a stream of unknown length using bounded memory",
+        "correctAnswer": 0,
         "explanation": "Reservoir sampling maintains a uniform sample of fixed size k from a stream without knowing its length in advance."
       },
       {
@@ -238,7 +238,7 @@
           "Using randomness",
           "In exponential time"
         ],
-        "correctAnswer": "Without knowing future inputs",
+        "correctAnswer": 0,
         "explanation": "Online algorithms see inputs sequentially and must commit to actions without the full sequence."
       },
       {
@@ -258,7 +258,7 @@
           "OPT",
           "LFU"
         ],
-        "correctAnswer": "LRU",
+        "correctAnswer": 0,
         "explanation": "LRU uses recency of access; it evicts the page with the oldest last access time."
       },
       {
@@ -278,7 +278,7 @@
           "Never buy",
           "Randomly buy each day with probability 1/2"
         ],
-        "correctAnswer": "Rent for B days then buy",
+        "correctAnswer": 0,
         "explanation": "Renting for B days and then buying yields a 2-competitive algorithm for ski rental."
       },
       {
@@ -291,7 +291,7 @@
           "The median candidate",
           "The first candidate"
         ],
-        "correctAnswer": "The best candidate",
+        "correctAnswer": 0,
         "explanation": "The classic secretary problem’s goal is selecting the maximum-ranked item with one-pass irrevocable choices."
       },
       {
@@ -326,7 +326,7 @@
           "If B is NP-hard, then B ∈ NP",
           "NP-hard implies solvable in polynomial time"
         ],
-        "correctAnswer": "If A is NP-hard and A ≤p B, then B is NP-hard",
+        "correctAnswer": 0,
         "explanation": "Hardness propagates forward along reductions: if a hard problem reduces to B, then B is at least as hard."
       },
       {
@@ -339,7 +339,7 @@
           "They are all optimization problems",
           "They are outside NP by definition"
         ],
-        "correctAnswer": "They are the hardest problems in NP under polynomial-time many-one reductions",
+        "correctAnswer": 0,
         "explanation": "NP-complete problems are in NP and NP-hard, meaning every NP problem reduces to them."
       },
       {
@@ -374,7 +374,7 @@
           "A ≤p SAT",
           "SAT ≤p A implies X is in P"
         ],
-        "correctAnswer": "A ≤p X",
+        "correctAnswer": 0,
         "explanation": "To show NP-hardness of X, reduce a known hard problem A to X."
       },
       {
@@ -387,7 +387,7 @@
           "1 + ε for all ε",
           "No constant-factor approximation exists"
         ],
-        "correctAnswer": "3/2",
+        "correctAnswer": 0,
         "explanation": "Christofides’ algorithm provides a 3/2 approximation for metric TSP."
       },
       {
@@ -400,7 +400,7 @@
           "O(n)",
           "O(log log n)"
         ],
-        "correctAnswer": "O(log n)",
+        "correctAnswer": 0,
         "explanation": "Greedy set cover is Θ(log n)-approximate in general."
       },
       {
@@ -420,7 +420,7 @@
           "Only using BFS",
           "Only using recursion"
         ],
-        "correctAnswer": "LP relaxation and rounding",
+        "correctAnswer": 0,
         "explanation": "Relax to a fractional solution (LP) and round to an integral solution while bounding the loss."
       },
       {
@@ -448,7 +448,7 @@
           "Replacing randomness with determinism",
           "Increasing the number of states in a DP"
         ],
-        "correctAnswer": "Repeating independent trials to reduce error probability exponentially",
+        "correctAnswer": 0,
         "explanation": "If each trial has constant success probability, repeated independent trials can drive failure probability down exponentially."
       },
       {
@@ -468,7 +468,7 @@
           "Exact TSP solutions",
           "Flow conservation constraints"
         ],
-        "correctAnswer": "The concentration of sums of independent bounded random variables",
+        "correctAnswer": 0,
         "explanation": "Chernoff bounds give exponentially decreasing tail probabilities for sums of independent random variables."
       },
       {
@@ -488,7 +488,7 @@
           "Run Dijkstra from the source",
           "Use dynamic programming"
         ],
-        "correctAnswer": "Repeat the algorithm many times and take the best cut found",
+        "correctAnswer": 0,
         "explanation": "Repeated independent runs amplify success probability; selecting the smallest cut found across runs is correct."
       },
       {
@@ -531,7 +531,7 @@
           "The best greedy algorithm",
           "The average input"
         ],
-        "correctAnswer": "An optimal offline algorithm",
+        "correctAnswer": 0,
         "explanation": "The baseline is OPT, which knows the entire input sequence ahead of time."
       },
       {
@@ -551,7 +551,7 @@
           "O(log k)-competitive",
           "Not competitive"
         ],
-        "correctAnswer": "k-competitive",
+        "correctAnswer": 0,
         "explanation": "LRU is k-competitive for cache size k, and this is optimal for deterministic algorithms."
       },
       {
@@ -571,7 +571,7 @@
           "2/3",
           "1/e"
         ],
-        "correctAnswer": "1 − 1/e",
+        "correctAnswer": 0,
         "explanation": "Ranking achieves (1−1/e)-competitive against an oblivious adversary for online bipartite matching."
       },
       {
@@ -592,7 +592,7 @@
           "Trees only",
           "Greedy choices"
         ],
-        "correctAnswer": "Subsets",
+        "correctAnswer": 0,
         "explanation": "Held–Karp uses dp[S][v] states (subset S ending at v), giving O(n^2 2^n) time."
       },
       {
@@ -619,7 +619,7 @@
           "Avoid recursion at all costs",
           "Randomize the input"
         ],
-        "correctAnswer": "Use rolling arrays when transitions depend on limited previous rows/columns",
+        "correctAnswer": 0,
         "explanation": "If dp[i][*] depends only on dp[i−1][*] (or a constant window), you can keep only the needed rows/columns."
       },
       {
@@ -632,7 +632,7 @@
           "Kruskal",
           "Reservoir sampling"
         ],
-        "correctAnswer": "Knuth optimization",
+        "correctAnswer": 0,
         "explanation": "Knuth optimization applies when the argmin is monotone and certain quadrangle inequalities hold."
       },
       {
@@ -675,7 +675,7 @@
           "It uses randomization",
           "It enumerates all possible flows"
         ],
-        "correctAnswer": "Each BFS increases the shortest augmenting path distance and each edge becomes critical only O(V) times",
+        "correctAnswer": 0,
         "explanation": "The nondecreasing BFS distance and bounded number of saturations imply O(VE^2) time."
       },
       {
@@ -702,7 +702,7 @@
           "Quicksort",
           "Convex hull"
         ],
-        "correctAnswer": "Bipartite matching",
+        "correctAnswer": 0,
         "explanation": "Add source→left edges (1), left→right edges (1), right→sink edges (1). The max flow value equals maximum matching size."
       },
       {
@@ -715,7 +715,7 @@
           "A negative-cost edge",
           "A shortcut to the sink"
         ],
-        "correctAnswer": "The ability to cancel (send back) some previously sent flow on (u, v)",
+        "correctAnswer": 0,
         "explanation": "Backward residual edges encode how much flow can be undone on a forward edge, enabling augmenting paths to reroute flow."
       },
       {
@@ -736,7 +736,7 @@
           "O(n^2)",
           "O(log n)"
         ],
-        "correctAnswer": "O(n log n)",
+        "correctAnswer": 0,
         "explanation": "Sorting dominates. The scan after sorting is linear."
       },
       {
@@ -763,7 +763,7 @@
           "Knapsack DP",
           "Chernoff bound"
         ],
-        "correctAnswer": "Orientation (ccw) test via cross product",
+        "correctAnswer": 0,
         "explanation": "Orientation tests determine left/right turns and are central in convex hulls and segment intersection."
       },
       {
@@ -776,7 +776,7 @@
           "Only max flow",
           "Only random sampling"
         ],
-        "correctAnswer": "Divide and conquer with a strip merge step",
+        "correctAnswer": 0,
         "explanation": "After dividing, only a constant number of candidate neighbors in the strip need checking, leading to O(n log n)."
       },
       {

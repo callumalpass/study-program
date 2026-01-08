@@ -15,7 +15,7 @@
           "A cloud-based application",
           "Any networked system"
         ],
-        "correctAnswer": "A collection of independent computers that appears to users as a single coherent system",
+        "correctAnswer": 0,
         "explanation": "A distributed system consists of multiple autonomous computers coordinating to appear as a single system to users, providing transparency and resource sharing."
       },
       {
@@ -28,7 +28,7 @@
           "Slower processing speed",
           "Limited programming languages"
         ],
-        "correctAnswer": "Lack of shared global state and partial failures",
+        "correctAnswer": 0,
         "explanation": "Distributed systems lack shared memory and must handle partial failures where some components fail while others continue, making them fundamentally more complex."
       },
       {
@@ -41,7 +41,7 @@
           "Performance",
           "Security"
         ],
-        "correctAnswer": "Either Consistency or Availability",
+        "correctAnswer": 0,
         "explanation": "CAP theorem states that during network partitions (P), systems must choose between Consistency (all nodes see same data) and Availability (all requests get responses)."
       },
       {
@@ -54,7 +54,7 @@
           "Poor scalability",
           "Difficult to secure"
         ],
-        "correctAnswer": "Server becomes a single point of failure",
+        "correctAnswer": 0,
         "explanation": "Client-server architecture centralizes logic and data on the server, making it a single point of failure. If the server fails, the entire system becomes unavailable."
       },
       {
@@ -67,7 +67,7 @@
           "Concurrency transparency",
           "Failure transparency"
         ],
-        "correctAnswer": "Replication transparency",
+        "correctAnswer": 0,
         "explanation": "Replication transparency hides that multiple copies of a resource exist, making the system appear to have only one copy while actually maintaining replicas for availability."
       },
       {
@@ -80,7 +80,7 @@
           "At-most-once semantics",
           "Best-effort semantics"
         ],
-        "correctAnswer": "Exactly-once semantics",
+        "correctAnswer": 0,
         "explanation": "Exactly-once semantics guarantee the remote procedure executes exactly once, which is ideal but difficult to achieve in practice due to failures and network issues."
       },
       {
@@ -93,7 +93,7 @@
           "Physical clocks are not precise enough",
           "Time zones create confusion"
         ],
-        "correctAnswer": "Clock drift and network delays make synchronization imperfect",
+        "correctAnswer": 0,
         "explanation": "Physical clocks drift at different rates and network delays are variable, making perfect clock synchronization impossible and unreliable for determining event ordering."
       },
       {
@@ -106,7 +106,7 @@
           "Reset the clock to zero",
           "Wait for acknowledgment before incrementing"
         ],
-        "correctAnswer": "Include the current logical timestamp with the message",
+        "correctAnswer": 0,
         "explanation": "When sending a message, the process includes its current logical timestamp, allowing the receiver to update its clock to maintain the happens-before relationship."
       },
       {
@@ -119,7 +119,7 @@
           "Simpler implementation",
           "Better performance"
         ],
-        "correctAnswer": "Ability to detect concurrent events",
+        "correctAnswer": 0,
         "explanation": "Vector clocks can determine if two events are concurrent (neither causally precedes the other), while Lamport clocks only provide a total ordering but cannot detect concurrency."
       },
       {
@@ -132,7 +132,7 @@
           "A and B are concurrent",
           "No relationship exists"
         ],
-        "correctAnswer": "A happens-before B (A → B)",
+        "correctAnswer": 0,
         "explanation": "Message sending creates a happens-before relationship: the send event causally precedes the receive event, establishing A → B in the distributed system."
       },
       {
@@ -145,7 +145,7 @@
           "Messages from same sender arrive in order",
           "No message is lost"
         ],
-        "correctAnswer": "If message m1 causally precedes m2, m1 is delivered before m2",
+        "correctAnswer": 0,
         "explanation": "Causal ordering ensures causally related messages are delivered in causal order, preserving the happens-before relationship while allowing concurrent messages to be delivered in any order."
       },
       {
@@ -158,7 +158,7 @@
           "Uses guaranteed delay bounds",
           "Requires dedicated timing networks"
         ],
-        "correctAnswer": "Measures round-trip time and estimates one-way delay",
+        "correctAnswer": 0,
         "explanation": "NTP measures round-trip time to time servers and estimates one-way delay (typically as half the round-trip), adjusting for network delays to improve synchronization accuracy."
       },
       {
@@ -171,7 +171,7 @@
           "Paxos cannot work",
           "Distributed systems are impossible"
         ],
-        "correctAnswer": "Deterministic consensus is impossible in asynchronous systems with failures",
+        "correctAnswer": 0,
         "explanation": "FLP proves that no deterministic algorithm can guarantee consensus in an asynchronous system with even one crash failure, though practical systems use timeouts and partial synchrony."
       },
       {
@@ -184,7 +184,7 @@
           "Only that participant aborts",
           "The system retries the transaction"
         ],
-        "correctAnswer": "The coordinator aborts the entire transaction",
+        "correctAnswer": 0,
         "explanation": "In 2PC, all participants must vote \"commit\" for the transaction to proceed. If any participant votes \"abort\" or fails to respond, the coordinator aborts the entire transaction."
       },
       {
@@ -197,7 +197,7 @@
           "Cannot handle more than two participants",
           "Requires Byzantine fault tolerance"
         ],
-        "correctAnswer": "Blocking if coordinator fails after prepare phase",
+        "correctAnswer": 0,
         "explanation": "If the coordinator fails after participants vote but before sending the final decision, participants are blocked and cannot unilaterally decide whether to commit or abort."
       },
       {
@@ -210,7 +210,7 @@
           "Proposed by the leader",
           "Accepted by any single acceptor"
         ],
-        "correctAnswer": "Accepted by a majority of acceptors",
+        "correctAnswer": 0,
         "explanation": "Paxos requires a value to be accepted by a majority (quorum) of acceptors to be chosen, ensuring safety since any two majorities overlap."
       },
       {
@@ -223,7 +223,7 @@
           "Raft handles Byzantine failures",
           "Raft requires fewer nodes"
         ],
-        "correctAnswer": "Raft uses a strong leader and is designed for understandability",
+        "correctAnswer": 0,
         "explanation": "Raft was designed to be more understandable than Paxos, using a strong leader model where all log entries flow from leader to followers, simplifying the algorithm."
       },
       {
@@ -236,7 +236,7 @@
           "To the candidate with highest ID",
           "Randomly"
         ],
-        "correctAnswer": "If the candidate's log is at least as up-to-date as the follower's",
+        "correctAnswer": 0,
         "explanation": "Followers only vote for candidates whose logs are at least as up-to-date, ensuring the elected leader has all committed entries and maintaining safety."
       },
       {
@@ -249,7 +249,7 @@
           "Causal consistency",
           "Linearizability"
         ],
-        "correctAnswer": "Eventual consistency",
+        "correctAnswer": 0,
         "explanation": "DynamoDB uses eventual consistency by default for better performance and availability, though it offers strongly consistent reads as an option when needed."
       },
       {
@@ -262,7 +262,7 @@
           "Eventually all replicas converge",
           "Reads always see latest write from same client"
         ],
-        "correctAnswer": "Operations appear to execute instantaneously at some point between invocation and response",
+        "correctAnswer": 0,
         "explanation": "Linearizability (strongest consistency) requires operations to appear atomic and instantaneous, with a total order consistent with real-time ordering."
       },
       {
@@ -275,7 +275,7 @@
           "5",
           "2"
         ],
-        "correctAnswer": "3",
+        "correctAnswer": 0,
         "explanation": "Read quorum + Write quorum must exceed N to guarantee overlap. With N=5 and write quorum=3, read quorum must be at least 3 (3+3=6>5) to ensure seeing the latest write."
       },
       {
@@ -288,7 +288,7 @@
           "Atomic and isolated",
           "Consistent and available"
         ],
-        "correctAnswer": "Commutative, associative, and idempotent",
+        "correctAnswer": 0,
         "explanation": "CRDTs require merge operations to be commutative (order independent), associative (grouping independent), and idempotent (repeated application safe) for automatic conflict resolution."
       },
       {
@@ -301,7 +301,7 @@
           "No data loss",
           "Simpler implementation"
         ],
-        "correctAnswer": "Lower latency and better availability",
+        "correctAnswer": 0,
         "explanation": "Asynchronous replication doesn't wait for replicas before acknowledging writes, providing lower latency and better availability, though at the risk of data loss on failures."
       },
       {
@@ -314,7 +314,7 @@
           "Reads never return stale data",
           "Writes are durable"
         ],
-        "correctAnswer": "A client always sees their own previous writes",
+        "correctAnswer": 0,
         "explanation": "Read-your-writes consistency ensures clients see their own updates, improving user experience even if other clients might temporarily see stale data."
       },
       {
@@ -327,7 +327,7 @@
           "Clients connect to random backups",
           "All data is lost"
         ],
-        "correctAnswer": "A backup is promoted to become the new primary",
+        "correctAnswer": 0,
         "explanation": "When the primary fails, one backup is promoted to primary (through election or predetermined order), allowing the system to continue serving requests."
       },
       {
@@ -340,7 +340,7 @@
           "Op-based uses less memory",
           "State-based handles conflicts better"
         ],
-        "correctAnswer": "State-based replicas share entire state; Op-based share operations",
+        "correctAnswer": 0,
         "explanation": "State-based CRDTs periodically share complete state and merge using semilattice join. Operation-based CRDTs share individual operations which must be commutative."
       }
     ]
@@ -361,7 +361,7 @@
           "Between cost and reliability",
           "Between scalability and simplicity"
         ],
-        "correctAnswer": "During partitions, choose between consistency and availability",
+        "correctAnswer": 0,
         "explanation": "CAP theorem shows that when network partitions occur, distributed systems must choose between maintaining consistency or availability; both cannot be guaranteed simultaneously."
       },
       {
@@ -374,7 +374,7 @@
           "To improve performance",
           "To simplify programming"
         ],
-        "correctAnswer": "To order events without perfect physical clock synchronization",
+        "correctAnswer": 0,
         "explanation": "Logical clocks (Lamport and vector clocks) capture causal relationships between events without requiring perfect physical clock synchronization, which is impossible in distributed systems."
       },
       {
@@ -387,7 +387,7 @@
           "Limited bandwidth",
           "Complex algorithms"
         ],
-        "correctAnswer": "Asynchrony, failures, and lack of global knowledge",
+        "correctAnswer": 0,
         "explanation": "Consensus is difficult because of unbounded message delays (asynchrony), partial failures, and lack of global knowledge, as proven by the FLP impossibility result."
       },
       {
@@ -400,7 +400,7 @@
           "Reduces network traffic",
           "Simplifies implementation"
         ],
-        "correctAnswer": "Ensures exactly one leader per term for safety",
+        "correctAnswer": 0,
         "explanation": "Raft's election ensures at most one leader per term through majority voting, preventing split-brain scenarios and maintaining safety of the replicated log."
       },
       {
@@ -413,7 +413,7 @@
           "9 failures",
           "4 failures"
         ],
-        "correctAnswer": "3 failures",
+        "correctAnswer": 0,
         "explanation": "BFT requires 3f+1 nodes to tolerate f Byzantine failures. With 10 nodes: 3f+1≤10, so f≤3. The system can tolerate 3 Byzantine failures."
       },
       {
@@ -426,7 +426,7 @@
           "Byzantine failures are easier to detect",
           "Fail-stop requires more nodes"
         ],
-        "correctAnswer": "Fail-stop processes halt; Byzantine processes exhibit arbitrary behavior",
+        "correctAnswer": 0,
         "explanation": "Fail-stop failures involve processes halting (detectable), while Byzantine failures involve arbitrary/malicious behavior (corrupted messages, lies), which is harder to handle."
       },
       {
@@ -439,7 +439,7 @@
           "Recover from failures automatically",
           "Log all system events"
         ],
-        "correctAnswer": "Monitor processes and suspect failures using timeouts",
+        "correctAnswer": 0,
         "explanation": "Failure detectors monitor processes (via heartbeats) and use timeouts to suspect failures, though they may make mistakes in asynchronous systems."
       },
       {
@@ -452,7 +452,7 @@
           "Detects failures instantly",
           "Works in fully asynchronous systems"
         ],
-        "correctAnswer": "Eventually stops making mistakes about correct processes",
+        "correctAnswer": 0,
         "explanation": "Eventually perfect detectors may initially suspect correct processes but eventually stabilize and accurately identify crashed vs. correct processes."
       },
       {
@@ -465,7 +465,7 @@
           "Detects failures faster",
           "Reduces network traffic"
         ],
-        "correctAnswer": "Allows recovery to a consistent state after failures",
+        "correctAnswer": 0,
         "explanation": "Checkpointing saves process state periodically, enabling recovery to a known consistent state after failure without restarting from the beginning."
       },
       {
@@ -478,7 +478,7 @@
           "When load increases",
           "Randomly"
         ],
-        "correctAnswer": "When failure rate exceeds a threshold",
+        "correctAnswer": 0,
         "explanation": "Circuit breakers monitor failure rates and open when failures exceed a threshold, preventing calls to failing services and allowing time for recovery."
       },
       {
@@ -491,7 +491,7 @@
           "Gradual shutdown",
           "Load balancing"
         ],
-        "correctAnswer": "Test if the service has recovered with limited requests",
+        "correctAnswer": 0,
         "explanation": "Half-Open state allows a few test requests through to determine if the service has recovered, transitioning back to Closed if successful or Open if still failing."
       },
       {
@@ -504,7 +504,7 @@
           "Data corruption",
           "Unauthorized access"
         ],
-        "correctAnswer": "Cascading failures across system components",
+        "correctAnswer": 0,
         "explanation": "Bulkhead pattern isolates resources (thread pools, connections) so failures in one component don't exhaust resources and cascade to other parts of the system."
       },
       {
@@ -517,7 +517,7 @@
           "Reduce implementation complexity",
           "Improve performance"
         ],
-        "correctAnswer": "Avoid overwhelming recovering services with retry storms",
+        "correctAnswer": 0,
         "explanation": "Exponential backoff increases delays between retries, preventing retry storms that could overwhelm a recovering service and giving it time to stabilize."
       },
       {
@@ -530,7 +530,7 @@
           "High CPU usage",
           "Memory overhead"
         ],
-        "correctAnswer": "Distinguishing between slow responses and failures",
+        "correctAnswer": 0,
         "explanation": "Setting timeouts is difficult because you must distinguish between legitimately slow responses and actual failures, balancing false positives vs. detection speed."
       },
       {
@@ -543,7 +543,7 @@
           "Load balancing",
           "Replication"
         ],
-        "correctAnswer": "Minimizing data movement when nodes are added/removed",
+        "correctAnswer": 0,
         "explanation": "Consistent hashing maps data and nodes to a ring, so adding/removing nodes only requires remapping a small fraction of keys, minimizing data movement."
       },
       {
@@ -556,7 +556,7 @@
           "Compression",
           "Encryption"
         ],
-        "correctAnswer": "Shuffle and sort groups values by key",
+        "correctAnswer": 0,
         "explanation": "The shuffle phase groups all values for each key together and sorts them, preparing data for the Reduce phase which processes each key's values."
       },
       {
@@ -569,7 +569,7 @@
           "Daily backups",
           "Erasure coding only"
         ],
-        "correctAnswer": "Replicating blocks across multiple DataNodes",
+        "correctAnswer": 0,
         "explanation": "HDFS replicates each block (typically 3 copies) across different DataNodes and racks, ensuring data survives individual node and rack failures."
       },
       {
@@ -582,7 +582,7 @@
           "Processes computation",
           "Handles authentication"
         ],
-        "correctAnswer": "Manages file system metadata and namespace",
+        "correctAnswer": 0,
         "explanation": "NameNode is the master that manages metadata (file-to-block mapping, locations) while DataNodes store actual blocks, making NameNode critical for file system operations."
       },
       {
@@ -595,7 +595,7 @@
           "Using local databases",
           "Regional data centers"
         ],
-        "correctAnswer": "Scheduling computation where data is already stored",
+        "correctAnswer": 0,
         "explanation": "Data locality schedules tasks on nodes that already have the required data, minimizing network transfer and improving performance in systems like MapReduce."
       },
       {
@@ -608,7 +608,7 @@
           "Batch uses less memory",
           "Stream is simpler"
         ],
-        "correctAnswer": "Stream processes unbounded data continuously; Batch processes bounded datasets",
+        "correctAnswer": 0,
         "explanation": "Stream processing handles continuous unbounded data streams with low latency, while batch processing handles complete bounded datasets with higher latency but simpler semantics."
       },
       {
@@ -621,7 +621,7 @@
           "Caching frequently accessed data",
           "Replicating data for availability"
         ],
-        "correctAnswer": "Horizontally partitioning data across nodes by a shard key",
+        "correctAnswer": 0,
         "explanation": "Sharding splits data horizontally across nodes using a shard key (e.g., user ID ranges), distributing load and enabling scaling beyond single-node capacity."
       },
       {
@@ -634,7 +634,7 @@
           "SQL query support",
           "Lower cost"
         ],
-        "correctAnswer": "Better horizontal scalability and flexible schemas",
+        "correctAnswer": 0,
         "explanation": "NoSQL databases sacrifice some ACID guarantees for better horizontal scalability and schema flexibility, making them suitable for large-scale distributed applications."
       },
       {
@@ -647,7 +647,7 @@
           "Key-value store",
           "Graph database"
         ],
-        "correctAnswer": "Column-family store",
+        "correctAnswer": 0,
         "explanation": "Cassandra is a column-family store that groups related columns together, optimized for high write throughput and massive scale across distributed nodes."
       },
       {
@@ -660,7 +660,7 @@
           "Data processing",
           "Authentication"
         ],
-        "correctAnswer": "Provide low-latency access to frequently used data",
+        "correctAnswer": 0,
         "explanation": "Distributed caches store frequently accessed data in memory across nodes, providing microsecond latency and reducing load on backend databases."
       },
       {
@@ -673,7 +673,7 @@
           "Service implementation",
           "Database management"
         ],
-        "correctAnswer": "Single entry point routing requests to microservices",
+        "correctAnswer": 0,
         "explanation": "API Gateways provide a unified entry point, routing requests to appropriate microservices while handling authentication, rate limiting, and other cross-cutting concerns."
       },
       {
@@ -686,7 +686,7 @@
           "User interface",
           "Database clustering"
         ],
-        "correctAnswer": "Infrastructure for service-to-service communication",
+        "correctAnswer": 0,
         "explanation": "Service meshes (like Istio) handle service-to-service communication, providing features like load balancing, encryption, observability, and resilience without changing application code."
       },
       {
@@ -699,7 +699,7 @@
           "Use distributed locks",
           "Require global transactions"
         ],
-        "correctAnswer": "Break into local transactions with compensating actions",
+        "correctAnswer": 0,
         "explanation": "Sagas split distributed transactions into local transactions on each service, using compensating transactions to undo changes if any step fails, avoiding distributed locks."
       },
       {
@@ -712,7 +712,7 @@
           "Choreography is simpler",
           "Orchestration uses fewer resources"
         ],
-        "correctAnswer": "Orchestration uses central coordinator; Choreography uses events",
+        "correctAnswer": 0,
         "explanation": "Orchestration sagas use a central coordinator directing each step. Choreography sagas use events where services listen and react, trading centralized control for loose coupling."
       },
       {
@@ -725,7 +725,7 @@
           "Event-driven architecture",
           "Real-time event processing"
         ],
-        "correctAnswer": "Storing all state changes as an immutable event log",
+        "correctAnswer": 0,
         "explanation": "Event sourcing persists all state changes as events in an append-only log, enabling state reconstruction, audit trails, and time-travel queries."
       },
       {
@@ -738,7 +738,7 @@
           "Frontend and backend",
           "Synchronous and asynchronous operations"
         ],
-        "correctAnswer": "Read and write data models",
+        "correctAnswer": 0,
         "explanation": "CQRS separates the models for reading and writing data, allowing independent optimization, scaling, and evolution of each side, often paired with event sourcing."
       },
       {
@@ -751,7 +751,7 @@
           "Monitor CPU usage",
           "Log aggregation"
         ],
-        "correctAnswer": "Track requests across multiple microservices",
+        "correctAnswer": 0,
         "explanation": "Distributed tracing (Jaeger, Zipkin) tracks requests as they flow through microservices, identifying latency bottlenecks, failures, and service dependencies."
       },
       {
@@ -764,7 +764,7 @@
           "Load balancing strategy",
           "Data replication method"
         ],
-        "correctAnswer": "Deploying helper containers alongside main application containers",
+        "correctAnswer": 0,
         "explanation": "Sidecar pattern deploys auxiliary containers (for logging, monitoring, proxying) alongside application containers in the same pod, extending functionality without code changes."
       },
       {
@@ -777,7 +777,7 @@
           "Performance optimization",
           "Security hardening"
         ],
-        "correctAnswer": "Gradually migrating from legacy to new systems",
+        "correctAnswer": 0,
         "explanation": "Strangler fig pattern incrementally replaces legacy systems by routing increasing traffic to new implementations while maintaining old ones until complete replacement."
       },
       {
@@ -790,7 +790,7 @@
           "Reduce costs",
           "Simplify implementation"
         ],
-        "correctAnswer": "Protect services from overload and ensure fair usage",
+        "correctAnswer": 0,
         "explanation": "Rate limiting controls request rates to prevent service overload, implement fair usage policies, and protect against denial-of-service attacks."
       },
       {
@@ -803,7 +803,7 @@
           "Vertical is cheaper",
           "Horizontal is simpler"
         ],
-        "correctAnswer": "Horizontal adds machines; Vertical adds resources to existing machines",
+        "correctAnswer": 0,
         "explanation": "Horizontal scaling (scale-out) adds more machines for virtually unlimited capacity. Vertical scaling (scale-up) adds CPU/RAM to existing machines but has hardware limits."
       },
       {
@@ -816,7 +816,7 @@
           "Database load",
           "Memory pressure"
         ],
-        "correctAnswer": "Feedback mechanism where consumers signal producers to slow down",
+        "correctAnswer": 0,
         "explanation": "Backpressure allows overloaded consumers to signal producers to slow down, preventing buffer overflow and maintaining system stability under varying load."
       },
       {
@@ -829,7 +829,7 @@
           "Reduces complexity",
           "Saves bandwidth"
         ],
-        "correctAnswer": "Allows safe retries of operations without side effects",
+        "correctAnswer": 0,
         "explanation": "Idempotent operations produce the same result when executed multiple times, making them safe to retry on failures and handle duplicate messages without adverse effects."
       },
       {
@@ -842,7 +842,7 @@
           "Data storage",
           "Load balancing"
         ],
-        "correctAnswer": "Enable asynchronous communication and decouple services",
+        "correctAnswer": 0,
         "explanation": "Message queues enable asynchronous communication, decoupling services temporally and spatially, buffering during load spikes, and providing reliable delivery."
       },
       {
@@ -855,7 +855,7 @@
           "Messages are never lost",
           "Messages arrive in order"
         ],
-        "correctAnswer": "Each message is processed exactly one time",
+        "correctAnswer": 0,
         "explanation": "Exactly-once delivery guarantees each message is processed exactly once (not lost, not duplicated), which is the strongest but most expensive delivery guarantee to implement."
       },
       {
@@ -868,7 +868,7 @@
           "At-most-once uses less bandwidth",
           "At-least-once is simpler"
         ],
-        "correctAnswer": "At-least-once may duplicate; At-most-once may lose messages",
+        "correctAnswer": 0,
         "explanation": "At-least-once guarantees delivery but may duplicate messages (requiring idempotent processing). At-most-once never duplicates but may lose messages on failures."
       },
       {
@@ -881,7 +881,7 @@
           "Reduce latency",
           "Improve security"
         ],
-        "correctAnswer": "Distribute requests evenly across multiple servers",
+        "correctAnswer": 0,
         "explanation": "Load balancers distribute incoming requests across multiple servers, improving resource utilization, preventing overload, and providing fault tolerance through redundancy."
       },
       {
@@ -894,7 +894,7 @@
           "Latency",
           "Cost"
         ],
-        "correctAnswer": "Availability (uptime percentage)",
+        "correctAnswer": 0,
         "explanation": "Availability (percentage of time the system is operational) is the primary reliability metric, often measured in \"nines\" (99.9%, 99.99%, etc.), directly impacting user experience."
       }
     ]

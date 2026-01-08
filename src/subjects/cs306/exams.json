@@ -14,7 +14,7 @@
           "Vertex Processing → Fragment Processing → Rasterization → Output Merging",
           "Fragment Processing → Vertex Processing → Rasterization → Output Merging"
         ],
-        "correctAnswer": "Vertex Processing → Rasterization → Fragment Processing → Output Merging",
+        "correctAnswer": 0,
         "explanation": "The graphics pipeline processes vertices first, converts them to fragments through rasterization, processes each fragment, and finally merges the output to the framebuffer."
       },
       {
@@ -27,7 +27,7 @@
           "Clip space",
           "Screen space"
         ],
-        "correctAnswer": "World space",
+        "correctAnswer": 0,
         "explanation": "After model transformations, vertices are in world space. They then undergo view transformation to camera space, projection to clip space, and finally viewport transformation to screen space."
       },
       {
@@ -40,7 +40,7 @@
           "To perform texture sampling",
           "To handle user input"
         ],
-        "correctAnswer": "To transform vertex positions and attributes",
+        "correctAnswer": 1,
         "explanation": "The vertex shader is responsible for transforming vertex positions through the model-view-projection matrix and processing vertex attributes like normals and texture coordinates."
       },
       {
@@ -53,7 +53,7 @@
           "Normal vectors for lighting",
           "Texture coordinates"
         ],
-        "correctAnswer": "Depth information for visibility testing",
+        "correctAnswer": 1,
         "explanation": "The z-buffer stores depth values for each pixel to determine which surfaces are visible and should be rendered, solving the hidden surface problem."
       },
       {
@@ -66,7 +66,7 @@
           "Matrices are multiplied together",
           "Textures are loaded into memory"
         ],
-        "correctAnswer": "Individual vertices are grouped into geometric primitives like triangles",
+        "correctAnswer": 0,
         "explanation": "Primitive assembly takes the transformed vertices and organizes them into geometric primitives (points, lines, or triangles) for the rasterization stage."
       },
       {
@@ -79,7 +79,7 @@
           "Determining which surfaces are visible",
           "Applying textures to surfaces"
         ],
-        "correctAnswer": "Removing primitives or parts of primitives outside the view frustum",
+        "correctAnswer": 0,
         "explanation": "Clipping removes geometry that falls outside the viewing volume (frustum) to avoid rendering unnecessary primitives and ensure correct behavior at the edges of the view."
       },
       {
@@ -92,7 +92,7 @@
           "Non-linear transformation",
           "Conformal transformation"
         ],
-        "correctAnswer": "Affine transformation",
+        "correctAnswer": 0,
         "explanation": "Affine transformations (translation, rotation, scaling, shearing) preserve parallelism and ratios of distances. Perspective transformations do not preserve these properties."
       },
       {
@@ -105,7 +105,7 @@
           "To increase rendering speed",
           "To simplify texture mapping"
         ],
-        "correctAnswer": "To represent translations as matrix multiplications",
+        "correctAnswer": 0,
         "explanation": "Homogeneous coordinates (adding a 4th component) allow translations to be represented as matrix multiplications, enabling all transformations to be combined through matrix multiplication."
       },
       {
@@ -118,7 +118,7 @@
           "T1 + T2",
           "T2 - T1"
         ],
-        "correctAnswer": "T2 × T1",
+        "correctAnswer": 0,
         "explanation": "In standard column-vector notation, to apply transformation T1 first and then T2, we compute T2 × T1. The rightmost matrix is applied first."
       },
       {
@@ -131,7 +131,7 @@
           "Translation",
           "Shearing"
         ],
-        "correctAnswer": "Reflection across an axis",
+        "correctAnswer": 0,
         "explanation": "Negative scaling factors flip the object across the corresponding axis, creating a reflection or mirror image."
       },
       {
@@ -144,7 +144,7 @@
           "It must be diagonal",
           "All elements must be positive"
         ],
-        "correctAnswer": "It must be orthogonal (its transpose equals its inverse)",
+        "correctAnswer": 0,
         "explanation": "Rotation matrices are orthogonal, meaning R^T = R^(-1). This property ensures that rotations preserve lengths and angles."
       },
       {
@@ -157,7 +157,7 @@
           "The top-left 3×3 submatrix",
           "The bottom-right element"
         ],
-        "correctAnswer": "The fourth column (or row, depending on convention)",
+        "correctAnswer": 0,
         "explanation": "In a 4×4 homogeneous transformation matrix, the translation components (tx, ty, tz) are stored in the fourth column (column-major) or fourth row (row-major)."
       },
       {
@@ -170,7 +170,7 @@
           "A technique for faster rotation calculations",
           "An error in matrix multiplication"
         ],
-        "correctAnswer": "Loss of one degree of freedom when two rotation axes align",
+        "correctAnswer": 0,
         "explanation": "Gimbal lock occurs in Euler angle representations when two of the three rotation axes align, causing the loss of one rotational degree of freedom. Quaternions can avoid this problem."
       },
       {
@@ -183,7 +183,7 @@
           "X-axis, Y-axis, and Z-axis",
           "Near plane, far plane, and field of view"
         ],
-        "correctAnswer": "Eye position, look-at point, and up vector",
+        "correctAnswer": 0,
         "explanation": "A view transformation is typically defined by the camera position (eye), the point it's looking at, and an up vector to determine the camera's orientation."
       },
       {
@@ -196,7 +196,7 @@
           "Perspective projection can only render triangles",
           "Orthographic projection requires a z-buffer"
         ],
-        "correctAnswer": "Perspective projection includes foreshortening; orthographic does not",
+        "correctAnswer": 0,
         "explanation": "Perspective projection creates realistic depth cues where distant objects appear smaller (foreshortening). Orthographic projection preserves parallel lines and sizes regardless of distance."
       },
       {
@@ -209,7 +209,7 @@
           "The resolution of the rendered image",
           "The camera's movement speed"
         ],
-        "correctAnswer": "The angular extent of the visible scene",
+        "correctAnswer": 0,
         "explanation": "Field of view determines how wide the camera's view is. A larger FOV creates a wider, more distorted view (wide-angle lens effect), while a smaller FOV creates a narrower, more telescopic view."
       },
       {
@@ -222,7 +222,7 @@
           "The area of the screen where rendering occurs",
           "The buffer used for depth testing"
         ],
-        "correctAnswer": "The truncated pyramid-shaped volume of visible space in perspective projection",
+        "correctAnswer": 0,
         "explanation": "The viewing frustum is a truncated pyramid defined by the near plane, far plane, and field of view. Objects outside this volume are clipped."
       },
       {
@@ -235,7 +235,7 @@
           "View space",
           "Screen space"
         ],
-        "correctAnswer": "Normalized Device Coordinates (NDC)",
+        "correctAnswer": 0,
         "explanation": "Perspective division converts clip space coordinates to Normalized Device Coordinates (NDC), typically ranging from -1 to 1 in each dimension, independent of screen resolution."
       },
       {
@@ -248,7 +248,7 @@
           "To set the screen resolution",
           "To determine the lighting intensity"
         ],
-        "correctAnswer": "To define the depth range of the visible volume",
+        "correctAnswer": 0,
         "explanation": "The near and far clipping planes define the minimum and maximum depth values for rendering. Objects closer than near or farther than far are clipped and not rendered."
       },
       {
@@ -261,7 +261,7 @@
           "Calculating lighting effects",
           "Transforming vertices"
         ],
-        "correctAnswer": "Converting geometric primitives into discrete pixels",
+        "correctAnswer": 0,
         "explanation": "Rasterization is the process of determining which pixels are covered by geometric primitives (triangles, lines, points) and generating fragments for those pixels."
       },
       {
@@ -274,7 +274,7 @@
           "Calculating triangle area",
           "Sorting triangles by depth"
         ],
-        "correctAnswer": "Interpolating vertex attributes across the triangle surface",
+        "correctAnswer": 0,
         "explanation": "Barycentric coordinates allow smooth interpolation of vertex attributes (colors, normals, texture coordinates) across the triangle surface for each fragment."
       },
       {
@@ -287,7 +287,7 @@
           "Slow rendering performance",
           "Missing texture details"
         ],
-        "correctAnswer": "Jagged edges (aliasing artifacts) on rendered primitives",
+        "correctAnswer": 0,
         "explanation": "Antialiasing techniques reduce jagged, stair-step edges (aliasing) that occur when continuous geometric shapes are sampled at discrete pixel locations."
       },
       {
@@ -300,7 +300,7 @@
           "Sorting triangles by depth",
           "Applying texture coordinates"
         ],
-        "correctAnswer": "Determining which pixels are inside a triangle",
+        "correctAnswer": 0,
         "explanation": "Edge equations (or edge functions) evaluate whether a point is on the positive or negative side of a triangle edge, allowing efficient inside/outside testing for each pixel."
       },
       {
@@ -313,7 +313,7 @@
           "Using multiple textures per surface",
           "Applying blur to the final image"
         ],
-        "correctAnswer": "Sampling multiple locations within each pixel for better edge quality",
+        "correctAnswer": 0,
         "explanation": "MSAA evaluates coverage at multiple sample points within each pixel, then combines the results to produce smoother edges while maintaining most of the performance of single-sample rendering."
       },
       {
@@ -326,7 +326,7 @@
           "The order in which triangles are rendered",
           "How to calculate pixel colors"
         ],
-        "correctAnswer": "Which pixels to fill when a pixel center lies exactly on a triangle edge",
+        "correctAnswer": 0,
         "explanation": "The fill convention (like the top-left rule) provides consistent rules for handling edge cases where pixel centers fall exactly on triangle edges, preventing gaps or double-coverage between adjacent triangles."
       },
       {
@@ -339,7 +339,7 @@
           "Linear interpolation of depth values",
           "Interpolation of colors without depth information"
         ],
-        "correctAnswer": "Interpolation that accounts for perspective division to correctly interpolate attributes in 3D",
+        "correctAnswer": 0,
         "explanation": "Perspective-correct interpolation properly accounts for the nonlinear effect of perspective projection when interpolating attributes like texture coordinates, ensuring they appear correct in 3D space."
       }
     ]
@@ -359,7 +359,7 @@
           "Fragment processing",
           "Output merging"
         ],
-        "correctAnswer": "Rasterization",
+        "correctAnswer": 0,
         "explanation": "Rasterization converts geometric primitives (like triangles) into fragments, which are potential pixels with associated attributes."
       },
       {
@@ -372,7 +372,7 @@
           "View matrix",
           "Normal matrix"
         ],
-        "correctAnswer": "Model-View-Projection (MVP) matrix",
+        "correctAnswer": 0,
         "explanation": "The MVP matrix is the product of the model, view, and projection matrices, transforming vertices from model space directly to clip space in a single operation."
       },
       {
@@ -385,7 +385,7 @@
           "Clip space coordinates are divided by w",
           "Vertices are transformed by the model matrix"
         ],
-        "correctAnswer": "NDC coordinates are mapped to screen pixel coordinates",
+        "correctAnswer": 0,
         "explanation": "The viewport transformation maps Normalized Device Coordinates (typically -1 to 1) to actual screen pixel coordinates based on the viewport dimensions."
       },
       {
@@ -398,7 +398,7 @@
           "They are easier to understand",
           "They render faster"
         ],
-        "correctAnswer": "They avoid gimbal lock and interpolate smoothly",
+        "correctAnswer": 0,
         "explanation": "Quaternions avoid gimbal lock problems inherent in Euler angles and provide smooth interpolation for animations through spherical linear interpolation (slerp)."
       },
       {
@@ -411,7 +411,7 @@
           "Triangles with negative depth",
           "Triangles smaller than one pixel"
         ],
-        "correctAnswer": "Triangles facing away from the camera",
+        "correctAnswer": 0,
         "explanation": "Backface culling removes triangles whose normals point away from the camera. For closed objects, these back-facing triangles are not visible and can be discarded to improve performance."
       },
       {
@@ -424,7 +424,7 @@
           "Position, normal, and color",
           "Direct, indirect, and emissive"
         ],
-        "correctAnswer": "Ambient, diffuse, and specular",
+        "correctAnswer": 0,
         "explanation": "The Phong model combines ambient lighting (constant background), diffuse reflection (matte surfaces), and specular reflection (shiny highlights) to approximate realistic lighting."
       },
       {
@@ -437,7 +437,7 @@
           "Only the light intensity",
           "The distance from the camera"
         ],
-        "correctAnswer": "The angle between the surface normal and light direction",
+        "correctAnswer": 0,
         "explanation": "Diffuse reflection follows Lambert's cosine law: intensity is proportional to the cosine of the angle between the surface normal and light direction (N · L)."
       },
       {
@@ -450,7 +450,7 @@
           "The color of the surface",
           "The shadow intensity"
         ],
-        "correctAnswer": "The size and sharpness of specular highlights",
+        "correctAnswer": 0,
         "explanation": "Higher specular exponents create smaller, sharper highlights (more mirror-like), while lower values create larger, softer highlights (less shiny surfaces)."
       },
       {
@@ -463,7 +463,7 @@
           "Blinn-Phong only works with point lights",
           "Phong shading is physically accurate"
         ],
-        "correctAnswer": "Blinn-Phong uses a halfway vector instead of the reflection vector",
+        "correctAnswer": 0,
         "explanation": "Blinn-Phong uses the halfway vector (between light and view directions) instead of computing the reflection vector, which is more efficient and can produce more pleasing results."
       },
       {
@@ -476,7 +476,7 @@
           "Flat only works with triangles; smooth works with any polygon",
           "Flat uses ambient lighting; smooth uses diffuse lighting"
         ],
-        "correctAnswer": "Flat uses one normal per polygon; smooth interpolates normals across the surface",
+        "correctAnswer": 0,
         "explanation": "Flat shading uses a single normal for the entire polygon, creating faceted appearance. Smooth shading (Gouraud or Phong) interpolates vertex normals across the surface for a smooth look."
       },
       {
@@ -489,7 +489,7 @@
           "Once per polygon",
           "During the texture mapping stage"
         ],
-        "correctAnswer": "At each vertex, then colors are interpolated across the polygon",
+        "correctAnswer": 0,
         "explanation": "Gouraud shading computes lighting at vertices and interpolates the resulting colors across the polygon. This is faster than per-pixel lighting but can miss highlights."
       },
       {
@@ -502,7 +502,7 @@
           "Light positions",
           "Depth values"
         ],
-        "correctAnswer": "Normal vectors",
+        "correctAnswer": 0,
         "explanation": "Per-pixel (Phong) shading interpolates normal vectors across the surface and performs full lighting calculations at each pixel, producing more accurate highlights than Gouraud shading."
       },
       {
@@ -515,7 +515,7 @@
           "Defining light directions",
           "Specifying material colors"
         ],
-        "correctAnswer": "Adding surface detail by perturbing normals without adding geometry",
+        "correctAnswer": 0,
         "explanation": "Normal maps store perturbed normal vectors that modify lighting calculations to simulate surface details like bumps and wrinkles without increasing polygon count."
       },
       {
@@ -528,7 +528,7 @@
           "View space",
           "Screen space"
         ],
-        "correctAnswer": "Tangent space",
+        "correctAnswer": 0,
         "explanation": "Tangent-space normal maps store normals relative to the surface's local coordinate system, making them reusable on different objects and orientations."
       },
       {
@@ -541,7 +541,7 @@
           "Simpler implementation",
           "Less memory usage"
         ],
-        "correctAnswer": "More realistic and consistent lighting under different conditions",
+        "correctAnswer": 0,
         "explanation": "PBR uses physically-based principles (energy conservation, Fresnel effects, microfacet theory) to produce consistent, realistic results across various lighting environments."
       },
       {
@@ -554,7 +554,7 @@
           "Metallic controls transparency; roughness controls refraction",
           "Metallic controls shadows; roughness controls highlights"
         ],
-        "correctAnswer": "Metallic controls reflectivity type; roughness controls surface smoothness",
+        "correctAnswer": 0,
         "explanation": "Metallic determines whether the surface reflects like a metal (colored reflections) or dielectric (white reflections). Roughness controls how smooth or rough the microsurface is."
       },
       {
@@ -567,7 +567,7 @@
           "Shadows become softer near edges",
           "Textures appear sharper when viewed closely"
         ],
-        "correctAnswer": "Reflectivity increases at grazing angles",
+        "correctAnswer": 0,
         "explanation": "The Fresnel effect describes how reflectivity increases when viewing a surface at shallow (grazing) angles. Even matte surfaces become more reflective at these angles."
       },
       {
@@ -580,7 +580,7 @@
           "The position of textures in world space",
           "Color values stored at each pixel"
         ],
-        "correctAnswer": "Parametric coordinates that map points on a surface to locations in a texture",
+        "correctAnswer": 0,
         "explanation": "UV coordinates are 2D parametric coordinates (typically ranging 0-1) that define how a 2D texture image maps onto a 3D surface."
       },
       {
@@ -593,7 +593,7 @@
           "Compressing texture data",
           "Converting between color spaces"
         ],
-        "correctAnswer": "Determining texture color when texture coordinates don't align with texel centers",
+        "correctAnswer": 0,
         "explanation": "Texture filtering (like nearest neighbor or bilinear filtering) determines how to compute a color when sampling the texture at coordinates that fall between texel centers."
       },
       {
@@ -606,7 +606,7 @@
           "Bilinear only works with square textures",
           "Nearest neighbor requires mipmaps"
         ],
-        "correctAnswer": "Nearest neighbor picks the closest texel; bilinear interpolates between four texels",
+        "correctAnswer": 0,
         "explanation": "Nearest neighbor sampling selects the single closest texel (fast but pixelated). Bilinear filtering interpolates between the four nearest texels for smoother results."
       },
       {
@@ -619,7 +619,7 @@
           "Textures appearing too bright",
           "UV coordinate wrapping"
         ],
-        "correctAnswer": "Aliasing and performance issues when textures are minified",
+        "correctAnswer": 0,
         "explanation": "Mipmaps are pre-filtered, progressively lower-resolution versions of a texture. They reduce aliasing artifacts and improve performance when textures are viewed at a distance."
       },
       {
@@ -632,7 +632,7 @@
           "Using three texture samples per pixel",
           "Filtering based on three light sources"
         ],
-        "correctAnswer": "Bilinear filtering between two mipmap levels plus interpolation between the levels",
+        "correctAnswer": 0,
         "explanation": "Trilinear filtering performs bilinear filtering on two adjacent mipmap levels and then linearly interpolates between them, eliminating visible transitions between mipmap levels."
       },
       {
@@ -645,7 +645,7 @@
           "High-resolution textures",
           "Multiple overlapping textures"
         ],
-        "correctAnswer": "Textures viewed at oblique angles where detail stretches in one direction",
+        "correctAnswer": 0,
         "explanation": "Anisotropic filtering takes multiple texture samples along the direction of anisotropy (elongation), producing sharper textures when surfaces are viewed at shallow angles."
       },
       {
@@ -658,7 +658,7 @@
           "The resolution of the texture",
           "The color space of the texture"
         ],
-        "correctAnswer": "How texture coordinates outside the 0-1 range are handled",
+        "correctAnswer": 0,
         "explanation": "Wrapping modes (repeat, clamp, mirror) define what happens when UV coordinates fall outside the standard 0-1 range, controlling texture tiling and edge behavior."
       },
       {
@@ -671,7 +671,7 @@
           "Terrain height information",
           "Shadow mapping"
         ],
-        "correctAnswer": "Environment mapping and reflections",
+        "correctAnswer": 0,
         "explanation": "Cube maps store six square textures arranged as the faces of a cube, commonly used for skyboxes and environment reflections where sampling direction is a 3D vector."
       },
       {
@@ -684,7 +684,7 @@
           "Compressing texture data",
           "Animating texture coordinates"
         ],
-        "correctAnswer": "Combining multiple textures into a single larger texture",
+        "correctAnswer": 0,
         "explanation": "Texture atlasing packs multiple smaller textures into one large texture, reducing the number of texture switches during rendering and improving performance."
       },
       {
@@ -697,7 +697,7 @@
           "Normal perturbations for lighting",
           "Transparency values"
         ],
-        "correctAnswer": "Height information that actually moves vertex positions",
+        "correctAnswer": 0,
         "explanation": "Unlike normal maps which only affect lighting, displacement maps actually modify the geometry by moving vertices based on height values, creating real surface detail."
       },
       {
@@ -710,7 +710,7 @@
           "Sorting objects by depth",
           "Interpolating vertex colors"
         ],
-        "correctAnswer": "Tracing rays from the camera through pixels to find intersections with scene geometry",
+        "correctAnswer": 0,
         "explanation": "Ray tracing works by casting rays from the camera through each pixel into the scene, finding what objects they intersect, and computing the color based on those intersections."
       },
       {
@@ -723,7 +723,7 @@
           "Lower memory usage",
           "Simpler implementation"
         ],
-        "correctAnswer": "Accurate reflections, refractions, and shadows with global illumination",
+        "correctAnswer": 0,
         "explanation": "Ray tracing naturally handles complex light transport including realistic reflections, refractions, shadows, and global illumination effects that are difficult or impossible with traditional rasterization."
       },
       {
@@ -736,7 +736,7 @@
           "A differential equation",
           "A matrix equation"
         ],
-        "correctAnswer": "A quadratic equation derived from substituting the ray equation into the sphere equation",
+        "correctAnswer": 0,
         "explanation": "Ray-sphere intersection involves substituting the parametric ray equation into the implicit sphere equation, resulting in a quadratic equation whose solutions give intersection distances."
       },
       {
@@ -749,7 +749,7 @@
           "A ray that creates shadows on other objects",
           "The primary ray from the camera"
         ],
-        "correctAnswer": "A ray cast from a surface point toward a light source to test for occlusion",
+        "correctAnswer": 0,
         "explanation": "Shadow rays are cast from surface points toward light sources. If the ray intersects an object before reaching the light, the point is in shadow."
       },
       {
@@ -762,7 +762,7 @@
           "Using recursion to organize scene geometry",
           "Repeating the rendering process multiple times"
         ],
-        "correctAnswer": "Spawning secondary rays for reflections and refractions that recursively generate more rays",
+        "correctAnswer": 0,
         "explanation": "Recursive ray tracing generates secondary rays (reflection, refraction) at intersection points, which themselves can generate more rays, creating a recursive tree of ray paths."
       },
       {
@@ -775,7 +775,7 @@
           "To compress scene geometry",
           "To parallelize ray tracing across multiple processors"
         ],
-        "correctAnswer": "To quickly reject large groups of objects that a ray doesn't intersect",
+        "correctAnswer": 0,
         "explanation": "BVH and similar structures organize geometry hierarchically in bounding volumes, allowing ray tracers to quickly skip large groups of objects without testing individual intersections."
       },
       {
@@ -788,7 +788,7 @@
           "Determining shadow intensity",
           "Computing surface normals"
         ],
-        "correctAnswer": "Computing the direction of refracted rays when light passes through transparent materials",
+        "correctAnswer": 0,
         "explanation": "Snell's law (n1 sin θ1 = n2 sin θ2) relates the angles and indices of refraction when light passes between materials, used to compute refraction direction in ray tracing."
       },
       {
@@ -801,7 +801,7 @@
           "Tracing rays along predetermined paths",
           "A method for finding the shortest path through a scene"
         ],
-        "correctAnswer": "A Monte Carlo ray tracing method that traces random paths for global illumination",
+        "correctAnswer": 0,
         "explanation": "Path tracing randomly samples light paths through the scene, accumulating many samples to converge on the correct global illumination solution, producing highly realistic lighting."
       },
       {
@@ -814,7 +814,7 @@
           "The equation for calculating depth values",
           "A formula for interpolating vertex attributes"
         ],
-        "correctAnswer": "An integral equation describing how light bounces and accumulates in a scene",
+        "correctAnswer": 0,
         "explanation": "The rendering equation, introduced by Kajiya, is an integral equation that describes the total light reflected from a point as a sum of emitted and reflected light from all directions."
       },
       {
@@ -827,7 +827,7 @@
           "Taking more samples for important pixels",
           "Sampling textures at higher resolution"
         ],
-        "correctAnswer": "Biasing random samples toward directions likely to contribute more to the final result",
+        "correctAnswer": 0,
         "explanation": "Importance sampling concentrates samples in directions that contribute more to the result (e.g., toward light sources), reducing noise and improving convergence speed."
       },
       {
@@ -840,7 +840,7 @@
           "Shadow rays that miss all light sources",
           "Occlusion culling for performance optimization"
         ],
-        "correctAnswer": "Approximating indirect lighting by testing how exposed each point is to the sky",
+        "correctAnswer": 0,
         "explanation": "Ambient occlusion casts rays in random directions to determine how occluded a point is. Crevices and corners receive less ambient light, adding depth and realism."
       },
       {
@@ -853,7 +853,7 @@
           "A method for randomly placing lights in a scene",
           "Random selection of camera positions"
         ],
-        "correctAnswer": "Randomly terminating ray paths with probability based on contribution to reduce computation",
+        "correctAnswer": 0,
         "explanation": "Russian roulette randomly terminates rays with some probability (adjusting contribution accordingly), preventing infinite recursion while maintaining unbiased results on average."
       },
       {
@@ -866,7 +866,7 @@
           "Hard shadows are faster to compute",
           "Soft shadows only occur indoors"
         ],
-        "correctAnswer": "Hard shadows have sharp edges (point lights); soft shadows have gradual transitions (area lights)",
+        "correctAnswer": 0,
         "explanation": "Hard shadows result from point light sources and have sharp, well-defined edges. Soft shadows result from area lights and have gradual penumbra regions."
       },
       {
@@ -879,7 +879,7 @@
           "Chemical effects on materials",
           "Lighting effects in fog or smoke"
         ],
-        "correctAnswer": "Focused light patterns created by reflection or refraction through curved surfaces",
+        "correctAnswer": 0,
         "explanation": "Caustics are concentrated light patterns formed when light rays converge after reflecting off or refracting through curved surfaces, like the patterns at the bottom of a swimming pool."
       },
       {
@@ -892,7 +892,7 @@
           "Storing light intensity in texture maps",
           "Mapping camera rays to light sources"
         ],
-        "correctAnswer": "A two-pass algorithm that traces photons from lights and uses them to compute indirect illumination",
+        "correctAnswer": 0,
         "explanation": "Photon mapping first traces photons from light sources and stores them where they hit surfaces. In a second pass, these stored photons are used to efficiently compute indirect lighting and caustics."
       }
     ]

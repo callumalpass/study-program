@@ -21,7 +21,7 @@
           "6 + 11i",
           "10 - 11i"
         ],
-        "correctAnswer": "10 + 5i",
+        "correctAnswer": 1,
         "explanation": "(3 + 4i)(2 - i) = 6 - 3i + 8i - 4i² = 6 + 5i + 4 = 10 + 5i (since i² = -1)"
       },
       {
@@ -34,7 +34,7 @@
           "2i, -2i, 2",
           "2e^(iπ/6), 2e^(i5π/6), 2e^(i3π/2)"
         ],
-        "correctAnswer": "2e^(iπ/6), 2e^(i5π/6), 2e^(i3π/2)",
+        "correctAnswer": 3,
         "explanation": "8i = 8e^(iπ/2). Cube roots: 2e^(i(π/2 + 2πk)/3) for k=0,1,2, giving 2e^(iπ/6), 2e^(i5π/6), 2e^(i3π/2)"
       },
       {
@@ -47,7 +47,7 @@
           "{z : Re(z) > 0}",
           "{z : 1 < |z| < 2}"
         ],
-        "correctAnswer": "{z : |z - i| ≤ 2}",
+        "correctAnswer": 1,
         "explanation": "The set {z : |z - i| ≤ 2} includes its boundary (≤ not <), so it is closed, not open."
       },
       {
@@ -60,7 +60,7 @@
           "x³ - 3xy²",
           "3x² - y²"
         ],
-        "correctAnswer": "3x² - 3y²",
+        "correctAnswer": 1,
         "explanation": "z³ = (x+iy)³ = x³ - 3xy² + i(3x²y - y³). So u = x³ - 3xy², and ∂u/∂x = 3x² - 3y²"
       },
       {
@@ -73,7 +73,7 @@
           "No, nowhere",
           "Yes, on the real axis"
         ],
-        "correctAnswer": "Yes, only at z = 0",
+        "correctAnswer": 1,
         "explanation": "f(z) = x² + y², so u = x² + y², v = 0. C-R equations are satisfied only at (0,0)"
       },
       {
@@ -86,7 +86,7 @@
           "z²e^(z²)",
           "2e^(z²)"
         ],
-        "correctAnswer": "2ze^(z²)",
+        "correctAnswer": 1,
         "explanation": "Using chain rule: f'(z) = e^(z²) · d/dz(z²) = 2ze^(z²)"
       },
       {
@@ -99,7 +99,7 @@
           "7",
           "25"
         ],
-        "correctAnswer": "5",
+        "correctAnswer": 1,
         "explanation": "|z| = √((-3)² + 4²) = √(9 + 16) = √25 = 5"
       },
       {
@@ -119,7 +119,7 @@
           "3π/4",
           "-π/4"
         ],
-        "correctAnswer": "-3π/4",
+        "correctAnswer": 1,
         "explanation": "z = -1 - i is in the third quadrant. arg(z) = arctan(-1/-1) + π adjusted = -3π/4 (principal value in (-π, π])"
       },
       {
@@ -132,7 +132,7 @@
           "∂u/∂x = -∂v/∂y",
           "∂v/∂x = -∂u/∂y"
         ],
-        "correctAnswer": "∂u/∂x = -∂v/∂y",
+        "correctAnswer": 2,
         "explanation": "The Cauchy-Riemann equations are: ∂u/∂x = ∂v/∂y and ∂u/∂y = -∂v/∂x. The third option reverses the sign incorrectly."
       },
       {
@@ -145,7 +145,7 @@
           "2πi",
           "2πie"
         ],
-        "correctAnswer": "2πi",
+        "correctAnswer": 2,
         "explanation": "By Cauchy's formula with f(z) = e^z, a = 0: ∫ = 2πi·f(0) = 2πi·1 = 2πi"
       },
       {
@@ -158,7 +158,7 @@
           "Every entire function has a zero",
           "Every constant function is entire"
         ],
-        "correctAnswer": "Every bounded entire function is constant",
+        "correctAnswer": 1,
         "explanation": "Liouville's theorem: If f is entire and bounded, then f is constant."
       },
       {
@@ -171,7 +171,7 @@
           "3",
           "Cannot determine"
         ],
-        "correctAnswer": "3",
+        "correctAnswer": 2,
         "explanation": "Maximum modulus principle: maximum of |f| on a closed bounded domain is attained on the boundary."
       },
       {
@@ -191,7 +191,7 @@
           "i",
           "-i"
         ],
-        "correctAnswer": "-1",
+        "correctAnswer": 1,
         "explanation": "By Euler's formula: e^(iπ) = cos(π) + i·sin(π) = -1 + 0 = -1"
       },
       {
@@ -204,7 +204,7 @@
           "2πi",
           "4πi"
         ],
-        "correctAnswer": "0",
+        "correctAnswer": 0,
         "explanation": "Poles at z = ±i. Residues sum to 0: Res(f,i) = 1/(2i), Res(f,-i) = -1/(2i). Total = 0."
       },
       {
@@ -217,7 +217,7 @@
           "If f has a pole inside γ, then ∫_γ f = 2πi",
           "The integral depends only on endpoints"
         ],
-        "correctAnswer": "If f is analytic on and inside γ, then ∫_γ f = 0",
+        "correctAnswer": 0,
         "explanation": "Cauchy-Goursat: If f is analytic on a simply connected domain containing γ, then ∫_γ f(z)dz = 0"
       },
       {
@@ -230,7 +230,7 @@
           "e",
           "∞"
         ],
-        "correctAnswer": "0",
+        "correctAnswer": 0,
         "explanation": "Using ratio test: |aₙ₊₁/aₙ| = (n+1)|z| → ∞ for any z ≠ 0. So R = 0."
       },
       {
@@ -243,7 +243,7 @@
           "e",
           "∞"
         ],
-        "correctAnswer": "∞",
+        "correctAnswer": 3,
         "explanation": "This is the series for e^z. The ratio test gives R = ∞."
       },
       {
@@ -256,7 +256,7 @@
           "Pole of order 2",
           "Essential"
         ],
-        "correctAnswer": "Removable",
+        "correctAnswer": 0,
         "explanation": "sin(z)/z = 1 - z²/6 + ... has no negative powers. lim_{z→0} sin(z)/z = 1, so removable."
       },
       {
@@ -269,7 +269,7 @@
           "(1/n!)∫_γ f(z)/(z-a)^n dz",
           "n!∫_γ f(z)/(z-a) dz"
         ],
-        "correctAnswer": "(n!/2πi)∫_γ f(z)/(z-a)^(n+1) dz",
+        "correctAnswer": 1,
         "explanation": "Cauchy's generalized formula: f^(n)(a) = (n!/2πi)∫_γ f(z)/(z-a)^(n+1) dz"
       },
       {
@@ -289,7 +289,7 @@
           "1/z",
           "z^10 + 3z - 2"
         ],
-        "correctAnswer": "1/z",
+        "correctAnswer": 2,
         "explanation": "1/z has a pole at z = 0, so it is not analytic at the origin and hence not entire."
       },
       {
@@ -302,7 +302,7 @@
           "πi",
           "Depends on γ"
         ],
-        "correctAnswer": "0",
+        "correctAnswer": 0,
         "explanation": "z is entire with antiderivative z²/2. For any closed contour, ∫_γ z dz = 0 by Cauchy-Goursat."
       },
       {
@@ -315,7 +315,7 @@
           "16i",
           "-16i"
         ],
-        "correctAnswer": "16",
+        "correctAnswer": 0,
         "explanation": "1 + i = √2 e^(iπ/4), so (1+i)^8 = (√2)^8 e^(i8π/4) = 16e^(i2π) = 16"
       },
       {
@@ -328,7 +328,7 @@
           "The minimum of f on any circle around a",
           "The derivative at a"
         ],
-        "correctAnswer": "The average of f on any circle around a",
+        "correctAnswer": 1,
         "explanation": "Mean value property: f(a) = (1/2π)∫₀^{2π} f(a + re^{iθ}) dθ for any r where f is analytic."
       }
     ]
@@ -356,7 +356,7 @@
           "-i/4",
           "1/4"
         ],
-        "correctAnswer": "-i/4",
+        "correctAnswer": 2,
         "explanation": "Pole of order 2. Using the formula for order-2 poles: Res(f, i) = -i/4."
       },
       {
@@ -369,7 +369,7 @@
           "2π/√2",
           "π/2"
         ],
-        "correctAnswer": "π/√2",
+        "correctAnswer": 0,
         "explanation": "Poles in upper half-plane at e^(iπ/4) and e^(i3π/4). Computing residues gives π/√2."
       },
       {
@@ -382,7 +382,7 @@
           "π/3",
           "2π/3"
         ],
-        "correctAnswer": "π/2",
+        "correctAnswer": 0,
         "explanation": "Substitute z = e^(iθ), cos(θ) = (z + 1/z)/2. Find poles inside |z|=1, compute residues."
       },
       {
@@ -395,7 +395,7 @@
           "Residues sum to zero",
           "Poles must be simple"
         ],
-        "correctAnswer": "Semicircular arc integral vanishes for f→0",
+        "correctAnswer": 0,
         "explanation": "Jordan's Lemma: If f→0 uniformly on semicircle C_R and a>0, then ∫_{C_R} f(z)e^(iaz)dz → 0 as R→∞."
       },
       {
@@ -408,7 +408,7 @@
           "2π/e",
           "e/π"
         ],
-        "correctAnswer": "π/e",
+        "correctAnswer": 0,
         "explanation": "Consider ∫ e^(ix)/(x²+1) dx. Pole at z=i. Res = e^(-1)/(2i). Real part gives π/e."
       },
       {
@@ -421,7 +421,7 @@
           "Halved",
           "Tripled"
         ],
-        "correctAnswer": "Doubled",
+        "correctAnswer": 1,
         "explanation": "f'(z) = 2z = 0 at z=0. At critical point, angles are multiplied by 2."
       },
       {
@@ -434,7 +434,7 @@
           "Circles",
           "Hyperbolas"
         ],
-        "correctAnswer": "Rays from origin",
+        "correctAnswer": 1,
         "explanation": "Horizontal line y=c maps to: |w| = e^x varies, arg(w) = c constant, giving a ray."
       },
       {
@@ -447,7 +447,7 @@
           "Every function has a conformal extension",
           "Möbius maps are the only conformal maps"
         ],
-        "correctAnswer": "Simply connected domain (≠ℂ) maps conformally to unit disk",
+        "correctAnswer": 1,
         "explanation": "Any simply connected proper subdomain of ℂ is conformally equivalent to the unit disk."
       },
       {
@@ -460,7 +460,7 @@
           "Dirichlet kernel",
           "Fejér kernel"
         ],
-        "correctAnswer": "Poisson kernel",
+        "correctAnswer": 1,
         "explanation": "The Poisson kernel for the half-plane solves Laplace's equation with given boundary values."
       },
       {
@@ -473,7 +473,7 @@
           "Pole of order 3",
           "Essential"
         ],
-        "correctAnswer": "Pole of order 2",
+        "correctAnswer": 1,
         "explanation": "e^z - 1 = z + z²/2 + ... So f(z) = 1/z² + 1/(2z) + ... Pole of order 2."
       },
       {
@@ -486,7 +486,7 @@
           "1 + 1/z + 1/(2!z²) + ...",
           "Does not exist"
         ],
-        "correctAnswer": "1 + 1/z + 1/(2!z²) + ...",
+        "correctAnswer": 2,
         "explanation": "e^(1/z) = 1 + 1/z + 1/(2!z²) + ... (infinitely many negative powers, essential singularity)"
       },
       {
@@ -499,7 +499,7 @@
           "Preserves distances",
           "Forms a group under composition"
         ],
-        "correctAnswer": "Preserves distances",
+        "correctAnswer": 2,
         "explanation": "Möbius transformations preserve angles and map circles to circles, but do NOT preserve distances."
       },
       {
@@ -512,7 +512,7 @@
           "(e^(iz) - e^(-iz))/(2iz)",
           "cos(z)/z"
         ],
-        "correctAnswer": "e^(iz)/z",
+        "correctAnswer": 1,
         "explanation": "Consider ∫ e^(iz)/z dz. By Jordan's lemma and semicircular contour with indent at origin."
       },
       {
@@ -525,7 +525,7 @@
           "1",
           "-1"
         ],
-        "correctAnswer": "1/2",
+        "correctAnswer": 0,
         "explanation": "f(z) = 1/[(z-1)(z+1)]. Simple pole at z=1. Res = lim_{z→1} (z-1)f(z) = 1/2."
       },
       {
@@ -538,7 +538,7 @@
           "3",
           "4"
         ],
-        "correctAnswer": "4",
+        "correctAnswer": 3,
         "explanation": "sin(z) has a simple zero at 0, so 1/sin(z) has order-1 pole. Combined with 1/z³, total order is 4."
       },
       {
@@ -551,7 +551,7 @@
           "5",
           "0"
         ],
-        "correctAnswer": "5",
+        "correctAnswer": 2,
         "explanation": "Let f(z) = z^5, g(z) = 3z+1. On |z|=2: |f| = 32, |g| ≤ 7 < 32. Same roots as z^5, which has 5."
       },
       {
@@ -564,7 +564,7 @@
           "The winding number",
           "The maximum modulus"
         ],
-        "correctAnswer": "N - P (zeros minus poles)",
+        "correctAnswer": 1,
         "explanation": "Argument principle: (1/2πi)∫_γ f'/f dz = N - P, where N = zeros, P = poles inside γ."
       },
       {
@@ -584,7 +584,7 @@
           "Lower half-plane",
           "Exterior of unit disk"
         ],
-        "correctAnswer": "Unit disk",
+        "correctAnswer": 1,
         "explanation": "This Möbius transformation maps the upper half-plane to the unit disk, with i → 0."
       },
       {
@@ -597,7 +597,7 @@
           "Annulus to strip",
           "Circle to line"
         ],
-        "correctAnswer": "Half-plane to polygon",
+        "correctAnswer": 1,
         "explanation": "Schwarz-Christoffel provides explicit conformal maps from upper half-plane to polygonal domains."
       },
       {
@@ -610,7 +610,7 @@
           "2",
           "∞"
         ],
-        "correctAnswer": "1",
+        "correctAnswer": 1,
         "explanation": "Using root test: |a_n|^(1/n) = 1/n^(2/n) → 1 as n → ∞. So R = 1."
       },
       {
@@ -623,7 +623,7 @@
           "A zero of order 2",
           "A pole"
         ],
-        "correctAnswer": "A simple zero",
+        "correctAnswer": 1,
         "explanation": "f(z₀) = 0 means z₀ is a zero. f'(z₀) ≠ 0 means the zero has order exactly 1 (simple)."
       },
       {
@@ -636,7 +636,7 @@
           "z₁z₂/(z₃z₄)",
           "(z₁-z₂)(z₃-z₄)"
         ],
-        "correctAnswer": "(z₁-z₃)(z₂-z₄)/[(z₁-z₄)(z₂-z₃)]",
+        "correctAnswer": 0,
         "explanation": "The cross-ratio is preserved by Möbius transformations and defined by this formula."
       },
       {
@@ -656,7 +656,7 @@
           "4πi",
           "-2πi"
         ],
-        "correctAnswer": "2πi",
+        "correctAnswer": 1,
         "explanation": "∫ z dz = 0 (entire). ∫ dz/z = 2πi. Total = 2πi."
       },
       {
@@ -669,7 +669,7 @@
           "Pole of order 2",
           "Essential"
         ],
-        "correctAnswer": "Essential",
+        "correctAnswer": 3,
         "explanation": "The Laurent series has infinitely many negative powers, indicating an essential singularity."
       },
       {
@@ -682,7 +682,7 @@
           "The segment [-2, 2]",
           "A parabola"
         ],
-        "correctAnswer": "The segment [-2, 2]",
+        "correctAnswer": 2,
         "explanation": "For |z| = 1: w = e^(iθ) + e^(-iθ) = 2cos(θ), tracing [-2, 2] twice."
       },
       {
@@ -695,7 +695,7 @@
           "f'(z₀) ≠ 0",
           "f is entire"
         ],
-        "correctAnswer": "f'(z₀) ≠ 0",
+        "correctAnswer": 2,
         "explanation": "Conformality requires f to be analytic with non-zero derivative."
       },
       {
@@ -708,7 +708,7 @@
           "-πi",
           "2πi"
         ],
-        "correctAnswer": "-πi",
+        "correctAnswer": 2,
         "explanation": "Only z=1 is inside |z|=2. Res = 1/(1-3) = -1/2. Integral = 2πi(-1/2) = -πi."
       },
       {
@@ -721,7 +721,7 @@
           "-1",
           "π"
         ],
-        "correctAnswer": "1",
+        "correctAnswer": 1,
         "explanation": "cot(z) = cos(z)/sin(z). Simple pole at 0. Res = cos(0)/[d/dz sin(z)]_{z=0} = 1/1 = 1."
       },
       {
@@ -734,7 +734,7 @@
           "-1/z + 1 + z + z² + ...",
           "1/z - 1 - z - z² - ..."
         ],
-        "correctAnswer": "-1/z - 1 - z - z² - ...",
+        "correctAnswer": 0,
         "explanation": "Partial fractions: -1/z + 1/(z-1) = -1/z - 1/(1-z) = -1/z - (1 + z + z² + ...)"
       },
       {
@@ -754,7 +754,7 @@
           "1/z",
           "e^z"
         ],
-        "correctAnswer": "e^(iθ)(z-a)/(1-āz)",
+        "correctAnswer": 1,
         "explanation": "Automorphisms of the unit disk are Blaschke factors composed with rotations."
       },
       {
@@ -767,7 +767,7 @@
           "Vertical lines",
           "Horizontal lines"
         ],
-        "correctAnswer": "Circles centered at origin",
+        "correctAnswer": 1,
         "explanation": "Vertical line x = c: w = e^c e^(iy) traces a circle of radius e^c."
       },
       {
@@ -780,7 +780,7 @@
           "π",
           "2π"
         ],
-        "correctAnswer": "π/4",
+        "correctAnswer": 0,
         "explanation": "Double pole at z=i. Res = d/dz[1/(z+i)²] at z=i = -1/(4i). Integral = πi·(-1/(4i)) = π/4."
       },
       {
@@ -793,7 +793,7 @@
           "Bounded entire functions are constant",
           "Analytic functions have antiderivatives"
         ],
-        "correctAnswer": "If f is continuous and ∫_γ f = 0 for all closed γ, then f is analytic",
+        "correctAnswer": 0,
         "explanation": "Morera's theorem is the converse of Cauchy-Goursat."
       },
       {
@@ -806,7 +806,7 @@
           "Right half-plane",
           "Entire plane"
         ],
-        "correctAnswer": "Upper half-plane",
+        "correctAnswer": 1,
         "explanation": "z² doubles angles. First quadrant (0 to π/2) maps to upper half-plane (0 to π)."
       },
       {
@@ -819,7 +819,7 @@
           "n²",
           "n/2"
         ],
-        "correctAnswer": "2n",
+        "correctAnswer": 1,
         "explanation": "If f ~ 1/(z-z₀)^n near z₀, then f² ~ 1/(z-z₀)^(2n)."
       },
       {
@@ -839,7 +839,7 @@
           "The image of any punctured neighborhood is dense in ℂ",
           "f has a Laurent series"
         ],
-        "correctAnswer": "The image of any punctured neighborhood is dense in ℂ",
+        "correctAnswer": 2,
         "explanation": "Near an essential singularity, f comes arbitrarily close to every complex value."
       },
       {
@@ -852,7 +852,7 @@
           "1/z²",
           "-1/z² + 1/z"
         ],
-        "correctAnswer": "-1/z² - 1/z",
+        "correctAnswer": 1,
         "explanation": "f(z) = -1/z² · 1/(1-z) = -1/z² (1 + z + z² + ...) = -1/z² - 1/z - 1 - ..."
       },
       {
@@ -865,7 +865,7 @@
           "2",
           "-1"
         ],
-        "correctAnswer": "1",
+        "correctAnswer": 1,
         "explanation": "z = 1 is inside |z| = 2. The winding number is 1 for counterclockwise traversal."
       }
     ]

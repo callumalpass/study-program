@@ -404,11 +404,8 @@ describe('Math302 - Differential Equations Content', () => {
       const verifyY1 = 1 / 3 + 5 / 3; // x=1: 1/3 + 5/3 = 6/3 = 2
       expect(verifyY1).toBe(2);
 
-      // Check the correct answer
-      expect(q5.correctAnswer).toBe('y = x²/3 + 5/(3x)');
-
-      // The first option should be the correct one
-      expect(q5.options[0]).toBe('y = x²/3 + 5/(3x)');
+      // Check the correct answer - correctAnswer is a numeric index
+      expect(q5.options[q5.correctAnswer]).toBe('y = x²/3 + 5/(3x)');
 
       // Verify the explanation does not contain the incorrect equivalence
       expect(q5.explanation).not.toContain('= x²/2 + 3/(2x)');
@@ -421,7 +418,8 @@ describe('Math302 - Differential Equations Content', () => {
 
       // Verify: dy/y² = x dx → -1/y = x²/2 + C
       // IC y(0) = 1: -1 = C → -1/y = x²/2 - 1 → y = 1/(1 - x²/2)
-      expect(q1.correctAnswer).toBe('y = 1/(1 - x²/2)');
+      // correctAnswer is a numeric index
+      expect(q1.options[q1.correctAnswer]).toBe('y = 1/(1 - x²/2)');
 
       // Verify y(0) = 1
       const y0 = 1 / (1 - 0 / 2);
@@ -433,7 +431,8 @@ describe('Math302 - Differential Equations Content', () => {
       const q3 = midterm.questions.find((q: any) => q.id === 'math302-mid-q3');
       expect(q3).toBeDefined();
 
-      expect(q3.correctAnswer).toBe('y = Ce^(3x)');
+      // correctAnswer is a numeric index
+      expect(q3.options[q3.correctAnswer]).toBe('y = Ce^(3x)');
     });
 
     it('Q4: Integrating factor for dy/dx + 2y = e^x should be e^(2x)', () => {
@@ -442,7 +441,8 @@ describe('Math302 - Differential Equations Content', () => {
       expect(q4).toBeDefined();
 
       // μ(x) = e^(∫P(x)dx) = e^(∫2dx) = e^(2x)
-      expect(q4.correctAnswer).toBe('e^(2x)');
+      // correctAnswer is a numeric index
+      expect(q4.options[q4.correctAnswer]).toBe('e^(2x)');
     });
   });
 
@@ -455,7 +455,8 @@ describe('Math302 - Differential Equations Content', () => {
       // Characteristic equation: r² - 5r + 6 = 0
       // (r - 2)(r - 3) = 0
       // r = 2, 3
-      expect(q11.correctAnswer).toBe('y = C₁e^(2x) + C₂e^(3x)');
+      // correctAnswer is a numeric index
+      expect(q11.options[q11.correctAnswer]).toBe('y = C₁e^(2x) + C₂e^(3x)');
     });
 
     it('Q12: y\'\' + 4y\' + 4y = 0 should have repeated root r = -2', () => {
@@ -464,7 +465,8 @@ describe('Math302 - Differential Equations Content', () => {
       expect(q12).toBeDefined();
 
       // r² + 4r + 4 = (r + 2)² = 0
-      expect(q12.correctAnswer).toBe('r = -2 (repeated)');
+      // correctAnswer is a numeric index
+      expect(q12.options[q12.correctAnswer]).toBe('r = -2 (repeated)');
     });
 
     it('Q13: Complex roots r = -1 ± 2i should give oscillatory solution', () => {
@@ -472,7 +474,8 @@ describe('Math302 - Differential Equations Content', () => {
       const q13 = midterm.questions.find((q: any) => q.id === 'math302-mid-q13');
       expect(q13).toBeDefined();
 
-      expect(q13.correctAnswer).toBe('y = e^(-x)(C₁cos(2x) + C₂sin(2x))');
+      // correctAnswer is a numeric index
+      expect(q13.options[q13.correctAnswer]).toBe('y = e^(-x)(C₁cos(2x) + C₂sin(2x))');
     });
   });
 
@@ -483,35 +486,40 @@ describe('Math302 - Differential Equations Content', () => {
 
       const q1 = final.questions.find((q: any) => q.id === 'math302-final-q1');
       expect(q1).toBeDefined();
-      expect(q1.correctAnswer).toBe('F(s) = 1/s');
+      // correctAnswer is a numeric index
+      expect(q1.options[q1.correctAnswer]).toBe('F(s) = 1/s');
     });
 
     it('Q2: L{e^(at)} = 1/(s-a)', () => {
       const final = math302Exams.find((e: any) => e.id === 'math302-final');
       const q2 = final.questions.find((q: any) => q.id === 'math302-final-q2');
       expect(q2).toBeDefined();
-      expect(q2.correctAnswer).toBe('1/(s - a) for s > a');
+      // correctAnswer is a numeric index
+      expect(q2.options[q2.correctAnswer]).toBe('1/(s - a) for s > a');
     });
 
     it('Q3: L{sin(ωt)} = ω/(s² + ω²)', () => {
       const final = math302Exams.find((e: any) => e.id === 'math302-final');
       const q3 = final.questions.find((q: any) => q.id === 'math302-final-q3');
       expect(q3).toBeDefined();
-      expect(q3.correctAnswer).toBe('ω/(s² + ω²)');
+      // correctAnswer is a numeric index
+      expect(q3.options[q3.correctAnswer]).toBe('ω/(s² + ω²)');
     });
 
     it('Q4: L{cos(ωt)} = s/(s² + ω²)', () => {
       const final = math302Exams.find((e: any) => e.id === 'math302-final');
       const q4 = final.questions.find((q: any) => q.id === 'math302-final-q4');
       expect(q4).toBeDefined();
-      expect(q4.correctAnswer).toBe('s/(s² + ω²)');
+      // correctAnswer is a numeric index
+      expect(q4.options[q4.correctAnswer]).toBe('s/(s² + ω²)');
     });
 
     it('Q40: L{t^n} = n!/s^(n+1)', () => {
       const final = math302Exams.find((e: any) => e.id === 'math302-final');
       const q40 = final.questions.find((q: any) => q.id === 'math302-final-q40');
       expect(q40).toBeDefined();
-      expect(q40.correctAnswer).toBe('n!/s^(n+1)');
+      // correctAnswer is a numeric index
+      expect(q40.options[q40.correctAnswer]).toBe('n!/s^(n+1)');
     });
   });
 
