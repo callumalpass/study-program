@@ -461,3 +461,198 @@ describe('ContentNavigator Progress Helpers', () => {
     });
   });
 });
+
+/**
+ * Re-implementation of the isQuizPassed function from ContentNavigator
+ * to test the fix that distinguishes between "attempted" and "passed" quizzes
+ */
+function isQuizPassed(quizId: string, progress: SubjectProgress | undefined): boolean {
+  const attempts = progress?.quizAttempts?.[quizId];
+  return Boolean(attempts && attempts.some(a => a.score >= QUIZ_PASSING_SCORE));
+}
+
+/**
+ * Re-implementation of the isQuizAttempted function from ContentNavigator
+ */
+function isQuizAttempted(quizId: string, progress: SubjectProgress | undefined): boolean {
+  const attempts = progress?.quizAttempts?.[quizId];
+  return Boolean(attempts && attempts.length > 0);
+}
+
+describe('ContentNavigator Quiz Status Helpers', () => {
+  describe('isQuizAttempted vs isQuizPassed distinction', () => {
+    /**
+     * This test verifies the fix for the UX issue where quizzes were shown
+     * with a checkmark (appearing "completed") even when the user had failed
+     * all attempts.
+     *
+     * Before fix: The sidebar used isQuizAttempted which returns true for any
+     * attempt, causing the checkmark to appear even for failed quizzes.
+     *
+     * After fix: The sidebar uses isQuizPassed which only shows the checkmark
+     * when the quiz has been passed (score >= 70).
+     */
+    it('isQuizAttempted returns true for any attempt, isQuizPassed only for passing scores', () => {
+      const progress = makeProgress({
+        quizAttempts: {
+          'quiz-1': [makeQuizAttempt(50)], // Failed
+          'quiz-2': [makeQuizAttempt(70)], // Passed
+          'quiz-3': [makeQuizAttempt(40), makeQuizAttempt(50)], // All failed
+          'quiz-4': [makeQuizAttempt(30), makeQuizAttempt(75)], // One passed
+        },
+      });
+
+      // isQuizAttempted returns true if there are ANY attempts
+      expect(isQuizAttempted('quiz-1', progress)).toBe(true);
+      expect(isQuizAttempted('quiz-2', progress)).toBe(true);
+      expect(isQuizAttempted('quiz-3', progress)).toBe(true);
+      expect(isQuizAttempted('quiz-4', progress)).toBe(true);
+      expect(isQuizAttempted('quiz-5', progress)).toBe(false); // No attempts
+
+      // isQuizPassed returns true only if at least one attempt passed
+      expect(isQuizPassed('quiz-1', progress)).toBe(false); // Score 50 < 70
+      expect(isQuizPassed('quiz-2', progress)).toBe(true);  // Score 70 >= 70
+      expect(isQuizPassed('quiz-3', progress)).toBe(false); // Max 50 < 70
+      expect(isQuizPassed('quiz-4', progress)).toBe(true);  // Has 75 >= 70
+      expect(isQuizPassed('quiz-5', progress)).toBe(false); // No attempts
+    });
+
+    it('quiz with score of exactly 70 should be marked as passed', () => {
+      const progress = makeProgress({
+        quizAttempts: {
+          'quiz-1': [makeQuizAttempt(70)],
+        },
+      });
+
+      expect(isQuizAttempted('quiz-1', progress)).toBe(true);
+      expect(isQuizPassed('quiz-1', progress)).toBe(true);
+    });
+
+    it('quiz with score of 69 should be attempted but not passed', () => {
+      const progress = makeProgress({
+        quizAttempts: {
+          'quiz-1': [makeQuizAttempt(69)],
+        },
+      });
+
+      expect(isQuizAttempted('quiz-1', progress)).toBe(true);
+      expect(isQuizPassed('quiz-1', progress)).toBe(false);
+    });
+  });
+
+  describe('isQuizPassed', () => {
+    it('returns false when progress is undefined', () => {
+      expect(isQuizPassed('quiz-1', undefined)).toBe(false);
+    });
+
+    it('returns false when quiz has no attempts', () => {
+      const progress = makeProgress();
+      expect(isQuizPassed('quiz-1', progress)).toBe(false);
+    });
+
+    it('returns false when all attempts are below passing score', () => {
+      const progress = makeProgress({
+        quizAttempts: {
+          'quiz-1': [
+            makeQuizAttempt(0),
+            makeQuizAttempt(25),
+            makeQuizAttempt(50),
+            makeQuizAttempt(69),
+          ],
+        },
+      });
+      expect(isQuizPassed('quiz-1', progress)).toBe(false);
+    });
+
+    it('returns true when at least one attempt passes', () => {
+      const progress = makeProgress({
+        quizAttempts: {
+          'quiz-1': [
+            makeQuizAttempt(50),
+            makeQuizAttempt(65),
+            makeQuizAttempt(72), // This passes
+            makeQuizAttempt(60),
+          ],
+        },
+      });
+      expect(isQuizPassed('quiz-1', progress)).toBe(true);
+    });
+
+    it('returns true when first attempt passes', () => {
+      const progress = makeProgress({
+        quizAttempts: {
+          'quiz-1': [makeQuizAttempt(85)],
+        },
+      });
+      expect(isQuizPassed('quiz-1', progress)).toBe(true);
+    });
+
+    it('returns true for perfect score', () => {
+      const progress = makeProgress({
+        quizAttempts: {
+          'quiz-1': [makeQuizAttempt(100)],
+        },
+      });
+      expect(isQuizPassed('quiz-1', progress)).toBe(true);
+    });
+  });
+
+  describe('isQuizAttempted', () => {
+    it('returns false when progress is undefined', () => {
+      expect(isQuizAttempted('quiz-1', undefined)).toBe(false);
+    });
+
+    it('returns false when quiz has no attempts', () => {
+      const progress = makeProgress();
+      expect(isQuizAttempted('quiz-1', progress)).toBe(false);
+    });
+
+    it('returns true when quiz has at least one attempt (even failing)', () => {
+      const progress = makeProgress({
+        quizAttempts: {
+          'quiz-1': [makeQuizAttempt(0)],
+        },
+      });
+      expect(isQuizAttempted('quiz-1', progress)).toBe(true);
+    });
+
+    it('returns true when quiz has multiple attempts', () => {
+      const progress = makeProgress({
+        quizAttempts: {
+          'quiz-1': [
+            makeQuizAttempt(30),
+            makeQuizAttempt(40),
+            makeQuizAttempt(50),
+          ],
+        },
+      });
+      expect(isQuizAttempted('quiz-1', progress)).toBe(true);
+    });
+  });
+
+  describe('Practice Sidebar Count Behavior', () => {
+    /**
+     * Tests the expected count displayed in the Practice sidebar for quizzes.
+     * After the fix, the count shows passed quizzes (not just attempted).
+     */
+    it('sidebar count should show passed quizzes, not just attempted', () => {
+      const quizIds = ['quiz-1', 'quiz-2', 'quiz-3', 'quiz-4'];
+      const progress = makeProgress({
+        quizAttempts: {
+          'quiz-1': [makeQuizAttempt(85)],  // Passed
+          'quiz-2': [makeQuizAttempt(50)],  // Attempted but failed
+          'quiz-3': [makeQuizAttempt(40), makeQuizAttempt(75)], // Passed (after retry)
+          // quiz-4: not attempted
+        },
+      });
+
+      // Count of passed quizzes (what sidebar now shows after fix)
+      const passedCount = quizIds.filter(qid => isQuizPassed(qid, progress)).length;
+      expect(passedCount).toBe(2); // Only quiz-1 and quiz-3 passed
+
+      // Count of attempted quizzes (what sidebar showed before fix)
+      const attemptedCount = quizIds.filter(qid => isQuizAttempted(qid, progress)).length;
+      expect(attemptedCount).toBe(3); // quiz-1, quiz-2, quiz-3 all attempted
+    });
+  });
+});

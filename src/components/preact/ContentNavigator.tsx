@@ -217,6 +217,11 @@ export function ContentNavigator({
     return Boolean(attempts && attempts.length > 0);
   }, [progress]);
 
+  const isQuizPassed = useCallback((quizId: string): boolean => {
+    const attempts = progress?.quizAttempts?.[quizId];
+    return Boolean(attempts && attempts.some(a => a.score >= QUIZ_PASSING_SCORE));
+  }, [progress]);
+
   const isExerciseComplete = useCallback((exerciseId: string): boolean => {
     const completion = progress?.exerciseCompletions?.[exerciseId];
     return Boolean(completion?.passed);
@@ -540,20 +545,21 @@ export function ContentNavigator({
                 <div class="practice-group-header">
                   <span>Quizzes</span>
                   <span class="practice-count">
-                    {practiceQuizzes.filter(q => isQuizAttempted(q.id)).length}/{practiceQuizzes.length}
+                    {practiceQuizzes.filter(q => isQuizPassed(q.id)).length}/{practiceQuizzes.length}
                   </span>
                 </div>
                 {practiceQuizzes.slice(0, showAllQuizzes ? undefined : INITIAL_QUIZ_COUNT).map((quiz, index) => {
+                  const passed = isQuizPassed(quiz.id);
                   const attempted = isQuizAttempted(quiz.id);
                   const isActive = currentPracticeId === quiz.id;
                   return (
                     <button
                       key={quiz.id}
-                      class={`practice-item ${attempted ? 'completed' : ''} ${isActive ? 'active' : ''}`}
+                      class={`practice-item ${passed ? 'completed' : attempted ? 'attempted' : ''} ${isActive ? 'active' : ''}`}
                       onClick={(e) => handleQuizClick(e, quiz.id)}
                     >
                       <span class="practice-title">Quiz {index + 1}</span>
-                      {attempted && (
+                      {passed && (
                         <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
                       )}
                     </button>
