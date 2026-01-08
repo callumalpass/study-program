@@ -20,8 +20,12 @@ import { Icons } from '../components/icons';
 
 /**
  * Format a review item ID into a human-readable title
- * Quiz IDs: "cs101-quiz-1" -> "CS101 Quiz 1", "cs101-quiz-1b" -> "CS101 Quiz 1B"
- *           "cs402-quiz-1-2" -> "CS402 Quiz 1-2" (topic-subquiz format)
+ * Quiz IDs support multiple formats:
+ *   - "cs101-quiz-1" -> "CS101 Quiz 1"
+ *   - "cs101-quiz-1b" -> "CS101 Quiz 1B"
+ *   - "cs402-quiz-1-2" -> "CS402 Quiz 1-2" (topic-subquiz format)
+ *   - "cs304-t1-quiz-1" -> "CS304 Topic 1 Quiz 1" (topic prefix format)
+ *   - "cs102-q1-1" -> "CS102 Quiz 1" (short q format)
  * Exercise IDs: "cs101-t1-ex02" -> "CS101 Topic 1 Exercise 2"
  */
 // Regex patterns for parsing review item IDs
@@ -30,8 +34,11 @@ const TOPIC_NUMBER_PATTERN = /-t(\d+)-/; // Matches "-t{number}-" to extract top
 // Quiz ID formats:
 // 1. Level letter format: "cs101-quiz-1", "cs101-quiz-1b", "cs102-quiz-2-c"
 // 2. Topic-subquiz format: "cs402-quiz-1-2", "math302-quiz-3-1"
+// 3. Topic prefix format: "cs304-t1-quiz-1", "cs304-t1-quiz-2"
+// 4. Short format: "cs102-q1-1", "cs102-q1-b-1"
 const QUIZ_LEVEL_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i; // Matches "quiz-{number}" with optional level letter
 const QUIZ_SUBQUIZ_PATTERN = /quiz-(\d+)-(\d+)/i; // Matches "quiz-{topic}-{subquiz}" format
+const SHORT_QUIZ_PATTERN = /-q(\d+)(?:-([a-c]))?-(\d+)/i; // Matches short "-q{N}-{M}" or "-q{N}-{level}-{M}" format
 const EXERCISE_NUMBER_PATTERN = /ex(\d+)/i; // Matches "ex{number}" for exercise number (e.g., "ex01")
 
 function formatReviewItemTitle(item: ReviewItem): string {
@@ -44,7 +51,15 @@ function formatReviewItemTitle(item: ReviewItem): string {
   const topicNum = topicMatch ? `Topic ${topicMatch[1]}` : '';
 
   if (item.itemType === 'quiz') {
-    // Try topic-subquiz format first (e.g., cs402-quiz-1-2)
+    // Try short quiz format (e.g., cs102-q1-1, cs102-q1-b-1)
+    const shortMatch = id.match(SHORT_QUIZ_PATTERN);
+    if (shortMatch) {
+      const quizNumber = shortMatch[1];
+      const level = (shortMatch[2] || '').toUpperCase();
+      return [subjectCode, topicNum, `Quiz ${quizNumber}${level}`].filter(Boolean).join(' ');
+    }
+
+    // Try topic-subquiz format (e.g., cs402-quiz-1-2)
     const subquizMatch = id.match(QUIZ_SUBQUIZ_PATTERN);
     if (subquizMatch) {
       const topicNumber = subquizMatch[1];
