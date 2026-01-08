@@ -10,37 +10,7 @@
 
 import { describe, it, expect } from 'vitest';
 import type { QuizQuestion, QuizAnswer, CodingAnswer, ProgrammingLanguage } from '@/core/types';
-
-// Helper functions mirroring Question.tsx implementation
-
-function normalizeAnswer(value: string | number | boolean | undefined): string {
-  if (value === undefined) return '';
-  return String(value).trim().toLowerCase();
-}
-
-/**
- * Get the correct option index for a multiple choice question.
- * Handles both numeric indices and string values that match an option.
- */
-function getCorrectOptionIndex(question: QuizQuestion): number {
-  const correctAnswer = question.correctAnswer;
-
-  // If already a number, return it directly
-  if (typeof correctAnswer === 'number') {
-    return correctAnswer;
-  }
-
-  // If a string, find the matching option index
-  if (typeof correctAnswer === 'string' && question.options) {
-    const index = question.options.indexOf(correctAnswer);
-    if (index !== -1) {
-      return index;
-    }
-  }
-
-  // Fallback: return -1 to indicate no valid answer found
-  return -1;
-}
+import { normalizeAnswer, getCorrectOptionIndex } from '@/utils/quiz-utils';
 
 /**
  * Get the Prism language class for a code snippet.
@@ -284,6 +254,30 @@ describe('Question Component - Multiple Choice', () => {
         explanation: '',
       };
       expect(getCorrectOptionIndex(question)).toBe(0);
+    });
+
+    it('returns -1 for out-of-bounds positive index', () => {
+      const question: QuizQuestion = {
+        id: 'mc7',
+        type: 'multiple_choice',
+        prompt: 'Test',
+        options: ['A', 'B', 'C'],
+        correctAnswer: 5, // Index 5 is out of bounds for array of length 3
+        explanation: '',
+      };
+      expect(getCorrectOptionIndex(question)).toBe(-1);
+    });
+
+    it('returns -1 for negative index', () => {
+      const question: QuizQuestion = {
+        id: 'mc8',
+        type: 'multiple_choice',
+        prompt: 'Test',
+        options: ['A', 'B', 'C'],
+        correctAnswer: -1, // Negative index
+        explanation: '',
+      };
+      expect(getCorrectOptionIndex(question)).toBe(-1);
     });
   });
 });
