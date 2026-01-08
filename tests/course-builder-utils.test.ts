@@ -479,6 +479,37 @@ describe('course-builder-utils', () => {
         expect(result).toHaveLength(1);
       });
 
+      it('handles HTML-like characters in search', () => {
+        // This tests that the filter function handles strings with HTML special chars
+        // The actual escaping happens in the rendering layer (course-builder.ts)
+        const filters: CourseBuilderFilters = {
+          category: 'all',
+          year: null,
+          search: '<script>alert("xss")</script>',
+        };
+        // Should not match anything and not throw
+        const result = filterSubjects(testCurriculum, filters);
+        expect(result).toEqual([]);
+      });
+
+      it('handles ampersand and quotes in search', () => {
+        const subjectsWithSpecialChars = [
+          makeSubject({
+            id: 'test-ampersand',
+            code: 'TEST456',
+            title: 'C++ & STL',
+            description: 'Contains "quoted" text',
+          }),
+        ];
+        const filters: CourseBuilderFilters = {
+          category: 'all',
+          year: null,
+          search: 'C++ & STL',
+        };
+        const result = filterSubjects(subjectsWithSpecialChars, filters);
+        expect(result).toHaveLength(1);
+      });
+
       it('preserves original order of subjects', () => {
         const filters: CourseBuilderFilters = {
           category: 'cs',

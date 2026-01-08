@@ -14,7 +14,8 @@ describe('escapeHtml - XSS Prevention', () => {
       const xss = '<script>alert("xss")</script>';
       const escaped = escapeHtml(xss);
       expect(escaped).not.toContain('<script');
-      expect(escaped).toBe('&lt;script&gt;alert("xss")&lt;/script&gt;');
+      // Quotes are now also escaped for attribute safety
+      expect(escaped).toBe('&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;');
     });
 
     it('prevents script tag with attributes', () => {
@@ -48,7 +49,8 @@ describe('escapeHtml - XSS Prevention', () => {
       const escaped = escapeHtml(xss);
       expect(escaped).not.toContain('<img');
       // The text 'onerror' is preserved but harmless since it's not in a tag
-      expect(escaped).toBe('&lt;img src=x onerror="alert(1)"&gt;');
+      // Quotes are now also escaped for attribute safety
+      expect(escaped).toBe('&lt;img src=x onerror=&quot;alert(1)&quot;&gt;');
     });
 
     it('prevents onclick event handler', () => {
@@ -218,8 +220,8 @@ describe('escapeHtml - XSS Prevention', () => {
       const xss = "jaVasCript:/*-/*`/*\\`/*'/*\"/**/(/* */oNcLiCk=alert() )//";
       const escaped = escapeHtml(xss);
       // This is just text, should pass through mostly unchanged
-      // Only quotes and forward slashes have no special meaning in HTML content
-      expect(escaped).toBe(xss);
+      // Quotes are now escaped for attribute safety
+      expect(escaped).toBe("jaVasCript:/*-/*`/*\\`/*&#39;/*&quot;/**/(/* */oNcLiCk=alert() )//");
     });
 
     it('prevents IMG tag with expression', () => {
@@ -287,6 +289,51 @@ describe('escapeHtml - XSS Prevention', () => {
   });
 });
 
+describe('escapeHtml - HTML Attribute Context', () => {
+  describe('attribute value injection prevention', () => {
+    it('escapes double quotes to prevent attribute breakout', () => {
+      // If user types: " onclick="alert(1)
+      // Without escaping, this could create: value="" onclick="alert(1)"
+      const input = '" onclick="alert(1)';
+      const escaped = escapeHtml(input);
+      expect(escaped).toBe('&quot; onclick=&quot;alert(1)');
+      // When placed in value="...", this is safe
+    });
+
+    it('escapes single quotes for single-quoted attributes', () => {
+      const input = "' onclick='alert(1)";
+      const escaped = escapeHtml(input);
+      expect(escaped).toBe("&#39; onclick=&#39;alert(1)");
+    });
+
+    it('escapes both quote types together', () => {
+      const input = '"\' onclick=alert(1) data-x="';
+      const escaped = escapeHtml(input);
+      expect(escaped).toBe('&quot;&#39; onclick=alert(1) data-x=&quot;');
+    });
+
+    it('prevents attribute value with embedded tags', () => {
+      const input = '"><script>alert(1)</script><input value="';
+      const escaped = escapeHtml(input);
+      expect(escaped).not.toContain('<script');
+      expect(escaped).toContain('&lt;script&gt;');
+    });
+
+    it('handles form input values with special characters', () => {
+      // Simulates user typing in a search box
+      const searchInput = 'C++ & STL "basics"';
+      const escaped = escapeHtml(searchInput);
+      expect(escaped).toBe('C++ &amp; STL &quot;basics&quot;');
+    });
+
+    it('preserves normal search text', () => {
+      const searchInput = 'algorithms data structures';
+      const escaped = escapeHtml(searchInput);
+      expect(escaped).toBe('algorithms data structures');
+    });
+  });
+});
+
 describe('escapeHtml - Safe Content Preservation', () => {
   describe('preserves safe text content', () => {
     it('preserves regular text', () => {
@@ -329,8 +376,9 @@ describe('escapeHtml - Safe Content Preservation', () => {
       expect(escapeHtml('(a)[b]{c}')).toBe('(a)[b]{c}');
     });
 
-    it('preserves punctuation', () => {
-      expect(escapeHtml('Hello! How are you? I\'m fine.')).toBe("Hello! How are you? I'm fine.");
+    it('escapes quotes in punctuation', () => {
+      // Single quotes are now escaped for attribute safety
+      expect(escapeHtml('Hello! How are you? I\'m fine.')).toBe("Hello! How are you? I&#39;m fine.");
     });
 
     it('preserves at sign and hash', () => {
@@ -367,15 +415,16 @@ describe('escapeHtml - Safe Content Preservation', () => {
   });
 
   describe('code snippets', () => {
-    it('preserves safe Python code', () => {
+    it('escapes quotes in Python code', () => {
       const code = 'def hello():\n    print("Hello")\n    return 42';
-      expect(escapeHtml(code)).toBe('def hello():\n    print("Hello")\n    return 42');
+      // Double quotes are now escaped for attribute safety
+      expect(escapeHtml(code)).toBe('def hello():\n    print(&quot;Hello&quot;)\n    return 42');
     });
 
     it('escapes HTML in code but preserves structure', () => {
       const code = 'html = "<p>Hello</p>"';
       const escaped = escapeHtml(code);
-      expect(escaped).toBe('html = "&lt;p&gt;Hello&lt;/p&gt;"');
+      expect(escaped).toBe('html = &quot;&lt;p&gt;Hello&lt;/p&gt;&quot;');
     });
 
     it('handles JavaScript with template literals', () => {

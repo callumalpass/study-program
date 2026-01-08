@@ -2,15 +2,16 @@ import { describe, expect, it } from 'vitest';
 import { escapeHtml } from '../src/utils/html';
 
 describe('escapeHtml', () => {
-  it('escapes HTML special characters', () => {
+  it('escapes HTML special characters including quotes', () => {
     const input = '<div>"Hello" & \'World\'</div>';
     const output = escapeHtml(input);
-    expect(output).toBe('&lt;div&gt;"Hello" &amp; \'World\'&lt;/div&gt;');
+    // Now also escapes quotes for attribute safety
+    expect(output).toBe('&lt;div&gt;&quot;Hello&quot; &amp; &#39;World&#39;&lt;/div&gt;');
   });
 
-  it('escapes angle brackets', () => {
+  it('escapes angle brackets and quotes', () => {
     expect(escapeHtml('<script>alert("xss")</script>')).toBe(
-      '&lt;script&gt;alert("xss")&lt;/script&gt;'
+      '&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;'
     );
   });
 
@@ -49,7 +50,8 @@ describe('escapeHtml', () => {
     const xss = '<img src=x onerror="alert(1)">';
     const escaped = escapeHtml(xss);
     expect(escaped).not.toContain('<img');
-    expect(escaped).toBe('&lt;img src=x onerror="alert(1)"&gt;');
+    // Now also escapes quotes
+    expect(escaped).toBe('&lt;img src=x onerror=&quot;alert(1)&quot;&gt;');
   });
 
   it('handles string with only special characters', () => {

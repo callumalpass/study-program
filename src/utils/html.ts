@@ -4,10 +4,15 @@
 
 /**
  * Escape HTML special characters to prevent XSS attacks.
- * Uses the browser's built-in text escaping via textContent.
+ * Escapes <, >, &, ", and ' to make the string safe for use
+ * in both HTML content and HTML attributes.
  */
 export function escapeHtml(text: string): string {
   const div = document.createElement('div');
   div.textContent = text;
-  return div.innerHTML;
+  // innerHTML escapes <, >, and &
+  // We also need to escape quotes for attribute contexts
+  return div.innerHTML
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }

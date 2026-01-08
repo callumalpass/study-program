@@ -5,6 +5,7 @@ import { courseTemplates, getTemplateById } from '@/data/templates';
 import { curriculum } from '@/data/curriculum';
 import { navigate } from '@/core/router';
 import { Mascots } from '@/components/mascots';
+import { escapeHtml } from '@/utils/html';
 import {
   getMissingPrerequisites,
   getDependentSubjects,
@@ -80,7 +81,7 @@ export function renderCourseBuilderPage(container: HTMLElement): void {
                 type="text"
                 id="subject-search"
                 placeholder="Search subjects..."
-                value="${currentFilters.search}"
+                value="${escapeHtml(currentFilters.search)}"
               />
             </div>
 
