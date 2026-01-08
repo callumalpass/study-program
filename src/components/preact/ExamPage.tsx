@@ -1,6 +1,7 @@
 import { h, Fragment } from 'preact';
 import { useState, useCallback, useRef } from 'preact/hooks';
 import type { Subject, Exam, QuizQuestion, ExamAttempt } from '@/core/types';
+import { QUIZ_PASSING_SCORE } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { navigateToSubject } from '@/core/router';
 import { Icons } from '@/components/icons';
@@ -77,7 +78,7 @@ export function ExamPage({ subject, exam }: ExamPageProps) {
           {bestAttempt && (
             <div class="best-score">
               <span class="label">Best Score:</span>
-              <span class={`score ${bestAttempt.score >= 70 ? 'passed' : 'failed'}`}>
+              <span class={`score ${bestAttempt.score >= QUIZ_PASSING_SCORE ? 'passed' : 'failed'}`}>
                 {bestAttempt.score}%
               </span>
             </div>
@@ -109,7 +110,7 @@ export function ExamPage({ subject, exam }: ExamPageProps) {
           <h2>Previous Attempts</h2>
           <div class="attempts-list">
             {attempts.slice(-5).reverse().map((attempt, index) => (
-              <div key={attempt.attemptId} class={`attempt-card ${attempt.score >= 70 ? 'passed' : 'failed'}`}>
+              <div key={attempt.attemptId} class={`attempt-card ${attempt.score >= QUIZ_PASSING_SCORE ? 'passed' : 'failed'}`}>
                 <div class="attempt-info">
                   <span class="attempt-number">Attempt {attempts.length - index}</span>
                   <span class="attempt-date">{formatDate(attempt.timestamp)}</span>

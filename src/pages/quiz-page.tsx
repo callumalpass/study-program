@@ -2,6 +2,7 @@
 import { h } from 'preact';
 import { useState, useCallback } from 'preact/hooks';
 import type { Subject, Quiz, QuizAttempt, Exercise, Exam, Project } from '@/core/types';
+import { QUIZ_PASSING_SCORE } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { navigateToSubject } from '@/core/router';
 import { Icons } from '@/components/icons';
@@ -62,7 +63,7 @@ function QuizPageContent({ subject, quiz }: QuizPageContentProps) {
           {bestAttempt && (
             <div class="best-score">
               <span class="label">Best Score:</span>
-              <span class={`score ${bestAttempt.score >= 70 ? 'passed' : 'failed'}`}>
+              <span class={`score ${bestAttempt.score >= QUIZ_PASSING_SCORE ? 'passed' : 'failed'}`}>
                 {bestAttempt.score}%
               </span>
             </div>
@@ -89,7 +90,7 @@ function QuizPageContent({ subject, quiz }: QuizPageContentProps) {
             {attempts.slice(-5).reverse().map((attempt, index) => (
               <div
                 key={attempt.timestamp}
-                class={`attempt-card ${attempt.score >= 70 ? 'passed' : 'failed'}`}
+                class={`attempt-card ${attempt.score >= QUIZ_PASSING_SCORE ? 'passed' : 'failed'}`}
               >
                 <div class="attempt-info">
                   <span class="attempt-number">Attempt {attempts.length - index}</span>

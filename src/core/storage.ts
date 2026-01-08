@@ -12,6 +12,7 @@ import type {
   SubtopicView,
   ReviewItem,
 } from './types';
+import { QUIZ_PASSING_SCORE } from './types';
 import { githubService } from '../services/github';
 
 const STORAGE_KEY = 'study_program_progress';
@@ -358,8 +359,8 @@ export class ProgressStorage {
 
     subjectProgress.quizAttempts[quizId].push(attempt);
 
-    // Auto-add to review queue if score < 85%
-    if (attempt.score < 85) {
+    // Auto-add to review queue if score below passing threshold
+    if (attempt.score < QUIZ_PASSING_SCORE) {
       this.addToReviewQueue({
         itemType: 'quiz',
         itemId: quizId,

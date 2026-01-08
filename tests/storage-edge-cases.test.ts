@@ -27,12 +27,12 @@ afterEach(() => {
 
 describe('Storage boundary conditions', () => {
   describe('Quiz scores at boundaries', () => {
-    it('adds quiz to review queue when score is exactly 84', () => {
+    it('adds quiz to review queue when score is exactly 69 (below passing threshold)', () => {
       const storage = makeStorage();
       storage.addQuizAttempt('cs101', 'quiz-1', {
         attemptId: 'attempt-1',
         timestamp: now.toISOString(),
-        score: 84,
+        score: 69, // Just below QUIZ_PASSING_SCORE (70)
         answers: {},
         timeSpentSeconds: 60,
       });
@@ -41,12 +41,12 @@ describe('Storage boundary conditions', () => {
       expect(queue.some(item => item.itemId === 'quiz-1')).toBe(true);
     });
 
-    it('does not add quiz to review queue when score is exactly 85', () => {
+    it('does not add quiz to review queue when score is exactly at passing threshold (70)', () => {
       const storage = makeStorage();
       storage.addQuizAttempt('cs101', 'quiz-1', {
         attemptId: 'attempt-1',
         timestamp: now.toISOString(),
-        score: 85,
+        score: 70, // At QUIZ_PASSING_SCORE
         answers: {},
         timeSpentSeconds: 60,
       });

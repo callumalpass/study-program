@@ -274,14 +274,14 @@ describe('ProgressStorage quiz attempts', () => {
     expect(storage.getQuizAttempts('cs101', 'quiz1')).toEqual([]);
   });
 
-  it('adds quiz to review queue when score is below 85%', () => {
+  it('adds quiz to review queue when score is below passing threshold (70%)', () => {
     const storage = makeStorage();
 
     storage.addQuizAttempt('cs101', 'quiz1', {
       attemptId: 'a1',
       timestamp: now.toISOString(),
       answers: {},
-      score: 75,
+      score: 65, // Below QUIZ_PASSING_SCORE (70)
       timeSpentSeconds: 100,
     });
 
@@ -292,14 +292,14 @@ describe('ProgressStorage quiz attempts', () => {
     expect(reviewQueue[0].subjectId).toBe('cs101');
   });
 
-  it('does not add quiz to review queue when score is 85% or higher', () => {
+  it('does not add quiz to review queue when score is at or above passing threshold (70%)', () => {
     const storage = makeStorage();
 
     storage.addQuizAttempt('cs101', 'quiz1', {
       attemptId: 'a1',
       timestamp: now.toISOString(),
       answers: {},
-      score: 85,
+      score: 70, // At QUIZ_PASSING_SCORE
       timeSpentSeconds: 100,
     });
 

@@ -11,6 +11,7 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ProgressStorage } from '../src/core/storage';
+import { QUIZ_PASSING_SCORE } from '../src/core/types';
 
 const now = new Date('2024-06-15T12:00:00.000Z');
 
@@ -387,14 +388,14 @@ describe('ProgressStorage Review Queue - Due Item Retrieval', () => {
 
 describe('ProgressStorage Review Queue - Integration with Quiz/Exercise Attempts', () => {
   describe('automatic review queue updates on quiz attempt', () => {
-    it('adds quiz to review queue when score < 85', () => {
+    it('adds quiz to review queue when score below passing threshold (70%)', () => {
       const storage = makeStorage();
 
       storage.addQuizAttempt('cs101', 'quiz-1', {
         attemptId: 'attempt-1',
         timestamp: now.toISOString(),
         answers: {},
-        score: 70,
+        score: 65, // Below QUIZ_PASSING_SCORE (70)
         timeSpentSeconds: 60,
       });
 
@@ -407,21 +408,21 @@ describe('ProgressStorage Review Queue - Integration with Quiz/Exercise Attempts
       });
     });
 
-    it('does not add quiz to review queue when score >= 85', () => {
+    it('does not add quiz to review queue when score at or above passing threshold (70%)', () => {
       const storage = makeStorage();
 
       storage.addQuizAttempt('cs101', 'quiz-1', {
         attemptId: 'attempt-1',
         timestamp: now.toISOString(),
         answers: {},
-        score: 85,
+        score: 70, // At QUIZ_PASSING_SCORE
         timeSpentSeconds: 60,
       });
 
       expect(storage.getReviewQueue()).toHaveLength(0);
     });
 
-    it('updates existing review item when score >= 85', () => {
+    it('updates existing review item when score at or above passing threshold (70%)', () => {
       const storage = makeStorage();
 
       // First attempt fails
@@ -521,7 +522,7 @@ describe('ProgressStorage Review Queue - Edge Cases', () => {
       attemptId: 'attempt-1',
       timestamp: now.toISOString(),
       answers: {},
-      score: 70, // Below 85, adds to review queue
+      score: 65, // Below passing threshold (70), adds to review queue
       timeSpentSeconds: 60,
     });
 
@@ -548,5 +549,39 @@ describe('ProgressStorage Review Queue - Edge Cases', () => {
 
     expect(storage.getReviewQueue()).toHaveLength(100);
     expect(storage.getDueReviewCount()).toBe(100);
+  });
+});
+
+describe('ProgressStorage Review Queue - Threshold Consistency', () => {
+  it('uses QUIZ_PASSING_SCORE constant for review queue threshold', () => {
+    const storage = makeStorage();
+
+    // Score exactly at passing threshold should NOT be added to queue
+    storage.addQuizAttempt('cs101', 'quiz-at-threshold', {
+      attemptId: 'attempt-1',
+      timestamp: now.toISOString(),
+      answers: {},
+      score: QUIZ_PASSING_SCORE, // Exactly at threshold
+      timeSpentSeconds: 60,
+    });
+
+    expect(storage.getReviewQueue().some(item => item.itemId === 'quiz-at-threshold')).toBe(false);
+
+    // Score one below passing threshold SHOULD be added to queue
+    storage.addQuizAttempt('cs101', 'quiz-below-threshold', {
+      attemptId: 'attempt-2',
+      timestamp: now.toISOString(),
+      answers: {},
+      score: QUIZ_PASSING_SCORE - 1, // Just below threshold
+      timeSpentSeconds: 60,
+    });
+
+    expect(storage.getReviewQueue().some(item => item.itemId === 'quiz-below-threshold')).toBe(true);
+  });
+
+  it('ensures passing score threshold is consistent across the app', () => {
+    // This test documents that QUIZ_PASSING_SCORE is the single source of truth
+    // for determining pass/fail status throughout the application
+    expect(QUIZ_PASSING_SCORE).toBe(70);
   });
 });

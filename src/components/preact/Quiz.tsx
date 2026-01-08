@@ -1,6 +1,7 @@
 import { h, Fragment } from 'preact';
 import { useState, useEffect, useCallback, useRef } from 'preact/hooks';
 import type { Quiz as QuizType, Exam, QuizAttempt, QuizAnswer } from '@/core/types';
+import { QUIZ_PASSING_SCORE } from '@/core/types';
 import { Icons } from '@/components/icons';
 import { Question } from './Question';
 import { checkAnswer, calculateScore } from '@/utils/quiz-utils';
@@ -126,13 +127,13 @@ export function Quiz({ quiz, onComplete, durationMinutes, isExam = false }: Quiz
             {timedOut ? "Time's Up!" : isExam ? 'Exam Complete!' : 'Quiz Complete!'}
           </div>
           <div class="summary-score">
-            <div class={`score-circle ${score >= 70 ? 'pass' : 'fail'}`}>
+            <div class={`score-circle ${score >= QUIZ_PASSING_SCORE ? 'pass' : 'fail'}`}>
               <span class="score-value">{score}%</span>
             </div>
             <div class="score-details">
               <div>{correctCount} out of {quiz.questions.length} correct</div>
               <div class="score-label">
-                {score >= 70 ? 'Passed' : 'Keep practicing'}
+                {score >= QUIZ_PASSING_SCORE ? 'Passed' : 'Keep practicing'}
               </div>
             </div>
           </div>
