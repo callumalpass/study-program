@@ -36,7 +36,7 @@ const topicConfigs = [
   },
   {
     number: 4,
-    title: "Cosets and Lagrange\\",
+    title: "Cosets and Lagrange's Theorem",
     quizIds: ['math304-quiz-4-1', 'math304-quiz-4-2', 'math304-quiz-4-3'],
     exerciseIds: ['math304-t4-ex01', 'math304-t4-ex02', 'math304-t4-ex03', 'math304-t4-ex04', 'math304-t4-ex05', 'math304-t4-ex06', 'math304-t4-ex07', 'math304-t4-ex08', 'math304-t4-ex09', 'math304-t4-ex10', 'math304-t4-ex11', 'math304-t4-ex12', 'math304-t4-ex13', 'math304-t4-ex14', 'math304-t4-ex15', 'math304-t4-ex16'],
   },
