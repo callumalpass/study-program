@@ -228,10 +228,10 @@ describe('checkAnswer edge cases', () => {
       expect(checkAnswer(question, 'o(n²)')).toBe(true); // case-insensitive
     });
 
-    it('rejects non-string answers for fill_blank', () => {
+    it('accepts numeric answers for fill_blank when value matches', () => {
       const question = createFillBlankQuestion('q1', '42');
-      // When answer is not a string, it gets converted to empty string
-      expect(checkAnswer(question, 42 as unknown as string)).toBe(false);
+      // Numeric answers are normalized to strings for comparison (more robust)
+      expect(checkAnswer(question, 42 as unknown as string)).toBe(true);
     });
   });
 

@@ -28,10 +28,10 @@ describe('checkAnswer with numeric correctAnswer values', () => {
       expect(checkAnswer(codeOutputQuestion, '  5  ')).toBe(true);
     });
 
-    it('rejects numeric answer type (UI always sends strings)', () => {
-      // This should not happen in practice since UI sends strings,
-      // but testing the edge case
-      expect(checkAnswer(codeOutputQuestion, 5)).toBe(false);
+    it('accepts numeric answer type when it matches', () => {
+      // Although UI typically sends strings, numeric answers should be
+      // accepted when they match the expected value (more robust)
+      expect(checkAnswer(codeOutputQuestion, 5)).toBe(true);
     });
 
     it('rejects boolean answer type', () => {
@@ -81,9 +81,10 @@ describe('checkAnswer with numeric correctAnswer values', () => {
       expect(checkAnswer(boolOutputQuestion, 'TRUE')).toBe(true);
     });
 
-    it('rejects boolean type (should be string)', () => {
-      // The answer should be a string 'True', not boolean true
-      expect(checkAnswer(boolOutputQuestion, true)).toBe(false);
+    it('accepts boolean type when normalized value matches', () => {
+      // Boolean true normalizes to "true" which matches "True" (case-insensitive)
+      // This is more robust - accepting semantically correct answers
+      expect(checkAnswer(boolOutputQuestion, true)).toBe(true);
     });
   });
 

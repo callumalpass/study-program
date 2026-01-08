@@ -63,8 +63,10 @@ export function checkAnswer(question: QuizQuestion, answer: QuizAnswer | undefin
     case 'fill_blank':
     case 'code_output':
     case 'written': {
-      const textAnswer = typeof answer === 'string' ? answer : '';
-      return normalizeAnswer(textAnswer) === normalizeAnswer(question.correctAnswer);
+      // Use normalizeAnswer on both sides - it handles string, number, boolean, and undefined
+      // This ensures numeric answers (e.g., 5) match numeric correctAnswers (e.g., "5")
+      const normalizedAnswer = isCodingAnswer(answer) ? '' : normalizeAnswer(answer as string | number | boolean | undefined);
+      return normalizedAnswer === normalizeAnswer(question.correctAnswer);
     }
     case 'coding':
       return isCodingAnswer(answer) && answer.passed === true;
