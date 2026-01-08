@@ -143,7 +143,7 @@
     "title": "Gray Code to Binary",
     "difficulty": 3,
     "description": "Write a function that converts an n-bit Gray code string to its binary representation.",
-    "starterCode": "# Convert Gray code to binary\ndef gray_to_binary(gray_str):\n    # Your code here\n    pass\n\nprint(gray_to_binary(\"1101\"))  # -> 1011",
+    "starterCode": "# Convert Gray code to binary\ndef gray_to_binary(gray_str):\n    # Your code here\n    pass\n\nprint(gray_to_binary(\"1101\"))  # -> 1001",
     "solution": "def gray_to_binary(gray_str):\n    # First bit is the same\n    binary = gray_str[0]\n    for i in range(1, len(gray_str)):\n        # XOR previous binary bit with current gray bit\n        prev_bit = int(binary[-1])\n        gbit = int(gray_str[i])\n        bbit = prev_bit ^ gbit\n        binary += str(bbit)\n    return binary\n\nprint(gray_to_binary(\"1101\"))",
     "testCases": [],
     "hints": [
