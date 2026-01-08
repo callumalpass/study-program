@@ -14,42 +14,53 @@ const content = import.meta.glob('./content/**/*.md', {
   import: 'default',
 }) as Record<string, string>;
 
+// Helper to generate exercise IDs for a topic
+const exerciseIds = (topic: number) =>
+  Array.from({ length: 16 }, (_, i) => `cs406-t${topic}-ex${String(i + 1).padStart(2, '0')}`);
+
 // Topic configuration (titles and IDs for quizzes/exercises)
 const topicConfigs = [
   {
     number: 1,
     title: 'AI Fundamentals',
     quizIds: ['cs406-quiz-1-1', 'cs406-quiz-1-2', 'cs406-quiz-1-3'],
+    exerciseIds: exerciseIds(1),
   },
   {
     number: 2,
     title: 'Search Algorithms',
     quizIds: ['cs406-quiz-2-1', 'cs406-quiz-2-2', 'cs406-quiz-2-3'],
+    exerciseIds: exerciseIds(2),
   },
   {
     number: 3,
     title: 'Adversarial Search',
     quizIds: ['cs406-quiz-3-1', 'cs406-quiz-3-2', 'cs406-quiz-3-3'],
+    exerciseIds: exerciseIds(3),
   },
   {
     number: 4,
     title: 'Constraint Satisfaction Problems',
     quizIds: ['cs406-quiz-4-1', 'cs406-quiz-4-2', 'cs406-quiz-4-3'],
+    exerciseIds: exerciseIds(4),
   },
   {
     number: 5,
     title: 'Planning',
     quizIds: ['cs406-quiz-5-1', 'cs406-quiz-5-2', 'cs406-quiz-5-3'],
+    exerciseIds: exerciseIds(5),
   },
   {
     number: 6,
     title: 'Knowledge Representation',
     quizIds: ['cs406-quiz-6-1', 'cs406-quiz-6-2', 'cs406-quiz-6-3'],
+    exerciseIds: exerciseIds(6),
   },
   {
     number: 7,
     title: 'Probabilistic Reasoning',
     quizIds: ['cs406-quiz-7-1', 'cs406-quiz-7-2', 'cs406-quiz-7-3'],
+    exerciseIds: exerciseIds(7),
   },
 ];
 
