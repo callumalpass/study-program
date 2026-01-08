@@ -27,18 +27,21 @@ const ALL_SUBJECT_IDS = [
 ];
 
 /**
- * Calculate the next review interval based on streak and pass/fail
- * Simple three-tier system: 1 day -> 3 days -> 7 days -> 14 days -> 30 days
+ * Calculate the next review interval based on streak and pass/fail.
+ * Uses a spaced repetition system: 1 day -> 3 days -> 7 days -> 14 days -> 30 days
+ *
+ * Note: The streak is incremented BEFORE this function is called when passed=true.
+ * So streak=1 means the item was just passed for the first time.
  */
 function calculateNextInterval(streak: number, passed: boolean): number {
   if (!passed) return 1;  // Failed: review tomorrow
 
   switch (streak) {
-    case 0: return 1;     // First time: 1 day
-    case 1: return 3;     // Second correct: 3 days
-    case 2: return 7;     // Third correct: 1 week
-    case 3: return 14;    // Fourth correct: 2 weeks
-    default: return 30;   // Mastered: monthly
+    case 0: return 1;     // Not yet passed (shouldn't happen with current logic)
+    case 1: return 3;     // First pass: review in 3 days
+    case 2: return 7;     // Second pass: review in 1 week
+    case 3: return 14;    // Third pass: review in 2 weeks
+    default: return 30;   // Fourth+ pass (mastered): review monthly
   }
 }
 const SYNC_DEBOUNCE_MS = 5000; // Sync at most every 5 seconds
