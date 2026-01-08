@@ -107,9 +107,9 @@ function createQuizAttempt(score: number): QuizAttempt {
 
 function createExerciseCompletion(passed: boolean): ExerciseCompletion {
   return {
+    completionId: `completion-${Math.random().toString(36).slice(2)}`,
     timestamp: new Date().toISOString(),
     code: 'def solution(): pass',
-    language: 'python',
     passed,
     type: 'coding',
     passedTestCases: passed ? 5 : 2,
@@ -120,9 +120,10 @@ function createExerciseCompletion(passed: boolean): ExerciseCompletion {
 
 function createProjectSubmission(): ProjectSubmission {
   return {
-    submissionId: `submission-${Math.random()}`,
+    submissionId: `submission-${Math.random().toString(36).slice(2)}`,
     timestamp: new Date().toISOString(),
-    files: {},
+    description: 'Test project submission',
+    selfAssessment: {},
     notes: 'Test submission',
   };
 }
