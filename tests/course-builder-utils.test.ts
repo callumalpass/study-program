@@ -359,16 +359,17 @@ describe('course-builder-utils', () => {
         expect(result.every(s => s.category === 'math')).toBe(true);
       });
 
-      it('handles whitespace in search', () => {
+      it('handles whitespace in search by trimming', () => {
         const filters: CourseBuilderFilters = {
           category: 'all',
           year: null,
           search: '  programming  ',
         };
-        // Note: current implementation doesn't trim, so this tests actual behavior
+        // Search should trim whitespace and find matches
         const result = filterSubjects(testCurriculum, filters);
-        // With leading/trailing spaces, it won't match "programming" in title
-        expect(result).toEqual([]);
+        // Should match "Introduction to Programming"
+        expect(result).toHaveLength(1);
+        expect(result[0].id).toBe('cs101');
       });
     });
 

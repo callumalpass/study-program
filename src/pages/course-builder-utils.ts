@@ -51,8 +51,8 @@ export function filterSubjects(subjects: Subject[], filters: CourseBuilderFilter
     }
 
     // Search filter
-    if (filters.search) {
-      const searchLower = filters.search.toLowerCase();
+    if (filters.search.trim()) {
+      const searchLower = filters.search.trim().toLowerCase();
       const matchesCode = subject.code.toLowerCase().includes(searchLower);
       const matchesTitle = subject.title.toLowerCase().includes(searchLower);
       const matchesDesc = subject.description.toLowerCase().includes(searchLower);
