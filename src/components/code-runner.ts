@@ -420,7 +420,7 @@ export async function runCTests(
   const results: TestResult[] = [];
 
   // Extract function name from the code (for function-based tests)
-  const funcMatch = code.match(/^\s*(?:int|void|float|double|char)\s+(\w+)\s*\(/m);
+  const funcMatch = code.match(/^\s*(?:int|void|float|double|char|long|short)\s+(\w+)\s*\(/m);
   const funcName = funcMatch ? funcMatch[1] : null;
 
   // Check if this is a main-based program or function-based
@@ -480,16 +480,17 @@ export async function runCTests(
  */
 function getPrintfFormatSpecifier(cType: string): string {
   switch (cType) {
+    case 'float':
+    case 'double':
+      return '%f';
+    case 'char':
+      return '%c';
     case 'int':
     case 'long':
     case 'short':
-      return '%d';
-    case 'char':
-      return '%c';
-    case 'float':
-    case 'double':
     default:
-      return '%f';
+      // Default to %d for integer types (including unsigned int, etc.)
+      return '%d';
   }
 }
 

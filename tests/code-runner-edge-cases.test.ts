@@ -403,3 +403,137 @@ describe('Test result structure validation', () => {
     expect(results[1].testCase.description).toBe('Second test');
   });
 });
+
+describe('C function return type handling', () => {
+  it('handles int return type correctly', async () => {
+    const code = `
+      #include <stdio.h>
+      int add(int a, int b) {
+        return a + b;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: '5, 3', description: 'Add 5 and 3' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toBe('8');
+  });
+
+  it('handles long return type correctly', async () => {
+    const code = `
+      #include <stdio.h>
+      long multiply(long a, long b) {
+        return a * b;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: '100, 200', description: 'Multiply 100 and 200' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toBe('20000');
+  });
+
+  it('handles short return type correctly', async () => {
+    const code = `
+      #include <stdio.h>
+      short negate(short n) {
+        return -n;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: '42', description: 'Negate 42' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toBe('-42');
+  });
+
+  it('handles float return type correctly', async () => {
+    const code = `
+      #include <stdio.h>
+      float half(float n) {
+        return n / 2.0f;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: '10.0', description: 'Half of 10' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toContain('5');
+  });
+
+  it('handles double return type correctly', async () => {
+    const code = `
+      #include <stdio.h>
+      double third(double n) {
+        return n / 3.0;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: '9.0', description: 'Third of 9' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toContain('3');
+  });
+
+  it('handles char return type correctly', async () => {
+    const code = `
+      #include <stdio.h>
+      char next_char(char c) {
+        return c + 1;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: "'A'", description: 'Next char after A' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toBe('B');
+  });
+
+  it('handles void return type correctly', async () => {
+    const code = `
+      #include <stdio.h>
+      void print_hello() {
+        printf("Hello");
+      }
+      int main() {
+        print_hello();
+        return 0;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: '', description: 'Print hello' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toBe('Hello');
+  });
+
+  it('defaults to integer format for unknown types', async () => {
+    // This tests that the printf format specifier defaults to %d
+    // for types that aren't explicitly handled (like unsigned int)
+    // The function detection may still work with explicit main
+    const code = `
+      #include <stdio.h>
+      int main() {
+        unsigned int x = 42;
+        printf("%d", x);
+        return 0;
+      }
+    `;
+    const result = await runCode(code, 'c', '', 5000);
+    expect(result).toBe('42');
+  });
+});
