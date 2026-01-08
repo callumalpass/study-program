@@ -52,8 +52,9 @@ export function parseFrontmatter(markdown: string): ParsedMarkdown {
         value = value.slice(1, -1);
       }
 
-      // Parse numbers
-      if (/^\d+$/.test(value)) {
+      // Parse numbers (only if no leading zeros, except for "0" itself)
+      // Leading zeros indicate the value should remain a string (e.g., zip codes, IDs)
+      if (/^(0|[1-9]\d*)$/.test(value)) {
         frontmatter[key] = parseInt(value, 10);
       } else {
         frontmatter[key] = value;

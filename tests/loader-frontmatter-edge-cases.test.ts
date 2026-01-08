@@ -166,16 +166,56 @@ Content`;
       expect(result.frontmatter.pi).toBe('3.14159');
     });
 
-    it('does not parse numbers with leading zeros as numbers', () => {
+    it('preserves numbers with leading zeros as strings', () => {
       const markdown = `---
 zipcode: 01234
 ---
 Content`;
 
       const result = parseFrontmatter(markdown);
-      // Should still parse as number since /^\d+$/ matches
-      expect(result.frontmatter.zipcode).toBe(1234);
-      expect(typeof result.frontmatter.zipcode).toBe('number');
+      // Leading zeros indicate the value should remain a string (e.g., zip codes, IDs)
+      expect(result.frontmatter.zipcode).toBe('01234');
+      expect(typeof result.frontmatter.zipcode).toBe('string');
+    });
+
+    it('preserves single leading zero as string (octal-like)', () => {
+      const markdown = `---
+code: 00123
+extension: 007
+binary: 00001111
+---
+Content`;
+
+      const result = parseFrontmatter(markdown);
+      // All leading zero values should be preserved as strings
+      expect(result.frontmatter.code).toBe('00123');
+      expect(typeof result.frontmatter.code).toBe('string');
+      expect(result.frontmatter.extension).toBe('007');
+      expect(typeof result.frontmatter.extension).toBe('string');
+      expect(result.frontmatter.binary).toBe('00001111');
+      expect(typeof result.frontmatter.binary).toBe('string');
+    });
+
+    it('parses zero itself as a number', () => {
+      const markdown = `---
+count: 0
+---
+Content`;
+
+      const result = parseFrontmatter(markdown);
+      expect(result.frontmatter.count).toBe(0);
+      expect(typeof result.frontmatter.count).toBe('number');
+    });
+
+    it('parses large integers correctly', () => {
+      const markdown = `---
+bignum: 1234567890
+---
+Content`;
+
+      const result = parseFrontmatter(markdown);
+      expect(result.frontmatter.bignum).toBe(1234567890);
+      expect(typeof result.frontmatter.bignum).toBe('number');
     });
 
     it('does not parse numeric strings in quotes as numbers', () => {
