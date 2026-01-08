@@ -153,6 +153,72 @@ describe('CS302 Computer Networks Exam Content Validation', () => {
     });
   });
 
+  describe('Subnet Calculation Questions', () => {
+    let exams: Exam[];
+
+    beforeAll(() => {
+      const content = readFileSync(examPath, 'utf-8');
+      exams = JSON.parse(content);
+    });
+
+    it('final-q16: 10.5.5.5 and 10.5.6.5 are NOT in the same /23 subnet', () => {
+      const final = exams.find(e => e.id === 'cs302-exam-final');
+      expect(final).toBeDefined();
+
+      const question = final!.questions.find(q => q.id === 'final-q16');
+      expect(question).toBeDefined();
+      expect(question!.type).toBe('code_output');
+
+      // Verify the answer is "no" - they are in different /23 subnets
+      // 10.5.5.5 is in 10.5.4.0/23 (covers 10.5.4.x and 10.5.5.x)
+      // 10.5.6.5 is in 10.5.6.0/23 (covers 10.5.6.x and 10.5.7.x)
+      expect(question!.correctAnswer).toBe('no');
+    });
+
+    it('validates /23 subnet calculation logic', () => {
+      // A /23 subnet has a mask of 255.255.254.0
+      // This means the third octet's least significant bit is part of the host portion
+      // /23 subnets are aligned to even numbers in the third octet
+
+      // Helper function to calculate /23 network address
+      const getSlash23Network = (thirdOctet: number): number => {
+        // Mask 254 (11111110) clears the least significant bit
+        return thirdOctet & 254;
+      };
+
+      // 10.5.5.5: Third octet 5 & 254 = 4, so network is 10.5.4.0/23
+      expect(getSlash23Network(5)).toBe(4);
+
+      // 10.5.6.5: Third octet 6 & 254 = 6, so network is 10.5.6.0/23
+      expect(getSlash23Network(6)).toBe(6);
+
+      // These are different networks, confirming the answer should be "no"
+      expect(getSlash23Network(5)).not.toBe(getSlash23Network(6));
+    });
+
+    it('verifies /23 subnet boundaries', () => {
+      // /23 subnets span two consecutive Class C networks
+      const getSlash23Network = (thirdOctet: number): number => thirdOctet & 254;
+
+      // Verify subnet boundaries
+      // 10.5.0.0/23 covers .0.x and .1.x
+      expect(getSlash23Network(0)).toBe(0);
+      expect(getSlash23Network(1)).toBe(0);
+
+      // 10.5.2.0/23 covers .2.x and .3.x
+      expect(getSlash23Network(2)).toBe(2);
+      expect(getSlash23Network(3)).toBe(2);
+
+      // 10.5.4.0/23 covers .4.x and .5.x
+      expect(getSlash23Network(4)).toBe(4);
+      expect(getSlash23Network(5)).toBe(4);
+
+      // 10.5.6.0/23 covers .6.x and .7.x
+      expect(getSlash23Network(6)).toBe(6);
+      expect(getSlash23Network(7)).toBe(6);
+    });
+  });
+
   describe('Exam Structure Validation', () => {
     let exams: Exam[];
 

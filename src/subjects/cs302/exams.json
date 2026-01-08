@@ -426,8 +426,8 @@
         "type": "code_output",
         "prompt": "Are 10.5.5.5 and 10.5.6.5 in the same /23 subnet?",
         "codeSnippet": "# IP1: 10.5.5.5\n# IP2: 10.5.6.5\n# Mask /23 = 255.255.254.0\n# Check if network portions match",
-        "correctAnswer": "yes",
-        "explanation": "/23 includes both 10.5.4.0 and 10.5.5.0 networks. Both IPs are in 10.5.4.0/23."
+        "correctAnswer": "no",
+        "explanation": "10.5.5.5 is in 10.5.4.0/23 (covers .4.x and .5.x). 10.5.6.5 is in 10.5.6.0/23 (covers .6.x and .7.x). Different subnets."
       },
       {
         "id": "final-q17",
