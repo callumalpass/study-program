@@ -7,6 +7,7 @@ import type {
   ExamAttempt,
   ExerciseCompletion,
   SubjectScheduleOverride,
+  ProjectSubmission,
 } from '../src/core/types';
 import {
   topologicalSort,
@@ -63,6 +64,23 @@ const makeExerciseCompletion = (passed: boolean): ExerciseCompletion => ({
   code: 'print("hi")',
   passed,
   timeSpentSeconds: 30,
+});
+
+const makeProjectSubmission = (score?: number): ProjectSubmission => ({
+  submissionId: `sub-${score ?? 'na'}`,
+  timestamp: now,
+  description: 'submission',
+  selfAssessment: {},
+  notes: '',
+  aiEvaluation: score === undefined
+    ? undefined
+    : {
+        score,
+        feedback: 'ok',
+        rubricScores: {},
+        strengths: [],
+        improvements: [],
+      },
 });
 
 const makeProgress = (overrides?: Partial<SubjectProgress>): SubjectProgress => ({
@@ -775,5 +793,62 @@ describe('edge cases and integration', () => {
     expect(schedule.get('a')!.hasOverride).toBe(false);
     expect(schedule.get('b')!.hasOverride).toBe(true);
     expect(schedule.get('b')!.startDate).toEqual(new Date('2024-06-01'));
+  });
+
+  it('includes project submissions in completion percentage calculation', () => {
+    // This test verifies that timeline uses the same completion calculation as progress.ts
+    // which includes project submissions (bug fix: previously timeline had its own
+    // implementation that didn't include projects)
+    const subjects = [makeSubject({
+      id: 'cs101',
+      topics: [
+        { id: 't1', title: 'T1', content: '', quizIds: ['q1'], exerciseIds: [] },
+      ],
+      examIds: [],
+      projectIds: ['proj1', 'proj2'],
+    })];
+
+    const userProgress = makeUserProgress({
+      cs101: makeProgress({
+        status: 'in_progress',
+        quizAttempts: { q1: [makeQuizAttempt(80)] }, // passed (>= 70)
+        projectSubmissions: {
+          proj1: [makeProjectSubmission(75)], // passed AI evaluation (>= 70)
+          proj2: [makeProjectSubmission(50)], // failed AI evaluation (< 70)
+        },
+      }),
+    });
+    const startDate = new Date('2024-01-01');
+
+    const schedule = calculateSchedule(subjects, userProgress, startDate, 'standard');
+
+    // 3 total items: quiz (passed), proj1 (passed), proj2 (failed) = 2/3 = 67%
+    expect(schedule.get('cs101')!.completionPercentage).toBe(67);
+  });
+
+  it('counts project submissions without AI evaluation as complete', () => {
+    // Verify that projects without AI evaluation are counted as complete
+    // (consistent with progress.ts behavior)
+    const subjects = [makeSubject({
+      id: 'cs101',
+      topics: [],
+      examIds: [],
+      projectIds: ['proj1'],
+    })];
+
+    const userProgress = makeUserProgress({
+      cs101: makeProgress({
+        status: 'in_progress',
+        projectSubmissions: {
+          proj1: [makeProjectSubmission()], // No AI evaluation
+        },
+      }),
+    });
+    const startDate = new Date('2024-01-01');
+
+    const schedule = calculateSchedule(subjects, userProgress, startDate, 'standard');
+
+    // Project without AI evaluation should count as complete
+    expect(schedule.get('cs101')!.completionPercentage).toBe(100);
   });
 });

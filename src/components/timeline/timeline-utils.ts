@@ -1,5 +1,5 @@
 import type { Subject, UserProgress, StudyPace, SubjectScheduleOverride } from '@/core/types';
-import { QUIZ_PASSING_SCORE } from '@/core/types';
+import { calculateSubjectCompletion } from '@/core/progress';
 
 // Weeks per topic based on pace
 export const PACE_WEEKS_PER_TOPIC: Record<StudyPace, number> = {
@@ -91,53 +91,6 @@ function arePrerequisitesCompleted(
 }
 
 /**
- * Calculate completion percentage for a subject based on quizzes and exercises
- */
-function calculateSubjectCompletion(
-  subject: Subject,
-  userProgress: UserProgress
-): number {
-  const subjectProgress = userProgress.subjects[subject.id];
-  if (!subjectProgress) return 0;
-
-  let completed = 0;
-  let total = 0;
-
-  // Count quizzes
-  for (const topic of subject.topics) {
-    for (const quizId of topic.quizIds) {
-      total++;
-      const attempts = subjectProgress.quizAttempts[quizId];
-      if (attempts && attempts.some(a => a.score >= QUIZ_PASSING_SCORE)) {
-        completed++;
-      }
-    }
-
-    // Count exercises
-    for (const exerciseId of topic.exerciseIds) {
-      total++;
-      const completion = subjectProgress.exerciseCompletions[exerciseId];
-      if (completion?.passed) {
-        completed++;
-      }
-    }
-  }
-
-  // Count exams
-  if (subject.examIds) {
-    for (const examId of subject.examIds) {
-      total++;
-      const attempts = subjectProgress.examAttempts[examId];
-      if (attempts && attempts.some(a => a.score >= QUIZ_PASSING_SCORE)) {
-        completed++;
-      }
-    }
-  }
-
-  return total > 0 ? Math.round((completed / total) * 100) : 0;
-}
-
-/**
  * Determine the status of a subject based on progress and prerequisites
  */
 function determineSubjectStatus(
@@ -215,7 +168,8 @@ export function calculateSchedule(
 
     // Determine status and completion
     const status = determineSubjectStatus(subject, userProgress);
-    const completionPercentage = calculateSubjectCompletion(subject, userProgress);
+    const subjectProgress = userProgress.subjects[subject.id];
+    const completionPercentage = calculateSubjectCompletion(subject, subjectProgress);
 
     // Simple row allocation: count overlapping subjects
     const row = Array.from(schedule.values()).filter(
