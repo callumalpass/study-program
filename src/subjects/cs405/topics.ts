@@ -54,7 +54,7 @@ const topicConfigs = [
     title: 'Kubernetes',
     quizIds: ['cs405-quiz-4', 'cs405-quiz-4b', 'cs405-quiz-4c'],
     exerciseIds: [
-      'cs405-ex-4-1', 'cs405-t4-ex02', 'cs405-t4-ex03', 'cs405-t4-ex04',
+      'cs405-t4-ex01', 'cs405-t4-ex02', 'cs405-t4-ex03', 'cs405-t4-ex04',
       'cs405-t4-ex05', 'cs405-t4-ex06', 'cs405-t4-ex07', 'cs405-t4-ex08',
       'cs405-t4-ex09', 'cs405-t4-ex10', 'cs405-t4-ex11', 'cs405-t4-ex12',
       'cs405-t4-ex13', 'cs405-t4-ex14', 'cs405-t4-ex15', 'cs405-t4-ex16',
