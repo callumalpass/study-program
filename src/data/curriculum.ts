@@ -120,7 +120,7 @@ export const curriculum: Subject[] = [
     estimatedHours: 90,
     topics: cs102Topics,
     examIds: ['cs102-midterm', 'cs102-final'],
-    projectIds: ['cs102-project-1', 'cs102-project-2', 'cs102-project-3', 'cs102-project-4']
+    projectIds: ['cs102-project-3']
   },
 
   {
@@ -539,7 +539,7 @@ export const curriculum: Subject[] = [
     estimatedHours: 120,
     topics: cs304Topics,
     examIds: ['cs304-exam-midterm', 'cs304-exam-final'],
-    projectIds: ['cs304-project-1', 'cs304-project-2', 'cs304-project-3']
+    projectIds: ['cs304-project-1', 'cs304-project-2']
   },
 
   {
@@ -613,7 +613,7 @@ export const curriculum: Subject[] = [
     estimatedHours: 130,
     topics: cs305Topics,
     examIds: ['cs305-exam-midterm', 'cs305-exam-final'],
-    projectIds: ['cs305-project-1', 'cs305-project-2', 'cs305-project-3']
+    projectIds: ['cs305-proj1-portfolio', 'cs305-proj2-todo-app', 'cs305-proj3-weather-dashboard']
   },
 
   {

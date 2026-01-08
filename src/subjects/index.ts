@@ -18,7 +18,7 @@ import { cs102Quizzes, cs102Exercises, cs102Projects, cs102Exams } from './cs102
 
 // Year 1 - Semester 2
 import { cs103Quizzes, cs103Exercises, cs103Projects, cs103Exams } from './cs103';
-import { math102Quizzes, math102Exercises, math102Exams } from './math102';
+import { math102Quizzes, math102Exercises, math102Projects, math102Exams } from './math102';
 import { cs104Quizzes, cs104Exercises, cs104Projects, cs104Exams } from './cs104';
 import { cs105Quizzes, cs105Exercises, cs105Projects, cs105Exams } from './cs105';
 
@@ -201,12 +201,13 @@ export const allExercises: Exercise[] = [
   ...math404Exercises,
 ];
 
-// Aggregate all projects (note: math subjects don't have projects)
+// Aggregate all projects
 export const allProjects: Project[] = [
   // Year 1
   ...cs101Projects,
   ...cs102Projects,
   ...cs103Projects,
+  ...math102Projects,
   ...cs104Projects,
   ...cs105Projects,
   // Year 2
