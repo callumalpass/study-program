@@ -595,3 +595,100 @@ describe('edge cases in code execution', () => {
     expect(result).toBe('120');
   });
 });
+
+describe('C function return type handling', () => {
+  it('handles long return type with correct format specifier', async () => {
+    const code = `
+      #include <stdio.h>
+      long multiply(long a, long b) {
+        return a * b;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: '1000, 1000', description: 'Multiply large numbers' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toBe('1000000');
+  });
+
+  it('handles short return type with correct format specifier', async () => {
+    const code = `
+      #include <stdio.h>
+      short add(short a, short b) {
+        return a + b;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: '10, 20', description: 'Add short values' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toBe('30');
+  });
+
+  it('handles double return type', async () => {
+    const code = `
+      #include <stdio.h>
+      double divide(double a, double b) {
+        return a / b;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: '10.0, 4.0', description: 'Divide doubles' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toContain('2.5');
+  });
+
+  it('handles char return type', async () => {
+    const code = `
+      #include <stdio.h>
+      char getChar(int n) {
+        return 'A' + n;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: '2', description: 'Get char at offset' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toBe('C');
+  });
+
+  it('handles void functions correctly', async () => {
+    const code = `
+      #include <stdio.h>
+      void printHello() {
+        printf("Hello");
+      }
+      int main() {
+        printHello();
+        return 0;
+      }
+    `;
+    const result = await runCode(code, 'c', '', 5000);
+    expect(result).toBe('Hello');
+  });
+
+  it('handles int return type (basic case)', async () => {
+    const code = `
+      #include <stdio.h>
+      int square(int n) {
+        return n * n;
+      }
+    `;
+    const solution = code;
+    const tests = [{ input: '5', description: 'Square of 5' }];
+
+    const results = await runTestsForLanguage(code, tests, solution, 'c', 5000);
+
+    expect(results[0].passed).toBe(true);
+    expect(results[0].actualOutput).toBe('25');
+  });
+});

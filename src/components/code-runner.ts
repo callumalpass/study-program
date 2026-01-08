@@ -420,7 +420,8 @@ export async function runCTests(
   const results: TestResult[] = [];
 
   // Extract function name from the code (for function-based tests)
-  const funcMatch = code.match(/^\s*(?:int|void|float|double|char|long|short)\s+(\w+)\s*\(/m);
+  // Supports compound types like "unsigned int", "long long", "unsigned long", etc.
+  const funcMatch = code.match(/^\s*(?:(?:unsigned|signed|static|const)\s+)*(?:int|void|float|double|char|long|short)(?:\s+(?:long|int))?\s+(\w+)\s*\(/m);
   const funcName = funcMatch ? funcMatch[1] : null;
 
   // Check if this is a main-based program or function-based
@@ -477,21 +478,26 @@ export async function runCTests(
  * Get the printf format specifier for a C type.
  * @param cType - The C type (int, float, char, etc.)
  * @returns The corresponding printf format specifier
+ *
+ * Note: JSCPP (the C interpreter) only supports basic format specifiers (%d, %f, %c, %s).
+ * It does not support %ld, %hd, %lld, etc. All integer types use %d.
  */
 function getPrintfFormatSpecifier(cType: string): string {
-  switch (cType) {
-    case 'float':
-    case 'double':
-      return '%f';
-    case 'char':
-      return '%c';
-    case 'int':
-    case 'long':
-    case 'short':
-    default:
-      // Default to %d for integer types (including unsigned int, etc.)
-      return '%d';
+  // Normalize the type by removing extra whitespace
+  const normalizedType = cType.trim().replace(/\s+/g, ' ');
+
+  // JSCPP only supports basic specifiers - use %f for floating point
+  if (normalizedType.includes('double') || normalizedType.includes('float')) {
+    return '%f';
   }
+  // Use %c for char
+  if (normalizedType.includes('char')) {
+    return '%c';
+  }
+
+  // Default to %d for all integer types (int, long, short, unsigned, etc.)
+  // JSCPP doesn't support %ld, %hd, %lld - it treats all integers the same
+  return '%d';
 }
 
 /**
@@ -504,13 +510,14 @@ function prepareCFunctionTestCode(code: string, funcName: string, input: string)
     return code;
   }
 
-  // Detect return type of the function
-  const funcMatch = code.match(new RegExp(`(int|void|float|double|char|long|short)\\s+${funcName}\\s*\\(`));
+  // Detect return type of the function (supports compound types like "unsigned int", "long long", etc.)
+  const funcMatch = code.match(new RegExp(`((?:(?:unsigned|signed|static|const)\\s+)*(?:int|void|float|double|char|long|short)(?:\\s+(?:long|int))?)\\s+${funcName}\\s*\\(`));
   const returnType = funcMatch ? funcMatch[1] : 'int';
 
   // Build the function call statement based on return type
   const functionCall = `${funcName}(${input})`;
-  const printStatement = returnType === 'void'
+  const isVoid = returnType.includes('void');
+  const printStatement = isVoid
     ? `${functionCall};`
     : `printf("${getPrintfFormatSpecifier(returnType)}", ${functionCall});`;
 
