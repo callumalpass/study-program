@@ -129,6 +129,27 @@ describe('Math304 Abstract Algebra Exam Validation', () => {
   });
 
   describe('Permutation Group Questions', () => {
+    it('validates alternating group membership question has unique correct answer (math304-mid-q23)', () => {
+      const question = allQuestions.find(q => q.id === 'math304-mid-q23');
+
+      expect(question).toBeDefined();
+      expect(question?.prompt).toContain('NOT in A₄');
+
+      // The options should be:
+      // 0: (1 2)(3 4) - product of 2 transpositions = even, IN A₄
+      // 1: (1 2 3) - 3-cycle = 2 transpositions = even, IN A₄
+      // 2: (1 3)(2 4) - product of 2 transpositions = even, IN A₄
+      // 3: (1 2 3 4) - 4-cycle = 3 transpositions = odd, NOT IN A₄
+
+      // Only option 3 (the 4-cycle) is NOT in A₄
+      expect(question?.correctAnswer).toBe(3);
+      expect(question?.options?.[3]).toBe('(1 2 3 4)');
+
+      // Verify all other options ARE in A₄ (even permutations)
+      // This ensures there's only one correct answer
+      expect(question?.explanation).toContain('Only the 4-cycle is odd');
+    });
+
     it('validates order of product of disjoint cycles (math304-mid-q20)', () => {
       const question = allQuestions.find(q => q.id === 'math304-mid-q20');
 
