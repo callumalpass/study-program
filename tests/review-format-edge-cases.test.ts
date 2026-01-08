@@ -11,37 +11,13 @@
 
 import { describe, it, expect } from 'vitest';
 import type { ReviewItem } from '../src/core/types';
+import { formatReviewItemTitle } from '../src/pages/home';
 
-// Re-implementation of patterns and function from home.ts for isolated testing
+// Regex patterns used for pattern-specific tests (kept in sync with home.ts)
 const SUBJECT_CODE_PATTERN = /^([a-z]+\d+)/i;
 const TOPIC_NUMBER_PATTERN = /-t(\d+)-/;
-const QUIZ_NUMBER_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i;
+const QUIZ_LEVEL_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i;
 const EXERCISE_NUMBER_PATTERN = /ex(\d+)/i;
-
-function formatReviewItemTitle(item: ReviewItem): string {
-  const id = item.itemId;
-
-  const subjectMatch = id.match(SUBJECT_CODE_PATTERN);
-  const subjectCode = subjectMatch ? subjectMatch[1].toUpperCase() : '';
-
-  const topicMatch = id.match(TOPIC_NUMBER_PATTERN);
-  const topicNum = topicMatch ? `Topic ${topicMatch[1]}` : '';
-
-  if (item.itemType === 'quiz') {
-    const quizMatch = id.match(QUIZ_NUMBER_PATTERN);
-    let quizLabel = 'Quiz';
-    if (quizMatch) {
-      const quizNumber = quizMatch[1];
-      const quizLevel = (quizMatch[2] || quizMatch[3] || '').toUpperCase();
-      quizLabel = `Quiz ${quizNumber}${quizLevel}`;
-    }
-    return [subjectCode, topicNum, quizLabel].filter(Boolean).join(' ');
-  } else {
-    const exMatch = id.match(EXERCISE_NUMBER_PATTERN);
-    const exNum = exMatch ? `Exercise ${parseInt(exMatch[1], 10)}` : 'Exercise';
-    return [subjectCode, topicNum, exNum].filter(Boolean).join(' ');
-  }
-}
 
 function createReviewItem(overrides: Partial<ReviewItem>): ReviewItem {
   return {
@@ -427,31 +403,31 @@ describe('Review Format Pattern Matching', () => {
     });
   });
 
-  describe('QUIZ_NUMBER_PATTERN behavior', () => {
+  describe('QUIZ_LEVEL_PATTERN behavior', () => {
     it('matches quiz-1', () => {
-      const match = 'cs101-quiz-1'.match(QUIZ_NUMBER_PATTERN);
+      const match = 'cs101-quiz-1'.match(QUIZ_LEVEL_PATTERN);
       expect(match).not.toBeNull();
       expect(match![1]).toBe('1');
       expect(match![2]).toBeUndefined();
     });
 
     it('matches quiz-1a (level attached)', () => {
-      const match = 'cs101-quiz-1a'.match(QUIZ_NUMBER_PATTERN);
+      const match = 'cs101-quiz-1a'.match(QUIZ_LEVEL_PATTERN);
       expect(match).not.toBeNull();
       expect(match![1]).toBe('1');
       expect(match![2]).toBe('a');
     });
 
     it('matches quiz-1-a (level separated)', () => {
-      const match = 'cs101-quiz-1-a'.match(QUIZ_NUMBER_PATTERN);
+      const match = 'cs101-quiz-1-a'.match(QUIZ_LEVEL_PATTERN);
       expect(match).not.toBeNull();
       expect(match![1]).toBe('1');
       expect(match![3]).toBe('a');
     });
 
     it('is case insensitive', () => {
-      const match1 = 'cs101-Quiz-1A'.match(QUIZ_NUMBER_PATTERN);
-      const match2 = 'cs101-QUIZ-1a'.match(QUIZ_NUMBER_PATTERN);
+      const match1 = 'cs101-Quiz-1A'.match(QUIZ_LEVEL_PATTERN);
+      const match2 = 'cs101-QUIZ-1a'.match(QUIZ_LEVEL_PATTERN);
       expect(match1).not.toBeNull();
       expect(match2).not.toBeNull();
     });

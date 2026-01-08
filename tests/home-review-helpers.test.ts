@@ -8,71 +8,19 @@
 
 import { describe, it, expect } from 'vitest';
 import type { ReviewItem } from '../src/core/types';
+import { formatReviewItemTitle } from '../src/pages/home';
 
-// Re-implementation of the regex patterns and functions from home.ts for testing
-const SUBJECT_CODE_PATTERN = /^([a-z]+\d+)/i; // Matches subject code at start (e.g., "cs101", "math201")
-const TOPIC_NUMBER_PATTERN = /-t(\d+)-/; // Matches "-t{number}-" to extract topic number
-// Quiz ID formats:
-// 1. Level letter format: "cs101-quiz-1", "cs101-quiz-1b", "cs102-quiz-2-c"
-// 2. Topic-subquiz format: "cs402-quiz-1-2", "math302-quiz-3-1"
-// 3. Topic prefix format: "cs304-t1-quiz-1", "cs304-t1-quiz-2"
-// 4. Short format: "cs102-q1-1", "cs102-q1-b-1"
-const QUIZ_LEVEL_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i; // Matches "quiz-{number}" with optional level letter
-const QUIZ_SUBQUIZ_PATTERN = /quiz-(\d+)-(\d+)/i; // Matches "quiz-{topic}-{subquiz}" format
-const SHORT_QUIZ_PATTERN = /-q(\d+)(?:-([a-c]))?-(\d+)/i; // Matches short "-q{N}-{M}" or "-q{N}-{level}-{M}" format
-const EXERCISE_NUMBER_PATTERN = /ex(\d+)/i; // Matches "ex{number}" for exercise number (e.g., "ex01")
-
-/**
- * Format a review item ID into a human-readable title
- * (mirrors home.ts implementation)
- */
-function formatReviewItemTitle(item: ReviewItem): string {
-  const id = item.itemId;
-
-  const subjectMatch = id.match(SUBJECT_CODE_PATTERN);
-  const subjectCode = subjectMatch ? subjectMatch[1].toUpperCase() : '';
-
-  const topicMatch = id.match(TOPIC_NUMBER_PATTERN);
-  const topicNum = topicMatch ? `Topic ${topicMatch[1]}` : '';
-
-  if (item.itemType === 'quiz') {
-    // Try short quiz format (e.g., cs102-q1-1, cs102-q1-b-1)
-    const shortMatch = id.match(SHORT_QUIZ_PATTERN);
-    if (shortMatch) {
-      const quizNumber = shortMatch[1];
-      const level = (shortMatch[2] || '').toUpperCase();
-      return [subjectCode, topicNum, `Quiz ${quizNumber}${level}`].filter(Boolean).join(' ');
-    }
-
-    // Try topic-subquiz format (e.g., cs402-quiz-1-2)
-    const subquizMatch = id.match(QUIZ_SUBQUIZ_PATTERN);
-    if (subquizMatch) {
-      const topicNumber = subquizMatch[1];
-      const subquizNumber = subquizMatch[2];
-      return [subjectCode, topicNum, `Quiz ${topicNumber}-${subquizNumber}`].filter(Boolean).join(' ');
-    }
-
-    // Fall back to level letter format (e.g., cs101-quiz-1b)
-    const levelMatch = id.match(QUIZ_LEVEL_PATTERN);
-    let quizLabel = 'Quiz';
-    if (levelMatch) {
-      const quizNumber = levelMatch[1];
-      // Level can be in group 2 (attached: "1b") or group 3 (separated: "1-b")
-      const quizLevel = (levelMatch[2] || levelMatch[3] || '').toUpperCase();
-      quizLabel = `Quiz ${quizNumber}${quizLevel}`;
-    }
-    return [subjectCode, topicNum, quizLabel].filter(Boolean).join(' ');
-  } else {
-    // Format: cs101-t1-ex01 -> CS101 Topic 1 Exercise 1
-    const exMatch = id.match(EXERCISE_NUMBER_PATTERN);
-    const exNum = exMatch ? `Exercise ${parseInt(exMatch[1], 10)}` : 'Exercise';
-    return [subjectCode, topicNum, exNum].filter(Boolean).join(' ');
-  }
-}
+// Regex patterns from home.ts (kept in sync for pattern-specific tests)
+const SUBJECT_CODE_PATTERN = /^([a-z]+\d+)/i;
+const TOPIC_NUMBER_PATTERN = /-t(\d+)-/;
+const QUIZ_LEVEL_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i;
+const QUIZ_SUBQUIZ_PATTERN = /quiz-(\d+)-(\d+)/i;
+const SHORT_QUIZ_PATTERN = /-q(\d+)(?:-([a-c]))?-(\d+)/i;
+const EXERCISE_NUMBER_PATTERN = /ex(\d+)/i;
 
 /**
  * Get the navigation URL for a review item
- * (mirrors home.ts implementation)
+ * (mirrors home.ts implementation - not exported, so duplicated here)
  */
 function getReviewItemUrl(item: ReviewItem): string {
   if (item.itemType === 'quiz') {

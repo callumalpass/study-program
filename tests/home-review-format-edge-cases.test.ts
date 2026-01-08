@@ -7,47 +7,15 @@
 
 import { describe, it, expect } from 'vitest';
 import type { ReviewItem } from '../src/core/types';
+import { formatReviewItemTitle } from '../src/pages/home';
 
-// Regex patterns from home.ts
+// Regex patterns from home.ts (kept in sync for pattern-specific tests)
 const SUBJECT_CODE_PATTERN = /^([a-z]+\d+)/i;
 const TOPIC_NUMBER_PATTERN = /-t(\d+)-/;
 const QUIZ_LEVEL_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i;
 const QUIZ_SUBQUIZ_PATTERN = /quiz-(\d+)-(\d+)/i;
+const SHORT_QUIZ_PATTERN = /-q(\d+)(?:-([a-c]))?-(\d+)/i;
 const EXERCISE_NUMBER_PATTERN = /ex(\d+)/i;
-
-function formatReviewItemTitle(item: ReviewItem): string {
-  const id = item.itemId;
-
-  const subjectMatch = id.match(SUBJECT_CODE_PATTERN);
-  const subjectCode = subjectMatch ? subjectMatch[1].toUpperCase() : '';
-
-  const topicMatch = id.match(TOPIC_NUMBER_PATTERN);
-  const topicNum = topicMatch ? `Topic ${topicMatch[1]}` : '';
-
-  if (item.itemType === 'quiz') {
-    // Try topic-subquiz format first (e.g., cs402-quiz-1-2)
-    const subquizMatch = id.match(QUIZ_SUBQUIZ_PATTERN);
-    if (subquizMatch) {
-      const topicNumber = subquizMatch[1];
-      const subquizNumber = subquizMatch[2];
-      return [subjectCode, topicNum, `Quiz ${topicNumber}-${subquizNumber}`].filter(Boolean).join(' ');
-    }
-
-    // Fall back to level letter format (e.g., cs101-quiz-1b)
-    const levelMatch = id.match(QUIZ_LEVEL_PATTERN);
-    let quizLabel = 'Quiz';
-    if (levelMatch) {
-      const quizNumber = levelMatch[1];
-      const quizLevel = (levelMatch[2] || levelMatch[3] || '').toUpperCase();
-      quizLabel = `Quiz ${quizNumber}${quizLevel}`;
-    }
-    return [subjectCode, topicNum, quizLabel].filter(Boolean).join(' ');
-  } else {
-    const exMatch = id.match(EXERCISE_NUMBER_PATTERN);
-    const exNum = exMatch ? `Exercise ${parseInt(exMatch[1], 10)}` : 'Exercise';
-    return [subjectCode, topicNum, exNum].filter(Boolean).join(' ');
-  }
-}
 
 function createReviewItem(overrides: Partial<ReviewItem>): ReviewItem {
   return {

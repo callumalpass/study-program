@@ -41,7 +41,7 @@ const QUIZ_SUBQUIZ_PATTERN = /quiz-(\d+)-(\d+)/i; // Matches "quiz-{topic}-{subq
 const SHORT_QUIZ_PATTERN = /-q(\d+)(?:-([a-c]))?-(\d+)/i; // Matches short "-q{N}-{M}" or "-q{N}-{level}-{M}" format
 const EXERCISE_NUMBER_PATTERN = /ex(\d+)/i; // Matches "ex{number}" for exercise number (e.g., "ex01")
 
-function formatReviewItemTitle(item: ReviewItem): string {
+export function formatReviewItemTitle(item: ReviewItem): string {
   const id = item.itemId;
 
   const subjectMatch = id.match(SUBJECT_CODE_PATTERN);
