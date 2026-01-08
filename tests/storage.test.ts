@@ -728,3 +728,160 @@ describe('ProgressStorage migration', () => {
     expect(progress.settings.theme).toBe('auto');
   });
 });
+
+describe('ProgressStorage spaced repetition edge cases', () => {
+  it('handles updating a non-existent review item gracefully', () => {
+    const storage = makeStorage();
+
+    // Should not throw when updating item that doesn't exist
+    storage.updateReviewItem('nonexistent', 'quiz', true);
+
+    expect(storage.getReviewQueue()).toHaveLength(0);
+  });
+
+  it('handles removing a non-existent review item gracefully', () => {
+    const storage = makeStorage();
+    storage.addToReviewQueue({ itemType: 'quiz', itemId: 'q1', subjectId: 's1' });
+
+    // Should not throw when removing item that doesn't exist
+    storage.removeFromReviewQueue('nonexistent', 'quiz');
+
+    expect(storage.getReviewQueue()).toHaveLength(1);
+  });
+
+  it('distinguishes between quiz and exercise with same ID', () => {
+    const storage = makeStorage();
+
+    storage.addToReviewQueue({ itemType: 'quiz', itemId: 'item-1', subjectId: 's1' });
+    storage.addToReviewQueue({ itemType: 'exercise', itemId: 'item-1', subjectId: 's1' });
+
+    expect(storage.getReviewQueue()).toHaveLength(2);
+
+    // Update only the quiz
+    storage.updateReviewItem('item-1', 'quiz', true);
+
+    const quiz = storage.getReviewQueue().find(i => i.itemType === 'quiz');
+    const exercise = storage.getReviewQueue().find(i => i.itemType === 'exercise');
+
+    expect(quiz?.streak).toBe(1);
+    expect(exercise?.streak).toBe(0);
+  });
+
+  it('maintains streak at max interval (30 days) for continued success', () => {
+    const storage = makeStorage();
+    storage.addToReviewQueue({ itemType: 'quiz', itemId: 'q1', subjectId: 's1' });
+
+    // Build up to max interval
+    for (let i = 0; i < 5; i++) {
+      storage.updateReviewItem('q1', 'quiz', true);
+    }
+
+    let item = storage.getReviewQueue().find(i => i.itemId === 'q1');
+    expect(item?.streak).toBe(5);
+    expect(item?.interval).toBe(30);
+
+    // Continue passing - interval should stay at 30
+    storage.updateReviewItem('q1', 'quiz', true);
+    item = storage.getReviewQueue().find(i => i.itemId === 'q1');
+    expect(item?.streak).toBe(6);
+    expect(item?.interval).toBe(30);
+  });
+
+  it('returns empty array for getDueReviewItems when queue is empty', () => {
+    const storage = makeStorage();
+    expect(storage.getDueReviewItems()).toEqual([]);
+  });
+
+  it('returns 0 for getDueReviewCount when queue is empty', () => {
+    const storage = makeStorage();
+    expect(storage.getDueReviewCount()).toBe(0);
+  });
+
+  it('correctly filters items not yet due', () => {
+    const storage = makeStorage();
+    storage.addToReviewQueue({ itemType: 'quiz', itemId: 'q1', subjectId: 's1' });
+
+    // Pass the quiz - next review in 3 days
+    storage.updateReviewItem('q1', 'quiz', true);
+
+    // Same day - should not be due
+    expect(storage.getDueReviewItems()).toHaveLength(0);
+    expect(storage.getDueReviewCount()).toBe(0);
+
+    // 2 days later - still not due
+    vi.setSystemTime(new Date('2024-01-03T00:00:00.000Z'));
+    expect(storage.getDueReviewItems()).toHaveLength(0);
+
+    // 3 days later - now due
+    vi.setSystemTime(new Date('2024-01-04T00:00:00.000Z'));
+    expect(storage.getDueReviewItems()).toHaveLength(1);
+    expect(storage.getDueReviewCount()).toBe(1);
+  });
+
+  it('handles getDueReviewItems with limit of 0', () => {
+    const storage = makeStorage();
+    storage.addToReviewQueue({ itemType: 'quiz', itemId: 'q1', subjectId: 's1' });
+
+    // All newly added items are due immediately
+    expect(storage.getDueReviewItems(0)).toEqual([]);
+  });
+});
+
+describe('ProgressStorage concurrent operations', () => {
+  it('handles rapid successive updates without data loss', () => {
+    const storage = makeStorage();
+
+    // Rapidly add multiple items
+    for (let i = 0; i < 10; i++) {
+      storage.addToReviewQueue({ itemType: 'quiz', itemId: `q${i}`, subjectId: 's1' });
+    }
+
+    expect(storage.getReviewQueue()).toHaveLength(10);
+
+    // Rapidly update them
+    for (let i = 0; i < 10; i++) {
+      storage.updateReviewItem(`q${i}`, 'quiz', i % 2 === 0);
+    }
+
+    const queue = storage.getReviewQueue();
+    const passedCount = queue.filter(i => i.streak === 1).length;
+    const failedCount = queue.filter(i => i.streak === 0).length;
+
+    expect(passedCount).toBe(5);
+    expect(failedCount).toBe(5);
+  });
+});
+
+describe('ProgressStorage selection edge cases', () => {
+  it('handles setSelectedSubjects with empty array', () => {
+    const storage = makeStorage();
+    storage.addToSelection('cs101');
+    storage.setSelectedSubjects([]);
+
+    expect(storage.getSelectedSubjects()).toEqual([]);
+    expect(storage.hasSelectedSubjects()).toBe(false);
+  });
+
+  it('handles duplicate IDs in setSelectedSubjects', () => {
+    const storage = makeStorage();
+    storage.setSelectedSubjects(['cs101', 'cs101', 'cs102']);
+
+    // Implementation should handle duplicates (either dedupe or allow)
+    const selected = storage.getSelectedSubjects();
+    expect(selected).toContain('cs101');
+    expect(selected).toContain('cs102');
+  });
+
+  it('add and remove selection work correctly in sequence', () => {
+    const storage = makeStorage();
+
+    storage.addToSelection('cs101');
+    expect(storage.isSubjectSelected('cs101')).toBe(true);
+
+    storage.removeFromSelection('cs101');
+    expect(storage.isSubjectSelected('cs101')).toBe(false);
+
+    storage.addToSelection('cs101');
+    expect(storage.isSubjectSelected('cs101')).toBe(true);
+  });
+});
