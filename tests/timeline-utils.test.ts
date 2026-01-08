@@ -620,6 +620,68 @@ describe('daysBetween', () => {
     const end = new Date('2024-01-01');
     expect(daysBetween(start, end)).toBe(31);
   });
+
+  it('handles leap year February', () => {
+    // 2024 is a leap year
+    const start = new Date('2024-02-01');
+    const end = new Date('2024-03-01');
+    expect(daysBetween(start, end)).toBe(29); // 29 days in Feb 2024
+  });
+
+  it('handles non-leap year February', () => {
+    // 2023 is not a leap year
+    const start = new Date('2023-02-01');
+    const end = new Date('2023-03-01');
+    expect(daysBetween(start, end)).toBe(28); // 28 days in Feb 2023
+  });
+
+  it('handles daylight saving time spring forward (US)', () => {
+    // In most US timezones, DST starts second Sunday of March
+    // March 10, 2024 is when DST starts - clocks spring forward 1 hour
+    // This should still return 1 day even though that day is only 23 hours
+    const beforeDST = new Date('2024-03-09T12:00:00');
+    const afterDST = new Date('2024-03-10T12:00:00');
+    expect(daysBetween(beforeDST, afterDST)).toBe(1);
+  });
+
+  it('handles daylight saving time fall back (US)', () => {
+    // In most US timezones, DST ends first Sunday of November
+    // Nov 3, 2024 is when DST ends - clocks fall back 1 hour
+    // This should still return 1 day even though that day is 25 hours
+    const beforeDST = new Date('2024-11-02T12:00:00');
+    const afterDST = new Date('2024-11-03T12:00:00');
+    expect(daysBetween(beforeDST, afterDST)).toBe(1);
+  });
+
+  it('handles very large date ranges', () => {
+    const start = new Date('2000-01-01');
+    const end = new Date('2100-01-01');
+    // 100 years including 25 leap years
+    expect(daysBetween(start, end)).toBe(36525);
+  });
+
+  it('handles same day different times correctly based on rounding', () => {
+    // 12 hours = 0.5 days, which rounds to 1
+    const morning = new Date('2024-06-15T08:00:00');
+    const evening = new Date('2024-06-15T20:00:00');
+    // 12 hours difference rounds to 1 day
+    expect(daysBetween(morning, evening)).toBe(1);
+
+    // Less than 12 hours rounds to 0
+    const start = new Date('2024-06-15T00:00:00');
+    const lessThan12Hours = new Date('2024-06-15T11:59:00');
+    expect(daysBetween(start, lessThan12Hours)).toBe(0);
+  });
+
+  it('handles dates with different time components correctly', () => {
+    // The function rounds, so 12 hours difference rounds to 1 day
+    // and 23 hours rounds to 1 day
+    const start = new Date('2024-01-01T00:00:00');
+    const end1 = new Date('2024-01-01T12:00:00'); // 0.5 days, rounds to 1
+    const end2 = new Date('2024-01-01T11:59:59'); // just under 0.5, rounds to 0
+    expect(daysBetween(start, end1)).toBe(1); // rounds 0.5 to 1
+    expect(daysBetween(start, end2)).toBe(0); // rounds 0.499 to 0
+  });
 });
 
 // ============================================================================
