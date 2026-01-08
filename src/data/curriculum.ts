@@ -370,7 +370,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 110,
     topics: cs205Topics,
-    examIds: ['cs205-midterm', 'cs205-final'],
+    examIds: ['cs205-exam-midterm', 'cs205-exam-final'],
     projectIds: ['cs205-project-1', 'cs205-project-2', 'cs205-project-3']
   },
 
@@ -563,7 +563,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 120,
     topics: math301Topics,
-    examIds: ['math301-exam-midterm', 'math301-exam-final']
+    examIds: ['math301-midterm', 'math301-final']
   },
 
   {
@@ -586,7 +586,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 110,
     topics: math302Topics,
-    examIds: ['math302-exam-midterm', 'math302-exam-final']
+    examIds: ['math302-midterm', 'math302-final']
   },
 
   // ============================================================================
@@ -613,7 +613,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 130,
     topics: cs305Topics,
-    examIds: ['cs305-exam-midterm', 'cs305-exam-final'],
+    examIds: ['cs305-midterm', 'cs305-final'],
     projectIds: ['cs305-proj1-portfolio', 'cs305-proj2-todo-app', 'cs305-proj3-weather-dashboard']
   },
 
@@ -637,7 +637,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 110,
     topics: cs306Topics,
-    examIds: ['cs306-exam-midterm', 'cs306-exam-final'],
+    examIds: ['cs306-midterm', 'cs306-final'],
     projectIds: ['cs306-project-1', 'cs306-project-2', 'cs306-project-3']
   },
 
@@ -661,7 +661,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 110,
     topics: cs307Topics,
-    examIds: ['cs307-exam-midterm', 'cs307-exam-final'],
+    examIds: ['cs307-midterm', 'cs307-final'],
     projectIds: ['cs307-project-1']
   },
 
@@ -685,7 +685,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 130,
     topics: math303Topics,
-    examIds: ['math303-exam-midterm', 'math303-exam-final']
+    examIds: ['math303-midterm', 'math303-final']
   },
 
   {
@@ -708,7 +708,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 120,
     topics: math304Topics,
-    examIds: ['math304-exam-midterm', 'math304-exam-final']
+    examIds: ['math304-midterm', 'math304-final']
   },
 
   // ============================================================================
@@ -735,7 +735,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 130,
     topics: cs401Topics,
-    examIds: ['cs401-exam-midterm', 'cs401-exam-final'],
+    examIds: ['cs401-midterm', 'cs401-final'],
     projectIds: ['cs401-project-1']
   },
 
@@ -783,7 +783,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 120,
     topics: cs403Topics,
-    examIds: ['cs403-exam-midterm', 'cs403-exam-final'],
+    examIds: ['cs403-midterm', 'cs403-final'],
     projectIds: ['cs403-project-1']
   },
 
@@ -831,7 +831,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 120,
     topics: math401Topics,
-    examIds: ['math401-exam-midterm', 'math401-exam-final']
+    examIds: ['math401-midterm', 'math401-final']
   },
 
   {
@@ -854,7 +854,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 110,
     topics: math402Topics,
-    examIds: ['math402-exam-midterm', 'math402-exam-final']
+    examIds: ['math402-midterm', 'math402-final']
   },
 
   // ============================================================================
@@ -881,7 +881,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 150,
     topics: cs404Topics,
-    examIds: ['cs404-exam-midterm', 'cs404-exam-final'],
+    examIds: ['cs404-midterm', 'cs404-final'],
     projectIds: ['cs404-project-1']
   },
 
@@ -905,7 +905,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 130,
     topics: cs406Topics,
-    examIds: ['cs406-exam-midterm', 'cs406-exam-final'],
+    examIds: ['cs406-midterm', 'cs406-final'],
     projectIds: ['cs406-project-1']
   },
 
@@ -976,7 +976,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 120,
     topics: math404Topics,
-    examIds: ['math404-exam-midterm', 'math404-exam-final']
+    examIds: ['math404-midterm', 'math404-final']
   }
 ];
 
