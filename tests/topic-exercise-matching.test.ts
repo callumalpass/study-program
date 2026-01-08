@@ -278,6 +278,97 @@ describe('Topic-Exercise ID Matching', () => {
   });
 });
 
+describe('MATH402 exercises', () => {
+  const math402 = curriculum.find(s => s.id === 'math402');
+
+  it('has MATH402 subject defined', () => {
+    expect(math402).toBeDefined();
+  });
+
+  it('has exercises for each topic', () => {
+    if (!math402) return;
+
+    math402.topics.forEach((topic, idx) => {
+      expect(
+        topic.exerciseIds.length,
+        `Topic ${idx + 1} (${topic.title}) should have exercises`
+      ).toBeGreaterThan(0);
+    });
+  });
+
+  it('all topic exercise IDs reference existing exercises', () => {
+    if (!math402) return;
+
+    math402.topics.forEach(topic => {
+      topic.exerciseIds.forEach(exerciseId => {
+        expect(
+          exerciseIdSet.has(exerciseId),
+          `Exercise ID "${exerciseId}" in topic "${topic.title}" should exist`
+        ).toBe(true);
+      });
+    });
+  });
+
+  it('has 16 exercises per topic', () => {
+    if (!math402) return;
+
+    math402.topics.forEach((topic, idx) => {
+      expect(
+        topic.exerciseIds.length,
+        `Topic ${idx + 1} should have 16 exercises`
+      ).toBe(16);
+    });
+  });
+});
+
+describe('MATH404 exercises', () => {
+  const math404 = curriculum.find(s => s.id === 'math404');
+
+  it('has MATH404 subject defined', () => {
+    expect(math404).toBeDefined();
+  });
+
+  it('has exercises for each topic', () => {
+    if (!math404) return;
+
+    math404.topics.forEach((topic, idx) => {
+      expect(
+        topic.exerciseIds.length,
+        `Topic ${idx + 1} (${topic.title}) should have exercises`
+      ).toBeGreaterThan(0);
+    });
+  });
+
+  it('all topic exercise IDs reference existing exercises', () => {
+    if (!math404) return;
+
+    math404.topics.forEach(topic => {
+      topic.exerciseIds.forEach(exerciseId => {
+        expect(
+          exerciseIdSet.has(exerciseId),
+          `Exercise ID "${exerciseId}" in topic "${topic.title}" should exist`
+        ).toBe(true);
+      });
+    });
+  });
+
+  it('exercise IDs follow expected format', () => {
+    if (!math404) return;
+
+    math404.topics.forEach((topic, idx) => {
+      const topicNum = idx + 1;
+      topic.exerciseIds.forEach(exerciseId => {
+        // Expected format: math404-t{topicNum}-ex{NN}
+        const expectedPattern = new RegExp(`^math404-t${topicNum}-ex\\d{2}$`);
+        expect(
+          expectedPattern.test(exerciseId),
+          `Exercise ID "${exerciseId}" should match format math404-t${topicNum}-exNN`
+        ).toBe(true);
+      });
+    });
+  });
+});
+
 describe('Loader utility functions', () => {
   describe('groupIdsByTopic', () => {
 

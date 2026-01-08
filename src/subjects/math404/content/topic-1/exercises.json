@@ -1,6 +1,6 @@
 [
   {
-    "id": "math404-t1-ex1",
+    "id": "math404-t1-ex01",
     "subjectId": "math404",
     "topicId": "topic-1",
     "type": "written",
@@ -16,7 +16,7 @@
     "solution": "To formulate an optimization problem:\n\n1. **Decision Variables**: Identify quantities you can choose\n   Let x₁ = units of product A, x₂ = units of product B\n\n2. **Objective Function**: Write what to optimize\n   max f(x) = 5x₁ + 3x₂ (profit)\n\n3. **Constraints**: List all restrictions\n   2x₁ + x₂ ≤ 100 (labor hours)\n   x₁ + 2x₂ ≤ 80 (material)\n\n4. **Non-negativity**: x₁, x₂ ≥ 0\n\nComplete formulation:\nmax 5x₁ + 3x₂\ns.t. 2x₁ + x₂ ≤ 100\n     x₁ + 2x₂ ≤ 80\n     x₁, x₂ ≥ 0"
   },
   {
-    "id": "math404-t1-ex2",
+    "id": "math404-t1-ex02",
     "subjectId": "math404",
     "topicId": "topic-1",
     "type": "written",
@@ -31,7 +31,7 @@
     "solution": "f(x) = x₁² + x₂² - x₁x₂\n\n**Step 1: Compute the Hessian**\n∂f/∂x₁ = 2x₁ - x₂\n∂f/∂x₂ = 2x₂ - x₁\n∂²f/∂x₁² = 2\n∂²f/∂x₂² = 2\n∂²f/∂x₁∂x₂ = -1\n\nH = [[2, -1], [-1, 2]]\n\n**Step 2: Check eigenvalues**\ndet(H - λI) = (2-λ)² - 1 = 0\nλ² - 4λ + 3 = 0\nλ = (4 ± 2)/2 → λ₁ = 1, λ₂ = 3\n\n**Conclusion**: Both eigenvalues are positive, so H is positive definite.\nTherefore f is strictly convex."
   },
   {
-    "id": "math404-t1-ex3",
+    "id": "math404-t1-ex03",
     "subjectId": "math404",
     "topicId": "topic-1",
     "type": "written",

@@ -1,6 +1,6 @@
 [
   {
-    "id": "math404-t2-ex1",
+    "id": "math404-t2-ex01",
     "subjectId": "math404",
     "topicId": "topic-2",
     "type": "written",
@@ -16,7 +16,7 @@
     "solution": "**Problem:** Convert to standard form:\nmax 3x₁ + 2x₂\ns.t. x₁ + x₂ ≤ 4\n     2x₁ + x₂ ≥ 2\n     x₁ ≥ 0, x₂ free\n\n**Solution:**\n1. Convert max to min: min -3x₁ - 2x₂\n2. Add slack s₁: x₁ + x₂ + s₁ = 4\n3. Subtract surplus s₂: 2x₁ + x₂ - s₂ = 2\n4. Replace x₂ = x₂⁺ - x₂⁻\n\n**Standard form:**\nmin -3x₁ - 2x₂⁺ + 2x₂⁻\ns.t. x₁ + x₂⁺ - x₂⁻ + s₁ = 4\n     2x₁ + x₂⁺ - x₂⁻ - s₂ = 2\n     x₁, x₂⁺, x₂⁻, s₁, s₂ ≥ 0"
   },
   {
-    "id": "math404-t2-ex2",
+    "id": "math404-t2-ex02",
     "subjectId": "math404",
     "topicId": "topic-2",
     "type": "written",
@@ -31,7 +31,7 @@
     "solution": "**Simplex Iteration:**\n\nInitial tableau:\n| BV  | x₁ | x₂ | s₁ | s₂ | RHS |\n|-----|----|----|----|----|-----|\n| s₁  | 1  | 2  | 1  | 0  | 8   |\n| s₂  | 4  | 1  | 0  | 1  | 12  |\n| z   | -3 | -2 | 0  | 0  | 0   |\n\n1. **Entering**: x₁ (most negative: -3)\n2. **Leaving**: min(8/1, 12/4) = 3 → s₂ leaves\n3. **Pivot** on row 2, column 1\n\nAfter pivoting:\n| BV  | x₁ | x₂   | s₁ | s₂  | RHS |\n|-----|----|----- |----|----|------|\n| s₁  | 0  | 7/4  | 1  |-1/4| 5    |\n| x₁  | 1  | 1/4  | 0  |1/4 | 3    |\n| z   | 0  |-5/4  | 0  |3/4 | 9    |\n\nCurrent solution: x₁ = 3, x₂ = 0, z = 9"
   },
   {
-    "id": "math404-t2-ex3",
+    "id": "math404-t2-ex03",
     "subjectId": "math404",
     "topicId": "topic-2",
     "type": "written",
