@@ -171,6 +171,7 @@ export const curriculum: Subject[] = [
     ],
     estimatedHours: 100,
     topics: math102Topics,
+    examIds: ['math102-exam-midterm', 'math102-exam-final'],
     projectIds: ['math102-p1']
   },
 
