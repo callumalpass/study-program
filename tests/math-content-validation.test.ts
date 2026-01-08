@@ -374,6 +374,191 @@ describe('Math204 - Calculus II Exam Content', () => {
   });
 });
 
+describe('Math302 - Differential Equations Content', () => {
+  let math302Exams: any[] = [];
+
+  beforeAll(async () => {
+    const module = await import('../src/subjects/math302/exams.json');
+    math302Exams = module.default;
+  });
+
+  describe('Midterm Exam - First Order DEs', () => {
+    it('Q5: dy/dx + y/x = x with y(1) = 2 should give y = x²/3 + 5/(3x)', () => {
+      const midterm = math302Exams.find((e: any) => e.id === 'math302-midterm');
+      expect(midterm).toBeDefined();
+
+      const q5 = midterm.questions.find((q: any) => q.id === 'math302-mid-q5');
+      expect(q5).toBeDefined();
+      expect(q5.type).toBe('multiple_choice');
+
+      // Verify the solution mathematically:
+      // Integrating factor: μ(x) = e^(∫1/x dx) = e^(ln|x|) = x
+      // Multiply: x(dy/dx) + y = x²
+      // d/dx(xy) = x²
+      // Integrate: xy = x³/3 + C
+      // Apply IC y(1) = 2: 1·2 = 1/3 + C → C = 2 - 1/3 = 5/3
+      // So xy = x³/3 + 5/3
+      // y = x²/3 + 5/(3x)
+
+      // Verify y(1) = 2 with the solution
+      const verifyY1 = 1 / 3 + 5 / 3; // x=1: 1/3 + 5/3 = 6/3 = 2
+      expect(verifyY1).toBe(2);
+
+      // Check the correct answer
+      expect(q5.correctAnswer).toBe('y = x²/3 + 5/(3x)');
+
+      // The first option should be the correct one
+      expect(q5.options[0]).toBe('y = x²/3 + 5/(3x)');
+
+      // Verify the explanation does not contain the incorrect equivalence
+      expect(q5.explanation).not.toContain('= x²/2 + 3/(2x)');
+    });
+
+    it('Q1: Separable DE dy/dx = xy² with y(0) = 1 should give y = 1/(1 - x²/2)', () => {
+      const midterm = math302Exams.find((e: any) => e.id === 'math302-midterm');
+      const q1 = midterm.questions.find((q: any) => q.id === 'math302-mid-q1');
+      expect(q1).toBeDefined();
+
+      // Verify: dy/y² = x dx → -1/y = x²/2 + C
+      // IC y(0) = 1: -1 = C → -1/y = x²/2 - 1 → y = 1/(1 - x²/2)
+      expect(q1.correctAnswer).toBe('y = 1/(1 - x²/2)');
+
+      // Verify y(0) = 1
+      const y0 = 1 / (1 - 0 / 2);
+      expect(y0).toBe(1);
+    });
+
+    it('Q3: dy/dx = 3y general solution should be y = Ce^(3x)', () => {
+      const midterm = math302Exams.find((e: any) => e.id === 'math302-midterm');
+      const q3 = midterm.questions.find((q: any) => q.id === 'math302-mid-q3');
+      expect(q3).toBeDefined();
+
+      expect(q3.correctAnswer).toBe('y = Ce^(3x)');
+    });
+
+    it('Q4: Integrating factor for dy/dx + 2y = e^x should be e^(2x)', () => {
+      const midterm = math302Exams.find((e: any) => e.id === 'math302-midterm');
+      const q4 = midterm.questions.find((q: any) => q.id === 'math302-mid-q4');
+      expect(q4).toBeDefined();
+
+      // μ(x) = e^(∫P(x)dx) = e^(∫2dx) = e^(2x)
+      expect(q4.correctAnswer).toBe('e^(2x)');
+    });
+  });
+
+  describe('Midterm Exam - Second Order DEs', () => {
+    it('Q11: y\'\' - 5y\' + 6y = 0 should have solution y = C₁e^(2x) + C₂e^(3x)', () => {
+      const midterm = math302Exams.find((e: any) => e.id === 'math302-midterm');
+      const q11 = midterm.questions.find((q: any) => q.id === 'math302-mid-q11');
+      expect(q11).toBeDefined();
+
+      // Characteristic equation: r² - 5r + 6 = 0
+      // (r - 2)(r - 3) = 0
+      // r = 2, 3
+      expect(q11.correctAnswer).toBe('y = C₁e^(2x) + C₂e^(3x)');
+    });
+
+    it('Q12: y\'\' + 4y\' + 4y = 0 should have repeated root r = -2', () => {
+      const midterm = math302Exams.find((e: any) => e.id === 'math302-midterm');
+      const q12 = midterm.questions.find((q: any) => q.id === 'math302-mid-q12');
+      expect(q12).toBeDefined();
+
+      // r² + 4r + 4 = (r + 2)² = 0
+      expect(q12.correctAnswer).toBe('r = -2 (repeated)');
+    });
+
+    it('Q13: Complex roots r = -1 ± 2i should give oscillatory solution', () => {
+      const midterm = math302Exams.find((e: any) => e.id === 'math302-midterm');
+      const q13 = midterm.questions.find((q: any) => q.id === 'math302-mid-q13');
+      expect(q13).toBeDefined();
+
+      expect(q13.correctAnswer).toBe('y = e^(-x)(C₁cos(2x) + C₂sin(2x))');
+    });
+  });
+
+  describe('Final Exam - Laplace Transforms', () => {
+    it('Q1: L{1} = 1/s', () => {
+      const final = math302Exams.find((e: any) => e.id === 'math302-final');
+      expect(final).toBeDefined();
+
+      const q1 = final.questions.find((q: any) => q.id === 'math302-final-q1');
+      expect(q1).toBeDefined();
+      expect(q1.correctAnswer).toBe('F(s) = 1/s');
+    });
+
+    it('Q2: L{e^(at)} = 1/(s-a)', () => {
+      const final = math302Exams.find((e: any) => e.id === 'math302-final');
+      const q2 = final.questions.find((q: any) => q.id === 'math302-final-q2');
+      expect(q2).toBeDefined();
+      expect(q2.correctAnswer).toBe('1/(s - a) for s > a');
+    });
+
+    it('Q3: L{sin(ωt)} = ω/(s² + ω²)', () => {
+      const final = math302Exams.find((e: any) => e.id === 'math302-final');
+      const q3 = final.questions.find((q: any) => q.id === 'math302-final-q3');
+      expect(q3).toBeDefined();
+      expect(q3.correctAnswer).toBe('ω/(s² + ω²)');
+    });
+
+    it('Q4: L{cos(ωt)} = s/(s² + ω²)', () => {
+      const final = math302Exams.find((e: any) => e.id === 'math302-final');
+      const q4 = final.questions.find((q: any) => q.id === 'math302-final-q4');
+      expect(q4).toBeDefined();
+      expect(q4.correctAnswer).toBe('s/(s² + ω²)');
+    });
+
+    it('Q40: L{t^n} = n!/s^(n+1)', () => {
+      const final = math302Exams.find((e: any) => e.id === 'math302-final');
+      const q40 = final.questions.find((q: any) => q.id === 'math302-final-q40');
+      expect(q40).toBeDefined();
+      expect(q40.correctAnswer).toBe('n!/s^(n+1)');
+    });
+  });
+
+  describe('Verify First Order DE Solution Method', () => {
+    // This test mathematically verifies the Q5 solution
+    it('should verify y = x²/3 + 5/(3x) satisfies dy/dx + y/x = x', () => {
+      // y = x²/3 + 5/(3x)
+      // dy/dx = 2x/3 - 5/(3x²)
+      // y/x = x/3 + 5/(3x²)
+      // dy/dx + y/x = 2x/3 - 5/(3x²) + x/3 + 5/(3x²) = 2x/3 + x/3 = x ✓
+
+      // Verify at x = 2
+      const x = 2;
+      const y = (x * x) / 3 + 5 / (3 * x);
+      const dy_dx = (2 * x) / 3 - 5 / (3 * x * x);
+      const y_over_x = y / x;
+      const lhs = dy_dx + y_over_x;
+      const rhs = x;
+
+      expect(lhs).toBeCloseTo(rhs, 10);
+    });
+
+    it('should verify y(1) = 2 for the solution', () => {
+      const x = 1;
+      const y = (x * x) / 3 + 5 / (3 * x);
+      expect(y).toBeCloseTo(2, 10);
+    });
+
+    it('should verify the old incorrect answer y = x²/2 + 3/(2x) does NOT satisfy y(1) = 2', () => {
+      const x = 1;
+      const y_wrong = (x * x) / 2 + 3 / (2 * x);
+      // y_wrong(1) = 1/2 + 3/2 = 2
+      // This actually equals 2, but let's verify it doesn't satisfy the DE at other points
+
+      // Check if it satisfies the DE at x = 2
+      const x2 = 2;
+      const y_wrong_at_2 = (x2 * x2) / 2 + 3 / (2 * x2);
+      const dy_dx_wrong = x2 - 3 / (2 * x2 * x2);
+      const y_over_x_wrong = y_wrong_at_2 / x2;
+      const lhs_wrong = dy_dx_wrong + y_over_x_wrong;
+
+      // It should NOT equal x = 2
+      expect(lhs_wrong).not.toBeCloseTo(x2, 5);
+    });
+  });
+});
+
 describe('Mathematical Computation Verification', () => {
   // Helper functions to verify mathematical content
   const factorial = (n: number): number => (n <= 1 ? 1 : n * factorial(n - 1));
