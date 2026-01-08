@@ -20,14 +20,15 @@ import { Icons } from '../components/icons';
 
 /**
  * Format a review item ID into a human-readable title
- * e.g., "cs101-t1-quiz-a" -> "CS101 Topic 1 Quiz A"
+ * Quiz IDs: "cs101-quiz-1" -> "CS101 Quiz 1", "cs101-quiz-1b" -> "CS101 Quiz 1B"
+ * Exercise IDs: "cs101-t1-ex02" -> "CS101 Topic 1 Exercise 2"
  */
 // Regex patterns for parsing review item IDs
-// Item IDs follow the format: {subjectCode}-t{topicNum}-{type}
-// Examples: "cs101-t1-quiz-a", "math201-t3-ex02"
 const SUBJECT_CODE_PATTERN = /^([a-z]+\d+)/i; // Matches subject code at start (e.g., "cs101", "math201")
 const TOPIC_NUMBER_PATTERN = /-t(\d+)-/; // Matches "-t{number}-" to extract topic number
-const QUIZ_LEVEL_PATTERN = /quiz-([abc])/i; // Matches "quiz-{a|b|c}" for difficulty level
+// Quiz ID format: {subject}-quiz-{number} or {subject}-quiz-{number}{level}
+// Examples: "cs101-quiz-1", "cs101-quiz-1b", "cs102-quiz-2-c"
+const QUIZ_NUMBER_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i; // Matches "quiz-{number}" with optional level
 const EXERCISE_NUMBER_PATTERN = /ex(\d+)/i; // Matches "ex{number}" for exercise number (e.g., "ex01")
 
 function formatReviewItemTitle(item: ReviewItem): string {
@@ -40,10 +41,16 @@ function formatReviewItemTitle(item: ReviewItem): string {
   const topicNum = topicMatch ? `Topic ${topicMatch[1]}` : '';
 
   if (item.itemType === 'quiz') {
-    // Format: cs101-t1-quiz-a -> CS101 Topic 1 Quiz A
-    const quizMatch = id.match(QUIZ_LEVEL_PATTERN);
-    const quizLevel = quizMatch ? `Quiz ${quizMatch[1].toUpperCase()}` : 'Quiz';
-    return [subjectCode, topicNum, quizLevel].filter(Boolean).join(' ');
+    // Format: cs101-quiz-1 -> CS101 Quiz 1, cs101-quiz-1b -> CS101 Quiz 1B
+    const quizMatch = id.match(QUIZ_NUMBER_PATTERN);
+    let quizLabel = 'Quiz';
+    if (quizMatch) {
+      const quizNumber = quizMatch[1];
+      // Level can be in group 2 (attached: "1b") or group 3 (separated: "1-b")
+      const quizLevel = (quizMatch[2] || quizMatch[3] || '').toUpperCase();
+      quizLabel = `Quiz ${quizNumber}${quizLevel}`;
+    }
+    return [subjectCode, topicNum, quizLabel].filter(Boolean).join(' ');
   } else {
     // Format: cs101-t1-ex01 -> CS101 Topic 1 Exercise 1
     const exMatch = id.match(EXERCISE_NUMBER_PATTERN);
