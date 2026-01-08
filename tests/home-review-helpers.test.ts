@@ -12,9 +12,11 @@ import type { ReviewItem } from '../src/core/types';
 // Re-implementation of the regex patterns and functions from home.ts for testing
 const SUBJECT_CODE_PATTERN = /^([a-z]+\d+)/i; // Matches subject code at start (e.g., "cs101", "math201")
 const TOPIC_NUMBER_PATTERN = /-t(\d+)-/; // Matches "-t{number}-" to extract topic number
-// Quiz ID format: {subject}-quiz-{number} or {subject}-quiz-{number}{level}
-// Examples: "cs101-quiz-1", "cs101-quiz-1b", "cs102-quiz-2-c"
-const QUIZ_NUMBER_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i; // Matches "quiz-{number}" with optional level
+// Quiz ID formats:
+// 1. Level letter format: "cs101-quiz-1", "cs101-quiz-1b", "cs102-quiz-2-c"
+// 2. Topic-subquiz format: "cs402-quiz-1-2", "math302-quiz-3-1"
+const QUIZ_LEVEL_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i; // Matches "quiz-{number}" with optional level letter
+const QUIZ_SUBQUIZ_PATTERN = /quiz-(\d+)-(\d+)/i; // Matches "quiz-{topic}-{subquiz}" format
 const EXERCISE_NUMBER_PATTERN = /ex(\d+)/i; // Matches "ex{number}" for exercise number (e.g., "ex01")
 
 /**
@@ -31,13 +33,21 @@ function formatReviewItemTitle(item: ReviewItem): string {
   const topicNum = topicMatch ? `Topic ${topicMatch[1]}` : '';
 
   if (item.itemType === 'quiz') {
-    // Format: cs101-quiz-1 -> CS101 Quiz 1, cs101-quiz-1b -> CS101 Quiz 1B
-    const quizMatch = id.match(QUIZ_NUMBER_PATTERN);
+    // Try topic-subquiz format first (e.g., cs402-quiz-1-2)
+    const subquizMatch = id.match(QUIZ_SUBQUIZ_PATTERN);
+    if (subquizMatch) {
+      const topicNumber = subquizMatch[1];
+      const subquizNumber = subquizMatch[2];
+      return [subjectCode, topicNum, `Quiz ${topicNumber}-${subquizNumber}`].filter(Boolean).join(' ');
+    }
+
+    // Fall back to level letter format (e.g., cs101-quiz-1b)
+    const levelMatch = id.match(QUIZ_LEVEL_PATTERN);
     let quizLabel = 'Quiz';
-    if (quizMatch) {
-      const quizNumber = quizMatch[1];
+    if (levelMatch) {
+      const quizNumber = levelMatch[1];
       // Level can be in group 2 (attached: "1b") or group 3 (separated: "1-b")
-      const quizLevel = (quizMatch[2] || quizMatch[3] || '').toUpperCase();
+      const quizLevel = (levelMatch[2] || levelMatch[3] || '').toUpperCase();
       quizLabel = `Quiz ${quizNumber}${quizLevel}`;
     }
     return [subjectCode, topicNum, quizLabel].filter(Boolean).join(' ');
@@ -121,6 +131,56 @@ describe('formatReviewItemTitle', () => {
     it('falls back to "Quiz" when number not found', () => {
       const item = createReviewItem({ itemId: 'cs101-quiz', itemType: 'quiz' });
       expect(formatReviewItemTitle(item)).toBe('CS101 Quiz');
+    });
+  });
+
+  describe('quiz formatting - topic-subquiz format (e.g., quiz-1-2)', () => {
+    it('formats topic-subquiz quiz ID (cs402-quiz-1-2)', () => {
+      const item = createReviewItem({
+        itemId: 'cs402-quiz-1-2',
+        itemType: 'quiz',
+      });
+      expect(formatReviewItemTitle(item)).toBe('CS402 Quiz 1-2');
+    });
+
+    it('formats topic-subquiz for different topics', () => {
+      const item1 = createReviewItem({ itemId: 'cs402-quiz-1-1', itemType: 'quiz' });
+      const item2 = createReviewItem({ itemId: 'cs402-quiz-2-3', itemType: 'quiz' });
+      const item3 = createReviewItem({ itemId: 'cs402-quiz-7-1', itemType: 'quiz' });
+
+      expect(formatReviewItemTitle(item1)).toBe('CS402 Quiz 1-1');
+      expect(formatReviewItemTitle(item2)).toBe('CS402 Quiz 2-3');
+      expect(formatReviewItemTitle(item3)).toBe('CS402 Quiz 7-1');
+    });
+
+    it('formats topic-subquiz for math subjects', () => {
+      const item1 = createReviewItem({ itemId: 'math302-quiz-1-1', itemType: 'quiz' });
+      const item2 = createReviewItem({ itemId: 'math302-quiz-2-2', itemType: 'quiz' });
+
+      expect(formatReviewItemTitle(item1)).toBe('MATH302 Quiz 1-1');
+      expect(formatReviewItemTitle(item2)).toBe('MATH302 Quiz 2-2');
+    });
+
+    it('formats topic-subquiz for cs205, cs403, cs404 courses', () => {
+      const cs205 = createReviewItem({ itemId: 'cs205-quiz-3-2', itemType: 'quiz' });
+      const cs403 = createReviewItem({ itemId: 'cs403-quiz-1-3', itemType: 'quiz' });
+      const cs404 = createReviewItem({ itemId: 'cs404-quiz-1-1', itemType: 'quiz' });
+
+      expect(formatReviewItemTitle(cs205)).toBe('CS205 Quiz 3-2');
+      expect(formatReviewItemTitle(cs403)).toBe('CS403 Quiz 1-3');
+      expect(formatReviewItemTitle(cs404)).toBe('CS404 Quiz 1-1');
+    });
+
+    it('handles double-digit topic and subquiz numbers', () => {
+      const item = createReviewItem({ itemId: 'cs101-quiz-10-12', itemType: 'quiz' });
+      expect(formatReviewItemTitle(item)).toBe('CS101 Quiz 10-12');
+    });
+
+    it('prioritizes topic-subquiz format over level letter format', () => {
+      // quiz-1-2 should be treated as topic 1, quiz 2, NOT quiz 1 with level "2"
+      const item = createReviewItem({ itemId: 'cs402-quiz-1-2', itemType: 'quiz' });
+      expect(formatReviewItemTitle(item)).toBe('CS402 Quiz 1-2');
+      expect(formatReviewItemTitle(item)).not.toBe('CS402 Quiz 1'); // Not level letter format
     });
   });
 
@@ -210,12 +270,19 @@ describe('formatReviewItemTitle', () => {
       expect('cs101-topic-1'.match(TOPIC_NUMBER_PATTERN)).toBeNull(); // Wrong format
     });
 
-    it('QUIZ_NUMBER_PATTERN matches quiz numbers with optional level', () => {
-      expect('quiz-1'.match(QUIZ_NUMBER_PATTERN)?.[1]).toBe('1');
-      expect('quiz-1b'.match(QUIZ_NUMBER_PATTERN)?.[1]).toBe('1');
-      expect('quiz-1b'.match(QUIZ_NUMBER_PATTERN)?.[2]).toBe('b');
-      expect('quiz-2-c'.match(QUIZ_NUMBER_PATTERN)?.[1]).toBe('2');
-      expect('quiz-2-c'.match(QUIZ_NUMBER_PATTERN)?.[3]).toBe('c');
+    it('QUIZ_LEVEL_PATTERN matches quiz numbers with optional level', () => {
+      expect('quiz-1'.match(QUIZ_LEVEL_PATTERN)?.[1]).toBe('1');
+      expect('quiz-1b'.match(QUIZ_LEVEL_PATTERN)?.[1]).toBe('1');
+      expect('quiz-1b'.match(QUIZ_LEVEL_PATTERN)?.[2]).toBe('b');
+      expect('quiz-2-c'.match(QUIZ_LEVEL_PATTERN)?.[1]).toBe('2');
+      expect('quiz-2-c'.match(QUIZ_LEVEL_PATTERN)?.[3]).toBe('c');
+    });
+
+    it('QUIZ_SUBQUIZ_PATTERN matches topic-subquiz format', () => {
+      expect('quiz-1-2'.match(QUIZ_SUBQUIZ_PATTERN)?.[1]).toBe('1');
+      expect('quiz-1-2'.match(QUIZ_SUBQUIZ_PATTERN)?.[2]).toBe('2');
+      expect('quiz-3-1'.match(QUIZ_SUBQUIZ_PATTERN)?.[1]).toBe('3');
+      expect('quiz-3-1'.match(QUIZ_SUBQUIZ_PATTERN)?.[2]).toBe('1');
     });
 
     it('EXERCISE_NUMBER_PATTERN matches exercise numbers', () => {

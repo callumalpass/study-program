@@ -11,7 +11,8 @@ import type { ReviewItem } from '../src/core/types';
 // Regex patterns from home.ts
 const SUBJECT_CODE_PATTERN = /^([a-z]+\d+)/i;
 const TOPIC_NUMBER_PATTERN = /-t(\d+)-/;
-const QUIZ_NUMBER_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i;
+const QUIZ_LEVEL_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i;
+const QUIZ_SUBQUIZ_PATTERN = /quiz-(\d+)-(\d+)/i;
 const EXERCISE_NUMBER_PATTERN = /ex(\d+)/i;
 
 function formatReviewItemTitle(item: ReviewItem): string {
@@ -24,11 +25,20 @@ function formatReviewItemTitle(item: ReviewItem): string {
   const topicNum = topicMatch ? `Topic ${topicMatch[1]}` : '';
 
   if (item.itemType === 'quiz') {
-    const quizMatch = id.match(QUIZ_NUMBER_PATTERN);
+    // Try topic-subquiz format first (e.g., cs402-quiz-1-2)
+    const subquizMatch = id.match(QUIZ_SUBQUIZ_PATTERN);
+    if (subquizMatch) {
+      const topicNumber = subquizMatch[1];
+      const subquizNumber = subquizMatch[2];
+      return [subjectCode, topicNum, `Quiz ${topicNumber}-${subquizNumber}`].filter(Boolean).join(' ');
+    }
+
+    // Fall back to level letter format (e.g., cs101-quiz-1b)
+    const levelMatch = id.match(QUIZ_LEVEL_PATTERN);
     let quizLabel = 'Quiz';
-    if (quizMatch) {
-      const quizNumber = quizMatch[1];
-      const quizLevel = (quizMatch[2] || quizMatch[3] || '').toUpperCase();
+    if (levelMatch) {
+      const quizNumber = levelMatch[1];
+      const quizLevel = (levelMatch[2] || levelMatch[3] || '').toUpperCase();
       quizLabel = `Quiz ${quizNumber}${quizLevel}`;
     }
     return [subjectCode, topicNum, quizLabel].filter(Boolean).join(' ');
@@ -129,6 +139,49 @@ describe('formatReviewItemTitle - Malformed Input Edge Cases', () => {
       const item = createReviewItem({ itemId: 'cs101-quiz-001', itemType: 'quiz' });
       const result = formatReviewItemTitle(item);
       expect(result).toBe('CS101 Quiz 001');
+    });
+  });
+
+  describe('topic-subquiz format edge cases', () => {
+    it('handles topic-subquiz format with zeros', () => {
+      const item = createReviewItem({ itemId: 'cs101-quiz-0-0', itemType: 'quiz' });
+      const result = formatReviewItemTitle(item);
+      expect(result).toBe('CS101 Quiz 0-0');
+    });
+
+    it('handles topic-subquiz format with large numbers', () => {
+      const item = createReviewItem({ itemId: 'cs101-quiz-99-99', itemType: 'quiz' });
+      const result = formatReviewItemTitle(item);
+      expect(result).toBe('CS101 Quiz 99-99');
+    });
+
+    it('handles topic-subquiz format with leading zeros in topic', () => {
+      const item = createReviewItem({ itemId: 'cs101-quiz-01-2', itemType: 'quiz' });
+      const result = formatReviewItemTitle(item);
+      expect(result).toBe('CS101 Quiz 01-2');
+    });
+
+    it('handles topic-subquiz format with leading zeros in subquiz', () => {
+      const item = createReviewItem({ itemId: 'cs101-quiz-1-02', itemType: 'quiz' });
+      const result = formatReviewItemTitle(item);
+      expect(result).toBe('CS101 Quiz 1-02');
+    });
+
+    it('topic-subquiz format takes precedence for quiz-X-Y patterns', () => {
+      // quiz-1-2 matches QUIZ_SUBQUIZ_PATTERN, not level letter
+      const item = createReviewItem({ itemId: 'cs402-quiz-1-2', itemType: 'quiz' });
+      const result = formatReviewItemTitle(item);
+      // Should be "Quiz 1-2", not "Quiz 1" (treating 2 as something else)
+      expect(result).toBe('CS402 Quiz 1-2');
+    });
+
+    it('falls back to level letter for quiz-X-Y where Y is a-c', () => {
+      // quiz-1-a should use level letter format since 'a' is a valid level
+      // However, our pattern checks subquiz first (numeric only), so quiz-1-a won't match
+      const item = createReviewItem({ itemId: 'cs101-quiz-1-a', itemType: 'quiz' });
+      const result = formatReviewItemTitle(item);
+      // Level pattern handles this: quiz-1-a
+      expect(result).toBe('CS101 Quiz 1A');
     });
   });
 
@@ -251,36 +304,56 @@ describe('formatReviewItemTitle - Regex Pattern Coverage', () => {
     });
   });
 
-  describe('QUIZ_NUMBER_PATTERN edge cases', () => {
+  describe('QUIZ_LEVEL_PATTERN edge cases', () => {
     it('matches quiz without level', () => {
-      const match = 'quiz-5'.match(QUIZ_NUMBER_PATTERN);
+      const match = 'quiz-5'.match(QUIZ_LEVEL_PATTERN);
       expect(match![1]).toBe('5');
       expect(match![2]).toBeUndefined();
       expect(match![3]).toBeUndefined();
     });
 
     it('matches quiz with attached level', () => {
-      const match = 'quiz-5b'.match(QUIZ_NUMBER_PATTERN);
+      const match = 'quiz-5b'.match(QUIZ_LEVEL_PATTERN);
       expect(match![1]).toBe('5');
       expect(match![2]).toBe('b');
     });
 
     it('matches quiz with separated level', () => {
-      const match = 'quiz-5-c'.match(QUIZ_NUMBER_PATTERN);
+      const match = 'quiz-5-c'.match(QUIZ_LEVEL_PATTERN);
       expect(match![1]).toBe('5');
       expect(match![3]).toBe('c');
     });
 
     it('only matches levels a, b, c', () => {
-      const matchA = 'quiz-1a'.match(QUIZ_NUMBER_PATTERN);
-      const matchB = 'quiz-1b'.match(QUIZ_NUMBER_PATTERN);
-      const matchC = 'quiz-1c'.match(QUIZ_NUMBER_PATTERN);
-      const matchD = 'quiz-1d'.match(QUIZ_NUMBER_PATTERN);
+      const matchA = 'quiz-1a'.match(QUIZ_LEVEL_PATTERN);
+      const matchB = 'quiz-1b'.match(QUIZ_LEVEL_PATTERN);
+      const matchC = 'quiz-1c'.match(QUIZ_LEVEL_PATTERN);
+      const matchD = 'quiz-1d'.match(QUIZ_LEVEL_PATTERN);
 
       expect(matchA![2]).toBe('a');
       expect(matchB![2]).toBe('b');
       expect(matchC![2]).toBe('c');
       expect(matchD![2]).toBeUndefined(); // 'd' is not a valid level
+    });
+  });
+
+  describe('QUIZ_SUBQUIZ_PATTERN edge cases', () => {
+    it('matches topic-subquiz format', () => {
+      const match = 'quiz-1-2'.match(QUIZ_SUBQUIZ_PATTERN);
+      expect(match![1]).toBe('1');
+      expect(match![2]).toBe('2');
+    });
+
+    it('matches different topic and subquiz numbers', () => {
+      const match = 'cs402-quiz-3-1'.match(QUIZ_SUBQUIZ_PATTERN);
+      expect(match![1]).toBe('3');
+      expect(match![2]).toBe('1');
+    });
+
+    it('handles double-digit numbers', () => {
+      const match = 'quiz-10-12'.match(QUIZ_SUBQUIZ_PATTERN);
+      expect(match![1]).toBe('10');
+      expect(match![2]).toBe('12');
     });
   });
 
