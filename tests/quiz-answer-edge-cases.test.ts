@@ -153,13 +153,13 @@ describe('getCorrectOptionIndex edge cases', () => {
       expect(getCorrectOptionIndex(question)).toBe(-1);
     });
 
-    it('handles out-of-bounds numeric index by returning it as-is', () => {
-      // Note: The function doesn't validate bounds - it just returns the number
+    it('returns -1 for out-of-bounds numeric index', () => {
+      // The function validates bounds and returns -1 for invalid indices
       const question = createMultipleChoiceQuestion('q1', ['A', 'B'], 99);
-      expect(getCorrectOptionIndex(question)).toBe(99);
+      expect(getCorrectOptionIndex(question)).toBe(-1);
     });
 
-    it('handles negative numeric index by returning it as-is', () => {
+    it('returns -1 for negative numeric index', () => {
       const question = createMultipleChoiceQuestion('q1', ['A', 'B'], -1);
       expect(getCorrectOptionIndex(question)).toBe(-1);
     });
@@ -170,8 +170,9 @@ describe('checkAnswer edge cases', () => {
   describe('multiple_choice with invalid configurations', () => {
     it('returns false when correctIndex is -1 and answer is -1', () => {
       // If correctAnswer doesn't match any option, correctIndex is -1
+      // The function correctly returns false because no valid answer exists
       const question = createMultipleChoiceQuestion('q1', ['A', 'B', 'C'], 'NotInOptions');
-      expect(checkAnswer(question, -1)).toBe(true); // Bug: this returns true because -1 === -1
+      expect(checkAnswer(question, -1)).toBe(false);
     });
 
     it('returns false for valid answer when correctAnswer is invalid', () => {

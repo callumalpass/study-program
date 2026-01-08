@@ -345,8 +345,8 @@ describe('Practice Mode Answer Checking', () => {
         correctAnswer: 0,
         explanation: '',
       };
-      // Should not crash, returns the index as answer
-      expect(getCorrectOptionIndex(question)).toBe(0);
+      // Should not crash, returns -1 when options are undefined (index 0 is invalid with no options)
+      expect(getCorrectOptionIndex(question)).toBe(-1);
     });
 
     it('handles empty options array', () => {

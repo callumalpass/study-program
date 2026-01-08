@@ -199,6 +199,66 @@ describe('getCorrectOptionIndex', () => {
     };
     expect(getCorrectOptionIndex(question)).toBe(-1);
   });
+
+  it('returns -1 for out-of-bounds positive numeric index', () => {
+    const question: QuizQuestion = {
+      id: 'q1',
+      type: 'multiple_choice',
+      prompt: 'Test?',
+      correctAnswer: 10, // Only 4 options (0-3 valid)
+      explanation: 'Test',
+      options: ['A', 'B', 'C', 'D'],
+    };
+    expect(getCorrectOptionIndex(question)).toBe(-1);
+  });
+
+  it('returns -1 for negative numeric index', () => {
+    const question: QuizQuestion = {
+      id: 'q1',
+      type: 'multiple_choice',
+      prompt: 'Test?',
+      correctAnswer: -1,
+      explanation: 'Test',
+      options: ['A', 'B', 'C', 'D'],
+    };
+    expect(getCorrectOptionIndex(question)).toBe(-1);
+  });
+
+  it('returns -1 for numeric index equal to options length', () => {
+    const question: QuizQuestion = {
+      id: 'q1',
+      type: 'multiple_choice',
+      prompt: 'Test?',
+      correctAnswer: 4, // options.length is 4, so valid indices are 0-3
+      explanation: 'Test',
+      options: ['A', 'B', 'C', 'D'],
+    };
+    expect(getCorrectOptionIndex(question)).toBe(-1);
+  });
+
+  it('returns valid index for last option', () => {
+    const question: QuizQuestion = {
+      id: 'q1',
+      type: 'multiple_choice',
+      prompt: 'Test?',
+      correctAnswer: 3, // Last valid index
+      explanation: 'Test',
+      options: ['A', 'B', 'C', 'D'],
+    };
+    expect(getCorrectOptionIndex(question)).toBe(3);
+  });
+
+  it('returns -1 for numeric index with empty options array', () => {
+    const question: QuizQuestion = {
+      id: 'q1',
+      type: 'multiple_choice',
+      prompt: 'Test?',
+      correctAnswer: 0,
+      explanation: 'Test',
+      options: [],
+    };
+    expect(getCorrectOptionIndex(question)).toBe(-1);
+  });
 });
 
 describe('checkAnswer for multiple_choice questions', () => {
@@ -232,6 +292,62 @@ describe('checkAnswer for multiple_choice questions', () => {
   it('returns false for out-of-bounds index', () => {
     expect(checkAnswer(mcQuestion, 10)).toBe(false);
     expect(checkAnswer(mcQuestion, -1)).toBe(false);
+  });
+
+  it('returns false when question has invalid correctAnswer (out of bounds)', () => {
+    const invalidQuestion: QuizQuestion = {
+      id: 'mc_invalid',
+      type: 'multiple_choice',
+      prompt: 'Invalid question?',
+      correctAnswer: 999, // Out of bounds
+      explanation: 'Test',
+      options: ['A', 'B', 'C', 'D'],
+    };
+    // No answer should be considered correct when correctAnswer is invalid
+    expect(checkAnswer(invalidQuestion, 0)).toBe(false);
+    expect(checkAnswer(invalidQuestion, 1)).toBe(false);
+    expect(checkAnswer(invalidQuestion, 2)).toBe(false);
+    expect(checkAnswer(invalidQuestion, 3)).toBe(false);
+    expect(checkAnswer(invalidQuestion, 999)).toBe(false);
+  });
+
+  it('returns false when question has negative correctAnswer index', () => {
+    const invalidQuestion: QuizQuestion = {
+      id: 'mc_negative',
+      type: 'multiple_choice',
+      prompt: 'Invalid question?',
+      correctAnswer: -2,
+      explanation: 'Test',
+      options: ['A', 'B', 'C', 'D'],
+    };
+    // Even if user answers -2, it should not be considered correct
+    expect(checkAnswer(invalidQuestion, -2)).toBe(false);
+    expect(checkAnswer(invalidQuestion, 0)).toBe(false);
+  });
+
+  it('returns false when question has string correctAnswer not in options', () => {
+    const invalidQuestion: QuizQuestion = {
+      id: 'mc_string_invalid',
+      type: 'multiple_choice',
+      prompt: 'Invalid question?',
+      correctAnswer: 'E', // Not in options
+      explanation: 'Test',
+      options: ['A', 'B', 'C', 'D'],
+    };
+    expect(checkAnswer(invalidQuestion, 0)).toBe(false);
+    expect(checkAnswer(invalidQuestion, 1)).toBe(false);
+  });
+
+  it('returns false when question has empty options array', () => {
+    const emptyOptionsQuestion: QuizQuestion = {
+      id: 'mc_empty',
+      type: 'multiple_choice',
+      prompt: 'No options?',
+      correctAnswer: 0,
+      explanation: 'Test',
+      options: [],
+    };
+    expect(checkAnswer(emptyOptionsQuestion, 0)).toBe(false);
   });
 });
 

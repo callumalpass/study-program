@@ -25,13 +25,19 @@ export function isCodingAnswer(answer: QuizAnswer | undefined): answer is Coding
 /**
  * Get the correct option index for a multiple choice question.
  * Handles both numeric indices and string values that match an option.
+ * Returns -1 if no valid answer is found or the index is out of bounds.
  */
 export function getCorrectOptionIndex(question: QuizQuestion): number {
   const correctAnswer = question.correctAnswer;
+  const optionsLength = question.options?.length ?? 0;
 
-  // If already a number, return it directly
+  // If already a number, validate it's within bounds
   if (typeof correctAnswer === 'number') {
-    return correctAnswer;
+    if (correctAnswer >= 0 && correctAnswer < optionsLength) {
+      return correctAnswer;
+    }
+    // Out of bounds numeric index
+    return -1;
   }
 
   // If a string, find the matching option index
@@ -56,6 +62,8 @@ export function checkAnswer(question: QuizQuestion, answer: QuizAnswer | undefin
     case 'multiple_choice': {
       // For multiple choice, compare the selected index to the correct index
       const correctIndex = getCorrectOptionIndex(question);
+      // If no valid correct answer exists (returns -1), the question cannot be answered correctly
+      if (correctIndex === -1) return false;
       return answer === correctIndex;
     }
     case 'true_false':
