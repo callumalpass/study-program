@@ -71,7 +71,11 @@ export function Quiz({ quiz, onComplete, durationMinutes, isExam = false }: Quiz
     onComplete(attempt);
   }, [quiz, state.answers, state.submitted, onComplete]);
 
-  // Timer effect
+  // Keep a ref to handleSubmit so the timer effect doesn't re-run on every answer change
+  const handleSubmitRef = useRef(handleSubmit);
+  handleSubmitRef.current = handleSubmit;
+
+  // Timer effect - uses ref to avoid dependency on handleSubmit which changes on every answer
   useEffect(() => {
     if (!durationMinutes || state.submitted) return;
 
@@ -79,7 +83,8 @@ export function Quiz({ quiz, onComplete, durationMinutes, isExam = false }: Quiz
       setTimeRemaining((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
-          handleSubmit(true);
+          // Use ref to get current handleSubmit without causing effect to re-run
+          handleSubmitRef.current(true);
           return 0;
         }
         return prev - 1;
@@ -87,7 +92,7 @@ export function Quiz({ quiz, onComplete, durationMinutes, isExam = false }: Quiz
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [durationMinutes, state.submitted, handleSubmit]);
+  }, [durationMinutes, state.submitted]);
 
   const score = state.submitted ? calculateScore(quiz.questions, state.answers) : 0;
   const correctCount = state.submitted
