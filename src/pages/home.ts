@@ -296,7 +296,12 @@ function calculateStats(subjects: Subject[], userProgress: UserProgress): {
   let totalQuizScore = 0;
   let quizAttemptCount = 0;
 
-  Object.entries(userProgress.subjects).forEach(([_subjectId, progress]) => {
+  // Create a set of subject IDs that are in the filtered list for fast lookup
+  const selectedSubjectIds = new Set(subjects.map(s => s.id));
+
+  Object.entries(userProgress.subjects).forEach(([subjectId, progress]) => {
+    // Only count stats for subjects in the filtered list
+    if (!selectedSubjectIds.has(subjectId)) return;
     // Count quizzes
     Object.values(progress.quizAttempts).forEach((attempts: QuizAttempt[]) => {
       if (attempts && attempts.length > 0) {
