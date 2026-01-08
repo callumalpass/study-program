@@ -580,6 +580,62 @@ describe('Duplicate Options Validation', () => {
   });
 });
 
+describe('Multiple Choice correctAnswer Type Validation', () => {
+  describe('CS402 topic-4 quizzes should use numeric correctAnswer indices', () => {
+    const cs402Topic4File = join(SUBJECTS_DIR, 'cs402', 'content', 'topic-4', 'quizzes.json');
+
+    it('validates all multiple_choice questions use numeric correctAnswer', () => {
+      const quizzes = loadJsonFile<Quiz[]>(cs402Topic4File);
+      const errors: string[] = [];
+
+      for (const quiz of quizzes) {
+        for (const question of quiz.questions) {
+          if (question.type === 'multiple_choice') {
+            if (typeof question.correctAnswer !== 'number') {
+              errors.push(
+                `${quiz.id}/${question.id}: correctAnswer should be numeric index, got ${typeof question.correctAnswer}`
+              );
+            } else if (question.correctAnswer < 0 || question.correctAnswer >= (question.options?.length ?? 0)) {
+              errors.push(
+                `${quiz.id}/${question.id}: correctAnswer ${question.correctAnswer} is out of bounds for ${question.options?.length} options`
+              );
+            }
+          }
+        }
+      }
+
+      expect(errors, `Found ${errors.length} issues:\n${errors.join('\n')}`).toHaveLength(0);
+    });
+  });
+
+  describe('Math302 topic-1 quizzes should use numeric correctAnswer indices', () => {
+    const math302Topic1File = join(SUBJECTS_DIR, 'math302', 'content', 'topic-1', 'quizzes.json');
+
+    it('validates all multiple_choice questions use numeric correctAnswer', () => {
+      const quizzes = loadJsonFile<Quiz[]>(math302Topic1File);
+      const errors: string[] = [];
+
+      for (const quiz of quizzes) {
+        for (const question of quiz.questions) {
+          if (question.type === 'multiple_choice') {
+            if (typeof question.correctAnswer !== 'number') {
+              errors.push(
+                `${quiz.id}/${question.id}: correctAnswer should be numeric index, got ${typeof question.correctAnswer}`
+              );
+            } else if (question.correctAnswer < 0 || question.correctAnswer >= (question.options?.length ?? 0)) {
+              errors.push(
+                `${quiz.id}/${question.id}: correctAnswer ${question.correctAnswer} is out of bounds for ${question.options?.length} options`
+              );
+            }
+          }
+        }
+      }
+
+      expect(errors, `Found ${errors.length} issues:\n${errors.join('\n')}`).toHaveLength(0);
+    });
+  });
+});
+
 describe('Exam Structure Validation', () => {
   const examFiles = findExamFiles(SUBJECTS_DIR);
 

@@ -60,14 +60,18 @@ describe('Math302 Topic 1 - First-Order ODEs', () => {
     it('math302-q1: dy/dx = xy is separable', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q1');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('dy/dx = xy');
+      // correctAnswer is numeric index (0 = "dy/dx = xy")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('dy/dx = xy');
       // Verify this is correct: dy/dx = xy can be written as dy/y = x dx
     });
 
     it('math302-q2: Solution of dy/dx = 2xy with y(0) = 1 is e^(x²)', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q2');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('y = e^(x²)');
+      // correctAnswer is numeric index (0 = "y = e^(x²)")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('y = e^(x²)');
       // Verify: dy/y = 2x dx → ln|y| = x² + C → y = e^(x² + C)
       // With y(0) = 1: 1 = e^C → C = 0, so y = e^(x²)
     });
@@ -75,15 +79,18 @@ describe('Math302 Topic 1 - First-Order ODEs', () => {
     it('math302-q3: Integrating factor for dy/dx + 2y = x is e^(2x)', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q3');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('e^(2x)');
+      // correctAnswer is numeric index (0 = "e^(2x)")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('e^(2x)');
       // Verify: μ(x) = e^(∫P dx) = e^(∫2 dx) = e^(2x)
     });
 
     it('math302-q4: Solution of dy/dx + y = e^x is (1/2)e^x + Ce^(-x)', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q4');
       expect(q).toBeDefined();
-      // This is the corrected answer - previously was incorrectly (x/2)e^x
-      expect(q!.correctAnswer).toBe('y = (1/2)e^x + Ce^(-x)');
+      // correctAnswer is numeric index (0 = "y = (1/2)e^x + Ce^(-x)")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('y = (1/2)e^x + Ce^(-x)');
       // Verify: Integrating factor is e^x
       // d/dx(ye^x) = e^(2x)
       // ye^x = (1/2)e^(2x) + C
@@ -93,7 +100,9 @@ describe('Math302 Topic 1 - First-Order ODEs', () => {
     it('math302-q5: Homogeneous substitution for dy/dx = (x² + y²)/xy', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q5');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('Homogeneous substitution v = y/x');
+      // correctAnswer is numeric index (0 = "Homogeneous substitution v = y/x")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('Homogeneous substitution v = y/x');
       // Verify: The equation is homogeneous of degree 0 since both numerator
       // and denominator are degree 2 in x and y
     });
@@ -109,13 +118,17 @@ describe('Math302 Topic 1 - First-Order ODEs', () => {
     it('math302-q6: Exactness condition is ∂M/∂y = ∂N/∂x', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q6');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('∂M/∂y = ∂N/∂x');
+      // correctAnswer is numeric index (0 = "∂M/∂y = ∂N/∂x")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('∂M/∂y = ∂N/∂x');
     });
 
     it('math302-q7: (2xy + 3)dx + (x² - 1)dy = 0 is exact', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q7');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('Yes, because ∂M/∂y = ∂N/∂x = 2x');
+      // correctAnswer is numeric index (0 = "Yes, because ∂M/∂y = ∂N/∂x = 2x")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('Yes, because ∂M/∂y = ∂N/∂x = 2x');
       // Verify: M = 2xy + 3, ∂M/∂y = 2x
       //         N = x² - 1, ∂N/∂x = 2x
       // Equal, so exact
@@ -124,7 +137,9 @@ describe('Math302 Topic 1 - First-Order ODEs', () => {
     it('math302-q9: Solution of 2x dx + 2y dy = 0 is x² + y² = C', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q9');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('x² + y² = C');
+      // correctAnswer is numeric index (0 = "x² + y² = C")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('x² + y² = C');
       // Verify: F(x,y) = x² + y² satisfies ∂F/∂x = 2x, ∂F/∂y = 2y
     });
   });
@@ -139,13 +154,17 @@ describe('Math302 Topic 1 - First-Order ODEs', () => {
     it('math302-q11: Picard-Lindelöf requires continuity', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q11');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('Continuous in a region containing (x₀, y₀)');
+      // correctAnswer is numeric index (0 = "Continuous in a region containing (x₀, y₀)")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('Continuous in a region containing (x₀, y₀)');
     });
 
     it('math302-q12: dy/dx = y^(1/3), y(0) = 0 may have non-unique solution', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q12');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('Solution exists but may not be unique');
+      // correctAnswer is numeric index (0 = "Solution exists but may not be unique")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('Solution exists but may not be unique');
       // Verify: f(x,y) = y^(1/3) is continuous at y=0
       // but ∂f/∂y = (1/3)y^(-2/3) is not continuous at y=0
       // So existence is guaranteed but not uniqueness
@@ -154,7 +173,9 @@ describe('Math302 Topic 1 - First-Order ODEs', () => {
     it('math302-q13: dy/dx = x² + y², y(0) = 1 has unique solution', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q13');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('dy/dx = x² + y², y(0) = 1');
+      // correctAnswer is numeric index (0 = "dy/dx = x² + y², y(0) = 1")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('dy/dx = x² + y², y(0) = 1');
       // Verify: f(x,y) = x² + y² is polynomial, so f and ∂f/∂y = 2y
       // are both continuous everywhere
     });
@@ -162,7 +183,9 @@ describe('Math302 Topic 1 - First-Order ODEs', () => {
     it('math302-q15: Autonomous equations depend only on y', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q15');
       expect(q).toBeDefined();
-      expect(q!.correctAnswer).toBe('f depends only on y, not x');
+      // correctAnswer is numeric index (0 = "f depends only on y, not x")
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('f depends only on y, not x');
     });
   });
 });
@@ -302,9 +325,11 @@ describe('Mathematical correctness verification', () => {
       const quiz = quizzes.find(q => q.id === 'math302-quiz-1-1');
       const q = quiz!.questions.find(q => q.id === 'math302-q4');
 
-      // The correct answer must be (1/2)e^x + Ce^(-x), not (x/2)e^x
-      expect(q!.correctAnswer).toBe('y = (1/2)e^x + Ce^(-x)');
-      expect(q!.correctAnswer).not.toBe('y = (x/2)e^x + Ce^(-x)');
+      // correctAnswer is numeric index 0, verify the option is correct
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('y = (1/2)e^x + Ce^(-x)');
+      // Verify the incorrect answer is not at index 0
+      expect(q!.options![0]).not.toBe('y = (x/2)e^x + Ce^(-x)');
     });
 
     it('verifies explanation matches the correct answer', () => {
@@ -331,7 +356,9 @@ describe('Mathematical correctness verification', () => {
       const quiz = quizzes.find(q => q.id === 'math302-quiz-1-1');
       const q = quiz!.questions.find(q => q.id === 'math302-q2');
 
-      expect(q!.correctAnswer).toBe('y = e^(x²)');
+      // correctAnswer is numeric index 0, verify the option is correct
+      expect(q!.correctAnswer).toBe(0);
+      expect(q!.options![0]).toBe('y = e^(x²)');
     });
   });
 });

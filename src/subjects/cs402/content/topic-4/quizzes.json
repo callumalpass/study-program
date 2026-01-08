@@ -15,7 +15,7 @@
           "A kernel method",
           "A decision tree variant"
         ],
-        "correctAnswer": "A binary linear classifier: output = sign(wᵀx + b)",
+        "correctAnswer": 0,
         "explanation": "The perceptron is the simplest neural unit, computing a weighted sum and applying a threshold/sign function. It can only learn linearly separable functions."
       },
       {
@@ -28,7 +28,7 @@
           "To prevent overfitting",
           "To handle missing data"
         ],
-        "correctAnswer": "Without them, multiple layers collapse to a single linear transformation",
+        "correctAnswer": 0,
         "explanation": "Composing linear transformations yields another linear transformation: f(Wx + b) = Wx + b without non-linearity. Activation functions enable learning complex non-linear functions."
       },
       {
@@ -41,7 +41,7 @@
           "Tanh",
           "Step function"
         ],
-        "correctAnswer": "ReLU (Rectified Linear Unit)",
+        "correctAnswer": 0,
         "explanation": "ReLU(x) = max(0,x) is popular because it's computationally efficient, doesn't saturate for positive values, and enables sparse activations. It largely replaced sigmoid/tanh in hidden layers."
       },
       {
@@ -54,7 +54,7 @@
           "K-means clustering",
           "Genetic algorithms"
         ],
-        "correctAnswer": "Backpropagation with gradient descent",
+        "correctAnswer": 0,
         "explanation": "Backpropagation efficiently computes gradients by applying the chain rule backward through the network. These gradients are used with gradient descent (or variants) to update weights."
       },
       {
@@ -67,7 +67,7 @@
           "Too fast convergence",
           "Memory overflow"
         ],
-        "correctAnswer": "Vanishing gradients",
+        "correctAnswer": 0,
         "explanation": "Sigmoid and tanh have small derivatives (<0.25) near their saturation regions. When multiplied across many layers during backprop, gradients exponentially decay, preventing learning in early layers."
       }
     ]
@@ -88,7 +88,7 @@
           "Activation functions",
           "Dataset size"
         ],
-        "correctAnswer": "Learning rate and weight initialization",
+        "correctAnswer": 0,
         "explanation": "Learning rate too high causes divergence, too low means no progress. Poor initialization can cause dead neurons or gradient issues. These are the most common culprits for failed training."
       },
       {
@@ -101,7 +101,7 @@
           "Stopping training early",
           "Removing features from input"
         ],
-        "correctAnswer": "Randomly deactivating neurons during training to prevent co-adaptation",
+        "correctAnswer": 0,
         "explanation": "Dropout randomly sets neuron outputs to 0 with probability p during training, forcing the network to learn redundant representations. At test time, all neurons are active but scaled by (1-p)."
       },
       {
@@ -114,7 +114,7 @@
           "To speed up inference",
           "To handle imbalanced classes"
         ],
-        "correctAnswer": "To stabilize training by normalizing layer inputs and enable higher learning rates",
+        "correctAnswer": 0,
         "explanation": "Batch normalization normalizes layer inputs to have mean 0 and variance 1 per mini-batch, reducing internal covariate shift. This stabilizes training and allows higher learning rates."
       },
       {
@@ -127,7 +127,7 @@
           "Use exactly as many as input features",
           "Use as many as possible"
         ],
-        "correctAnswer": "Start with a reasonable size and tune via validation performance",
+        "correctAnswer": 0,
         "explanation": "There's no universal rule. Start with a moderate size (e.g., similar to input dimension), then increase if underfitting or decrease/regularize if overfitting, guided by validation error."
       },
       {
@@ -140,7 +140,7 @@
           "Requires no hyperparameters",
           "Always faster than SGD"
         ],
-        "correctAnswer": "Adapts learning rate per parameter using momentum and RMSprop",
+        "correctAnswer": 0,
         "explanation": "Adam combines momentum (exponential moving average of gradients) and RMSprop (adaptive learning rates). This often works well out-of-the-box with default hyperparameters β₁=0.9, β₂=0.999, α=0.001."
       }
     ]
@@ -161,7 +161,7 @@
           "Deep networks are always better than shallow ones",
           "Backpropagation always finds the global minimum"
         ],
-        "correctAnswer": "A neural network with one hidden layer can approximate any continuous function",
+        "correctAnswer": 0,
         "explanation": "The UAT states a 2-layer network with enough hidden units can approximate any continuous function on a compact domain arbitrarily well. However, depth can make learning much more efficient."
       },
       {
@@ -174,7 +174,7 @@
           "∂L/∂wᵢⱼ = Σwᵢⱼ²",
           "∂L/∂wᵢⱼ = log(aⱼ)"
         ],
-        "correctAnswer": "∂L/∂wᵢⱼ = ∂L/∂zⱼ · ∂zⱼ/∂wᵢⱼ = δⱼ · aᵢ",
+        "correctAnswer": 0,
         "explanation": "Backprop applies chain rule: gradient w.r.t. weight wᵢⱼ is the error term δⱼ = ∂L/∂zⱼ times the input activation aᵢ. Error terms propagate backward via δⱼ = (Σwⱼₖδₖ)·f'(zⱼ)."
       },
       {
@@ -187,7 +187,7 @@
           "Makes all neurons identical",
           "Speeds up convergence to global minimum"
         ],
-        "correctAnswer": "Keeps variance of activations and gradients consistent across layers",
+        "correctAnswer": 0,
         "explanation": "Xavier initialization sets weights from N(0, 1/n_in) or U(-√(6/(n_in+n_out)), √(6/(n_in+n_out))). This maintains activation variance through layers, preventing vanishing/exploding activations."
       },
       {
@@ -200,7 +200,7 @@
           "∂ReLU(z)/∂z = 1/(1+e^(-z))",
           "∂ReLU(z)/∂z = 1-tanh²(z)"
         ],
-        "correctAnswer": "∂ReLU(z)/∂z = 1 if z>0, else 0 (undefined at 0)",
+        "correctAnswer": 0,
         "explanation": "ReLU gradient is simple: 1 for positive inputs (allows gradient flow) and 0 for negative (blocks gradient). This simplicity and lack of saturation for positive values helps deep networks train."
       },
       {
@@ -213,7 +213,7 @@
           "ReLU is too slow to compute",
           "ReLU requires too much memory"
         ],
-        "correctAnswer": "Neurons can get stuck outputting 0 for all inputs due to large negative bias",
+        "correctAnswer": 0,
         "explanation": "A neuron with large negative weighted sum will output 0, receive gradient 0, and never recover. This \"dies\" the neuron. Leaky ReLU (small negative slope) prevents this by allowing small gradient for negative inputs."
       }
     ]
