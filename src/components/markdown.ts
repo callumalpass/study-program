@@ -335,12 +335,17 @@ export function generateTableOfContents(markdown: string): Array<{
 
   lines.forEach((line) => {
     // Check for code block start/end (``` or ~~~)
+    // A code block starts with ``` or ~~~ (optionally followed by a language identifier)
+    // A code block ends with ONLY the delimiter (optionally followed by whitespace)
     const codeBlockMatch = line.match(/^(```|~~~)/);
     if (codeBlockMatch) {
       if (!inCodeBlock) {
+        // Starting a code block - can have language identifier after
         inCodeBlock = true;
         codeBlockDelimiter = codeBlockMatch[1];
-      } else if (line.startsWith(codeBlockDelimiter)) {
+      } else if (line.match(new RegExp(`^${codeBlockDelimiter}\\s*$`))) {
+        // Closing a code block - must be ONLY the delimiter (with optional trailing whitespace)
+        // This prevents ```python from closing a ``` code block
         inCodeBlock = false;
         codeBlockDelimiter = '';
       }

@@ -679,4 +679,51 @@ describe('edge cases for answer normalization', () => {
     expect(checkAnswer(question, '')).toBe(true);
     expect(checkAnswer(question, '   ')).toBe(true);
   });
+
+  it('handles unicode in answers', () => {
+    const question = createFillBlank('q1', 'π');
+    expect(checkAnswer(question, 'π')).toBe(true);
+    expect(checkAnswer(question, 'Π')).toBe(true); // uppercase pi
+  });
+
+  it('handles emoji in answers', () => {
+    const question = createFillBlank('q1', '👍');
+    expect(checkAnswer(question, '👍')).toBe(true);
+    expect(checkAnswer(question, '👎')).toBe(false);
+  });
+});
+
+describe('getCorrectOptionIndex additional edge cases', () => {
+  it('returns -1 for undefined options', () => {
+    const question: QuizQuestion = {
+      id: 'q1',
+      type: 'multiple_choice',
+      prompt: 'Test',
+      correctAnswer: 0,
+      explanation: 'Test',
+      options: undefined as unknown as string[],
+    };
+    expect(getCorrectOptionIndex(question)).toBe(-1);
+  });
+
+  it('handles string correctAnswer with case sensitivity', () => {
+    // String matching is exact, not case-insensitive
+    const options = ['Option A', 'Option B', 'Option C'];
+    const question = createMultipleChoice('q1', 'Option A', options);
+    expect(getCorrectOptionIndex(question)).toBe(0);
+
+    const questionLower = createMultipleChoice('q2', 'option a', options);
+    expect(getCorrectOptionIndex(questionLower)).toBe(-1); // exact match required
+  });
+
+  it('handles single option array', () => {
+    const question = createMultipleChoice('q1', 0, ['Only Option']);
+    expect(getCorrectOptionIndex(question)).toBe(0);
+  });
+
+  it('handles large option index', () => {
+    const options = Array.from({ length: 100 }, (_, i) => `Option ${i}`);
+    const question = createMultipleChoice('q1', 99, options);
+    expect(getCorrectOptionIndex(question)).toBe(99);
+  });
 });

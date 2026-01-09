@@ -219,6 +219,121 @@ function foo() {}
       expect(toc).toHaveLength(1);
       expect(toc[0].text).toBe('Real Heading');
     });
+
+    it('handles code fence with language specifier not closing a plain code fence', () => {
+      // A line like ```python should NOT close a ``` code block
+      // because the closing fence must have only the delimiter (no content after)
+      const markdown = `# Documentation
+
+\`\`\`
+Show how to use code:
+\`\`\`python
+# This is inside the outer code block, not a heading
+\`\`\`
+
+# After Code Block`;
+
+      const toc = generateTableOfContents(markdown);
+
+      // The ```python line should NOT close the ``` block
+      // The plain ``` line closes it
+      // So we should have 2 headings
+      expect(toc).toHaveLength(2);
+      expect(toc.map(h => h.text)).toEqual(['Documentation', 'After Code Block']);
+    });
+
+    it('handles tilde fence with language specifier not closing a plain tilde fence', () => {
+      const markdown = `# Documentation
+
+~~~
+Example:
+~~~bash
+# Not a heading
+~~~
+
+# After`;
+
+      const toc = generateTableOfContents(markdown);
+
+      expect(toc).toHaveLength(2);
+      expect(toc.map(h => h.text)).toEqual(['Documentation', 'After']);
+    });
+
+    it('handles closing fence with trailing whitespace', () => {
+      const markdown = `# Title
+
+\`\`\`
+code
+\`\`\`
+
+# After`;
+
+      const toc = generateTableOfContents(markdown);
+
+      expect(toc).toHaveLength(2);
+      expect(toc.map(h => h.text)).toEqual(['Title', 'After']);
+    });
+
+    it('handles opening fence with trailing whitespace (no language)', () => {
+      const markdown = `# Title
+
+\`\`\`
+# Not a heading
+\`\`\`
+
+# After`;
+
+      const toc = generateTableOfContents(markdown);
+
+      expect(toc).toHaveLength(2);
+      expect(toc.map(h => h.text)).toEqual(['Title', 'After']);
+    });
+
+    it('handles code block immediately after heading', () => {
+      const markdown = `# Title
+\`\`\`
+# comment
+\`\`\`
+# After`;
+
+      const toc = generateTableOfContents(markdown);
+
+      expect(toc).toHaveLength(2);
+      expect(toc.map(h => h.text)).toEqual(['Title', 'After']);
+    });
+
+    it('handles multiple consecutive code blocks', () => {
+      const markdown = `# Start
+
+\`\`\`
+# code1
+\`\`\`
+
+\`\`\`
+# code2
+\`\`\`
+
+# End`;
+
+      const toc = generateTableOfContents(markdown);
+
+      expect(toc).toHaveLength(2);
+      expect(toc.map(h => h.text)).toEqual(['Start', 'End']);
+    });
+
+    it('handles empty code blocks', () => {
+      const markdown = `# Title
+
+\`\`\`
+\`\`\`
+
+# After`;
+
+      const toc = generateTableOfContents(markdown);
+
+      expect(toc).toHaveLength(2);
+      expect(toc.map(h => h.text)).toEqual(['Title', 'After']);
+    });
   });
 
   describe('edge cases', () => {
