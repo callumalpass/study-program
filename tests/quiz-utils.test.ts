@@ -124,9 +124,13 @@ describe('normalizeAnswer', () => {
     });
   });
 
-  describe('undefined handling', () => {
+  describe('undefined and null handling', () => {
     it('returns empty string for undefined', () => {
       expect(normalizeAnswer(undefined)).toBe('');
+    });
+
+    it('returns empty string for null', () => {
+      expect(normalizeAnswer(null)).toBe('');
     });
   });
 
