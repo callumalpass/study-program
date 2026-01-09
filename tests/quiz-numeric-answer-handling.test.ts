@@ -154,7 +154,7 @@ describe('Numeric answer edge cases in code_output questions', () => {
     it('handles list output', () => {
       const question = createCodeOutputQuestion('q1', '[1, 2, 3]', 'print([1, 2, 3])');
       expect(checkAnswer(question, '[1, 2, 3]')).toBe(true);
-      expect(checkAnswer(question, '[1,2,3]')).toBe(false); // spacing matters
+      expect(checkAnswer(question, '[1,2,3]')).toBe(true); // whitespace is now normalized
     });
 
     it('handles tuple output', () => {

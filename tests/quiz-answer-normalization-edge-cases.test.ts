@@ -321,7 +321,7 @@ describe('checkAnswer - code output edge cases', () => {
   it('handles list output as string', () => {
     const question = createQuestion('code_output', '[1, 2, 3]');
     expect(checkAnswer(question, '[1, 2, 3]')).toBe(true);
-    expect(checkAnswer(question, '[1,2,3]')).toBe(false); // Spaces matter
+    expect(checkAnswer(question, '[1,2,3]')).toBe(true); // Whitespace is now normalized
   });
 
   it('handles dict output as string', () => {

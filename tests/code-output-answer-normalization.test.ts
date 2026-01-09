@@ -199,17 +199,17 @@ describe('Code Output Answer Normalization', () => {
         expect(checkAnswer(q, '[1, 2, 3]')).toBe(true);
       });
 
-      it('list output respects internal spacing', () => {
+      it('list output normalizes whitespace around punctuation', () => {
         const q = makeCodeOutputQuestion('[1, 2, 3]');
-        // These should fail because internal spacing differs
-        expect(checkAnswer(q, '[1,2,3]')).toBe(false);
-        expect(checkAnswer(q, '[1 , 2 , 3]')).toBe(false);
+        // These should pass because whitespace is now normalized for code_output
+        expect(checkAnswer(q, '[1,2,3]')).toBe(true);
+        expect(checkAnswer(q, '[1 , 2 , 3]')).toBe(true);
       });
 
-      it('matches empty list', () => {
+      it('matches empty list with various spacing', () => {
         const q = makeCodeOutputQuestion('[]');
         expect(checkAnswer(q, '[]')).toBe(true);
-        expect(checkAnswer(q, '[ ]')).toBe(false);
+        expect(checkAnswer(q, '[ ]')).toBe(true); // Now accepted
       });
 
       it('matches tuple output', () => {
@@ -280,8 +280,8 @@ describe('Code Output Answer Normalization', () => {
       it('handles range to list conversion', () => {
         const q = makeCodeOutputQuestion('[0, 1, 2]');
         expect(checkAnswer(q, '[0, 1, 2]')).toBe(true);
-        // This is a known limitation - spacing must match exactly
-        expect(checkAnswer(q, '[0,1,2]')).toBe(false);
+        // Whitespace is now normalized for code_output questions
+        expect(checkAnswer(q, '[0,1,2]')).toBe(true);
       });
 
       it('handles string slicing output', () => {

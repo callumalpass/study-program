@@ -106,9 +106,9 @@ describe('checkAnswer with numeric correctAnswer values', () => {
       expect(checkAnswer(listOutputQuestion, '[0, 1, 2]')).toBe(true);
     });
 
-    it('rejects different spacing', () => {
-      // Spacing differences cause mismatch
-      expect(checkAnswer(listOutputQuestion, '[0,1,2]')).toBe(false);
+    it('accepts different spacing (whitespace normalized)', () => {
+      // Whitespace is now normalized for code_output questions
+      expect(checkAnswer(listOutputQuestion, '[0,1,2]')).toBe(true);
     });
   });
 });

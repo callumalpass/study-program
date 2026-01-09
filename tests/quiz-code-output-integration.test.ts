@@ -80,7 +80,7 @@ describe('Code Output - Data Structure Representations', () => {
     it('handles nested lists', () => {
       const q = createCodeOutputQuestion('[[1, 2], [3, 4]]');
       expect(checkAnswer(q, '[[1, 2], [3, 4]]')).toBe(true);
-      expect(checkAnswer(q, '[[1,2],[3,4]]')).toBe(false); // spacing matters
+      expect(checkAnswer(q, '[[1,2],[3,4]]')).toBe(true); // whitespace is now normalized
     });
 
     it('handles list with strings', () => {
@@ -317,12 +317,12 @@ describe('Code Output - calculateScore Integration', () => {
 
     const mixedAnswers: Record<string, QuizAnswer> = {
       q1: '42',         // correct
-      q2: '[1,2,3]',    // wrong (spacing)
+      q2: '[1,2,3]',    // correct (whitespace now normalized)
       q3: 'True',       // correct
       q4: 'goodbye',    // wrong
     };
 
-    expect(calculateScore(questions, mixedAnswers)).toBe(50);
+    expect(calculateScore(questions, mixedAnswers)).toBe(75);
   });
 
   it('handles missing answers as incorrect', () => {

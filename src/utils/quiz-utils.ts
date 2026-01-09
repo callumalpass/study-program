@@ -16,6 +16,28 @@ export function normalizeAnswer(value: string | number | boolean | undefined | n
 }
 
 /**
+ * Normalize code output for comparison.
+ * In addition to standard normalization, this also normalizes whitespace around
+ * punctuation so that "[1, 2, 3]" matches "[1,2,3]" and "(a, b)" matches "(a,b)".
+ * This is important for code_output questions where users might type without spaces.
+ */
+export function normalizeCodeOutput(value: string | number | boolean | undefined | null): string {
+  if (value === undefined || value === null) return '';
+  return String(value)
+    .trim()
+    .toLowerCase()
+    // Normalize whitespace around common punctuation: commas, colons, brackets
+    .replace(/\s*,\s*/g, ', ')      // Standardize comma spacing
+    .replace(/\s*:\s*/g, ': ')      // Standardize colon spacing (for dicts)
+    .replace(/\[\s+/g, '[')         // Remove space after [
+    .replace(/\s+\]/g, ']')         // Remove space before ]
+    .replace(/\(\s+/g, '(')         // Remove space after (
+    .replace(/\s+\)/g, ')')         // Remove space before )
+    .replace(/\{\s+/g, '{')         // Remove space after {
+    .replace(/\s+\}/g, '}');        // Remove space before }
+}
+
+/**
  * Type guard to check if an answer is a CodingAnswer object.
  */
 export function isCodingAnswer(answer: QuizAnswer | undefined): answer is CodingAnswer {
@@ -68,8 +90,13 @@ export function checkAnswer(question: QuizQuestion, answer: QuizAnswer | undefin
     }
     case 'true_false':
       return answer === question.correctAnswer;
+    case 'code_output': {
+      // For code output, use normalizeCodeOutput which handles whitespace around punctuation
+      // This allows "[1,2,3]" to match "[1, 2, 3]" for better user experience
+      const normalizedAnswer = isCodingAnswer(answer) ? '' : normalizeCodeOutput(answer as string | number | boolean | undefined);
+      return normalizedAnswer === normalizeCodeOutput(question.correctAnswer);
+    }
     case 'fill_blank':
-    case 'code_output':
     case 'written': {
       // Use normalizeAnswer on both sides - it handles string, number, boolean, and undefined
       // This ensures numeric answers (e.g., 5) match numeric correctAnswers (e.g., "5")

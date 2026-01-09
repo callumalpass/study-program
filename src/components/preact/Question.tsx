@@ -7,7 +7,7 @@ import { Icons } from '@/components/icons';
 import { CompactCodeEditor } from './CodeEditor';
 import type { TestResult } from '@/components/code-runner';
 import Prism from 'prismjs';
-import { normalizeAnswer, getCorrectOptionIndex, isCodingAnswer as isCodingAnswerUtil } from '@/utils/quiz-utils';
+import { normalizeAnswer, normalizeCodeOutput, getCorrectOptionIndex, isCodingAnswer as isCodingAnswerUtil } from '@/utils/quiz-utils';
 
 interface QuestionProps {
   question: QuizQuestion;
@@ -133,9 +133,31 @@ export function Question({
           </div>
         );
 
-      case 'fill_blank':
       case 'code_output': {
-        // For fill_blank and code_output, answer is always a string
+        // For code_output, use normalizeCodeOutput for flexible whitespace matching
+        const textAnswer = typeof answer === 'string' ? answer : '';
+        const isTextCorrect = showFeedback &&
+          normalizeCodeOutput(textAnswer) === normalizeCodeOutput(question.correctAnswer);
+        const inputClass = showFeedback
+          ? `text-input ${isTextCorrect ? 'correct' : 'incorrect'}`
+          : 'text-input';
+
+        return (
+          <div class="answer-container">
+            <input
+              type="text"
+              class={inputClass}
+              placeholder="Enter the expected output..."
+              value={textAnswer}
+              disabled={showFeedback}
+              onInput={(e) => handleTextInput((e.target as HTMLInputElement).value)}
+            />
+          </div>
+        );
+      }
+
+      case 'fill_blank': {
+        // For fill_blank, use normalizeAnswer for exact matching (case-insensitive)
         const textAnswer = typeof answer === 'string' ? answer : '';
         const isTextCorrect = showFeedback &&
           normalizeAnswer(textAnswer) === normalizeAnswer(question.correctAnswer);
@@ -148,11 +170,7 @@ export function Question({
             <input
               type="text"
               class={inputClass}
-              placeholder={
-                question.type === 'code_output'
-                  ? 'Enter the expected output...'
-                  : 'Enter your answer...'
-              }
+              placeholder="Enter your answer..."
               value={textAnswer}
               disabled={showFeedback}
               onInput={(e) => handleTextInput((e.target as HTMLInputElement).value)}

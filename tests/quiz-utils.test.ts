@@ -668,10 +668,10 @@ describe('edge cases for answer normalization', () => {
     expect(checkAnswer(question, 999999999999)).toBe(true);
   });
 
-  it('handles answers with special characters preserved', () => {
+  it('handles answers with special characters (whitespace normalized)', () => {
     const question = createCodeOutput('q1', '[1, 2, 3]');
     expect(checkAnswer(question, '[1, 2, 3]')).toBe(true);
-    expect(checkAnswer(question, '[1,2,3]')).toBe(false); // Different spacing matters
+    expect(checkAnswer(question, '[1,2,3]')).toBe(true); // Whitespace is now normalized
   });
 
   it('handles empty code_output answer', () => {

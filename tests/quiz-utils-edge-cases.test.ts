@@ -11,6 +11,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   normalizeAnswer,
+  normalizeCodeOutput,
   isCodingAnswer,
   getCorrectOptionIndex,
   checkAnswer,
@@ -704,14 +705,44 @@ describe('Integration: mixed question types scoring', () => {
       },
     ];
 
-    // Student gets 3/4 correct
+    // Student gets all 4 correct
+    // Note: code_output now uses normalizeCodeOutput which handles whitespace
     const answers = {
       mc1: 2, // correct
       tf1: true, // correct
       fill1: 'fifo', // correct (case insensitive)
-      code1: '[0,1,2]', // wrong (different formatting)
+      code1: '[0,1,2]', // correct (whitespace normalized for code_output)
     };
 
-    expect(calculateScore(mixedQuiz, answers)).toBe(75);
+    expect(calculateScore(mixedQuiz, answers)).toBe(100);
+  });
+
+  it('correctly marks wrong content as incorrect', () => {
+    const mixedQuiz: QuizQuestion[] = [
+      {
+        id: 'mc1',
+        type: 'multiple_choice',
+        prompt: 'What is 2+2?',
+        correctAnswer: 1,
+        explanation: 'Basic math',
+        options: ['3', '4', '5', '6'],
+      },
+      {
+        id: 'code1',
+        type: 'code_output',
+        prompt: 'What does this print?',
+        codeSnippet: 'print([1, 2, 3])',
+        correctAnswer: '[1, 2, 3]',
+        explanation: 'List literal',
+      },
+    ];
+
+    // Student gets 1/2 correct - wrong values, not just formatting
+    const answers = {
+      mc1: 1, // correct
+      code1: '[1, 2, 4]', // wrong - different value
+    };
+
+    expect(calculateScore(mixedQuiz, answers)).toBe(50);
   });
 });
