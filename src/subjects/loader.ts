@@ -29,8 +29,10 @@ interface ParsedMarkdown {
  * Frontmatter is YAML between --- markers at the start of the file.
  */
 export function parseFrontmatter(markdown: string): ParsedMarkdown {
+  // Normalize line endings (CRLF to LF) for consistent parsing
+  const normalizedMarkdown = markdown.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
   const frontmatterRegex = /^---\n([\s\S]*?)\n---\n?([\s\S]*)$/;
-  const match = markdown.match(frontmatterRegex);
+  const match = normalizedMarkdown.match(frontmatterRegex);
 
   if (!match) {
     return { frontmatter: {}, content: markdown };
