@@ -15,7 +15,7 @@
           "document.getElement()",
           "document.selectById()"
         ],
-        "correctAnswer": "document.getElementById()",
+        "correctAnswer": 1,
         "explanation": "document.getElementById() selects a single element by its ID attribute. It returns the element or null if not found."
       },
       {
@@ -35,7 +35,7 @@
           "element.content = \"new text\"",
           "element.setText(\"new text\")"
         ],
-        "correctAnswer": "element.textContent = \"new text\"",
+        "correctAnswer": 1,
         "explanation": "The textContent property sets or returns the text content of an element and its descendants."
       },
       {
@@ -48,7 +48,7 @@
           "innerText",
           "content"
         ],
-        "correctAnswer": "innerHTML",
+        "correctAnswer": 0,
         "explanation": "innerHTML gets or sets the HTML markup contained within an element. Use with caution as it can introduce XSS vulnerabilities."
       },
       {
@@ -76,7 +76,7 @@
           "Preventing default behavior",
           "Stopping event propagation"
         ],
-        "correctAnswer": "Attaching events to parent instead of children",
+        "correctAnswer": 1,
         "explanation": "Event delegation attaches an event listener to a parent element to handle events from its children, leveraging event bubbling for efficiency."
       },
       {
@@ -96,7 +96,7 @@
           "Removes the event listener",
           "Delays the event"
         ],
-        "correctAnswer": "Prevents the default action",
+        "correctAnswer": 1,
         "explanation": "preventDefault() prevents the default action of an event (e.g., preventing form submission or link navigation)."
       },
       {
@@ -109,7 +109,7 @@
           "Removes event listener",
           "Triggers parent events"
         ],
-        "correctAnswer": "Stops event from bubbling up",
+        "correctAnswer": 1,
         "explanation": "stopPropagation() prevents the event from bubbling up to parent elements in the DOM tree."
       },
       {
@@ -137,7 +137,7 @@
           "currentTarget is deprecated",
           "target is for bubbling, currentTarget for capturing"
         ],
-        "correctAnswer": "target is the element that triggered, currentTarget is where listener is attached",
+        "correctAnswer": 1,
         "explanation": "event.target is the element that actually triggered the event, while event.currentTarget is the element to which the event listener is attached."
       },
       {
@@ -157,7 +157,7 @@
           "element.removeNode()",
           "element.destroy()"
         ],
-        "correctAnswer": "element.remove()",
+        "correctAnswer": 1,
         "explanation": "The remove() method removes the element from the DOM. Alternatively, you can use parentNode.removeChild(element)."
       },
       {
@@ -170,7 +170,7 @@
           "empty string",
           "Error"
         ],
-        "correctAnswer": "null",
+        "correctAnswer": 1,
         "explanation": "getAttribute() returns null if the specified attribute does not exist on the element."
       },
       {
