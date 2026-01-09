@@ -5,6 +5,7 @@ import { githubService } from '@/services/github';
 import { Icons } from '@/components/icons';
 import { Mascots } from '@/components/mascots';
 import { validateGeminiApiKey } from '@/utils/gemini-eval';
+import { escapeHtml } from '@/utils/html';
 
 /**
  * Render the settings page
@@ -424,7 +425,7 @@ function attachEventListeners(container: HTMLElement): void {
         }
       } catch (error) {
         console.error(error);
-        githubStatus.innerHTML = `${Icons.Cross} Error: ` + (error instanceof Error ? error.message : 'Unknown error');
+        githubStatus.innerHTML = `${Icons.Cross} Error: ` + escapeHtml(error instanceof Error ? error.message : 'Unknown error');
         githubStatus.style.color = 'var(--color-error)';
       } finally {
         connectGithubBtn.disabled = false;
@@ -462,7 +463,7 @@ function attachEventListeners(container: HTMLElement): void {
         }
       } catch (error) {
         console.error(error);
-        syncStatus.innerHTML = `${Icons.Cross} Error: ` + (error instanceof Error ? error.message : 'Unknown error');
+        syncStatus.innerHTML = `${Icons.Cross} Error: ` + escapeHtml(error instanceof Error ? error.message : 'Unknown error');
         syncStatus.style.color = 'var(--color-error)';
       } finally {
         syncNowBtn.disabled = false;
@@ -507,7 +508,7 @@ function attachEventListeners(container: HTMLElement): void {
         saveGeminiKeyBtn.textContent = 'Update';
       } catch (error) {
         console.error(error);
-        geminiStatus.innerHTML = `${Icons.Cross} Error: ` + (error instanceof Error ? error.message : 'Invalid key');
+        geminiStatus.innerHTML = `${Icons.Cross} Error: ` + escapeHtml(error instanceof Error ? error.message : 'Invalid key');
         geminiStatus.style.color = 'var(--color-error)';
         saveGeminiKeyBtn.textContent = originalBtnText || 'Save';
       } finally {

@@ -275,7 +275,7 @@ export function renderFunctionPlots(): void {
       element.setAttribute('data-rendered', 'true');
     } catch (error) {
       console.error('Function plot rendering error:', error);
-      element.innerHTML = `<div class="plot-error">Error rendering plot: ${error instanceof Error ? error.message : 'Unknown error'}</div>`;
+      element.innerHTML = `<div class="plot-error">Error rendering plot: ${escapeHtml(error instanceof Error ? error.message : 'Unknown error')}</div>`;
     }
   });
 }
