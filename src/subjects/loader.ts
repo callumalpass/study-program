@@ -73,7 +73,9 @@ export function extractTitleFromContent(content: string): string | null {
   // Remove fenced code blocks before searching for headings
   // This prevents matching # comments inside code blocks
   const contentWithoutCodeBlocks = content.replace(/^(```|~~~)[\s\S]*?^\1/gm, '');
-  const match = contentWithoutCodeBlocks.match(/^#\s+(.+)$/m);
+  // Match h1: # followed by horizontal whitespace (space/tab, not newline) and content
+  // Using [ \t]+ instead of \s+ to prevent matching # on one line with content on another
+  const match = contentWithoutCodeBlocks.match(/^#[ \t]+(.+)$/m);
   return match ? match[1].trim() : null;
 }
 
