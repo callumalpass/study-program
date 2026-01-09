@@ -15,7 +15,7 @@
           "Unsupervised learning is more accurate",
           "Supervised learning requires more computational power"
         ],
-        "correctAnswer": "Supervised learning uses labeled data, unsupervised learning does not",
+        "correctAnswer": 0,
         "explanation": "The key distinction is that supervised learning trains on labeled examples (input-output pairs), while unsupervised learning finds patterns in unlabeled data without predefined target values."
       },
       {
@@ -28,7 +28,7 @@
           "Model training and validation",
           "Feature engineering"
         ],
-        "correctAnswer": "Manual code optimization for production",
+        "correctAnswer": 0,
         "explanation": "The typical ML workflow includes data collection, preprocessing, feature engineering, model selection, training, validation, and deployment. Manual code optimization is not a standard ML workflow step."
       },
       {
@@ -41,7 +41,7 @@
           "The tradeoff between training and test set size",
           "The balance between false positives and false negatives"
         ],
-        "correctAnswer": "The balance between model simplicity (high bias) and flexibility (high variance)",
+        "correctAnswer": 0,
         "explanation": "The bias-variance tradeoff describes how simple models have high bias (underfitting) but low variance, while complex models have low bias but high variance (overfitting). The goal is to minimize total error."
       },
       {
@@ -54,7 +54,7 @@
           "Normalizing feature values",
           "Selecting the best machine learning algorithm"
         ],
-        "correctAnswer": "Creating new features from raw data to improve model performance",
+        "correctAnswer": 0,
         "explanation": "Feature engineering is the process of using domain knowledge to create new, informative features from raw data that help machine learning models learn better patterns."
       },
       {
@@ -67,7 +67,7 @@
           "XGBoost",
           "TensorFlow 1.x"
         ],
-        "correctAnswer": "PyTorch",
+        "correctAnswer": 0,
         "explanation": "PyTorch uses dynamic computational graphs (define-by-run), making it flexible and intuitive for research. TensorFlow 2.x also adopted this approach, but PyTorch was the pioneer in this area."
       }
     ]
@@ -88,7 +88,7 @@
           "Computational efficiency will be excellent",
           "The model will always generalize well"
         ],
-        "correctAnswer": "Overfitting due to the curse of dimensionality",
+        "correctAnswer": 0,
         "explanation": "With more features than samples (p > n), models can easily overfit. This is the curse of dimensionality - as dimensions increase, data becomes sparse and patterns harder to find reliably."
       },
       {
@@ -101,7 +101,7 @@
           "When features are highly correlated",
           "When the dataset is perfectly balanced"
         ],
-        "correctAnswer": "When you have imbalanced classes and want to preserve class proportions",
+        "correctAnswer": 0,
         "explanation": "Stratified sampling ensures that train and test sets have the same proportion of classes as the original dataset, which is crucial for imbalanced datasets to avoid biased evaluation."
       },
       {
@@ -114,7 +114,7 @@
           "To increase the size of the training set",
           "To reduce computational complexity"
         ],
-        "correctAnswer": "To put features on similar scales so they contribute equally to distance-based models",
+        "correctAnswer": 0,
         "explanation": "Normalization (scaling to [0,1]) or standardization (zero mean, unit variance) ensures features with different scales don't dominate distance calculations or gradient descent."
       },
       {
@@ -127,7 +127,7 @@
           "Good generalization",
           "High bias"
         ],
-        "correctAnswer": "Overfitting",
+        "correctAnswer": 0,
         "explanation": "Overfitting occurs when a model learns the training data too well, including noise and specific patterns that don't generalize to new data, resulting in poor validation/test performance."
       },
       {
@@ -140,7 +140,7 @@
           "Increasing model complexity",
           "Training for more epochs"
         ],
-        "correctAnswer": "Regularization (L1/L2)",
+        "correctAnswer": 0,
         "explanation": "Regularization adds a penalty term to the loss function that discourages complex models, helping prevent overfitting. L1 (Lasso) and L2 (Ridge) are common regularization techniques."
       }
     ]
@@ -161,7 +161,7 @@
           "Error from insufficient training data",
           "Error from poor hyperparameter tuning"
         ],
-        "correctAnswer": "Noise inherent in the data that no model can eliminate",
+        "correctAnswer": 0,
         "explanation": "Irreducible error (Bayes error) comes from noise in the data itself - random variation that cannot be predicted by any model. Total error = bias² + variance + irreducible error."
       },
       {
@@ -174,7 +174,7 @@
           "The depth of a neural network",
           "The training time complexity"
         ],
-        "correctAnswer": "A measure of model capacity - the maximum number of points that can be shattered",
+        "correctAnswer": 0,
         "explanation": "VC (Vapnik-Chervonenkis) dimension measures hypothesis class complexity. A set of n points is \"shattered\" if the classifier can realize all 2^n possible labelings. Higher VC dimension means more capacity but higher overfitting risk."
       },
       {
@@ -187,7 +187,7 @@
           "The model is approximately 100% accurate",
           "Predictions are always correct within a small margin"
         ],
-        "correctAnswer": "With high probability, the learned hypothesis has low error",
+        "correctAnswer": 0,
         "explanation": "PAC learning provides probabilistic guarantees: with probability ≥(1-δ), the learned hypothesis has error ≤ε, given sufficient samples. It doesn't guarantee perfect learning, just good learning with high probability."
       },
       {
@@ -200,7 +200,7 @@
           "The number of parameters in the model",
           "The memory required to store the dataset"
         ],
-        "correctAnswer": "The number of training examples needed to achieve a given error with given confidence",
+        "correctAnswer": 0,
         "explanation": "Sample complexity bounds (from PAC theory) specify how many training examples m are needed to learn a concept with error ≤ε and confidence ≥(1-δ). Generally m = O((1/ε)log(1/δ)log|H|)."
       },
       {
@@ -213,7 +213,7 @@
           "Simple models always outperform complex ones",
           "Neural networks are always the best choice"
         ],
-        "correctAnswer": "Averaged over all possible problems, no algorithm outperforms random guessing",
+        "correctAnswer": 0,
         "explanation": "The No Free Lunch theorem proves that no single algorithm is universally best. Every algorithm has inductive biases that make it excel on some problems but fail on others. This motivates domain-specific algorithm selection."
       }
     ]

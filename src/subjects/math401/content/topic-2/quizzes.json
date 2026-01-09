@@ -15,7 +15,7 @@
           "∂u/∂x = -∂v/∂y",
           "∂v/∂x = -∂u/∂y"
         ],
-        "correctAnswer": "∂u/∂x = -∂v/∂y",
+        "correctAnswer": 2,
         "explanation": "The Cauchy-Riemann equations are: ∂u/∂x = ∂v/∂y and ∂u/∂y = -∂v/∂x"
       },
       {
@@ -35,7 +35,7 @@
           "∂u/∂x = ∂u/∂y",
           "∂²u/∂x∂y = 0"
         ],
-        "correctAnswer": "∂²u/∂x² + ∂²u/∂y² = 0",
+        "correctAnswer": 0,
         "explanation": "The real and imaginary parts of an analytic function are harmonic: they satisfy Laplace's equation"
       },
       {
@@ -48,7 +48,7 @@
           "z²",
           "2"
         ],
-        "correctAnswer": "2z",
+        "correctAnswer": 1,
         "explanation": "Using the power rule (which applies to analytic functions): d/dz(z²) = 2z"
       },
       {
@@ -76,7 +76,7 @@
           "e^z",
           "log(z)"
         ],
-        "correctAnswer": "e^z",
+        "correctAnswer": 2,
         "explanation": "e^z is entire (analytic everywhere). 1/z has a pole at 0, tan(z) has poles, log(z) has a branch cut"
       },
       {
@@ -89,7 +89,7 @@
           "x³ + 3xy²",
           "3x²y - y³"
         ],
-        "correctAnswer": "x³ - 3xy²",
+        "correctAnswer": 1,
         "explanation": "z³ = (x + iy)³ = x³ + 3x²(iy) + 3x(iy)² + (iy)³ = x³ - 3xy² + i(3x²y - y³), so Re(z³) = x³ - 3xy²"
       },
       {
@@ -109,7 +109,7 @@
           "Positive imaginary axis",
           "Negative imaginary axis"
         ],
-        "correctAnswer": "Negative real axis",
+        "correctAnswer": 1,
         "explanation": "The principal branch is defined with argument in (-π, π], requiring a cut along the negative real axis"
       },
       {
@@ -122,7 +122,7 @@
           "i cosh(1)",
           "cosh(1)"
         ],
-        "correctAnswer": "i sinh(1)",
+        "correctAnswer": 0,
         "explanation": "sin(iz) = i sinh(z), so sin(i) = i sinh(1)"
       }
     ]
@@ -143,7 +143,7 @@
           "Cauchy-Riemann equations",
           "u·v = 0"
         ],
-        "correctAnswer": "Cauchy-Riemann equations",
+        "correctAnswer": 2,
         "explanation": "Analyticity is equivalent to satisfying the Cauchy-Riemann equations"
       },
       {
@@ -156,7 +156,7 @@
           "1/z",
           "-1/z"
         ],
-        "correctAnswer": "-1/z²",
+        "correctAnswer": 1,
         "explanation": "Using power rule: d/dz(z^(-1)) = -1·z^(-2) = -1/z²"
       },
       {
@@ -176,7 +176,7 @@
           "Analytic at origin only",
           "Analytic on real axis"
         ],
-        "correctAnswer": "Nowhere analytic",
+        "correctAnswer": 1,
         "explanation": "Re(z) = x has u = x, v = 0. C-R: ∂u/∂x = 1 but ∂v/∂y = 0, so C-R equations fail everywhere"
       },
       {
@@ -189,7 +189,7 @@
           "e^|z|",
           "1"
         ],
-        "correctAnswer": "e^x",
+        "correctAnswer": 0,
         "explanation": "|e^z| = |e^x e^(iy)| = |e^x| · |e^(iy)| = e^x · 1 = e^x"
       }
     ]

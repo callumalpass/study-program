@@ -15,7 +15,7 @@
           "Availability",
           "Authentication"
         ],
-        "correctAnswer": "Integrity",
+        "correctAnswer": 1,
         "explanation": "Integrity ensures that data remains accurate and unaltered by unauthorized parties. Confidentiality protects against unauthorized access, while Availability ensures systems remain accessible."
       },
       {
@@ -35,7 +35,7 @@
           "Privilege escalation should be enabled by default",
           "All permissions should be granted temporarily"
         ],
-        "correctAnswer": "Users should have only the minimum permissions necessary to perform their job",
+        "correctAnswer": 1,
         "explanation": "The principle of least privilege states that users, programs, and processes should have only the minimum privileges necessary to complete their tasks, reducing the attack surface."
       },
       {
@@ -48,7 +48,7 @@
           "System, Testing, Review, Integration, Deployment, Execution",
           "Strategies, Tactics, Risks, Incidents, Defense, Escalation"
         ],
-        "correctAnswer": "Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege",
+        "correctAnswer": 1,
         "explanation": "STRIDE is a threat modeling framework developed by Microsoft that categorizes threats into six types: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege."
       },
       {
@@ -76,7 +76,7 @@
           "Fail-fast",
           "Fail-over"
         ],
-        "correctAnswer": "Fail-secure (fail-closed)",
+        "correctAnswer": 1,
         "explanation": "Fail-secure (or fail-closed) means that when a system encounters an error or failure, it should default to a secure state that denies access rather than allowing unrestricted access."
       },
       {
@@ -89,7 +89,7 @@
           "Encrypting all data at rest",
           "Using complex passwords"
         ],
-        "correctAnswer": "Hiding implementation details as the sole security measure",
+        "correctAnswer": 1,
         "explanation": "Security through obscurity relies on keeping the implementation secret. This is generally discouraged as a primary security measure because once the secret is discovered, the system is compromised. It may be used as an additional layer but never as the only defense."
       },
       {
@@ -109,7 +109,7 @@
           "Only the first access attempt needs verification",
           "Mediation should only occur during login"
         ],
-        "correctAnswer": "All access attempts must be checked every time",
+        "correctAnswer": 0,
         "explanation": "Complete mediation requires that every access to every resource is checked against the access control mechanism. This prevents attackers from exploiting cached permissions or bypassing checks after initial authentication."
       },
       {
@@ -122,7 +122,7 @@
           "The physical size of the data center",
           "The number of lines of code in the application"
         ],
-        "correctAnswer": "The sum of all points where an attacker can try to enter or extract data",
+        "correctAnswer": 1,
         "explanation": "The attack surface encompasses all the different points where an unauthorized user could potentially enter data or extract data from a system. Reducing the attack surface is a key security principle."
       }
     ]
@@ -150,7 +150,7 @@
           "To create a list of past security incidents",
           "To test the system for vulnerabilities after deployment"
         ],
-        "correctAnswer": "To identify, prioritize, and mitigate potential security threats early in development",
+        "correctAnswer": 1,
         "explanation": "Threat modeling is a proactive approach to identify potential security threats and vulnerabilities early in the development lifecycle, allowing teams to prioritize and implement appropriate countermeasures before deployment."
       },
       {
@@ -163,7 +163,7 @@
           "Open design",
           "Least common mechanism"
         ],
-        "correctAnswer": "Economy of mechanism",
+        "correctAnswer": 0,
         "explanation": "Economy of mechanism (also called simplicity) advocates for keeping security designs as simple as possible. Simple mechanisms are easier to verify, test, and are less likely to contain vulnerabilities than complex ones."
       },
       {
@@ -183,7 +183,7 @@
           "It makes systems immune to all attacks",
           "It reduces the cost of security implementation"
         ],
-        "correctAnswer": "It provides multiple layers of protection so compromise of one layer doesn't compromise the entire system",
+        "correctAnswer": 1,
         "explanation": "Defense in depth uses multiple, overlapping security controls. If one layer is compromised, additional layers continue to provide protection, making it significantly harder for attackers to breach the entire system."
       }
     ]

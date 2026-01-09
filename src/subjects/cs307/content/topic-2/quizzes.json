@@ -15,7 +15,7 @@
           "Symmetric encryption",
           "Hashing"
         ],
-        "correctAnswer": "Symmetric encryption",
+        "correctAnswer": 2,
         "explanation": "Symmetric encryption uses the same secret key for both encryption and decryption. Examples include AES, DES, and ChaCha20. It is faster than asymmetric encryption but requires secure key distribution."
       },
       {
@@ -35,7 +35,7 @@
           "The recipient's private key",
           "The recipient's public key"
         ],
-        "correctAnswer": "The recipient's public key",
+        "correctAnswer": 3,
         "explanation": "To send a confidential message, you encrypt with the recipient's public key. Only the recipient can decrypt it with their corresponding private key. This ensures confidentiality even if the public key is widely known."
       },
       {
@@ -48,7 +48,7 @@
           "To compress data",
           "To hide the sender's identity"
         ],
-        "correctAnswer": "To verify the authenticity and integrity of a message",
+        "correctAnswer": 1,
         "explanation": "Digital signatures provide authentication (proving who sent the message) and integrity (proving the message wasn't altered). The sender signs with their private key, and anyone can verify with the sender's public key."
       },
       {
@@ -76,7 +76,7 @@
           "MD5",
           "BLAKE2"
         ],
-        "correctAnswer": "MD5",
+        "correctAnswer": 2,
         "explanation": "MD5 (Message Digest 5) is cryptographically broken and unsuitable for security applications. Collision attacks have been demonstrated, making it possible to create two different inputs that produce the same hash. Use SHA-256 or SHA-3 instead."
       },
       {
@@ -96,7 +96,7 @@
           "Generating random encryption keys",
           "Detecting SQL injection attacks"
         ],
-        "correctAnswer": "Cracking hashed passwords using precomputed hash values",
+        "correctAnswer": 1,
         "explanation": "A rainbow table is a precomputed table of hash values for common passwords. Attackers use these to quickly reverse hashes and discover passwords. Salting passwords before hashing defeats rainbow table attacks."
       },
       {
@@ -109,7 +109,7 @@
           "To encrypt the password",
           "To compress the password"
         ],
-        "correctAnswer": "To ensure identical passwords produce different hashes",
+        "correctAnswer": 1,
         "explanation": "A salt is random data added to passwords before hashing. This ensures that even identical passwords produce different hashes, preventing rainbow table attacks and making it impossible to identify users with the same password."
       },
       {
@@ -137,7 +137,7 @@
           "No need for key management",
           "Provides digital signatures"
         ],
-        "correctAnswer": "Significantly faster performance",
+        "correctAnswer": 1,
         "explanation": "Symmetric encryption is much faster than asymmetric encryption, making it suitable for encrypting large amounts of data. However, it requires secure key distribution, which is why hybrid approaches often use asymmetric encryption to exchange symmetric keys."
       },
       {
@@ -157,7 +157,7 @@
           "HMAC (Hash-based Message Authentication Code)",
           "TLS handshake"
         ],
-        "correctAnswer": "HMAC (Hash-based Message Authentication Code)",
+        "correctAnswer": 2,
         "explanation": "HMAC uses a cryptographic hash function and a secret key to verify both data integrity and authenticity. However, it does not encrypt the data, so it provides no confidentiality. The message remains readable but tampering can be detected."
       },
       {
@@ -170,7 +170,7 @@
           "To store all private keys securely",
           "To decrypt messages on behalf of users"
         ],
-        "correctAnswer": "To issue and verify digital certificates that bind public keys to identities",
+        "correctAnswer": 1,
         "explanation": "A Certificate Authority is a trusted entity that issues digital certificates, which bind public keys to specific identities (like domain names or organizations). This allows users to trust that a public key actually belongs to who it claims to belong to."
       },
       {

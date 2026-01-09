@@ -15,7 +15,7 @@
           "ST coordinates",
           "RGB coordinates"
         ],
-        "correctAnswer": "UV coordinates",
+        "correctAnswer": 0,
         "explanation": "Texture coordinates are commonly called UV coordinates (u, v), representing 2D positions in texture space, typically normalized to [0,1] range, distinct from spatial XYZ coordinates."
       },
       {
@@ -28,7 +28,7 @@
           "Apply lighting to textures",
           "Generate texture coordinates"
         ],
-        "correctAnswer": "Determine color when texture coordinates fall between pixels",
+        "correctAnswer": 0,
         "explanation": "Texture filtering (magnification and minification) determines how to sample textures when UVs don't align with texel centers, using methods like nearest neighbor, bilinear, or trilinear filtering."
       },
       {
@@ -48,7 +48,7 @@
           "Blends two mipmap levels",
           "Applies anisotropic sampling"
         ],
-        "correctAnswer": "Interpolates between the four nearest texels",
+        "correctAnswer": 0,
         "explanation": "Bilinear filtering performs linear interpolation in both texture dimensions, blending the four nearest texels to produce smooth results when magnifying or minifying textures."
       },
       {
@@ -61,7 +61,7 @@
           "Mirror",
           "Border"
         ],
-        "correctAnswer": "Repeat (or Wrap)",
+        "correctAnswer": 0,
         "explanation": "Repeat/Wrap mode tiles the texture by using the fractional part of UV coordinates, allowing textures to repeat seamlessly across surfaces, useful for patterns like brick walls or grass."
       }
     ]
@@ -82,7 +82,7 @@
           "Sampling three texels",
           "Three-dimensional texture lookup"
         ],
-        "correctAnswer": "Bilinear filtering on two mipmap levels then blending between them",
+        "correctAnswer": 0,
         "explanation": "Trilinear filtering performs bilinear filtering on the two nearest mipmap levels, then linearly interpolates between those results based on distance, eliminating visible mipmap transitions."
       },
       {
@@ -102,7 +102,7 @@
           "Texture for color mapping",
           "Texture for transparency"
         ],
-        "correctAnswer": "Texture storing surface normal directions as RGB values",
+        "correctAnswer": 0,
         "explanation": "Normal maps encode surface normal vectors as RGB colors (R=X, G=Y, B=Z), allowing per-pixel lighting detail on low-polygon meshes by perturbing surface normals during shading."
       },
       {
@@ -115,7 +115,7 @@
           "Mirrors the texture",
           "Uses a specified border color"
         ],
-        "correctAnswer": "Clamps UV coordinates to [0,1] range",
+        "correctAnswer": 0,
         "explanation": "Clamp mode restricts UV coordinates to [0,1], extending edge pixels infinitely beyond the texture boundary. UVs outside this range sample the nearest edge texel."
       },
       {
@@ -128,7 +128,7 @@
           "Adjusting texture coordinates",
           "Filtering texture samples"
         ],
-        "correctAnswer": "Modifying vertex positions based on a texture",
+        "correctAnswer": 0,
         "explanation": "Displacement mapping actually moves vertex positions based on a heightmap texture, creating real geometric detail. Unlike normal mapping, it changes the silhouette and can produce self-shadowing."
       }
     ]
@@ -149,7 +149,7 @@
           "Character skin textures",
           "UI elements"
         ],
-        "correctAnswer": "Environment mapping and reflections",
+        "correctAnswer": 0,
         "explanation": "Cube maps consist of six square textures forming a cube around a point, used for environment mapping, reflections, and skyboxes. They're sampled using 3D direction vectors."
       },
       {
@@ -169,7 +169,7 @@
           "Filtering textures",
           "Compressing texture data"
         ],
-        "correctAnswer": "Combining multiple textures into a single large texture",
+        "correctAnswer": 0,
         "explanation": "A texture atlas packs multiple smaller textures into one large texture, reducing draw calls and texture binding overhead. Each sub-texture is accessed via specific UV coordinate ranges."
       },
       {
@@ -182,7 +182,7 @@
           "Texture coordinates",
           "Light positions"
         ],
-        "correctAnswer": "Per-pixel shininess or reflectivity",
+        "correctAnswer": 0,
         "explanation": "Specular maps control the intensity and potentially color of specular highlights on a per-pixel basis, allowing different parts of a surface to have varying shininess (e.g., worn vs. polished metal)."
       },
       {
@@ -195,7 +195,7 @@
           "Faster texture creation",
           "Simplified UV mapping"
         ],
-        "correctAnswer": "Reduced memory usage and bandwidth",
+        "correctAnswer": 0,
         "explanation": "Texture compression (like DXT/BC, ASTC) significantly reduces memory footprint and bandwidth usage, crucial for GPU performance. Modern formats can decompress on-the-fly with minimal quality loss."
       }
     ]

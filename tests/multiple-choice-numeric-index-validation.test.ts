@@ -62,8 +62,8 @@ describe('Multiple Choice Numeric Index Validation', () => {
       expect(quizFiles.length).toBeGreaterThan(0);
     });
 
-    it('string correctAnswer values should match an option (informational)', () => {
-      const unmatchedIssues: QuestionIssue[] = [];
+    it('all multiple_choice quiz questions should use numeric correctAnswer indices', () => {
+      const issues: QuestionIssue[] = [];
 
       for (const filePath of quizFiles) {
         const content = readFileSync(filePath, 'utf-8');
@@ -73,36 +73,38 @@ describe('Multiple Choice Numeric Index Validation', () => {
         for (const quiz of quizzes) {
           for (const question of quiz.questions) {
             if (question.type === 'multiple_choice' && question.options) {
-              if (typeof question.correctAnswer === 'string') {
-                // String values are allowed if they match an option
-                const idx = question.options.indexOf(question.correctAnswer);
-                if (idx === -1) {
-                  // This is an actual error - string doesn't match any option
-                  unmatchedIssues.push({
-                    file: relativePath,
-                    quizId: quiz.id,
-                    questionId: question.id,
-                    correctAnswer: question.correctAnswer,
-                    expectedIndex: null,
-                    options: question.options,
-                  });
+              if (typeof question.correctAnswer !== 'number') {
+                let expectedIndex: number | null = null;
+                if (typeof question.correctAnswer === 'string') {
+                  const idx = question.options.indexOf(question.correctAnswer);
+                  if (idx !== -1) {
+                    expectedIndex = idx;
+                  }
                 }
+
+                issues.push({
+                  file: relativePath,
+                  quizId: quiz.id,
+                  questionId: question.id,
+                  correctAnswer: question.correctAnswer,
+                  expectedIndex,
+                  options: question.options,
+                });
               }
             }
           }
         }
       }
 
-      // Only fail if string values don't match any option
-      if (unmatchedIssues.length > 0) {
-        const issueDetails = unmatchedIssues
+      if (issues.length > 0) {
+        const issueDetails = issues
           .map(
             (i) =>
-              `  ${i.file} - ${i.quizId}/${i.questionId}: correctAnswer="${i.correctAnswer}" not in options: ${JSON.stringify(i.options)}`
+              `  ${i.file} - ${i.quizId}/${i.questionId}: correctAnswer="${i.correctAnswer}" (should be ${i.expectedIndex ?? 'unknown'})`
           )
           .join('\n');
         expect.fail(
-          `Found ${unmatchedIssues.length} multiple_choice questions with unmatched string correctAnswer:\n${issueDetails}`
+          `Found ${issues.length} multiple_choice quiz questions with non-numeric correctAnswer:\n${issueDetails}`
         );
       }
     });

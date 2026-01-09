@@ -15,7 +15,7 @@
           "To increase single-point failures",
           "To reduce system availability"
         ],
-        "correctAnswer": "To share resources and improve scalability",
+        "correctAnswer": 0,
         "explanation": "Distributed systems are built to share resources across multiple nodes, improve scalability by adding more machines, and provide fault tolerance through redundancy."
       },
       {
@@ -28,7 +28,7 @@
           "Independent failures",
           "No shared memory"
         ],
-        "correctAnswer": "Shared global clock",
+        "correctAnswer": 0,
         "explanation": "Distributed systems lack a shared global clock, making time synchronization a challenge. They do exhibit concurrency, independent failures, and typically have no shared memory."
       },
       {
@@ -41,7 +41,7 @@
           "Using clear glass in server racks",
           "Exposing network delays to applications"
         ],
-        "correctAnswer": "Hiding the distributed nature from users",
+        "correctAnswer": 0,
         "explanation": "Transparency in distributed systems means hiding aspects of distribution (like location, replication, or failures) from users and applications, making the system appear as a single coherent entity."
       },
       {
@@ -54,7 +54,7 @@
           "Replication transparency",
           "Failure transparency"
         ],
-        "correctAnswer": "Location transparency",
+        "correctAnswer": 0,
         "explanation": "Location transparency hides where a resource is physically located, allowing users to access resources without knowing their physical location in the network."
       },
       {
@@ -67,7 +67,7 @@
           "Latency exists",
           "Multiple administrators manage the system"
         ],
-        "correctAnswer": "The network is reliable",
+        "correctAnswer": 0,
         "explanation": "One of the famous fallacies of distributed computing is assuming the network is reliable. In reality, networks fail, packets are lost, and connections drop, requiring systems to handle these failures."
       }
     ]
@@ -88,7 +88,7 @@
           "Blockchain architecture",
           "Edge computing architecture"
         ],
-        "correctAnswer": "Client-server architecture",
+        "correctAnswer": 0,
         "explanation": "Client-server architecture uses a central server to handle requests from multiple clients, providing centralized control and coordination."
       },
       {
@@ -101,7 +101,7 @@
           "Simple security management",
           "Guaranteed consistency"
         ],
-        "correctAnswer": "No single point of failure",
+        "correctAnswer": 0,
         "explanation": "Peer-to-peer systems distribute functionality across all nodes, eliminating single points of failure and improving fault tolerance, though at the cost of coordination complexity."
       },
       {
@@ -114,7 +114,7 @@
           "Share global variables across nodes",
           "Eliminate network communication"
         ],
-        "correctAnswer": "Make remote function calls appear local",
+        "correctAnswer": 0,
         "explanation": "RPC provides location transparency by making remote procedure calls appear as if they were local function calls, hiding the complexity of network communication."
       },
       {
@@ -127,7 +127,7 @@
           "Return value handling",
           "Function naming"
         ],
-        "correctAnswer": "Network failures and latency",
+        "correctAnswer": 0,
         "explanation": "Unlike local calls, RPC faces network failures, variable latency, and partial failures that don't occur in single-machine environments, requiring special handling."
       },
       {
@@ -140,7 +140,7 @@
           "Caching, Authentication, and Privacy",
           "Compression, Availability, and Persistence"
         ],
-        "correctAnswer": "Consistency, Availability, and Partition tolerance",
+        "correctAnswer": 0,
         "explanation": "CAP theorem states that in the presence of network partitions, a distributed system must choose between consistency (all nodes see the same data) and availability (all requests receive responses)."
       }
     ]
@@ -161,7 +161,7 @@
           "Both Consistency and Availability",
           "None, all three can be maintained"
         ],
-        "correctAnswer": "Either Consistency or Availability",
+        "correctAnswer": 0,
         "explanation": "When network partitions occur (P in CAP), systems must choose between maintaining consistency (rejecting some requests) or availability (potentially serving stale data)."
       },
       {
@@ -174,7 +174,7 @@
           "Strong consistency with delays",
           "No consistency guarantees"
         ],
-        "correctAnswer": "All replicas converge to the same state eventually",
+        "correctAnswer": 0,
         "explanation": "Eventual consistency guarantees that if no new updates are made, all replicas will eventually converge to the same state, though they may temporarily differ."
       },
       {
@@ -187,7 +187,7 @@
           "CA system (Consistency + Availability)",
           "None of the above"
         ],
-        "correctAnswer": "AP system (Availability + Partition tolerance)",
+        "correctAnswer": 0,
         "explanation": "AP systems choose to remain available during partitions, accepting that different nodes may serve different data temporarily, using eventual consistency models."
       },
       {
@@ -200,7 +200,7 @@
           "Using minimal server resources",
           "Reducing code size"
         ],
-        "correctAnswer": "Decomposing applications into small, independent services",
+        "correctAnswer": 0,
         "explanation": "Microservices architecture breaks applications into small, loosely coupled services that can be developed, deployed, and scaled independently."
       },
       {
@@ -213,7 +213,7 @@
           "Discovering bugs in services",
           "Finding service documentation"
         ],
-        "correctAnswer": "Automatically locating available services",
+        "correctAnswer": 0,
         "explanation": "Service discovery is the process of automatically detecting available services and their network locations, enabling dynamic service-to-service communication."
       }
     ]

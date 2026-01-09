@@ -15,7 +15,7 @@
           "fₙ = f for all n",
           "fₙ is continuous for all n"
         ],
-        "correctAnswer": "For each x in E, lim(n→∞) fₙ(x) = f(x)",
+        "correctAnswer": 0,
         "explanation": "Pointwise convergence means convergence at each individual point. For each fixed x, the sequence of numbers fₙ(x) converges to f(x)."
       },
       {
@@ -28,7 +28,7 @@
           "f(x) = 0 for all x in [0, 1]",
           "f(x) = x for all x in [0, 1]"
         ],
-        "correctAnswer": "f(x) = 0 for x in [0, 1), and f(1) = 1",
+        "correctAnswer": 0,
         "explanation": "For x < 1, xⁿ → 0. For x = 1, 1ⁿ = 1. The limit function is discontinuous even though each fₙ is continuous."
       },
       {
@@ -41,7 +41,7 @@
           "Always differentiable",
           "Always uniformly continuous"
         ],
-        "correctAnswer": "Not necessarily continuous",
+        "correctAnswer": 0,
         "explanation": "Pointwise convergence does not preserve continuity. Example: fₙ(x) = xⁿ on [0, 1] has a discontinuous limit."
       },
       {
@@ -54,7 +54,7 @@
           "f is not integrable",
           "∫ fₙ = ∫ f for all n"
         ],
-        "correctAnswer": "∫ fₙ may not converge to ∫ f",
+        "correctAnswer": 0,
         "explanation": "Pointwise convergence does not guarantee that integrals converge. Stronger convergence (like uniform) is needed to interchange limit and integral."
       },
       {
@@ -67,7 +67,7 @@
           "fₙ(x) → 0 for each x",
           "∑fₙ is finite"
         ],
-        "correctAnswer": "The sequence of partial sums Sₙ(x) = ∑(k=1 to n) fₖ(x) converges to f(x) for each x",
+        "correctAnswer": 0,
         "explanation": "Series convergence is defined through convergence of partial sums, just as with numerical series."
       }
     ]
@@ -88,7 +88,7 @@
           "fₙ is continuous for all n",
           "f is continuous"
         ],
-        "correctAnswer": "lim(n→∞) sup{|fₙ(x) - f(x)| : x in E} = 0",
+        "correctAnswer": 0,
         "explanation": "Uniform convergence requires convergence at the same rate for all x. The supremum of |fₙ(x) - f(x)| over all x must go to 0."
       },
       {
@@ -101,7 +101,7 @@
           "f is differentiable",
           "f is constant"
         ],
-        "correctAnswer": "f is continuous on E",
+        "correctAnswer": 0,
         "explanation": "This is the Uniform Limit Theorem: uniform convergence of continuous functions preserves continuity."
       },
       {
@@ -114,7 +114,7 @@
           "Only pointwise",
           "Not even pointwise"
         ],
-        "correctAnswer": "Yes",
+        "correctAnswer": 0,
         "explanation": "sup{|x/n| : x in [0, 1]} = 1/n → 0, so convergence is uniform. Each fₙ is within 1/n of 0 uniformly over [0, 1]."
       },
       {
@@ -127,7 +127,7 @@
           "∫ₐᵇ f does not exist",
           "Cannot determine"
         ],
-        "correctAnswer": "∫ₐᵇ fₙ → ∫ₐᵇ f",
+        "correctAnswer": 0,
         "explanation": "Uniform convergence allows us to interchange limit and integral: lim ∫fₙ = ∫(lim fₙ) = ∫f."
       },
       {
@@ -140,7 +140,7 @@
           "∑fₙ diverges",
           "∑fₙ = 0"
         ],
-        "correctAnswer": "∑fₙ converges uniformly",
+        "correctAnswer": 0,
         "explanation": "The Weierstrass M-Test provides a sufficient condition for uniform convergence of a series of functions by comparison with a convergent numerical series."
       }
     ]
@@ -161,7 +161,7 @@
           "f' ≠ g",
           "f is constant"
         ],
-        "correctAnswer": "f is differentiable and f' = g",
+        "correctAnswer": 0,
         "explanation": "Under uniform convergence of both functions and derivatives, we can interchange limit and differentiation: (lim fₙ)' = lim(f'ₙ)."
       },
       {
@@ -174,7 +174,7 @@
           "Only at x = c",
           "Nowhere"
         ],
-        "correctAnswer": "Any closed interval [a, b] inside its interval of convergence",
+        "correctAnswer": 0,
         "explanation": "Power series converge uniformly on compact subsets of their interval of convergence, though not necessarily on the entire interval."
       },
       {
@@ -187,7 +187,7 @@
           "The space of all functions",
           "The space of discontinuous functions"
         ],
-        "correctAnswer": "C([a, b]), the space of continuous functions on [a, b]",
+        "correctAnswer": 0,
         "explanation": "The Stone-Weierstrass Theorem generalizes Weierstrass Approximation: any continuous function on [a, b] can be uniformly approximated by polynomials."
       },
       {
@@ -200,7 +200,7 @@
           "Differentiated",
           "Integrated to give a polynomial"
         ],
-        "correctAnswer": "Uniformly approximated by polynomials",
+        "correctAnswer": 0,
         "explanation": "For any ε > 0, there exists a polynomial p such that |f(x) - p(x)| < ε for all x in [a, b]."
       },
       {
@@ -213,7 +213,7 @@
           "fₙ/gₙ → f/g uniformly",
           "None of the above"
         ],
-        "correctAnswer": "fₙ + gₙ → f + g uniformly",
+        "correctAnswer": 0,
         "explanation": "Uniform convergence is preserved under addition. However, multiplication and division require additional conditions (like boundedness)."
       }
     ]

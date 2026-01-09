@@ -15,7 +15,7 @@
           "It runs in time O(n^ρ)",
           "It returns a solution with cost ≥ ρ · OPT"
         ],
-        "correctAnswer": "It always returns a solution with cost ≤ ρ · OPT",
+        "correctAnswer": 0,
         "explanation": "For minimization, approximation factor ρ means the algorithm’s solution cost is within a multiplicative factor ρ of the optimal cost."
       },
       {
@@ -28,7 +28,7 @@
           "An exact algorithm with expected polynomial runtime",
           "A scheme with runtime polynomial in n and log(1/ε)"
         ],
-        "correctAnswer": "A (1+ε)-approximation scheme with runtime polynomial in n and 1/ε",
+        "correctAnswer": 0,
         "explanation": "An FPTAS is a fully polynomial-time approximation scheme: it produces a (1+ε) solution in time poly(n, 1/ε)."
       },
       {
@@ -55,7 +55,7 @@
           "Shortest paths",
           "Dynamic programming"
         ],
-        "correctAnswer": "Maximum matching",
+        "correctAnswer": 0,
         "explanation": "Take any maximal matching and include both endpoints of each matched edge; this yields a vertex cover at most twice optimal."
       }
     ]
@@ -76,7 +76,7 @@
           "20",
           "40"
         ],
-        "correctAnswer": "20",
+        "correctAnswer": 2,
         "explanation": "A 2-approximation guarantees cost ≤ 2·OPT = 20 for minimization."
       },
       {
@@ -89,7 +89,7 @@
           "An exact solution",
           "No approximation guarantee"
         ],
-        "correctAnswer": "A 2-approximation",
+        "correctAnswer": 0,
         "explanation": "The picked edges form a matching, and any vertex cover must include at least one endpoint from each edge in the matching. Taking both endpoints gives factor 2."
       },
       {
@@ -117,7 +117,7 @@
           "A 2-approximation is impossible",
           "The problem is solvable exactly in O(n log n)"
         ],
-        "correctAnswer": "There is an FPTAS",
+        "correctAnswer": 0,
         "explanation": "0/1 Knapsack admits an FPTAS via value scaling and dynamic programming, despite being NP-hard."
       }
     ]
@@ -138,7 +138,7 @@
           "Randomized algorithms always beat deterministic ones",
           "Greedy algorithms are always optimal"
         ],
-        "correctAnswer": "No polynomial-time algorithm can approximate within a certain factor unless P=NP (or stronger assumptions)",
+        "correctAnswer": 0,
         "explanation": "Inapproximability results bound what approximation ratios are achievable in polynomial time under widely believed assumptions."
       },
       {
@@ -151,7 +151,7 @@
           "The number of constraints in the LP",
           "The probability that rounding succeeds"
         ],
-        "correctAnswer": "How much worse the best integer solution can be compared to the fractional LP optimum",
+        "correctAnswer": 0,
         "explanation": "Integrality gap is the worst-case ratio between the optimal integer solution and the optimal fractional (LP) solution; it informs achievable approximation via rounding."
       },
       {
@@ -178,7 +178,7 @@
           "Random sampling",
           "Amortized analysis"
         ],
-        "correctAnswer": "Linear programming duality",
+        "correctAnswer": 0,
         "explanation": "Primal–dual methods simultaneously build a feasible primal solution and a dual certificate that lower-bounds OPT, yielding an approximation factor from complementary slackness-like arguments."
       }
     ]

@@ -15,7 +15,7 @@
           "Cross-entropy with softmax",
           "Euclidean distance"
         ],
-        "correctAnswer": "Information gain or Gini impurity",
+        "correctAnswer": 0,
         "explanation": "Decision trees select splits that maximize information gain (entropy reduction) or minimize Gini impurity. Both measure how well a split separates classes."
       },
       {
@@ -28,7 +28,7 @@
           "Use random initial weights",
           "Randomly prune trees"
         ],
-        "correctAnswer": "Train multiple decision trees on random subsets of data and features, then aggregate predictions",
+        "correctAnswer": 0,
         "explanation": "Random Forests use bootstrap sampling (bagging) to create diverse trees and random feature subsets at each split. Averaging predictions reduces variance and improves generalization."
       },
       {
@@ -41,7 +41,7 @@
           "Training accuracy",
           "The distance from origin"
         ],
-        "correctAnswer": "The margin between classes",
+        "correctAnswer": 0,
         "explanation": "SVM finds the hyperplane that maximizes the margin (distance) to the nearest training points of each class. This maximum-margin principle often leads to good generalization."
       },
       {
@@ -54,7 +54,7 @@
           "Trains k separate neural networks",
           "Performs k iterations of gradient descent"
         ],
-        "correctAnswer": "Finds k nearest training examples and returns majority class",
+        "correctAnswer": 0,
         "explanation": "k-Nearest Neighbors is a non-parametric method that classifies based on the k closest training examples in feature space, using majority vote for classification or mean for regression."
       },
       {
@@ -67,7 +67,7 @@
           "Features are normally distributed",
           "The decision boundary is linear"
         ],
-        "correctAnswer": "Features are conditionally independent given the class",
+        "correctAnswer": 0,
         "explanation": "Naive Bayes assumes P(x₁,...,xₙ|y) = ∏P(xᵢ|y), i.e., features are independent given class. This \"naive\" assumption simplifies computation and often works well despite being unrealistic."
       }
     ]
@@ -88,7 +88,7 @@
           "Increase tree depth",
           "Use pure leaf nodes"
         ],
-        "correctAnswer": "Prune the tree or limit max depth",
+        "correctAnswer": 0,
         "explanation": "Deep trees overfit by creating complex decision boundaries. Pruning (removing branches) or limiting depth (min_samples_split, max_depth) creates simpler trees that generalize better."
       },
       {
@@ -101,7 +101,7 @@
           "When you have very little data",
           "When training time must be minimal"
         ],
-        "correctAnswer": "When you want better generalization and lower variance",
+        "correctAnswer": 0,
         "explanation": "Random Forests reduce variance through ensemble averaging, leading to better generalization. The tradeoff is less interpretability and longer training time compared to a single tree."
       },
       {
@@ -114,7 +114,7 @@
           "Decrease the margin",
           "Use more training data"
         ],
-        "correctAnswer": "Use a kernel (e.g., RBF) to map data to higher dimensional space",
+        "correctAnswer": 0,
         "explanation": "The kernel trick allows SVM to implicitly map data to higher dimensions where it may be linearly separable, without explicitly computing the transformation. RBF (Gaussian) kernel is popular for non-linear problems."
       },
       {
@@ -127,7 +127,7 @@
           "Requires extensive training",
           "Cannot handle continuous features"
         ],
-        "correctAnswer": "Slow prediction time since it requires computing distances to all training points",
+        "correctAnswer": 0,
         "explanation": "k-NN has zero training time (lazy learning) but O(nm) prediction time where n is training set size. For large datasets, this becomes prohibitive. Solutions include KD-trees or approximate nearest neighbors."
       },
       {
@@ -140,7 +140,7 @@
           "Only with binary features",
           "Only with small datasets"
         ],
-        "correctAnswer": "When the violation doesn't strongly affect the rank ordering of class probabilities",
+        "correctAnswer": 0,
         "explanation": "Naive Bayes only needs correct rank ordering of P(y|x) for classification, not accurate probability estimates. It often works well even when features are correlated, especially for text classification."
       }
     ]
@@ -161,7 +161,7 @@
           "IG = -Σpᵢ log pᵢ",
           "IG = max(0, margin)"
         ],
-        "correctAnswer": "IG(D,A) = H(D) - Σ(|Dᵥ|/|D|)H(Dᵥ) where H is entropy",
+        "correctAnswer": 0,
         "explanation": "Information gain measures entropy reduction from splitting on attribute A. It's the parent entropy H(D) minus weighted average of children entropies. Higher IG means better split."
       },
       {
@@ -174,7 +174,7 @@
           "max Σαᵢ - (1/2)ΣΣαᵢαⱼyᵢyⱼxᵢᵀxⱼ",
           "min -log p(y|x)"
         ],
-        "correctAnswer": "min (1/2)||w||² subject to yᵢ(wᵀxᵢ + b) ≥ 1",
+        "correctAnswer": 0,
         "explanation": "Hard-margin SVM minimizes ||w||² (maximizes margin 2/||w||) subject to correct classification with margin ≥1. This is a convex quadratic program solved via Lagrangian duality."
       },
       {
@@ -187,7 +187,7 @@
           "It improves accuracy",
           "It reduces memory usage"
         ],
-        "correctAnswer": "It enables the kernel trick by expressing solution in terms of dot products xᵢᵀxⱼ",
+        "correctAnswer": 0,
         "explanation": "The dual formulation max Σαᵢ - (1/2)ΣΣαᵢαⱼyᵢyⱼxᵢᵀxⱼ depends only on dot products. Replacing xᵢᵀxⱼ with k(xᵢ,xⱼ) enables implicit feature mapping without computing φ(x)."
       },
       {
@@ -200,7 +200,7 @@
           "Training error on all data",
           "Error from trees that didn't converge"
         ],
-        "correctAnswer": "Validation error estimated using samples not in each tree's bootstrap sample",
+        "correctAnswer": 0,
         "explanation": "Since each tree uses ~63% of data (bootstrap), the remaining ~37% provide validation. OOB error averages predictions on these out-of-bag samples, providing unbiased error estimate without separate validation set."
       },
       {
@@ -213,7 +213,7 @@
           "Randomly adjusts weights",
           "Uses gradient descent"
         ],
-        "correctAnswer": "Increases weight on misclassified examples so subsequent models focus on hard cases",
+        "correctAnswer": 0,
         "explanation": "AdaBoost updates weights as wᵢ *= exp(α) for misclassified examples, where α depends on classifier error. This forces the next weak learner to focus on previously misclassified examples."
       }
     ]

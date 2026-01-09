@@ -15,7 +15,7 @@
           "Computing vertex positions",
           "Applying texture filtering"
         ],
-        "correctAnswer": "Tracing light rays from the camera through pixels into the scene",
+        "correctAnswer": 0,
         "explanation": "Ray tracing shoots rays from the camera through each pixel to determine what is visible, testing for intersections with scene geometry and recursively tracing reflection and refraction rays."
       },
       {
@@ -28,7 +28,7 @@
           "Linked list",
           "Array"
         ],
-        "correctAnswer": "BVH (Bounding Volume Hierarchy)",
+        "correctAnswer": 0,
         "explanation": "BVH organizes geometry into a tree of bounding volumes, allowing ray tracers to quickly skip large portions of the scene that a ray doesn't intersect, dramatically reducing intersection tests."
       },
       {
@@ -48,7 +48,7 @@
           "Ray after reflection",
           "Ray testing for shadows"
         ],
-        "correctAnswer": "Ray shot from the camera through a pixel",
+        "correctAnswer": 0,
         "explanation": "Primary rays (or eye rays) are the initial rays cast from the camera position through each pixel into the scene to determine what is visible at that pixel."
       },
       {
@@ -61,7 +61,7 @@
           "Calculate refraction",
           "Determine camera visibility"
         ],
-        "correctAnswer": "Test if a point is occluded from a light source",
+        "correctAnswer": 0,
         "explanation": "Shadow rays are cast from a surface point toward each light source to determine if the point is in shadow (occluded) or directly illuminated, enabling accurate shadow rendering."
       }
     ]
@@ -82,7 +82,7 @@
           "Optimizing ray traversal",
           "Texture mapping technique"
         ],
-        "correctAnswer": "Monte Carlo ray tracing that simulates global illumination",
+        "correctAnswer": 0,
         "explanation": "Path tracing extends ray tracing by randomly sampling indirect lighting paths, simulating complex light transport including color bleeding, caustics, and soft shadows for physically accurate global illumination."
       },
       {
@@ -102,7 +102,7 @@
           "Formula for vertex transformation",
           "Algorithm for rasterization"
         ],
-        "correctAnswer": "Fundamental equation describing light transport in a scene",
+        "correctAnswer": 0,
         "explanation": "The rendering equation (Kajiya) mathematically describes how light reflects off surfaces, integrating incoming light from all directions weighted by the BRDF. It's the theoretical foundation of global illumination."
       },
       {
@@ -115,7 +115,7 @@
           "Texture distortions",
           "Rendering errors"
         ],
-        "correctAnswer": "Focused light patterns from reflection or refraction",
+        "correctAnswer": 0,
         "explanation": "Caustics are bright patterns created when light is focused by reflection (like light on the bottom of a pool) or refraction (through glass), requiring advanced techniques like photon mapping to render."
       },
       {
@@ -128,7 +128,7 @@
           "Direct lighting calculation",
           "Shadow mapping method"
         ],
-        "correctAnswer": "Two-pass technique storing and using photon positions for indirect lighting",
+        "correctAnswer": 0,
         "explanation": "Photon mapping traces photons from lights into the scene, stores them at surface intersections, then uses this photon map during rendering to approximate indirect illumination and caustics efficiently."
       }
     ]
@@ -149,7 +149,7 @@
           "Sampling only direct lighting",
           "Random sampling without weights"
         ],
-        "correctAnswer": "Sampling directions based on their contribution to reduce noise",
+        "correctAnswer": 0,
         "explanation": "Importance sampling concentrates samples in directions that contribute most to the final result (e.g., toward lights or specular directions), reducing noise and converging faster than uniform random sampling."
       },
       {
@@ -169,7 +169,7 @@
           "Texture sampling method",
           "Anti-aliasing technique"
         ],
-        "correctAnswer": "Probabilistic ray termination to limit bounce depth",
+        "correctAnswer": 0,
         "explanation": "Russian Roulette randomly terminates ray paths with probability based on energy, unbiasing the estimator while limiting recursion depth. Paths are weighted by survival probability to maintain correctness."
       },
       {
@@ -182,7 +182,7 @@
           "Texture mapping technique",
           "Shadow rendering algorithm"
         ],
-        "correctAnswer": "Finite element method for diffuse global illumination",
+        "correctAnswer": 0,
         "explanation": "Radiosity divides surfaces into patches and solves for equilibrium light distribution considering diffuse inter-reflections. It's view-independent and excels at architectural scenes with diffuse surfaces."
       },
       {
@@ -195,7 +195,7 @@
           "Cannot handle transparency",
           "Poor shadow quality"
         ],
-        "correctAnswer": "High computational cost requiring hardware acceleration",
+        "correctAnswer": 0,
         "explanation": "Ray tracing is computationally expensive, requiring millions of ray-geometry intersection tests per frame. Modern GPUs use dedicated RT cores and denoising to make real-time ray tracing feasible."
       }
     ]

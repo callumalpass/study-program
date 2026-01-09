@@ -15,7 +15,7 @@
           "Cook-Torrance model",
           "Toon shading"
         ],
-        "correctAnswer": "Phong reflection model",
+        "correctAnswer": 0,
         "explanation": "The Phong reflection model computes lighting as the sum of ambient (uniform background), diffuse (matte reflection), and specular (shiny highlights) components."
       },
       {
@@ -28,7 +28,7 @@
           "Background illumination",
           "Emitted light"
         ],
-        "correctAnswer": "Matte, view-independent reflection",
+        "correctAnswer": 0,
         "explanation": "Diffuse reflection represents light scattering equally in all directions from a matte surface, depending only on the angle between the surface normal and light direction (Lambertian reflection)."
       },
       {
@@ -48,7 +48,7 @@
           "I = ka × Ia",
           "I = N × L × V"
         ],
-        "correctAnswer": "I = kd × (N · L)",
+        "correctAnswer": 0,
         "explanation": "Lambertian diffuse reflection is proportional to the cosine of the angle between the surface normal (N) and light direction (L), expressed as their dot product, scaled by the diffuse coefficient kd."
       },
       {
@@ -61,7 +61,7 @@
           "The ambient coefficient",
           "The surface color"
         ],
-        "correctAnswer": "The shininess exponent",
+        "correctAnswer": 0,
         "explanation": "The shininess exponent (n) in the specular term (R·V)ⁿ controls highlight size: larger values create smaller, sharper highlights characteristic of very shiny surfaces."
       }
     ]
@@ -82,7 +82,7 @@
           "Phong uses flat shading, Gouraud uses smooth shading",
           "They are the same technique"
         ],
-        "correctAnswer": "Phong interpolates normals, Gouraud interpolates colors",
+        "correctAnswer": 0,
         "explanation": "Gouraud shading computes lighting at vertices and interpolates colors across triangles. Phong shading interpolates normals and computes lighting per pixel, producing better specular highlights."
       },
       {
@@ -102,7 +102,7 @@
           "Better diffuse reflection",
           "Faster ambient occlusion"
         ],
-        "correctAnswer": "Uses halfway vector, more efficient and physically plausible",
+        "correctAnswer": 0,
         "explanation": "Blinn-Phong uses the halfway vector between light and view directions instead of the reflection vector, reducing computation and behaving more like real materials at grazing angles."
       },
       {
@@ -115,7 +115,7 @@
           "Shadow darkness",
           "Color saturation"
         ],
-        "correctAnswer": "Light intensity decreasing with distance",
+        "correctAnswer": 0,
         "explanation": "Attenuation models how light intensity decreases with distance from the source, typically using a quadratic falloff (1/(a + b×d + c×d²)) to approximate physical light behavior."
       },
       {
@@ -128,7 +128,7 @@
           "Deferred shading",
           "Ray tracing"
         ],
-        "correctAnswer": "Gouraud shading",
+        "correctAnswer": 0,
         "explanation": "Gouraud shading computes lighting at triangle vertices and interpolates the resulting colors across the surface, making it faster but less accurate than per-pixel lighting."
       }
     ]
@@ -149,7 +149,7 @@
           "Specular reflection calculation",
           "Texture filtering method"
         ],
-        "correctAnswer": "Approximation of how exposed each point is to ambient lighting",
+        "correctAnswer": 0,
         "explanation": "Ambient occlusion estimates how much ambient light reaches each surface point, darkening crevices and contact areas to add depth and realism without expensive global illumination."
       },
       {
@@ -169,7 +169,7 @@
           "Color shift with distance",
           "Shadow softness"
         ],
-        "correctAnswer": "Reflectivity changing with viewing angle",
+        "correctAnswer": 0,
         "explanation": "The Fresnel effect describes how reflectivity increases at grazing angles. Looking straight at water shows less reflection than viewing it at a shallow angle, where it becomes mirror-like."
       },
       {
@@ -182,7 +182,7 @@
           "Determine texture coordinates",
           "Compute vertex positions"
         ],
-        "correctAnswer": "Describe how light reflects off a surface from different angles",
+        "correctAnswer": 0,
         "explanation": "A BRDF defines the ratio of reflected light for any pair of incoming and outgoing directions, characterizing surface appearance. Different BRDFs model materials like plastic, metal, or skin."
       },
       {
@@ -195,7 +195,7 @@
           "Flat shading",
           "Gouraud shading"
         ],
-        "correctAnswer": "Deferred shading",
+        "correctAnswer": 0,
         "explanation": "Deferred shading renders geometry to a G-buffer (storing position, normal, albedo, etc.) then applies lighting in a second pass, efficiently handling many lights by processing each visible pixel once."
       }
     ]

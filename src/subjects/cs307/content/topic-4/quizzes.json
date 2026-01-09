@@ -15,7 +15,7 @@
           "Broken Authentication",
           "Security Misconfiguration"
         ],
-        "correctAnswer": "Injection",
+        "correctAnswer": 1,
         "explanation": "SQL injection is a type of injection vulnerability where attackers insert malicious SQL code into queries. This can lead to unauthorized data access, modification, or deletion. Parameterized queries and prepared statements prevent SQL injection."
       },
       {
@@ -35,7 +35,7 @@
           "Encrypting all form data",
           "Using strong passwords"
         ],
-        "correctAnswer": "Implementing CSRF tokens that are validated on state-changing requests",
+        "correctAnswer": 1,
         "explanation": "CSRF tokens are unpredictable values tied to user sessions that must be included in state-changing requests. Attackers cannot guess these tokens, preventing them from forging requests. SameSite cookies also provide CSRF protection."
       },
       {
@@ -48,7 +48,7 @@
           "XSS",
           "Buffer Overflow"
         ],
-        "correctAnswer": "Insecure Direct Object Reference (IDOR)",
+        "correctAnswer": 0,
         "explanation": "IDOR vulnerabilities occur when applications expose direct references to internal objects (like /user/1234) without proper authorization checks. Attackers can manipulate these references to access unauthorized data by changing IDs in URLs or parameters."
       },
       {
@@ -76,7 +76,7 @@
           "Stored XSS (Persistent XSS)",
           "Universal XSS"
         ],
-        "correctAnswer": "Stored XSS (Persistent XSS)",
+        "correctAnswer": 2,
         "explanation": "Stored XSS occurs when malicious input is saved to a database or file system and later displayed to users without proper sanitization. This is more dangerous than reflected XSS because it affects all users who view the compromised content, not just those who click a malicious link."
       },
       {
@@ -96,7 +96,7 @@
           "Attackers can exploit publicly known weaknesses",
           "License compliance issues"
         ],
-        "correctAnswer": "Attackers can exploit publicly known weaknesses",
+        "correctAnswer": 2,
         "explanation": "When applications use libraries or frameworks with known vulnerabilities (disclosed in CVE databases), attackers can exploit these weaknesses. Keeping dependencies updated and monitoring vulnerability databases is crucial for maintaining security."
       },
       {
@@ -109,7 +109,7 @@
           "CSRF",
           "Privilege Escalation"
         ],
-        "correctAnswer": "Path Traversal (Directory Traversal)",
+        "correctAnswer": 1,
         "explanation": "Path traversal vulnerabilities allow attackers to access files outside the intended directory by manipulating file paths with sequences like \"../\". This can expose sensitive files like /etc/passwd or configuration files containing credentials. Input validation and sandboxing prevent this."
       },
       {
@@ -137,7 +137,7 @@
           "Reduced storage requirements",
           "Faster development cycles"
         ],
-        "correctAnswer": "Delayed detection of security breaches and incidents",
+        "correctAnswer": 1,
         "explanation": "Without proper logging and monitoring, security incidents may go undetected for months. Effective logging helps detect attacks, investigate incidents, and meet compliance requirements. Logs should capture authentication events, access control failures, and input validation failures."
       },
       {
@@ -157,7 +157,7 @@
           "To prevent SQL injection",
           "To enforce password complexity"
         ],
-        "correctAnswer": "To mitigate XSS attacks by controlling which resources can be loaded",
+        "correctAnswer": 1,
         "explanation": "Content Security Policy is a browser security mechanism that restricts which resources (scripts, styles, images) can be loaded and from where. By disallowing inline scripts and restricting sources, CSP significantly reduces the impact of XSS attacks."
       },
       {
@@ -170,7 +170,7 @@
           "Man-in-the-Middle",
           "Phishing"
         ],
-        "correctAnswer": "Denial of Service (DoS)",
+        "correctAnswer": 1,
         "explanation": "DoS attacks aim to exhaust system resources (bandwidth, CPU, memory, connections) making services unavailable. Distributed DoS (DDoS) uses multiple systems to amplify the attack. Mitigations include rate limiting, traffic filtering, CDNs, and auto-scaling."
       },
       {

@@ -15,7 +15,7 @@
           "h(x) = max(0, θᵀx)",
           "h(x) = sign(θᵀx)"
         ],
-        "correctAnswer": "h(x) = θ₀ + θ₁x₁ + θ₂x₂ + ... + θₙxₙ",
+        "correctAnswer": 0,
         "explanation": "Linear regression uses a linear combination of features: h(x) = θᵀx where θ are parameters to learn. This represents a hyperplane in feature space."
       },
       {
@@ -28,7 +28,7 @@
           "Hinge loss",
           "0-1 loss"
         ],
-        "correctAnswer": "Mean Squared Error (MSE)",
+        "correctAnswer": 0,
         "explanation": "Linear regression minimizes MSE: (1/2m)Σ(h(x⁽ⁱ⁾) - y⁽ⁱ⁾)². This is equivalent to maximum likelihood estimation under Gaussian noise assumptions."
       },
       {
@@ -41,7 +41,7 @@
           "Randomly searches for good parameters",
           "Increases the loss function to find maximum"
         ],
-        "correctAnswer": "Iteratively updates parameters in the direction that decreases the loss function",
+        "correctAnswer": 0,
         "explanation": "Gradient descent updates parameters as θⱼ := θⱼ - α(∂J/∂θⱼ), moving downhill on the loss surface. The learning rate α controls step size."
       },
       {
@@ -54,7 +54,7 @@
           "To speed up training",
           "To handle missing values"
         ],
-        "correctAnswer": "To map linear predictions to probability range [0,1]",
+        "correctAnswer": 0,
         "explanation": "The sigmoid function σ(z) = 1/(1+e^(-z)) squashes any real number to (0,1), allowing interpretation as probability. Logistic regression uses h(x) = σ(θᵀx)."
       },
       {
@@ -67,7 +67,7 @@
           "Lasso",
           "Dropout"
         ],
-        "correctAnswer": "Weight decay",
+        "correctAnswer": 0,
         "explanation": "L2 regularization adds λΣθⱼ² to the loss, penalizing large weights. This is equivalent to weight decay in gradient descent: weights shrink toward zero at each step."
       }
     ]
@@ -88,7 +88,7 @@
           "Add more features",
           "Use fewer training iterations"
         ],
-        "correctAnswer": "Decrease the learning rate",
+        "correctAnswer": 0,
         "explanation": "Oscillation indicates the learning rate is too high, causing overshooting. Decreasing α makes smaller, more stable steps toward the minimum."
       },
       {
@@ -101,7 +101,7 @@
           "When you have no multicollinearity",
           "When you want all weights to be small but non-zero"
         ],
-        "correctAnswer": "When you want feature selection by driving some weights to exactly zero",
+        "correctAnswer": 0,
         "explanation": "L1 regularization (λΣ|θⱼ|) creates sparse solutions with many exact zeros due to its non-differentiable corners, effectively performing feature selection. L2 only shrinks weights."
       },
       {
@@ -114,7 +114,7 @@
           "Decrease the learning rate",
           "Use a more complex model"
         ],
-        "correctAnswer": "Use mini-batch or stochastic gradient descent",
+        "correctAnswer": 0,
         "explanation": "Batch GD computes gradients over the entire dataset, which is slow for large datasets. Mini-batch GD uses small batches for faster, noisier updates that often converge faster in practice."
       },
       {
@@ -127,7 +127,7 @@
           "Binary cross-entropy",
           "Sigmoid activation"
         ],
-        "correctAnswer": "One-vs-All (OvA)",
+        "correctAnswer": 0,
         "explanation": "One-vs-All trains K binary classifiers (one per class vs rest), then selects the class with highest confidence. Softmax regression directly models all K classes in one model."
       },
       {
@@ -140,7 +140,7 @@
           "Newton's method",
           "Backpropagation"
         ],
-        "correctAnswer": "Normal equation: θ = (XᵀX)⁻¹Xᵀy",
+        "correctAnswer": 0,
         "explanation": "The normal equation provides an analytical solution by setting gradient to zero and solving. It works well for small n but is O(n³) due to matrix inversion, while gradient descent is O(kn²) for k iterations."
       }
     ]
@@ -161,7 +161,7 @@
           "Minimizing KL divergence",
           "Bayesian inference with conjugate prior"
         ],
-        "correctAnswer": "Maximum likelihood estimation assuming Gaussian noise: y = θᵀx + ε where ε ~ N(0,σ²)",
+        "correctAnswer": 0,
         "explanation": "Under Gaussian noise assumptions, minimizing MSE is equivalent to maximum likelihood estimation. This explains why squared loss is natural for regression."
       },
       {
@@ -174,7 +174,7 @@
           "Σ(h(x⁽ⁱ⁾) - y⁽ⁱ⁾)²",
           "-Σy⁽ⁱ⁾log(h(x⁽ⁱ⁾))"
         ],
-        "correctAnswer": "(1/m)Σ(h(x⁽ⁱ⁾) - y⁽ⁱ⁾)xⱼ⁽ⁱ⁾",
+        "correctAnswer": 0,
         "explanation": "Remarkably, logistic regression has the same gradient form as linear regression, even though h(x) = σ(θᵀx) is nonlinear. This comes from the cancellation between sigmoid derivative and log-likelihood."
       },
       {
@@ -187,7 +187,7 @@
           "The number of features",
           "The optimal learning rate"
         ],
-        "correctAnswer": "Numerical stability of the normal equation; high condition number indicates ill-conditioning",
+        "correctAnswer": 0,
         "explanation": "Condition number κ(XᵀX) = λ_max/λ_min measures sensitivity to numerical errors. High κ (near-singular matrix) makes (XᵀX)⁻¹ unstable. Regularization improves conditioning by adding λI to XᵀX."
       },
       {
@@ -200,7 +200,7 @@
           "Ridge is unrelated to Bayesian inference",
           "Ridge is maximum likelihood estimation"
         ],
-        "correctAnswer": "Ridge is MAP with Gaussian prior on weights: p(θ) ~ N(0, σ²I)",
+        "correctAnswer": 0,
         "explanation": "L2 regularization emerges naturally from Bayesian inference with Gaussian prior on weights. The penalty term λΣθⱼ² corresponds to -log p(θ) for a Gaussian prior."
       },
       {
@@ -213,7 +213,7 @@
           "The sigmoid function is convex",
           "It always converges in one iteration"
         ],
-        "correctAnswer": "The negative log-likelihood loss is convex, guaranteeing global minimum",
+        "correctAnswer": 0,
         "explanation": "The negative log-likelihood J(θ) = -Σ[y log h(x) + (1-y)log(1-h(x))] is convex in θ. Convexity means any local minimum is global, so gradient descent is guaranteed to find the optimal solution."
       }
     ]

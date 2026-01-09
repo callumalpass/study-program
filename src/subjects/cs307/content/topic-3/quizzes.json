@@ -15,7 +15,7 @@
           "Encryption, hashing, signing",
           "Local, network, cloud"
         ],
-        "correctAnswer": "Something you know, something you have, something you are",
+        "correctAnswer": 1,
         "explanation": "The three authentication factors are: something you know (password, PIN), something you have (token, phone, smart card), and something you are (biometrics like fingerprint, face). Multi-factor authentication combines two or more of these."
       },
       {
@@ -35,7 +35,7 @@
           "To encrypt network traffic",
           "To authenticate the user's identity"
         ],
-        "correctAnswer": "To grant limited access to resources without sharing credentials",
+        "correctAnswer": 1,
         "explanation": "An OAuth access token is a credential that allows applications to access specific resources on behalf of a user without requiring the user's password. Tokens can have limited scope and expiration times for enhanced security."
       },
       {
@@ -48,7 +48,7 @@
           "Remote-Based Access Control",
           "Recursive-Based Access Control"
         ],
-        "correctAnswer": "Role-Based Access Control",
+        "correctAnswer": 1,
         "explanation": "RBAC (Role-Based Access Control) assigns permissions to roles rather than individual users. Users are then assigned roles, simplifying permission management in large organizations. For example, all \"Managers\" might have the same set of permissions."
       },
       {
@@ -76,7 +76,7 @@
           "It automatically detects phishing attempts",
           "It encrypts all network traffic"
         ],
-        "correctAnswer": "It allows you to use strong, unique passwords for every service without memorizing them",
+        "correctAnswer": 1,
         "explanation": "Password managers securely store unique, complex passwords for each service. This prevents password reuse attacks where a breach on one service compromises other accounts. Users only need to remember one strong master password."
       },
       {
@@ -96,7 +96,7 @@
           "DDoS attacks",
           "Man-in-the-middle attacks during token exchange"
         ],
-        "correctAnswer": "Man-in-the-middle attacks during token exchange",
+        "correctAnswer": 3,
         "explanation": "OAuth 2.0's authorization code flow with PKCE (Proof Key for Code Exchange) prevents attackers from intercepting authorization codes and exchanging them for tokens. The code is exchanged for tokens on the backend, and PKCE ensures the same client that requested the code exchanges it."
       },
       {
@@ -109,7 +109,7 @@
           "Hardware security keys using FIDO2/WebAuthn",
           "Security questions"
         ],
-        "correctAnswer": "Hardware security keys using FIDO2/WebAuthn",
+        "correctAnswer": 2,
         "explanation": "Hardware security keys using FIDO2/WebAuthn are the most secure MFA method. They are phishing-resistant, don't rely on SMS (which can be intercepted), and use public key cryptography. SMS-based codes are vulnerable to SIM swapping and interception."
       },
       {
@@ -137,7 +137,7 @@
           "To replace HTTPS",
           "To store session data on the server"
         ],
-        "correctAnswer": "To provide a self-contained token that carries claims about the user",
+        "correctAnswer": 1,
         "explanation": "JWTs are self-contained tokens that include claims (like user ID, roles, expiration) and are digitally signed. Servers can verify and trust the token without storing session state, making them useful for stateless authentication in distributed systems."
       },
       {
@@ -157,7 +157,7 @@
           "Authentication is for users; authorization is for systems",
           "Authorization verifies identity; authentication determines permissions"
         ],
-        "correctAnswer": "Authentication verifies identity; authorization determines what actions are permitted",
+        "correctAnswer": 1,
         "explanation": "Authentication answers \"Who are you?\" (verifying identity through credentials), while authorization answers \"What are you allowed to do?\" (determining permissions based on identity). Both are crucial but serve different purposes in access control."
       },
       {
@@ -170,7 +170,7 @@
           "Client credentials grant",
           "Resource owner password credentials grant"
         ],
-        "correctAnswer": "Authorization code grant",
+        "correctAnswer": 1,
         "explanation": "The authorization code grant (with PKCE) is most secure for web applications because the access token is obtained server-side and never exposed to the browser. The implicit grant is deprecated due to security concerns, and client credentials are for machine-to-machine communication."
       },
       {

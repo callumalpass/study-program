@@ -15,7 +15,7 @@
           "y = sin(x)",
           "y = a₀ + a₁x"
         ],
-        "correctAnswer": "y = Σ(n=0 to ∞) a_n x^n",
+        "correctAnswer": 0,
         "explanation": "A power series solution is an infinite series y = Σa_n x^n, where coefficients a_n are determined by the differential equation."
       },
       {
@@ -28,7 +28,7 @@
           "P(x) and Q(x) are undefined at x₀",
           "The equation has no solution at x₀"
         ],
-        "correctAnswer": "P(x) and Q(x) are analytic at x₀",
+        "correctAnswer": 0,
         "explanation": "x₀ is ordinary if P(x) and Q(x) are analytic (have convergent power series) at x₀. Otherwise, it's a singular point."
       },
       {
@@ -41,7 +41,7 @@
           "Σ(n=0 to ∞) a_n x^(n-1)",
           "Σ(n=0 to ∞) (n+1)a_n x^n"
         ],
-        "correctAnswer": "Σ(n=1 to ∞) na_n x^(n-1)",
+        "correctAnswer": 0,
         "explanation": "Differentiating term by term: y′ = Σna_n x^(n-1), starting from n=1 since the n=0 term has zero derivative."
       },
       {
@@ -54,7 +54,7 @@
           "Set x = 0",
           "Use L'Hôpital's rule"
         ],
-        "correctAnswer": "Shift indices to align powers of x",
+        "correctAnswer": 0,
         "explanation": "To combine series, we shift indices so all terms have the same power x^k, then equate coefficients to find recurrence relations."
       },
       {
@@ -67,7 +67,7 @@
           "The radius of convergence",
           "The singular points"
         ],
-        "correctAnswer": "Coefficients a_n in terms of previous coefficients",
+        "correctAnswer": 0,
         "explanation": "Equating coefficients of like powers gives a recurrence relation, expressing a_n in terms of a_(n-1), a_(n-2), etc."
       }
     ]
@@ -88,7 +88,7 @@
           "An irregular singular point",
           "Any point"
         ],
-        "correctAnswer": "A regular singular point",
+        "correctAnswer": 0,
         "explanation": "The Frobenius method finds series solutions near regular singular points, using the form y = x^r Σa_n x^n."
       },
       {
@@ -101,7 +101,7 @@
           "y = e^(rx)",
           "y = r^x"
         ],
-        "correctAnswer": "y = x^r Σ(n=0 to ∞) a_n x^n with a₀ ≠ 0",
+        "correctAnswer": 0,
         "explanation": "Frobenius method assumes y = x^r Σa_n x^n = Σa_n x^(n+r), where r is determined by the indicial equation."
       },
       {
@@ -114,7 +114,7 @@
           "The radius of convergence",
           "Whether the point is singular"
         ],
-        "correctAnswer": "The exponent r in the Frobenius solution",
+        "correctAnswer": 0,
         "explanation": "The indicial equation, obtained from the lowest power of x, determines the possible values of r in y = x^r Σa_n x^n."
       },
       {
@@ -127,7 +127,7 @@
           "No solution exists",
           "The solutions are identical"
         ],
-        "correctAnswer": "The second solution may involve logarithms",
+        "correctAnswer": 0,
         "explanation": "When roots differ by an integer, the second solution may contain logarithmic terms: y₂ = y₁ ln(x) + x^r₂ Σb_n x^n."
       },
       {
@@ -140,7 +140,7 @@
           "P(x₀) = ∞",
           "The equation has no solution at x₀"
         ],
-        "correctAnswer": "(x-x₀)P(x) and (x-x₀)²Q(x) are analytic at x₀",
+        "correctAnswer": 0,
         "explanation": "x₀ is regular singular if (x-x₀)P(x) and (x-x₀)²Q(x) are analytic at x₀. Otherwise, it's irregular singular."
       }
     ]
@@ -161,7 +161,7 @@
           "x²y″ - 2xy′ + 2y = 0",
           "(1 - x²)y″ - 2xy′ + ν(ν+1)y = 0"
         ],
-        "correctAnswer": "x²y″ + xy′ + (x² - ν²)y = 0",
+        "correctAnswer": 0,
         "explanation": "Bessel's equation is x²y″ + xy′ + (x² - ν²)y = 0. It has regular singular point at x = 0 and arises in cylindrical coordinate problems."
       },
       {
@@ -174,7 +174,7 @@
           "An exponential function",
           "Always zero at x = 0"
         ],
-        "correctAnswer": "A series solution to Bessel's equation",
+        "correctAnswer": 0,
         "explanation": "J_ν(x) is a fundamental solution to Bessel's equation, given by a power series. For integer ν, it's bounded at x = 0."
       },
       {
@@ -187,7 +187,7 @@
           "y″ + xy = 0",
           "y″ - 2xy′ + 2ny = 0"
         ],
-        "correctAnswer": "(1 - x²)y″ - 2xy′ + n(n+1)y = 0",
+        "correctAnswer": 0,
         "explanation": "Legendre's equation is (1-x²)y″ - 2xy′ + n(n+1)y = 0, arising in spherical coordinate problems. Has singular points at x = ±1."
       },
       {
@@ -200,7 +200,7 @@
           "Hermite polynomial",
           "Chebyshev polynomial"
         ],
-        "correctAnswer": "Legendre polynomial P_n(x)",
+        "correctAnswer": 0,
         "explanation": "For integer n ≥ 0, one solution to Legendre's equation is the Legendre polynomial P_n(x), a polynomial of degree n."
       },
       {
@@ -213,7 +213,7 @@
           "P_m(x)P_n(x) = 0 for all x",
           "∫₋₁¹ P_n(x) dx = 0"
         ],
-        "correctAnswer": "∫₋₁¹ P_m(x)P_n(x) dx = 0 for m ≠ n",
+        "correctAnswer": 0,
         "explanation": "Legendre polynomials are orthogonal on [-1,1]: ∫₋₁¹ P_m(x)P_n(x) dx = 0 when m ≠ n, important for expansions."
       }
     ]

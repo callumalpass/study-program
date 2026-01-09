@@ -15,7 +15,7 @@
           "Service implementation",
           "Data storage"
         ],
-        "correctAnswer": "Single entry point routing requests to services",
+        "correctAnswer": 0,
         "explanation": "API Gateways provide a single entry point for clients, routing requests to appropriate microservices while handling cross-cutting concerns like authentication, rate limiting, and load balancing."
       },
       {
@@ -28,7 +28,7 @@
           "Database cluster",
           "Web server"
         ],
-        "correctAnswer": "Infrastructure layer managing service-to-service communication",
+        "correctAnswer": 0,
         "explanation": "A service mesh (like Istio, Linkerd) is an infrastructure layer that handles service-to-service communication, providing features like load balancing, encryption, observability, and resilience."
       },
       {
@@ -41,7 +41,7 @@
           "Load balancing",
           "Caching"
         ],
-        "correctAnswer": "Managing distributed transactions across microservices",
+        "correctAnswer": 0,
         "explanation": "Sagas manage long-running distributed transactions by breaking them into local transactions with compensating actions, avoiding distributed locks while maintaining consistency."
       },
       {
@@ -54,7 +54,7 @@
           "Push and Pull",
           "Active and Passive"
         ],
-        "correctAnswer": "Choreography and Orchestration",
+        "correctAnswer": 0,
         "explanation": "Choreography sagas use events where each service listens and reacts. Orchestration sagas use a central coordinator directing each step. Each has tradeoffs in complexity and coupling."
       },
       {
@@ -67,7 +67,7 @@
           "Real-time event processing",
           "Event logging for debugging"
         ],
-        "correctAnswer": "Storing state changes as a sequence of events",
+        "correctAnswer": 0,
         "explanation": "Event sourcing stores all state changes as events in an append-only log, allowing state reconstruction, complete audit history, and time-travel queries, though increasing complexity."
       }
     ]
@@ -88,7 +88,7 @@
           "Query optimization",
           "Command pattern"
         ],
-        "correctAnswer": "Separating read and write models",
+        "correctAnswer": 0,
         "explanation": "CQRS separates the models for reading and writing data, allowing independent optimization, scaling, and evolution of read and write sides, often combined with event sourcing."
       },
       {
@@ -101,7 +101,7 @@
           "Monitor CPU usage",
           "Encrypt communications"
         ],
-        "correctAnswer": "Track requests across multiple services",
+        "correctAnswer": 0,
         "explanation": "Distributed tracing (like Jaeger, Zipkin) tracks requests as they flow through microservices, helping identify performance bottlenecks, failures, and dependencies in complex systems."
       },
       {
@@ -114,7 +114,7 @@
           "Load balancing",
           "Data replication"
         ],
-        "correctAnswer": "Deploying helper components alongside main services",
+        "correctAnswer": 0,
         "explanation": "Sidecar pattern deploys auxiliary components (for logging, monitoring, proxying) alongside main services in the same pod/host, extending functionality without modifying service code."
       },
       {
@@ -127,7 +127,7 @@
           "Performance optimization",
           "Data migration"
         ],
-        "correctAnswer": "Gradually replacing legacy systems with new ones",
+        "correctAnswer": 0,
         "explanation": "Strangler fig pattern incrementally replaces legacy system components with new implementations, routing increasing traffic to new services while maintaining old ones until complete replacement."
       },
       {
@@ -140,7 +140,7 @@
           "Data compression",
           "Encryption"
         ],
-        "correctAnswer": "Controlling request rates to protect services",
+        "correctAnswer": 0,
         "explanation": "Rate limiting restricts the number of requests clients can make, protecting services from overload, implementing fair usage policies, and preventing denial-of-service attacks."
       }
     ]
@@ -161,7 +161,7 @@
           "Vertical is cheaper",
           "They are the same"
         ],
-        "correctAnswer": "Horizontal adds more machines; Vertical adds more resources to one machine",
+        "correctAnswer": 0,
         "explanation": "Horizontal scaling (scale-out) adds more machines to distribute load, while vertical scaling (scale-up) adds CPU/memory to existing machines. Horizontal scaling is unlimited but more complex."
       },
       {
@@ -174,7 +174,7 @@
           "Database pressure",
           "Memory pressure"
         ],
-        "correctAnswer": "Mechanism for handling overload by slowing down producers",
+        "correctAnswer": 0,
         "explanation": "Backpressure is a feedback mechanism where overloaded consumers signal producers to slow down, preventing buffer overflow and maintaining system stability under high load."
       },
       {
@@ -187,7 +187,7 @@
           "Operations are simple",
           "Operations never fail"
         ],
-        "correctAnswer": "Operations produce same result when executed multiple times",
+        "correctAnswer": 0,
         "explanation": "Idempotent operations produce the same result when executed multiple times, making them safe to retry. This is crucial for handling failures and duplicate messages in distributed systems."
       },
       {
@@ -200,7 +200,7 @@
           "Data storage",
           "Authentication"
         ],
-        "correctAnswer": "Asynchronous communication between services",
+        "correctAnswer": 0,
         "explanation": "Message queues (like RabbitMQ, Kafka) enable asynchronous communication, decoupling services, buffering during load spikes, and ensuring reliable message delivery between components."
       },
       {
@@ -213,7 +213,7 @@
           "Message size limits",
           "Network protocols"
         ],
-        "correctAnswer": "Guarantees about how many times messages are delivered",
+        "correctAnswer": 0,
         "explanation": "At-most-once may lose messages, at-least-once may duplicate messages, and exactly-once guarantees single delivery. Each has tradeoffs between complexity, performance, and guarantees."
       }
     ]

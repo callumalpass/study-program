@@ -15,7 +15,7 @@
           "Both of the above",
           "Neither of the above"
         ],
-        "correctAnswer": "Both of the above",
+        "correctAnswer": 2,
         "explanation": "Both definitions are equivalent. The first uses h → 0 and the second uses x → c. Both give f'(c) when the limit exists."
       },
       {
@@ -28,7 +28,7 @@
           "Discontinuous at c",
           "Constant near c"
         ],
-        "correctAnswer": "Continuous at c",
+        "correctAnswer": 0,
         "explanation": "Differentiability implies continuity. If f'(c) exists, then lim(x→c) f(x) = f(c), so f is continuous at c."
       },
       {
@@ -41,7 +41,7 @@
           "Not continuous",
           "Both continuous and differentiable"
         ],
-        "correctAnswer": "Continuous but not differentiable",
+        "correctAnswer": 0,
         "explanation": "f(x) = |x| is continuous everywhere, but not differentiable at x = 0 because the left and right derivatives differ."
       },
       {
@@ -54,7 +54,7 @@
           "f(c)g(c)",
           "[f(c) + g(c)]'(c)"
         ],
-        "correctAnswer": "f'(c)g(c) + f(c)g'(c)",
+        "correctAnswer": 0,
         "explanation": "This is the Product Rule: (fg)' = f'g + fg'. It is one of the fundamental differentiation rules."
       },
       {
@@ -67,7 +67,7 @@
           "(f ∘ g)'(c) = f(g'(c))",
           "(f ∘ g)'(c) = f'(c) + g'(c)"
         ],
-        "correctAnswer": "(f ∘ g)'(c) = f'(g(c)) · g'(c)",
+        "correctAnswer": 0,
         "explanation": "The Chain Rule for composition: the derivative of f(g(x)) is f'(g(x)) times g'(x)."
       }
     ]
@@ -88,7 +88,7 @@
           "f is constant",
           "f(a) ≠ f(b)"
         ],
-        "correctAnswer": "f(a) = f(b)",
+        "correctAnswer": 0,
         "explanation": "Rolle's Theorem states that if f(a) = f(b), then there exists c in (a, b) with f'(c) = 0."
       },
       {
@@ -101,7 +101,7 @@
           "f'(c) = 0",
           "f(c) = 0"
         ],
-        "correctAnswer": "f'(c) = [f(b) - f(a)]/(b - a)",
+        "correctAnswer": 0,
         "explanation": "The MVT states that there exists a point c where the instantaneous rate of change equals the average rate of change over [a, b]."
       },
       {
@@ -114,7 +114,7 @@
           "Linear on (a, b)",
           "Discontinuous on (a, b)"
         ],
-        "correctAnswer": "Constant on (a, b)",
+        "correctAnswer": 0,
         "explanation": "This is a corollary of the MVT: if the derivative is zero everywhere on an interval, the function is constant on that interval."
       },
       {
@@ -127,7 +127,7 @@
           "Constant on (a, b)",
           "Concave on (a, b)"
         ],
-        "correctAnswer": "Strictly increasing on (a, b)",
+        "correctAnswer": 0,
         "explanation": "By the MVT, if f'(x) > 0 throughout an interval, then f is strictly increasing on that interval."
       },
       {
@@ -140,7 +140,7 @@
           "f(x) = sin(x) on [0, π]",
           "f(x) = x³ on [-1, 1]"
         ],
-        "correctAnswer": "f(x) = |x| on [-1, 1]",
+        "correctAnswer": 0,
         "explanation": "The MVT requires differentiability on (a, b). f(x) = |x| is not differentiable at x = 0, so the MVT does not apply."
       }
     ]
@@ -161,7 +161,7 @@
           "The function value f(a)",
           "The second derivative f''(a)"
         ],
-        "correctAnswer": "The remainder term Rₙ(x)",
+        "correctAnswer": 0,
         "explanation": "Taylor's Theorem states f(x) = Pₙ(x) + Rₙ(x), where Pₙ is the Taylor polynomial and Rₙ is the remainder (error) term."
       },
       {
@@ -174,7 +174,7 @@
           "Pₙ(x) = f(x)",
           "Pₙ(x) = f(a)"
         ],
-        "correctAnswer": "Pₙ(x) = ∑(k=0 to n) f⁽ᵏ⁾(a)/k! · (x-a)ᵏ",
+        "correctAnswer": 0,
         "explanation": "The Taylor polynomial of order n uses derivatives of f at a up to order n, weighted by factorials."
       },
       {
@@ -187,7 +187,7 @@
           "lim f(x)/g(x) = 0",
           "lim f(x)/g(x) = ∞"
         ],
-        "correctAnswer": "lim f(x)/g(x) = lim f'(x)/g'(x) (when the right limit exists)",
+        "correctAnswer": 0,
         "explanation": "L'Hôpital's Rule allows us to evaluate indeterminate forms by taking derivatives of numerator and denominator separately."
       },
       {
@@ -200,7 +200,7 @@
           "Rₙ(x) = 0",
           "Rₙ(x) = f⁽ⁿ⁾(a)/n! · (x-a)ⁿ"
         ],
-        "correctAnswer": "Rₙ(x) = f⁽ⁿ⁺¹⁾(c)/(n+1)! · (x-a)ⁿ⁺¹ for some c between a and x",
+        "correctAnswer": 0,
         "explanation": "The Lagrange remainder formula involves the (n+1)-st derivative evaluated at some point c in the interval."
       },
       {
@@ -213,7 +213,7 @@
           "The error is constant",
           "The error grows unboundedly"
         ],
-        "correctAnswer": "The error goes to zero faster than (x-a)ⁿ⁻¹ as x → a",
+        "correctAnswer": 0,
         "explanation": "The little-o notation o((x-a)ⁿ⁻¹) means the error term is negligible compared to (x-a)ⁿ⁻¹ near a."
       }
     ]

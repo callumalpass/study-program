@@ -15,7 +15,7 @@
           "Process continues with wrong behavior",
           "Network partition"
         ],
-        "correctAnswer": "Process halts and others can detect it",
+        "correctAnswer": 0,
         "explanation": "In fail-stop failures, a process halts completely and other processes can reliably detect that it has failed, making it easier to handle than other failure types."
       },
       {
@@ -28,7 +28,7 @@
           "Network delay",
           "Disk failure"
         ],
-        "correctAnswer": "Arbitrary or malicious behavior",
+        "correctAnswer": 0,
         "explanation": "Byzantine failures involve arbitrary or malicious behavior where nodes may send incorrect or contradictory information. This is the most difficult failure type to handle."
       },
       {
@@ -41,7 +41,7 @@
           "N-1 failures",
           "Any number"
         ],
-        "correctAnswer": "(N-1)/3 failures",
+        "correctAnswer": 0,
         "explanation": "BFT systems require at least 3f+1 nodes to tolerate f Byzantine failures, meaning they can tolerate less than one-third failures, which is more expensive than crash tolerance."
       },
       {
@@ -54,7 +54,7 @@
           "Software that fixes bugs",
           "Network monitoring tool"
         ],
-        "correctAnswer": "Component that monitors and reports process failures",
+        "correctAnswer": 0,
         "explanation": "A failure detector is a distributed system component that monitors processes and reports suspected failures, typically using heartbeats and timeouts, though it may be unreliable."
       },
       {
@@ -67,7 +67,7 @@
           "Completeness: correct failures; Accuracy: complete failures",
           "They are the same thing"
         ],
-        "correctAnswer": "Completeness: detect all failures; Accuracy: no false positives",
+        "correctAnswer": 0,
         "explanation": "Completeness means eventually detecting all actual failures. Accuracy means not incorrectly suspecting correct processes. Perfect failure detection is impossible in asynchronous systems."
       }
     ]
@@ -88,7 +88,7 @@
           "Never makes mistakes",
           "Detects Byzantine failures"
         ],
-        "correctAnswer": "Eventually stops making mistakes about correct processes",
+        "correctAnswer": 0,
         "explanation": "An eventually perfect failure detector may make mistakes initially but eventually accurately identifies all crashed processes and stops suspecting correct ones, useful in practice."
       },
       {
@@ -101,7 +101,7 @@
           "Testing system security",
           "Monitoring performance"
         ],
-        "correctAnswer": "Periodically saving process state for recovery",
+        "correctAnswer": 0,
         "explanation": "Checkpointing involves periodically saving the state of a process to stable storage, allowing it to recover to a consistent state after a failure without restarting from the beginning."
       },
       {
@@ -114,7 +114,7 @@
           "Compressing messages",
           "Routing messages"
         ],
-        "correctAnswer": "Recording messages to replay after recovery",
+        "correctAnswer": 0,
         "explanation": "Message logging records received messages so that after a failure, a process can recover from a checkpoint and replay logged messages to reach a consistent state."
       },
       {
@@ -127,7 +127,7 @@
           "Undelivered messages",
           "Memory leaks"
         ],
-        "correctAnswer": "Recovered process doesn't know about messages it sent before failure",
+        "correctAnswer": 0,
         "explanation": "The orphan problem occurs when a recovered process doesn't remember sending messages before failure, but other processes have received them and acted on them, causing inconsistencies."
       },
       {
@@ -140,7 +140,7 @@
           "Interrupting power supply",
           "Stopping all processes"
         ],
-        "correctAnswer": "Preventing cascading failures by stopping calls to failing services",
+        "correctAnswer": 0,
         "explanation": "Circuit breakers monitor for failures and \"open\" (stop forwarding requests) when failure rate exceeds a threshold, preventing cascading failures and giving failing services time to recover."
       }
     ]
@@ -161,7 +161,7 @@
           "Active, Inactive, Suspended",
           "Running, Stopped, Paused"
         ],
-        "correctAnswer": "Closed, Open, Half-Open",
+        "correctAnswer": 0,
         "explanation": "Circuit breakers have three states: Closed (normal operation), Open (blocking requests after failures), and Half-Open (testing if service recovered by allowing limited requests)."
       },
       {
@@ -174,7 +174,7 @@
           "Encrypting communications",
           "Load balancing"
         ],
-        "correctAnswer": "Isolating resources to prevent failure propagation",
+        "correctAnswer": 0,
         "explanation": "Bulkhead pattern isolates resources (like thread pools or connection pools) so that failure in one part doesn't consume all resources and affect other parts of the system."
       },
       {
@@ -187,7 +187,7 @@
           "Improving performance over time",
           "Preventing all failures"
         ],
-        "correctAnswer": "Continuing with reduced functionality when failures occur",
+        "correctAnswer": 0,
         "explanation": "Graceful degradation allows a system to continue operating with reduced functionality when failures occur, rather than completely failing, improving overall availability."
       },
       {
@@ -200,7 +200,7 @@
           "Never retrying",
           "Retrying with random delays"
         ],
-        "correctAnswer": "Retrying failed operations with increasing delays",
+        "correctAnswer": 0,
         "explanation": "Exponential backoff increases delay between retries exponentially (e.g., 1s, 2s, 4s, 8s), preventing overwhelming a failing service while giving it time to recover."
       },
       {
@@ -213,7 +213,7 @@
           "Scheduling tasks",
           "Encrypting data"
         ],
-        "correctAnswer": "Detecting failures and preventing indefinite waiting",
+        "correctAnswer": 0,
         "explanation": "Timeouts prevent processes from waiting indefinitely for responses, allowing failure detection and recovery. However, setting appropriate timeout values is challenging."
       }
     ]

@@ -15,7 +15,7 @@
           "Perspective transformation",
           "Non-uniform scaling"
         ],
-        "correctAnswer": "Rigid transformation",
+        "correctAnswer": 0,
         "explanation": "Rigid transformations (rotation and translation) preserve both angles and lengths, maintaining the shape and size of objects. They are also called isometric transformations."
       },
       {
@@ -28,7 +28,7 @@
           "3x4",
           "4x3"
         ],
-        "correctAnswer": "4x4",
+        "correctAnswer": 0,
         "explanation": "Homogeneous coordinates use a 4x4 matrix for 3D transformations, with the extra dimension allowing translation to be represented as a matrix multiplication."
       },
       {
@@ -48,7 +48,7 @@
           "-1",
           "Any value"
         ],
-        "correctAnswer": "1",
+        "correctAnswer": 0,
         "explanation": "Points in homogeneous coordinates use w=1, while vectors (representing directions) use w=0. This distinction allows translation to affect points but not directions."
       },
       {
@@ -61,7 +61,7 @@
           "Translation",
           "Shearing"
         ],
-        "correctAnswer": "Scaling",
+        "correctAnswer": 0,
         "explanation": "Scaling changes the size of an object by multiplying coordinates by scale factors. Uniform scaling maintains proportions, while non-uniform scaling can distort shapes."
       }
     ]
@@ -82,7 +82,7 @@
           "(x, y) → (-x, -y)",
           "(x, y) → (x, -y)"
         ],
-        "correctAnswer": "(x, y) → (-y, x)",
+        "correctAnswer": 0,
         "explanation": "A 90-degree counterclockwise rotation around the Z-axis transforms point (x, y) to (-y, x). This can be verified using the rotation matrix with θ=90°."
       },
       {
@@ -102,7 +102,7 @@
           "Translate(P) → Rotate → Translate(-P)",
           "Rotate → Translate(P)"
         ],
-        "correctAnswer": "Translate(-P) → Rotate → Translate(P)",
+        "correctAnswer": 0,
         "explanation": "To rotate around point P: first translate P to origin, perform rotation around origin, then translate back to P. This is applied right-to-left in matrix multiplication."
       },
       {
@@ -115,7 +115,7 @@
           "-1",
           "Depends on angle"
         ],
-        "correctAnswer": "1",
+        "correctAnswer": 0,
         "explanation": "Rotation matrices are orthogonal and have a determinant of 1, indicating they preserve volume and are orientation-preserving transformations."
       },
       {
@@ -128,7 +128,7 @@
           "Rotation matrices",
           "Axis-angle"
         ],
-        "correctAnswer": "Quaternions",
+        "correctAnswer": 0,
         "explanation": "Quaternions provide a robust way to represent rotations without gimbal lock, which occurs with Euler angles when two rotation axes align. They also interpolate smoothly."
       }
     ]
@@ -149,7 +149,7 @@
           "Rigid transformation",
           "Linear transformation"
         ],
-        "correctAnswer": "Affine transformation",
+        "correctAnswer": 0,
         "explanation": "A 3x3 matrix in 2D homogeneous coordinates represents affine transformations, which include translation, rotation, scaling, and shearing while preserving parallel lines."
       },
       {
@@ -169,7 +169,7 @@
           "Less memory usage",
           "Better numerical precision"
         ],
-        "correctAnswer": "All transformations can be represented as matrix multiplication",
+        "correctAnswer": 0,
         "explanation": "Homogeneous coordinates allow translation to be expressed as matrix multiplication, enabling all affine transformations to be composed and applied uniformly through matrix operations."
       },
       {
@@ -182,7 +182,7 @@
           "Matrix with s in all entries",
           "Upper triangular matrix with s"
         ],
-        "correctAnswer": "Diagonal matrix with s, s, s on diagonal",
+        "correctAnswer": 0,
         "explanation": "Uniform scaling is represented by a diagonal matrix with the scale factor on the diagonal (and 1 for the w component in homogeneous coordinates)."
       },
       {
@@ -195,7 +195,7 @@
           "Original matrix M",
           "Transpose of M"
         ],
-        "correctAnswer": "Identity matrix",
+        "correctAnswer": 0,
         "explanation": "By definition, multiplying a matrix by its inverse yields the identity matrix (M × M⁻¹ = I), which represents no transformation."
       }
     ]

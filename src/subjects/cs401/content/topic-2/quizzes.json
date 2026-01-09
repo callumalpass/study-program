@@ -15,7 +15,7 @@
           "Time zones differ",
           "Hardware clock precision"
         ],
-        "correctAnswer": "No shared physical clock and network delays",
+        "correctAnswer": 0,
         "explanation": "Without a shared physical clock and with variable network delays, achieving precise clock synchronization across distributed nodes is fundamentally challenging."
       },
       {
@@ -28,7 +28,7 @@
           "Network delay variations",
           "Time zone changes"
         ],
-        "correctAnswer": "Gradual divergence of a clock from actual time",
+        "correctAnswer": 0,
         "explanation": "Clock drift occurs when a computer's clock gradually runs faster or slower than actual time due to hardware imperfections, requiring periodic synchronization."
       },
       {
@@ -41,7 +41,7 @@
           "Network bandwidth measurement",
           "Packet routing"
         ],
-        "correctAnswer": "Clock synchronization across networks",
+        "correctAnswer": 0,
         "explanation": "NTP synchronizes computer clocks across networks using a hierarchy of time servers, accounting for network delays to achieve millisecond-level accuracy."
       },
       {
@@ -54,7 +54,7 @@
           "Time can go backwards",
           "Concurrent events don't exist"
         ],
-        "correctAnswer": "Event ordering matters more than absolute time",
+        "correctAnswer": 0,
         "explanation": "Lamport clocks focus on capturing the happens-before relationship between events rather than their absolute time, which is sufficient for many distributed algorithms."
       },
       {
@@ -67,7 +67,7 @@
           "Only when sending messages",
           "Once per second"
         ],
-        "correctAnswer": "Before each event",
+        "correctAnswer": 0,
         "explanation": "In Lamport's algorithm, each process increments its logical clock before each event (internal, send, or receive), ensuring causally related events have ordered timestamps."
       }
     ]
@@ -88,7 +88,7 @@
           "Decrements its clock",
           "Resets clock to zero"
         ],
-        "correctAnswer": "Sets clock to max(local, message) + 1",
+        "correctAnswer": 0,
         "explanation": "When receiving a message, a process updates its clock to the maximum of its local clock and the message timestamp, then increments, ensuring consistency with the happens-before relation."
       },
       {
@@ -101,7 +101,7 @@
           "Too complex to implement",
           "Don't work with more than two processes"
         ],
-        "correctAnswer": "Cannot detect concurrent events",
+        "correctAnswer": 0,
         "explanation": "Lamport clocks can determine if events are ordered but cannot distinguish concurrent events (those that don't causally affect each other) since concurrent events may have different timestamps."
       },
       {
@@ -114,7 +114,7 @@
           "Less memory usage",
           "Physical time accuracy"
         ],
-        "correctAnswer": "Detection of concurrent events",
+        "correctAnswer": 0,
         "explanation": "Vector clocks maintain a vector of logical times (one per process), allowing them to detect concurrent events by comparing vectors, which Lamport clocks cannot do."
       },
       {
@@ -127,7 +127,7 @@
           "log(N) entries",
           "N^2 entries"
         ],
-        "correctAnswer": "N entries",
+        "correctAnswer": 0,
         "explanation": "Each vector clock contains N entries, one for each process in the system, tracking that process's view of the logical time at every other process."
       },
       {
@@ -140,7 +140,7 @@
           "One vector is strictly less than the other",
           "Timestamps are equal"
         ],
-        "correctAnswer": "Neither vector is less than or equal to the other",
+        "correctAnswer": 0,
         "explanation": "Two events are concurrent if their vector clocks are incomparable (neither is less than or equal to the other), meaning neither event causally preceded the other."
       }
     ]
@@ -161,7 +161,7 @@
           "Random event ordering",
           "Process ID-based ordering"
         ],
-        "correctAnswer": "A partial ordering of events based on causality",
+        "correctAnswer": 0,
         "explanation": "The happens-before relation (→) is a partial order that captures causal dependencies: if event a could affect event b, then a → b, but concurrent events are unordered."
       },
       {
@@ -174,7 +174,7 @@
           "Causality requires physical time",
           "Concurrent events have causal relationship"
         ],
-        "correctAnswer": "If a → b, then a causally affects b",
+        "correctAnswer": 0,
         "explanation": "The happens-before relation captures causality: if a → b, then a could have causally affected b. Events that are concurrent have no causal relationship."
       },
       {
@@ -187,7 +187,7 @@
           "Events are unordered",
           "Only local events are ordered"
         ],
-        "correctAnswer": "Every pair of events has a defined order",
+        "correctAnswer": 0,
         "explanation": "Total ordering means every pair of events has a defined order, even concurrent ones. This is stronger than the partial ordering provided by causality alone."
       },
       {
@@ -200,7 +200,7 @@
           "Messages are sorted by timestamp",
           "Messages are delivered randomly"
         ],
-        "correctAnswer": "Messages are delivered in causal order",
+        "correctAnswer": 0,
         "explanation": "Causal ordering ensures that if message m1 causally precedes m2, then m1 is delivered before m2 at all common destinations, preserving causal relationships."
       },
       {
@@ -213,7 +213,7 @@
           "Requires less bandwidth",
           "Works without network"
         ],
-        "correctAnswer": "Allows more concurrency and better performance",
+        "correctAnswer": 0,
         "explanation": "Causal ordering only orders causally related events, allowing concurrent events to be processed in parallel, enabling better performance than total ordering which orders everything."
       }
     ]

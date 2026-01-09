@@ -15,7 +15,7 @@
           "Calculate lighting and shading",
           "Apply texture mapping"
         ],
-        "correctAnswer": "Convert geometric primitives to discrete pixels/fragments",
+        "correctAnswer": 0,
         "explanation": "Rasterization is the process of determining which pixels are covered by geometric primitives (triangles, lines) and generating fragments for those pixels."
       },
       {
@@ -28,7 +28,7 @@
           "Quick sort",
           "Binary search"
         ],
-        "correctAnswer": "Bresenham's algorithm",
+        "correctAnswer": 0,
         "explanation": "Bresenham's algorithm efficiently rasterizes lines using only integer arithmetic and addition, making it fast for determining which pixels to draw along a line."
       },
       {
@@ -48,7 +48,7 @@
           "Increase color depth",
           "Enhance texture quality"
         ],
-        "correctAnswer": "Reduce jagged edges and staircase effects",
+        "correctAnswer": 0,
         "explanation": "Anti-aliasing smooths jagged edges (aliasing artifacts) that occur when representing continuous lines and shapes with discrete pixels, improving visual quality."
       },
       {
@@ -61,7 +61,7 @@
           "The color of a pixel",
           "The texture coordinate"
         ],
-        "correctAnswer": "Whether a point is inside or outside the triangle",
+        "correctAnswer": 0,
         "explanation": "The edge function evaluates which side of an edge a point lies on. A point is inside the triangle if it's on the correct side of all three edges."
       }
     ]
@@ -82,7 +82,7 @@
           "Using multiple rendering passes",
           "Blurring the final image"
         ],
-        "correctAnswer": "Rendering at higher resolution then downsampling",
+        "correctAnswer": 0,
         "explanation": "Supersampling renders the scene at a higher resolution (e.g., 2x or 4x) and then averages down to the target resolution, effectively sampling multiple points per pixel for smoother edges."
       },
       {
@@ -102,7 +102,7 @@
           "α × β × γ = 1",
           "α - β + γ = 0"
         ],
-        "correctAnswer": "α + β + γ = 1",
+        "correctAnswer": 0,
         "explanation": "Barycentric coordinates sum to 1, where each coordinate represents the weight of the corresponding vertex. A point is inside the triangle when all three are between 0 and 1."
       },
       {
@@ -115,7 +115,7 @@
           "Sampling and shading multiple times per pixel",
           "Post-processing blur filter"
         ],
-        "correctAnswer": "Sampling coverage at multiple points per pixel but shading once",
+        "correctAnswer": 0,
         "explanation": "MSAA samples geometric coverage at multiple sub-pixel locations but runs the pixel shader only once per pixel, making it more efficient than SSAA while still reducing edge aliasing."
       },
       {
@@ -128,7 +128,7 @@
           "The color used to fill triangles",
           "The pattern used for texture filling"
         ],
-        "correctAnswer": "Rules for which pixels to fill when a triangle edge passes exactly through pixel centers",
+        "correctAnswer": 0,
         "explanation": "Fill conventions (like top-left rule) determine which pixels to rasterize when edges pass exactly through pixel centers, ensuring consistent results and preventing gaps or overlaps between adjacent triangles."
       }
     ]
@@ -149,7 +149,7 @@
           "Anti-aliasing",
           "Depth buffer optimization"
         ],
-        "correctAnswer": "Correctly interpolating attributes in screen space accounting for depth",
+        "correctAnswer": 0,
         "explanation": "Perspective-correct interpolation accounts for perspective division by interpolating in 3D space rather than 2D screen space, preventing distortion in texture coordinates and other attributes."
       },
       {
@@ -169,7 +169,7 @@
           "A vertex after transformation",
           "A texture sample"
         ],
-        "correctAnswer": "A pixel-sized piece of a primitive with associated data",
+        "correctAnswer": 0,
         "explanation": "A fragment is the rasterizer's output: a potential pixel with interpolated attributes (color, depth, texture coordinates) that will be processed by the fragment shader."
       },
       {
@@ -182,7 +182,7 @@
           "MSAA (Multi-Sample Anti-Aliasing)",
           "CSAA (Coverage Sampling Anti-Aliasing)"
         ],
-        "correctAnswer": "FXAA (Fast Approximate Anti-Aliasing)",
+        "correctAnswer": 0,
         "explanation": "FXAA is a post-processing technique that analyzes the rendered image to detect and smooth edges using a shader, making it very fast but potentially less accurate than sampling-based methods."
       },
       {
@@ -195,7 +195,7 @@
           "Speed up vertex processing",
           "Enhance texture filtering"
         ],
-        "correctAnswer": "Discard fragments before expensive shader execution",
+        "correctAnswer": 0,
         "explanation": "Early Z-testing performs the depth test before fragment shading, discarding occluded fragments early to avoid unnecessary pixel shader execution, significantly improving performance."
       }
     ]

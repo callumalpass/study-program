@@ -15,7 +15,7 @@
           "dx/dt = ax + by, dy/dt = cx + dy",
           "Both the first and third options"
         ],
-        "correctAnswer": "Both the first and third options",
+        "correctAnswer": 3,
         "explanation": "X′ = AX is vector notation for a system. For 2D: dx/dt = ax + by, dy/dt = cx + dy, where A = [[a,b],[c,d]]."
       },
       {
@@ -28,7 +28,7 @@
           "X = e^(λt)",
           "X = v + λt"
         ],
-        "correctAnswer": "X = ve^(λt)",
+        "correctAnswer": 0,
         "explanation": "Each eigenvalue-eigenvector pair (λ, v) generates a solution X = ve^(λt) to the system X′ = AX."
       },
       {
@@ -41,7 +41,7 @@
           "X = (c₁v₁ + c₂v₂)e^(-2t)",
           "X = c₁e^(-2t) + c₂e^(-3t)"
         ],
-        "correctAnswer": "X = c₁v₁e^(-2t) + c₂v₂e^(-3t)",
+        "correctAnswer": 0,
         "explanation": "The general solution is a linear combination of all fundamental solutions: X = c₁v₁e^(λ₁t) + c₂v₂e^(λ₂t)."
       },
       {
@@ -54,7 +54,7 @@
           "cos(αt) and sin(βt)",
           "e^(βt)cos(αt) and e^(βt)sin(αt)"
         ],
-        "correctAnswer": "e^(αt)cos(βt) and e^(αt)sin(βt)",
+        "correctAnswer": 0,
         "explanation": "Complex eigenvalues α ± βi give oscillatory solutions with exponential factor: e^(αt)cos(βt) and e^(αt)sin(βt)."
       },
       {
@@ -67,7 +67,7 @@
           "X = 1",
           "AX = 1"
         ],
-        "correctAnswer": "X = 0",
+        "correctAnswer": 0,
         "explanation": "Equilibrium points satisfy X′ = 0. For X′ = AX, this gives AX = 0, so X = 0 (assuming A is non-singular)."
       }
     ]
@@ -88,7 +88,7 @@
           "Complex conjugates",
           "Zero"
         ],
-        "correctAnswer": "Real with the same sign",
+        "correctAnswer": 0,
         "explanation": "A node occurs when both eigenvalues are real and have the same sign (both negative: stable node; both positive: unstable node)."
       },
       {
@@ -101,7 +101,7 @@
           "Complex conjugates",
           "Both zero"
         ],
-        "correctAnswer": "Real with opposite signs",
+        "correctAnswer": 0,
         "explanation": "A saddle point (unstable) occurs when eigenvalues are real with opposite signs (one positive, one negative)."
       },
       {
@@ -114,7 +114,7 @@
           "Real and distinct",
           "Real and equal"
         ],
-        "correctAnswer": "Complex with non-zero real part",
+        "correctAnswer": 0,
         "explanation": "Spiral behavior occurs with complex eigenvalues α ± βi where α ≠ 0. Stable if α < 0, unstable if α > 0."
       },
       {
@@ -127,7 +127,7 @@
           "Real and positive",
           "Complex with negative real part"
         ],
-        "correctAnswer": "Pure imaginary (±βi)",
+        "correctAnswer": 0,
         "explanation": "A center (neutrally stable) occurs when eigenvalues are pure imaginary λ = ±βi, producing periodic orbits."
       },
       {
@@ -140,7 +140,7 @@
           "tr(A) = a - d, det(A) = ad + bc",
           "tr(A) = ac + bd, det(A) = ad - bc"
         ],
-        "correctAnswer": "tr(A) = a + d, det(A) = ad - bc",
+        "correctAnswer": 0,
         "explanation": "For 2×2 matrix A, trace = sum of diagonal elements = a + d, determinant = ad - bc. These relate to eigenvalues."
       }
     ]
@@ -161,7 +161,7 @@
           "X = tv e^(λt)",
           "X = we^(λt) for any vector w"
         ],
-        "correctAnswer": "X = (vt + w)e^(λt) where (A - λI)w = v",
+        "correctAnswer": 0,
         "explanation": "For a defective eigenvalue, the second solution has form X = (vt + w)e^(λt) where w is a generalized eigenvector."
       },
       {
@@ -174,7 +174,7 @@
           "Φ = e^(At)",
           "Both the first and third options"
         ],
-        "correctAnswer": "Both the first and third options",
+        "correctAnswer": 3,
         "explanation": "The fundamental matrix satisfies Φ′ = AΦ with Φ(0) = I. It equals the matrix exponential: Φ(t) = e^(At)."
       },
       {
@@ -187,7 +187,7 @@
           "X = X_p",
           "X = AX + F"
         ],
-        "correctAnswer": "X = X_h + X_p",
+        "correctAnswer": 0,
         "explanation": "Like scalar equations, the solution to a nonhomogeneous system is the sum of homogeneous solution X_h and particular solution X_p."
       },
       {
@@ -200,7 +200,7 @@
           "X_p = Φ(t)F(t)",
           "X_p = A^(-1)F(t)"
         ],
-        "correctAnswer": "X_p = Φ(t)∫Φ^(-1)(t)F(t) dt",
+        "correctAnswer": 0,
         "explanation": "The particular solution by variation of parameters is X_p = Φ(t)∫Φ^(-1)(s)F(s) ds, where Φ is the fundamental matrix."
       },
       {
@@ -213,7 +213,7 @@
           "Computing eigenvalues",
           "Calculating the Wronskian"
         ],
-        "correctAnswer": "Determining stability without solving",
+        "correctAnswer": 0,
         "explanation": "A Lyapunov function is a scalar function V(X) that helps prove stability of equilibrium points without explicitly solving the system."
       }
     ]

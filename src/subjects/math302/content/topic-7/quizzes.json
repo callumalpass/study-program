@@ -15,7 +15,7 @@
           "P(t) = k/t",
           "P(t) = P₀sin(kt)"
         ],
-        "correctAnswer": "P(t) = P₀e^(kt)",
+        "correctAnswer": 0,
         "explanation": "This separable equation gives P(t) = P₀e^(kt), where k > 0 for growth, k < 0 for decay. Models unconstrained population growth."
       },
       {
@@ -28,7 +28,7 @@
           "Harmonic motion",
           "Radioactive decay"
         ],
-        "correctAnswer": "Population growth with carrying capacity M",
+        "correctAnswer": 0,
         "explanation": "The logistic model includes a carrying capacity M. Growth slows as P approaches M, modeling limited resources."
       },
       {
@@ -41,7 +41,7 @@
           "P = k and P = M",
           "No equilibrium exists"
         ],
-        "correctAnswer": "P = 0 (unstable) and P = M (stable)",
+        "correctAnswer": 0,
         "explanation": "Setting dP/dt = 0 gives P = 0 and P = M. P = 0 is unstable (populations grow from small values), P = M is stable."
       },
       {
@@ -54,7 +54,7 @@
           "The half-life",
           "The initial amount"
         ],
-        "correctAnswer": "The decay constant (λ > 0)",
+        "correctAnswer": 0,
         "explanation": "Radioactive decay: dN/dt = -λN, solution N(t) = N₀e^(-λt). The decay constant λ relates to half-life: t₁/₂ = ln(2)/λ."
       },
       {
@@ -67,7 +67,7 @@
           "t",
           "T²"
         ],
-        "correctAnswer": "T - T_ambient",
+        "correctAnswer": 0,
         "explanation": "Newton's law: dT/dt = -k(T - T_m), where T_m is ambient temperature. The rate of cooling is proportional to the temperature difference."
       }
     ]
@@ -88,7 +88,7 @@
           "Logistic growth",
           "Steady-state flow"
         ],
-        "correctAnswer": "Damped harmonic motion",
+        "correctAnswer": 0,
         "explanation": "This is the damped harmonic oscillator: m = mass, b = damping coefficient, k = spring constant. Describes vibrating systems."
       },
       {
@@ -101,7 +101,7 @@
           "x = C₁e^(ωt) + C₂e^(-ωt)",
           "x = Ct²"
         ],
-        "correctAnswer": "x = C₁cos(ωt) + C₂sin(ωt)",
+        "correctAnswer": 0,
         "explanation": "With b = 0, we get simple harmonic motion: x″ + ω²x = 0, where ω² = k/m. Solution: x = C₁cos(ωt) + C₂sin(ωt)."
       },
       {
@@ -114,7 +114,7 @@
           "L = Laplace transform, R = recurrence, C = constant",
           "L = limit, R = rate, C = coefficient"
         ],
-        "correctAnswer": "L = inductance, R = resistance, C = capacitance",
+        "correctAnswer": 0,
         "explanation": "RLC circuit equation: LI″ + RI′ + I/C = E′(t) is analogous to spring-mass system. I = current, E(t) = voltage source."
       },
       {
@@ -127,7 +127,7 @@
           "mk",
           "2mk"
         ],
-        "correctAnswer": "2√(mk)",
+        "correctAnswer": 0,
         "explanation": "Critical damping: b = 2√(mk), giving repeated characteristic roots. System returns to equilibrium fastest without oscillation."
       },
       {
@@ -140,7 +140,7 @@
           "Infinity",
           "The damping coefficient"
         ],
-        "correctAnswer": "The natural frequency of the system",
+        "correctAnswer": 0,
         "explanation": "Resonance occurs when external forcing frequency matches natural frequency ω₀ = √(k/m), causing amplitude to grow dramatically."
       }
     ]
@@ -161,7 +161,7 @@
           "y(x)·f(x, y)",
           "y(x) + h²f(x, y)"
         ],
-        "correctAnswer": "y(x) + hf(x, y)",
+        "correctAnswer": 0,
         "explanation": "Euler's method: y_{n+1} = y_n + hf(x_n, y_n), using the tangent line approximation. Simple but has O(h) local error."
       },
       {
@@ -174,7 +174,7 @@
           "Series solution method",
           "Separation of variables"
         ],
-        "correctAnswer": "Predictor-corrector method",
+        "correctAnswer": 0,
         "explanation": "Improved Euler predicts using Euler's method, then corrects using average of slopes. Better accuracy than basic Euler method."
       },
       {
@@ -187,7 +187,7 @@
           "O(h²)",
           "O(h³)"
         ],
-        "correctAnswer": "O(h⁵)",
+        "correctAnswer": 0,
         "explanation": "Fourth-order Runge-Kutta (RK4) has local error O(h⁵), global error O(h⁴). Very accurate and widely used numerical method."
       },
       {
@@ -200,7 +200,7 @@
           "They are faster than analytical methods",
           "They require no initial conditions"
         ],
-        "correctAnswer": "They work when analytical solutions are unavailable",
+        "correctAnswer": 0,
         "explanation": "Numerical methods approximate solutions for equations that cannot be solved analytically, though they introduce discretization error."
       },
       {
@@ -213,7 +213,7 @@
           "The step size can be arbitrarily large",
           "The solution is exact"
         ],
-        "correctAnswer": "Errors do not grow unboundedly as steps progress",
+        "correctAnswer": 0,
         "explanation": "A stable method controls error propagation. Unstable methods can produce growing errors even with small step size h."
       }
     ]

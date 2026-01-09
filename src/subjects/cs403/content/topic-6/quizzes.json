@@ -15,7 +15,7 @@
           "Tree with priorities",
           "Planar graph only"
         ],
-        "correctAnswer": "Directed graph with capacities",
+        "correctAnswer": 0,
         "explanation": "Standard max-flow is defined on directed edges with nonnegative capacities, with a source and sink."
       },
       {
@@ -42,7 +42,7 @@
           "Dijkstra",
           "Bellman–Ford"
         ],
-        "correctAnswer": "BFS (shortest in edges)",
+        "correctAnswer": 0,
         "explanation": "Edmonds–Karp chooses shortest augmenting paths by number of edges using BFS, yielding a polynomial-time bound."
       },
       {
@@ -55,7 +55,7 @@
           "Every flow is a cut",
           "Max flow equals number of vertices"
         ],
-        "correctAnswer": "The value of the maximum s–t flow equals the capacity of the minimum s–t cut",
+        "correctAnswer": 0,
         "explanation": "Max-flow min-cut connects flows (primal) and cuts (dual): the maximum flow value equals the minimum cut capacity."
       }
     ]
@@ -76,7 +76,7 @@
           "Taking the MST of the bipartite graph",
           "Using dynamic programming over subsets"
         ],
-        "correctAnswer": "Adding a source connected to left nodes and a sink connected from right nodes, all capacities 1",
+        "correctAnswer": 0,
         "explanation": "Construct a flow network with unit capacities: source→left (1), left→right edges (1), right→sink (1). The max flow equals maximum matching size."
       },
       {
@@ -96,7 +96,7 @@
           "Graph diameter",
           "Maximum degree"
         ],
-        "correctAnswer": "Total edge cost of the shipped flow",
+        "correctAnswer": 0,
         "explanation": "Min-cost flow assigns costs to edges and seeks a feasible flow of given value with minimum total cost."
       },
       {
@@ -116,7 +116,7 @@
           "Computing convex hull",
           "Finding primes"
         ],
-        "correctAnswer": "Project selection / closure problems",
+        "correctAnswer": 0,
         "explanation": "Many selection problems reduce to min-cut / max-flow (e.g., maximum closure, project selection with prerequisites) by building a flow network and taking an s–t cut."
       }
     ]
@@ -137,7 +137,7 @@
           "It requires planar graphs",
           "It always picks minimum cuts first"
         ],
-        "correctAnswer": "With irrational capacities, it may never terminate (or may take extremely many augmentations)",
+        "correctAnswer": 0,
         "explanation": "Ford–Fulkerson’s augmentation count can depend on the numeric value of capacities and the choice of augmenting paths; with irrational capacities it may not terminate."
       },
       {
@@ -157,7 +157,7 @@
           "Taking the smallest SCC",
           "Sorting edges by capacity"
         ],
-        "correctAnswer": "Taking vertices reachable from s in the final residual graph",
+        "correctAnswer": 0,
         "explanation": "When no augmenting path exists, the reachable set S from s in the residual graph forms an s–t cut (S, V\\S) whose capacity equals the max flow value."
       },
       {
@@ -177,7 +177,7 @@
           "It forbids fractional solutions",
           "It can be solved by one BFS"
         ],
-        "correctAnswer": "Multiple flows share edge capacities, creating coupling constraints",
+        "correctAnswer": 0,
         "explanation": "In multi-commodity flow, different commodities compete for capacity on the same edges, leading to coupled constraints and typically harder optimization problems."
       }
     ]

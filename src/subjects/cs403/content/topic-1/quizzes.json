@@ -15,7 +15,7 @@
           "co-NP",
           "PSPACE"
         ],
-        "correctAnswer": "P",
+        "correctAnswer": 0,
         "explanation": "P is the class of decision problems solvable in polynomial time on a deterministic model. NP instead captures problems whose solutions can be verified in polynomial time."
       },
       {
@@ -28,7 +28,7 @@
           "In P and has a polynomial-time verifier",
           "In NP and solvable in polynomial time"
         ],
-        "correctAnswer": "In NP and NP-hard under polynomial-time many-one reductions",
+        "correctAnswer": 0,
         "explanation": "NP-complete means both membership in NP (poly-time verification) and NP-hardness (every NP problem reduces to it). NP-hard alone does not imply membership in NP."
       },
       {
@@ -71,7 +71,7 @@
           "Show X has a polynomial-time verifier",
           "Show X is not in NP"
         ],
-        "correctAnswer": "Reduce a known NP-hard/NP-complete problem to X",
+        "correctAnswer": 0,
         "explanation": "To prove NP-hardness, you want to show X is at least as hard as a known hard problem A by giving a polynomial-time reduction A → X."
       },
       {
@@ -84,7 +84,7 @@
           "NP-complete problems are in P; NP-hard problems are not",
           "NP-hard means “not solvable by nondeterminism”"
         ],
-        "correctAnswer": "NP-complete problems are in NP; NP-hard problems may be outside NP",
+        "correctAnswer": 0,
         "explanation": "NP-complete = NP-hard + in NP. NP-hard is a lower bound notion and can include optimization problems or even undecidable problems."
       },
       {
@@ -97,7 +97,7 @@
           "Given a certificate, decide the problem without the instance",
           "Given an instance, verify all possible certificates in polynomial time"
         ],
-        "correctAnswer": "Given an instance and a certificate, verify in polynomial time that the certificate proves a YES answer",
+        "correctAnswer": 0,
         "explanation": "NP is defined by polynomial-time verification of a proposed certificate for YES instances. Finding certificates (search) is a different requirement."
       },
       {
@@ -132,7 +132,7 @@
           "P = NP",
           "NP ∩ co-NP = ∅"
         ],
-        "correctAnswer": "P ⊆ NP",
+        "correctAnswer": 0,
         "explanation": "Any problem solvable in polynomial time can have its solution verified in polynomial time (using an empty or trivial certificate), so P is contained in NP."
       },
       {
@@ -145,7 +145,7 @@
           "Always in P",
           "Always outside NP"
         ],
-        "correctAnswer": "Not known to be NP-complete unless NP = co-NP",
+        "correctAnswer": 0,
         "explanation": "Whether complements of NP-complete languages are NP-complete is tied to whether NP equals co-NP, which is unknown. (co-NP contains complements of NP languages.)"
       },
       {
@@ -165,7 +165,7 @@
           "Only defined for optimization problems",
           "Equivalent to taking complements"
         ],
-        "correctAnswer": "At least as powerful as a polynomial-time many-one reduction",
+        "correctAnswer": 0,
         "explanation": "Many-one reductions make one call after transforming the instance; Turing reductions can make multiple adaptive oracle queries, making them at least as powerful."
       },
       {

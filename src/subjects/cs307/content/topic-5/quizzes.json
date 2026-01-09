@@ -15,7 +15,7 @@
           "Validating input length",
           "Encrypting database connections"
         ],
-        "correctAnswer": "Using parameterized queries or prepared statements",
+        "correctAnswer": 1,
         "explanation": "Parameterized queries (prepared statements) separate SQL code from data, ensuring user input is never interpreted as SQL commands. This is more reliable than escaping because it prevents all injection attacks regardless of input complexity. ORMs typically use parameterized queries."
       },
       {
@@ -35,7 +35,7 @@
           "Accept all input and fix issues later",
           "Rely on client-side validation only"
         ],
-        "correctAnswer": "Whitelist allowed patterns and reject everything else",
+        "correctAnswer": 1,
         "explanation": "Whitelisting (allowing only known good input) is more secure than blacklisting because it's impossible to enumerate all malicious patterns. Define what is acceptable and reject everything else. For example, for a phone number, accept only digits and specific characters."
       },
       {
@@ -48,7 +48,7 @@
           "Hide all errors completely",
           "Display stack traces to all users"
         ],
-        "correctAnswer": "Show generic error messages to users; log detailed errors securely",
+        "correctAnswer": 1,
         "explanation": "Detailed error messages can leak sensitive information like database structure, file paths, or library versions. Show users generic messages (\"An error occurred\") while logging detailed information securely for developers to investigate. Never expose stack traces to users."
       },
       {
@@ -76,7 +76,7 @@
           "Storing logs in plain text files",
           "Disabling all logging in production"
         ],
-        "correctAnswer": "Sanitizing logs to remove passwords, credit cards, and PII before logging",
+        "correctAnswer": 1,
         "explanation": "Never log sensitive data like passwords, tokens, credit cards, or personal information. Sanitize data before logging and use structured logging to control what gets recorded. Logs should help with debugging and security monitoring without exposing sensitive information."
       },
       {
@@ -96,7 +96,7 @@
           "Continue execution despite errors",
           "Retry failed operations indefinitely"
         ],
-        "correctAnswer": "Default to denying access when errors occur rather than granting it",
+        "correctAnswer": 1,
         "explanation": "Fail-secure means that when errors occur, the system defaults to a secure state (denying access) rather than an insecure state. For example, if authorization checks fail, deny access rather than allowing it. This prevents security bypasses through error conditions."
       },
       {
@@ -109,7 +109,7 @@
           "Hashed with a fast algorithm like MD5",
           "Hashed with a slow, adaptive algorithm like bcrypt or Argon2 with unique salts"
         ],
-        "correctAnswer": "Hashed with a slow, adaptive algorithm like bcrypt or Argon2 with unique salts",
+        "correctAnswer": 3,
         "explanation": "Passwords should be hashed with slow, adaptive algorithms (bcrypt, scrypt, Argon2) that resist brute-force attacks. Each password needs a unique salt. Never use fast algorithms (MD5, SHA-1) or encryption (which is reversible) for passwords."
       },
       {
@@ -137,7 +137,7 @@
           "They generate truly random hardware-based numbers",
           "They compress data more efficiently"
         ],
-        "correctAnswer": "They provide cryptographically unpredictable values suitable for tokens and keys",
+        "correctAnswer": 1,
         "explanation": "Cryptographically secure random number generators (like crypto.getRandomValues(), secrets module in Python) are essential for generating session tokens, password reset tokens, and encryption keys. Standard random functions (Math.random(), rand()) are predictable and unsuitable for security."
       },
       {
@@ -157,7 +157,7 @@
           "X-XSS-Protection",
           "Strict-Transport-Security"
         ],
-        "correctAnswer": "X-Frame-Options",
+        "correctAnswer": 1,
         "explanation": "X-Frame-Options (or CSP's frame-ancestors directive) prevents your site from being embedded in iframes on other sites, mitigating clickjacking attacks where attackers trick users into clicking invisible frames. Set to DENY or SAMEORIGIN as appropriate."
       },
       {
@@ -170,7 +170,7 @@
           "To compress data for storage",
           "To translate data between languages"
         ],
-        "correctAnswer": "To remove or encode potentially dangerous characters before processing",
+        "correctAnswer": 1,
         "explanation": "Input sanitization modifies input to remove or neutralize potentially malicious content. However, context-specific output encoding is generally preferred over sanitization because sanitization can be incomplete. Validate input strictly, then encode output appropriately for the context."
       },
       {

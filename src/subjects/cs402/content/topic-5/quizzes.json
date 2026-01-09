@@ -15,7 +15,7 @@
           "Processing tabular data",
           "Processing graph-structured data"
         ],
-        "correctAnswer": "Processing grid-like data such as images",
+        "correctAnswer": 0,
         "explanation": "CNNs use convolutional layers with local connectivity and weight sharing, making them ideal for grid-like data (images, videos) where spatial relationships matter."
       },
       {
@@ -28,7 +28,7 @@
           "Individual pixel values",
           "Image metadata"
         ],
-        "correctAnswer": "Filters (kernels) that detect local patterns in the input",
+        "correctAnswer": 0,
         "explanation": "Each filter in a convolutional layer learns to detect specific local patterns (edges, textures, shapes). Early layers detect simple patterns, deeper layers detect complex patterns."
       },
       {
@@ -41,7 +41,7 @@
           "Add non-linearity",
           "Normalize activations"
         ],
-        "correctAnswer": "Reduce spatial dimensions while retaining important features",
+        "correctAnswer": 0,
         "explanation": "Pooling layers downsample feature maps, reducing computation and providing some translation invariance. Max pooling and average pooling are common strategies."
       },
       {
@@ -54,7 +54,7 @@
           "Smaller batch sizes",
           "Removing batch normalization"
         ],
-        "correctAnswer": "Skip/residual connections that bypass layers",
+        "correctAnswer": 0,
         "explanation": "Residual connections (skip connections) allow gradients to flow directly through the network, solving the degradation problem and enabling training of networks with 100+ layers."
       },
       {
@@ -67,7 +67,7 @@
           "Converting between different model architectures",
           "Transferring weights randomly"
         ],
-        "correctAnswer": "Using a pre-trained model and fine-tuning it for a new task",
+        "correctAnswer": 0,
         "explanation": "Transfer learning leverages models pre-trained on large datasets (e.g., ImageNet) and fine-tunes them for specific tasks, dramatically reducing training time and data requirements."
       }
     ]
@@ -88,7 +88,7 @@
           "Tabular data",
           "Graph-structured data"
         ],
-        "correctAnswer": "Sequential data with temporal dependencies",
+        "correctAnswer": 0,
         "explanation": "RNNs have recurrent connections that maintain hidden state across time steps, making them ideal for sequences like text, speech, and time series where order matters."
       },
       {
@@ -101,7 +101,7 @@
           "Slow training speed",
           "High memory usage"
         ],
-        "correctAnswer": "Vanishing gradients in long sequences",
+        "correctAnswer": 0,
         "explanation": "LSTMs and GRUs use gating mechanisms to control information flow, allowing them to maintain long-term dependencies without suffering from vanishing gradients like vanilla RNNs."
       },
       {
@@ -114,7 +114,7 @@
           "Entry gate, exit gate, memory gate",
           "Start gate, middle gate, end gate"
         ],
-        "correctAnswer": "Forget gate, input gate, output gate",
+        "correctAnswer": 0,
         "explanation": "LSTM cells use forget gate (what to remove from cell state), input gate (what new information to add), and output gate (what to output based on cell state)."
       },
       {
@@ -127,7 +127,7 @@
           "More layers",
           "Different activation functions"
         ],
-        "correctAnswer": "Self-attention mechanism",
+        "correctAnswer": 0,
         "explanation": "Transformers use self-attention to compute relationships between all positions in parallel, eliminating sequential dependencies and enabling much better parallelization than RNNs."
       },
       {
@@ -140,7 +140,7 @@
           "They use simpler operations",
           "They require less memory"
         ],
-        "correctAnswer": "They process all sequence positions in parallel rather than sequentially",
+        "correctAnswer": 0,
         "explanation": "Unlike RNNs that process sequences step-by-step, Transformers compute attention over all positions simultaneously, fully utilizing parallel computing hardware like GPUs."
       }
     ]
@@ -161,7 +161,7 @@
           "Attention(Q,K,V) = softmax(Q+K)V",
           "Attention(Q,K,V) = sigmoid(QK^T)V"
         ],
-        "correctAnswer": "Attention(Q,K,V) = softmax(QK^T/√d_k)V",
+        "correctAnswer": 0,
         "explanation": "Scaled dot-product attention computes similarity between queries and keys (QK^T), scales by √d_k for stability, applies softmax, and uses the result to weight values V."
       },
       {
@@ -174,7 +174,7 @@
           "Faster training",
           "Regularization"
         ],
-        "correctAnswer": "Information about the position of tokens in the sequence",
+        "correctAnswer": 0,
         "explanation": "Since Transformers have no inherent notion of sequence order, positional encodings (often sinusoidal) are added to embeddings to inject positional information."
       },
       {
@@ -187,7 +187,7 @@
           "Reinforcement learning",
           "Active learning"
         ],
-        "correctAnswer": "Transfer learning / Pre-training and fine-tuning",
+        "correctAnswer": 0,
         "explanation": "Modern NLP models like BERT and GPT use pre-training on large unlabeled corpora (self-supervised) followed by fine-tuning on specific tasks with smaller labeled datasets."
       },
       {
@@ -200,7 +200,7 @@
           "BERT is smaller than GPT",
           "BERT is faster than GPT"
         ],
-        "correctAnswer": "BERT is bidirectional (encoder), GPT is unidirectional (decoder)",
+        "correctAnswer": 0,
         "explanation": "BERT uses the Transformer encoder with bidirectional context (masked language modeling), while GPT uses the decoder with causal (left-to-right) attention for autoregressive generation."
       },
       {
@@ -213,7 +213,7 @@
           "Meta-learning",
           "Curriculum learning"
         ],
-        "correctAnswer": "In-context learning / few-shot learning",
+        "correctAnswer": 0,
         "explanation": "Large language models can perform new tasks by providing examples in the prompt (in-context learning), without updating weights, demonstrating emergent few-shot learning capabilities."
       }
     ]

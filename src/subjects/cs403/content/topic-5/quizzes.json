@@ -15,7 +15,7 @@
           "Only overlapping subproblems",
           "No repeated states"
         ],
-        "correctAnswer": "Optimal substructure and overlapping subproblems",
+        "correctAnswer": 0,
         "explanation": "DP exploits overlapping subproblems (reuse) and optimal substructure (optimal solution can be built from optimal subsolutions)."
       },
       {
@@ -42,7 +42,7 @@
           "Convex hull",
           "Set cover"
         ],
-        "correctAnswer": "String similarity",
+        "correctAnswer": 0,
         "explanation": "Edit distance computes the minimum number of edits to transform one string into another using a DP table over prefix lengths."
       },
       {
@@ -71,7 +71,7 @@
           "Number of mismatches in prefixes",
           "The lexicographically smallest subsequence"
         ],
-        "correctAnswer": "LCS length of prefixes X[0..i) and Y[0..j)",
+        "correctAnswer": 0,
         "explanation": "Standard LCS DP defines dp[i][j] as the LCS length of the first i characters of X and the first j characters of Y."
       },
       {
@@ -91,7 +91,7 @@
           "Matrices only",
           "Greedy choices"
         ],
-        "correctAnswer": "Subsets",
+        "correctAnswer": 0,
         "explanation": "Held–Karp uses DP over subsets of visited cities and an endpoint, leading to O(n^2 2^n) time."
       },
       {
@@ -111,7 +111,7 @@
           "Sorting the input first",
           "Using a heap"
         ],
-        "correctAnswer": "Keeping only the previous row/column when transitions are local",
+        "correctAnswer": 0,
         "explanation": "If dp[i][*] depends only on dp[i-1][*] (or a constant number of prior rows), you can roll arrays and reduce space."
       }
     ]
@@ -132,7 +132,7 @@
           "The DP is randomized",
           "The DP table is sparse"
         ],
-        "correctAnswer": "Quadrangle inequality / monotone optima conditions hold",
+        "correctAnswer": 0,
         "explanation": "Knuth optimization reduces O(n^3) interval DP to O(n^2) when the argmin is monotone and the cost function satisfies required properties."
       },
       {
@@ -159,7 +159,7 @@
           "A hash function",
           "A heap size"
         ],
-        "correctAnswer": "An endpoint/last element",
+        "correctAnswer": 0,
         "explanation": "Subset DP often tracks the cost of visiting exactly S and ending at v (e.g., Held–Karp). v encodes the “last” choice."
       },
       {
@@ -172,7 +172,7 @@
           "DP never uses recursion",
           "DP requires randomness"
         ],
-        "correctAnswer": "DP trades space for time by reusing computed subproblems",
+        "correctAnswer": 0,
         "explanation": "DP stores intermediate results to avoid recomputation, often reducing exponential recursion to polynomial time at the cost of additional memory."
       }
     ]

@@ -15,7 +15,7 @@
           "To increase accuracy",
           "To reduce overfitting during training"
         ],
-        "correctAnswer": "To evaluate model generalization on unseen data",
+        "correctAnswer": 0,
         "explanation": "The test set provides an unbiased estimate of model performance on new data. Training accuracy can be misleading due to overfitting; test accuracy measures true generalization."
       },
       {
@@ -28,7 +28,7 @@
           "90% training, 10% test",
           "30% training, 70% test"
         ],
-        "correctAnswer": "70-80% training, 20-30% test",
+        "correctAnswer": 0,
         "explanation": "Common splits are 70/30 or 80/20 (train/test). This balances having enough training data for learning with enough test data for reliable evaluation. Very large datasets might use 90/10."
       },
       {
@@ -41,7 +41,7 @@
           "Use k different datasets",
           "Split features into k groups"
         ],
-        "correctAnswer": "Split data into k folds, train on k-1 folds, test on 1, repeat k times",
+        "correctAnswer": 0,
         "explanation": "k-fold CV divides data into k equal parts. Each fold serves as test set once while others are training. Final metric is averaged over k runs, providing robust performance estimate."
       },
       {
@@ -54,7 +54,7 @@
           "Removing one class at a time",
           "Testing one model at a time"
         ],
-        "correctAnswer": "k-fold CV where k equals the number of data points",
+        "correctAnswer": 0,
         "explanation": "LOOCV is k-fold CV with k=n (dataset size). Each point is the test set once. It's unbiased but computationally expensive for large datasets."
       },
       {
@@ -67,7 +67,7 @@
           "A visualization of model architecture",
           "A plot of training loss"
         ],
-        "correctAnswer": "A table showing true vs predicted classes for evaluating classification",
+        "correctAnswer": 0,
         "explanation": "A confusion matrix has true labels as rows and predicted labels as columns (or vice versa). Diagonal elements are correct predictions; off-diagonal are errors. It shows which classes are confused."
       }
     ]
@@ -88,7 +88,7 @@
           "(TP + TN) / Total - overall accuracy",
           "TN / (TN + FP) - fraction of actual negatives found"
         ],
-        "correctAnswer": "TP / (TP + FP) - fraction of positive predictions that are correct",
+        "correctAnswer": 0,
         "explanation": "Precision = TP/(TP+FP) measures \"when the model predicts positive, how often is it correct?\" High precision means few false positives."
       },
       {
@@ -101,7 +101,7 @@
           "TN / (TN + FP) - fraction of actual negatives found",
           "(TP + TN) / Total - overall accuracy"
         ],
-        "correctAnswer": "TP / (TP + FN) - fraction of actual positives correctly identified",
+        "correctAnswer": 0,
         "explanation": "Recall = TP/(TP+FN) measures \"of all actual positive cases, how many did we find?\" High recall means few false negatives. Also called sensitivity or true positive rate."
       },
       {
@@ -114,7 +114,7 @@
           "Bias and variance",
           "Training and test error"
         ],
-        "correctAnswer": "Precision and recall (harmonic mean)",
+        "correctAnswer": 0,
         "explanation": "F1 = 2×(precision×recall)/(precision+recall) is the harmonic mean of precision and recall. It provides a single metric balancing both, useful when classes are imbalanced."
       },
       {
@@ -127,7 +127,7 @@
           "When classes are balanced",
           "When training time is limited"
         ],
-        "correctAnswer": "When false negatives are costly (e.g., disease detection)",
+        "correctAnswer": 0,
         "explanation": "Prioritize recall when missing positive cases is dangerous (medical diagnosis, fraud detection). Prioritize precision when false alarms are costly (spam filters, recommendation systems)."
       },
       {
@@ -140,7 +140,7 @@
           "Mean squared error",
           "R² score"
         ],
-        "correctAnswer": "Precision, recall, F1, or AUC-ROC rather than accuracy",
+        "correctAnswer": 0,
         "explanation": "With imbalanced classes (e.g., 95% negative), a model predicting all negative achieves 95% accuracy but is useless. Precision/recall/F1/AUC better capture performance on minority class."
       }
     ]
@@ -161,7 +161,7 @@
           "Accuracy vs Threshold",
           "Loss vs Epochs"
         ],
-        "correctAnswer": "True Positive Rate vs False Positive Rate at various thresholds",
+        "correctAnswer": 0,
         "explanation": "ROC curve plots TPR (recall) on y-axis vs FPR (1-specificity) on x-axis as classification threshold varies. It shows the tradeoff between true and false positives."
       },
       {
@@ -174,7 +174,7 @@
           "Average precision",
           "Training time"
         ],
-        "correctAnswer": "Probability that the model ranks a random positive higher than a random negative",
+        "correctAnswer": 0,
         "explanation": "AUC ranges from 0 to 1 (0.5 = random, 1 = perfect). It measures ranking quality: probability that a randomly chosen positive example scores higher than a randomly chosen negative."
       },
       {
@@ -187,7 +187,7 @@
           "Selecting features",
           "Choosing network architecture"
         ],
-        "correctAnswer": "Evaluating performance on imbalanced datasets",
+        "correctAnswer": 0,
         "explanation": "PR curves show precision vs recall tradeoff. They're more informative than ROC curves for imbalanced datasets because they focus on the positive class performance."
       },
       {
@@ -200,7 +200,7 @@
           "Using gradient descent on hyperparameters",
           "Manually adjusting one hyperparameter at a time"
         ],
-        "correctAnswer": "Exhaustively trying all combinations of hyperparameter values",
+        "correctAnswer": 0,
         "explanation": "Grid search defines a grid of hyperparameter values and evaluates all combinations via cross-validation. It's thorough but expensive. Random search samples randomly and is often more efficient."
       },
       {
@@ -213,7 +213,7 @@
           "A data augmentation method",
           "A neural network architecture"
         ],
-        "correctAnswer": "Resampling with replacement to estimate sampling distribution of a statistic",
+        "correctAnswer": 0,
         "explanation": "Bootstrap creates multiple datasets by sampling with replacement, trains models on each, and computes statistics (e.g., confidence intervals). It estimates variability without assumptions about data distribution."
       }
     ]

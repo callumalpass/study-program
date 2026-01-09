@@ -15,7 +15,7 @@
           "Is correct only with probability ≥ 1/2",
           "Requires an oracle for randomness"
         ],
-        "correctAnswer": "Always outputs a correct answer, but has random runtime",
+        "correctAnswer": 0,
         "explanation": "Las Vegas algorithms never sacrifice correctness; the randomness affects runtime (e.g., expected polynomial time), not the probability of error."
       },
       {
@@ -28,7 +28,7 @@
           "1/2",
           "1/e"
         ],
-        "correctAnswer": "2/(n(n-1))",
+        "correctAnswer": 0,
         "explanation": "Karger’s contraction algorithm succeeds with probability ≥ 2/(n(n−1)) per run; repeating boosts success probability."
       },
       {
@@ -71,7 +71,7 @@
           "8",
           "16"
         ],
-        "correctAnswer": "4",
+        "correctAnswer": 1,
         "explanation": "Failure per trial is ≤ 1/2. After t independent trials, failure probability is ≤ (1/2)^t. Setting (1/2)^t ≤ 1/16 gives t ≥ 4."
       },
       {
@@ -84,7 +84,7 @@
           "Topological sorting",
           "Dynamic programming"
         ],
-        "correctAnswer": "Amplification via repetition and majority vote",
+        "correctAnswer": 0,
         "explanation": "Repeating independent runs and taking a majority vote (or appropriate aggregation) reduces error exponentially in the number of repetitions."
       },
       {
@@ -111,7 +111,7 @@
           "It always picks the median pivot",
           "It uses a heap"
         ],
-        "correctAnswer": "The expected size of the remaining subproblem decreases geometrically",
+        "correctAnswer": 0,
         "explanation": "With a random pivot, there is a constant probability of discarding a constant fraction of elements each step, giving expected linear time."
       }
     ]
@@ -132,7 +132,7 @@
           "Competitive ratios to amortized costs",
           "Hashing to sorting"
         ],
-        "correctAnswer": "Randomized algorithm lower bounds to distributions over inputs",
+        "correctAnswer": 0,
         "explanation": "Yao’s principle states that the expected cost of the best randomized algorithm on the worst input is at least the expected cost of the best deterministic algorithm on some input distribution."
       },
       {
@@ -152,7 +152,7 @@
           "Exact optimal solutions to NP-hard problems",
           "The number of edges in a graph"
         ],
-        "correctAnswer": "The probability that the sum of independent random variables deviates far from its mean",
+        "correctAnswer": 0,
         "explanation": "Chernoff bounds provide exponentially small tail bounds for sums of independent bounded random variables, commonly used to show concentration around the mean."
       },
       {
@@ -172,7 +172,7 @@
           "Polynomial memory usage instead of linear",
           "Exact max-flow computation"
         ],
-        "correctAnswer": "High probability of finding the min-cut",
+        "correctAnswer": 0,
         "explanation": "Each run succeeds with small probability, but repeating enough times amplifies success to high probability using the union bound and exponential decay."
       }
     ]

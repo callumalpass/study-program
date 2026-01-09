@@ -15,7 +15,7 @@
           "Simplify programming",
           "Increase latency"
         ],
-        "correctAnswer": "Improve availability and fault tolerance",
+        "correctAnswer": 0,
         "explanation": "Data replication maintains multiple copies of data across different nodes, improving availability (data accessible despite failures) and fault tolerance (surviving failures)."
       },
       {
@@ -28,7 +28,7 @@
           "Eventually consistent",
           "No consistency guarantees"
         ],
-        "correctAnswer": "All reads see the most recent write",
+        "correctAnswer": 0,
         "explanation": "Strong consistency (also called linearizability) guarantees that all reads return the value of the most recent write, making the system appear as if there is only one copy of the data."
       },
       {
@@ -41,7 +41,7 @@
           "Eliminates partitions",
           "Requires synchronous replication"
         ],
-        "correctAnswer": "Sacrifices immediate consistency for availability",
+        "correctAnswer": 0,
         "explanation": "Eventual consistency allows replicas to temporarily diverge (sacrificing immediate consistency) to remain available, guaranteeing only that replicas will converge if updates stop."
       },
       {
@@ -54,7 +54,7 @@
           "No guarantees on read ordering",
           "Writes are never visible"
         ],
-        "correctAnswer": "A client sees their own updates immediately",
+        "correctAnswer": 0,
         "explanation": "Read-your-writes (also called read-after-write) consistency guarantees that a client will always see their own updates, even if other clients might see stale data temporarily."
       },
       {
@@ -67,7 +67,7 @@
           "All reads see same value",
           "Reads are ordered by timestamp"
         ],
-        "correctAnswer": "Reads never go backwards in time",
+        "correctAnswer": 0,
         "explanation": "Monotonic reads guarantee that if a client reads a value, any subsequent reads will see that value or a more recent one, never an older value."
       }
     ]
@@ -88,7 +88,7 @@
           "Multi-primary uses less storage",
           "Primary-backup requires no coordination"
         ],
-        "correctAnswer": "Primary-backup has one writer, multi-primary has many",
+        "correctAnswer": 0,
         "explanation": "Primary-backup replication has a single primary that handles all writes, while multi-primary allows multiple nodes to accept writes, increasing complexity but enabling geo-distribution."
       },
       {
@@ -101,7 +101,7 @@
           "The leader node",
           "Backup nodes"
         ],
-        "correctAnswer": "Minimum number of nodes needed for an operation",
+        "correctAnswer": 0,
         "explanation": "A quorum is the minimum number of nodes that must participate in an operation (read or write) to ensure consistency. Typically a majority to guarantee overlap between operations."
       },
       {
@@ -114,7 +114,7 @@
           "1 (any replica)",
           "log(N)"
         ],
-        "correctAnswer": "N/2 + 1 (majority)",
+        "correctAnswer": 0,
         "explanation": "A majority quorum (N/2 + 1) ensures that any two quorums overlap, guaranteeing that reads will see recent writes. This allows tolerating N/2 failures while maintaining consistency."
       },
       {
@@ -127,7 +127,7 @@
           "Compressed data formats",
           "Cloud-based databases"
         ],
-        "correctAnswer": "Data structures that merge automatically without conflicts",
+        "correctAnswer": 0,
         "explanation": "CRDTs are data structures designed to be replicated across nodes where concurrent updates can be merged automatically without conflicts, enabling strong eventual consistency."
       },
       {
@@ -140,7 +140,7 @@
           "Encrypted and secure",
           "Ordered and sequential"
         ],
-        "correctAnswer": "Commutative, associative, and idempotent",
+        "correctAnswer": 0,
         "explanation": "CRDT merges must be commutative (order doesn't matter), associative (grouping doesn't matter), and idempotent (applying twice has same effect), enabling automatic conflict resolution."
       }
     ]
@@ -161,7 +161,7 @@
           "Integer",
           "Linked list"
         ],
-        "correctAnswer": "Grow-only counter",
+        "correctAnswer": 0,
         "explanation": "State-based CRDTs (like grow-only counters, grow-only sets) share entire state and merge using a semilattice structure, where merging is the join operation."
       },
       {
@@ -174,7 +174,7 @@
           "CRDTs that don't merge",
           "CRDTs for encryption"
         ],
-        "correctAnswer": "CRDTs that share operations instead of state",
+        "correctAnswer": 0,
         "explanation": "Operation-based CRDTs share operations (like \"increment\", \"add element\") instead of full state. Operations must commute, and typically require causal delivery of operations."
       },
       {
@@ -187,7 +187,7 @@
           "No consistency guarantees",
           "Physical clock synchronization"
         ],
-        "correctAnswer": "Consistency guarantees within a single client session",
+        "correctAnswer": 0,
         "explanation": "Session consistency provides consistency guarantees (like read-your-writes, monotonic reads) within a single client session, but not across different clients or sessions."
       },
       {
@@ -200,7 +200,7 @@
           "No data loss",
           "Simpler implementation"
         ],
-        "correctAnswer": "Lower latency and better availability",
+        "correctAnswer": 0,
         "explanation": "Asynchronous replication doesn't wait for acknowledgment from replicas before confirming writes, providing lower latency and better availability, though risking data loss on failures."
       },
       {
@@ -213,7 +213,7 @@
           "Linear time complexity",
           "Sequential consistency"
         ],
-        "correctAnswer": "Operations appear to execute atomically at some point between invocation and response",
+        "correctAnswer": 0,
         "explanation": "Linearizability (the strongest consistency model) requires that operations appear to execute instantaneously at some point between their invocation and response, with a total order consistent with real-time."
       }
     ]

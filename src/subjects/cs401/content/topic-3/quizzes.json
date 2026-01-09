@@ -15,7 +15,7 @@
           "Load balancing requests",
           "Encrypting communications"
         ],
-        "correctAnswer": "Getting all nodes to agree on a single value",
+        "correctAnswer": 0,
         "explanation": "Distributed consensus requires all non-faulty nodes to agree on a single value, with the agreement being final and irrevocable, despite failures and asynchrony."
       },
       {
@@ -28,7 +28,7 @@
           "Validity (decided value was proposed)",
           "Termination (all processes eventually decide)"
         ],
-        "correctAnswer": "Fast execution",
+        "correctAnswer": 0,
         "explanation": "Consensus requires agreement, validity, and termination, but not necessarily fast execution. Speed is a practical concern but not a correctness requirement."
       },
       {
@@ -41,7 +41,7 @@
           "Three-phase commit always works",
           "Physical clock synchronization is impossible"
         ],
-        "correctAnswer": "Consensus is impossible in asynchronous systems with one failure",
+        "correctAnswer": 0,
         "explanation": "The FLP (Fischer, Lynch, Paterson) impossibility result proves that no deterministic consensus algorithm can guarantee termination in an asynchronous system with even one crash failure."
       },
       {
@@ -54,7 +54,7 @@
           "Guarantee no failures occur",
           "Use quantum computing"
         ],
-        "correctAnswer": "Use timeouts and assume partial synchrony",
+        "correctAnswer": 0,
         "explanation": "Practical algorithms like Raft and Paxos assume partial synchrony (timeouts eventually work) and use failure detectors, trading theoretical guarantees for practical functionality."
       },
       {
@@ -67,7 +67,7 @@
           "Clock synchronization",
           "Load balancing"
         ],
-        "correctAnswer": "Atomic distributed transactions",
+        "correctAnswer": 0,
         "explanation": "Two-phase commit ensures that a distributed transaction either commits on all nodes or aborts on all nodes, maintaining atomicity across multiple participants."
       }
     ]
@@ -88,7 +88,7 @@
           "Lock and Unlock",
           "Send and Receive"
         ],
-        "correctAnswer": "Prepare and Commit",
+        "correctAnswer": 0,
         "explanation": "In 2PC, the coordinator first asks participants to prepare (vote on whether they can commit), then based on votes, instructs them to commit or abort in the second phase."
       },
       {
@@ -101,7 +101,7 @@
           "Cannot handle reads",
           "Requires Byzantine fault tolerance"
         ],
-        "correctAnswer": "Coordinator failure blocks progress",
+        "correctAnswer": 0,
         "explanation": "If the coordinator fails after participants prepare but before sending commit/abort decisions, participants are blocked indefinitely, unable to unilaterally decide the transaction outcome."
       },
       {
@@ -114,7 +114,7 @@
           "Faster networks",
           "Byzantine fault tolerance"
         ],
-        "correctAnswer": "A prepare-to-commit phase",
+        "correctAnswer": 0,
         "explanation": "3PC adds a prepare-to-commit phase between prepare and commit, allowing participants to timeout and make progress if the coordinator fails, though this requires synchrony assumptions."
       },
       {
@@ -127,7 +127,7 @@
           "Implement transactions",
           "Detect failures"
         ],
-        "correctAnswer": "Achieve consensus on a single value",
+        "correctAnswer": 0,
         "explanation": "Paxos is a consensus algorithm that allows a collection of nodes to agree on a single value even in the presence of failures, forming the basis for many distributed systems."
       },
       {
@@ -140,7 +140,7 @@
           "Leader, Follower, Observer",
           "Master, Slave, Backup"
         ],
-        "correctAnswer": "Proposer, Acceptor, Learner",
+        "correctAnswer": 0,
         "explanation": "Paxos defines three roles: Proposers propose values, Acceptors vote on proposals (forming a quorum), and Learners learn which value was chosen. Nodes can play multiple roles."
       }
     ]
@@ -161,7 +161,7 @@
           "Raft handles Byzantine failures",
           "Raft doesn't use leaders"
         ],
-        "correctAnswer": "Raft is designed to be more understandable",
+        "correctAnswer": 0,
         "explanation": "Raft was designed as a more understandable alternative to Paxos, using a strong leader model and clear separation of concerns (leader election, log replication, safety)."
       },
       {
@@ -174,7 +174,7 @@
           "Number of nodes",
           "Transaction duration"
         ],
-        "correctAnswer": "A period of time with at most one leader",
+        "correctAnswer": 0,
         "explanation": "Terms in Raft are logical time periods, each with at most one leader. Terms are numbered consecutively and used to detect stale information and ensure safety."
       },
       {
@@ -187,7 +187,7 @@
           "Requests first",
           "Has the most log entries"
         ],
-        "correctAnswer": "Receives votes from a majority of servers",
+        "correctAnswer": 0,
         "explanation": "A candidate becomes leader by receiving votes from a majority of servers in the cluster, ensuring at most one leader per term since majorities overlap."
       },
       {
@@ -200,7 +200,7 @@
           "Audit trail",
           "Performance optimization"
         ],
-        "correctAnswer": "Keep state machine replicas synchronized",
+        "correctAnswer": 0,
         "explanation": "Raft replicates a log of commands to all nodes, ensuring all state machines execute the same commands in the same order, maintaining consistency across replicas."
       },
       {
@@ -213,7 +213,7 @@
           "When all servers acknowledge",
           "After one second"
         ],
-        "correctAnswer": "When replicated on a majority of servers",
+        "correctAnswer": 0,
         "explanation": "An entry is committed once the leader has replicated it to a majority of servers, guaranteeing it won't be lost and can be safely applied to state machines."
       }
     ]

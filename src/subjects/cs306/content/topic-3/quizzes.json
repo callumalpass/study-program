@@ -15,7 +15,7 @@
           "The screen coordinate system",
           "The object coordinate system"
         ],
-        "correctAnswer": "The region of 3D space visible to the camera",
+        "correctAnswer": 0,
         "explanation": "The view frustum is a truncated pyramid defining the visible region between the near and far clipping planes, bounded by the field of view."
       },
       {
@@ -28,7 +28,7 @@
           "Stereographic projection",
           "Cylindrical projection"
         ],
-        "correctAnswer": "Orthographic projection",
+        "correctAnswer": 0,
         "explanation": "Orthographic projection is a parallel projection that preserves parallel lines and does not apply perspective foreshortening, making objects the same size regardless of distance."
       },
       {
@@ -48,7 +48,7 @@
           "The aspect ratio",
           "The camera position"
         ],
-        "correctAnswer": "The angular extent of the visible scene",
+        "correctAnswer": 0,
         "explanation": "Field of view determines the angular width of the visible scene. A larger FOV shows more of the scene but with more distortion, like a wide-angle lens."
       },
       {
@@ -61,7 +61,7 @@
           "Object space",
           "Screen space"
         ],
-        "correctAnswer": "View space (camera space)",
+        "correctAnswer": 0,
         "explanation": "In view space (or camera space), the coordinate system is centered at the camera position, typically with the camera looking down the negative Z-axis by convention."
       }
     ]
@@ -82,7 +82,7 @@
           "Set the camera position",
           "Control the field of view"
         ],
-        "correctAnswer": "Prevent rendering objects too close to the camera",
+        "correctAnswer": 0,
         "explanation": "The near clipping plane defines the closest distance at which objects are rendered. Objects closer than this are clipped, preventing numerical issues and unwanted extreme foreshortening."
       },
       {
@@ -102,7 +102,7 @@
           "Near and far clipping planes",
           "Projection type and viewport"
         ],
-        "correctAnswer": "Camera position, target point, and up vector",
+        "correctAnswer": 0,
         "explanation": "The look-at transformation constructs the view matrix using the camera (eye) position, the target point to look at, and an up vector to define orientation."
       },
       {
@@ -115,7 +115,7 @@
           "[-1, 1] for x and y, [0, 1] for z",
           "[0, width] for x, [0, height] for y"
         ],
-        "correctAnswer": "[-1, 1] for all axes",
+        "correctAnswer": 0,
         "explanation": "In most graphics APIs (OpenGL convention), normalized device coordinates range from -1 to 1 for all three axes after perspective division (though some APIs use [0,1] for z)."
       },
       {
@@ -128,7 +128,7 @@
           "Model matrix",
           "Viewport transformation"
         ],
-        "correctAnswer": "Projection matrix",
+        "correctAnswer": 0,
         "explanation": "The projection matrix transforms coordinates from view/camera space to clip space, applying either perspective or orthographic projection based on the camera settings."
       }
     ]
@@ -149,7 +149,7 @@
           "Transform from world to view space",
           "Apply viewport scaling"
         ],
-        "correctAnswer": "Divide x, y, z by w to get normalized device coordinates",
+        "correctAnswer": 0,
         "explanation": "Perspective division divides the homogeneous coordinates (x, y, z) by w to convert from clip space to normalized device coordinates, creating the perspective effect."
       },
       {
@@ -169,7 +169,7 @@
           "Fisheye projection",
           "Spherical projection"
         ],
-        "correctAnswer": "Orthographic projection",
+        "correctAnswer": 0,
         "explanation": "Orthographic projection is preferred for technical drawings because it preserves measurements and parallel lines, making it easier to interpret dimensions and angles."
       },
       {
@@ -182,7 +182,7 @@
           "The center of the screen",
           "The far clipping plane"
         ],
-        "correctAnswer": "The point where parallel lines appear to converge",
+        "correctAnswer": 0,
         "explanation": "Vanishing points are where parallel lines in 3D space appear to converge in the 2D projection, a key characteristic of perspective projection that creates depth perception."
       },
       {
@@ -195,7 +195,7 @@
           "Set the background color",
           "Control depth buffer precision near the camera"
         ],
-        "correctAnswer": "Define the maximum visible distance from the camera",
+        "correctAnswer": 0,
         "explanation": "The far clipping plane sets the maximum distance for rendering. Objects beyond this distance are clipped, helping manage depth buffer precision and rendering performance."
       }
     ]

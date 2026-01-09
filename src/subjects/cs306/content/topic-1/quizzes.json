@@ -15,7 +15,7 @@
           "Rasterization → Geometry → Application → Fragment Processing",
           "Fragment Processing → Geometry → Rasterization → Application"
         ],
-        "correctAnswer": "Application → Geometry → Rasterization → Fragment Processing",
+        "correctAnswer": 0,
         "explanation": "The graphics pipeline follows a specific order: Application (CPU) prepares data, Geometry transforms vertices, Rasterization converts to fragments, and Fragment Processing determines final pixel colors."
       },
       {
@@ -28,7 +28,7 @@
           "Rasterization stage",
           "Fragment processing stage"
         ],
-        "correctAnswer": "Application stage",
+        "correctAnswer": 0,
         "explanation": "The application stage runs on the CPU and handles tasks like collision detection, input handling, and preparing geometry data to send to the GPU."
       },
       {
@@ -41,7 +41,7 @@
           "Texture coordinates",
           "Fragment data"
         ],
-        "correctAnswer": "Transformed vertices in screen space",
+        "correctAnswer": 0,
         "explanation": "The geometry stage transforms vertices from object space through various coordinate systems to screen space, preparing them for rasterization."
       },
       {
@@ -61,7 +61,7 @@
           "Stencil buffer",
           "Accumulation buffer"
         ],
-        "correctAnswer": "Z-buffer (depth buffer)",
+        "correctAnswer": 0,
         "explanation": "The Z-buffer (or depth buffer) stores depth information for each pixel, enabling proper visibility determination by keeping track of which surfaces are closest to the camera."
       }
     ]
@@ -82,7 +82,7 @@
           "Convert primitives to fragments",
           "Handle texture filtering"
         ],
-        "correctAnswer": "Transform vertex positions and compute per-vertex attributes",
+        "correctAnswer": 0,
         "explanation": "Vertex shaders are programmable units that transform vertex positions from object space to clip space and can compute various per-vertex attributes like normals and texture coordinates."
       },
       {
@@ -95,7 +95,7 @@
           "Circles",
           "Polygons"
         ],
-        "correctAnswer": "Triangles",
+        "correctAnswer": 0,
         "explanation": "Triangles are the fundamental primitive in modern graphics because they are always planar, easy to rasterize, and can approximate any surface efficiently."
       },
       {
@@ -115,7 +115,7 @@
           "Transparent objects",
           "Texture coordinates"
         ],
-        "correctAnswer": "Geometry outside the view frustum",
+        "correctAnswer": 0,
         "explanation": "Clipping removes or truncates geometry that lies outside the viewing frustum, preventing unnecessary processing of invisible primitives."
       },
       {
@@ -128,7 +128,7 @@
           "Index buffer",
           "Uniform buffer"
         ],
-        "correctAnswer": "Frame buffer",
+        "correctAnswer": 0,
         "explanation": "The frame buffer stores the final rendered image and is responsible for displaying the result on the screen, often using double buffering to prevent tearing."
       }
     ]
@@ -149,7 +149,7 @@
           "Removing occluded polygons",
           "Removing transparent polygons"
         ],
-        "correctAnswer": "Removing polygons facing away from the camera",
+        "correctAnswer": 0,
         "explanation": "Back-face culling is an optimization that removes polygons whose normals point away from the camera, typically reducing the number of polygons to render by about 50%."
       },
       {
@@ -169,7 +169,7 @@
           "Alpha test",
           "Scissor test"
         ],
-        "correctAnswer": "Depth test",
+        "correctAnswer": 0,
         "explanation": "The depth test compares a fragment's depth value with the value in the depth buffer to determine visibility, writing only the closest fragments to the frame buffer."
       },
       {
@@ -182,7 +182,7 @@
           "Apply perspective projection",
           "Perform texture mapping"
         ],
-        "correctAnswer": "Map normalized device coordinates to screen coordinates",
+        "correctAnswer": 0,
         "explanation": "The viewport transformation converts normalized device coordinates (typically -1 to 1) to actual screen pixel coordinates based on the viewport dimensions."
       },
       {
@@ -195,7 +195,7 @@
           "Multiplicative blending",
           "Subtractive blending"
         ],
-        "correctAnswer": "Alpha blending",
+        "correctAnswer": 0,
         "explanation": "Alpha blending combines source and destination colors based on alpha values, enabling transparency effects by blending the new fragment with the existing pixel color."
       }
     ]

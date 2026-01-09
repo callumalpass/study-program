@@ -15,7 +15,7 @@
           "Vulnerability scanning is illegal; penetration testing is legal",
           "Penetration testing is fully automated; vulnerability scanning is manual"
         ],
-        "correctAnswer": "Vulnerability scanning automatically identifies potential vulnerabilities; penetration testing actively exploits them",
+        "correctAnswer": 1,
         "explanation": "Vulnerability scanners (like Nessus, OpenVAS) automatically detect known vulnerabilities. Penetration testing involves security professionals actively attempting to exploit vulnerabilities to assess real-world impact. Both are valuable and complementary security testing approaches."
       },
       {
@@ -35,7 +35,7 @@
           "Dynamic Application Security Testing (DAST)",
           "Threat Modeling"
         ],
-        "correctAnswer": "Dynamic Application Security Testing (DAST)",
+        "correctAnswer": 2,
         "explanation": "DAST tools test running applications from the outside, similar to how an attacker would. They send various inputs and analyze responses to find vulnerabilities like XSS, SQL injection, or authentication issues. DAST complements SAST by finding runtime and configuration issues."
       },
       {
@@ -48,7 +48,7 @@
           "It only works on compiled languages",
           "It eliminates all false positives"
         ],
-        "correctAnswer": "It combines aspects of SAST and DAST by instrumenting the running application",
+        "correctAnswer": 1,
         "explanation": "IAST instruments the application (using agents or profilers) to monitor behavior during testing. This provides accurate results with low false positives, showing exactly where vulnerabilities exist in code. It combines the depth of SAST with the runtime context of DAST."
       },
       {
@@ -76,7 +76,7 @@
           "To automatically fix security issues",
           "To test employee security awareness"
         ],
-        "correctAnswer": "To incentivize external security researchers to report vulnerabilities responsibly",
+        "correctAnswer": 1,
         "explanation": "Bug bounty programs reward external security researchers for discovering and responsibly disclosing vulnerabilities. This harnesses the collective expertise of the security community, often finding issues that internal teams miss. Programs like HackerOne and Bugcrowd facilitate these."
       },
       {
@@ -96,7 +96,7 @@
           "White box testing",
           "Red team testing"
         ],
-        "correctAnswer": "White box testing",
+        "correctAnswer": 2,
         "explanation": "White box testing (clear box) provides full knowledge including code, architecture, and credentials. Black box has no prior knowledge (simulating external attackers). Gray box has partial knowledge (simulating insider threats). Each approach has different benefits and use cases."
       },
       {
@@ -109,7 +109,7 @@
           "To optimize performance",
           "To reduce code size"
         ],
-        "correctAnswer": "To identify security vulnerabilities and design flaws through manual examination",
+        "correctAnswer": 1,
         "explanation": "Security-focused code reviews involve manually examining code for vulnerabilities, insecure patterns, and design flaws. Experienced reviewers can find subtle issues that automated tools miss, like business logic flaws, authorization issues, or cryptographic misuse."
       },
       {
@@ -137,7 +137,7 @@
           "To monitor production systems",
           "To train developers on coding standards"
         ],
-        "correctAnswer": "To proactively identify potential threats and design countermeasures during development",
+        "correctAnswer": 1,
         "explanation": "Threat modeling is performed during design to identify potential security threats, assess risks, and plan mitigations before code is written. Using frameworks like STRIDE or PASTA, teams systematically analyze attack vectors and design secure architectures, catching issues early when they're cheaper to fix."
       },
       {
@@ -157,7 +157,7 @@
           "Lines of code written",
           "Server uptime"
         ],
-        "correctAnswer": "Mean Time to Remediate (MTTR) vulnerabilities",
+        "correctAnswer": 1,
         "explanation": "MTTR measures how quickly vulnerabilities are fixed after discovery. Other useful metrics include vulnerability density (vulnerabilities per KLOC), time to detection, severity distribution, and recurrence rate. Tracking these over time shows security program maturity and effectiveness."
       },
       {
@@ -170,7 +170,7 @@
           "Outsourcing security to third parties",
           "Delaying security testing until production"
         ],
-        "correctAnswer": "Integrating security early in development to find and fix issues when they're cheaper to remediate",
+        "correctAnswer": 1,
         "explanation": "Shift-left security integrates security practices early in the SDLC (design, development) rather than at the end. Finding vulnerabilities during design or development is far cheaper than fixing them in production. Tools like SAST in IDEs and security training enable shift-left."
       },
       {

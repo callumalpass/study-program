@@ -15,7 +15,7 @@
           "Reduce dimensionality to K dimensions",
           "Select K best features"
         ],
-        "correctAnswer": "Partition data into K clusters minimizing within-cluster variance",
+        "correctAnswer": 0,
         "explanation": "K-means aims to minimize the sum of squared distances between points and their assigned cluster centroids, creating K compact clusters."
       },
       {
@@ -28,7 +28,7 @@
           "Uses density-based connectivity",
           "Applies principal component analysis"
         ],
-        "correctAnswer": "Alternates between assigning points to nearest centroids and updating centroids",
+        "correctAnswer": 0,
         "explanation": "K-means iteratively: (1) assigns each point to the nearest centroid, (2) recomputes centroids as cluster means. This process repeats until convergence."
       },
       {
@@ -41,7 +41,7 @@
           "Only works with binary features",
           "Requires labeled data"
         ],
-        "correctAnswer": "Requires specifying K beforehand and sensitive to initialization",
+        "correctAnswer": 0,
         "explanation": "K-means requires knowing K in advance and can converge to poor local minima depending on initialization. K-means++ initialization helps, but the algorithm remains sensitive to initial centroids."
       },
       {
@@ -54,7 +54,7 @@
           "K fixed clusters",
           "A probability distribution over clusters"
         ],
-        "correctAnswer": "A dendrogram showing nested cluster relationships",
+        "correctAnswer": 0,
         "explanation": "Hierarchical clustering creates a tree structure (dendrogram) showing how clusters merge (agglomerative) or split (divisive), allowing different granularities of clustering."
       },
       {
@@ -67,7 +67,7 @@
           "Hierarchical merging",
           "Gaussian distributions"
         ],
-        "correctAnswer": "Density: regions with sufficient nearby points",
+        "correctAnswer": 0,
         "explanation": "DBSCAN defines clusters as dense regions (points with many neighbors within radius ε) separated by sparse regions. It can find arbitrary-shaped clusters and identify outliers."
       }
     ]
@@ -88,7 +88,7 @@
           "Use the number of features",
           "Use the square root of data size"
         ],
-        "correctAnswer": "Use the elbow method or silhouette analysis on validation data",
+        "correctAnswer": 0,
         "explanation": "The elbow method plots within-cluster sum of squares vs K (look for the \"elbow\"). Silhouette analysis measures how well points fit their clusters. Both help select K."
       },
       {
@@ -101,7 +101,7 @@
           "Classification",
           "Feature selection"
         ],
-        "correctAnswer": "Dimensionality reduction while preserving maximum variance",
+        "correctAnswer": 0,
         "explanation": "PCA finds orthogonal directions (principal components) of maximum variance in the data, enabling projection to lower dimensions while retaining most information."
       },
       {
@@ -114,7 +114,7 @@
           "Normalize, classify, validate",
           "Sample, train, test"
         ],
-        "correctAnswer": "Center data, compute covariance, find eigenvectors, project",
+        "correctAnswer": 0,
         "explanation": "PCA: (1) center data (subtract mean), (2) compute covariance matrix, (3) find eigenvectors/eigenvalues, (4) project onto top k eigenvectors. Eigenvectors with largest eigenvalues are principal components."
       },
       {
@@ -127,7 +127,7 @@
           "When clusters are spherical",
           "When speed is critical"
         ],
-        "correctAnswer": "When clusters have arbitrary shapes or there are outliers",
+        "correctAnswer": 0,
         "explanation": "DBSCAN handles non-spherical clusters and automatically identifies outliers as noise. K-means assumes spherical clusters and is sensitive to outliers."
       },
       {
@@ -140,7 +140,7 @@
           "Learning rate and momentum",
           "Depth and width"
         ],
-        "correctAnswer": "ε (radius) and MinPts (minimum points for core)",
+        "correctAnswer": 0,
         "explanation": "DBSCAN requires ε (neighborhood radius) and MinPts (minimum points to form a dense region). Points with ≥MinPts neighbors within ε are core points that form clusters."
       }
     ]
@@ -161,7 +161,7 @@
           "J = Σᵢ Σⱼ ||μᵢ - μⱼ||² (maximize between-cluster distance)",
           "J = log Σᵢ |Cᵢ| (balance cluster sizes)"
         ],
-        "correctAnswer": "J = Σᵢ Σₓ∈Cᵢ ||x - μᵢ||² (minimize within-cluster sum of squares)",
+        "correctAnswer": 0,
         "explanation": "K-means minimizes WCSS (within-cluster sum of squares), the sum of squared distances from each point to its cluster centroid. This is equivalent to maximizing cluster compactness."
       },
       {
@@ -174,7 +174,7 @@
           "The classification accuracy",
           "The outlier score"
         ],
-        "correctAnswer": "The proportion of total variance captured by each principal component",
+        "correctAnswer": 0,
         "explanation": "Explained variance ratio = λᵢ/Σλⱼ where λᵢ is the eigenvalue of component i. It shows how much information each component retains, helping choose the number of components."
       },
       {
@@ -187,7 +187,7 @@
           "t-SNE is linear, PCA is non-linear",
           "t-SNE requires labels, PCA does not"
         ],
-        "correctAnswer": "t-SNE preserves local structure (neighborhoods), PCA preserves global variance",
+        "correctAnswer": 0,
         "explanation": "t-SNE uses probabilistic neighborhoods to preserve local relationships, making it better for visualization. PCA is linear and preserves global variance structure. t-SNE is slower and non-deterministic."
       },
       {
@@ -200,7 +200,7 @@
           "Applies Gaussian noise to data",
           "Normalizes data to Gaussian distribution"
         ],
-        "correctAnswer": "Assumes data comes from K Gaussian distributions and uses EM to find parameters",
+        "correctAnswer": 0,
         "explanation": "GMM models data as mixture of K Gaussians. The EM algorithm iteratively: E-step computes probability of each point belonging to each cluster; M-step updates means, covariances, and mixture weights."
       },
       {
@@ -213,7 +213,7 @@
           "A classification model",
           "A data augmentation technique"
         ],
-        "correctAnswer": "A neural network that learns to compress and reconstruct data",
+        "correctAnswer": 0,
         "explanation": "Autoencoders have encoder (compresses input to latent representation) and decoder (reconstructs from latent). They learn useful representations in an unsupervised manner by minimizing reconstruction error."
       }
     ]
