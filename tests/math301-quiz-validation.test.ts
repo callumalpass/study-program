@@ -116,13 +116,11 @@ describe('Math301 Topic 1 Quiz Validation', () => {
       // d = |2 + 2 + 2 - 3| / 3 = |3| / 3 = 1
       expect(q9!.prompt).toContain('x + 2y - 2z = 3');
 
-      // Correct answer should be "1" (index 0)
-      if (typeof q9!.correctAnswer === 'number') {
-        expect(q9!.correctAnswer).toBe(0);
-        expect(q9!.options![0]).toBe('1');
-      } else {
-        expect(q9!.correctAnswer).toBe('1');
-      }
+      // Correct answer should be "1" - verify the correct answer points to that value
+      const correctIndex = q9!.correctAnswer as number;
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(q9!.options!.length);
+      expect(q9!.options![correctIndex]).toBe('1');
     });
 
     it('math301-q10 should be multiple_choice (not fill_blank)', () => {
@@ -139,12 +137,10 @@ describe('Math301 Topic 1 Quiz Validation', () => {
       expect(q10!.options).toContain('|r\'(t)|');
 
       // Correct answer should reference |r'(t)| (the magnitude of the derivative)
-      if (typeof q10!.correctAnswer === 'number') {
-        expect(q10!.correctAnswer).toBe(0);
-        expect(q10!.options![0]).toBe('|r\'(t)|');
-      } else {
-        expect(q10!.correctAnswer).toBe('|r\'(t)|');
-      }
+      const correctIndex = q10!.correctAnswer as number;
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(q10!.options!.length);
+      expect(q10!.options![correctIndex]).toBe('|r\'(t)|');
     });
   });
 

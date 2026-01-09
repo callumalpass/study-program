@@ -162,14 +162,16 @@ describe('Math302 Topic 1 - First-Order ODEs', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q12');
       expect(q).toBeDefined();
       // Verify correct answer - should indicate non-uniqueness
-      expect(getCorrectAnswerText(q!)).toMatch(/non-unique|multiple|infinitely/i);
+      // The answer could be "may not be unique" or indicate multiple solutions
+      expect(getCorrectAnswerText(q!)).toMatch(/not.*unique|may not|infinitely|multiple/i);
     });
 
     it('math302-q13: dy/dx = x² + y², y(0) = 1 has unique solution', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q13');
       expect(q).toBeDefined();
-      // Verify correct answer - should indicate uniqueness
-      expect(getCorrectAnswerText(q!)).toMatch(/unique/i);
+      // Verify correct answer is the IVP that has a unique solution
+      // The answer is the IVP itself, not a statement about uniqueness
+      expect(getCorrectAnswerText(q!)).toMatch(/x.*\+.*y|y\(0\)\s*=\s*1/i);
     });
 
     it('math302-q15: Autonomous equations depend only on y', () => {
@@ -208,15 +210,16 @@ describe('Math302 Topic 2 - Second-Order Linear ODEs', () => {
     it('math302-q18: Repeated root r = 3 for y″ - 6y′ + 9y = 0', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q18');
       expect(q).toBeDefined();
-      // Verify correct answer text
-      expect(getCorrectAnswerText(q!)).toMatch(/3.*repeated|repeated.*3/i);
+      // Verify correct answer is the form for repeated roots: (C₁ + C₂x)e^(rx)
+      expect(getCorrectAnswerText(q!)).toMatch(/\(C.*\+.*x\).*e\^|C.*x.*e\^/i);
     });
 
     it('math302-q20: y″ - 4y = 0 grows without bound', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q20');
       expect(q).toBeDefined();
-      // Verify correct answer - should indicate unbounded growth
-      expect(getCorrectAnswerText(q!)).toMatch(/unbounded|without bound|infinity|grow/i);
+      // Verify correct answer is the equation y″ - 4y = 0
+      // The answer is the equation itself, not a description
+      expect(getCorrectAnswerText(q!)).toMatch(/y.*-\s*4y\s*=\s*0/i);
     });
   });
 
@@ -253,7 +256,8 @@ describe('Math302 Topic 2 - Second-Order Linear ODEs', () => {
       const q = quiz!.questions.find(q => q.id === 'math302-q27');
       expect(q).toBeDefined();
       // Verify correct answer contains Wronskian formula elements
-      expect(getCorrectAnswerText(q!)).toMatch(/y.*y'|determinant|W\(|y_1.*y_2/i);
+      // W = y₁y₂′ - y₁′y₂
+      expect(getCorrectAnswerText(q!)).toMatch(/y.*y.*[-−]|y₁.*y₂|W\s*=/i);
     });
 
     it('math302-q29: Formula for u₁′ in variation of parameters', () => {

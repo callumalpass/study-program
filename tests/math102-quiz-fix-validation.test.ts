@@ -29,9 +29,15 @@ describe('Math102 Topic 2 Quiz Validation', () => {
       expect(question?.options?.length).toBe(4);
     });
 
-    it('has numeric correctAnswer index', () => {
+    it('has numeric correctAnswer index pointing to n^log₂(7) option', () => {
       expect(typeof question?.correctAnswer).toBe('number');
-      expect(question?.correctAnswer).toBe(2);
+      const correctIndex = question?.correctAnswer as number;
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(question?.options?.length ?? 0);
+      // Verify the correct option contains log₂(7) / 2.81 content
+      const correctOption = question?.options?.[correctIndex];
+      expect(correctOption).toContain('log');
+      expect(correctOption).toContain('2.81');
     });
 
     it('correct option references n^log₂(7)', () => {
@@ -44,18 +50,23 @@ describe('Math102 Topic 2 Quiz Validation', () => {
     it('checkAnswer validates correctly', () => {
       if (!question) throw new Error('Question not found');
 
-      // Correct answer (index 2)
-      expect(checkAnswer(question as QuizQuestion, 2)).toBe(true);
+      const correctIndex = question.correctAnswer as number;
 
-      // Wrong answers
-      expect(checkAnswer(question as QuizQuestion, 0)).toBe(false);
-      expect(checkAnswer(question as QuizQuestion, 1)).toBe(false);
-      expect(checkAnswer(question as QuizQuestion, 3)).toBe(false);
+      // Correct answer should pass
+      expect(checkAnswer(question as QuizQuestion, correctIndex)).toBe(true);
+
+      // Wrong answers should fail
+      for (let i = 0; i < (question.options?.length ?? 0); i++) {
+        if (i !== correctIndex) {
+          expect(checkAnswer(question as QuizQuestion, i)).toBe(false);
+        }
+      }
     });
 
     it('getCorrectOptionIndex returns correct index', () => {
       if (!question) throw new Error('Question not found');
-      expect(getCorrectOptionIndex(question as QuizQuestion)).toBe(2);
+      const correctIndex = question.correctAnswer as number;
+      expect(getCorrectOptionIndex(question as QuizQuestion)).toBe(correctIndex);
     });
 
     it('explanation references Case 1 of Master Theorem', () => {

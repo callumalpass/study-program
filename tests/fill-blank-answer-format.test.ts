@@ -158,7 +158,7 @@ describe('Fill Blank Answer Format Validation', () => {
       expect(question?.options?.length).toBeGreaterThanOrEqual(2);
     });
 
-    it('math204-q1c-5 should have correct integral answer as first option', () => {
+    it('math204-q1c-5 should have correct integral answer (sin x + C)', () => {
       const math204Quizzes = allQuizzes.filter(q => q.subjectId === 'math204');
       const allMath204Questions = math204Quizzes.flatMap(q => q.questions);
 
@@ -166,9 +166,15 @@ describe('Fill Blank Answer Format Validation', () => {
 
       expect(question).toBeDefined();
       if (question && question.type === 'multiple_choice') {
-        expect(question.correctAnswer).toBe(0);
-        expect(question.options?.[0]).toContain('sin');
-        expect(question.options?.[0]).toContain('C');
+        // Verify the correct answer points to the sin x + C option
+        const correctIndex = question.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(question.options!.length);
+        const correctOption = question.options?.[correctIndex];
+        expect(correctOption).toContain('sin');
+        expect(correctOption).toContain('C');
+        // Should NOT be -sin (that's the derivative, not the integral)
+        expect(correctOption).not.toMatch(/^[^a-zA-Z]*-.*sin/);
       }
     });
   });

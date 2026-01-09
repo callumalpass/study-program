@@ -165,11 +165,13 @@ describe('Math203 Calculus I Quiz Validation', () => {
       expect(evtQuestion!.options).toBeDefined();
       expect(evtQuestion!.options!.length).toBe(4);
 
-      // Correct answer should be index 2 (Both max and min)
-      expect(evtQuestion!.correctAnswer).toBe(2);
+      // Correct answer should point to an option mentioning both max and min
+      const correctIndex = evtQuestion!.correctAnswer as number;
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(evtQuestion!.options!.length);
 
       // Verify the correct option mentions both maximum and minimum
-      const correctOption = evtQuestion!.options![2];
+      const correctOption = evtQuestion!.options![correctIndex];
       expect(correctOption.toLowerCase()).toContain('maximum');
       expect(correctOption.toLowerCase()).toContain('minimum');
     });

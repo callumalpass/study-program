@@ -196,11 +196,13 @@ describe('Math204 Calculus II Quiz Validation', () => {
         const hasSquareRoot = arcLengthFormulaQuestion.options?.some(opt => opt.includes('sqrt'));
         expect(hasSquareRoot).toBe(true);
 
-        // Verify the correct answer is option index 1 (the one with f'(x) squared)
-        expect(arcLengthFormulaQuestion.correctAnswer).toBe(1);
+        // Verify the correct answer index is valid
+        const correctIndex = arcLengthFormulaQuestion.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(arcLengthFormulaQuestion.options!.length);
 
         // Verify the correct option has the squared derivative
-        const correctOption = arcLengthFormulaQuestion.options![1];
+        const correctOption = arcLengthFormulaQuestion.options![correctIndex];
         expect(correctOption).toContain('^2');
       }
     });

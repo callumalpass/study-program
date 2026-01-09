@@ -124,17 +124,19 @@ describe('Math204 Exam Format Validation', () => {
       expect(diskQuestion?.type).toBe('multiple_choice');
     });
 
-    it('disk method question should have correct answer as first option', () => {
+    it('disk method question should have correct answer pointing to disk formula', () => {
       const diskQuestion = allQuestions.find(q =>
         q.id === 'math204-mid-q21'
       );
 
       expect(diskQuestion).toBeDefined();
       if (diskQuestion && diskQuestion.type === 'multiple_choice') {
-        expect(diskQuestion.correctAnswer).toBe(0);
-        expect(diskQuestion.options).toBeDefined();
-        expect(diskQuestion.options![0]).toContain('pi');
-        expect(diskQuestion.options![0]).toContain('[f(x)]^2');
+        const correctIndex = diskQuestion.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(diskQuestion.options!.length);
+        const correctOption = diskQuestion.options![correctIndex];
+        expect(correctOption).toContain('pi');
+        expect(correctOption).toContain('[f(x)]^2');
       }
     });
   });
@@ -157,8 +159,10 @@ describe('Math204 Exam Format Validation', () => {
 
       expect(washerQuestion).toBeDefined();
       if (washerQuestion && washerQuestion.type === 'multiple_choice') {
-        expect(washerQuestion.correctAnswer).toBe(0);
-        const correctOption = washerQuestion.options![0];
+        const correctIndex = washerQuestion.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(washerQuestion.options!.length);
+        const correctOption = washerQuestion.options![correctIndex];
         expect(correctOption).toContain('[R(x)]^2');
         expect(correctOption).toContain('[r(x)]^2');
         expect(correctOption).toContain('-');
@@ -184,8 +188,10 @@ describe('Math204 Exam Format Validation', () => {
 
       expect(trigSubQuestion).toBeDefined();
       if (trigSubQuestion && trigSubQuestion.type === 'multiple_choice') {
-        expect(trigSubQuestion.correctAnswer).toBe(0);
-        const correctOption = trigSubQuestion.options![0];
+        const correctIndex = trigSubQuestion.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(trigSubQuestion.options!.length);
+        const correctOption = trigSubQuestion.options![correctIndex];
         expect(correctOption).toContain('sec');
         expect(correctOption).toContain('5');
       }
@@ -210,8 +216,10 @@ describe('Math204 Exam Format Validation', () => {
 
       expect(arctanQuestion).toBeDefined();
       if (arctanQuestion && arctanQuestion.type === 'multiple_choice') {
-        expect(arctanQuestion.correctAnswer).toBe(0);
-        const correctOption = arctanQuestion.options![0];
+        const correctIndex = arctanQuestion.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(arctanQuestion.options!.length);
+        const correctOption = arctanQuestion.options![correctIndex];
         expect(correctOption).toContain('arctan');
         // LaTeX uses \frac{1}{3} format
         expect(correctOption).toMatch(/frac\{1\}\{3\}|1\/3/);
@@ -238,8 +246,10 @@ describe('Math204 Exam Format Validation', () => {
 
       expect(evenQuestion).toBeDefined();
       if (evenQuestion && evenQuestion.type === 'multiple_choice') {
-        expect(evenQuestion.correctAnswer).toBe(0);
-        const correctOption = evenQuestion.options![0];
+        const correctIndex = evenQuestion.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(evenQuestion.options!.length);
+        const correctOption = evenQuestion.options![correctIndex];
         expect(correctOption).toContain('2');
         expect(correctOption).toMatch(/int.*0.*a/i);
       }

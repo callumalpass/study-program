@@ -102,7 +102,11 @@ describe('Math304 Abstract Algebra Exam Validation', () => {
       if (question) {
         // Question about subgroups of cyclic group of order 60
         // Divisors of 60: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60 = 12 divisors
-        expect(question.correctAnswer).toBe(0); // Index 0 = "12"
+        const correctIndex = question.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(question.options!.length);
+        // Verify the correct answer is "12"
+        expect(question.options![correctIndex]).toBe('12');
       }
     });
   });
@@ -113,7 +117,11 @@ describe('Math304 Abstract Algebra Exam Validation', () => {
 
       if (question) {
         // |G| = 24, |H| = 6, so [G:H] = 24/6 = 4
-        expect(question.correctAnswer).toBe(1); // Index 1 = "4"
+        const correctIndex = question.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(question.options!.length);
+        // Verify the correct answer is "4"
+        expect(question.options![correctIndex]).toBe('4');
       }
     });
 
@@ -135,15 +143,14 @@ describe('Math304 Abstract Algebra Exam Validation', () => {
       expect(question).toBeDefined();
       expect(question?.prompt).toContain('NOT in A₄');
 
-      // The options should be:
-      // 0: (1 2)(3 4) - product of 2 transpositions = even, IN A₄
-      // 1: (1 2 3) - 3-cycle = 2 transpositions = even, IN A₄
-      // 2: (1 3)(2 4) - product of 2 transpositions = even, IN A₄
-      // 3: (1 2 3 4) - 4-cycle = 3 transpositions = odd, NOT IN A₄
+      // The 4-cycle (1 2 3 4) is odd (3 transpositions), NOT in A₄
+      // All other permutations listed are even, so they ARE in A₄
+      const correctIndex = question?.correctAnswer as number;
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(question?.options?.length ?? 0);
 
-      // Only option 3 (the 4-cycle) is NOT in A₄
-      expect(question?.correctAnswer).toBe(3);
-      expect(question?.options?.[3]).toBe('(1 2 3 4)');
+      // Verify the correct answer is the 4-cycle
+      expect(question?.options?.[correctIndex]).toBe('(1 2 3 4)');
 
       // Verify all other options ARE in A₄ (even permutations)
       // This ensures there's only one correct answer
@@ -164,7 +171,10 @@ describe('Math304 Abstract Algebra Exam Validation', () => {
 
       if (question) {
         // Number of 3-cycles in S₄ = C(4,3) × 2! = 4 × 2 = 8
-        expect(question.correctAnswer).toBe(1); // Index 1 = "8"
+        const correctIndex = question.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(question.options!.length);
+        expect(question.options![correctIndex]).toBe('8');
       }
     });
 
@@ -212,7 +222,10 @@ describe('Math304 Abstract Algebra Exam Validation', () => {
       if (question) {
         // |⟨6⟩| = 18/gcd(6,18) = 18/6 = 3
         // |Z₁₈/⟨6⟩| = 18/3 = 6
-        expect(question.correctAnswer).toBe(1); // Index 1 = "6"
+        const correctIndex = question.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(question.options!.length);
+        expect(question.options![correctIndex]).toBe('6');
       }
     });
 
@@ -222,7 +235,10 @@ describe('Math304 Abstract Algebra Exam Validation', () => {
       if (question) {
         // |⟨4⟩| = 12/gcd(4,12) = 12/4 = 3
         // Number of cosets = [Z₁₂:⟨4⟩] = 12/3 = 4
-        expect(question.correctAnswer).toBe(1); // Index 1 = "4"
+        const correctIndex = question.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(question.options!.length);
+        expect(question.options![correctIndex]).toBe('4');
       }
     });
   });
@@ -256,7 +272,10 @@ describe('Math304 Abstract Algebra Exam Validation', () => {
       if (question) {
         // By Fermat's Little Theorem: a^(p-1) ≡ 1 (mod p) when gcd(a,p) = 1
         // 5^12 ≡ 1 (mod 13) since 13 is prime
-        expect(question.correctAnswer).toBe(0); // Index 0 = "1"
+        const correctIndex = question.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(question.options!.length);
+        expect(question.options![correctIndex]).toBe('1');
       }
     });
   });
@@ -270,7 +289,10 @@ describe('Math304 Abstract Algebra Exam Validation', () => {
         // e = 3, need d where ed ≡ 1 (mod 40)
         // 3×27 = 81 = 2×40 + 1 ≡ 1 (mod 40)
         // d = 27
-        expect(question.correctAnswer).toBe(2); // Index 2 = "27"
+        const correctIndex = question.correctAnswer as number;
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(question.options!.length);
+        expect(question.options![correctIndex]).toBe('27');
       }
     });
   });

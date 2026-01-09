@@ -71,7 +71,7 @@ describe('Math301 Topic 3 Quiz Validation', () => {
   });
 
   describe('Specific Question Validations', () => {
-    it('math301-q31 (gradient question) should use numeric index', () => {
+    it('math301-q31 (gradient question) should use numeric index pointing to correct gradient', () => {
       let q31: QuizQuestion | undefined;
       for (const quiz of quizzes) {
         q31 = quiz.questions.find((q) => q.id === 'math301-q31');
@@ -81,11 +81,14 @@ describe('Math301 Topic 3 Quiz Validation', () => {
       expect(q31, 'math301-q31 should exist').toBeDefined();
       expect(q31!.type).toBe('multiple_choice');
       expect(typeof q31!.correctAnswer).toBe('number');
-      expect(q31!.correctAnswer).toBe(0);
-      expect(q31!.options![0]).toBe('<2x + 2y, 2x + 2y>');
+      const correctIndex = q31!.correctAnswer as number;
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(q31!.options!.length);
+      // The correct answer should be <2x + 2y, 2x + 2y>
+      expect(q31!.options![correctIndex]).toBe('<2x + 2y, 2x + 2y>');
     });
 
-    it('math301-q33 (directional derivative formula) should use numeric index', () => {
+    it('math301-q33 (directional derivative formula) should use numeric index pointing to dot product', () => {
       let q33: QuizQuestion | undefined;
       for (const quiz of quizzes) {
         q33 = quiz.questions.find((q) => q.id === 'math301-q33');
@@ -95,8 +98,11 @@ describe('Math301 Topic 3 Quiz Validation', () => {
       expect(q33, 'math301-q33 should exist').toBeDefined();
       expect(q33!.type).toBe('multiple_choice');
       expect(typeof q33!.correctAnswer).toBe('number');
-      expect(q33!.correctAnswer).toBe(0);
-      expect(q33!.options![0]).toBe('∇f · u');
+      const correctIndex = q33!.correctAnswer as number;
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(q33!.options!.length);
+      // The correct answer should be the dot product formula
+      expect(q33!.options![correctIndex]).toBe('∇f · u');
     });
 
     it('math301-q42 (directional derivative calculation) should point to 7/5', () => {
@@ -109,12 +115,14 @@ describe('Math301 Topic 3 Quiz Validation', () => {
       expect(q42, 'math301-q42 should exist').toBeDefined();
       expect(q42!.type).toBe('multiple_choice');
       expect(typeof q42!.correctAnswer).toBe('number');
-      // 7/5 is at index 1 (second option)
-      expect(q42!.correctAnswer).toBe(1);
-      expect(q42!.options![1]).toBe('7/5');
+      const correctIndex = q42!.correctAnswer as number;
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(q42!.options!.length);
+      // The correct answer should be 7/5
+      expect(q42!.options![correctIndex]).toBe('7/5');
     });
 
-    it('math301-q44 (normal line equation) should use numeric index', () => {
+    it('math301-q44 (normal line equation) should use numeric index pointing to correct line', () => {
       let q44: QuizQuestion | undefined;
       for (const quiz of quizzes) {
         q44 = quiz.questions.find((q) => q.id === 'math301-q44');
@@ -124,8 +132,11 @@ describe('Math301 Topic 3 Quiz Validation', () => {
       expect(q44, 'math301-q44 should exist').toBeDefined();
       expect(q44!.type).toBe('multiple_choice');
       expect(typeof q44!.correctAnswer).toBe('number');
-      expect(q44!.correctAnswer).toBe(0);
-      expect(q44!.options![0]).toBe('r(t) = <1,1,2> + t<2,2,-1>');
+      const correctIndex = q44!.correctAnswer as number;
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(q44!.options!.length);
+      // The correct answer should be the normal line with direction <2,2,-1>
+      expect(q44!.options![correctIndex]).toBe('r(t) = <1,1,2> + t<2,2,-1>');
     });
   });
 
