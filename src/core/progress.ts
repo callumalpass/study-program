@@ -484,6 +484,67 @@ export function isExerciseCompleted(
 }
 
 /**
+ * Check if an exam is completed (passed with a passing score)
+ */
+export function isExamCompleted(
+  examId: string,
+  progress: SubjectProgress | undefined
+): boolean {
+  if (!progress) return false;
+  const attempts = progress.examAttempts?.[examId];
+  if (!attempts || attempts.length === 0) return false;
+  return isScorePassing(getBestScore(attempts));
+}
+
+/**
+ * Get the best score for an exam (or null if no attempts)
+ */
+export function getExamBestScore(
+  examId: string,
+  progress: SubjectProgress | undefined
+): number | null {
+  if (!progress) return null;
+  const attempts = progress.examAttempts?.[examId];
+  if (!attempts || attempts.length === 0) return null;
+  return getBestScore(attempts);
+}
+
+/**
+ * Check if a project is completed (has a submission with passing AI evaluation, or any submission if no AI evaluation)
+ */
+export function isProjectCompleted(
+  projectId: string,
+  progress: SubjectProgress | undefined
+): boolean {
+  if (!progress) return false;
+  const submissions = progress.projectSubmissions?.[projectId];
+  if (!submissions || submissions.length === 0) return false;
+
+  const bestSubmission = getBestProjectSubmission(submissions);
+  if (!bestSubmission) return false;
+
+  if (bestSubmission.aiEvaluation) {
+    return isScorePassing(bestSubmission.aiEvaluation.score);
+  }
+  // No AI evaluation - count submission as complete
+  return true;
+}
+
+/**
+ * Get the best project submission (highest AI score, or first if no AI evaluations)
+ * Returns undefined if no submissions exist.
+ */
+export function getProjectBestSubmission(
+  projectId: string,
+  progress: SubjectProgress | undefined
+): ProjectSubmission | undefined {
+  if (!progress) return undefined;
+  const submissions = progress.projectSubmissions?.[projectId];
+  if (!submissions || submissions.length === 0) return undefined;
+  return getBestProjectSubmission(submissions);
+}
+
+/**
  * Get subjects that directly depend on this subject (immediate dependents only)
  */
 export function getDependentSubjects(
