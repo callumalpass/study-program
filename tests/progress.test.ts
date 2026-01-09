@@ -303,6 +303,31 @@ describe('subject grouping and relationships', () => {
     expect(getDependentSubjects('a', [subjectA, subjectB, subjectC])).toEqual([subjectB, subjectC]);
     expect(getPrerequisiteSubjects(subjectB, [subjectA, subjectB, subjectC])).toEqual([subjectA]);
   });
+
+  it('handles subjects with undefined prerequisites in getDependentSubjects', () => {
+    const subjectA = subjectTemplate({ id: 'a', prerequisites: [] });
+    // Simulate a malformed subject with undefined prerequisites at runtime
+    const subjectB = {
+      ...subjectTemplate({ id: 'b' }),
+      prerequisites: undefined as unknown as string[],
+    };
+    const subjectC = subjectTemplate({ id: 'c', prerequisites: ['a'] });
+
+    // Should not crash and should only return subjects with valid prerequisites
+    expect(getDependentSubjects('a', [subjectA, subjectB, subjectC])).toEqual([subjectC]);
+  });
+
+  it('handles subject with undefined prerequisites in getPrerequisiteSubjects', () => {
+    const subjectA = subjectTemplate({ id: 'a', prerequisites: [] });
+    // Simulate a malformed subject with undefined prerequisites at runtime
+    const subjectB = {
+      ...subjectTemplate({ id: 'b' }),
+      prerequisites: undefined as unknown as string[],
+    };
+
+    // Should not crash and should return empty array
+    expect(getPrerequisiteSubjects(subjectB, [subjectA, subjectB])).toEqual([]);
+  });
 });
 
 describe('canStartSubject', () => {

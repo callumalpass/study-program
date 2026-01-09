@@ -490,7 +490,7 @@ export function getDependentSubjects(
   subjectId: string,
   subjects: Subject[]
 ): Subject[] {
-  return subjects.filter(s => s.prerequisites.includes(subjectId));
+  return subjects.filter(s => s.prerequisites && s.prerequisites.includes(subjectId));
 }
 
 /**
@@ -500,6 +500,7 @@ export function getPrerequisiteSubjects(
   subject: Subject,
   subjects: Subject[]
 ): Subject[] {
+  if (!subject.prerequisites) return [];
   return subject.prerequisites
     .map(prereqId => subjects.find(s => s.id === prereqId))
     .filter((s): s is Subject => s !== undefined);
