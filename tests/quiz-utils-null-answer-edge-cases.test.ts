@@ -78,9 +78,11 @@ describe('checkAnswer - null answer handling', () => {
       expect(checkAnswer(question, null as unknown as QuizAnswer)).toBe(false);
     });
 
-    it('null answer matches empty string correct answer', () => {
+    it('null answer does NOT match empty string correct answer', () => {
+      // null means "no answer provided" which is semantically different from
+      // providing an empty string. A null answer should always be wrong.
       const question = createFillBlank('q1', '');
-      expect(checkAnswer(question, null as unknown as QuizAnswer)).toBe(true);
+      expect(checkAnswer(question, null as unknown as QuizAnswer)).toBe(false);
     });
 
     it('null answer does NOT match the string "null"', () => {

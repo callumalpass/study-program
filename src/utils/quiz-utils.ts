@@ -55,8 +55,8 @@ export function getCorrectOptionIndex(question: QuizQuestion): number {
 /**
  * Check if a given answer is correct for a question.
  */
-export function checkAnswer(question: QuizQuestion, answer: QuizAnswer | undefined): boolean {
-  if (answer === undefined) return false;
+export function checkAnswer(question: QuizQuestion, answer: QuizAnswer | undefined | null): boolean {
+  if (answer === undefined || answer === null) return false;
 
   switch (question.type) {
     case 'multiple_choice': {
