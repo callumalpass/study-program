@@ -369,6 +369,8 @@ export class ProgressStorage {
         itemId: quizId,
         subjectId,
       });
+      // Also update review item to reset streak if it exists
+      this.updateReviewItem(quizId, 'quiz', false);
     } else {
       // Good score - update review item if it exists (extends interval)
       this.updateReviewItem(quizId, 'quiz', true);
@@ -500,6 +502,8 @@ export class ProgressStorage {
         itemId: exerciseId,
         subjectId,
       });
+      // Also update review item to reset streak if it exists
+      this.updateReviewItem(exerciseId, 'exercise', false);
     } else {
       // Passed - update review item if it exists (extends interval)
       this.updateReviewItem(exerciseId, 'exercise', true);
