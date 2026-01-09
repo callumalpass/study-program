@@ -22,6 +22,7 @@ import { renderExportPage } from './pages/export';
 import { renderTimelinePage } from './pages/timeline';
 import { renderCourseBuilderPage } from './pages/course-builder';
 import { updateMermaidTheme } from './components/markdown';
+import { escapeHtml } from './utils/html';
 
 /** Delay before closing mobile menu after navigation click (ms) */
 const MENU_CLOSE_DELAY_MS = 100;
@@ -82,9 +83,9 @@ function renderErrorPage(container: HTMLElement, error: Error, path: string): vo
       <p class="error-message">An error occurred while rendering this page.</p>
       <details class="error-details">
         <summary>Technical details</summary>
-        <p><strong>Path:</strong> <code>${path}</code></p>
-        <p><strong>Error:</strong> <code>${error.message}</code></p>
-        ${error.stack ? `<pre class="error-stack">${error.stack}</pre>` : ''}
+        <p><strong>Path:</strong> <code>${escapeHtml(path)}</code></p>
+        <p><strong>Error:</strong> <code>${escapeHtml(error.message)}</code></p>
+        ${error.stack ? `<pre class="error-stack">${escapeHtml(error.stack)}</pre>` : ''}
       </details>
       <div class="error-actions">
         <button class="btn btn-primary" onclick="location.reload()">Reload Page</button>
