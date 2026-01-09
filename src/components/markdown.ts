@@ -328,7 +328,8 @@ export function generateTableOfContents(markdown: string): Array<{
   id: string;
 }> {
   const toc: Array<{ level: number; text: string; id: string }> = [];
-  const lines = markdown.split('\n');
+  // Normalize line endings (CRLF to LF) before splitting
+  const lines = markdown.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
   const idCounts: Record<string, number> = {};
   let inCodeBlock = false;
   let codeBlockDelimiter = '';
