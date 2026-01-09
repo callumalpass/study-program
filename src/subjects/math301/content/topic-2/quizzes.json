@@ -15,7 +15,7 @@
           "2xy + y²",
           "x² + 3y²"
         ],
-        "correctAnswer": "2xy + 3y²",
+        "correctAnswer": 0,
         "explanation": "Treating y as constant: ∂/∂x(x²y) = 2xy and ∂/∂x(3xy²) = 3y²"
       },
       {
@@ -28,7 +28,7 @@
           "x² + 3y²",
           "2x + 6y"
         ],
-        "correctAnswer": "x² + 6xy",
+        "correctAnswer": 0,
         "explanation": "Treating x as constant: ∂/∂y(x²y) = x² and ∂/∂y(3xy²) = 6xy"
       },
       {
@@ -48,7 +48,7 @@
           "cos(xy)",
           "-sin(xy)"
         ],
-        "correctAnswer": "cos(xy) - xy·sin(xy)",
+        "correctAnswer": 0,
         "explanation": "∂f/∂x = y·cos(xy), then ∂/∂y[y·cos(xy)] = cos(xy) + y·(-sin(xy))·x = cos(xy) - xy·sin(xy)"
       },
       {
@@ -76,7 +76,7 @@
           "5t⁴",
           "3t⁶"
         ],
-        "correctAnswer": "7t⁶",
+        "correctAnswer": 0,
         "explanation": "Using the chain rule: dz/dt = (∂z/∂x)(dx/dt) + (∂z/∂y)(dy/dt). We have ∂z/∂x = 2xy, ∂z/∂y = x², dx/dt = 2t, dy/dt = 3t². Substituting x = t² and y = t³: dz/dt = 2(t²)(t³)·2t + (t²)²·3t² = 4t⁶ + 3t⁶ = 7t⁶. This can be verified by direct substitution: z = (t²)²(t³) = t⁷, so dz/dt = 7t⁶."
       },
       {
@@ -89,7 +89,7 @@
           "3",
           "4"
         ],
-        "correctAnswer": "3",
+        "correctAnswer": 2,
         "explanation": "dw/dt = (∂w/∂x)(dx/dt) + (∂w/∂y)(dy/dt) + (∂w/∂z)(dz/dt), which has 3 terms"
       },
       {
@@ -102,7 +102,7 @@
           "xye^(xy)",
           "e^(xy)"
         ],
-        "correctAnswer": "y²e^(xy)",
+        "correctAnswer": 0,
         "explanation": "∂f/∂x = ye^(xy), then ∂²f/∂x² = y·ye^(xy) = y²e^(xy)"
       },
       {
@@ -143,7 +143,7 @@
           "3x² + 3y²",
           "0"
         ],
-        "correctAnswer": "6x + 6y",
+        "correctAnswer": 0,
         "explanation": "f_x = 3x² - 3y, f_xx = 6x; f_y = 3y² - 3x, f_yy = 6y. Thus f_xx + f_yy = 6x + 6y"
       },
       {
@@ -156,7 +156,7 @@
           "xyz(dx + dy + dz)",
           "2xyz(dx + dy + dz)"
         ],
-        "correctAnswer": "2xyz dx + x²z dy + x²y dz",
+        "correctAnswer": 0,
         "explanation": "df = f_x dx + f_y dy + f_z dz = 2xyz dx + x²z dy + x²y dz"
       },
       {
@@ -176,7 +176,7 @@
           "3",
           "4"
         ],
-        "correctAnswer": "2",
+        "correctAnswer": 1,
         "explanation": "∂w/∂s = (∂w/∂x)(∂x/∂s) + (∂w/∂y)(∂y/∂s), which has 2 terms"
       },
       {
@@ -189,7 +189,7 @@
           "0",
           "Does not exist"
         ],
-        "correctAnswer": "1/2",
+        "correctAnswer": 0,
         "explanation": "Along y = x: f(x,x) = x²/(x² + x²) = x²/2x² = 1/2 for all x ≠ 0"
       }
     ]
