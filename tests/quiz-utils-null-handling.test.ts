@@ -38,10 +38,10 @@ const createFillBlank = (id: string, correctAnswer: string): QuizQuestion => ({
 });
 
 describe('normalizeAnswer null handling', () => {
-  it('handles null value by converting to string "null"', () => {
-    // When null is passed (cast to bypass TypeScript), String(null) = "null"
+  it('handles null value by returning empty string', () => {
+    // When null is passed, it should be treated as "no answer" like undefined
     const result = normalizeAnswer(null as unknown as string);
-    expect(result).toBe('null');
+    expect(result).toBe('');
   });
 
   it('handles empty string', () => {

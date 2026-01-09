@@ -10,8 +10,8 @@ import type { QuizQuestion, QuizAnswer, CodingAnswer } from '@/core/types';
  * Normalize an answer for comparison.
  * Converts to string, trims whitespace, and lowercases for case-insensitive matching.
  */
-export function normalizeAnswer(value: string | number | boolean | undefined): string {
-  if (value === undefined) return '';
+export function normalizeAnswer(value: string | number | boolean | undefined | null): string {
+  if (value === undefined || value === null) return '';
   return String(value).trim().toLowerCase();
 }
 
