@@ -9,12 +9,12 @@
         "type": "multiple_choice",
         "prompt": "Solve the separable differential equation dy/dx = xy² with initial condition y(0) = 1.",
         "options": [
-          "y = 1/(1 - x²/2)",
           "y = 1/(1 + x²/2)",
           "y = e^(x²/2)",
-          "y = 1/(2 - x²)"
+          "y = 1/(2 - x²)",
+          "y = 1/(1 - x²/2)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Separating variables: dy/y² = x dx. Integrating: -1/y = x²/2 + C. Using y(0) = 1 gives C = -1, so y = 1/(1 - x²/2)."
       },
       {
@@ -35,12 +35,12 @@
         "type": "multiple_choice",
         "prompt": "The general solution to dy/dx = 3y is:",
         "options": [
-          "y = Ce^(3x)",
           "y = C + 3x",
           "y = 3Ce^x",
-          "y = Ce^(x/3)"
+          "y = Ce^(x/3)",
+          "y = Ce^(3x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Separating: dy/y = 3dx. Integrating: ln|y| = 3x + C₁, so y = Ce^(3x)."
       },
       {
@@ -48,12 +48,12 @@
         "type": "multiple_choice",
         "prompt": "What is the integrating factor for the linear DE: dy/dx + 2y = e^x?",
         "options": [
+          "2e^x",
           "e^(2x)",
           "e^x",
-          "e^(-2x)",
-          "2e^x"
+          "e^(-2x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For a linear DE dy/dx + P(x)y = Q(x), the integrating factor is μ(x) = e^(∫P(x)dx) = e^(∫2dx) = e^(2x)."
       },
       {
@@ -61,12 +61,12 @@
         "type": "multiple_choice",
         "prompt": "Solve dy/dx + y/x = x with y(1) = 2.",
         "options": [
-          "y = x²/3 + 5/(3x)",
           "y = x²/3 + 2/x",
           "y = x² + 1/x",
-          "y = x²/2 + 1/x"
+          "y = x²/2 + 1/x",
+          "y = x²/3 + 5/(3x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Integrating factor μ = e^(∫1/x dx) = x. Multiplying: d/dx(xy) = x². So xy = x³/3 + C. Using y(1) = 2 gives C = 5/3, thus y = x²/3 + 5/(3x)."
       },
       {
@@ -74,12 +74,12 @@
         "type": "multiple_choice",
         "prompt": "Which form represents a first-order linear differential equation?",
         "options": [
-          "dy/dx + P(x)y = Q(x)",
-          "dy/dx = f(x)g(y)",
           "M(x,y)dx + N(x,y)dy = 0",
-          "dy/dx + y² = x"
+          "dy/dx + y² = x",
+          "dy/dx + P(x)y = Q(x)",
+          "dy/dx = f(x)g(y)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A first-order linear DE has the standard form dy/dx + P(x)y = Q(x), where y appears to the first power only."
       },
       {
@@ -87,12 +87,12 @@
         "type": "multiple_choice",
         "prompt": "For the equation (2xy + 3)dx + (x² + 4y)dy = 0, what condition must hold for exactness?",
         "options": [
-          "∂M/∂y = ∂N/∂x",
           "∂M/∂x = ∂N/∂y",
           "M = N",
-          "∂²M/∂x∂y = 0"
+          "∂²M/∂x∂y = 0",
+          "∂M/∂y = ∂N/∂x"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "An equation M dx + N dy = 0 is exact if ∂M/∂y = ∂N/∂x. Here ∂M/∂y = 2x and ∂N/∂x = 2x, so it is exact."
       },
       {
@@ -100,12 +100,12 @@
         "type": "multiple_choice",
         "prompt": "Is the equation (3x² + 2y)dx + (2x + 4y)dy = 0 exact?",
         "options": [
+          "No, because it is nonlinear",
           "Yes, because ∂M/∂y = ∂N/∂x = 2",
           "No, because ∂M/∂y ≠ ∂N/∂x",
-          "Yes, because M and N are polynomials",
-          "No, because it is nonlinear"
+          "Yes, because M and N are polynomials"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "M = 3x² + 2y gives ∂M/∂y = 2. N = 2x + 4y gives ∂N/∂x = 2. Since these are equal, the equation is exact."
       },
       {
@@ -113,12 +113,12 @@
         "type": "multiple_choice",
         "prompt": "If an equation is not exact but (∂M/∂y - ∂N/∂x)/N is a function of x only, what is the integrating factor?",
         "options": [
-          "μ(x) = e^(∫[(∂M/∂y - ∂N/∂x)/N]dx)",
           "μ(y) = e^(∫[(∂N/∂x - ∂M/∂y)/M]dy)",
           "μ(x) = e^(∫N dx)",
-          "μ(x) = e^(∫M dx)"
+          "μ(x) = e^(∫M dx)",
+          "μ(x) = e^(∫[(∂M/∂y - ∂N/∂x)/N]dx)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "When (∂M/∂y - ∂N/∂x)/N = f(x) depends only on x, the integrating factor is μ(x) = e^(∫f(x)dx)."
       },
       {
@@ -139,12 +139,12 @@
         "type": "multiple_choice",
         "prompt": "What is the general solution to y'' - 5y' + 6y = 0?",
         "options": [
-          "y = C₁e^(2x) + C₂e^(3x)",
           "y = C₁e^(-2x) + C₂e^(-3x)",
           "y = C₁e^(2x) + C₂xe^(2x)",
-          "y = e^(2x)(C₁cos(x) + C₂sin(x))"
+          "y = e^(2x)(C₁cos(x) + C₂sin(x))",
+          "y = C₁e^(2x) + C₂e^(3x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The characteristic equation is r² - 5r + 6 = 0, which factors as (r - 2)(r - 3) = 0. Roots are r = 2, 3, giving y = C₁e^(2x) + C₂e^(3x)."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "For y'' + 4y' + 4y = 0, the roots of the characteristic equation are:",
         "options": [
-          "r = -2 (repeated)",
-          "r = 2 (repeated)",
           "r = ±2i",
-          "r = -2, -2i"
+          "r = -2, -2i",
+          "r = -2 (repeated)",
+          "r = 2 (repeated)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The characteristic equation r² + 4r + 4 = 0 factors as (r + 2)² = 0, giving a repeated root r = -2."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "What is the general solution when the characteristic equation has roots r = -1 ± 2i?",
         "options": [
-          "y = e^(-x)(C₁cos(2x) + C₂sin(2x))",
           "y = e^x(C₁cos(2x) + C₂sin(2x))",
           "y = C₁e^(-x) + C₂e^(2ix)",
-          "y = e^(-x)(C₁e^(2x) + C₂e^(-2x))"
+          "y = e^(-x)(C₁e^(2x) + C₂e^(-2x))",
+          "y = e^(-x)(C₁cos(2x) + C₂sin(2x))"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Complex roots r = α ± βi give the solution y = e^(αx)(C₁cos(βx) + C₂sin(βx)). Here α = -1 and β = 2."
       },
       {
@@ -178,12 +178,12 @@
         "type": "multiple_choice",
         "prompt": "For a repeated root r = 3, what is the general solution?",
         "options": [
+          "y = C₁e^(3x) + C₂e^(3x²)",
           "y = C₁e^(3x) + C₂xe^(3x)",
           "y = C₁e^(3x) + C₂e^(-3x)",
-          "y = (C₁ + C₂x)e^(6x)",
-          "y = C₁e^(3x) + C₂e^(3x²)"
+          "y = (C₁ + C₂x)e^(6x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For a repeated root r, the general solution is y = C₁e^(rx) + C₂xe^(rx). Here r = 3."
       },
       {
@@ -191,12 +191,12 @@
         "type": "multiple_choice",
         "prompt": "For y'' + y = sin(2x), what form should the particular solution take?",
         "options": [
-          "yₚ = A cos(2x) + B sin(2x)",
           "yₚ = A sin(x)",
           "yₚ = Ax sin(2x)",
-          "yₚ = A cos(x) + B sin(x)"
+          "yₚ = A cos(x) + B sin(x)",
+          "yₚ = A cos(2x) + B sin(2x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For a forcing function sin(2x), we try yₚ = A cos(2x) + B sin(2x) since both cos and sin terms arise from derivatives."
       },
       {
@@ -204,12 +204,12 @@
         "type": "multiple_choice",
         "prompt": "For y'' - 3y' + 2y = 4e^x, what is the appropriate form for yₚ?",
         "options": [
-          "yₚ = Axe^x",
-          "yₚ = Ae^x",
           "yₚ = Ax²e^x",
-          "yₚ = A + Be^x"
+          "yₚ = A + Be^x",
+          "yₚ = Axe^x",
+          "yₚ = Ae^x"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The characteristic roots are r = 1, 2. Since e^x is a solution to the homogeneous equation (r = 1), we multiply by x: yₚ = Axe^x."
       },
       {
@@ -217,12 +217,12 @@
         "type": "multiple_choice",
         "prompt": "For y'' + 4y = 8, what form should yₚ take?",
         "options": [
-          "yₚ = A (constant)",
           "yₚ = Ax",
           "yₚ = Ax²",
-          "yₚ = A cos(2x)"
+          "yₚ = A cos(2x)",
+          "yₚ = A (constant)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For a constant forcing function, we try a constant particular solution yₚ = A."
       },
       {
@@ -230,12 +230,12 @@
         "type": "multiple_choice",
         "prompt": "For y'' + y = x² + 3x, the form of yₚ should be:",
         "options": [
+          "yₚ = Ax³ + Bx² + Cx",
           "yₚ = Ax² + Bx + C",
           "yₚ = Ax²",
-          "yₚ = Ax + B",
-          "yₚ = Ax³ + Bx² + Cx"
+          "yₚ = Ax + B"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For a polynomial forcing function of degree n, we try a polynomial of degree n: yₚ = Ax² + Bx + C."
       },
       {
@@ -243,12 +243,12 @@
         "type": "multiple_choice",
         "prompt": "Variation of parameters is preferred over undetermined coefficients when:",
         "options": [
-          "The forcing function is not of a form suitable for undetermined coefficients",
           "The equation has constant coefficients",
           "The forcing function is a polynomial",
-          "The homogeneous solution is known"
+          "The homogeneous solution is known",
+          "The forcing function is not of a form suitable for undetermined coefficients"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Variation of parameters works for any forcing function, while undetermined coefficients only works for specific forms (polynomials, exponentials, sines/cosines)."
       },
       {
@@ -269,12 +269,12 @@
         "type": "multiple_choice",
         "prompt": "For the third-order equation y''' - 6y'' + 11y' - 6y = 0, the characteristic equation is:",
         "options": [
-          "r³ - 6r² + 11r - 6 = 0",
           "r³ + 6r² + 11r + 6 = 0",
           "r² - 6r + 11 = 0",
-          "3r² - 12r + 11 = 0"
+          "3r² - 12r + 11 = 0",
+          "r³ - 6r² + 11r - 6 = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Substituting y = e^(rx) into the DE gives the characteristic equation r³ - 6r² + 11r - 6 = 0."
       },
       {
@@ -282,12 +282,12 @@
         "type": "multiple_choice",
         "prompt": "A Cauchy-Euler equation has the form:",
         "options": [
-          "x²y'' + axy' + by = 0",
-          "y'' + axy' + by = 0",
           "x²y'' + xy' + y = 0 with constant a, b",
-          "y'' + ay' + by = 0"
+          "y'' + ay' + by = 0",
+          "x²y'' + axy' + by = 0",
+          "y'' + axy' + by = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A Cauchy-Euler equation has the form x²y'' + axy' + by = 0, where coefficients are powers of x matching derivative orders."
       },
       {
@@ -295,12 +295,12 @@
         "type": "multiple_choice",
         "prompt": "To solve a Cauchy-Euler equation, we typically substitute:",
         "options": [
-          "y = x^r",
           "y = e^(rx)",
           "y = r^x",
-          "y = ln(x)"
+          "y = ln(x)",
+          "y = x^r"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For Cauchy-Euler equations, we substitute y = x^r, which transforms the equation into an algebraic equation for r."
       },
       {
@@ -308,12 +308,12 @@
         "type": "multiple_choice",
         "prompt": "For the system x' = Ax, if A has eigenvalues λ₁ = 2, λ₂ = -3, the general solution involves:",
         "options": [
+          "cos(2t) and sin(3t)",
           "e^(2t) and e^(-3t)",
           "e^(2t) only",
-          "t·e^(2t) and t·e^(-3t)",
-          "cos(2t) and sin(3t)"
+          "t·e^(2t) and t·e^(-3t)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For distinct real eigenvalues λ₁ and λ₂, the solution includes terms e^(λ₁t) and e^(λ₂t), here e^(2t) and e^(-3t)."
       },
       {
@@ -321,12 +321,12 @@
         "type": "multiple_choice",
         "prompt": "If a 2×2 matrix has complex eigenvalues λ = 1 ± 2i, the origin is a:",
         "options": [
-          "Spiral source (unstable)",
           "Spiral sink (stable)",
           "Center",
-          "Saddle point"
+          "Saddle point",
+          "Spiral source (unstable)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Complex eigenvalues with positive real part (1 > 0) indicate a spiral source (unstable spiral). The imaginary part causes rotation."
       },
       {
@@ -334,12 +334,12 @@
         "type": "multiple_choice",
         "prompt": "A saddle point occurs when the eigenvalues are:",
         "options": [
+          "Complex conjugates",
           "Real with opposite signs",
           "Real and both positive",
-          "Real and both negative",
-          "Complex conjugates"
+          "Real and both negative"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A saddle point (unstable) occurs when the eigenvalues are real with opposite signs, causing trajectories to approach along one direction and diverge along another."
       }
     ]
@@ -354,12 +354,12 @@
         "type": "multiple_choice",
         "prompt": "Solve the separable differential equation dy/dx = xy² with initial condition y(0) = 1.",
         "options": [
-          "y = 1/(1 - x²/2)",
           "y = 1/(1 + x²/2)",
           "y = e^(x²/2)",
-          "y = 1/(2 - x²)"
+          "y = 1/(2 - x²)",
+          "y = 1/(1 - x²/2)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Separating variables: dy/y² = x dx. Integrating: -1/y = x²/2 + C. Using y(0) = 1 gives C = -1, so y = 1/(1 - x²/2)."
       },
       {
@@ -380,12 +380,12 @@
         "type": "multiple_choice",
         "prompt": "The general solution to dy/dx = 3y is:",
         "options": [
-          "y = Ce^(3x)",
           "y = C + 3x",
           "y = 3Ce^x",
-          "y = Ce^(x/3)"
+          "y = Ce^(x/3)",
+          "y = Ce^(3x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Separating: dy/y = 3dx. Integrating: ln|y| = 3x + C₁, so y = Ce^(3x)."
       },
       {
@@ -393,12 +393,12 @@
         "type": "multiple_choice",
         "prompt": "What is the integrating factor for the linear DE: dy/dx + 2y = e^x?",
         "options": [
+          "2e^x",
           "e^(2x)",
           "e^x",
-          "e^(-2x)",
-          "2e^x"
+          "e^(-2x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For a linear DE dy/dx + P(x)y = Q(x), the integrating factor is μ(x) = e^(∫P(x)dx) = e^(∫2dx) = e^(2x)."
       },
       {
@@ -406,12 +406,12 @@
         "type": "multiple_choice",
         "prompt": "Solve dy/dx + y/x = x with y(1) = 2.",
         "options": [
-          "y = x²/3 + 5/(3x)",
           "y = x²/3 + 2/x",
           "y = x² + 1/x",
-          "y = x²/2 + 1/x"
+          "y = x²/2 + 1/x",
+          "y = x²/3 + 5/(3x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Integrating factor μ = e^(∫1/x dx) = x. Multiplying: d/dx(xy) = x². So xy = x³/3 + C. Using y(1) = 2 gives C = 5/3, thus y = x²/3 + 5/(3x)."
       },
       {
@@ -419,12 +419,12 @@
         "type": "multiple_choice",
         "prompt": "Which form represents a first-order linear differential equation?",
         "options": [
-          "dy/dx + P(x)y = Q(x)",
-          "dy/dx = f(x)g(y)",
           "M(x,y)dx + N(x,y)dy = 0",
-          "dy/dx + y² = x"
+          "dy/dx + y² = x",
+          "dy/dx + P(x)y = Q(x)",
+          "dy/dx = f(x)g(y)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A first-order linear DE has the standard form dy/dx + P(x)y = Q(x), where y appears to the first power only."
       },
       {
@@ -432,12 +432,12 @@
         "type": "multiple_choice",
         "prompt": "For the equation (2xy + 3)dx + (x² + 4y)dy = 0, what condition must hold for exactness?",
         "options": [
-          "∂M/∂y = ∂N/∂x",
           "∂M/∂x = ∂N/∂y",
           "M = N",
-          "∂²M/∂x∂y = 0"
+          "∂²M/∂x∂y = 0",
+          "∂M/∂y = ∂N/∂x"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "An equation M dx + N dy = 0 is exact if ∂M/∂y = ∂N/∂x. Here ∂M/∂y = 2x and ∂N/∂x = 2x, so it is exact."
       },
       {
@@ -445,12 +445,12 @@
         "type": "multiple_choice",
         "prompt": "Is the equation (3x² + 2y)dx + (2x + 4y)dy = 0 exact?",
         "options": [
+          "No, because it is nonlinear",
           "Yes, because ∂M/∂y = ∂N/∂x = 2",
           "No, because ∂M/∂y ≠ ∂N/∂x",
-          "Yes, because M and N are polynomials",
-          "No, because it is nonlinear"
+          "Yes, because M and N are polynomials"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "M = 3x² + 2y gives ∂M/∂y = 2. N = 2x + 4y gives ∂N/∂x = 2. Since these are equal, the equation is exact."
       },
       {
@@ -458,12 +458,12 @@
         "type": "multiple_choice",
         "prompt": "If an equation is not exact but (∂M/∂y - ∂N/∂x)/N is a function of x only, what is the integrating factor?",
         "options": [
-          "μ(x) = e^(∫[(∂M/∂y - ∂N/∂x)/N]dx)",
           "μ(y) = e^(∫[(∂N/∂x - ∂M/∂y)/M]dy)",
           "μ(x) = e^(∫N dx)",
-          "μ(x) = e^(∫M dx)"
+          "μ(x) = e^(∫M dx)",
+          "μ(x) = e^(∫[(∂M/∂y - ∂N/∂x)/N]dx)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "When (∂M/∂y - ∂N/∂x)/N = f(x) depends only on x, the integrating factor is μ(x) = e^(∫f(x)dx)."
       },
       {
@@ -484,12 +484,12 @@
         "type": "multiple_choice",
         "prompt": "What is the general solution to y'' - 5y' + 6y = 0?",
         "options": [
-          "y = C₁e^(2x) + C₂e^(3x)",
           "y = C₁e^(-2x) + C₂e^(-3x)",
           "y = C₁e^(2x) + C₂xe^(2x)",
-          "y = e^(2x)(C₁cos(x) + C₂sin(x))"
+          "y = e^(2x)(C₁cos(x) + C₂sin(x))",
+          "y = C₁e^(2x) + C₂e^(3x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The characteristic equation is r² - 5r + 6 = 0, which factors as (r - 2)(r - 3) = 0. Roots are r = 2, 3, giving y = C₁e^(2x) + C₂e^(3x)."
       },
       {
@@ -497,12 +497,12 @@
         "type": "multiple_choice",
         "prompt": "For y'' + 4y' + 4y = 0, the roots of the characteristic equation are:",
         "options": [
-          "r = -2 (repeated)",
-          "r = 2 (repeated)",
           "r = ±2i",
-          "r = -2, -2i"
+          "r = -2, -2i",
+          "r = -2 (repeated)",
+          "r = 2 (repeated)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The characteristic equation r² + 4r + 4 = 0 factors as (r + 2)² = 0, giving a repeated root r = -2."
       },
       {
@@ -510,12 +510,12 @@
         "type": "multiple_choice",
         "prompt": "What is the general solution when the characteristic equation has roots r = -1 ± 2i?",
         "options": [
-          "y = e^(-x)(C₁cos(2x) + C₂sin(2x))",
           "y = e^x(C₁cos(2x) + C₂sin(2x))",
           "y = C₁e^(-x) + C₂e^(2ix)",
-          "y = e^(-x)(C₁e^(2x) + C₂e^(-2x))"
+          "y = e^(-x)(C₁e^(2x) + C₂e^(-2x))",
+          "y = e^(-x)(C₁cos(2x) + C₂sin(2x))"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Complex roots r = α ± βi give the solution y = e^(αx)(C₁cos(βx) + C₂sin(βx)). Here α = -1 and β = 2."
       },
       {
@@ -523,12 +523,12 @@
         "type": "multiple_choice",
         "prompt": "For a repeated root r = 3, what is the general solution?",
         "options": [
+          "y = C₁e^(3x) + C₂e^(3x²)",
           "y = C₁e^(3x) + C₂xe^(3x)",
           "y = C₁e^(3x) + C₂e^(-3x)",
-          "y = (C₁ + C₂x)e^(6x)",
-          "y = C₁e^(3x) + C₂e^(3x²)"
+          "y = (C₁ + C₂x)e^(6x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For a repeated root r, the general solution is y = C₁e^(rx) + C₂xe^(rx). Here r = 3."
       },
       {
@@ -536,12 +536,12 @@
         "type": "multiple_choice",
         "prompt": "For y'' + y = sin(2x), what form should the particular solution take?",
         "options": [
-          "yₚ = A cos(2x) + B sin(2x)",
           "yₚ = A sin(x)",
           "yₚ = Ax sin(2x)",
-          "yₚ = A cos(x) + B sin(x)"
+          "yₚ = A cos(x) + B sin(x)",
+          "yₚ = A cos(2x) + B sin(2x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For a forcing function sin(2x), we try yₚ = A cos(2x) + B sin(2x) since both cos and sin terms arise from derivatives."
       },
       {
@@ -549,12 +549,12 @@
         "type": "multiple_choice",
         "prompt": "For y'' - 3y' + 2y = 4e^x, what is the appropriate form for yₚ?",
         "options": [
-          "yₚ = Axe^x",
-          "yₚ = Ae^x",
           "yₚ = Ax²e^x",
-          "yₚ = A + Be^x"
+          "yₚ = A + Be^x",
+          "yₚ = Axe^x",
+          "yₚ = Ae^x"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The characteristic roots are r = 1, 2. Since e^x is a solution to the homogeneous equation (r = 1), we multiply by x: yₚ = Axe^x."
       },
       {
@@ -562,12 +562,12 @@
         "type": "multiple_choice",
         "prompt": "For y'' + 4y = 8, what form should yₚ take?",
         "options": [
-          "yₚ = A (constant)",
           "yₚ = Ax",
           "yₚ = Ax²",
-          "yₚ = A cos(2x)"
+          "yₚ = A cos(2x)",
+          "yₚ = A (constant)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For a constant forcing function, we try a constant particular solution yₚ = A."
       },
       {
@@ -575,12 +575,12 @@
         "type": "multiple_choice",
         "prompt": "For y'' + y = x² + 3x, the form of yₚ should be:",
         "options": [
+          "yₚ = Ax³ + Bx² + Cx",
           "yₚ = Ax² + Bx + C",
           "yₚ = Ax²",
-          "yₚ = Ax + B",
-          "yₚ = Ax³ + Bx² + Cx"
+          "yₚ = Ax + B"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For a polynomial forcing function of degree n, we try a polynomial of degree n: yₚ = Ax² + Bx + C."
       },
       {
@@ -588,12 +588,12 @@
         "type": "multiple_choice",
         "prompt": "Variation of parameters is preferred over undetermined coefficients when:",
         "options": [
-          "The forcing function is not of a form suitable for undetermined coefficients",
           "The equation has constant coefficients",
           "The forcing function is a polynomial",
-          "The homogeneous solution is known"
+          "The homogeneous solution is known",
+          "The forcing function is not of a form suitable for undetermined coefficients"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Variation of parameters works for any forcing function, while undetermined coefficients only works for specific forms (polynomials, exponentials, sines/cosines)."
       },
       {
@@ -614,12 +614,12 @@
         "type": "multiple_choice",
         "prompt": "For the third-order equation y''' - 6y'' + 11y' - 6y = 0, the characteristic equation is:",
         "options": [
-          "r³ - 6r² + 11r - 6 = 0",
           "r³ + 6r² + 11r + 6 = 0",
           "r² - 6r + 11 = 0",
-          "3r² - 12r + 11 = 0"
+          "3r² - 12r + 11 = 0",
+          "r³ - 6r² + 11r - 6 = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Substituting y = e^(rx) into the DE gives the characteristic equation r³ - 6r² + 11r - 6 = 0."
       },
       {
@@ -627,12 +627,12 @@
         "type": "multiple_choice",
         "prompt": "A Cauchy-Euler equation has the form:",
         "options": [
-          "x²y'' + axy' + by = 0",
-          "y'' + axy' + by = 0",
           "x²y'' + xy' + y = 0 with constant a, b",
-          "y'' + ay' + by = 0"
+          "y'' + ay' + by = 0",
+          "x²y'' + axy' + by = 0",
+          "y'' + axy' + by = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A Cauchy-Euler equation has the form x²y'' + axy' + by = 0, where coefficients are powers of x matching derivative orders."
       },
       {
@@ -640,12 +640,12 @@
         "type": "multiple_choice",
         "prompt": "To solve a Cauchy-Euler equation, we typically substitute:",
         "options": [
-          "y = x^r",
           "y = e^(rx)",
           "y = r^x",
-          "y = ln(x)"
+          "y = ln(x)",
+          "y = x^r"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For Cauchy-Euler equations, we substitute y = x^r, which transforms the equation into an algebraic equation for r."
       },
       {
@@ -653,12 +653,12 @@
         "type": "multiple_choice",
         "prompt": "For the system x' = Ax, if A has eigenvalues λ₁ = 2, λ₂ = -3, the general solution involves:",
         "options": [
+          "cos(2t) and sin(3t)",
           "e^(2t) and e^(-3t)",
           "e^(2t) only",
-          "t·e^(2t) and t·e^(-3t)",
-          "cos(2t) and sin(3t)"
+          "t·e^(2t) and t·e^(-3t)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For distinct real eigenvalues λ₁ and λ₂, the solution includes terms e^(λ₁t) and e^(λ₂t), here e^(2t) and e^(-3t)."
       },
       {
@@ -666,12 +666,12 @@
         "type": "multiple_choice",
         "prompt": "If a 2×2 matrix has complex eigenvalues λ = 1 ± 2i, the origin is a:",
         "options": [
-          "Spiral source (unstable)",
           "Spiral sink (stable)",
           "Center",
-          "Saddle point"
+          "Saddle point",
+          "Spiral source (unstable)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Complex eigenvalues with positive real part (1 > 0) indicate a spiral source (unstable spiral). The imaginary part causes rotation."
       },
       {
@@ -679,12 +679,12 @@
         "type": "multiple_choice",
         "prompt": "A saddle point occurs when the eigenvalues are:",
         "options": [
+          "Complex conjugates",
           "Real with opposite signs",
           "Real and both positive",
-          "Real and both negative",
-          "Complex conjugates"
+          "Real and both negative"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A saddle point (unstable) occurs when the eigenvalues are real with opposite signs, causing trajectories to approach along one direction and diverge along another."
       },
       {
@@ -692,12 +692,12 @@
         "type": "multiple_choice",
         "prompt": "What is the Laplace transform of f(t) = 1?",
         "options": [
-          "F(s) = 1/s",
           "F(s) = s",
           "F(s) = 1",
-          "F(s) = e^(-s)"
+          "F(s) = e^(-s)",
+          "F(s) = 1/s"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "L{1} = ∫₀^∞ e^(-st) dt = [-1/s · e^(-st)]₀^∞ = 1/s for s > 0."
       },
       {
@@ -705,12 +705,12 @@
         "type": "multiple_choice",
         "prompt": "What is L{e^(at)}?",
         "options": [
-          "1/(s - a) for s > a",
-          "1/(s + a) for s > -a",
           "a/(s - a)",
-          "e^a/s"
+          "e^a/s",
+          "1/(s - a) for s > a",
+          "1/(s + a) for s > -a"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "L{e^(at)} = ∫₀^∞ e^(at)e^(-st) dt = ∫₀^∞ e^(-(s-a)t) dt = 1/(s - a) for s > a."
       },
       {
@@ -718,12 +718,12 @@
         "type": "multiple_choice",
         "prompt": "The Laplace transform of sin(ωt) is:",
         "options": [
-          "ω/(s² + ω²)",
           "s/(s² + ω²)",
           "1/(s² + ω²)",
-          "ω/(s² - ω²)"
+          "ω/(s² - ω²)",
+          "ω/(s² + ω²)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "L{sin(ωt)} = ω/(s² + ω²), which can be derived using integration by parts or from the definition."
       },
       {
@@ -731,12 +731,12 @@
         "type": "multiple_choice",
         "prompt": "What is L{cos(ωt)}?",
         "options": [
+          "s/(s - ω)",
           "s/(s² + ω²)",
           "ω/(s² + ω²)",
-          "1/(s² + ω²)",
-          "s/(s - ω)"
+          "1/(s² + ω²)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "L{cos(ωt)} = s/(s² + ω²), complementing the Laplace transform of sin(ωt)."
       },
       {
@@ -744,12 +744,12 @@
         "type": "multiple_choice",
         "prompt": "The first shifting theorem states L{e^(at)f(t)} equals:",
         "options": [
-          "F(s - a)",
           "F(s + a)",
           "e^a F(s)",
-          "F(s)/a"
+          "F(s)/a",
+          "F(s - a)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The first shifting theorem: L{e^(at)f(t)} = F(s - a), where F(s) = L{f(t)}. This shifts the transform in the s-domain."
       },
       {
@@ -757,12 +757,12 @@
         "type": "multiple_choice",
         "prompt": "What is L{y'}?",
         "options": [
-          "sY(s) - y(0)",
-          "sY(s) + y(0)",
           "Y'(s)",
-          "s²Y(s) - y(0)"
+          "s²Y(s) - y(0)",
+          "sY(s) - y(0)",
+          "sY(s) + y(0)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The Laplace transform of the first derivative is L{y'} = sY(s) - y(0), where Y(s) = L{y}."
       },
       {
@@ -770,12 +770,12 @@
         "type": "multiple_choice",
         "prompt": "What is L{y''}?",
         "options": [
-          "s²Y(s) - sy(0) - y'(0)",
           "s²Y(s) - y(0) - y'(0)",
           "sY(s) - y(0)",
-          "s²Y(s) + sy(0) + y'(0)"
+          "s²Y(s) + sy(0) + y'(0)",
+          "s²Y(s) - sy(0) - y'(0)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "L{y''} = s²Y(s) - sy(0) - y'(0), which incorporates both initial conditions y(0) and y'(0)."
       },
       {
@@ -783,12 +783,12 @@
         "type": "multiple_choice",
         "prompt": "To solve y'' + 4y = 0 with y(0) = 1, y'(0) = 0 using Laplace transforms, we get:",
         "options": [
+          "Y(s) = 4/(s² + 4)",
           "Y(s) = s/(s² + 4)",
           "Y(s) = 1/(s² + 4)",
-          "Y(s) = 2/(s² + 4)",
-          "Y(s) = 4/(s² + 4)"
+          "Y(s) = 2/(s² + 4)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Taking Laplace: s²Y - s + 4Y = 0. So Y(s² + 4) = s, giving Y = s/(s² + 4), which transforms back to y = cos(2t)."
       },
       {
@@ -796,12 +796,12 @@
         "type": "multiple_choice",
         "prompt": "The unit step function u(t - a) has Laplace transform:",
         "options": [
-          "e^(-as)/s",
           "e^(as)/s",
           "1/(s - a)",
-          "a/s"
+          "a/s",
+          "e^(-as)/s"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "L{u(t - a)} = e^(-as)/s, where u(t - a) is 0 for t < a and 1 for t ≥ a. This is the second shifting theorem."
       },
       {
@@ -822,12 +822,12 @@
         "type": "multiple_choice",
         "prompt": "The convolution of f and g is defined as:",
         "options": [
-          "(f * g)(t) = ∫₀^t f(τ)g(t - τ) dτ",
-          "(f * g)(t) = ∫₀^∞ f(τ)g(τ) dτ",
+          "∫₀^∞ f(τ)g(τ) dτ",
           "(f * g)(t) = f(t)·g(t)",
-          "(f * g)(t) = f(t) + g(t)"
+          "(f * g)(t) = f(t) + g(t)",
+          "(f * g)(t) = ∫₀^t f(τ)g(t - τ) dτ"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The convolution is (f * g)(t) = ∫₀^t f(τ)g(t - τ) dτ. Note: both forms ∫₀^t f(τ)g(t - τ) dτ and ∫₀^t f(t - τ)g(τ) dτ are equivalent."
       },
       {
@@ -835,12 +835,12 @@
         "type": "multiple_choice",
         "prompt": "The convolution theorem states L{f * g} equals:",
         "options": [
+          "∫F(s)G(s) ds",
           "F(s)·G(s)",
           "F(s) + G(s)",
-          "F(s)/G(s)",
-          "∫F(s)G(s) ds"
+          "F(s)/G(s)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The convolution theorem: L{f * g} = F(s)·G(s), where F(s) = L{f} and G(s) = L{g}. Convolution in time domain = multiplication in s-domain."
       },
       {
@@ -848,12 +848,12 @@
         "type": "multiple_choice",
         "prompt": "A power series solution has the form:",
         "options": [
-          "y = Σ aₙ(x - x₀)ⁿ",
           "y = Σ aₙe^(nx)",
           "y = Σ aₙ sin(nx)",
-          "y = Σ aₙ/n!"
+          "y = Σ aₙ/n!",
+          "y = Σ aₙ(x - x₀)ⁿ"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A power series solution is y = Σ aₙ(x - x₀)ⁿ, centered at x₀. The coefficients aₙ are determined by substituting into the DE."
       },
       {
@@ -861,12 +861,12 @@
         "type": "multiple_choice",
         "prompt": "An ordinary point x₀ of a DE y'' + P(x)y' + Q(x)y = 0 is one where:",
         "options": [
+          "P(x) or Q(x) has a singularity at x₀",
           "Both P(x) and Q(x) are analytic at x₀",
           "P(x₀) = 0",
-          "Q(x₀) = 0",
-          "P(x) or Q(x) has a singularity at x₀"
+          "Q(x₀) = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "An ordinary point is where both P(x) and Q(x) are analytic (have convergent power series). Otherwise, x₀ is a singular point."
       },
       {
@@ -874,12 +874,12 @@
         "type": "multiple_choice",
         "prompt": "A regular singular point requires:",
         "options": [
-          "(x - x₀)P(x) and (x - x₀)²Q(x) are analytic at x₀",
           "P(x) and Q(x) both have poles at x₀",
           "P(x) is analytic but Q(x) is not",
-          "The DE cannot be solved near x₀"
+          "The DE cannot be solved near x₀",
+          "(x - x₀)P(x) and (x - x₀)²Q(x) are analytic at x₀"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A singular point x₀ is regular if (x - x₀)P(x) and (x - x₀)²Q(x) are both analytic at x₀. Otherwise, it is irregular."
       },
       {
@@ -887,12 +887,12 @@
         "type": "multiple_choice",
         "prompt": "The Frobenius method assumes a solution of the form:",
         "options": [
-          "y = (x - x₀)^r Σ aₙ(x - x₀)ⁿ",
-          "y = e^r Σ aₙx^n",
           "y = Σ aₙx^(n+r)",
-          "y = x^r·e^x"
+          "y = x^r·e^x",
+          "y = (x - x₀)^r Σ aₙ(x - x₀)ⁿ",
+          "y = e^r Σ aₙx^n"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The Frobenius method uses y = (x - x₀)^r Σ aₙ(x - x₀)ⁿ where r is found from the indicial equation and may not be an integer."
       },
       {
@@ -900,12 +900,12 @@
         "type": "multiple_choice",
         "prompt": "The indicial equation is obtained by:",
         "options": [
-          "Finding the coefficient of the lowest power of x in the series",
           "Setting the leading coefficient equal to zero",
           "Differentiating the DE twice",
-          "Taking the Laplace transform"
+          "Taking the Laplace transform",
+          "Finding the coefficient of the lowest power of x in the series"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "After substituting the Frobenius series, the indicial equation comes from the coefficient of the lowest power of (x - x₀), determining possible values of r."
       },
       {
@@ -913,12 +913,12 @@
         "type": "multiple_choice",
         "prompt": "If the indicial equation has roots r₁ and r₂ with r₁ - r₂ = integer, the solutions:",
         "options": [
-          "May involve logarithmic terms",
-          "Are always two independent power series",
           "Cannot be found by Frobenius method",
-          "Are always identical"
+          "Are always identical",
+          "May involve logarithmic terms",
+          "Are always two independent power series"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "When r₁ - r₂ is an integer, the second solution may involve logarithmic terms: y₂ = y₁ ln(x) + power series."
       },
       {
@@ -926,12 +926,12 @@
         "type": "multiple_choice",
         "prompt": "Bessel's equation of order ν is:",
         "options": [
-          "x²y'' + xy' + (x² - ν²)y = 0",
           "x²y'' + xy' - (x² + ν²)y = 0",
           "y'' + xy' + ν²y = 0",
-          "x²y'' - xy' + (x² - ν²)y = 0"
+          "x²y'' - xy' + (x² - ν²)y = 0",
+          "x²y'' + xy' + (x² - ν²)y = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The standard form of Bessel's equation is x²y'' + xy' + (x² - ν²)y = 0, where ν is the order."
       },
       {
@@ -952,12 +952,12 @@
         "type": "multiple_choice",
         "prompt": "Bessel functions of the first kind Jᵥ(x) behave near x = 0 as:",
         "options": [
-          "Jᵥ(x) ∼ x^ν for small x",
           "Jᵥ(x) ∼ ln(x) for small x",
           "Jᵥ(x) ∼ 1/x^ν for small x",
-          "Jᵥ(x) ∼ e^x for small x"
+          "Jᵥ(x) ∼ e^x for small x",
+          "Jᵥ(x) ∼ x^ν for small x"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Near x = 0, Jᵥ(x) ∼ (x/2)^ν / Γ(ν + 1), so Jᵥ(x) behaves like x^ν for small x."
       },
       {
@@ -965,12 +965,12 @@
         "type": "multiple_choice",
         "prompt": "The Bessel function of the second kind Yᵥ(x) (also called Neumann function):",
         "options": [
-          "Is singular at x = 0",
-          "Is regular at x = 0",
           "Equals Jᵥ(x)",
-          "Is only defined for integer ν"
+          "Is only defined for integer ν",
+          "Is singular at x = 0",
+          "Is regular at x = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Yᵥ(x) is singular (unbounded) at x = 0, typically behaving like ln(x) or 1/x^ν near the origin."
       },
       {
@@ -978,12 +978,12 @@
         "type": "multiple_choice",
         "prompt": "The logistic equation for population growth is:",
         "options": [
-          "dP/dt = rP(1 - P/K)",
           "dP/dt = rP",
           "dP/dt = r(K - P)",
-          "dP/dt = rP + K"
+          "dP/dt = rP + K",
+          "dP/dt = rP(1 - P/K)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The logistic equation is dP/dt = rP(1 - P/K), where r is growth rate and K is carrying capacity. Growth slows as P approaches K."
       },
       {
@@ -991,12 +991,12 @@
         "type": "multiple_choice",
         "prompt": "In the logistic model dP/dt = rP(1 - P/K), the carrying capacity is:",
         "options": [
+          "r/K",
           "K",
           "r",
-          "rK",
-          "r/K"
+          "rK"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "K is the carrying capacity, the maximum sustainable population. As P → K, dP/dt → 0."
       },
       {
@@ -1004,12 +1004,12 @@
         "type": "multiple_choice",
         "prompt": "The simple exponential growth model dP/dt = rP has solution:",
         "options": [
-          "P(t) = P₀e^(rt)",
           "P(t) = P₀(1 + rt)",
           "P(t) = P₀/(1 + e^(-rt))",
-          "P(t) = K(1 - e^(-rt))"
+          "P(t) = K(1 - e^(-rt))",
+          "P(t) = P₀e^(rt)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The exponential model dP/dt = rP has solution P(t) = P₀e^(rt), showing unlimited exponential growth."
       },
       {
@@ -1017,12 +1017,12 @@
         "type": "multiple_choice",
         "prompt": "For a series RLC circuit, the DE for charge Q is:",
         "options": [
-          "L(d²Q/dt²) + R(dQ/dt) + Q/C = E(t)",
-          "L(dQ/dt) + RQ + Q/C = E(t)",
           "L(d²Q/dt²) + R(dQ/dt) + CQ = E(t)",
-          "LQ + R(dQ/dt) + Q/C = E(t)"
+          "LQ + R(dQ/dt) + Q/C = E(t)",
+          "L(d²Q/dt²) + R(dQ/dt) + Q/C = E(t)",
+          "L(dQ/dt) + RQ + Q/C = E(t)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Kirchhoff's voltage law gives L(d²Q/dt²) + R(dQ/dt) + Q/C = E(t), where L is inductance, R is resistance, C is capacitance, E(t) is voltage."
       },
       {
@@ -1030,12 +1030,12 @@
         "type": "multiple_choice",
         "prompt": "In an RLC circuit, the current I is related to charge Q by:",
         "options": [
-          "I = dQ/dt",
           "I = Q",
           "I = d²Q/dt²",
-          "I = ∫Q dt"
+          "I = ∫Q dt",
+          "I = dQ/dt"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Current is the rate of change of charge: I = dQ/dt."
       },
       {
@@ -1043,12 +1043,12 @@
         "type": "multiple_choice",
         "prompt": "An LC circuit (R = 0) with no external voltage exhibits:",
         "options": [
+          "Constant charge",
           "Simple harmonic oscillation",
           "Exponential decay",
-          "Exponential growth",
-          "Constant charge"
+          "Exponential growth"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "With R = 0 and E = 0, the equation becomes L(d²Q/dt²) + Q/C = 0, giving oscillatory solutions (simple harmonic motion)."
       },
       {
@@ -1056,12 +1056,12 @@
         "type": "multiple_choice",
         "prompt": "Overdamping in an RLC circuit occurs when:",
         "options": [
-          "R² > 4L/C",
           "R² < 4L/C",
           "R² = 4L/C",
-          "R = 0"
+          "R = 0",
+          "R² > 4L/C"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The characteristic equation gives distinct real roots (overdamping) when R² > 4L/C, causing the circuit to return to equilibrium without oscillating."
       },
       {
@@ -1082,12 +1082,12 @@
         "type": "multiple_choice",
         "prompt": "Euler's method for solving dy/dx = f(x, y) uses the approximation:",
         "options": [
-          "yₙ₊₁ = yₙ + h·f(xₙ, yₙ)",
           "yₙ₊₁ = yₙ + h·f(xₙ₊₁, yₙ₊₁)",
           "yₙ₊₁ = yₙ + h²·f(xₙ, yₙ)",
-          "yₙ₊₁ = yₙ·f(xₙ, yₙ)"
+          "yₙ₊₁ = yₙ·f(xₙ, yₙ)",
+          "yₙ₊₁ = yₙ + h·f(xₙ, yₙ)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Euler's method: yₙ₊₁ = yₙ + h·f(xₙ, yₙ), where h is step size. This approximates the solution using the tangent line."
       },
       {
@@ -1095,12 +1095,12 @@
         "type": "multiple_choice",
         "prompt": "The improved Euler method (Heun's method) is:",
         "options": [
-          "A second-order Runge-Kutta method",
-          "The same as standard Euler method",
           "A fourth-order method",
-          "Only applicable to linear DEs"
+          "Only applicable to linear DEs",
+          "A second-order Runge-Kutta method",
+          "The same as standard Euler method"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The improved Euler (Heun's) method is a second-order Runge-Kutta method, using a predictor-corrector approach for better accuracy."
       },
       {
@@ -1108,12 +1108,12 @@
         "type": "multiple_choice",
         "prompt": "The classical fourth-order Runge-Kutta method (RK4) uses how many evaluations of f per step?",
         "options": [
-          "4",
           "2",
           "1",
-          "8"
+          "8",
+          "4"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "RK4 uses four evaluations of f (denoted k₁, k₂, k₃, k₄) per step to achieve fourth-order accuracy."
       },
       {
@@ -1121,12 +1121,12 @@
         "type": "multiple_choice",
         "prompt": "The local truncation error of Euler's method is:",
         "options": [
-          "O(h²)",
-          "O(h)",
           "O(h³)",
-          "O(h⁴)"
+          "O(h⁴)",
+          "O(h²)",
+          "O(h)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Euler's method has local truncation error O(h²) and global error O(h), where h is the step size."
       },
       {
@@ -1134,12 +1134,12 @@
         "type": "multiple_choice",
         "prompt": "Compared to Euler's method, RK4 is:",
         "options": [
-          "More accurate but requires more computation per step",
           "Less accurate but faster",
           "Equally accurate with same computational cost",
-          "Only applicable to second-order DEs"
+          "Only applicable to second-order DEs",
+          "More accurate but requires more computation per step"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "RK4 has O(h⁴) local error vs. O(h²) for Euler, but requires 4 function evaluations per step instead of 1."
       },
       {
@@ -1147,12 +1147,12 @@
         "type": "multiple_choice",
         "prompt": "For the DE y'' + p(x)y' + q(x)y = 0, if y₁ is a known solution, the second solution can be found using:",
         "options": [
+          "Power series only",
           "Reduction of order: y₂ = v(x)y₁",
           "Separation of variables",
-          "Laplace transforms",
-          "Power series only"
+          "Laplace transforms"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Reduction of order assumes y₂ = v(x)y₁, substitutes into the DE, and solves for v(x) to find the second linearly independent solution."
       },
       {
@@ -1160,12 +1160,12 @@
         "type": "multiple_choice",
         "prompt": "The Dirac delta function δ(t - a) satisfies:",
         "options": [
-          "∫₀^∞ δ(t - a)f(t) dt = f(a) for a > 0",
           "δ(t - a) = 0 for all t",
           "∫₀^∞ δ(t - a) dt = 0",
-          "δ(t - a) = 1 for all t"
+          "δ(t - a) = 1 for all t",
+          "∫₀^∞ δ(t - a)f(t) dt = f(a) for a > 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The Dirac delta has the sifting property: ∫₀^∞ δ(t - a)f(t) dt = f(a). Its Laplace transform is L{δ(t - a)} = e^(-as)."
       },
       {
@@ -1173,12 +1173,12 @@
         "type": "multiple_choice",
         "prompt": "A predator-prey model (Lotka-Volterra) is an example of:",
         "options": [
-          "A system of nonlinear first-order DEs",
-          "A single second-order linear DE",
           "A separable equation",
-          "An exact equation"
+          "An exact equation",
+          "A system of nonlinear first-order DEs",
+          "A single second-order linear DE"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The Lotka-Volterra equations form a system of two coupled nonlinear first-order DEs modeling predator and prey populations."
       },
       {
@@ -1186,12 +1186,12 @@
         "type": "multiple_choice",
         "prompt": "The method of Frobenius is used when:",
         "options": [
-          "The DE has a regular singular point",
           "The DE has constant coefficients",
           "The DE is first-order",
-          "The DE is linear with ordinary points everywhere"
+          "The DE is linear with ordinary points everywhere",
+          "The DE has a regular singular point"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Frobenius method is specifically designed for DEs with regular singular points, where standard power series may fail."
       },
       {
@@ -1212,12 +1212,12 @@
         "type": "multiple_choice",
         "prompt": "For a stable node in a phase portrait, the eigenvalues must be:",
         "options": [
-          "Real and both negative",
           "Real and both positive",
           "Complex with positive real part",
-          "Pure imaginary"
+          "Pure imaginary",
+          "Real and both negative"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A stable node occurs when both eigenvalues are real and negative, causing all trajectories to approach the equilibrium point."
       },
       {
@@ -1225,12 +1225,12 @@
         "type": "multiple_choice",
         "prompt": "A center (neutrally stable) occurs when eigenvalues are:",
         "options": [
-          "Pure imaginary (λ = ±bi)",
           "Real and positive",
           "Real and negative",
-          "Complex with nonzero real part"
+          "Complex with nonzero real part",
+          "Pure imaginary (λ = ±bi)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A center occurs with purely imaginary eigenvalues λ = ±bi, creating closed elliptical trajectories around the equilibrium (neutrally stable)."
       }
     ]
