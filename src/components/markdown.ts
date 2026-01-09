@@ -319,6 +319,7 @@ export function extractPlainText(markdown: string): string {
 
 /**
  * Generate a table of contents from markdown headers.
+ * Ignores headings inside fenced code blocks (``` or ~~~).
  * @internal Not currently used - available for future features
  */
 export function generateTableOfContents(markdown: string): Array<{
@@ -329,8 +330,28 @@ export function generateTableOfContents(markdown: string): Array<{
   const toc: Array<{ level: number; text: string; id: string }> = [];
   const lines = markdown.split('\n');
   const idCounts: Record<string, number> = {};
+  let inCodeBlock = false;
+  let codeBlockDelimiter = '';
 
   lines.forEach((line) => {
+    // Check for code block start/end (``` or ~~~)
+    const codeBlockMatch = line.match(/^(```|~~~)/);
+    if (codeBlockMatch) {
+      if (!inCodeBlock) {
+        inCodeBlock = true;
+        codeBlockDelimiter = codeBlockMatch[1];
+      } else if (line.startsWith(codeBlockDelimiter)) {
+        inCodeBlock = false;
+        codeBlockDelimiter = '';
+      }
+      return;
+    }
+
+    // Skip lines inside code blocks
+    if (inCodeBlock) {
+      return;
+    }
+
     const match = line.match(/^(#{1,6})\s+(.+)$/);
     if (match) {
       const level = match[1].length;

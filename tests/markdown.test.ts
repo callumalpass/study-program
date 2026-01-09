@@ -494,6 +494,99 @@ This is not a header # just has hash
       const uniqueIds = new Set(ids);
       expect(uniqueIds.size).toBe(10);
     });
+
+    it('ignores headings inside backtick code blocks', () => {
+      const markdown = `# Real Title
+\`\`\`python
+# This is a Python comment, not a heading
+def foo():
+    pass
+\`\`\`
+## Real Section`;
+      const result = generateTableOfContents(markdown);
+      expect(result).toHaveLength(2);
+      expect(result[0].text).toBe('Real Title');
+      expect(result[1].text).toBe('Real Section');
+    });
+
+    it('ignores headings inside tilde code blocks', () => {
+      const markdown = `# Title
+~~~bash
+# Shell comment
+echo "hello"
+~~~
+## Section`;
+      const result = generateTableOfContents(markdown);
+      expect(result).toHaveLength(2);
+      expect(result[0].text).toBe('Title');
+      expect(result[1].text).toBe('Section');
+    });
+
+    it('handles multiple code blocks correctly', () => {
+      const markdown = `# Introduction
+\`\`\`
+# Code block 1
+\`\`\`
+## Section 1
+\`\`\`python
+# Code block 2
+## Not a heading
+\`\`\`
+## Section 2`;
+      const result = generateTableOfContents(markdown);
+      expect(result).toHaveLength(3);
+      expect(result[0].text).toBe('Introduction');
+      expect(result[1].text).toBe('Section 1');
+      expect(result[2].text).toBe('Section 2');
+    });
+
+    it('handles code blocks with language specifiers', () => {
+      const markdown = `# Title
+\`\`\`javascript
+// # Not a heading
+const x = 1;
+\`\`\`
+## Real Heading`;
+      const result = generateTableOfContents(markdown);
+      expect(result).toHaveLength(2);
+      expect(result[0].text).toBe('Title');
+      expect(result[1].text).toBe('Real Heading');
+    });
+
+    it('returns empty when only headings are inside code blocks', () => {
+      const markdown = `Some text
+\`\`\`
+# Not a heading
+## Also not
+\`\`\`
+More text`;
+      const result = generateTableOfContents(markdown);
+      expect(result).toEqual([]);
+    });
+
+    it('handles nested backticks vs tildes correctly', () => {
+      const markdown = `# Title
+\`\`\`markdown
+~~~
+# Nested code
+~~~
+\`\`\`
+## Section`;
+      const result = generateTableOfContents(markdown);
+      expect(result).toHaveLength(2);
+      expect(result[0].text).toBe('Title');
+      expect(result[1].text).toBe('Section');
+    });
+
+    it('handles unclosed code blocks by skipping rest of content', () => {
+      const markdown = `# Title
+\`\`\`
+# In code block
+## Still in code block`;
+      const result = generateTableOfContents(markdown);
+      expect(result).toHaveLength(1);
+      expect(result[0].text).toBe('Title');
+    });
   });
 
   describe('extractPlainText', () => {
