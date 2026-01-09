@@ -1,14 +1,16 @@
 // Shared utilities for assessment pages
 import { navigateToSubject } from '@/core/router';
+import { escapeHtml } from '@/utils/html';
 
 /**
  * Render not found page
  */
 export function renderNotFound(container: HTMLElement, itemType: string, subjectId: string): void {
+  const safeItemType = escapeHtml(itemType);
   container.innerHTML = `
     <div class="error-page">
-      <h1>${itemType} Not Found</h1>
-      <p>The ${itemType.toLowerCase()} you're looking for doesn't exist.</p>
+      <h1>${safeItemType} Not Found</h1>
+      <p>The ${safeItemType.toLowerCase()} you're looking for doesn't exist.</p>
       <button class="btn btn-primary" id="back-to-subject">Back to Subject</button>
     </div>
   `;

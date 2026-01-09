@@ -228,13 +228,35 @@ describe('assessment-utils', () => {
       expect(paragraph?.textContent).toBe("The  you're looking for doesn't exist.");
     });
 
-    it('handles item type with special characters', () => {
-      renderNotFound(container, 'Quiz<script>', 'cs101');
+    it('escapes HTML in item type to prevent XSS', () => {
+      renderNotFound(container, '<script>alert("xss")</script>', 'cs101');
 
-      // The innerHTML assignment will escape special characters in modern browsers
-      // but we should verify the element still renders
       const heading = container.querySelector('h1');
       expect(heading).not.toBeNull();
+      // Verify the script tag is escaped, not executed
+      expect(heading?.textContent).toContain('<script>');
+      expect(heading?.textContent).toContain('</script>');
+      // Verify no actual script element was created
+      expect(container.querySelector('script')).toBeNull();
+    });
+
+    it('escapes HTML special characters in item type', () => {
+      renderNotFound(container, 'Quiz<img src=x onerror=alert(1)>', 'cs101');
+
+      const heading = container.querySelector('h1');
+      expect(heading).not.toBeNull();
+      // Verify the img tag is escaped
+      expect(heading?.textContent).toContain('<img');
+      // Verify no actual img element was created
+      expect(container.querySelector('img')).toBeNull();
+    });
+
+    it('escapes ampersands and quotes in item type', () => {
+      renderNotFound(container, 'Test & "quoted"', 'cs101');
+
+      const heading = container.querySelector('h1');
+      expect(heading).not.toBeNull();
+      expect(heading?.textContent).toBe('Test & "quoted" Not Found');
     });
 
     it('handles empty subject ID', () => {
