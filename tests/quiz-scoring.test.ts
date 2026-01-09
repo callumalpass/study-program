@@ -10,64 +10,13 @@
 
 import { describe, it, expect } from 'vitest';
 import type { QuizQuestion, QuizAnswer, CodingAnswer, Quiz } from '@/core/types';
-
-// Helper functions mirroring Quiz.tsx implementation
-function normalizeAnswer(value: string | number | boolean | undefined): string {
-  if (value === undefined) return '';
-  return String(value).trim().toLowerCase();
-}
-
-function isCodingAnswer(answer: QuizAnswer | undefined): answer is CodingAnswer {
-  return typeof answer === 'object' && answer !== null && 'code' in answer;
-}
-
-function getCorrectOptionIndex(question: QuizQuestion): number {
-  const correctAnswer = question.correctAnswer;
-  if (typeof correctAnswer === 'number') {
-    return correctAnswer;
-  }
-  if (typeof correctAnswer === 'string' && question.options) {
-    const index = question.options.indexOf(correctAnswer);
-    if (index !== -1) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-function checkAnswer(question: QuizQuestion, answer: QuizAnswer | undefined): boolean {
-  if (answer === undefined) return false;
-
-  switch (question.type) {
-    case 'multiple_choice': {
-      const correctIndex = getCorrectOptionIndex(question);
-      return answer === correctIndex;
-    }
-    case 'true_false':
-      return answer === question.correctAnswer;
-    case 'fill_blank':
-    case 'code_output':
-    case 'written': {
-      const textAnswer = typeof answer === 'string' ? answer : '';
-      return normalizeAnswer(textAnswer) === normalizeAnswer(question.correctAnswer);
-    }
-    case 'coding':
-      return isCodingAnswer(answer) && answer.passed === true;
-    default:
-      return false;
-  }
-}
-
-function calculateScore(questions: QuizQuestion[], answers: Record<string, QuizAnswer>): number {
-  if (questions.length === 0) return 0;
-  let correct = 0;
-  questions.forEach((question) => {
-    if (checkAnswer(question, answers[question.id])) {
-      correct++;
-    }
-  });
-  return Math.round((correct / questions.length) * 100);
-}
+import {
+  normalizeAnswer,
+  isCodingAnswer,
+  getCorrectOptionIndex,
+  checkAnswer,
+  calculateScore,
+} from '@/utils/quiz-utils';
 
 // Test helper to create quiz questions
 const createMultipleChoice = (id: string, correctAnswer: number | string, options = ['A', 'B', 'C', 'D']): QuizQuestion => ({
