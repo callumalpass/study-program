@@ -551,3 +551,132 @@ describe('real-world scenarios', () => {
     expect(checkAnswer(question, 'HELLO\nHELLO')).toBe(true);
   });
 });
+
+describe('numeric answer handling', () => {
+  describe('code_output with numeric answers', () => {
+    it('accepts numeric user input matching string correct answer', () => {
+      // Correct answer is "42" as a string, but user provides 42 as a number
+      const question = createCodeOutput('q1', '42');
+      expect(checkAnswer(question, 42)).toBe(true);
+    });
+
+    it('accepts string user input matching string correct answer', () => {
+      const question = createCodeOutput('q1', '42');
+      expect(checkAnswer(question, '42')).toBe(true);
+    });
+
+    it('handles floating point answers', () => {
+      const question = createCodeOutput('q1', '3.14');
+      expect(checkAnswer(question, 3.14)).toBe(true);
+      expect(checkAnswer(question, '3.14')).toBe(true);
+    });
+
+    it('handles negative numbers', () => {
+      const question = createCodeOutput('q1', '-5');
+      expect(checkAnswer(question, -5)).toBe(true);
+      expect(checkAnswer(question, '-5')).toBe(true);
+    });
+
+    it('handles zero', () => {
+      const question = createCodeOutput('q1', '0');
+      expect(checkAnswer(question, 0)).toBe(true);
+      expect(checkAnswer(question, '0')).toBe(true);
+    });
+
+    it('rejects numeric mismatches', () => {
+      const question = createCodeOutput('q1', '42');
+      expect(checkAnswer(question, 43)).toBe(false);
+      expect(checkAnswer(question, '43')).toBe(false);
+    });
+  });
+
+  describe('fill_blank with numeric answers', () => {
+    it('accepts numeric user input matching string correct answer', () => {
+      const question = createFillBlank('q1', '100');
+      expect(checkAnswer(question, 100)).toBe(true);
+    });
+
+    it('handles floating point in fill_blank', () => {
+      const question = createFillBlank('q1', '2.5');
+      expect(checkAnswer(question, 2.5)).toBe(true);
+      expect(checkAnswer(question, '2.5')).toBe(true);
+    });
+
+    it('handles math quiz numeric answers', () => {
+      // Typical math quiz question: "What is 5 + 3?"
+      const question = createFillBlank('q1', '8');
+      expect(checkAnswer(question, 8)).toBe(true);
+      expect(checkAnswer(question, '8')).toBe(true);
+      expect(checkAnswer(question, '  8  ')).toBe(true);
+    });
+  });
+});
+
+describe('multiple choice bounds checking', () => {
+  it('returns false for out-of-bounds positive index', () => {
+    const question = createMultipleChoice('q1', 0, ['A', 'B', 'C']);
+    expect(checkAnswer(question, 10)).toBe(false);
+    expect(checkAnswer(question, 3)).toBe(false);
+  });
+
+  it('returns false for negative index', () => {
+    const question = createMultipleChoice('q1', 0, ['A', 'B', 'C']);
+    expect(checkAnswer(question, -1)).toBe(false);
+    expect(checkAnswer(question, -999)).toBe(false);
+  });
+
+  it('handles question with empty options array', () => {
+    const question = createMultipleChoice('q1', 0, []);
+    expect(checkAnswer(question, 0)).toBe(false);
+    expect(getCorrectOptionIndex(question)).toBe(-1);
+  });
+
+  it('handles question with out-of-bounds correct answer', () => {
+    const question = createMultipleChoice('q1', 10, ['A', 'B', 'C']);
+    // The correct answer index is invalid, so no answer can be correct
+    expect(checkAnswer(question, 0)).toBe(false);
+    expect(checkAnswer(question, 10)).toBe(false);
+    expect(getCorrectOptionIndex(question)).toBe(-1);
+  });
+
+  it('handles negative correct answer index', () => {
+    const question = createMultipleChoice('q1', -1, ['A', 'B', 'C']);
+    expect(checkAnswer(question, 0)).toBe(false);
+    expect(getCorrectOptionIndex(question)).toBe(-1);
+  });
+});
+
+describe('edge cases for answer normalization', () => {
+  it('handles boolean answers to fill_blank questions', () => {
+    const questionTrue = createFillBlank('q1', 'true');
+    const questionFalse = createFillBlank('q2', 'false');
+
+    // Boolean true should match string "true"
+    expect(checkAnswer(questionTrue, true)).toBe(true);
+    expect(checkAnswer(questionFalse, false)).toBe(true);
+  });
+
+  it('handles scientific notation', () => {
+    const question = createCodeOutput('q1', '1e10');
+    // Note: JavaScript's String(1e10) = "10000000000", not "1e10"
+    // This test documents expected behavior
+    expect(checkAnswer(question, '1e10')).toBe(true);
+  });
+
+  it('handles very large numbers', () => {
+    const question = createCodeOutput('q1', '999999999999');
+    expect(checkAnswer(question, 999999999999)).toBe(true);
+  });
+
+  it('handles answers with special characters preserved', () => {
+    const question = createCodeOutput('q1', '[1, 2, 3]');
+    expect(checkAnswer(question, '[1, 2, 3]')).toBe(true);
+    expect(checkAnswer(question, '[1,2,3]')).toBe(false); // Different spacing matters
+  });
+
+  it('handles empty code_output answer', () => {
+    const question = createCodeOutput('q1', '');
+    expect(checkAnswer(question, '')).toBe(true);
+    expect(checkAnswer(question, '   ')).toBe(true);
+  });
+});
