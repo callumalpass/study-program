@@ -68,7 +68,7 @@ export function calculateSubjectCompletion(
     // Count quizzes
     topic.quizIds.forEach(quizId => {
       totalItems++;
-      const attempts = progress.quizAttempts[quizId];
+      const attempts = progress.quizAttempts?.[quizId];
       // Consider quiz completed if best score meets passing threshold
       if (attempts && attempts.length > 0 && isScorePassing(getBestScore(attempts))) {
         completedItems++;
@@ -78,7 +78,7 @@ export function calculateSubjectCompletion(
     // Count exercises
     topic.exerciseIds.forEach(exerciseId => {
       totalItems++;
-      const completion = progress.exerciseCompletions[exerciseId];
+      const completion = progress.exerciseCompletions?.[exerciseId];
       // Consider exercise completed if passed
       if (completion?.passed) {
         completedItems++;
@@ -382,7 +382,7 @@ export function getSubjectProgressDetails(subject: Subject): {
     if (progress) {
       // Count completed quizzes (passing score)
       topic.quizIds.forEach(quizId => {
-        const attempts = progress.quizAttempts[quizId];
+        const attempts = progress.quizAttempts?.[quizId];
         if (attempts && attempts.length > 0 && isScorePassing(getBestScore(attempts))) {
           quizzesCompleted++;
         }
@@ -390,7 +390,7 @@ export function getSubjectProgressDetails(subject: Subject): {
 
       // Count completed exercises
       topic.exerciseIds.forEach(exerciseId => {
-        const completion = progress.exerciseCompletions[exerciseId];
+        const completion = progress.exerciseCompletions?.[exerciseId];
         if (completion?.passed) {
           exercisesCompleted++;
         }
@@ -453,7 +453,7 @@ export function isQuizCompleted(
   progress: SubjectProgress | undefined
 ): boolean {
   if (!progress) return false;
-  const attempts = progress.quizAttempts[quizId];
+  const attempts = progress.quizAttempts?.[quizId];
   if (!attempts || attempts.length === 0) return false;
   return isScorePassing(getBestScore(attempts));
 }
@@ -466,7 +466,7 @@ export function getQuizBestScore(
   progress: SubjectProgress | undefined
 ): number | null {
   if (!progress) return null;
-  const attempts = progress.quizAttempts[quizId];
+  const attempts = progress.quizAttempts?.[quizId];
   if (!attempts || attempts.length === 0) return null;
   return getBestScore(attempts);
 }
@@ -479,7 +479,7 @@ export function isExerciseCompleted(
   progress: SubjectProgress | undefined
 ): boolean {
   if (!progress) return false;
-  const completion = progress.exerciseCompletions[exerciseId];
+  const completion = progress.exerciseCompletions?.[exerciseId];
   return completion?.passed ?? false;
 }
 

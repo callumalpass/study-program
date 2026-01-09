@@ -336,7 +336,7 @@ function calculateStats(subjects: Subject[], userProgress: UserProgress): {
     // Only count stats for subjects in the filtered list
     if (!selectedSubjectIds.has(subjectId)) return;
     // Count quizzes
-    Object.values(progress.quizAttempts).forEach((attempts: QuizAttempt[]) => {
+    Object.values(progress.quizAttempts || {}).forEach((attempts: QuizAttempt[]) => {
       if (attempts && attempts.length > 0) {
         const bestScore = Math.max(...attempts.map((a: QuizAttempt) => a.score));
         if (bestScore >= QUIZ_PASSING_SCORE) quizzesCompleted++;
@@ -350,14 +350,14 @@ function calculateStats(subjects: Subject[], userProgress: UserProgress): {
     });
 
     // Count exercises
-    Object.values(progress.exerciseCompletions).forEach((completion: ExerciseCompletion) => {
+    Object.values(progress.exerciseCompletions || {}).forEach((completion: ExerciseCompletion) => {
       if (completion && completion.passed) {
         exercisesCompleted++;
       }
     });
 
     // Count projects
-    Object.values(progress.projectSubmissions).forEach((submissions: ProjectSubmission[]) => {
+    Object.values(progress.projectSubmissions || {}).forEach((submissions: ProjectSubmission[]) => {
       if (submissions && submissions.length > 0) {
         projectsSubmitted += submissions.length;
       }
