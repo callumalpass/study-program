@@ -223,9 +223,32 @@ Line 3`;
     it('does not match hash in code blocks', () => {
       const content = '```\n# This is a comment\n```\n\n# Actual Title';
 
-      // Note: This simple regex doesn't handle code blocks, so it will find the first #
-      // This tests the actual behavior
-      expect(extractTitleFromContent(content)).toBe('This is a comment');
+      // The function properly skips code blocks and finds the real title
+      expect(extractTitleFromContent(content)).toBe('Actual Title');
+    });
+
+    it('handles tilde-fenced code blocks', () => {
+      const content = '~~~\n# Also a comment\n~~~\n\n# Real Title';
+
+      expect(extractTitleFromContent(content)).toBe('Real Title');
+    });
+
+    it('handles multiple code blocks before title', () => {
+      const content = '```python\n# Python comment\ndef foo():\n    pass\n```\n\nSome text\n\n```bash\n# Bash comment\necho "hello"\n```\n\n# The Actual Title';
+
+      expect(extractTitleFromContent(content)).toBe('The Actual Title');
+    });
+
+    it('returns null when only title is inside code block', () => {
+      const content = '```\n# Only Title Inside Code\n```\n\nNo real title here.';
+
+      expect(extractTitleFromContent(content)).toBeNull();
+    });
+
+    it('handles code blocks with language specifier', () => {
+      const content = '```python\n# Python comment\nprint("hello")\n```\n\n# Proper Title';
+
+      expect(extractTitleFromContent(content)).toBe('Proper Title');
     });
   });
 

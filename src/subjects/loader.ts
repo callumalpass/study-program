@@ -66,10 +66,14 @@ export function parseFrontmatter(markdown: string): ParsedMarkdown {
 }
 
 /**
- * Extract title from first # heading in markdown content
+ * Extract title from first # heading in markdown content.
+ * Ignores headings that appear inside fenced code blocks (``` or ~~~).
  */
 export function extractTitleFromContent(content: string): string | null {
-  const match = content.match(/^#\s+(.+)$/m);
+  // Remove fenced code blocks before searching for headings
+  // This prevents matching # comments inside code blocks
+  const contentWithoutCodeBlocks = content.replace(/^(```|~~~)[\s\S]*?^\1/gm, '');
+  const match = contentWithoutCodeBlocks.match(/^#\s+(.+)$/m);
   return match ? match[1].trim() : null;
 }
 
