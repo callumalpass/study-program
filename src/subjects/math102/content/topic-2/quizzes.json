@@ -143,10 +143,16 @@
       },
       {
         "id": "math102-q2c-3",
-        "type": "fill_blank",
-        "prompt": "For T(n) = 7T(n/2) + n², the Master Theorem gives T(n) = Θ(n^____).",
-        "correctAnswer": "log2(7)",
-        "explanation": "log_2(7) ≈ 2.81. Since f(n)=n² and log_2(7)>2, Case 1 applies."
+        "type": "multiple_choice",
+        "prompt": "For T(n) = 7T(n/2) + n², what is the asymptotic complexity using the Master Theorem?",
+        "options": [
+          "Θ(n²)",
+          "Θ(n² log n)",
+          "Θ(n^log₂(7)) ≈ Θ(n^2.81)",
+          "Θ(n³)"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Here a=7, b=2, f(n)=n². Since log_2(7) ≈ 2.81 > 2, Case 1 of the Master Theorem applies: T(n) = Θ(n^log_b(a)) = Θ(n^log₂(7))."
       },
       {
         "id": "math102-q2c-4",
