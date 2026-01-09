@@ -6,6 +6,7 @@ import { Icons } from '@/components/icons';
 import { renderMarkdown } from '@/components/markdown';
 import { renderNotFound, formatDate } from './assessment-utils';
 import { evaluateProject, type ProjectFile } from '@/utils/gemini-eval';
+import { escapeHtml } from '@/utils/html';
 
 const MAX_TOTAL_FILE_SIZE = 200 * 1024; // 200KB total limit
 
@@ -111,23 +112,23 @@ export function renderProjectPage(
             ${latestSubmission.repositoryUrl ? `
               <div class="submission-link">
                 <span class="label">Repository:</span>
-                <a href="${latestSubmission.repositoryUrl}" target="_blank" rel="noopener">${latestSubmission.repositoryUrl}</a>
+                <a href="${escapeHtml(latestSubmission.repositoryUrl)}" target="_blank" rel="noopener">${escapeHtml(latestSubmission.repositoryUrl)}</a>
               </div>
             ` : ''}
             ${latestSubmission.demoUrl ? `
               <div class="submission-link">
                 <span class="label">Demo:</span>
-                <a href="${latestSubmission.demoUrl}" target="_blank" rel="noopener">${latestSubmission.demoUrl}</a>
+                <a href="${escapeHtml(latestSubmission.demoUrl)}" target="_blank" rel="noopener">${escapeHtml(latestSubmission.demoUrl)}</a>
               </div>
             ` : ''}
             <div class="submission-description">
               <span class="label">Description:</span>
-              <p>${latestSubmission.description}</p>
+              <p>${escapeHtml(latestSubmission.description)}</p>
             </div>
             ${latestSubmission.notes ? `
               <div class="submission-notes">
                 <span class="label">Notes:</span>
-                <p>${latestSubmission.notes}</p>
+                <p>${escapeHtml(latestSubmission.notes)}</p>
               </div>
             ` : ''}
             ${latestSubmission.aiEvaluation ? renderAiEvaluation(latestSubmission.aiEvaluation, project) : ''}
@@ -206,7 +207,7 @@ function renderAiEvaluation(evaluation: ProjectAiEvaluation, project: Project): 
     <div class="ai-evaluation">
       <h3>AI Evaluation</h3>
       <div class="evaluation-feedback">
-        <p>${evaluation.feedback}</p>
+        <p>${escapeHtml(evaluation.feedback)}</p>
       </div>
 
       <div class="rubric-scores">
@@ -217,11 +218,11 @@ function renderAiEvaluation(evaluation: ProjectAiEvaluation, project: Project): 
           return `
             <div class="rubric-score-item">
               <div class="rubric-score-header">
-                <span class="criterion-name">${criterion.name}</span>
+                <span class="criterion-name">${escapeHtml(criterion.name)}</span>
                 <span class="criterion-weight">(${criterion.weight}%)</span>
-                <span class="criterion-score ${getScoreClass(score.score)}">${score.score} - ${score.level}</span>
+                <span class="criterion-score ${getScoreClass(score.score)}">${score.score} - ${escapeHtml(score.level)}</span>
               </div>
-              <p class="criterion-justification">${score.justification}</p>
+              <p class="criterion-justification">${escapeHtml(score.justification)}</p>
             </div>
           `;
         }).join('')}
@@ -231,7 +232,7 @@ function renderAiEvaluation(evaluation: ProjectAiEvaluation, project: Project): 
         <div class="evaluation-strengths">
           <h4>Strengths</h4>
           <ul>
-            ${evaluation.strengths.map(s => `<li>${s}</li>`).join('')}
+            ${evaluation.strengths.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
           </ul>
         </div>
       ` : ''}
@@ -240,7 +241,7 @@ function renderAiEvaluation(evaluation: ProjectAiEvaluation, project: Project): 
         <div class="evaluation-improvements">
           <h4>Areas for Improvement</h4>
           <ul>
-            ${evaluation.improvements.map(i => `<li>${i}</li>`).join('')}
+            ${evaluation.improvements.map(i => `<li>${escapeHtml(i)}</li>`).join('')}
           </ul>
         </div>
       ` : ''}
