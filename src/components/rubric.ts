@@ -1,4 +1,5 @@
 import type { RubricCriterion } from '@/core/types';
+import { escapeHtml } from '@/utils/html';
 
 /**
  * Render a rubric as an interactive table.
@@ -86,10 +87,10 @@ export function renderRubric(
 
       levelDiv.innerHTML = `
         <div class="level-header">
-          <span class="level-label">${level.label}</span>
+          <span class="level-label">${escapeHtml(level.label)}</span>
           <span class="level-score">${level.score} pts</span>
         </div>
-        <div class="level-description">${level.description}</div>
+        <div class="level-description">${escapeHtml(level.description)}</div>
       `;
 
       levelsContainer.appendChild(levelDiv);
@@ -190,7 +191,7 @@ export function renderInteractiveRubric(
       const criterionHeader = document.createElement('div');
       criterionHeader.className = 'criterion-header';
       criterionHeader.innerHTML = `
-        <span class="criterion-title">${criterion.name}</span>
+        <span class="criterion-title">${escapeHtml(criterion.name)}</span>
         <span class="criterion-weight">${criterion.weight}% of grade</span>
       `;
       criterionDiv.appendChild(criterionHeader);
@@ -211,10 +212,10 @@ export function renderInteractiveRubric(
 
         levelButton.innerHTML = `
           <div class="level-button-header">
-            <span class="level-label">${level.label}</span>
+            <span class="level-label">${escapeHtml(level.label)}</span>
             <span class="level-score">${level.score} pts</span>
           </div>
-          <div class="level-description">${level.description}</div>
+          <div class="level-description">${escapeHtml(level.description)}</div>
         `;
 
         levelButton.onclick = () => {

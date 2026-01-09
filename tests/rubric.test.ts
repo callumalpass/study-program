@@ -569,4 +569,106 @@ describe('renderInteractiveRubric', () => {
       expect(scoreValue?.textContent).toBe('0.0%');
     });
   });
+
+  describe('XSS prevention', () => {
+    it('escapes HTML in criterion name', () => {
+      const rubric = [
+        createCriterion('<script>alert("xss")</script>', 100, [
+          { score: 4, label: 'Good', description: 'Test' },
+        ]),
+      ];
+      renderInteractiveRubric(container, rubric);
+
+      // The script tag should be escaped, not executed
+      expect(container.innerHTML).not.toContain('<script>');
+      expect(container.innerHTML).toContain('&lt;script&gt;');
+    });
+
+    it('escapes HTML in level label', () => {
+      const rubric = [
+        createCriterion('Test', 100, [
+          { score: 4, label: '<img src=x onerror=alert(1)>', description: 'Test' },
+        ]),
+      ];
+      renderInteractiveRubric(container, rubric);
+
+      expect(container.innerHTML).not.toContain('<img src=x');
+      expect(container.innerHTML).toContain('&lt;img');
+    });
+
+    it('escapes HTML in level description', () => {
+      const rubric = [
+        createCriterion('Test', 100, [
+          { score: 4, label: 'Good', description: '<div onclick="evil()">Click me</div>' },
+        ]),
+      ];
+      renderInteractiveRubric(container, rubric);
+
+      expect(container.innerHTML).not.toContain('<div onclick');
+      expect(container.innerHTML).toContain('&lt;div onclick');
+    });
+
+    it('escapes special characters in all fields', () => {
+      const rubric = [
+        createCriterion('Name with "quotes" & <brackets>', 100, [
+          { score: 4, label: 'Label "with" <tags>', description: 'Desc & "special" <chars>' },
+        ]),
+      ];
+      renderInteractiveRubric(container, rubric);
+
+      // Check that angle brackets and ampersands are escaped
+      const html = container.innerHTML;
+      expect(html).toContain('&amp;');
+      expect(html).toContain('&lt;');
+      expect(html).toContain('&gt;');
+      // The content should be safely displayed as text
+      expect(container.textContent).toContain('Name with "quotes" & <brackets>');
+      expect(container.textContent).toContain('Label "with" <tags>');
+    });
+  });
+});
+
+describe('renderRubric XSS prevention', () => {
+  let container: HTMLElement;
+
+  beforeEach(() => {
+    container = document.createElement('div');
+  });
+
+  it('escapes HTML in level label', () => {
+    const rubric = [
+      createCriterion('Test', 100, [
+        { score: 4, label: '<script>alert("xss")</script>', description: 'Test' },
+      ]),
+    ];
+    renderRubric(container, rubric);
+
+    expect(container.innerHTML).not.toContain('<script>');
+    expect(container.innerHTML).toContain('&lt;script&gt;');
+  });
+
+  it('escapes HTML in level description', () => {
+    const rubric = [
+      createCriterion('Test', 100, [
+        { score: 4, label: 'Good', description: '<img src=x onerror=alert(1)>' },
+      ]),
+    ];
+    renderRubric(container, rubric);
+
+    expect(container.innerHTML).not.toContain('<img src=x');
+    expect(container.innerHTML).toContain('&lt;img');
+  });
+
+  it('preserves content after escaping', () => {
+    const rubric = [
+      createCriterion('Test Criterion', 100, [
+        { score: 4, label: 'Good & Great', description: 'Uses < and > comparisons' },
+      ]),
+    ];
+    renderRubric(container, rubric);
+
+    // Content should be visible as text
+    expect(container.textContent).toContain('Good & Great');
+    expect(container.textContent).toContain('Uses < and > comparisons');
+  });
 });
