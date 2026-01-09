@@ -2,6 +2,28 @@ import { describe, expect, it } from 'vitest';
 import { escapeHtml } from '../src/utils/html';
 
 describe('escapeHtml', () => {
+  describe('null and undefined handling', () => {
+    it('returns empty string for null', () => {
+      expect(escapeHtml(null)).toBe('');
+    });
+
+    it('returns empty string for undefined', () => {
+      expect(escapeHtml(undefined)).toBe('');
+    });
+
+    it('handles null passed through type coercion', () => {
+      // Simulate runtime type coercion scenarios
+      const value: string | null = null;
+      expect(escapeHtml(value)).toBe('');
+    });
+
+    it('handles undefined passed through type coercion', () => {
+      // Simulate runtime type coercion scenarios
+      const value: string | undefined = undefined;
+      expect(escapeHtml(value)).toBe('');
+    });
+  });
+
   it('escapes HTML special characters including quotes', () => {
     const input = '<div>"Hello" & \'World\'</div>';
     const output = escapeHtml(input);
