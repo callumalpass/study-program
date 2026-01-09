@@ -223,10 +223,16 @@
       },
       {
         "id": "math204-mid-q21",
-        "type": "fill_blank",
-        "prompt": "The volume of a solid of revolution obtained by rotating $y = f(x)$ about the x-axis from $a$ to $b$ using the disk method is $V = $ ____.",
-        "correctAnswer": "∫[a to b] π[f(x)]² dx",
-        "explanation": "Disk method: $V = \\int_a^b \\pi [f(x)]^2 \\, dx$."
+        "type": "multiple_choice",
+        "prompt": "The volume of a solid of revolution obtained by rotating $y = f(x)$ about the x-axis from $a$ to $b$ using the disk method is:",
+        "options": [
+          "$\\int_a^b \\pi [f(x)]^2 \\, dx$",
+          "$\\int_a^b 2\\pi x f(x) \\, dx$",
+          "$\\int_a^b \\pi f(x) \\, dx$",
+          "$\\int_a^b [f(x)]^2 \\, dx$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Disk method: $V = \\int_a^b \\pi [f(x)]^2 \\, dx$. The cross-sectional area of each disk is $\\pi r^2 = \\pi[f(x)]^2$."
       },
       {
         "id": "math204-mid-q22",
@@ -312,10 +318,16 @@
       },
       {
         "id": "math204-final-q2",
-        "type": "fill_blank",
-        "prompt": "$\\int \\frac{1}{x^2+9} \\, dx = $ ____.",
-        "correctAnswer": "(1/3)arctan(x/3) + C",
-        "explanation": "Use the formula $\\int \\frac{1}{x^2+a^2} \\, dx = \\frac{1}{a}\\arctan(\\frac{x}{a}) + C$ with $a = 3$."
+        "type": "multiple_choice",
+        "prompt": "$\\int \\frac{1}{x^2+9} \\, dx = $",
+        "options": [
+          "$\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right) + C$",
+          "$\\arctan(x) + C$",
+          "$\\frac{1}{9}\\arctan(x) + C$",
+          "$\\ln|x^2+9| + C$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Use the formula $\\int \\frac{1}{x^2+a^2} \\, dx = \\frac{1}{a}\\arctan\\left(\\frac{x}{a}\\right) + C$ with $a = 3$."
       },
       {
         "id": "math204-final-q3",
@@ -365,10 +377,16 @@
       },
       {
         "id": "math204-final-q7",
-        "type": "fill_blank",
-        "prompt": "If $f$ is even, then $\\int_{-a}^a f(x) \\, dx = $ ____.",
-        "correctAnswer": "2∫[0 to a] f(x) dx",
-        "explanation": "For even functions: $\\int_{-a}^a f(x) \\, dx = 2\\int_0^a f(x) \\, dx$."
+        "type": "multiple_choice",
+        "prompt": "If $f$ is even, then $\\int_{-a}^a f(x) \\, dx = $",
+        "options": [
+          "$2\\int_0^a f(x) \\, dx$",
+          "$0$",
+          "$\\int_0^a f(x) \\, dx$",
+          "$\\int_{-a}^0 f(x) \\, dx$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "For even functions ($f(-x) = f(x)$), the area from $-a$ to $0$ equals the area from $0$ to $a$, so $\\int_{-a}^a f(x) \\, dx = 2\\int_0^a f(x) \\, dx$."
       },
       {
         "id": "math204-final-q8",
@@ -418,10 +436,16 @@
       },
       {
         "id": "math204-final-q12",
-        "type": "fill_blank",
-        "prompt": "For $\\int \\sqrt{x^2 - 25} \\, dx$, the appropriate trig substitution is $x = $ ____.",
-        "correctAnswer": "5sec(θ)",
-        "explanation": "For $\\sqrt{x^2 - a^2}$, use $x = a\\sec\\theta$. Here $a = 5$."
+        "type": "multiple_choice",
+        "prompt": "For $\\int \\sqrt{x^2 - 25} \\, dx$, the appropriate trigonometric substitution is $x = $",
+        "options": [
+          "$5\\sec\\theta$",
+          "$5\\sin\\theta$",
+          "$5\\tan\\theta$",
+          "$5\\cos\\theta$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "For $\\sqrt{x^2 - a^2}$, use $x = a\\sec\\theta$ because $\\sec^2\\theta - 1 = \\tan^2\\theta$. Here $a = 5$."
       },
       {
         "id": "math204-final-q13",
@@ -479,10 +503,16 @@
       },
       {
         "id": "math204-final-q18",
-        "type": "fill_blank",
-        "prompt": "The washer method formula for volume when rotating about the x-axis with outer radius $R(x)$ and inner radius $r(x)$ is $V = $ ____.",
-        "correctAnswer": "∫[a to b] π([R(x)]² - [r(x)]²) dx",
-        "explanation": "Washer method: $V = \\int_a^b \\pi([R(x)]^2 - [r(x)]^2) \\, dx$."
+        "type": "multiple_choice",
+        "prompt": "The washer method formula for volume when rotating about the x-axis with outer radius $R(x)$ and inner radius $r(x)$ is $V = $",
+        "options": [
+          "$\\int_a^b \\pi([R(x)]^2 - [r(x)]^2) \\, dx$",
+          "$\\int_a^b \\pi(R(x) - r(x))^2 \\, dx$",
+          "$\\int_a^b 2\\pi x(R(x) - r(x)) \\, dx$",
+          "$\\int_a^b \\pi R(x) r(x) \\, dx$"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Washer method: $V = \\int_a^b \\pi([R(x)]^2 - [r(x)]^2) \\, dx$. This is the difference of two disk areas."
       },
       {
         "id": "math204-final-q19",
