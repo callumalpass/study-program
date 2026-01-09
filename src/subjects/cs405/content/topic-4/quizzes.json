@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which component is the Kubernetes control plane's API server?",
         "options": [
+          "etcd",
           "kubelet",
-          "kube-apiserver",
           "kube-scheduler",
-          "etcd"
+          "kube-apiserver"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "kube-apiserver is the front-end of the Kubernetes control plane, exposing the Kubernetes API. All operations go through the API server."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What is the role of kubelet?",
         "options": [
+          "Schedules pods to nodes",
           "Manages the API server",
           "Runs on worker nodes and manages pods",
-          "Stores cluster state",
-          "Schedules pods to nodes"
+          "Stores cluster state"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "kubelet is an agent that runs on each worker node. It ensures containers are running in a Pod and reports node and pod status back to the control plane."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Which Kubernetes object stores cluster state?",
         "options": [
+          "kube-proxy",
           "kube-apiserver",
-          "etcd",
           "kube-controller-manager",
-          "kube-proxy"
+          "etcd"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "etcd is a consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data. It's the source of truth for the cluster."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary purpose of a Kubernetes Deployment?",
         "options": [
-          "Expose applications to the network",
-          "Manage stateful applications",
           "Provide declarative updates for Pods and ReplicaSets",
-          "Store configuration data"
+          "Store configuration data",
+          "Expose applications to the network",
+          "Manage stateful applications"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Deployments provide declarative updates for Pods and ReplicaSets. They manage rolling updates, rollbacks, and scaling of applications."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "Which Service type exposes the Service on a static port on each node?",
         "options": [
-          "ClusterIP",
           "NodePort",
           "LoadBalancer",
-          "ExternalName"
+          "ExternalName",
+          "ClusterIP"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "NodePort exposes the Service on a static port (30000-32767) on each node's IP. External traffic can access the Service via <NodeIP>:<NodePort>."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What happens when you update a Deployment with a new image?",
         "options": [
-          "All Pods are deleted and recreated simultaneously",
-          "Pods are updated one at a time with zero downtime",
+          "Nothing happens automatically",
           "The Deployment is deleted and recreated",
-          "Nothing happens automatically"
+          "Pods are updated one at a time with zero downtime",
+          "All Pods are deleted and recreated simultaneously"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Deployments perform rolling updates by default, gradually replacing Pods with the new version. This ensures zero downtime during updates."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "Which kubectl command scales a Deployment to 5 replicas?",
         "options": [
-          "kubectl scale deployment myapp --replicas=5",
-          "kubectl set replicas myapp 5",
+          "kubectl update deployment myapp --size=5",
           "kubectl resize deployment myapp 5",
-          "kubectl update deployment myapp --size=5"
+          "kubectl scale deployment myapp --replicas=5",
+          "kubectl set replicas myapp 5"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "kubectl scale deployment <name> --replicas=<count> scales a Deployment. For example: kubectl scale deployment myapp --replicas=5"
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "What is a StatefulSet used for?",
         "options": [
-          "Stateless applications",
           "Managing stateful applications with stable network identities",
-          "Batch jobs",
-          "One-off tasks"
+          "One-off tasks",
+          "Stateless applications",
+          "Batch jobs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "StatefulSets manage stateful applications requiring stable network identities, persistent storage, and ordered deployment/scaling (databases, distributed systems)."
       },
       {

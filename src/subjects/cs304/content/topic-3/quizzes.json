@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is a synthesized attribute?",
         "options": [
-          "Computed from parent nodes",
           "Computed from child nodes",
           "Always constant",
+          "Computed from parent nodes",
           "Only for terminals"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Synthesized attributes are computed from attributes of child nodes, flowing up the parse tree."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is an S-attributed grammar?",
         "options": [
-          "A grammar with only synthesized attributes",
-          "A grammar with only string attributes",
           "A simple grammar",
-          "A structured grammar"
+          "A grammar with only string attributes",
+          "A structured grammar",
+          "A grammar with only synthesized attributes"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "S-attributed grammars use only synthesized attributes, enabling single bottom-up pass evaluation."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is an L-attributed grammar?",
         "options": [
-          "A left-recursive grammar",
-          "Attributes depend only on inherited from parent or synthesized from left siblings",
           "A linear grammar",
-          "A grammar with lookahead"
+          "A left-recursive grammar",
+          "A grammar with lookahead",
+          "Attributes depend only on inherited from parent or synthesized from left siblings"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "L-attributed grammars allow inherited attributes computed from the parent and synthesized attributes from left siblings."
       },
       {
@@ -63,11 +63,11 @@
         "prompt": "What is a dependency graph in attribute evaluation?",
         "options": [
           "A parse tree",
-          "A graph showing which attributes depend on which others",
+          "A call graph",
           "A control flow graph",
-          "A call graph"
+          "A graph showing which attributes depend on which others"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The dependency graph shows attribute dependencies, determining evaluation order."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary purpose of a symbol table?",
         "options": [
-          "Storing source code",
-          "Mapping identifiers to their attributes",
+          "Parsing input",
           "Generating machine code",
-          "Parsing input"
+          "Storing source code",
+          "Mapping identifiers to their attributes"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Symbol tables map identifiers to information like type, scope, and memory location."
       },
       {
@@ -97,11 +97,11 @@
         "prompt": "How is lexical scoping typically implemented in symbol tables?",
         "options": [
           "Single global table",
-          "Stack of tables or chained hash tables",
+          "Binary search tree",
           "Array of identifiers",
-          "Binary search tree"
+          "Stack of tables or chained hash tables"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Lexical scoping uses a stack of tables or chained scopes, with inner scopes shadowing outer ones."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is name equivalence for types?",
         "options": [
-          "Types are equal only if they have the same name",
-          "Types are equal if structurally identical",
           "Types are equal if in the same scope",
+          "Types are equal if structurally identical",
+          "Types are equal only if they have the same name",
           "All types are equivalent"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Name equivalence requires types to have the same declared name to be considered equal."
       },
       {
@@ -136,11 +136,11 @@
         "prompt": "What is type coercion?",
         "options": [
           "Detecting type errors",
-          "Implicit conversion between types",
           "Declaring types",
+          "Implicit conversion between types",
           "Type inheritance"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Type coercion is automatic (implicit) type conversion performed by the compiler."
       }
     ]
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between a parse tree and an AST?",
         "options": [
-          "They are the same",
           "AST omits syntactic details like parentheses",
-          "Parse tree is more compact",
-          "AST includes tokens"
+          "AST includes tokens",
+          "They are the same",
+          "Parse tree is more compact"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "ASTs abstract away syntactic details (punctuation, grouping) present in parse trees, keeping semantic structure."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What algorithm is commonly used for type inference?",
         "options": [
-          "Quicksort",
           "Unification",
           "Binary search",
-          "Gradient descent"
+          "Gradient descent",
+          "Quicksort"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Unification (Algorithm W) finds substitutions making types equal, central to Hindley-Milner inference."
       },
       {

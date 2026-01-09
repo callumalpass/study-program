@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What type of cable is commonly used for Gigabit Ethernet connections up to 100 meters?",
         "options": [
-          "Coaxial cable",
-          "Cat 5e twisted pair",
           "Single-mode fiber",
-          "Cat 3 twisted pair"
+          "Cat 3 twisted pair",
+          "Coaxial cable",
+          "Cat 5e twisted pair"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Cat 5e (or Cat 6) UTP cables support Gigabit Ethernet (1000BASE-T) up to 100 meters."
       },
       {
@@ -51,11 +51,11 @@
         "prompt": "What does the EtherType field value 0x0800 indicate?",
         "options": [
           "ARP",
-          "IPv4",
           "IPv6",
-          "VLAN tag"
+          "VLAN tag",
+          "IPv4"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "0x0800 indicates IPv4. ARP is 0x0806, IPv6 is 0x86DD, and VLAN tagging uses 0x8100."
       }
     ]
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the Spanning Tree Protocol (STP)?",
         "options": [
+          "To compress data frames",
           "To increase network speed",
-          "To prevent loops in switched networks",
           "To encrypt network traffic",
-          "To compress data frames"
+          "To prevent loops in switched networks"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "STP (802.1D) prevents layer 2 loops in networks with redundant links by blocking certain ports until needed."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "What Wi-Fi security protocol should never be used due to known vulnerabilities?",
         "options": [
-          "WPA3",
+          "WEP",
           "WPA2",
-          "WPA",
-          "WEP"
+          "WPA3",
+          "WPA"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "WEP (Wired Equivalent Privacy) has serious cryptographic weaknesses and can be cracked in minutes. WPA2 or WPA3 should be used instead."
       },
       {
@@ -113,11 +113,11 @@
         "prompt": "In the binary exponential backoff algorithm, after 3 collisions, the random wait is chosen from how many possible slots?",
         "options": [
           "2",
-          "4",
           "8",
+          "4",
           "16"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "After n collisions, the backoff is chosen from 0 to 2^n - 1 slots. After 3 collisions: 2^3 = 8 possible values (0-7)."
       }
     ]
@@ -153,12 +153,12 @@
         "type": "multiple_choice",
         "prompt": "What mechanism does Wi-Fi use to handle the hidden terminal problem?",
         "options": [
-          "CSMA/CD",
           "Token passing",
           "RTS/CTS",
+          "CSMA/CD",
           "Polling"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "RTS/CTS (Request to Send/Clear to Send) allows stations to reserve the channel, preventing collisions from hidden terminals."
       },
       {
@@ -173,12 +173,12 @@
         "type": "multiple_choice",
         "prompt": "Which encoding scheme guarantees a transition in every bit period, enabling clock synchronization?",
         "options": [
-          "NRZ",
-          "NRZI",
           "Manchester",
-          "4B/5B"
+          "NRZ",
+          "4B/5B",
+          "NRZI"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Manchester encoding has a transition in the middle of every bit period, ensuring the receiver can synchronize its clock with the incoming signal."
       }
     ]

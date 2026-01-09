@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What does the instruction \"sll $t0, $t1, 2\" accomplish?",
         "options": [
-          "Adds 2 to $t1 and stores in $t0",
-          "Shifts $t1 left by 2 bits, stores in $t0",
           "Shifts $t1 right by 2 bits, stores in $t0",
-          "Stores the value 2 in $t0"
+          "Adds 2 to $t1 and stores in $t0",
+          "Stores the value 2 in $t0",
+          "Shifts $t1 left by 2 bits, stores in $t0"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "sll (shift left logical) shifts the bits of $t1 left by 2 positions (equivalent to multiplying by 4) and stores the result in $t0."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "Which directive is used to define a null-terminated string in MIPS assembly?",
         "options": [
-          ".word",
-          ".byte",
           ".asciiz",
-          ".space"
+          ".space",
+          ".word",
+          ".byte"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": ".asciiz creates a null-terminated ASCII string (the z stands for zero-terminated), suitable for use with print_string syscall."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "In MIPS, what is the difference between \"add\" and \"addu\"?",
         "options": [
-          "add is for floating point, addu for integers",
           "add can cause overflow exception, addu cannot",
+          "add is for floating point, addu for integers",
           "addu is unsigned and uses larger values",
           "There is no difference"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "add generates an overflow exception if the result overflows; addu (unsigned) does not trap on overflow."
       }
     ]
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "Which instruction would you use to implement \"if (a >= b)\" where a is in $t0 and b is in $t1?",
         "options": [
-          "bge $t0, $t1, target (pseudo)",
-          "slt $t2, $t0, $t1; beq $t2, $zero, target",
+          "Both B and C are correct",
           "slt $t2, $t1, $t0; bne $t2, $zero, target",
-          "Both B and C are correct"
+          "bge $t0, $t1, target (pseudo)",
+          "slt $t2, $t0, $t1; beq $t2, $zero, target"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "a >= b is equivalent to NOT(a < b). Both slt/beq and checking b < a work correctly for implementing this condition."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "To load a word from memory address 8($sp), which instruction is used?",
         "options": [
-          "lb $t0, 8($sp)",
           "lw $t0, 8($sp)",
           "sw $t0, 8($sp)",
+          "lb $t0, 8($sp)",
           "la $t0, 8($sp)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "lw (load word) loads a 32-bit word from the address computed as $sp + 8 into register $t0."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "In a for loop counting from 0 to N-1, which comparison is most efficient in MIPS?",
         "options": [
-          "Compare i == N",
           "Compare i < N",
-          "Compare i != N",
-          "Compare i >= N"
+          "Compare i >= N",
+          "Compare i == N",
+          "Compare i != N"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Using bne (branch if not equal) for i != N is efficient as MIPS has a native bne instruction; less-than requires slt."
       },
       {
@@ -136,11 +136,11 @@
         "prompt": "What does the \"lui\" instruction do?",
         "options": [
           "Loads a byte from memory",
-          "Loads immediate into upper 16 bits of register",
           "Performs unsigned comparison",
+          "Loads immediate into upper 16 bits of register",
           "Links to a subroutine"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "lui (load upper immediate) loads a 16-bit value into the upper half of a register, setting the lower 16 bits to zero."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Which registers must a callee save before using (callee-saved)?",
         "options": [
-          "$t0-$t9",
-          "$s0-$s7",
           "$a0-$a3",
-          "$v0-$v1"
+          "$v0-$v1",
+          "$t0-$t9",
+          "$s0-$s7"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "$s0-$s7 are callee-saved registers; if a function uses them, it must save and restore their original values."
       },
       {
@@ -170,11 +170,11 @@
         "prompt": "What happens to the stack pointer during a typical function prologue?",
         "options": [
           "It increases (moves to higher addresses)",
-          "It decreases (moves to lower addresses)",
+          "It is reset to zero",
           "It stays the same",
-          "It is reset to zero"
+          "It decreases (moves to lower addresses)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The stack grows downward in MIPS, so the stack pointer decreases to allocate space for local variables and saved registers."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "To print an integer using MIPS syscall, which value should be in $v0?",
         "options": [
+          "10",
           "1",
           "4",
-          "5",
-          "10"
+          "5"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Syscall code 1 prints the integer in $a0. Code 4 prints string, 5 reads integer, 10 exits program."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "In a recursive function, what must always be saved on the stack?",
         "options": [
-          "Only local variables",
           "Only the return address",
           "Return address and any registers the function modifies",
-          "All 32 registers"
+          "All 32 registers",
+          "Only local variables"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "A recursive function must save $ra (for nested calls) and any caller-saved registers it needs to preserve across the recursive call."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the frame pointer ($fp)?",
         "options": [
-          "To store function return values",
-          "To provide a stable reference to the stack frame",
+          "To store the global pointer",
           "To count function arguments",
-          "To store the global pointer"
+          "To provide a stable reference to the stack frame",
+          "To store function return values"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The frame pointer provides a stable base for accessing local variables and parameters, even as $sp changes within the function."
       }
     ]

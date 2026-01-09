@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which category does the Factory pattern belong to?",
         "options": [
-          "Creational",
-          "Structural",
+          "Concurrency",
           "Behavioral",
-          "Concurrency"
+          "Structural",
+          "Creational"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Factories are about object creation and decoupling construction from use."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "What does a Singleton pattern guarantee?",
         "options": [
-          "Many instances created efficiently",
           "Exactly one instance with a global access point",
           "No instances can be created",
+          "Many instances created efficiently",
           "Instances are immutable"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Singleton restricts instantiation and provides a single shared instance."
       }
     ]
@@ -106,12 +106,12 @@
         "type": "multiple_choice",
         "prompt": "When is a Singleton usually a bad idea?",
         "options": [
+          "When you want one instance of a dataclass",
           "When you need shared configuration",
-          "When global mutable state makes testing and reasoning harder",
           "When you want a single logger",
-          "When you want one instance of a dataclass"
+          "When global mutable state makes testing and reasoning harder"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Singletons can hide dependencies and create global state that is difficult to test."
       }
     ]
@@ -127,12 +127,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary design goal of the Adapter pattern?",
         "options": [
-          "Guarantee a single instance",
-          "Translate one interface into another expected by clients",
+          "Create objects based on type",
           "Broadcast messages to many listeners",
-          "Create objects based on type"
+          "Translate one interface into another expected by clients",
+          "Guarantee a single instance"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Adapters wrap an object to present a compatible interface."
       },
       {
@@ -140,12 +140,12 @@
         "type": "multiple_choice",
         "prompt": "Which statement about patterns is most accurate?",
         "options": [
-          "Patterns are always faster than non-pattern code",
-          "Patterns eliminate the need for refactoring",
           "Patterns help communicate design intent and typical trade-offs",
-          "Patterns force all code into rigid templates"
+          "Patterns are always faster than non-pattern code",
+          "Patterns force all code into rigid templates",
+          "Patterns eliminate the need for refactoring"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Patterns are vocabulary plus trade-offs; they don’t guarantee performance or perfection."
       },
       {

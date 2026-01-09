@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What is a basic feasible solution (BFS) in linear programming?",
         "options": [
-          "Any feasible solution to the LP",
           "A vertex of the feasible polytope",
-          "The optimal solution",
-          "A solution in the interior of the feasible region"
+          "A solution in the interior of the feasible region",
+          "Any feasible solution to the LP",
+          "The optimal solution"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A BFS corresponds to a vertex (extreme point) of the feasible polytope and has exactly n-m nonzero variables."
       },
       {
@@ -65,12 +65,12 @@
         "type": "multiple_choice",
         "prompt": "When using the graphical method for a 2D LP, where is the optimal solution found?",
         "options": [
-          "Always in the interior of the feasible region",
-          "At a vertex of the feasible region",
           "On an edge of the feasible region",
-          "Both B and C are possible"
+          "Always in the interior of the feasible region",
+          "Both B and C are possible",
+          "At a vertex of the feasible region"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "The optimum is at a vertex or, if there are multiple optima, along an edge connecting optimal vertices."
       },
       {
@@ -98,12 +98,12 @@
         "type": "multiple_choice",
         "prompt": "Interior-point methods for LP have what computational complexity?",
         "options": [
-          "Exponential worst-case",
-          "Pseudo-polynomial",
           "Polynomial worst-case",
+          "Pseudo-polynomial",
+          "Exponential worst-case",
           "Constant time"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Interior-point methods achieve polynomial worst-case complexity, typically O(n³) per iteration, unlike simplex which is exponential."
       },
       {
@@ -127,11 +127,11 @@
         "prompt": "Consider max 3x + 2y subject to x + y ≤ 4, 2x + y ≤ 6, x,y ≥ 0. What is the optimal value?",
         "options": [
           "10",
+          "16",
           "12",
-          "14",
-          "16"
+          "14"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The optimal solution is at vertex (2,2), giving objective value 3(2) + 2(2) = 10. We can verify this is optimal by checking all vertices."
       },
       {
@@ -147,11 +147,11 @@
         "prompt": "In the simplex tableau, what indicates optimality has been reached?",
         "options": [
           "All basic variables are positive",
-          "All reduced costs are non-negative (for minimization)",
+          "The basis is identity",
           "The right-hand side is all positive",
-          "The basis is identity"
+          "All reduced costs are non-negative (for minimization)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "For minimization, optimality is reached when all reduced costs are non-negative, meaning no improving direction exists."
       },
       {
@@ -159,12 +159,12 @@
         "type": "multiple_choice",
         "prompt": "What is the relationship between the number of pivots in simplex and problem dimensions?",
         "options": [
-          "Always exactly n pivots",
-          "At most m pivots",
           "Can be exponential in worst case",
+          "At most m pivots",
+          "Always exactly n pivots",
           "Always polynomial"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "While simplex is polynomial on average, pathological cases (e.g., Klee-Minty cube) require exponentially many pivots."
       },
       {

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the correct order of stages in the graphics pipeline?",
         "options": [
-          "Application → Geometry → Rasterization → Fragment Processing",
           "Geometry → Application → Rasterization → Fragment Processing",
-          "Rasterization → Geometry → Application → Fragment Processing",
-          "Fragment Processing → Geometry → Rasterization → Application"
+          "Fragment Processing → Geometry → Rasterization → Application",
+          "Application → Geometry → Rasterization → Fragment Processing",
+          "Rasterization → Geometry → Application → Fragment Processing"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The graphics pipeline follows a specific order: Application (CPU) prepares data, Geometry transforms vertices, Rasterization converts to fragments, and Fragment Processing determines final pixel colors."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which stage of the graphics pipeline is primarily executed on the CPU?",
         "options": [
-          "Application stage",
-          "Geometry stage",
           "Rasterization stage",
-          "Fragment processing stage"
+          "Geometry stage",
+          "Fragment processing stage",
+          "Application stage"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The application stage runs on the CPU and handles tasks like collision detection, input handling, and preparing geometry data to send to the GPU."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary output of the geometry stage?",
         "options": [
-          "Transformed vertices in screen space",
           "Final pixel colors",
+          "Fragment data",
           "Texture coordinates",
-          "Fragment data"
+          "Transformed vertices in screen space"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The geometry stage transforms vertices from object space through various coordinate systems to screen space, preparing them for rasterization."
       },
       {
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of vertex shaders in the graphics pipeline?",
         "options": [
+          "Handle texture filtering",
           "Transform vertex positions and compute per-vertex attributes",
           "Determine final pixel colors",
-          "Convert primitives to fragments",
-          "Handle texture filtering"
+          "Convert primitives to fragments"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Vertex shaders are programmable units that transform vertex positions from object space to clip space and can compute various per-vertex attributes like normals and texture coordinates."
       },
       {
@@ -90,12 +90,12 @@
         "type": "multiple_choice",
         "prompt": "Which primitive type is most commonly used in modern graphics rendering?",
         "options": [
-          "Triangles",
-          "Quadrilaterals",
           "Circles",
-          "Polygons"
+          "Quadrilaterals",
+          "Polygons",
+          "Triangles"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Triangles are the fundamental primitive in modern graphics because they are always planar, easy to rasterize, and can approximate any surface efficiently."
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "What does the clipping stage remove from the pipeline?",
         "options": [
-          "Geometry outside the view frustum",
-          "Hidden surfaces",
           "Transparent objects",
-          "Texture coordinates"
+          "Hidden surfaces",
+          "Texture coordinates",
+          "Geometry outside the view frustum"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Clipping removes or truncates geometry that lies outside the viewing frustum, preventing unnecessary processing of invisible primitives."
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "Which component is responsible for managing the final display of rendered images?",
         "options": [
-          "Frame buffer",
           "Vertex buffer",
+          "Uniform buffer",
           "Index buffer",
-          "Uniform buffer"
+          "Frame buffer"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The frame buffer stores the final rendered image and is responsible for displaying the result on the screen, often using double buffering to prevent tearing."
       }
     ]
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "What is back-face culling used for?",
         "options": [
-          "Removing polygons facing away from the camera",
-          "Removing polygons outside the view frustum",
           "Removing occluded polygons",
-          "Removing transparent polygons"
+          "Removing polygons outside the view frustum",
+          "Removing transparent polygons",
+          "Removing polygons facing away from the camera"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Back-face culling is an optimization that removes polygons whose normals point away from the camera, typically reducing the number of polygons to render by about 50%."
       },
       {

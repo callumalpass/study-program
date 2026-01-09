@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which paradigm treats computation as the evaluation of mathematical functions and avoids changing state?",
         "options": [
-          "Imperative programming",
-          "Functional programming",
           "Object-oriented programming",
-          "Logic programming"
+          "Logic programming",
+          "Functional programming",
+          "Imperative programming"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Functional programming emphasizes pure functions, immutability, and declarative expressions without side effects."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary characteristic of imperative programming?",
         "options": [
-          "Pattern matching",
-          "Explicit control flow through statements",
           "Logical inference",
-          "Message passing between objects"
+          "Pattern matching",
+          "Message passing between objects",
+          "Explicit control flow through statements"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Imperative programming uses statements that change program state, with explicit control flow through loops and conditionals."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "Which paradigm uses facts and rules to derive conclusions through logical inference?",
         "options": [
-          "Functional programming",
           "Imperative programming",
           "Logic programming",
+          "Functional programming",
           "Event-driven programming"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Logic programming (e.g., Prolog) expresses computation through logical statements and derives answers through inference."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What distinguishes declarative programming from imperative programming?",
         "options": [
+          "Declarative requires compilation",
           "Declarative uses more memory",
-          "Declarative describes what to compute, not how",
           "Declarative is always faster",
-          "Declarative requires compilation"
+          "Declarative describes what to compute, not how"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Declarative programming specifies the desired result, leaving implementation details to the language/runtime."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "Which is NOT a core concept of object-oriented programming?",
         "options": [
-          "Encapsulation",
-          "Inheritance",
           "Polymorphism",
-          "Unification"
+          "Unification",
+          "Encapsulation",
+          "Inheritance"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "Unification is a concept from logic programming. OOP core concepts are encapsulation, inheritance, polymorphism, and abstraction."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "Which concurrency model uses isolated processes that communicate through message passing?",
         "options": [
-          "Shared memory with locks",
           "Actor model",
           "Thread pool",
-          "Busy waiting"
+          "Busy waiting",
+          "Shared memory with locks"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The Actor model uses isolated actors that maintain private state and communicate exclusively through asynchronous messages."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What does CSP (Communicating Sequential Processes) use for synchronization?",
         "options": [
+          "Semaphores",
           "Mutexes",
           "Channels",
-          "Semaphores",
           "Barriers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "CSP uses channels for communication and synchronization between concurrent processes."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "Which language is considered purely functional with lazy evaluation by default?",
         "options": [
-          "Scala",
-          "OCaml",
           "Haskell",
+          "OCaml",
+          "Scala",
           "F#"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Haskell is a purely functional language with lazy evaluation by default, enforcing referential transparency."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is a multi-paradigm language?",
         "options": [
-          "A language that only supports OOP",
-          "A language supporting multiple programming styles",
           "A language with multiple compilers",
-          "A language for multi-core processors"
+          "A language for multi-core processors",
+          "A language that only supports OOP",
+          "A language supporting multiple programming styles"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Multi-paradigm languages like Python, Scala, and JavaScript support multiple programming paradigms within the same language."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "In Prolog, what is unification?",
         "options": [
-          "Combining multiple programs",
           "Pattern matching that can bind variables",
-          "Merging databases",
-          "Compiling code"
+          "Compiling code",
+          "Combining multiple programs",
+          "Merging databases"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Unification in Prolog matches terms and binds variables to make terms identical, forming the basis of logical inference."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What problem does the Actor model help avoid compared to shared-memory concurrency?",
         "options": [
-          "Memory leaks",
           "Race conditions and deadlocks",
+          "Memory leaks",
           "Stack overflow",
           "Type errors"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "By eliminating shared mutable state, the Actor model avoids race conditions and many deadlock scenarios."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is referential transparency?",
         "options": [
-          "Being able to see through objects",
           "An expression can be replaced by its value",
+          "Being able to see through objects",
           "Code that references other code",
           "Transparent error handling"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Referential transparency means an expression can be replaced with its value without changing program behavior."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "Which feature distinguishes prototype-based OOP from class-based OOP?",
         "options": [
-          "No inheritance",
-          "Objects inherit directly from other objects",
+          "Static typing",
           "No encapsulation",
-          "Static typing"
+          "Objects inherit directly from other objects",
+          "No inheritance"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "In prototype-based OOP (e.g., JavaScript), objects inherit directly from other objects rather than from classes."
       },
       {

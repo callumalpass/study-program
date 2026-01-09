@@ -37,14 +37,15 @@ describe('Math201 - Linear Algebra Content', () => {
       const q1 = quiz1c!.questions.find((q) => q.id === 'math201-q1c-1');
       expect(q1).toBeDefined();
       expect(q1!.type).toBe('multiple_choice');
-      // Correct answer should be index 2 (Infinitely many solutions)
-      expect(q1!.correctAnswer).toBe(2);
+      // Correct answer should be "Infinitely many solutions"
+      expect(q1!.options![q1!.correctAnswer as number]).toMatch(/infinitely many/i);
     });
 
     it('Q4: Trivial solution iff columns linearly independent', () => {
       const q4 = quiz1c!.questions.find((q) => q.id === 'math201-q1c-4');
       expect(q4).toBeDefined();
-      expect(q4!.correctAnswer).toBe(0); // First option: linearly independent
+      // Correct answer should be about linear independence
+      expect(q4!.options![q4!.correctAnswer as number]).toMatch(/linearly independent/i);
     });
   });
 
@@ -54,7 +55,8 @@ describe('Math201 - Linear Algebra Content', () => {
     it('Q1: Row with [0 0 0 | 5] means inconsistent', () => {
       const q1 = quiz1b!.questions.find((q) => q.id === 'math201-q1b-1');
       expect(q1).toBeDefined();
-      expect(q1!.correctAnswer).toBe(2); // Inconsistent
+      // Correct answer should be "Inconsistent"
+      expect(q1!.options![q1!.correctAnswer as number]).toMatch(/inconsistent/i);
     });
 
     it('Q3: RREF is unique should be true', () => {
@@ -76,7 +78,8 @@ describe('Math201 - Linear Algebra Content', () => {
     it('Q4: Homogeneous system has at least one solution (trivial)', () => {
       const q4 = quiz1a!.questions.find((q) => q.id === 'math201-q1a-4');
       expect(q4).toBeDefined();
-      expect(q4!.correctAnswer).toBe(0); // One solution (trivial)
+      // Correct answer should be about one or trivial solution
+      expect(q4!.options![q4!.correctAnswer as number]).toMatch(/one|trivial/i);
     });
   });
 });
@@ -90,13 +93,15 @@ describe('Math202 - Probability Content', () => {
     it('Q1: P(greater than 4) = 1/3', () => {
       const q1 = quiz1a!.questions.find((q) => q.id === 'q1');
       expect(q1).toBeDefined();
-      expect(q1!.correctAnswer).toBe(1); // 1/3
+      // Correct answer should be 1/3
+      expect(q1!.options![q1!.correctAnswer as number]).toMatch(/1\/3/);
     });
 
     it('Q2: P(exactly one head in two flips) = 1/2', () => {
       const q2 = quiz1a!.questions.find((q) => q.id === 'q2');
       expect(q2).toBeDefined();
-      expect(q2!.correctAnswer).toBe(2); // 1/2
+      // Correct answer should be 1/2
+      expect(q2!.options![q2!.correctAnswer as number]).toMatch(/1\/2/);
     });
   });
 
@@ -106,19 +111,22 @@ describe('Math202 - Probability Content', () => {
     it('Q1: P(A|B) = P(A∩B)/P(B) = 0.2/0.5 = 0.4', () => {
       const q1 = quiz1b!.questions.find((q) => q.id === 'q1');
       expect(q1).toBeDefined();
-      expect(q1!.correctAnswer).toBe(1); // 0.4
+      // Correct answer should be 0.4
+      expect(q1!.options![q1!.correctAnswer as number]).toMatch(/0\.4/);
     });
 
     it('Q3: P(A∩B) = P(B|A) × P(A) = 0.3 × 0.6 = 0.18', () => {
       const q3 = quiz1b!.questions.find((q) => q.id === 'q3');
       expect(q3).toBeDefined();
-      expect(q3!.correctAnswer).toBe(0); // 0.18
+      // Correct answer should be 0.18
+      expect(q3!.options![q3!.correctAnswer as number]).toMatch(/0\.18/);
     });
 
     it('Q4: Mutually exclusive events are not independent (except trivial case)', () => {
       const q4 = quiz1b!.questions.find((q) => q.id === 'q4');
       expect(q4).toBeDefined();
-      expect(q4!.correctAnswer).toBe(1); // No, they are not independent
+      // Correct answer should indicate they are NOT independent
+      expect(q4!.options![q4!.correctAnswer as number]).toMatch(/no/i);
     });
   });
 
@@ -128,13 +136,15 @@ describe('Math202 - Probability Content', () => {
     it('Q1: P(5,3) = 60', () => {
       const q1 = quiz1c!.questions.find((q) => q.id === 'q1');
       expect(q1).toBeDefined();
-      expect(q1!.correctAnswer).toBe(1); // 60
+      // Correct answer should be 60
+      expect(q1!.options![q1!.correctAnswer as number]).toMatch(/60/);
     });
 
     it('Q3: Disease test positive - approximately 9% (Bayes theorem)', () => {
       const q3 = quiz1c!.questions.find((q) => q.id === 'q3');
       expect(q3).toBeDefined();
-      expect(q3!.correctAnswer).toBe(0); // About 9%
+      // Correct answer should be about 9%
+      expect(q3!.options![q3!.correctAnswer as number]).toMatch(/9%|0\.0[89]/i);
       // Verify the math in explanation
       // P(D|+) = P(+|D)P(D) / [P(+|D)P(D) + P(+|H)P(H)]
       // = 0.95*0.01 / (0.95*0.01 + 0.10*0.99)
@@ -153,7 +163,8 @@ describe('Math102 - Combinatorics Content', () => {
     it('Q1: 5! = 120 arrangements of 5 books', () => {
       const q1 = quiz1!.questions.find((q) => q.id === 'math102-q1-1');
       expect(q1).toBeDefined();
-      expect(q1!.correctAnswer).toBe(2); // 120
+      // Correct answer should be 120
+      expect(q1!.options![q1!.correctAnswer as number]).toMatch(/120/);
       // Verify: 5! = 120
       expect(5 * 4 * 3 * 2 * 1).toBe(120);
     });
@@ -161,7 +172,8 @@ describe('Math102 - Combinatorics Content', () => {
     it('Q2: C(10,3) = 120 ways to choose 3 from 10', () => {
       const q2 = quiz1!.questions.find((q) => q.id === 'math102-q1-2');
       expect(q2).toBeDefined();
-      expect(q2!.correctAnswer).toBe(1); // 120
+      // Correct answer should be 120
+      expect(q2!.options![q2!.correctAnswer as number]).toMatch(/120/);
       // Verify: C(10,3) = 10!/(3!*7!) = (10*9*8)/(3*2*1) = 720/6 = 120
       expect((10 * 9 * 8) / (3 * 2 * 1)).toBe(120);
     });
@@ -169,7 +181,8 @@ describe('Math102 - Combinatorics Content', () => {
     it('Q5: C(8,3) = 56', () => {
       const q5 = quiz1!.questions.find((q) => q.id === 'math102-q1-5');
       expect(q5).toBeDefined();
-      expect(q5!.correctAnswer).toBe(1); // 56
+      // Correct answer should be 56
+      expect(q5!.options![q5!.correctAnswer as number]).toMatch(/56/);
       // Verify: C(8,3) = 8!/(3!*5!) = (8*7*6)/(3*2*1) = 336/6 = 56
       expect((8 * 7 * 6) / (3 * 2 * 1)).toBe(56);
     });
@@ -181,7 +194,8 @@ describe('Math102 - Combinatorics Content', () => {
     it('Q1: 26^3 × 10^2 = 1,757,600 passwords', () => {
       const q1 = quiz1b!.questions.find((q) => q.id === 'math102-q1b-1');
       expect(q1).toBeDefined();
-      expect(q1!.correctAnswer).toBe(2); // 1,757,600
+      // Correct answer should be 1,757,600
+      expect(q1!.options![q1!.correctAnswer as number]).toMatch(/1,757,600|1757600/);
       // Verify
       expect(Math.pow(26, 3) * Math.pow(10, 2)).toBe(1757600);
     });
@@ -189,7 +203,7 @@ describe('Math102 - Combinatorics Content', () => {
     it('Q2: P(5,3) = 60', () => {
       const q2 = quiz1b!.questions.find((q) => q.id === 'math102-q1b-2');
       expect(q2).toBeDefined();
-      expect(q2!.correctAnswer).toBe('60');
+      expect(q2!.correctAnswer).toBe('60'); // This is a fill_blank, so string expected
       // Verify: P(5,3) = 5!/(5-3)! = 5!/2! = 120/2 = 60
       expect(120 / 2).toBe(60);
     });
@@ -197,7 +211,8 @@ describe('Math102 - Combinatorics Content', () => {
     it('Q3: MISSISSIPPI arrangements = 34650', () => {
       const q3 = quiz1b!.questions.find((q) => q.id === 'math102-q1b-3');
       expect(q3).toBeDefined();
-      expect(q3!.correctAnswer).toBe(0); // 34650
+      // Correct answer should be 34650
+      expect(q3!.options![q3!.correctAnswer as number]).toMatch(/34,650|34650/);
       // Verify: 11!/(4!×4!×2!) = 39916800/(24×24×2) = 39916800/1152 = 34650
       // M=1, I=4, S=4, P=2
       const factorial = (n: number): number => (n <= 1 ? 1 : n * factorial(n - 1));
@@ -207,7 +222,8 @@ describe('Math102 - Combinatorics Content', () => {
     it('Q5: Lattice paths from (0,0) to (3,2) = C(5,2) = 10', () => {
       const q5 = quiz1b!.questions.find((q) => q.id === 'math102-q1b-5');
       expect(q5).toBeDefined();
-      expect(q5!.correctAnswer).toBe(2); // 10
+      // Correct answer should be 10
+      expect(q5!.options![q5!.correctAnswer as number]).toMatch(/^10$/);
       // Verify: C(5,2) = 10
       expect((5 * 4) / (2 * 1)).toBe(10);
     });
@@ -219,7 +235,8 @@ describe('Math102 - Combinatorics Content', () => {
     it('Q1: Inclusion-exclusion: |divisible by 2 or 3| = 50 + 33 - 16 = 67', () => {
       const q1 = quiz1c!.questions.find((q) => q.id === 'math102-q1c-1');
       expect(q1).toBeDefined();
-      expect(q1!.correctAnswer).toBe(1); // 67
+      // Correct answer should be 67
+      expect(q1!.options![q1!.correctAnswer as number]).toMatch(/67/);
       // |A| = floor(100/2) = 50
       // |B| = floor(100/3) = 33
       // |A∩B| = floor(100/6) = 16
@@ -229,7 +246,8 @@ describe('Math102 - Combinatorics Content', () => {
     it('Q2: Stars and bars: C(7,2) = 21 ways to distribute 5 balls into 3 boxes', () => {
       const q2 = quiz1c!.questions.find((q) => q.id === 'math102-q1c-2');
       expect(q2).toBeDefined();
-      expect(q2!.correctAnswer).toBe(1); // 21
+      // Correct answer should be 21
+      expect(q2!.options![q2!.correctAnswer as number]).toMatch(/21/);
       // C(n+r-1, r-1) = C(5+3-1, 3-1) = C(7,2) = 21
       expect((7 * 6) / (2 * 1)).toBe(21);
     });
@@ -245,7 +263,8 @@ describe('Math102 - Combinatorics Content', () => {
     it('Q5: Binary strings of length 6 with exactly 3 ones = C(6,3) = 20', () => {
       const q5 = quiz1c!.questions.find((q) => q.id === 'math102-q1c-5');
       expect(q5).toBeDefined();
-      expect(q5!.correctAnswer).toBe(1); // 20
+      // Correct answer should be 20
+      expect(q5!.options![q5!.correctAnswer as number]).toMatch(/20/);
       expect((6 * 5 * 4) / (3 * 2 * 1)).toBe(20);
     });
   });

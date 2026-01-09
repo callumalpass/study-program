@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "A collection ℬ is a basis for a topology if:",
         "options": [
-          "ℬ covers X and intersections of basis elements are basis elements",
           "ℬ covers X and intersections of basis elements contain basis elements",
-          "ℬ is closed under unions and intersections",
-          "ℬ contains all open sets"
+          "ℬ contains all open sets",
+          "ℬ covers X and intersections of basis elements are basis elements",
+          "ℬ is closed under unions and intersections"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Basis axioms: (B1) ⋃ℬ = X, and (B2) if x ∈ B₁ ∩ B₂, there exists B₃ ∈ ℬ with x ∈ B₃ ⊆ B₁ ∩ B₂."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "Which property characterizes second countable spaces?",
         "options": [
-          "The space has a countable dense subset",
-          "The space has a countable basis",
           "Every point has a countable local basis",
-          "The space is countable"
+          "The space is countable",
+          "The space has a countable basis",
+          "The space has a countable dense subset"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A space is second countable if it has a countable basis for its topology. This is a stronger property than first countable or separable."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "ℝ with standard topology is:",
         "options": [
-          "First countable but not second countable",
           "Second countable but not separable",
           "Both second countable and separable",
+          "First countable but not second countable",
           "Neither second countable nor separable"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "ℝ is second countable (basis: intervals with rational endpoints) and separable (ℚ is a countable dense subset)."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "In the subspace topology, a set U ⊆ Y is open in Y if:",
         "options": [
-          "U is open in X",
           "U = Y ∩ V for some open V in X",
           "U is closed in X",
+          "U is open in X",
           "U is dense in Y"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The subspace topology on Y ⊆ X is defined by τ_Y = {Y ∩ V : V ∈ τ_X}. Sets open in Y are intersections of Y with open sets in X."
       },
       {
@@ -111,12 +111,12 @@
         "type": "multiple_choice",
         "prompt": "Which space is separable?",
         "options": [
-          "ℝ with standard topology",
-          "Any metric space",
           "Any uncountable space",
-          "The discrete topology on an uncountable set"
+          "ℝ with standard topology",
+          "The discrete topology on an uncountable set",
+          "Any metric space"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "ℝ is separable (ℚ is dense). Not all metric spaces are separable, and uncountable discrete spaces are not separable."
       }
     ]
@@ -139,12 +139,12 @@
         "type": "multiple_choice",
         "prompt": "If X has the discrete topology and is uncountable, then X is:",
         "options": [
-          "Second countable",
-          "Not first countable",
           "Not second countable",
-          "Not separable but second countable"
+          "Second countable",
+          "Not separable but second countable",
+          "Not first countable"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "An uncountable discrete space is not second countable because each singleton must be in any basis, requiring an uncountable basis."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "The lower limit topology on ℝ has basis ℬ = {[a, b) : a < b}. This topology is:",
         "options": [
-          "Coarser than the standard topology",
-          "The same as the standard topology",
           "Finer than the standard topology",
-          "Incomparable to the standard topology"
+          "Coarser than the standard topology",
+          "Incomparable to the standard topology",
+          "The same as the standard topology"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The lower limit topology is strictly finer than the standard topology. Every standard open set is lower-limit open, but [0, 1) is lower-limit open but not standard open."
       },
       {
@@ -172,12 +172,12 @@
         "type": "multiple_choice",
         "prompt": "Let Y = [0, 1] ⊆ ℝ with subspace topology. Is (0, 1/2] open in Y?",
         "options": [
-          "Yes, because it's an interval",
-          "No, because it's not open in ℝ",
           "Yes, because it equals Y ∩ (0, 1/2]",
+          "No, because it's not open in ℝ",
+          "Yes, because it's an interval",
           "No, because it contains its right endpoint"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "In the subspace topology, (0, 1/2] = Y ∩ (0, 1/2], and since (0, 1/2] is the intersection of Y with an open set in ℝ... wait, (0, 1/2] is NOT open in ℝ. However, (0, 1/2] = Y ∩ (0, 3/4) for example, where (0, 3/4) is open in ℝ, making (0, 1/2] open in Y."
       }
     ]

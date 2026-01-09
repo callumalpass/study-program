@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What does PEAS stand for in agent design?",
         "options": [
-          "Performance, Environment, Actuators, Sensors",
-          "Planning, Execution, Analysis, Sensing",
           "Prediction, Evaluation, Action, State",
-          "Problem, Environment, Action, Solution"
+          "Planning, Execution, Analysis, Sensing",
+          "Problem, Environment, Action, Solution",
+          "Performance, Environment, Actuators, Sensors"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "PEAS is a framework for specifying task environments: Performance measure (success criteria), Environment (the world), Actuators (actions), and Sensors (perceptions)."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main advantage of A* search over uniform cost search?",
         "options": [
-          "A* uses less memory",
           "A* uses a heuristic to guide search toward the goal",
+          "A* uses less memory",
           "A* always finds solutions faster",
           "A* requires no domain knowledge"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A* combines path cost g(n) with heuristic h(n) to estimate total cost f(n) = g(n) + h(n), using domain knowledge to search more efficiently toward the goal."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "An admissible heuristic is one that:",
         "options": [
+          "Uses the least amount of memory",
           "Never overestimates the cost to reach the goal",
           "Always finds the solution in minimum time",
-          "Uses the least amount of memory",
           "Works for all problem types"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "An admissible heuristic never overestimates the true cost to reach the goal (h(n) ≤ h*(n)). This property ensures A* with an admissible heuristic finds optimal solutions."
       },
       {
@@ -76,11 +76,11 @@
         "prompt": "In the Minimax algorithm, the MAX player:",
         "options": [
           "Tries to minimize the score",
-          "Tries to maximize the score",
           "Makes random moves",
+          "Tries to maximize the score",
           "Always goes first"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "In Minimax, MAX player tries to maximize the utility value while MIN player tries to minimize it. They alternate turns, each playing optimally."
       },
       {
@@ -114,12 +114,12 @@
         "type": "multiple_choice",
         "prompt": "The AC-3 algorithm is used for:",
         "options": [
-          "Planning optimal routes",
-          "Enforcing arc consistency in CSPs",
           "Playing adversarial games",
-          "Logical inference"
+          "Logical inference",
+          "Planning optimal routes",
+          "Enforcing arc consistency in CSPs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "AC-3 (Arc Consistency Algorithm 3) removes values from variable domains that cannot be part of any solution, enforcing arc consistency throughout the constraint graph."
       },
       {
@@ -128,11 +128,11 @@
         "prompt": "The Minimum Remaining Values (MRV) heuristic in CSP selects:",
         "options": [
           "The variable with the most remaining legal values",
+          "A random unassigned variable",
           "The variable with the fewest remaining legal values",
-          "The variable that appears in most constraints",
-          "A random unassigned variable"
+          "The variable that appears in most constraints"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "MRV (also called \"most constrained variable\") chooses the variable with the smallest domain, as it's most likely to cause failure soon if no solution exists."
       },
       {
@@ -163,11 +163,11 @@
         "prompt": "For the 8-puzzle problem, which is the best admissible heuristic?",
         "options": [
           "Number of misplaced tiles",
+          "Random value between 0 and puzzle size",
           "Sum of Manhattan distances of tiles from goal positions",
-          "Number of tiles in correct position",
-          "Random value between 0 and puzzle size"
+          "Number of tiles in correct position"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Manhattan distance (sum of horizontal and vertical distances) is more informed than misplaced tiles, still admissible (never overestimates), and guides A* more efficiently to the goal."
       },
       {
@@ -197,12 +197,12 @@
         "type": "multiple_choice",
         "prompt": "In a CSP, backtracking search with forward checking is more efficient than naive backtracking because:",
         "options": [
-          "It checks constraints earlier, detecting failures sooner",
           "It uses less memory",
           "It always finds the optimal solution",
+          "It checks constraints earlier, detecting failures sooner",
           "It explores fewer variables"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Forward checking eliminates values from future variables' domains after each assignment, detecting dead ends earlier and avoiding futile search in branches that will inevitably fail."
       },
       {
@@ -217,12 +217,12 @@
         "type": "multiple_choice",
         "prompt": "The degree heuristic for CSP variable ordering chooses:",
         "options": [
+          "The variable with the largest domain",
           "The variable involved in the most constraints with remaining variables",
           "The variable with the highest value in its domain",
-          "The variable assigned most recently",
-          "The variable with the largest domain"
+          "The variable assigned most recently"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The degree heuristic (often used as a tie-breaker with MRV) selects the variable participating in the most constraints, as assigning it will most reduce other variables' domains."
       },
       {
@@ -265,12 +265,12 @@
         "type": "multiple_choice",
         "prompt": "Least Constraining Value heuristic in CSP selects:",
         "options": [
-          "The value that rules out the fewest choices for neighboring variables",
           "The smallest value in the domain",
+          "The value that rules out the fewest choices for neighboring variables",
           "The value that appears least frequently across all domains",
           "The value most recently used"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The least constraining value heuristic chooses the value that leaves maximum flexibility for future assignments by eliminating fewest values from neighbors' domains, increasing chances of finding a solution."
       },
       {
@@ -294,12 +294,12 @@
         "type": "multiple_choice",
         "prompt": "Bayes' theorem allows us to compute:",
         "options": [
+          "Only marginal probabilities",
           "P(A|B) from P(B|A), P(A), and P(B)",
           "The maximum likelihood estimate",
-          "The joint probability directly",
-          "Only marginal probabilities"
+          "The joint probability directly"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Bayes' theorem: P(A|B) = P(B|A)P(A)/P(B). It inverts conditional probabilities, computing P(cause|effect) from P(effect|cause) and priors."
       },
       {
@@ -320,12 +320,12 @@
         "type": "multiple_choice",
         "prompt": "The Markov assumption in Hidden Markov Models states that:",
         "options": [
-          "The current state depends only on the previous state",
-          "All states are equally likely",
           "Observations are independent of states",
-          "The model has no memory"
+          "The model has no memory",
+          "All states are equally likely",
+          "The current state depends only on the previous state"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The Markov property (first-order) states that the current state depends only on the immediately previous state, not on earlier history: P(S_t|S_{t-1},...,S_1) = P(S_t|S_{t-1})."
       },
       {
@@ -346,12 +346,12 @@
         "type": "multiple_choice",
         "prompt": "The UCB1 formula in MCTS balances:",
         "options": [
+          "Depth and breadth of search",
           "Exploitation of good moves and exploration of untried moves",
           "Speed and memory usage",
-          "Depth and breadth of search",
           "Accuracy and precision"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "UCB1 (Upper Confidence Bound) = wins/visits + C×√(ln(parent_visits)/visits). The first term favors exploitation, the second favors exploration of less-visited nodes."
       },
       {
@@ -359,12 +359,12 @@
         "type": "multiple_choice",
         "prompt": "Which search algorithm is complete but not optimal?",
         "options": [
-          "Depth-First Search",
+          "Greedy Best-First Search",
           "A* with admissible heuristic",
-          "Uniform Cost Search",
-          "Greedy Best-First Search"
+          "Depth-First Search",
+          "Uniform Cost Search"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "DFS is complete in finite spaces but not optimal—it may find a non-optimal solution first. A* and UCS are both complete and optimal; Greedy search is neither."
       },
       {
@@ -372,12 +372,12 @@
         "type": "multiple_choice",
         "prompt": "Iterative Deepening Depth-First Search (IDDFS) combines advantages of:",
         "options": [
-          "BFS completeness/optimality with DFS memory efficiency",
           "A* heuristics with DFS speed",
-          "Hill climbing with random restarts",
-          "Forward and backward search"
+          "Forward and backward search",
+          "BFS completeness/optimality with DFS memory efficiency",
+          "Hill climbing with random restarts"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "IDDFS performs DFS with increasing depth limits, achieving BFS-like completeness and optimality (for uniform costs) while using only O(bd) memory like DFS."
       },
       {
@@ -385,12 +385,12 @@
         "type": "multiple_choice",
         "prompt": "In CSP, forward checking:",
         "options": [
-          "Checks constraints before assigning variables",
-          "Removes inconsistent values from unassigned neighbors' domains",
           "Assigns all variables forward in order",
-          "Checks the solution after completion"
+          "Checks constraints before assigning variables",
+          "Checks the solution after completion",
+          "Removes inconsistent values from unassigned neighbors' domains"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Forward checking maintains arc consistency for the current variable: after assigning variable X, it removes values from domains of unassigned neighbors that conflict with X."
       },
       {
@@ -398,12 +398,12 @@
         "type": "multiple_choice",
         "prompt": "Delete relaxation in planning heuristics means:",
         "options": [
-          "Deleting unreachable actions",
           "Ignoring delete effects of actions",
+          "Deleting unreachable actions",
           "Removing redundant goals",
           "Simplifying preconditions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Delete relaxation creates an easier problem by ignoring negative effects (delete lists) of actions. The relaxed plan length provides an admissible heuristic for the original problem."
       },
       {
@@ -411,12 +411,12 @@
         "type": "multiple_choice",
         "prompt": "Hierarchical Task Network (HTN) planning uses:",
         "options": [
+          "Priority queues for action selection",
           "Multiple levels of abstraction with task decomposition",
-          "A hierarchy of goals from most to least important",
           "Layered neural networks",
-          "Priority queues for action selection"
+          "A hierarchy of goals from most to least important"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "HTN planning decomposes high-level tasks into subtasks using methods, continuing recursively until reaching primitive actions. This matches how humans naturally plan."
       },
       {
@@ -437,12 +437,12 @@
         "type": "multiple_choice",
         "prompt": "Semantic networks represent knowledge using:",
         "options": [
-          "Graphs with nodes for concepts and edges for relationships",
           "Logical formulas in CNF",
           "Probability distributions",
+          "Graphs with nodes for concepts and edges for relationships",
           "Neural network weights"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Semantic networks use graph structures where nodes represent concepts/objects and labeled directed edges represent relationships like \"is-a\", \"part-of\", \"has-property\"."
       },
       {
@@ -450,12 +450,12 @@
         "type": "multiple_choice",
         "prompt": "Variable elimination in Bayesian networks:",
         "options": [
+          "Reduces the network to a tree structure",
           "Computes posterior probabilities by summing out variables",
-          "Removes unnecessary nodes from the network",
           "Eliminates dependencies between variables",
-          "Reduces the network to a tree structure"
+          "Removes unnecessary nodes from the network"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Variable elimination performs exact inference by systematically summing out (marginalizing) variables in an order that minimizes intermediate factor sizes."
       },
       {
@@ -463,12 +463,12 @@
         "type": "multiple_choice",
         "prompt": "The Viterbi algorithm finds:",
         "options": [
+          "The optimal policy for an MDP",
           "The most likely sequence of hidden states given observations",
-          "All possible state sequences",
           "The probability of observations",
-          "The optimal policy for an MDP"
+          "All possible state sequences"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The Viterbi algorithm uses dynamic programming to find the maximum a posteriori (MAP) state sequence in an HMM: argmax_states P(states|observations)."
       },
       {
@@ -489,12 +489,12 @@
         "type": "multiple_choice",
         "prompt": "Particle filtering (Sequential Monte Carlo) approximates:",
         "options": [
-          "Probability distributions using weighted samples",
-          "Deterministic state transitions",
           "Optimal action selection",
+          "Deterministic state transitions",
+          "Probability distributions using weighted samples",
           "Exact inference in Bayesian networks"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Particle filters represent belief distributions using a set of weighted samples (particles), allowing approximate inference for complex, non-Gaussian, nonlinear systems."
       },
       {
@@ -502,12 +502,12 @@
         "type": "multiple_choice",
         "prompt": "In local search for CSP, the min-conflicts heuristic:",
         "options": [
-          "Selects the value that results in minimum conflicts with other variables",
           "Minimizes the number of constraint checks",
           "Finds the variable with fewest conflicts",
+          "Selects the value that results in minimum conflicts with other variables",
           "Always finds the optimal solution"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Min-conflicts is a greedy local search heuristic: for a conflicted variable, choose the value that minimizes conflicts with other variable assignments."
       },
       {
@@ -515,12 +515,12 @@
         "type": "multiple_choice",
         "prompt": "The GraphPlan algorithm for planning uses:",
         "options": [
-          "Alternating layers of propositions and actions",
+          "Logical resolution",
           "State-space search with heuristics",
-          "Game-theoretic analysis",
-          "Logical resolution"
+          "Alternating layers of propositions and actions",
+          "Game-theoretic analysis"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "GraphPlan builds a planning graph with alternating proposition and action layers, encoding reachability and mutex relations to find parallel plans efficiently."
       },
       {
@@ -528,12 +528,12 @@
         "type": "multiple_choice",
         "prompt": "CNF (Conjunctive Normal Form) is:",
         "options": [
-          "A conjunction of disjunctions of literals",
           "A disjunction of conjunctions of literals",
           "A nested implication structure",
-          "A binary decision diagram"
+          "A binary decision diagram",
+          "A conjunction of disjunctions of literals"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "CNF is a conjunction (AND) of clauses, where each clause is a disjunction (OR) of literals. Example: (A∨¬B)∧(B∨C)∧(¬A∨¬C). Resolution requires CNF."
       },
       {
@@ -576,12 +576,12 @@
         "type": "multiple_choice",
         "prompt": "In first-order logic, unification finds:",
         "options": [
-          "A substitution that makes two expressions identical",
-          "All possible variable assignments",
+          "Contradictions in the knowledge base",
           "The most general formula",
-          "Contradictions in the knowledge base"
+          "A substitution that makes two expressions identical",
+          "All possible variable assignments"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Unification finds the most general unifier (MGU), a substitution of variables that makes two expressions syntactically identical, enabling inference rules like resolution and modus ponens in FOL."
       },
       {
@@ -596,12 +596,12 @@
         "type": "multiple_choice",
         "prompt": "Skolemization in first-order logic:",
         "options": [
-          "Removes existential quantifiers by introducing function symbols",
           "Converts all formulas to CNF",
-          "Eliminates universal quantifiers",
-          "Proves theorems by contradiction"
+          "Proves theorems by contradiction",
+          "Removes existential quantifiers by introducing function symbols",
+          "Eliminates universal quantifiers"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Skolemization replaces existentially quantified variables with Skolem functions of universally quantified variables, eliminating ∃ quantifiers while preserving satisfiability for conversion to CNF."
       },
       {
@@ -624,12 +624,12 @@
         "type": "multiple_choice",
         "prompt": "The forward algorithm for HMMs computes:",
         "options": [
-          "P(observations | model), the likelihood of the observation sequence",
+          "The optimal policy",
           "The most likely state sequence",
           "The transition probabilities",
-          "The optimal policy"
+          "P(observations | model), the likelihood of the observation sequence"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The forward algorithm computes the probability of an observation sequence by summing over all possible state sequences. It uses dynamic programming with forward probabilities α_t(s) = P(o_1:t, S_t=s)."
       },
       {
@@ -644,12 +644,12 @@
         "type": "multiple_choice",
         "prompt": "Rejection sampling in Bayesian networks:",
         "options": [
-          "Generates samples from the prior and rejects those inconsistent with evidence",
-          "Rejects invalid network structures",
+          "Reduces network complexity",
           "Eliminates low-probability events",
-          "Reduces network complexity"
+          "Rejects invalid network structures",
+          "Generates samples from the prior and rejects those inconsistent with evidence"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Rejection sampling generates samples from the joint distribution by sampling each variable given its parents, then rejects samples inconsistent with evidence. It's simple but inefficient for rare evidence."
       },
       {
@@ -672,12 +672,12 @@
         "type": "multiple_choice",
         "prompt": "In partial-order planning, the key advantage over total-order planning is:",
         "options": [
-          "Actions can be ordered flexibly, allowing more efficient search",
           "Plans are always shorter",
           "It requires less memory",
+          "Actions can be ordered flexibly, allowing more efficient search",
           "It works only in deterministic domains"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Partial-order planning commits to action orderings only when necessary to resolve conflicts, avoiding premature commitment. This flexibility allows exploration of larger plan spaces more efficiently."
       },
       {
@@ -700,12 +700,12 @@
         "type": "multiple_choice",
         "prompt": "Model checking in propositional logic:",
         "options": [
+          "Validates neural network architectures",
           "Enumerates all possible models to check if KB entails a query",
           "Checks if the model is correctly structured",
-          "Verifies code correctness",
-          "Validates neural network architectures"
+          "Verifies code correctness"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Model checking (truth table enumeration) checks all 2^n truth assignments to see if every model satisfying the knowledge base also satisfies the query, verifying KB ⊨ α."
       },
       {
@@ -727,12 +727,12 @@
         "type": "multiple_choice",
         "prompt": "Likelihood weighting for Bayesian network inference:",
         "options": [
-          "Samples only non-evidence variables and weights each sample by evidence probability",
+          "Eliminates variables by likelihood ratio",
           "Weights each variable by its prior probability",
           "Assigns higher weights to more likely networks",
-          "Eliminates variables by likelihood ratio"
+          "Samples only non-evidence variables and weights each sample by evidence probability"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Likelihood weighting fixes evidence variables to observed values and samples only non-evidence variables, weighting each sample by the probability of the evidence given the sampled values, avoiding rejection sampling's inefficiency."
       },
       {

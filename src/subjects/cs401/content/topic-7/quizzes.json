@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of an API Gateway in microservices?",
         "options": [
-          "Single entry point routing requests to services",
-          "Database access",
           "Service implementation",
+          "Database access",
+          "Single entry point routing requests to services",
           "Data storage"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "API Gateways provide a single entry point for clients, routing requests to appropriate microservices while handling cross-cutting concerns like authentication, rate limiting, and load balancing."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is service mesh?",
         "options": [
-          "Infrastructure layer managing service-to-service communication",
           "Network hardware",
-          "Database cluster",
-          "Web server"
+          "Web server",
+          "Infrastructure layer managing service-to-service communication",
+          "Database cluster"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A service mesh (like Istio, Linkerd) is an infrastructure layer that handles service-to-service communication, providing features like load balancing, encryption, observability, and resilience."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the Saga pattern used for?",
         "options": [
+          "Load balancing",
           "Managing distributed transactions across microservices",
           "Data replication",
-          "Load balancing",
           "Caching"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Sagas manage long-running distributed transactions by breaking them into local transactions with compensating actions, avoiding distributed locks while maintaining consistency."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What are the two types of Sagas?",
         "options": [
+          "Active and Passive",
           "Choreography and Orchestration",
-          "Sync and Async",
           "Push and Pull",
-          "Active and Passive"
+          "Sync and Async"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Choreography sagas use events where each service listens and reacts. Orchestration sagas use a central coordinator directing each step. Each has tradeoffs in complexity and coupling."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What is event sourcing?",
         "options": [
-          "Storing state changes as a sequence of events",
-          "Publishing events to topics",
           "Real-time event processing",
+          "Publishing events to topics",
+          "Storing state changes as a sequence of events",
           "Event logging for debugging"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Event sourcing stores all state changes as events in an append-only log, allowing state reconstruction, complete audit history, and time-travel queries, though increasing complexity."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is CQRS (Command Query Responsibility Segregation)?",
         "options": [
-          "Separating read and write models",
+          "Command pattern",
           "Combining reads and writes",
-          "Query optimization",
-          "Command pattern"
+          "Separating read and write models",
+          "Query optimization"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "CQRS separates the models for reading and writing data, allowing independent optimization, scaling, and evolution of read and write sides, often combined with event sourcing."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of distributed tracing?",
         "options": [
-          "Track requests across multiple services",
-          "Debug local code",
           "Monitor CPU usage",
-          "Encrypt communications"
+          "Track requests across multiple services",
+          "Encrypt communications",
+          "Debug local code"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Distributed tracing (like Jaeger, Zipkin) tracks requests as they flow through microservices, helping identify performance bottlenecks, failures, and dependencies in complex systems."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What is a sidecar pattern?",
         "options": [
+          "Data replication",
           "Deploying helper components alongside main services",
-          "Backup services",
           "Load balancing",
-          "Data replication"
+          "Backup services"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Sidecar pattern deploys auxiliary components (for logging, monitoring, proxying) alongside main services in the same pod/host, extending functionality without modifying service code."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What is rate limiting used for in distributed systems?",
         "options": [
-          "Controlling request rates to protect services",
-          "Measuring performance",
           "Data compression",
-          "Encryption"
+          "Encryption",
+          "Measuring performance",
+          "Controlling request rates to protect services"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Rate limiting restricts the number of requests clients can make, protecting services from overload, implementing fair usage policies, and preventing denial-of-service attacks."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between horizontal and vertical scaling?",
         "options": [
-          "Horizontal adds more machines; Vertical adds more resources to one machine",
-          "Horizontal is slower",
           "Vertical is cheaper",
+          "Horizontal is slower",
+          "Horizontal adds more machines; Vertical adds more resources to one machine",
           "They are the same"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Horizontal scaling (scale-out) adds more machines to distribute load, while vertical scaling (scale-up) adds CPU/memory to existing machines. Horizontal scaling is unlimited but more complex."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is backpressure in distributed systems?",
         "options": [
+          "Memory pressure",
           "Mechanism for handling overload by slowing down producers",
           "Network congestion",
-          "Database pressure",
-          "Memory pressure"
+          "Database pressure"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Backpressure is a feedback mechanism where overloaded consumers signal producers to slow down, preventing buffer overflow and maintaining system stability under high load."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is idempotency in distributed systems?",
         "options": [
-          "Operations produce same result when executed multiple times",
-          "Operations are fast",
+          "Operations never fail",
           "Operations are simple",
-          "Operations never fail"
+          "Operations are fast",
+          "Operations produce same result when executed multiple times"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Idempotent operations produce the same result when executed multiple times, making them safe to retry. This is crucial for handling failures and duplicate messages in distributed systems."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between at-most-once, at-least-once, and exactly-once delivery?",
         "options": [
+          "Network protocols",
           "Guarantees about how many times messages are delivered",
           "Performance characteristics",
-          "Message size limits",
-          "Network protocols"
+          "Message size limits"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "At-most-once may lose messages, at-least-once may duplicate messages, and exactly-once guarantees single delivery. Each has tradeoffs between complexity, performance, and guarantees."
       }
     ]

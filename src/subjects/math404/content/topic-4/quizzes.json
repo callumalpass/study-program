@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which operation preserves convexity of a function?",
         "options": [
+          "Multiplying by -1",
           "Taking the minimum of two convex functions",
           "Taking the maximum of two convex functions",
-          "Multiplying by -1",
           "Composing with any function"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The pointwise maximum of convex functions is convex. Minimum can give non-convex results."
       },
       {
@@ -65,12 +65,12 @@
         "type": "multiple_choice",
         "prompt": "Which of these is NOT a convex set?",
         "options": [
+          "Intersection of halfspaces",
           "A hyperplane {x : aᵀx = b}",
           "A ball {x : ||x-c|| ≤ r}",
-          "Union of two convex sets",
-          "Intersection of halfspaces"
+          "Union of two convex sets"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "The union of convex sets is generally not convex. The other options are all convex."
       },
       {
@@ -85,12 +85,12 @@
         "type": "multiple_choice",
         "prompt": "The first-order characterization of convexity states:",
         "options": [
-          "f(y) ≥ f(x) for all x,y",
           "f(y) ≥ f(x) + ∇f(x)ᵀ(y-x)",
+          "f(y) ≥ f(x) for all x,y",
           "f(y) = f(x) + ∇f(x)ᵀ(y-x)",
           "∇f(x) = 0"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "For differentiable convex f, the function lies above all its tangent hyperplanes: f(y) ≥ f(x) + ∇f(x)ᵀ(y-x)."
       },
       {
@@ -126,12 +126,12 @@
         "type": "multiple_choice",
         "prompt": "The conjugate function f*(y) = sup_x(yᵀx - f(x)) is always:",
         "options": [
-          "Differentiable",
-          "Convex",
           "Finite",
-          "Strictly convex"
+          "Differentiable",
+          "Strictly convex",
+          "Convex"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The conjugate function is always convex (as a supremum of affine functions), regardless of whether f is convex."
       },
       {
@@ -146,12 +146,12 @@
         "type": "multiple_choice",
         "prompt": "For a convex function f, which condition on the Hessian ensures strict convexity?",
         "options": [
-          "∇²f(x) ≥ 0",
-          "∇²f(x) > 0 (positive definite)",
           "∇²f(x) = 0",
-          "det(∇²f(x)) > 0"
+          "det(∇²f(x)) > 0",
+          "∇²f(x) > 0 (positive definite)",
+          "∇²f(x) ≥ 0"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Strict convexity requires the Hessian to be positive definite (not just semidefinite) everywhere."
       },
       {
@@ -160,11 +160,11 @@
         "prompt": "A sublevel set {x : f(x) ≤ α} of a convex function is:",
         "options": [
           "Always empty",
+          "Never convex",
           "Always convex",
-          "Always bounded",
-          "Never convex"
+          "Always bounded"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "All sublevel sets of a convex function are convex sets, which is equivalent to the definition of convexity."
       },
       {

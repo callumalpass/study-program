@@ -20,6 +20,14 @@ const math304Quizzes: Array<{
   (module: unknown) => (module as { default: Array<{ id: string; questions: QuizQuestion[] }> }).default
 );
 
+/** Helper to get the correct answer text for a multiple choice question */
+function getCorrectAnswerText(q: QuizQuestion): string {
+  if (typeof q.correctAnswer === 'number' && q.options) {
+    return q.options[q.correctAnswer];
+  }
+  return String(q.correctAnswer);
+}
+
 describe('Math304 Abstract Algebra Quiz Validation', () => {
   describe('Group Theory Questions', () => {
     it('should have questions about cyclic groups', () => {
@@ -52,8 +60,8 @@ describe('Math304 Abstract Algebra Quiz Validation', () => {
       // |1| in Z₄ is 4 (since 1 generates Z₄)
       // |1| in Z₆ is 6 (since 1 generates Z₆)
       // lcm(4,6) = 12
-      // correctAnswer is index 3, which corresponds to "12"
-      expect(question?.correctAnswer).toBe(3);
+      // The correct answer should be "12"
+      expect(getCorrectAnswerText(question!)).toBe('12');
     });
 
     it('validates the mathematical explanation is correct', () => {
@@ -86,16 +94,11 @@ describe('Math304 Abstract Algebra Quiz Validation', () => {
 
       if (nonCyclicQuestion) {
         // The Klein 4-group should be the correct answer for "not cyclic"
-        const kleinOption = nonCyclicQuestion.options?.findIndex(
-          o => o.includes('Klein') || o.includes('V₄')
-        );
-
-        if (typeof nonCyclicQuestion.correctAnswer === 'string') {
-          expect(
-            nonCyclicQuestion.correctAnswer.includes('Klein') ||
-            nonCyclicQuestion.correctAnswer.includes('V₄')
-          ).toBe(true);
-        }
+        const correctAnswer = getCorrectAnswerText(nonCyclicQuestion);
+        expect(
+          correctAnswer.includes('Klein') ||
+          correctAnswer.includes('V₄')
+        ).toBe(true);
       }
     });
   });
@@ -119,8 +122,8 @@ describe('Math304 Abstract Algebra Quiz Validation', () => {
       if (question) {
         // φ(12) = φ(4)·φ(3) = 2·2 = 4
         // Generators of Z₁₂ are: 1, 5, 7, 11 (elements coprime to 12)
-        // correctAnswer is index 1, which corresponds to "4"
-        expect(question.correctAnswer).toBe(1);
+        // The correct answer should be "4"
+        expect(getCorrectAnswerText(question)).toBe('4');
       }
     });
   });
@@ -133,8 +136,8 @@ describe('Math304 Abstract Algebra Quiz Validation', () => {
 
       if (question) {
         // Since gcd(2,3) = 1, the direct product is cyclic and isomorphic to Z₆
-        // correctAnswer is index 1, which corresponds to "Z₆"
-        expect(question.correctAnswer).toBe(1);
+        // The correct answer should be "Z₆" or reference Z_6
+        expect(getCorrectAnswerText(question)).toMatch(/Z₆|Z_6/);
       }
     });
 
@@ -145,13 +148,7 @@ describe('Math304 Abstract Algebra Quiz Validation', () => {
 
       if (question) {
         // Since gcd(4,6) = 2 ≠ 1, the direct product is NOT cyclic
-        const correctIndex = typeof question.correctAnswer === 'number'
-          ? question.correctAnswer
-          : question.options?.indexOf(question.correctAnswer);
-
-        if (correctIndex !== undefined && question.options) {
-          expect(question.options[correctIndex].toLowerCase()).toContain('no');
-        }
+        expect(getCorrectAnswerText(question).toLowerCase()).toContain('no');
       }
     });
   });
@@ -165,10 +162,7 @@ describe('Math304 Abstract Algebra Quiz Validation', () => {
       if (question) {
         // In Z₂₀, the unique subgroup of order 4 is ⟨5⟩ = {0, 5, 10, 15}
         // Because 20/4 = 5, so the generator is 5
-        const answer = typeof question.correctAnswer === 'string'
-          ? question.correctAnswer
-          : question.options?.[question.correctAnswer as number];
-        expect(answer).toContain('⟨5⟩');
+        expect(getCorrectAnswerText(question)).toContain('⟨5⟩');
       }
     });
   });

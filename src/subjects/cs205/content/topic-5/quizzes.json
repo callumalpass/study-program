@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which ACID property ensures a transaction transforms the database from one valid state to another?",
         "options": [
+          "Isolation",
           "Atomicity",
           "Consistency",
-          "Isolation",
           "Durability"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Consistency ensures all database constraints and rules are maintained after the transaction."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Isolation ensures that:",
         "options": [
-          "Transactions are permanent",
           "Concurrent transactions don't interfere with each other",
           "Transactions complete fully or not at all",
-          "Databases maintain valid states"
+          "Databases maintain valid states",
+          "Transactions are permanent"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Isolation prevents concurrent transactions from seeing each other's intermediate states."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "A dirty read occurs when a transaction reads:",
         "options": [
+          "Data from a different table",
           "Old committed data",
           "Data written by an uncommitted transaction",
-          "Data from a different table",
           "NULL values"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Dirty read means reading uncommitted data that might be rolled back."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "Non-repeatable read means:",
         "options": [
+          "Queries timeout frequently",
           "A query cannot be executed twice",
-          "Same query returns different values within one transaction",
           "Read operations fail randomly",
-          "Queries timeout frequently"
+          "Same query returns different values within one transaction"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Non-repeatable reads occur when another transaction modifies data between reads in the same transaction."
       },
       {
@@ -117,12 +117,12 @@
         "type": "multiple_choice",
         "prompt": "Which concurrency problem involves two transactions making disjoint updates that together violate a constraint?",
         "options": [
-          "Dirty read",
-          "Lost update",
           "Write skew",
-          "Phantom read"
+          "Lost update",
+          "Phantom read",
+          "Dirty read"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Write skew occurs when two transactions read overlapping data and make updates that together violate an invariant."
       }
     ]
@@ -151,12 +151,12 @@
         "type": "multiple_choice",
         "prompt": "SERIALIZABLE isolation level ensures:",
         "options": [
-          "Maximum concurrency",
           "Transactions appear to execute serially",
-          "Only read operations",
-          "No locks are used"
+          "No locks are used",
+          "Maximum concurrency",
+          "Only read operations"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "SERIALIZABLE provides the highest isolation—results are as if transactions ran one after another."
       },
       {
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "Which lock type allows multiple transactions to read the same data?",
         "options": [
-          "Exclusive lock",
           "Shared lock",
+          "Intent lock",
           "Update lock",
-          "Intent lock"
+          "Exclusive lock"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Shared locks (S-locks) allow concurrent reads but block writes."
       },
       {

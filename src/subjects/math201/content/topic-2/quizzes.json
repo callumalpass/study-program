@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "If $A$ is a $3 \\times 4$ matrix and $B$ is a $4 \\times 2$ matrix, what size is $AB$?",
         "options": [
-          "$3 \\times 2$",
           "$4 \\times 4$",
+          "$2 \\times 3$",
           "$3 \\times 4$",
-          "$2 \\times 3$"
+          "$3 \\times 2$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "When multiplying an $m \\times n$ matrix by an $n \\times p$ matrix, the result is $m \\times p$. So $3 \\times 4$ times $4 \\times 2$ gives $3 \\times 2$."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "The transpose of matrix $A$, denoted $A^T$, is formed by:",
         "options": [
-          "Inverting all the entries",
           "Swapping rows and columns",
           "Multiplying by -1",
-          "Taking the reciprocal of each entry"
+          "Taking the reciprocal of each entry",
+          "Inverting all the entries"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The transpose $A^T$ is formed by swapping rows and columns: the $(i,j)$ entry of $A$ becomes the $(j,i)$ entry of $A^T$."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "If $A$ is invertible, then $(A^{-1})^T$ equals:",
         "options": [
+          "$A$",
           "$A^T$",
           "$(A^T)^{-1}$",
-          "$A$",
           "$-A^T$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The transpose of the inverse equals the inverse of the transpose: $(A^{-1})^T = (A^T)^{-1}$."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "An elementary matrix is obtained by:",
         "options": [
-          "Multiplying the identity matrix by a scalar",
-          "Performing one elementary row operation on the identity matrix",
           "Taking the transpose of a matrix",
-          "Inverting a matrix"
+          "Inverting a matrix",
+          "Performing one elementary row operation on the identity matrix",
+          "Multiplying the identity matrix by a scalar"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "An elementary matrix is obtained by performing a single elementary row operation on an identity matrix."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "A diagonal matrix has all nonzero entries:",
         "options": [
-          "In the first row",
-          "In the first column",
           "On the main diagonal",
+          "In the first column",
+          "In the first row",
           "In the last row"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "A diagonal matrix has all its nonzero entries on the main diagonal (where row index equals column index)."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "The LU factorization of a matrix $A$ expresses $A$ as:",
         "options": [
-          "A product of lower and upper triangular matrices",
+          "A diagonal matrix",
           "A sum of lower and upper triangular matrices",
           "The transpose of a triangular matrix",
-          "A diagonal matrix"
+          "A product of lower and upper triangular matrices"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "LU factorization expresses $A = LU$ where $L$ is lower triangular and $U$ is upper triangular."
       },
       {

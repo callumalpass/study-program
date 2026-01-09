@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What resource is shared between threads of the same process?",
         "options": [
-          "Stack",
-          "Program counter",
           "Registers",
-          "Code and data sections"
+          "Code and data sections",
+          "Program counter",
+          "Stack"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "Threads share code, data, and heap sections. Each thread has its own stack, registers, and program counter."
       },
       {
@@ -24,11 +24,11 @@
         "prompt": "What is the main advantage of threads over processes?",
         "options": [
           "Better isolation",
-          "Faster creation and context switching",
           "Simpler programming model",
+          "Faster creation and context switching",
           "More security"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Threads have lower overhead because they share address space and resources, making creation and switching faster."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "What is thread-local storage (TLS)?",
         "options": [
+          "Stack memory",
           "Shared global variables",
           "Per-thread private data",
-          "Heap memory",
-          "Stack memory"
+          "Heap memory"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "TLS provides each thread with its own instance of a variable, avoiding synchronization issues."
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "Which pthread function creates a new thread?",
         "options": [
-          "pthread_init()",
-          "pthread_create()",
+          "pthread_spawn()",
           "pthread_new()",
-          "pthread_spawn()"
+          "pthread_init()",
+          "pthread_create()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "pthread_create() creates a new thread with specified attributes and start routine."
       },
       {
@@ -90,12 +90,12 @@
         "type": "multiple_choice",
         "prompt": "What does pthread_join() do?",
         "options": [
-          "Creates a thread",
           "Waits for a thread to terminate",
+          "Kills a thread",
           "Detaches a thread",
-          "Kills a thread"
+          "Creates a thread"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "pthread_join() blocks until the specified thread terminates and optionally retrieves its return value."
       },
       {
@@ -103,12 +103,12 @@
         "type": "multiple_choice",
         "prompt": "What is implicit threading?",
         "options": [
-          "Manually creating threads",
-          "Compiler/runtime manages thread creation",
+          "Hardware threading",
           "Single-threaded execution",
-          "Hardware threading"
+          "Compiler/runtime manages thread creation",
+          "Manually creating threads"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Implicit threading shifts thread management from programmers to compilers and runtime libraries."
       },
       {
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "What makes a function thread-safe?",
         "options": [
-          "It runs fast",
-          "It can be safely called by multiple threads",
           "It uses global variables",
-          "It is recursive"
+          "It is recursive",
+          "It can be safely called by multiple threads",
+          "It runs fast"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A thread-safe function can be called concurrently without causing race conditions or data corruption."
       },
       {
@@ -191,11 +191,11 @@
         "prompt": "According to Amdahl's Law, if 75% of code is parallelizable, what is the maximum speedup with infinite processors?",
         "options": [
           "2x",
-          "4x",
+          "Infinite",
           "75x",
-          "Infinite"
+          "4x"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Maximum speedup = 1/(1-P) = 1/0.25 = 4x, limited by the serial 25% portion."
       }
     ]

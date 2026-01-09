@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What operator is used to get the address of a variable?",
         "options": [
-          "*",
           "&",
+          "*",
           "->",
           "%"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The & operator (address-of operator) returns the memory address of a variable."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "If int *ptr points to an integer variable x, how do you access the value of x through ptr?",
         "options": [
-          "&ptr",
-          "ptr",
           "*ptr",
-          "ptr->x"
+          "&ptr",
+          "ptr->x",
+          "ptr"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The * operator dereferences a pointer, accessing the value at the memory address it stores."
       },
       {
@@ -44,12 +44,12 @@
         "type": "multiple_choice",
         "prompt": "What is a NULL pointer?",
         "options": [
+          "A pointer to an empty string",
           "A pointer to zero",
-          "A pointer that points to nothing",
           "An uninitialized pointer",
-          "A pointer to an empty string"
+          "A pointer that points to nothing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A NULL pointer is a special pointer value that indicates the pointer points to nothing (no valid memory location)."
       },
       {
@@ -102,11 +102,11 @@
         "prompt": "What happens when you increment an int pointer by 1?",
         "options": [
           "Address increases by 1 byte",
+          "Nothing",
           "Address increases by sizeof(int) bytes",
-          "Value at pointer increases by 1",
-          "Nothing"
+          "Value at pointer increases by 1"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Pointer arithmetic scales by the size of the pointed-to type. For int*, p+1 moves by sizeof(int) bytes."
       },
       {
@@ -150,12 +150,12 @@
         "type": "multiple_choice",
         "prompt": "What is the syntax for a function pointer that takes two ints and returns an int?",
         "options": [
-          "int (*fp)(int, int)",
-          "int *fp(int, int)",
+          "func<int(int,int)> fp",
           "int fp*(int, int)",
-          "func<int(int,int)> fp"
+          "int (*fp)(int, int)",
+          "int *fp(int, int)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Function pointer syntax: return_type (*pointer_name)(parameter_types). The parentheses around *fp are crucial."
       },
       {

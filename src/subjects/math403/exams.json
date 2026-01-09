@@ -16,12 +16,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is a topology on X = {a, b, c}?",
         "options": [
-          "{∅, {a}, {b, c}}",
           "{∅, {a}, {b}, {a, b}, X}",
-          "{∅, {a}, {a, b}, X}",
-          "{∅, {a}, {b}, X}"
+          "{∅, {a}, {b, c}}",
+          "{∅, {a}, {b}, X}",
+          "{∅, {a}, {a, b}, X}"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Option 2 is a topology. It contains ∅ and X, is closed under unions ({a} ∪ {a,b} = {a,b}), and under intersections ({a} ∩ {a,b} = {a})."
       },
       {
@@ -50,11 +50,11 @@
         "prompt": "What is int(ℚ) where ℚ is the rationals in ℝ with standard topology?",
         "options": [
           "ℚ",
+          "[0, 1]",
           "ℝ",
-          "∅",
-          "[0, 1]"
+          "∅"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "int(ℚ) = ∅ because ℚ contains no open intervals. Every open interval contains irrationals, so no rational is an interior point of ℚ."
       },
       {
@@ -70,12 +70,12 @@
         "type": "multiple_choice",
         "prompt": "A collection ℬ is a basis for a topology if:",
         "options": [
-          "ℬ contains all open sets",
           "⋃ℬ = X and intersections contain basis elements",
-          "ℬ is countable",
-          "ℬ contains ∅ and X"
+          "ℬ contains all open sets",
+          "ℬ contains ∅ and X",
+          "ℬ is countable"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The basis axioms require ⋃ℬ = X and that for any x ∈ B₁ ∩ B₂, there exists B₃ ∈ ℬ with x ∈ B₃ ⊆ B₁ ∩ B₂."
       },
       {
@@ -90,12 +90,12 @@
         "type": "multiple_choice",
         "prompt": "A set D is dense in X if:",
         "options": [
-          "D = X",
-          "cl(D) = X",
           "D is countable",
-          "int(D) = X"
+          "int(D) = X",
+          "D = X",
+          "cl(D) = X"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "D is dense in X if and only if cl(D) = X, meaning every point of X is either in D or a limit point of D."
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "A function f: X → Y is continuous if and only if:",
         "options": [
-          "f maps open sets to open sets",
           "f⁻¹(V) is open for every open V in Y",
           "f maps closed sets to closed sets",
+          "f maps open sets to open sets",
           "f is injective"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The topological definition of continuity: f is continuous iff preimages of open sets are open."
       },
       {
@@ -143,12 +143,12 @@
         "type": "multiple_choice",
         "prompt": "A homeomorphism is:",
         "options": [
-          "A continuous bijection",
-          "An open continuous map",
           "A continuous bijection with continuous inverse",
-          "A closed map"
+          "A closed map",
+          "A continuous bijection",
+          "An open continuous map"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "A homeomorphism requires f to be a continuous bijection with f⁻¹ also continuous."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Which property is NOT preserved by homeomorphisms?",
         "options": [
-          "Connectedness",
           "Compactness",
           "Being a metric space",
+          "Connectedness",
           "Cardinality"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "All topological properties are preserved, but \"being a metric space\" is not purely topological - a space might be metrizable with one metric but the homeomorphic image might have a different metric structure. Actually, metrizability IS preserved. The answer should be something like \"having a specific metric\" vs \"being metrizable.\" Let me reconsider... Actually metrizability is preserved. Better answer: none of these, or something like \"having rational coordinates.\""
       },
       {
@@ -178,11 +178,11 @@
         "prompt": "A space X is connected if and only if:",
         "options": [
           "X cannot be written as a union of two disjoint nonempty open sets",
+          "Both (a) and (c)",
           "X is path connected",
-          "X has no proper clopen subsets besides ∅ and X",
-          "Both (a) and (c)"
+          "X has no proper clopen subsets besides ∅ and X"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "X is connected iff it cannot be separated, which is equivalent to having no proper clopen subsets."
       },
       {
@@ -198,11 +198,11 @@
         "prompt": "Which space is NOT connected?",
         "options": [
           "[0, 1]",
-          "(0, 1)",
           "ℝ \\ {0}",
-          "S¹ (the circle)"
+          "S¹ (the circle)",
+          "(0, 1)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "ℝ \\ {0} = (-∞, 0) ∪ (0, ∞) is disconnected. All the others are connected."
       },
       {
@@ -210,12 +210,12 @@
         "type": "multiple_choice",
         "prompt": "The Intermediate Value Theorem is a consequence of:",
         "options": [
+          "Completeness of ℝ",
           "Compactness of [a, b]",
           "Connectedness of [a, b]",
-          "Completeness of ℝ",
           "Separability of ℝ"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "IVT follows from the fact that [a, b] is connected and continuous images of connected sets are connected."
       },
       {
@@ -231,12 +231,12 @@
         "type": "multiple_choice",
         "prompt": "Let X = {a, b, c} with topology τ = {∅, {a}, {a, b}, X}. Which of the following is cl({b})?",
         "options": [
-          "{b}",
-          "{a, b}",
           "{b, c}",
-          "X"
+          "X",
+          "{b}",
+          "{a, b}"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "The closed sets are complements of open sets: X, {b, c}, {c}, ∅. The smallest closed set containing {b} is X."
       },
       {
@@ -251,12 +251,12 @@
         "type": "multiple_choice",
         "prompt": "In the product topology on ℝ × ℝ, the set (0, 1) × (0, 1) is:",
         "options": [
-          "Open but not closed",
           "Closed but not open",
-          "Both open and closed",
-          "Neither open nor closed"
+          "Neither open nor closed",
+          "Open but not closed",
+          "Both open and closed"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "(0, 1) × (0, 1) is open (product of open sets is open in product topology). It is not closed since its complement is not open in the product topology."
       },
       {
@@ -284,12 +284,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is a subbasis for the standard topology on ℝ?",
         "options": [
-          "{(a, b) : a, b ∈ ℝ}",
-          "{(-∞, a) : a ∈ ℝ} ∪ {(a, ∞) : a ∈ ℝ}",
+          "{{x} : x ∈ ℝ}",
           "{[a, b] : a, b ∈ ℝ}",
-          "{{x} : x ∈ ℝ}"
+          "{(a, b) : a, b ∈ ℝ}",
+          "{(-∞, a) : a ∈ ℝ} ∪ {(a, ∞) : a ∈ ℝ}"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The collection of rays {(-∞, a)} ∪ {(a, ∞)} is a subbasis for ℝ. Finite intersections give (a, b) intervals, which form a basis."
       }
     ]
@@ -311,12 +311,12 @@
         "type": "multiple_choice",
         "prompt": "In the cofinite topology on an infinite set X, which sets are open?",
         "options": [
-          "Only ∅ and X",
-          "All finite sets",
+          "All sets",
           "∅ and sets whose complement is finite",
-          "All sets"
+          "Only ∅ and X",
+          "All finite sets"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "In the cofinite topology, a set is open iff it is empty or its complement is finite."
       },
       {
@@ -331,12 +331,12 @@
         "type": "multiple_choice",
         "prompt": "For A = {1/n : n ∈ ℕ} in ℝ, what is ∂A (the boundary)?",
         "options": [
-          "A",
-          "{0}",
           "A ∪ {0}",
-          "∅"
+          "∅",
+          "{0}",
+          "A"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "∂A = cl(A) \\ int(A). We have cl(A) = A ∪ {0} and int(A) = ∅, so ∂A = A ∪ {0}."
       },
       {
@@ -365,11 +365,11 @@
         "prompt": "The lower limit topology on ℝ (basis {[a, b)}) is:",
         "options": [
           "Coarser than the standard topology",
-          "Equal to the standard topology",
           "Finer than the standard topology",
-          "Incomparable to the standard topology"
+          "Incomparable to the standard topology",
+          "Equal to the standard topology"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The lower limit topology is strictly finer: every standard open set is lower-limit open, but [0, 1) is not standard open."
       },
       {
@@ -377,12 +377,12 @@
         "type": "multiple_choice",
         "prompt": "If ℬ is a basis for X, then:",
         "options": [
-          "ℬ must be countable",
-          "Every open set is a union of basis elements",
           "ℬ must contain all open sets",
-          "ℬ must be closed under intersections"
+          "ℬ must be closed under intersections",
+          "Every open set is a union of basis elements",
+          "ℬ must be countable"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "By definition, every open set in the topology generated by ℬ is a union of elements from ℬ."
       },
       {
@@ -398,12 +398,12 @@
         "type": "multiple_choice",
         "prompt": "The projection π₁: X × Y → X in the product topology is:",
         "options": [
-          "Continuous but not open",
           "Open but not continuous",
           "Both continuous and open",
+          "Continuous but not open",
           "Neither continuous nor open"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Projection maps are always both continuous and open in the product topology."
       },
       {
@@ -418,12 +418,12 @@
         "type": "multiple_choice",
         "prompt": "Are [0, 1] and [0, 2] homeomorphic?",
         "options": [
-          "Yes, via f(x) = 2x",
+          "No, they have different compactness",
           "Yes, via a different map",
-          "No, they have different cardinality",
-          "No, they have different compactness"
+          "Yes, via f(x) = 2x",
+          "No, they have different cardinality"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Yes, f(x) = 2x is a homeomorphism from [0, 1] to [0, 2]. Both are compact intervals."
       },
       {
@@ -452,11 +452,11 @@
         "prompt": "Which statement is true?",
         "options": [
           "Every connected space is path connected",
-          "Every path connected space is connected",
           "Connectedness and path connectedness are equivalent",
-          "Neither implies the other"
+          "Neither implies the other",
+          "Every path connected space is connected"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Path connected ⇒ connected, but not conversely (topologist's sine curve is a counterexample)."
       },
       {
@@ -471,12 +471,12 @@
         "type": "multiple_choice",
         "prompt": "A space is locally connected if:",
         "options": [
-          "It is connected",
-          "Every connected component is a singleton",
           "Every point has a local basis of connected neighborhoods",
-          "It is path connected"
+          "It is connected",
+          "It is path connected",
+          "Every connected component is a singleton"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Locally connected means every point has arbitrarily small connected neighborhoods forming a local basis."
       },
       {
@@ -498,11 +498,11 @@
         "prompt": "By the Heine-Borel Theorem, a subset of ℝⁿ is compact iff:",
         "options": [
           "It is closed",
-          "It is bounded",
           "It is closed and bounded",
+          "It is bounded",
           "It is open and bounded"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Heine-Borel: In ℝⁿ, compact ⟺ closed and bounded."
       },
       {
@@ -517,12 +517,12 @@
         "type": "multiple_choice",
         "prompt": "If f: X → ℝ is continuous and X is compact, then:",
         "options": [
+          "All of the above",
           "f is bounded",
           "f attains its maximum and minimum",
-          "f is uniformly continuous if X is metric",
-          "All of the above"
+          "f is uniformly continuous if X is metric"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "All three are true: continuous functions on compact spaces are bounded, attain extrema, and are uniformly continuous (in metric spaces)."
       },
       {
@@ -558,12 +558,12 @@
         "type": "multiple_choice",
         "prompt": "A metric space (X, d) is complete if:",
         "options": [
-          "Every sequence converges",
-          "Every Cauchy sequence converges",
           "X is compact",
-          "X is bounded"
+          "X is bounded",
+          "Every Cauchy sequence converges",
+          "Every sequence converges"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Completeness means every Cauchy sequence converges (to a point in X)."
       },
       {
@@ -592,11 +592,11 @@
         "prompt": "Which space is NOT complete?",
         "options": [
           "ℝ with standard metric",
-          "(0, 1) with standard metric",
           "[0, 1] with standard metric",
+          "(0, 1) with standard metric",
           "ℝⁿ with Euclidean metric"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "(0, 1) is not complete. For example, xₙ = 1/n is Cauchy but converges to 0 ∉ (0, 1)."
       },
       {
@@ -611,12 +611,12 @@
         "type": "multiple_choice",
         "prompt": "The Brouwer Fixed Point Theorem states that:",
         "options": [
-          "Every continuous function has a fixed point",
-          "Every continuous map from the n-disk to itself has a fixed point",
+          "Every metric space has a fixed point",
           "Every homeomorphism has a fixed point",
-          "Every metric space has a fixed point"
+          "Every continuous function has a fixed point",
+          "Every continuous map from the n-disk to itself has a fixed point"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Brouwer: Every continuous map f: Dⁿ → Dⁿ has a fixed point. This doesn't hold for all continuous functions."
       },
       {
@@ -632,12 +632,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following topological properties is NOT an invariant under homeomorphism?",
         "options": [
-          "Being Hausdorff",
           "Being compact",
           "Being a subset of ℝ²",
+          "Being Hausdorff",
           "Being connected"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Being a subset of ℝ² is not a topological property - it depends on embedding, not intrinsic topology. All the others are topological invariants."
       },
       {
@@ -653,11 +653,11 @@
         "prompt": "Let f: X → Y be a continuous surjection where X is compact. Which is necessarily true?",
         "options": [
           "Y is Hausdorff",
-          "Y is compact",
+          "Y is connected",
           "f is a homeomorphism",
-          "Y is connected"
+          "Y is compact"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The continuous image of a compact space is compact. The other properties depend on additional conditions (injectivity, Hausdorff property of Y, etc.)."
       },
       {
@@ -666,11 +666,11 @@
         "prompt": "The one-point compactification of ℝ is homeomorphic to:",
         "options": [
           "ℝ",
-          "S¹ (the circle)",
+          "ℝ²",
           "[0, 1]",
-          "ℝ²"
+          "S¹ (the circle)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The one-point compactification of ℝ is homeomorphic to S¹. We add a point at infinity that connects both ends of the real line into a circle."
       },
       {
@@ -707,11 +707,11 @@
         "prompt": "A topological space is T₁ if:",
         "options": [
           "Any two distinct points can be separated by disjoint open sets",
-          "Every singleton is closed",
+          "Every continuous function is bounded",
           "The space is metrizable",
-          "Every continuous function is bounded"
+          "Every singleton is closed"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A space is T₁ if every singleton {x} is closed. Equivalently, for distinct points x, y, there exist open sets U ∋ x and V ∋ y with y ∉ U and x ∉ V."
       },
       {
@@ -727,11 +727,11 @@
         "prompt": "The Lebesgue number lemma applies to which type of space?",
         "options": [
           "Any topological space",
-          "Compact metric spaces",
           "Complete metric spaces",
-          "Connected spaces"
+          "Connected spaces",
+          "Compact metric spaces"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The Lebesgue number lemma applies to compact metric spaces. It states that for any open cover of a compact metric space, there exists a Lebesgue number δ > 0 such that any set of diameter < δ lies in some cover element."
       },
       {
@@ -740,11 +740,11 @@
         "prompt": "Two spaces X and Y have the same homotopy type if:",
         "options": [
           "They are homeomorphic",
-          "They have isomorphic fundamental groups",
           "There exist continuous maps f: X → Y and g: Y → X with g∘f ≃ id_X and f∘g ≃ id_Y",
-          "They have the same cardinality"
+          "They have the same cardinality",
+          "They have isomorphic fundamental groups"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Homotopy equivalence requires continuous maps f and g such that g∘f is homotopic to id_X and f∘g is homotopic to id_Y. This is weaker than homeomorphism."
       },
       {

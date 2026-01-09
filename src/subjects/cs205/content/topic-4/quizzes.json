@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the closure of attribute set X?",
         "options": [
+          "All attributes in the table",
           "The minimum attributes X can have",
-          "All attributes functionally determined by X",
           "The primary key containing X",
-          "All attributes in the table"
+          "All attributes functionally determined by X"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The closure X⁺ includes all attributes that can be derived from X using the functional dependencies."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "A relation is in 1NF if:",
         "options": [
-          "It has no partial dependencies",
           "All attributes contain atomic values",
-          "All determinants are superkeys",
-          "It has no transitive dependencies"
+          "It has no partial dependencies",
+          "It has no transitive dependencies",
+          "All determinants are superkeys"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "1NF requires atomic (indivisible) values and no repeating groups."
       },
       {
@@ -85,11 +85,11 @@
         "prompt": "What violation does 2NF eliminate?",
         "options": [
           "Transitive dependencies",
-          "Partial dependencies on composite keys",
           "Multi-valued dependencies",
-          "Non-atomic values"
+          "Non-atomic values",
+          "Partial dependencies on composite keys"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "2NF eliminates partial dependencies where non-key attributes depend on part of a composite key."
       },
       {
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "The 3NF synthesis algorithm guarantees:",
         "options": [
-          "BCNF and lossless join",
           "3NF, lossless join, and dependency preservation",
-          "Only dependency preservation",
-          "4NF compliance"
+          "4NF compliance",
+          "BCNF and lossless join",
+          "Only dependency preservation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The 3NF synthesis algorithm produces decomposition that is lossless and dependency-preserving."
       },
       {

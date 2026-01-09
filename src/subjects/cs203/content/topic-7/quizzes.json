@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "The time complexity of a TM is:",
         "options": [
-          "The number of states",
           "The maximum steps on any input of length n",
           "The tape length used",
+          "The number of states",
           "The number of transitions defined"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Time complexity f(n) = max steps M uses on any input of length n. We measure worst-case running time."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Class P is defined as:",
         "options": [
+          "Problems with polynomial-size witnesses",
           "Problems solvable in linear time",
-          "Problems solvable in polynomial time",
           "Problems solvable in exponential time",
-          "Problems with polynomial-size witnesses"
+          "Problems solvable in polynomial time"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "P = ∪_k TIME(n^k) - languages decidable by a deterministic TM in polynomial time O(n^k) for some k."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "Which problem is in P?",
         "options": [
-          "Boolean satisfiability (SAT)",
-          "Traveling salesman optimization",
           "Sorting n numbers",
-          "Hamiltonian path"
+          "Traveling salesman optimization",
+          "Hamiltonian path",
+          "Boolean satisfiability (SAT)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Sorting is O(n log n), polynomial time. SAT, TSP optimization, and Hamiltonian path have no known polynomial algorithms."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "P is often considered the class of:",
         "options": [
+          "Problems requiring exponential space",
           "All possible problems",
           "\"Efficiently solvable\" problems",
-          "Undecidable problems",
-          "Problems requiring exponential space"
+          "Undecidable problems"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "P represents problems with efficient (polynomial-time) algorithms - the \"tractable\" problems in complexity theory."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "Why do we use O-notation for time complexity?",
         "options": [
-          "Exact step counts depend on encoding/model details",
+          "It simplifies proofs of undecidability",
           "It makes all problems tractable",
           "TMs cannot count steps",
-          "It simplifies proofs of undecidability"
+          "Exact step counts depend on encoding/model details"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "O-notation abstracts away constant factors and lower-order terms that depend on machine model and encoding choices."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "NP stands for:",
         "options": [
-          "Not Polynomial",
           "Nondeterministic Polynomial time",
-          "Non-Computable Problems",
-          "Nearly Polynomial"
+          "Nearly Polynomial",
+          "Not Polynomial",
+          "Non-Computable Problems"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "NP = Nondeterministic Polynomial time - languages accepted by a nondeterministic TM in polynomial time."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "An equivalent definition of NP uses:",
         "options": [
-          "Exponential time algorithms",
-          "Polynomial-time verifiers with polynomial-size certificates",
           "Space-bounded computation",
-          "Logarithmic time"
+          "Logarithmic time",
+          "Exponential time algorithms",
+          "Polynomial-time verifiers with polynomial-size certificates"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "L ∈ NP iff there exists a polynomial-time verifier V and polynomial p such that w ∈ L ⟺ ∃c, |c| ≤ p(|w|), V(w,c) accepts."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "If P = NP, then:",
         "options": [
-          "Cryptography would become more secure",
-          "Every efficiently verifiable problem would be efficiently solvable",
           "No polynomial algorithms would exist",
-          "TMs would become more powerful"
+          "TMs would become more powerful",
+          "Every efficiently verifiable problem would be efficiently solvable",
+          "Cryptography would become more secure"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "P = NP means problems with easy-to-verify solutions also have easy-to-find solutions. Many \"hard\" problems become tractable."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Most complexity theorists believe:",
         "options": [
-          "P = NP",
-          "P ≠ NP",
+          "P and NP are incomparable",
           "The question is meaningless",
-          "P and NP are incomparable"
+          "P = NP",
+          "P ≠ NP"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Despite lack of proof, decades of failed attempts to find polynomial algorithms for NP-complete problems suggests P ≠ NP."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "A problem is NP-complete if:",
         "options": [
-          "It is in NP",
-          "It is NP-hard",
           "It is in NP and NP-hard",
+          "It is NP-hard",
+          "It is in NP",
           "It is not in P"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "NP-complete = in NP (has polynomial verifier) AND NP-hard (all NP problems reduce to it in polynomial time)."
       },
       {
@@ -170,11 +170,11 @@
         "prompt": "The first problem proven NP-complete was:",
         "options": [
           "CLIQUE",
+          "VERTEX-COVER",
           "SAT (by Cook-Levin theorem)",
-          "HAMILTONIAN-PATH",
-          "VERTEX-COVER"
+          "HAMILTONIAN-PATH"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Cook (1971) and Levin proved SAT is NP-complete, establishing the first NP-complete problem and enabling reductions."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "To prove problem B is NP-complete:",
         "options": [
-          "Reduce B to SAT",
           "Show B ∈ NP and reduce a known NP-complete problem to B",
-          "Show B is undecidable",
-          "Prove P = NP"
+          "Reduce B to SAT",
+          "Prove P = NP",
+          "Show B is undecidable"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Prove B ∈ NP (give verifier), then reduce a known NP-complete problem A to B (A ≤_p B). This shows B is NP-hard."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "Savitch's theorem shows:",
         "options": [
-          "P = NP",
           "NSPACE(f(n)) ⊆ SPACE(f(n)²)",
           "Space and time are equivalent",
-          "All problems are in PSPACE"
+          "All problems are in PSPACE",
+          "P = NP"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Savitch's theorem: nondeterministic space can be simulated deterministically with only a square blowup. Thus NPSPACE = PSPACE."
       }
     ]

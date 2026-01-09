@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "The characteristic equation for y″ - 5y′ + 6y = 0 is:",
         "options": [
-          "r² - 5r + 6 = 0",
           "r² + 5r + 6 = 0",
+          "r² - 5r + 6 = 0",
           "r² - 5r - 6 = 0",
           "5r² - 6r + 1 = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For ay″ + by′ + cy = 0, the characteristic equation is ar² + br + c = 0. Here: r² - 5r + 6 = 0, giving r = 2, 3."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "If the characteristic equation has roots r = -2 ± 3i, the general solution is:",
         "options": [
+          "y = C₁cos(3x) + C₂sin(3x)",
           "y = e^(-2x)(C₁cos(3x) + C₂sin(3x))",
           "y = C₁e^(-2x) + C₂e^(3x)",
-          "y = e^(3x)(C₁cos(2x) + C₂sin(2x))",
-          "y = C₁cos(3x) + C₂sin(3x)"
+          "y = e^(3x)(C₁cos(2x) + C₂sin(2x))"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For complex roots α ± βi, the solution is y = e^(αx)(C₁cos(βx) + C₂sin(βx)). Here α = -2, β = 3."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "The general solution of y″ - 6y′ + 9y = 0 is:",
         "options": [
-          "y = (C₁ + C₂x)e^(3x)",
-          "y = C₁e^(3x) + C₂e^(-3x)",
           "y = C₁cos(3x) + C₂sin(3x)",
+          "y = C₁e^(3x) + C₂e^(-3x)",
+          "y = (C₁ + C₂x)e^(3x)",
           "y = C₁e^(3x) + C₂e^(9x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The characteristic equation r² - 6r + 9 = (r - 3)² = 0 has a repeated root r = 3. For repeated roots, y = (C₁ + C₂x)e^(rx)."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "Which equation has solutions that grow without bound as x → ∞?",
         "options": [
-          "y″ - 4y = 0",
-          "y″ + 4y = 0",
           "y″ + 4y′ + 4y = 0",
-          "y″ + y′ + y = 0"
+          "y″ + y′ + y = 0",
+          "y″ + 4y = 0",
+          "y″ - 4y = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Characteristic equation r² - 4 = 0 gives r = ±2. The positive root r = 2 produces an e^(2x) term that grows exponentially."
       }
     ]
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "For y″ - 3y′ = 6e^(3x), what particular solution form should you try?",
         "options": [
-          "Axe^(3x)",
           "Ae^(3x)",
+          "Axe^(3x)",
           "Ax²e^(3x)",
           "Ae^(3x) + Bx"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Since e^(3x) is a solution to the homogeneous equation (r = 0, 3), we multiply by x to get the particular solution form Axe^(3x)."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What particular solution form is appropriate for y″ + 9y = sin(3x)?",
         "options": [
-          "x(Acos(3x) + Bsin(3x))",
           "Acos(3x) + Bsin(3x)",
-          "Asin(3x)",
-          "Ae^(3x)"
+          "Ae^(3x)",
+          "x(Acos(3x) + Bsin(3x))",
+          "Asin(3x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The characteristic equation r² + 9 = 0 gives r = ±3i, so sin(3x) is in the homogeneous solution. Multiply by x."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "For y″ + y = xe^x, the particular solution form is:",
         "options": [
-          "(Ax + B)e^x",
-          "Axe^x",
+          "x²e^x",
           "Ae^x",
-          "x²e^x"
+          "Axe^x",
+          "(Ax + B)e^x"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For a product of polynomial and exponential, use (polynomial of same degree) × exponential. For xe^x, try (Ax + B)e^x."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "The method of undetermined coefficients works when the forcing function is:",
         "options": [
-          "A combination of polynomials, exponentials, sines, and cosines",
-          "Any continuous function",
           "Only polynomial functions",
-          "Any differentiable function"
+          "Any differentiable function",
+          "A combination of polynomials, exponentials, sines, and cosines",
+          "Any continuous function"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Undetermined coefficients applies to forcing functions that are linear combinations of polynomials, e^(ax), cos(bx), and sin(bx)."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Variation of parameters is useful when:",
         "options": [
-          "Undetermined coefficients doesn't apply",
-          "The equation has constant coefficients",
           "The forcing function is polynomial",
+          "The equation has constant coefficients",
+          "Undetermined coefficients doesn't apply",
           "The equation is homogeneous"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Variation of parameters works for any continuous forcing function, making it more general than undetermined coefficients."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "For y″ + P(x)y′ + Q(x)y = f(x) with solutions y₁, y₂ to the homogeneous equation, the Wronskian is:",
         "options": [
-          "W = y₁y₂′ - y₁′y₂",
-          "W = y₁y₂",
           "W = y₁′y₂′",
-          "W = y₁ + y₂"
+          "W = y₁y₂′ - y₁′y₂",
+          "W = y₁ + y₂",
+          "W = y₁y₂"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The Wronskian is defined as W(y₁, y₂) = y₁y₂′ - y₁′y₂. It determines if solutions are linearly independent (W ≠ 0)."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "In variation of parameters, if y_h = C₁y₁ + C₂y₂, the particular solution is:",
         "options": [
+          "y_p = y₁ + y₂",
           "y_p = u₁y₁ + u₂y₂ where u₁ and u₂ are functions",
           "y_p = Ay₁ + By₂ where A and B are constants",
-          "y_p = y₁ + y₂",
           "y_p = xy₁ + xy₂"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Variation of parameters replaces constants C₁, C₂ with functions u₁(x), u₂(x), giving y_p = u₁y₁ + u₂y₂."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "For variation of parameters, u₁′ is given by:",
         "options": [
-          "u₁′ = -y₂f/W",
+          "u₁′ = -y₁f/W",
           "u₁′ = y₁f/W",
           "u₁′ = f/W",
-          "u₁′ = -y₁f/W"
+          "u₁′ = -y₂f/W"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The formulas for variation of parameters are u₁′ = -y₂f/W and u₂′ = y₁f/W, where W is the Wronskian."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "If W(y₁, y₂) = 0 for all x, then y₁ and y₂ are:",
         "options": [
+          "Orthogonal",
           "Linearly dependent",
           "Linearly independent",
-          "Orthogonal",
           "Equal"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "When the Wronskian is zero everywhere, the solutions are linearly dependent, meaning one is a constant multiple of the other."
       }
     ]

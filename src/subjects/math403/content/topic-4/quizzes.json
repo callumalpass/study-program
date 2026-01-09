@@ -11,11 +11,11 @@
         "prompt": "A space X is connected if and only if:",
         "options": [
           "X cannot be written as a union of two disjoint nonempty open sets",
+          "Both (a) and (c)",
           "X is path connected",
-          "Every continuous function f: X → {0, 1} is constant",
-          "Both (a) and (c)"
+          "Every continuous function f: X → {0, 1} is constant"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "X is connected iff it cannot be separated into two disjoint nonempty open sets, which is equivalent to every continuous function to the discrete space {0, 1} being constant."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "A connected component of a space X is:",
         "options": [
-          "The largest connected subset containing a point",
-          "Any connected subset",
           "A path connected subset",
-          "An open connected subset"
+          "An open connected subset",
+          "Any connected subset",
+          "The largest connected subset containing a point"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The connected component of x is the maximal connected set containing x. Every point belongs to exactly one connected component."
       }
     ]
@@ -78,12 +78,12 @@
         "type": "multiple_choice",
         "prompt": "If A ⊆ B ⊆ cl(A) and A is connected, then:",
         "options": [
-          "B must be connected",
-          "B may or may not be connected",
           "cl(A) is connected",
-          "Both (a) and (c)"
+          "B may or may not be connected",
+          "Both (a) and (c)",
+          "B must be connected"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "If A is connected and A ⊆ B ⊆ cl(A), then B is connected. In particular, the closure of a connected set is connected."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "The Intermediate Value Theorem states:",
         "options": [
-          "Continuous functions map connected sets to connected sets",
-          "If f: [a,b] → ℝ is continuous and f(a) < c < f(b), then c is in the range",
           "Connected spaces are path connected",
-          "All intervals are connected"
+          "All intervals are connected",
+          "Continuous functions map connected sets to connected sets",
+          "If f: [a,b] → ℝ is continuous and f(a) < c < f(b), then c is in the range"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "IVT: If f is continuous on [a,b] and f(a) < c < f(b), then ∃x ∈ (a,b) with f(x) = c. This follows from connectedness of intervals."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "A space X is locally connected if:",
         "options": [
-          "Every point has arbitrarily small connected neighborhoods",
-          "X is connected",
           "Every connected component is open",
-          "Both (a) and (c)"
+          "X is connected",
+          "Both (a) and (c)",
+          "Every point has arbitrarily small connected neighborhoods"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "X is locally connected iff every point has a local basis of connected sets, which is equivalent to connected components being open."
       },
       {
@@ -172,12 +172,12 @@
         "type": "multiple_choice",
         "prompt": "Which space is connected but not path connected?",
         "options": [
-          "ℝ",
-          "The topologist's sine curve",
+          "S¹",
           "[0, 1] ∪ [2, 3]",
-          "S¹"
+          "ℝ",
+          "The topologist's sine curve"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The topologist's sine curve {(x, sin(1/x)) : x > 0} ∪ {(0, y) : -1 ≤ y ≤ 1} is connected but not path connected."
       }
     ]

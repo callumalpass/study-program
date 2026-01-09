@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "Radioactive decay follows the equation dN/dt = -λN, where λ is:",
         "options": [
-          "The decay constant (λ > 0)",
-          "The growth rate",
+          "The initial amount",
           "The half-life",
-          "The initial amount"
+          "The growth rate",
+          "The decay constant (λ > 0)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Radioactive decay: dN/dt = -λN, solution N(t) = N₀e^(-λt). The decay constant λ relates to half-life: t₁/₂ = ln(2)/λ."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "Newton's law of cooling states that dT/dt is proportional to:",
         "options": [
-          "T - T_ambient",
-          "T",
+          "T²",
           "t",
-          "T²"
+          "T",
+          "T - T_ambient"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Newton's law: dT/dt = -k(T - T_m), where T_m is ambient temperature. The rate of cooling is proportional to the temperature difference."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "The spring-mass system mx″ + bx′ + kx = 0 represents:",
         "options": [
-          "Damped harmonic motion",
           "Exponential growth",
           "Logistic growth",
+          "Damped harmonic motion",
           "Steady-state flow"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "This is the damped harmonic oscillator: m = mass, b = damping coefficient, k = spring constant. Describes vibrating systems."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Critical damping occurs when the damping coefficient b equals:",
         "options": [
-          "2√(mk)",
-          "√(mk)",
           "mk",
-          "2mk"
+          "√(mk)",
+          "2mk",
+          "2√(mk)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Critical damping: b = 2√(mk), giving repeated characteristic roots. System returns to equilibrium fastest without oscillation."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "Resonance occurs when the forcing frequency equals:",
         "options": [
-          "The natural frequency of the system",
           "Zero",
-          "Infinity",
-          "The damping coefficient"
+          "The natural frequency of the system",
+          "The damping coefficient",
+          "Infinity"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Resonance occurs when external forcing frequency matches natural frequency ω₀ = √(k/m), causing amplitude to grow dramatically."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Euler's method approximates y(x + h) as:",
         "options": [
+          "y(x)·f(x, y)",
           "y(x) + hf(x, y)",
           "y(x) + f(x, y)",
-          "y(x)·f(x, y)",
           "y(x) + h²f(x, y)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Euler's method: y_{n+1} = y_n + hf(x_n, y_n), using the tangent line approximation. Simple but has O(h) local error."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "The improved Euler (Heun) method is a:",
         "options": [
-          "Predictor-corrector method",
-          "Implicit method",
           "Series solution method",
-          "Separation of variables"
+          "Predictor-corrector method",
+          "Separation of variables",
+          "Implicit method"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Improved Euler predicts using Euler's method, then corrects using average of slopes. Better accuracy than basic Euler method."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "The classical Runge-Kutta method (RK4) has local truncation error of order:",
         "options": [
-          "O(h⁵)",
+          "O(h³)",
           "O(h)",
-          "O(h²)",
-          "O(h³)"
+          "O(h⁵)",
+          "O(h²)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Fourth-order Runge-Kutta (RK4) has local error O(h⁵), global error O(h⁴). Very accurate and widely used numerical method."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "The main advantage of numerical methods is:",
         "options": [
-          "They work when analytical solutions are unavailable",
           "They give exact solutions",
+          "They work when analytical solutions are unavailable",
           "They are faster than analytical methods",
           "They require no initial conditions"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Numerical methods approximate solutions for equations that cannot be solved analytically, though they introduce discretization error."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "Stability of a numerical method means:",
         "options": [
-          "Errors do not grow unboundedly as steps progress",
-          "The method always converges",
           "The step size can be arbitrarily large",
-          "The solution is exact"
+          "The method always converges",
+          "The solution is exact",
+          "Errors do not grow unboundedly as steps progress"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A stable method controls error propagation. Unstable methods can produce growing errors even with small step size h."
       }
     ]

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is NOT a Cauchy-Riemann equation?",
         "options": [
-          "∂u/∂x = ∂v/∂y",
-          "∂u/∂y = -∂v/∂x",
           "∂u/∂x = -∂v/∂y",
-          "∂v/∂x = -∂u/∂y"
+          "∂v/∂x = -∂u/∂y",
+          "∂u/∂x = ∂v/∂y",
+          "∂u/∂y = -∂v/∂x"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The Cauchy-Riemann equations are: ∂u/∂x = ∂v/∂y and ∂u/∂y = -∂v/∂x"
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "If f(z) = u + iv is analytic, what PDE does u satisfy?",
         "options": [
-          "∂²u/∂x² + ∂²u/∂y² = 0",
           "∂²u/∂x² - ∂²u/∂y² = 0",
+          "∂²u/∂x∂y = 0",
           "∂u/∂x = ∂u/∂y",
-          "∂²u/∂x∂y = 0"
+          "∂²u/∂x² + ∂²u/∂y² = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The real and imaginary parts of an analytic function are harmonic: they satisfy Laplace's equation"
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the derivative of f(z) = z²?",
         "options": [
+          "2",
           "z",
           "2z",
-          "z²",
-          "2"
+          "z²"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Using the power rule (which applies to analytic functions): d/dz(z²) = 2z"
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Which function is entire (analytic everywhere in ℂ)?",
         "options": [
-          "1/z",
           "tan(z)",
           "e^z",
-          "log(z)"
+          "log(z)",
+          "1/z"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "e^z is entire (analytic everywhere). 1/z has a pole at 0, tan(z) has poles, log(z) has a branch cut"
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "What is the real part of f(z) = z³ where z = x + iy?",
         "options": [
+          "3x²y - y³",
           "x³",
-          "x³ - 3xy²",
           "x³ + 3xy²",
-          "3x²y - y³"
+          "x³ - 3xy²"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "z³ = (x + iy)³ = x³ + 3x²(iy) + 3x(iy)² + (iy)³ = x³ - 3xy² + i(3x²y - y³), so Re(z³) = x³ - 3xy²"
       },
       {
@@ -105,11 +105,11 @@
         "prompt": "The principal branch of log(z) has a branch cut along which ray?",
         "options": [
           "Positive real axis",
-          "Negative real axis",
+          "Negative imaginary axis",
           "Positive imaginary axis",
-          "Negative imaginary axis"
+          "Negative real axis"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The principal branch is defined with argument in (-π, π], requiring a cut along the negative real axis"
       },
       {
@@ -151,12 +151,12 @@
         "type": "multiple_choice",
         "prompt": "What is the derivative of f(z) = 1/z for z ≠ 0?",
         "options": [
-          "1/z²",
-          "-1/z²",
+          "-1/z",
           "1/z",
-          "-1/z"
+          "1/z²",
+          "-1/z²"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Using power rule: d/dz(z^(-1)) = -1·z^(-2) = -1/z²"
       },
       {
@@ -172,11 +172,11 @@
         "prompt": "The function f(z) = Re(z) is:",
         "options": [
           "Analytic everywhere",
-          "Nowhere analytic",
+          "Analytic on real axis",
           "Analytic at origin only",
-          "Analytic on real axis"
+          "Nowhere analytic"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Re(z) = x has u = x, v = 0. C-R: ∂u/∂x = 1 but ∂v/∂y = 0, so C-R equations fail everywhere"
       },
       {

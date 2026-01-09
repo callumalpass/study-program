@@ -17,11 +17,11 @@
         "prompt": "Which OSI layer is responsible for end-to-end delivery and flow control?",
         "options": [
           "Network Layer",
-          "Transport Layer",
+          "Session Layer",
           "Data Link Layer",
-          "Session Layer"
+          "Transport Layer"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The Transport Layer (Layer 4) handles end-to-end communication, flow control, and reliability."
       },
       {
@@ -37,11 +37,11 @@
         "prompt": "At which OSI layer does a router operate?",
         "options": [
           "Layer 1 (Physical)",
-          "Layer 2 (Data Link)",
           "Layer 3 (Network)",
-          "Layer 4 (Transport)"
+          "Layer 4 (Transport)",
+          "Layer 2 (Data Link)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Routers operate at Layer 3 (Network), making decisions based on IP addresses."
       },
       {
@@ -64,12 +64,12 @@
         "type": "multiple_choice",
         "prompt": "Which network topology has the highest fault tolerance?",
         "options": [
-          "Bus",
           "Star",
+          "Full Mesh",
           "Ring",
-          "Full Mesh"
+          "Bus"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "Full mesh provides the highest redundancy as every node connects to every other node."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What does ARP resolve?",
         "options": [
-          "IP to MAC address",
-          "MAC to IP address",
+          "Port to process",
           "Domain to IP address",
-          "Port to process"
+          "MAC to IP address",
+          "IP to MAC address"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "ARP (Address Resolution Protocol) maps IP addresses to MAC addresses on a local network."
       },
       {
@@ -153,12 +153,12 @@
         "type": "multiple_choice",
         "prompt": "Given IP 10.45.67.89 with mask 255.255.255.0, what is the network address?",
         "options": [
-          "10.45.67.0",
-          "10.45.0.0",
           "10.0.0.0",
-          "10.45.67.255"
+          "10.45.0.0",
+          "10.45.67.255",
+          "10.45.67.0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "AND the IP with mask: 10.45.67.89 AND 255.255.255.0 = 10.45.67.0"
       },
       {
@@ -173,12 +173,12 @@
         "type": "multiple_choice",
         "prompt": "What happens when a router receives a packet with TTL=1?",
         "options": [
-          "Forwards it normally",
           "Decrements TTL and forwards",
           "Drops it and sends ICMP Time Exceeded",
-          "Sends it back to the source"
+          "Sends it back to the source",
+          "Forwards it normally"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "When TTL reaches 0 after decrement, the packet is dropped and ICMP Time Exceeded is sent."
       },
       {
@@ -249,12 +249,12 @@
         "type": "multiple_choice",
         "prompt": "Which port number is used by HTTPS by default?",
         "options": [
-          "80",
           "443",
           "8080",
+          "80",
           "8443"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "HTTPS uses port 443 by default. HTTP uses port 80."
       },
       {
@@ -283,12 +283,12 @@
         "type": "multiple_choice",
         "prompt": "Which layer of the OSI model handles data compression and encryption?",
         "options": [
-          "Application",
           "Presentation",
+          "Application",
           "Session",
           "Transport"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The Presentation layer (Layer 6) handles data formatting, compression, and encryption."
       },
       {
@@ -310,12 +310,12 @@
         "type": "multiple_choice",
         "prompt": "In a full mesh network of 10 nodes, how many links are required?",
         "options": [
-          "10",
-          "20",
+          "90",
           "45",
-          "90"
+          "20",
+          "10"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Full mesh links = n(n-1)/2 = 10(9)/2 = 45 links."
       },
       {
@@ -331,12 +331,12 @@
         "type": "multiple_choice",
         "prompt": "What type of frame is sent to MAC address FF:FF:FF:FF:FF:FF?",
         "options": [
+          "Anycast",
           "Unicast",
           "Broadcast",
-          "Multicast",
-          "Anycast"
+          "Multicast"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "FF:FF:FF:FF:FF:FF is the broadcast address, reaching all devices on the local network."
       },
       {
@@ -358,12 +358,12 @@
         "type": "multiple_choice",
         "prompt": "In the sliding window protocol, what happens when the window is full?",
         "options": [
-          "Sender continues sending",
           "Sender must wait for ACKs",
           "Connection is reset",
+          "Sender continues sending",
           "Packets are dropped"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "When the window is full, the sender must wait for ACKs to slide the window forward."
       },
       {
@@ -386,12 +386,12 @@
         "type": "multiple_choice",
         "prompt": "Which routing protocol uses distance-vector algorithm?",
         "options": [
-          "OSPF",
           "BGP",
-          "RIP",
-          "IS-IS"
+          "OSPF",
+          "IS-IS",
+          "RIP"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "RIP uses distance-vector (hop count). OSPF and IS-IS use link-state."
       },
       {
@@ -435,11 +435,11 @@
         "prompt": "What TCP flag is sent in the first packet of a connection?",
         "options": [
           "ACK",
-          "SYN",
           "FIN",
+          "SYN",
           "RST"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The client sends SYN to initiate the three-way handshake."
       },
       {
@@ -469,12 +469,12 @@
         "type": "multiple_choice",
         "prompt": "Which mechanism prevents a fast sender from overwhelming a slow receiver?",
         "options": [
-          "Congestion control",
-          "Flow control",
           "Error control",
-          "Access control"
+          "Congestion control",
+          "Access control",
+          "Flow control"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Flow control (receive window) prevents sender from overwhelming receiver's buffer."
       },
       {
@@ -489,12 +489,12 @@
         "type": "multiple_choice",
         "prompt": "In NAT, which type translates multiple private addresses to a single public address using ports?",
         "options": [
-          "Static NAT",
-          "Dynamic NAT",
           "PAT/NAPT",
+          "Dynamic NAT",
+          "Static NAT",
           "Double NAT"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "PAT (Port Address Translation) or NAPT uses port numbers to multiplex connections."
       },
       {
@@ -545,11 +545,11 @@
         "prompt": "Which socket type is used for TCP connections?",
         "options": [
           "SOCK_DGRAM",
-          "SOCK_STREAM",
+          "SOCK_SEQPACKET",
           "SOCK_RAW",
-          "SOCK_SEQPACKET"
+          "SOCK_STREAM"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "SOCK_STREAM is for TCP (reliable, connection-oriented). SOCK_DGRAM is for UDP."
       },
       {
@@ -626,12 +626,12 @@
         "type": "multiple_choice",
         "prompt": "Which SMTP response code indicates success?",
         "options": [
-          "220",
-          "250",
           "354",
-          "550"
+          "220",
+          "550",
+          "250"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "250 is \"OK\" in SMTP. 220 is greeting, 354 is \"start mail\", 550 is error."
       },
       {
@@ -647,12 +647,12 @@
         "type": "multiple_choice",
         "prompt": "Which DNS record type maps a domain name to an IPv6 address?",
         "options": [
-          "A",
-          "AAAA",
           "MX",
-          "CNAME"
+          "A",
+          "CNAME",
+          "AAAA"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "AAAA records map to IPv6. A records map to IPv4. MX is for mail servers."
       },
       {

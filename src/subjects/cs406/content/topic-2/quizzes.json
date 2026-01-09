@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of breadth-first search?",
         "options": [
-          "O(b^d) where b is branching factor and d is depth",
-          "O(bd)",
           "O(b + d)",
-          "O(d^b)"
+          "O(bd)",
+          "O(d^b)",
+          "O(b^d) where b is branching factor and d is depth"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "BFS explores all nodes at each depth level, resulting in exponential time complexity: 1 + b + b² + ... + b^d = O(b^d). This makes BFS impractical for problems with large branching factors or deep solutions."
       },
       {
@@ -79,12 +79,12 @@
         "type": "multiple_choice",
         "prompt": "What does A* use to evaluate nodes?",
         "options": [
-          "Only the heuristic h(n)",
-          "f(n) = g(n) + h(n) where g is actual cost and h is heuristic estimate",
           "Only the actual cost g(n)",
-          "The number of steps from the start"
+          "The number of steps from the start",
+          "f(n) = g(n) + h(n) where g is actual cost and h is heuristic estimate",
+          "Only the heuristic h(n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A* combines actual path cost g(n) with heuristic estimate h(n) to evaluate the estimated total cost f(n) = g(n) + h(n). This allows A* to efficiently find optimal solutions by preferring nodes with low total estimated cost."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Hill climbing can get stuck in:",
         "options": [
-          "Local maxima, plateaus, and ridges",
+          "Optimal solutions",
           "Only global maxima",
-          "Infinite loops",
-          "Optimal solutions"
+          "Local maxima, plateaus, and ridges",
+          "Infinite loops"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Hill climbing is susceptible to local maxima (peaks that aren't global), plateaus (flat regions with no gradient), and ridges (difficult to navigate). Random restart and simulated annealing can help overcome these limitations."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main advantage of beam search over greedy search?",
         "options": [
-          "It keeps track of k best states instead of just one",
-          "It always finds the optimal solution",
           "It uses less memory",
-          "It doesn't need a heuristic"
+          "It always finds the optimal solution",
+          "It doesn't need a heuristic",
+          "It keeps track of k best states instead of just one"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Beam search maintains k states at each level instead of just one, providing more robustness than greedy search while using less memory than breadth-first search. However, it's still incomplete and not optimal."
       },
       {

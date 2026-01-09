@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "The volume of a solid of revolution using the disk method is:",
         "options": [
-          "$V = \\int_a^b f(x) \\, dx$",
-          "$V = \\int_a^b \\pi f(x) \\, dx$",
           "$V = \\int_a^b [f(x)]^2 \\, dx$",
-          "$V = \\int_a^b \\pi [f(x)]^2 \\, dx$"
+          "$V = \\int_a^b \\pi [f(x)]^2 \\, dx$",
+          "$V = \\int_a^b \\pi f(x) \\, dx$",
+          "$V = \\int_a^b f(x) \\, dx$"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "Disk method: $V = \\int_a^b \\pi [\\text{radius}]^2 \\, dx = \\int_a^b \\pi [f(x)]^2 \\, dx$."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "The washer method is used when:",
         "options": [
-          "The solid has a hole (hollow center)",
           "The region touches the axis of rotation",
           "Rotating around the y-axis only",
+          "The solid has a hole (hollow center)",
           "The cross-sections are triangular"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The washer method applies when rotating a region that has a gap between it and the axis of rotation, creating hollow solids (washers). This happens when you have two curves defining outer radius $R(x)$ and inner radius $r(x)$: $V = \\int_a^b \\pi ([R(x)]^2 - [r(x)]^2) \\, dx$. The disk method is used when the region touches the axis (no hole)."
       },
       {
@@ -72,11 +72,11 @@
         "prompt": "The arc length of $y = f(x)$ from $a$ to $b$ is:",
         "options": [
           "$\\int_a^b \\sqrt{1 + f'(x)} \\, dx$",
-          "$\\int_a^b \\sqrt{1 + [f'(x)]^2} \\, dx$",
           "$\\int_a^b [f'(x)]^2 \\, dx$",
+          "$\\int_a^b \\sqrt{1 + [f'(x)]^2} \\, dx$",
           "$\\int_a^b f(x) \\, dx$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Arc length formula: $L = \\int_a^b \\sqrt{1 + [f'(x)]^2} \\, dx$ or $L = \\int_a^b \\sqrt{1 + (dy/dx)^2} \\, dx$."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What is the arc length of $y = x$ from $x = 0$ to $x = 1$?",
         "options": [
-          "$1$",
           "$\\sqrt{2}$",
-          "$2$",
-          "$\\frac{1}{2}$"
+          "$\\frac{1}{2}$",
+          "$1$",
+          "$2$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "$f'(x) = 1$, so $L = \\int_0^1 \\sqrt{1 + 1^2} \\, dx = \\int_0^1 \\sqrt{2} \\, dx = \\sqrt{2}$."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "Work done by a variable force $F(x)$ from $a$ to $b$ is:",
         "options": [
-          "$W = F(b) - F(a)$",
           "$W = \\int_a^b F(x) \\, dx$",
           "$W = F(x)(b - a)$",
-          "$W = \\int_a^b x \\, dx$"
+          "$W = \\int_a^b x \\, dx$",
+          "$W = F(b) - F(a)$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Work = $W = \\int_a^b F(x) \\, dx$ where $F(x)$ is force as a function of position."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "If a spring has spring constant $k = 10$ N/m, how much work is done stretching it from 0 to 0.5 m?",
         "options": [
+          "$5$ J",
           "$1.25$ J",
           "$2.5$ J",
-          "$5$ J",
           "$10$ J"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "$W = \\int_0^{0.5} 10x \\, dx = [5x^2]_0^{0.5} = 5(0.25) = 1.25$ J."
       },
       {

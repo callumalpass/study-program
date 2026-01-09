@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which type of encryption uses the same key for both encryption and decryption?",
         "options": [
-          "Asymmetric encryption",
+          "Hashing",
           "Public key encryption",
-          "Symmetric encryption",
-          "Hashing"
+          "Asymmetric encryption",
+          "Symmetric encryption"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Symmetric encryption uses the same secret key for both encryption and decryption. Examples include AES, DES, and ChaCha20. It is faster than asymmetric encryption but requires secure key distribution."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "In asymmetric encryption, which key should be used to encrypt a message that only the recipient can decrypt?",
         "options": [
-          "The sender's private key",
-          "The sender's public key",
           "The recipient's private key",
-          "The recipient's public key"
+          "The recipient's public key",
+          "The sender's private key",
+          "The sender's public key"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "To send a confidential message, you encrypt with the recipient's public key. Only the recipient can decrypt it with their corresponding private key. This ensures confidentiality even if the public key is widely known."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary purpose of a digital signature?",
         "options": [
-          "To encrypt the message content",
-          "To verify the authenticity and integrity of a message",
           "To compress data",
-          "To hide the sender's identity"
+          "To hide the sender's identity",
+          "To verify the authenticity and integrity of a message",
+          "To encrypt the message content"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Digital signatures provide authentication (proving who sent the message) and integrity (proving the message wasn't altered). The sender signs with their private key, and anyone can verify with the sender's public key."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Which cryptographic hash function is currently considered broken and should not be used for security purposes?",
         "options": [
-          "SHA-256",
           "SHA-3",
           "MD5",
+          "SHA-256",
           "BLAKE2"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "MD5 (Message Digest 5) is cryptographically broken and unsuitable for security applications. Collision attacks have been demonstrated, making it possible to create two different inputs that produce the same hash. Use SHA-256 or SHA-3 instead."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "What is a rainbow table attack used for?",
         "options": [
-          "Encrypting network traffic",
-          "Cracking hashed passwords using precomputed hash values",
           "Generating random encryption keys",
-          "Detecting SQL injection attacks"
+          "Encrypting network traffic",
+          "Detecting SQL injection attacks",
+          "Cracking hashed passwords using precomputed hash values"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A rainbow table is a precomputed table of hash values for common passwords. Attackers use these to quickly reverse hashes and discover passwords. Salting passwords before hashing defeats rainbow table attacks."
       },
       {
@@ -154,10 +154,10 @@
         "options": [
           "AES encryption",
           "RSA encryption",
-          "HMAC (Hash-based Message Authentication Code)",
-          "TLS handshake"
+          "TLS handshake",
+          "HMAC (Hash-based Message Authentication Code)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "HMAC uses a cryptographic hash function and a secret key to verify both data integrity and authenticity. However, it does not encrypt the data, so it provides no confidentiality. The message remains readable but tampering can be detected."
       },
       {

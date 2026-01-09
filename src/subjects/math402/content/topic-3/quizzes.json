@@ -32,11 +32,11 @@
         "prompt": "What is the main advantage of Newton's divided difference form over Lagrange interpolation?",
         "options": [
           "Newton form has lower degree",
-          "Newton form is easier to update when adding new points",
+          "Newton form doesn't require distinct x values",
           "Newton form always has smaller error",
-          "Newton form doesn't require distinct x values"
+          "Newton form is easier to update when adding new points"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Newton's form is incremental: adding a new point requires only computing one new divided difference and adding one term, whereas Lagrange requires recomputing all basis polynomials."
       },
       {
@@ -66,12 +66,12 @@
         "type": "multiple_choice",
         "prompt": "For a function f ∈ C^{n+1}[a,b], the error in polynomial interpolation at n+1 points is bounded by:",
         "options": [
-          "M/(n+1)! max|ω(x)|, where ω(x) is the node polynomial",
+          "M/(n+1) for some constant M",
           "M/n! max|f(x)|",
-          "M max|ω(x)|",
-          "M/(n+1) for some constant M"
+          "M/(n+1)! max|ω(x)|, where ω(x) is the node polynomial",
+          "M max|ω(x)|"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The interpolation error is f(x) - p_n(x) = f^{(n+1)}(ξ)/(n+1)! · ω(x), where ω(x) = ∏(x - x_i) and ξ ∈ [a,b]."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "The Lebesgue constant Λ_n for a set of interpolation nodes measures:",
         "options": [
-          "The maximum interpolation error",
           "The condition number of the interpolation problem",
+          "The maximum interpolation error",
           "The spacing between nodes",
           "The degree of the interpolating polynomial"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The Lebesgue constant Λ_n bounds how the interpolation error compares to the best polynomial approximation: ||p_n - f|| ≤ (1 + Λ_n)||p*_n - f||. It measures ill-conditioning."
       },
       {

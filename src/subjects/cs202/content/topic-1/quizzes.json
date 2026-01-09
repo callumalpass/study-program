@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary purpose of an Instruction Set Architecture (ISA)?",
         "options": [
-          "To define the physical layout of transistors on a chip",
           "To specify the interface between software and hardware",
-          "To determine the clock speed of a processor",
-          "To manage memory allocation in the operating system"
+          "To manage memory allocation in the operating system",
+          "To define the physical layout of transistors on a chip",
+          "To determine the clock speed of a processor"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "An ISA defines the abstract interface between software and hardware, specifying instructions, registers, memory model, and data types that programs can use."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "In a 32-bit MIPS R-format instruction, how many bits are allocated for the opcode field?",
         "options": [
-          "4 bits",
           "5 bits",
           "6 bits",
-          "8 bits"
+          "8 bits",
+          "4 bits"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "MIPS R-format instructions use 6 bits for the opcode field, which is used in conjunction with the funct field to specify the operation."
       },
       {
@@ -37,11 +37,11 @@
         "prompt": "Which addressing mode uses the instruction itself to contain the operand value?",
         "options": [
           "Register addressing",
-          "Immediate addressing",
           "Direct addressing",
-          "Indirect addressing"
+          "Indirect addressing",
+          "Immediate addressing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Immediate addressing embeds the operand value directly in the instruction, requiring no memory access to fetch the operand."
       },
       {
@@ -50,11 +50,11 @@
         "prompt": "What distinguishes a load-store architecture from a memory-memory architecture?",
         "options": [
           "Load-store has more registers",
-          "Only load and store instructions can access memory",
+          "Memory-memory is faster",
           "Load-store uses virtual memory",
-          "Memory-memory is faster"
+          "Only load and store instructions can access memory"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "In a load-store architecture, arithmetic/logic operations only work with registers; memory access requires explicit load/store instructions."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "Which type of ISA design typically has fixed-length instructions?",
         "options": [
+          "Both equally",
           "CISC",
           "RISC",
-          "Both equally",
           "Neither"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "RISC architectures typically use fixed-length instructions for simpler decoding and pipelining, while CISC often uses variable-length instructions."
       }
     ]
@@ -84,11 +84,11 @@
         "prompt": "In base+offset addressing, the effective address is calculated as:",
         "options": [
           "Contents of base register only",
+          "Base register × offset",
           "Offset value only",
-          "Base register contents + offset",
-          "Base register × offset"
+          "Base register contents + offset"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Base+offset (or displacement) addressing adds a constant offset to the contents of a base register to compute the effective address."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "PC-relative addressing is most commonly used for:",
         "options": [
-          "Loading constants",
-          "Array indexing",
+          "Stack operations",
           "Branch instructions",
-          "Stack operations"
+          "Loading constants",
+          "Array indexing"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "PC-relative addressing calculates the target address relative to the current PC, which is ideal for nearby branch targets."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Which instruction format would MIPS use for the instruction \"add $t0, $t1, $t2\"?",
         "options": [
+          "Pseudo-format",
           "R-format",
-          "I-format",
           "J-format",
-          "Pseudo-format"
+          "I-format"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "R-format is used for register-to-register operations like add, which specify three registers (rd, rs, rt)."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the \"funct\" field in MIPS R-format instructions?",
         "options": [
-          "To specify the destination register",
           "To extend the opcode for more operation types",
-          "To store immediate values",
-          "To indicate branch conditions"
+          "To specify the destination register",
+          "To indicate branch conditions",
+          "To store immediate values"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The funct field provides additional opcode bits for R-format instructions, allowing the same opcode to specify different operations."
       }
     ]
@@ -157,11 +157,11 @@
         "prompt": "Which characteristic is typical of CISC architectures?",
         "options": [
           "Fixed-length instructions",
+          "Large register files",
           "Load-store only memory access",
-          "Complex multi-cycle instructions",
-          "Large register files"
+          "Complex multi-cycle instructions"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "CISC architectures feature complex instructions that may take multiple cycles and can perform memory access with arithmetic operations."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "Modern x86 processors internally convert CISC instructions to:",
         "options": [
+          "Bytecode",
           "Assembly code",
           "Micro-operations (μops)",
-          "Bytecode",
           "Machine code"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Modern x86 CPUs decode complex CISC instructions into simpler RISC-like micro-operations for efficient execution."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "ARM is classified as which type of architecture?",
         "options": [
-          "Pure CISC",
-          "Pure RISC",
+          "Hybrid memory-memory",
           "RISC-inspired",
-          "Hybrid memory-memory"
+          "Pure CISC",
+          "Pure RISC"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "ARM is RISC-inspired with load-store design and fixed-length instructions, though newer versions add some complex instructions."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "Why do RISC architectures typically use more instructions to accomplish the same task as CISC?",
         "options": [
-          "RISC compilers are less efficient",
-          "RISC has simpler, more primitive instructions",
+          "RISC memory is slower",
           "RISC has fewer registers",
-          "RISC memory is slower"
+          "RISC compilers are less efficient",
+          "RISC has simpler, more primitive instructions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "RISC uses simpler primitive instructions, so complex operations require multiple instructions, but each executes quickly."
       }
     ]

@@ -79,12 +79,12 @@
         "type": "multiple_choice",
         "prompt": "Encapsulation is primarily about:",
         "options": [
-          "Creating many subclasses",
           "Hiding internal state and exposing a safe public interface",
-          "Overloading operators for readability",
-          "Using recursion instead of loops"
+          "Using recursion instead of loops",
+          "Creating many subclasses",
+          "Overloading operators for readability"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Encapsulation protects invariants and reduces coupling by exposing a controlled interface."
       },
       {
@@ -92,12 +92,12 @@
         "type": "multiple_choice",
         "prompt": "In Python, what does a leading underscore (e.g., `_balance`) conventionally indicate?",
         "options": [
-          "Truly private, inaccessible",
           "Internal/protected by convention",
           "Constant value",
-          "Static variable"
+          "Static variable",
+          "Truly private, inaccessible"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Python uses conventions: `_name` indicates internal/protected usage."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "Inheritance most directly models which relationship?",
         "options": [
-          "Has-a",
           "Is-a",
-          "Depends-on",
-          "Contained-in"
+          "Contained-in",
+          "Has-a",
+          "Depends-on"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Inheritance expresses an “is-a” relationship between a subclass and its base class."
       },
       {
@@ -170,12 +170,12 @@
         "type": "multiple_choice",
         "prompt": "What does MRO stand for?",
         "options": [
-          "Method Runtime Override",
           "Memory Read Only",
-          "Method Resolution Order",
-          "Multiple Return Output"
+          "Multiple Return Output",
+          "Method Runtime Override",
+          "Method Resolution Order"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "MRO is Method Resolution Order."
       },
       {
@@ -191,12 +191,12 @@
         "type": "multiple_choice",
         "prompt": "Which is a common sign that composition might be better than inheritance?",
         "options": [
-          "You are modeling a clear “is-a” relationship",
-          "You need polymorphic substitution",
           "You are inheriting mainly to reuse a few helper methods",
-          "You want a shared interface for many implementations"
+          "You need polymorphic substitution",
+          "You want a shared interface for many implementations",
+          "You are modeling a clear “is-a” relationship"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Inheritance used only for code reuse can create tight coupling; composition is often cleaner."
       },
       {
@@ -266,12 +266,12 @@
         "type": "multiple_choice",
         "prompt": "Which built-in function calls `__len__` under the hood?",
         "options": [
+          "repr",
           "sum",
           "len",
-          "print",
-          "repr"
+          "print"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "`len(obj)` calls `obj.__len__()`."
       },
       {
@@ -288,11 +288,11 @@
         "prompt": "Which statement about `@staticmethod` is correct?",
         "options": [
           "It receives `self` automatically",
+          "It can only be used in abstract classes",
           "It receives `cls` automatically",
-          "It receives no automatic first argument",
-          "It can only be used in abstract classes"
+          "It receives no automatic first argument"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Static methods are functions stored on a class; no implicit `self`/`cls` is passed."
       },
       {
@@ -329,12 +329,12 @@
         "type": "multiple_choice",
         "prompt": "Which is the best definition of polymorphism?",
         "options": [
+          "A class with many attributes",
           "Many classes in one file",
           "The same interface working with different concrete types",
-          "A class with many attributes",
           "A function with many parameters"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Polymorphism allows the same operation/interface to apply to multiple types."
       },
       {
@@ -364,12 +364,12 @@
         "type": "multiple_choice",
         "prompt": "Which is the best reason to prefer composition over inheritance?",
         "options": [
-          "Composition always runs faster",
           "Composition can reduce coupling and make behavior easier to swap",
           "Inheritance cannot implement polymorphism",
-          "Inheritance is not supported in Python"
+          "Inheritance is not supported in Python",
+          "Composition always runs faster"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Composition lets you swap parts without deep hierarchies and reduces fragile coupling."
       },
       {
@@ -385,12 +385,12 @@
         "type": "multiple_choice",
         "prompt": "What does the Dependency Inversion Principle (DIP) encourage?",
         "options": [
-          "High-level code should depend on low-level details",
-          "Both high-level and low-level code should depend on abstractions",
           "Never use interfaces",
-          "Only use singletons for dependencies"
+          "High-level code should depend on low-level details",
+          "Only use singletons for dependencies",
+          "Both high-level and low-level code should depend on abstractions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "DIP reduces coupling by depending on stable abstractions rather than concrete details."
       },
       {
@@ -420,12 +420,12 @@
         "type": "multiple_choice",
         "prompt": "Which pattern is primarily used to create objects without exposing concrete classes to callers?",
         "options": [
-          "Observer",
           "Factory",
-          "Decorator",
-          "Adapter"
+          "Observer",
+          "Adapter",
+          "Decorator"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Factories decouple object creation from use."
       },
       {
@@ -433,12 +433,12 @@
         "type": "multiple_choice",
         "prompt": "Which pattern adds behavior to an object without modifying its class?",
         "options": [
-          "Decorator",
           "Singleton",
           "Factory",
-          "Template Method"
+          "Template Method",
+          "Decorator"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Decorator wraps an object and extends behavior while preserving the interface."
       },
       {
@@ -446,12 +446,12 @@
         "type": "multiple_choice",
         "prompt": "Which pattern translates one interface into another expected by clients?",
         "options": [
-          "Adapter",
+          "Singleton",
           "Observer",
-          "Strategy",
-          "Singleton"
+          "Adapter",
+          "Strategy"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Adapter wraps an object to present a compatible interface."
       },
       {
@@ -502,12 +502,12 @@
         "type": "multiple_choice",
         "prompt": "Which pattern provides a simplified interface over a complex subsystem?",
         "options": [
-          "Facade",
           "Observer",
+          "Strategy",
           "Decorator",
-          "Strategy"
+          "Facade"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Facade hides subsystem complexity behind a simple API."
       },
       {
@@ -543,11 +543,11 @@
         "prompt": "What is a key benefit of coding to an interface/abstraction?",
         "options": [
           "It guarantees faster runtime",
-          "It reduces coupling and makes implementations swappable",
           "It removes the need for tests",
-          "It forbids inheritance"
+          "It forbids inheritance",
+          "It reduces coupling and makes implementations swappable"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Abstractions allow new implementations without changing callers."
       },
       {
@@ -562,12 +562,12 @@
         "type": "multiple_choice",
         "prompt": "Which module is used to define ABCs and abstract methods?",
         "options": [
-          "typing",
           "abc",
           "dataclasses",
+          "typing",
           "inspect"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "`abc` provides `ABC` and `@abstractmethod`."
       },
       {
@@ -583,12 +583,12 @@
         "type": "multiple_choice",
         "prompt": "Which is a risk of overly large interfaces?",
         "options": [
-          "They reduce memory use",
           "They force implementations to include irrelevant methods",
-          "They prevent polymorphism",
-          "They improve cohesion"
+          "They improve cohesion",
+          "They reduce memory use",
+          "They prevent polymorphism"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Large interfaces hurt cohesion and increase coupling (interface bloat)."
       },
       {
@@ -611,12 +611,12 @@
         "type": "multiple_choice",
         "prompt": "When might an ABC be preferable to a Protocol?",
         "options": [
-          "When you want runtime `isinstance` checks and shared template logic",
-          "When you want no inheritance anywhere",
           "When you only care about output formatting",
-          "When you want to avoid abstractions entirely"
+          "When you want to avoid abstractions entirely",
+          "When you want no inheritance anywhere",
+          "When you want runtime `isinstance` checks and shared template logic"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "ABCs support runtime checks and can contain shared base logic."
       },
       {
@@ -678,12 +678,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main benefit of dependency injection for testing?",
         "options": [
-          "It makes code shorter",
-          "It allows replacing dependencies with fakes/stubs",
           "It prevents exceptions",
-          "It enforces inheritance"
+          "It makes code shorter",
+          "It enforces inheritance",
+          "It allows replacing dependencies with fakes/stubs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Injected dependencies can be replaced with fakes/stubs/spies during tests."
       },
       {
@@ -698,12 +698,12 @@
         "type": "multiple_choice",
         "prompt": "Which is a reasonable guideline for constructors (`__init__`)?",
         "options": [
-          "Do network calls in __init__ to ensure readiness",
-          "Keep __init__ cheap; avoid slow/external side effects",
           "Always print debug output from __init__",
-          "Never store arguments on self"
+          "Never store arguments on self",
+          "Keep __init__ cheap; avoid slow/external side effects",
+          "Do network calls in __init__ to ensure readiness"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Cheap constructors improve testability and reduce surprises."
       },
       {
@@ -726,12 +726,12 @@
         "type": "multiple_choice",
         "prompt": "Which of these is a good signal you should refactor?",
         "options": [
-          "Code duplication and hard-to-test design",
-          "The program runs fast",
+          "The file is short",
           "The code has many comments",
-          "The file is short"
+          "The program runs fast",
+          "Code duplication and hard-to-test design"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Duplication and poor testability are common drivers for refactoring."
       },
       {

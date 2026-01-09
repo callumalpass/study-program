@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "In a cache address breakdown, what do the tag bits identify?",
         "options": [
-          "Which byte within a block",
           "Which cache line to check",
           "Which memory block is stored",
+          "Which byte within a block",
           "The memory bank number"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The tag bits uniquely identify which memory block is stored in a cache line, distinguishing between blocks that map to the same index."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "A cache with 64-byte blocks requires how many offset bits?",
         "options": [
-          "4",
+          "7",
           "5",
-          "6",
-          "7"
+          "4",
+          "6"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Block offset bits = log₂(block size) = log₂(64) = 6 bits to address any byte within the 64-byte block."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What does the valid bit indicate?",
         "options": [
-          "The data has been modified",
-          "The cache line contains valid data",
           "The address is valid",
-          "The cache is enabled"
+          "The cache is enabled",
+          "The data has been modified",
+          "The cache line contains valid data"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The valid bit indicates whether the cache line contains valid data; it's 0 on startup and after invalidation."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "AMAT (Average Memory Access Time) is calculated as:",
         "options": [
-          "Hit time × Miss rate",
-          "Hit time + Miss rate × Miss penalty",
           "Miss rate + Miss penalty",
-          "Hit time + Miss penalty"
+          "Hit time + Miss penalty",
+          "Hit time + Miss rate × Miss penalty",
+          "Hit time × Miss rate"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "AMAT = Hit time + Miss rate × Miss penalty, accounting for both hit and miss scenarios."
       }
     ]
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "A 4-way set-associative cache requires how many tag comparisons per access?",
         "options": [
+          "8",
           "1",
           "2",
-          "4",
-          "8"
+          "4"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "A 4-way cache has 4 blocks per set, requiring 4 tag comparisons (done in parallel) to check for a hit."
       },
       {
@@ -110,11 +110,11 @@
         "prompt": "Which cache type has the lowest conflict miss rate?",
         "options": [
           "Direct-mapped",
-          "2-way set-associative",
           "4-way set-associative",
-          "Fully associative"
+          "Fully associative",
+          "2-way set-associative"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "Fully associative caches have no conflict misses because any block can go anywhere."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "For a 32KB, 4-way set-associative cache with 64-byte blocks, how many sets are there?",
         "options": [
-          "64",
           "128",
           "256",
-          "512"
+          "512",
+          "64"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Total blocks = 32KB / 64B = 512. Sets = 512 / 4 ways = 128 sets."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "LRU replacement policy evicts:",
         "options": [
-          "The newest block",
-          "The block accessed longest ago",
+          "The block with most accesses",
           "A random block",
-          "The block with most accesses"
+          "The newest block",
+          "The block accessed longest ago"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "LRU (Least Recently Used) evicts the block that has not been accessed for the longest time."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Write-through policy means:",
         "options": [
-          "Writes go only to cache",
-          "Writes go to both cache and memory",
           "Writes bypass the cache",
-          "Writes are buffered indefinitely"
+          "Writes go only to cache",
+          "Writes are buffered indefinitely",
+          "Writes go to both cache and memory"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Write-through writes data to both the cache and main memory on every write, keeping them consistent."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What does the dirty bit indicate in write-back caches?",
         "options": [
-          "The block is invalid",
-          "The block has been modified and differs from memory",
           "The block is being accessed",
-          "The block should be written through"
+          "The block is invalid",
+          "The block should be written through",
+          "The block has been modified and differs from memory"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The dirty bit indicates the cache block has been modified and must be written to memory when evicted."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "Which type of miss cannot be avoided by increasing cache size?",
         "options": [
-          "Compulsory miss",
-          "Capacity miss",
           "Conflict miss",
+          "Capacity miss",
+          "Compulsory miss",
           "Coherence miss"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Compulsory (cold) misses occur on the first access to a block and cannot be avoided by larger caches."
       },
       {

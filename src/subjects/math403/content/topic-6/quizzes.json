@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which property is NOT required for a metric d?",
         "options": [
-          "d(x, y) ≥ 0",
-          "d(x, y) = d(y, x)",
+          "d(x, y) = d(x, z) + d(z, y) for some z",
           "d(x, y) ≤ d(x, z) + d(z, y)",
-          "d(x, y) = d(x, z) + d(z, y) for some z"
+          "d(x, y) ≥ 0",
+          "d(x, y) = d(y, x)"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "The triangle inequality states d(x,y) ≤ d(x,z) + d(z,y), not equality. Option (d) is not a required property."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "In a metric space, a sequence (xₙ) converges to x if:",
         "options": [
-          "xₙ = x for all n",
           "d(xₙ, x) → 0 as n → ∞",
           "xₙ is eventually constant",
-          "d(xₙ, xₙ₊₁) → 0"
+          "d(xₙ, xₙ₊₁) → 0",
+          "xₙ = x for all n"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "xₙ → x iff d(xₙ, x) → 0, i.e., for all ε > 0, ∃N such that n ≥ N ⇒ d(xₙ, x) < ε."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "A metric space is complete if:",
         "options": [
+          "The space is bounded",
           "Every sequence converges",
-          "Every Cauchy sequence converges",
           "The space is compact",
-          "The space is bounded"
+          "Every Cauchy sequence converges"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A metric space is complete if every Cauchy sequence converges to a point in the space."
       }
     ]
@@ -78,12 +78,12 @@
         "type": "multiple_choice",
         "prompt": "The Banach Fixed Point Theorem (Contraction Mapping Theorem) applies to:",
         "options": [
+          "Homeomorphisms",
           "All continuous functions on compact spaces",
-          "Contractions on complete metric spaces",
           "All functions on ℝ",
-          "Homeomorphisms"
+          "Contractions on complete metric spaces"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A contraction on a complete metric space has a unique fixed point. This requires completeness and the contraction property."
       },
       {
@@ -92,11 +92,11 @@
         "prompt": "A function f: (X, d) → (Y, ρ) is a contraction if:",
         "options": [
           "ρ(f(x), f(y)) < d(x, y) for all x ≠ y",
-          "ρ(f(x), f(y)) ≤ d(x, y) for all x, y",
           "ρ(f(x), f(y)) ≤ k·d(x, y) for some k < 1",
+          "ρ(f(x), f(y)) ≤ d(x, y) for all x, y",
           "f is continuous"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "A contraction satisfies ρ(f(x), f(y)) ≤ k·d(x, y) for some Lipschitz constant k < 1."
       },
       {
@@ -111,12 +111,12 @@
         "type": "multiple_choice",
         "prompt": "Which space is NOT complete?",
         "options": [
-          "ℝ with standard metric",
           "(0, 1) with standard metric",
-          "ℝⁿ with Euclidean metric",
-          "C[0,1] with sup metric"
+          "C[0,1] with sup metric",
+          "ℝ with standard metric",
+          "ℝⁿ with Euclidean metric"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "(0, 1) is not complete. For example, the sequence xₙ = 1/n is Cauchy but converges to 0 ∉ (0, 1)."
       }
     ]
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "The completion of a metric space (X, d) is:",
         "options": [
-          "The closure of X in a larger space",
-          "A complete metric space containing X as a dense subset",
           "X ∪ {all limit points}",
-          "The one-point compactification of X"
+          "The one-point compactification of X",
+          "The closure of X in a larger space",
+          "A complete metric space containing X as a dense subset"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The completion is a complete metric space in which X embeds as a dense subspace, unique up to isometry."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "A metrizable space is one that:",
         "options": [
-          "Is a metric space",
           "Has a topology that can be induced by some metric",
+          "Is separable",
           "Is complete",
-          "Is separable"
+          "Is a metric space"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A topological space is metrizable if its topology can be induced by some metric (not necessarily unique)."
       },
       {

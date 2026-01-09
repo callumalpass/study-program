@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following collections forms a topology on X = {a, b, c}?",
         "options": [
-          "{∅, X}",
-          "{∅, {a}, {b}, X}",
           "{∅, {a}, {a, b}, X}",
-          "{∅, {a}, {b}, {a, b}}"
+          "{∅, {a}, {b}, X}",
+          "{∅, {a}, {b}, {a, b}}",
+          "{∅, X}"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "A topology must contain ∅ and X, and be closed under arbitrary unions and finite intersections. Option 2 satisfies all requirements: {a} ∪ {a, b} = {a, b} ✓, {a} ∩ {a, b} = {a} ✓. Option 1 fails because it's missing X at the end."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "A set F is closed if and only if:",
         "options": [
+          "All of the above",
           "F contains all its limit points",
-          "F is the complement of an open set",
           "F = cl(F)",
-          "All of the above"
+          "F is the complement of an open set"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "All three statements are equivalent definitions of a closed set. A set is closed iff it equals its closure, iff it contains all its limit points, iff its complement is open."
       },
       {
@@ -78,12 +78,12 @@
         "type": "multiple_choice",
         "prompt": "In the discrete topology on any set X, which sets are open?",
         "options": [
-          "Only ∅ and X",
-          "Only finite sets",
           "Only countable sets",
-          "All subsets of X"
+          "Only finite sets",
+          "All subsets of X",
+          "Only ∅ and X"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "In the discrete topology, every subset of X is open (and also closed). This is the finest topology possible on X."
       },
       {
@@ -111,12 +111,12 @@
         "type": "multiple_choice",
         "prompt": "For A = {1/n : n ∈ ℕ} in ℝ, what is cl(A)?",
         "options": [
-          "A",
           "A ∪ {0}",
           "A ∪ {0, 1}",
+          "A",
           "[0, 1]"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The sequence 1/n → 0 as n → ∞, so 0 is a limit point of A. No other points are limit points, so cl(A) = A ∪ {0}."
       }
     ]
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "A point x is a limit point of A if:",
         "options": [
-          "x ∈ A",
-          "Every neighborhood of x intersects A",
           "Every neighborhood of x contains a point of A different from x",
-          "x ∈ cl(A)"
+          "Every neighborhood of x intersects A",
+          "x ∈ cl(A)",
+          "x ∈ A"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "By definition, x is a limit point of A if every neighborhood of x contains at least one point of A distinct from x. This allows x to be in or out of A."
       },
       {
@@ -172,12 +172,12 @@
         "type": "multiple_choice",
         "prompt": "In the indiscrete topology on X = {a, b, c}, how many limit points does {a} have?",
         "options": [
-          "0",
-          "1",
           "2",
-          "3"
+          "3",
+          "0",
+          "1"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "In the indiscrete topology, the only open sets are ∅ and X. Every neighborhood of any point is X, which always intersects {a}. Therefore, every point a, b, c is a limit point of {a}."
       }
     ]

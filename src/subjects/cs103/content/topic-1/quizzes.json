@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "What does `self` represent inside an instance method?",
         "options": [
-          "The class object",
           "The parent class",
-          "The current instance",
-          "A global reference"
+          "The class object",
+          "A global reference",
+          "The current instance"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "`self` is the current object (instance) the method is operating on."
       },
       {
@@ -51,11 +51,11 @@
         "prompt": "Which dunder method is used by `print(obj)` to produce a human-readable string?",
         "options": [
           "__repr__",
-          "__str__",
           "__call__",
+          "__str__",
           "__len__"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "`__str__` is used for user-friendly string output; `__repr__` is for debugging."
       }
     ]
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Which is the correct way to avoid a mutable default argument in `__init__`?",
         "options": [
-          "def __init__(self, items=[]): self.items = items",
           "def __init__(self, items=None): self.items = [] if items is None else items",
+          "def __init__(self, items=list()): self.items = items",
           "def __init__(self, items={}): self.items = items",
-          "def __init__(self, items=list()): self.items = items"
+          "def __init__(self, items=[]): self.items = items"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Using `None` avoids sharing a single default list/dict across instances."
       },
       {

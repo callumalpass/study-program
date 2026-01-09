@@ -11,11 +11,11 @@
         "prompt": "What is stored on the stack?",
         "options": [
           "All variables",
+          "Objects",
           "Function call frames and local variables",
-          "Global data",
-          "Objects"
+          "Global data"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The stack stores function call frames including return addresses, parameters, and local variables."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is stored on the heap?",
         "options": [
-          "Only strings",
           "Dynamically allocated objects with varying lifetimes",
           "Function code",
+          "Only strings",
           "Constants"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The heap stores dynamically allocated data whose lifetime isn't tied to function calls."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is a dangling pointer?",
         "options": [
+          "A null pointer",
           "An unused pointer",
           "A pointer to memory that has been freed",
-          "A null pointer",
           "A pointer arithmetic error"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A dangling pointer references memory that has been deallocated, leading to undefined behavior."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What is RAII (Resource Acquisition Is Initialization)?",
         "options": [
+          "An initialization pattern",
           "A programming language",
           "Tying resource lifetime to object lifetime",
-          "A memory allocator",
-          "An initialization pattern"
+          "A memory allocator"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "RAII ties resource management to object lifetime: acquire in constructor, release in destructor."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is the basic principle of garbage collection?",
         "options": [
+          "Compressing data",
           "Deleting files",
           "Automatically reclaiming unreachable memory",
-          "Compressing data",
           "Defragmenting disk"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Garbage collection automatically identifies and reclaims memory that is no longer reachable by the program."
       },
       {
@@ -110,11 +110,11 @@
         "prompt": "What is the main problem with reference counting?",
         "options": [
           "Too slow",
+          "Only works for integers",
           "Cannot reclaim circular references",
-          "Uses too much memory",
-          "Only works for integers"
+          "Uses too much memory"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Reference counting cannot reclaim cycles where objects reference each other but are unreachable from roots."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is generational garbage collection based on?",
         "options": [
-          "Code generations",
           "The hypothesis that most objects die young",
+          "Old programming styles",
           "Generation gaps",
-          "Old programming styles"
+          "Code generations"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Generational GC exploits the observation that most objects are short-lived, focusing collection on young objects."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is Rust's ownership system?",
         "options": [
+          "File ownership",
           "Copyright management",
           "Each value has one owner; ownership can be moved or borrowed",
-          "File ownership",
           "Thread ownership"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Rust's ownership: each value has one owner, transferring ownership moves the value, borrowing allows temporary access."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is the borrow checker in Rust?",
         "options": [
-          "A library checker",
-          "A compiler component that enforces borrowing rules",
+          "A linter",
           "A runtime check",
-          "A linter"
+          "A compiler component that enforces borrowing rules",
+          "A library checker"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Rust's borrow checker statically enforces that references don't outlive their referents and prevents aliased mutation."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is region-based memory management?",
         "options": [
-          "Geographic allocation",
           "Allocating objects in regions that are freed together",
-          "Regional programming",
-          "Disk regions"
+          "Disk regions",
+          "Geographic allocation",
+          "Regional programming"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Region-based management groups objects into regions/arenas that are deallocated together, avoiding individual frees."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What are linear types used for?",
         "options": [
-          "Linear algebra",
           "Ensuring values are used exactly once",
+          "Linear algebra",
           "Line-by-line processing",
           "Linear search"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Linear types ensure each value is used exactly once, enabling safe resource management without GC."
       },
       {

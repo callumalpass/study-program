@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which function is used to allocate memory dynamically in C?",
         "options": [
+          "create()",
           "alloc()",
-          "malloc()",
           "new()",
-          "create()"
+          "malloc()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "malloc (memory allocation) from stdlib.h allocates a specified number of bytes on the heap."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What does malloc return if allocation fails?",
         "options": [
-          "0",
           "NULL",
-          "-1",
-          "Throws an exception"
+          "0",
+          "Throws an exception",
+          "-1"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "malloc returns NULL if it cannot allocate the requested memory. Always check for NULL after malloc."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between malloc(10) and calloc(10, 1)?",
         "options": [
+          "calloc allocates more memory",
           "No difference",
           "calloc initializes to zero",
-          "malloc is faster",
-          "calloc allocates more memory"
+          "malloc is faster"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Both allocate 10 bytes, but calloc also initializes all bytes to zero while malloc leaves them uninitialized."
       }
     ]
@@ -98,11 +98,11 @@
         "prompt": "What is a stack overflow?",
         "options": [
           "Allocating too much heap memory",
-          "Using too many recursive calls or large local arrays",
           "Accessing freed memory",
+          "Using too many recursive calls or large local arrays",
           "Integer overflow"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Stack overflow occurs when the stack runs out of space, often due to deep recursion or large local arrays."
       },
       {
@@ -151,12 +151,12 @@
         "type": "multiple_choice",
         "prompt": "What is a \"double free\" error?",
         "options": [
-          "Freeing twice the allocated size",
           "Calling free() twice on the same pointer",
+          "Freeing twice the allocated size",
           "Freeing a double pointer",
           "Freeing static memory"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Double free means calling free() twice on the same memory address, which corrupts the heap."
       },
       {
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "Which tool is commonly used to detect memory errors in C programs?",
         "options": [
-          "GDB",
-          "Valgrind",
           "GCC",
-          "Make"
+          "Make",
+          "Valgrind",
+          "GDB"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Valgrind is a tool that detects memory leaks, invalid accesses, and other memory errors."
       },
       {
@@ -184,12 +184,12 @@
         "type": "multiple_choice",
         "prompt": "What is \"use after free\"?",
         "options": [
-          "Using malloc after free",
-          "Accessing memory after it has been freed",
           "Using free without malloc",
-          "Freeing uninitialized memory"
+          "Freeing uninitialized memory",
+          "Accessing memory after it has been freed",
+          "Using malloc after free"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Use after free means accessing memory through a pointer after that memory has been freed."
       }
     ]

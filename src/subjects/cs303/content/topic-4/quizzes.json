@@ -11,11 +11,11 @@
         "prompt": "What is the purpose of formal semantics?",
         "options": [
           "To make code look formal",
+          "To simplify syntax",
           "To give precise mathematical meaning to programs",
-          "To improve performance",
-          "To simplify syntax"
+          "To improve performance"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Formal semantics provides unambiguous, mathematical definitions of what programs mean and how they behave."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What does operational semantics describe?",
         "options": [
+          "Operating system behavior",
           "Operations on data",
           "How programs execute step by step",
-          "Operator precedence",
-          "Operating system behavior"
+          "Operator precedence"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Operational semantics defines program meaning through execution rules that describe computation steps."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between big-step and small-step semantics?",
         "options": [
-          "Size of programs",
           "Big-step evaluates to final value; small-step shows individual steps",
+          "Compilation speed",
           "Memory usage",
-          "Compilation speed"
+          "Size of programs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Big-step (natural) semantics relates expressions to final values; small-step (structural) shows each computation step."
       },
       {
@@ -50,11 +50,11 @@
         "prompt": "What does denotational semantics do?",
         "options": [
           "Denotes variable names",
-          "Maps programs to mathematical objects (denotations)",
           "Describes program names",
+          "Maps programs to mathematical objects (denotations)",
           "Defines notation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Denotational semantics maps programs to mathematical objects that represent their meaning compositionally."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What is a semantic domain?",
         "options": [
+          "A type of variable",
           "A website for semantics",
           "The set of possible meanings for a language construct",
-          "A domain name",
-          "A type of variable"
+          "A domain name"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A semantic domain is the mathematical set that provides the meanings (denotations) for language constructs."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is Hoare logic used for?",
         "options": [
-          "Logic puzzles",
-          "Reasoning about program correctness with pre/postconditions",
+          "Hardware design",
           "Boolean logic",
-          "Hardware design"
+          "Logic puzzles",
+          "Reasoning about program correctness with pre/postconditions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Hoare logic uses {P}C{Q} triples to specify that if precondition P holds and C executes, postcondition Q holds."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "In a Hoare triple {P} C {Q}, what is P?",
         "options": [
-          "Program",
-          "Precondition",
+          "Procedure",
           "Postcondition",
-          "Procedure"
+          "Precondition",
+          "Program"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "P is the precondition: the assertion that must be true before command C executes."
       },
       {
@@ -110,11 +110,11 @@
         "prompt": "What is a loop invariant?",
         "options": [
           "A loop that never changes",
-          "An assertion true before and after each loop iteration",
           "A constant in a loop",
+          "An assertion true before and after each loop iteration",
           "An infinite loop"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A loop invariant is an assertion that holds before and after every iteration, used to reason about loops."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What additional property is needed for total correctness?",
         "options": [
-          "Performance",
-          "Termination",
           "Documentation",
-          "Testing"
+          "Testing",
+          "Termination",
+          "Performance"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Total correctness = partial correctness + termination (the program must terminate)."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is abstract interpretation?",
         "options": [
-          "Art interpretation",
-          "Analyzing programs using approximations of their semantics",
+          "Abstract art programming",
           "Interpreting bytecode",
-          "Abstract art programming"
+          "Art interpretation",
+          "Analyzing programs using approximations of their semantics"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Abstract interpretation analyzes programs by computing over abstract domains that approximate concrete values."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of a weakest precondition?",
         "options": [
-          "Finding bugs",
-          "Finding the minimal precondition that ensures a postcondition",
+          "Performance optimization",
           "Weak typing",
-          "Performance optimization"
+          "Finding bugs",
+          "Finding the minimal precondition that ensures a postcondition"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The weakest precondition wp(C,Q) is the least restrictive precondition guaranteeing postcondition Q after C."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What does soundness mean for a program analysis?",
         "options": [
+          "It's well-documented",
           "It makes sound",
-          "If it reports no errors, the program is error-free",
           "It runs quietly",
-          "It's well-documented"
+          "If it reports no errors, the program is error-free"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A sound analysis never misses real errors (no false negatives), though it may report false positives."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What does completeness mean for a program analysis?",
         "options": [
-          "All code is analyzed",
           "If the program is error-free, no errors are reported",
           "The analysis finishes",
+          "All code is analyzed",
           "Full test coverage"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A complete analysis reports errors only for actual errors (no false positives), but may miss some errors."
       }
     ]

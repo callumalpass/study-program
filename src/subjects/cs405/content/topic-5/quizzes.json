@@ -11,11 +11,11 @@
         "prompt": "What is the main benefit of serverless computing?",
         "options": [
           "Servers are eliminated entirely",
-          "You only pay for actual execution time, no idle costs",
           "Unlimited free computing resources",
+          "You only pay for actual execution time, no idle costs",
           "Servers never crash"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Serverless means you don't manage servers and only pay for actual execution time. The cloud provider handles infrastructure, scaling, and availability."
       },
       {
@@ -31,11 +31,11 @@
         "prompt": "What is the AWS serverless compute service called?",
         "options": [
           "EC2",
-          "Lambda",
           "ECS",
+          "Lambda",
           "Batch"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "AWS Lambda is AWS's Function-as-a-Service (FaaS) offering. Google Cloud has Cloud Functions, Azure has Azure Functions."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the typical maximum execution time for AWS Lambda functions?",
         "options": [
-          "1 minute",
           "5 minutes",
-          "15 minutes",
-          "1 hour"
+          "1 minute",
+          "1 hour",
+          "15 minutes"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "AWS Lambda functions have a maximum execution time of 15 minutes. For longer-running tasks, use services like ECS, Batch, or Step Functions."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What is an event-driven architecture?",
         "options": [
+          "Systems that don't use databases",
           "Applications that run on scheduled timers",
-          "Systems where components communicate through events",
           "Applications that never fail",
-          "Systems that don't use databases"
+          "Systems where components communicate through events"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Event-driven architecture is a software pattern where components communicate asynchronously through events. Producers emit events, consumers react to them."
       },
       {
@@ -92,11 +92,11 @@
         "prompt": "Which AWS service is commonly used for event messaging in serverless architectures?",
         "options": [
           "RDS",
-          "S3",
           "SNS/SQS",
+          "S3",
           "Route53"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "SNS (Simple Notification Service) and SQS (Simple Queue Service) are AWS messaging services. SNS is pub/sub, SQS is queuing. Both trigger Lambda functions."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What pattern helps handle Lambda function failures?",
         "options": [
-          "Ignore failures",
           "Dead Letter Queues (DLQ)",
+          "Ignore failures",
           "Restart the server",
           "Use larger instances"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Dead Letter Queues (DLQ) capture failed events for later analysis or retry. Lambda can send failed events to SQS or SNS DLQs."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "How can you reduce Lambda cold start times?",
         "options": [
-          "Use larger memory allocation and keep functions warm",
           "Add more code",
           "Use smaller memory settings",
-          "Disable logging"
+          "Disable logging",
+          "Use larger memory allocation and keep functions warm"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Reduce cold starts by: increasing memory (faster CPU), keeping functions warm with scheduled pings, using provisioned concurrency, and minimizing dependencies."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "Which AWS service helps orchestrate complex serverless workflows?",
         "options": [
-          "Lambda only",
           "Step Functions",
-          "CloudWatch",
-          "IAM"
+          "Lambda only",
+          "IAM",
+          "CloudWatch"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "AWS Step Functions orchestrates multiple Lambda functions and services into serverless workflows. It handles state management, error handling, and retries."
       },
       {

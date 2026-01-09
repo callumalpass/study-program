@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "To test if vectors $\\{v_1, v_2, v_3\\}$ in $\\mathbb{R}^n$ are linearly independent, form matrix $A = [v_1 \\; v_2 \\; v_3]$ and:",
         "options": [
-          "Find the determinant",
           "Check if $Ax = 0$ has only the trivial solution",
+          "Both B and C",
           "Find the rank",
-          "Both B and C"
+          "Find the determinant"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "Vectors are independent if and only if $Ax = 0$ has only the trivial solution, which occurs when the rank equals the number of columns."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "The coordinate vector of $x$ with respect to basis $\\mathcal{B} = \\{b_1, b_2\\}$ is $[x]_\\mathcal{B} = \\begin{bmatrix} 3 \\\\ -2 \\end{bmatrix}$. This means:",
         "options": [
-          "$x = 3b_1 - 2b_2$",
-          "$x = -2b_1 + 3b_2$",
           "$x = b_1 + b_2$",
-          "$x = 3 - 2$"
+          "$x = 3 - 2$",
+          "$x = -2b_1 + 3b_2$",
+          "$x = 3b_1 - 2b_2$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The coordinate vector $[x]_\\mathcal{B} = \\begin{bmatrix} c_1 \\\\ c_2 \\end{bmatrix}$ means $x = c_1b_1 + c_2b_2$. So $x = 3b_1 - 2b_2$."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "If the columns of $A$ form a basis for $\\mathbb{R}^m$, then:",
         "options": [
-          "$A$ has $m$ linearly independent columns",
           "$A$ must be square",
           "$A$ is invertible",
-          "All of the above if $A$ is $m \\times m$"
+          "All of the above if $A$ is $m \\times m$",
+          "$A$ has $m$ linearly independent columns"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "If columns form a basis for $\\mathbb{R}^m$, there must be exactly $m$ linearly independent columns. For an $m \\times m$ matrix, this means $A$ is invertible."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "The change-of-basis matrix from basis $\\mathcal{B}$ to basis $\\mathcal{C}$ is denoted:",
         "options": [
-          "$P_{\\mathcal{B} \\leftarrow \\mathcal{C}}$",
+          "$\\mathcal{B} \\times \\mathcal{C}$",
           "$P_{\\mathcal{C} \\leftarrow \\mathcal{B}}$",
-          "$\\mathcal{C} - \\mathcal{B}$",
-          "$\\mathcal{B} \\times \\mathcal{C}$"
+          "$P_{\\mathcal{B} \\leftarrow \\mathcal{C}}$",
+          "$\\mathcal{C} - \\mathcal{B}$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The change-of-basis matrix $P_{\\mathcal{B} \\leftarrow \\mathcal{C}}$ converts coordinates from $\\mathcal{C}$ to $\\mathcal{B}$: $[x]_\\mathcal{B} = P_{\\mathcal{B} \\leftarrow \\mathcal{C}}[x]_\\mathcal{C}$."
       },
       {
@@ -105,11 +105,11 @@
         "prompt": "If matrix $A$ has rank $r$, then the dimension of Nul$(A)$ is:",
         "options": [
           "$r$",
+          "Cannot be determined",
           "$n - r$ where $n$ is the number of columns",
-          "$m - r$ where $m$ is the number of rows",
-          "Cannot be determined"
+          "$m - r$ where $m$ is the number of rows"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "By the Rank-Nullity Theorem: nullity$(A) = n - r$ where $n$ is the number of columns and $r$ is the rank."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "For which values of $k$ are the vectors $\\begin{bmatrix} 1 \\\\ 2 \\end{bmatrix}$ and $\\begin{bmatrix} 2 \\\\ k \\end{bmatrix}$ linearly dependent?",
         "options": [
-          "$k = 0$",
           "$k = 2$",
-          "$k = 4$",
-          "Never dependent"
+          "Never dependent",
+          "$k = 0$",
+          "$k = 4$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Vectors in $\\mathbb{R}^2$ are dependent if one is a scalar multiple of the other. $\\begin{bmatrix} 2 \\\\ k \\end{bmatrix} = 2\\begin{bmatrix} 1 \\\\ 2 \\end{bmatrix}$ when $k = 4$."
       },
       {

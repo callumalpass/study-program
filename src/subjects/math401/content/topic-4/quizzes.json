@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Cauchy's integral formula: if f is analytic inside and on γ, what is (1/2πi)∫_γ f(z)/(z-a) dz?",
         "options": [
-          "f(a)",
-          "f'(a)",
           "0",
-          "2πif(a)"
+          "2πif(a)",
+          "f'(a)",
+          "f(a)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Cauchy's integral formula: f(a) = (1/2πi)∫_γ f(z)/(z-a) dz for a inside γ"
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is f'(a) using Cauchy's formula for derivatives?",
         "options": [
+          "(2/2πi)∫_γ f(z)/(z-a)² dz",
           "(1/2πi)∫_γ f(z)/(z-a) dz",
           "(1/2πi)∫_γ f(z)/(z-a)² dz",
-          "(2/2πi)∫_γ f(z)/(z-a)² dz",
           "∫_γ f(z)/(z-a) dz"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "f'(a) = (1/2πi)∫_γ f(z)/(z-a)² dz by Cauchy's formula for the first derivative"
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Which theorem states that a non-constant analytic function on a domain cannot have a local maximum of |f|?",
         "options": [
+          "Liouville's theorem",
           "Fundamental theorem",
           "Maximum modulus principle",
-          "Liouville's theorem",
           "Cauchy's theorem"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The maximum modulus principle: |f| attains maximum on the boundary, not in the interior"
       },
       {
@@ -57,11 +57,11 @@
         "prompt": "How many times differentiable is an analytic function?",
         "options": [
           "Once",
-          "Twice",
           "Finitely many",
-          "Infinitely many"
+          "Infinitely many",
+          "Twice"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "Analytic functions are infinitely differentiable (this follows from Cauchy's integral formula)"
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "Morera's theorem is the converse of which theorem?",
         "options": [
-          "Liouville's",
-          "Cauchy-Goursat",
+          "Fundamental theorem of algebra",
           "Maximum modulus",
-          "Fundamental theorem of algebra"
+          "Cauchy-Goursat",
+          "Liouville's"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Morera: if ∫_γ f = 0 for all closed γ, then f is analytic (converse of Cauchy-Goursat)"
       },
       {
@@ -98,11 +98,11 @@
         "prompt": "If f is analytic on the closed disk |z| ≤ 1 and |f(z)| ≤ 5 for |z| = 1, what can we say about |f(0)|?",
         "options": [
           "|f(0)| = 5",
+          "|f(0)| ≥ 5",
           "|f(0)| > 5",
-          "|f(0)| ≤ 5",
-          "|f(0)| ≥ 5"
+          "|f(0)| ≤ 5"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "By maximum modulus principle, maximum is on boundary, so |f(0)| ≤ max_{|z|=1}|f(z)| ≤ 5"
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "What is the nth derivative f^(n)(a) using Cauchy's formula?",
         "options": [
-          "(n!/2πi)∫_γ f(z)/(z-a)^n dz",
           "(n!/2πi)∫_γ f(z)/(z-a)^(n+1) dz",
-          "(1/2πi)∫_γ f(z)/(z-a)^n dz",
-          "∫_γ f(z)/(z-a)^(n+1) dz"
+          "∫_γ f(z)/(z-a)^(n+1) dz",
+          "(n!/2πi)∫_γ f(z)/(z-a)^n dz",
+          "(1/2πi)∫_γ f(z)/(z-a)^n dz"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "General Cauchy formula: f^(n)(a) = (n!/2πi)∫_γ f(z)/(z-a)^(n+1) dz"
       },
       {
@@ -138,12 +138,12 @@
         "type": "multiple_choice",
         "prompt": "Using Cauchy's integral formula, what is ∫_{|z|=1} e^z/z dz?",
         "options": [
-          "e",
           "2πi",
+          "e",
           "2πie",
           "πi"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "By Cauchy's formula: ∫_γ f(z)/(z-a)dz = 2πif(a). Here f(z) = e^z, a = 0: result is 2πie^0 = 2πi"
       },
       {
@@ -172,11 +172,11 @@
         "prompt": "If f is analytic and non-constant on a bounded domain D, where does |f| attain its maximum?",
         "options": [
           "Interior of D",
-          "Boundary of D",
           "Nowhere",
+          "Boundary of D",
           "Everywhere"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Maximum modulus principle: maximum of |f| occurs on the boundary"
       },
       {

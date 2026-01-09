@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "A transformation $T: \\mathbb{R}^n \\to \\mathbb{R}^m$ is linear if:",
         "options": [
-          "$T(u + v) = T(u) + T(v)$ for all vectors $u, v$",
           "$T(cu) = cT(u)$ for all scalars $c$ and vectors $u$",
           "Both of the above",
+          "$T(u + v) = T(u) + T(v)$ for all vectors $u, v$",
           "Neither of the above"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "A transformation is linear if it preserves both addition and scalar multiplication: $T(u+v) = T(u)+T(v)$ and $T(cu) = cT(u)$."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "The kernel (null space) of linear transformation $T$ is:",
         "options": [
-          "The set of all outputs of $T$",
           "The set of all inputs that $T$ maps to zero",
-          "The set of all invertible vectors",
-          "The dimension of the domain"
+          "The dimension of the domain",
+          "The set of all outputs of $T$",
+          "The set of all invertible vectors"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "ker$(T) = \\{x : T(x) = 0\\}$, the set of all vectors that map to the zero vector."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "A linear transformation $T: \\mathbb{R}^n \\to \\mathbb{R}^m$ is onto if:",
         "options": [
-          "Every vector in $\\mathbb{R}^m$ is in the range of $T$",
-          "ker$(T) = \\{0\\}$",
           "$n = m$",
-          "$T$ is one-to-one"
+          "ker$(T) = \\{0\\}$",
+          "$T$ is one-to-one",
+          "Every vector in $\\mathbb{R}^m$ is in the range of $T$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A transformation is onto (surjective) if its range equals the entire codomain: range$(T) = \\mathbb{R}^m$."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "The composition of linear transformations $T_1: \\mathbb{R}^n \\to \\mathbb{R}^m$ and $T_2: \\mathbb{R}^m \\to \\mathbb{R}^p$ is:",
         "options": [
-          "Always linear",
           "Never linear",
+          "Always linear",
           "Linear only if both are invertible",
           "Linear only if $n = p$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The composition $(T_2 \\circ T_1)(x) = T_2(T_1(x))$ is always linear if both $T_1$ and $T_2$ are linear."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "Two matrices $A$ and $B$ are similar if there exists invertible $P$ such that:",
         "options": [
-          "$A = B$",
-          "$A = PBP^{-1}$",
+          "$AP = PB$",
           "$A + B = P$",
-          "$AP = PB$"
+          "$A = PBP^{-1}$",
+          "$A = B$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Matrices $A$ and $B$ are similar if $A = PBP^{-1}$ for some invertible matrix $P$. Similar matrices represent the same transformation in different bases."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "Similar matrices have the same:",
         "options": [
-          "Entries",
           "Eigenvalues",
+          "Entries",
           "Eigenvectors",
           "Columns"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Similar matrices have the same eigenvalues, determinant, trace, and characteristic polynomial, but generally different eigenvectors and entries."
       },
       {
@@ -166,11 +166,11 @@
         "prompt": "Which transformation is NOT linear?",
         "options": [
           "Rotation about the origin",
-          "Reflection across a line through the origin",
           "Translation by a nonzero vector",
-          "Projection onto a subspace"
+          "Projection onto a subspace",
+          "Reflection across a line through the origin"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Translation by a nonzero vector is not linear because it doesn't map the zero vector to zero: $T(0) = b \\neq 0$ for translation by $b$."
       },
       {

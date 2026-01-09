@@ -51,12 +51,12 @@
         "type": "multiple_choice",
         "prompt": "What does the ## operator do in macros?",
         "options": [
-          "Logical AND",
-          "String comparison",
           "Token concatenation",
-          "Double comment"
+          "Double comment",
+          "String comparison",
+          "Logical AND"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The ## operator concatenates two tokens. For example, #define CONCAT(a, b) a##b makes CONCAT(var, 1) become var1."
       }
     ]
@@ -72,12 +72,12 @@
         "type": "multiple_choice",
         "prompt": "Which directive tests if a macro is defined?",
         "options": [
-          "#if",
           "#ifdef",
           "#define",
-          "#check"
+          "#check",
+          "#if"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "#ifdef checks if a macro is defined. #if can also check with #if defined(MACRO)."
       },
       {
@@ -85,12 +85,12 @@
         "type": "multiple_choice",
         "prompt": "What is an include guard used for?",
         "options": [
-          "Security",
           "Preventing multiple inclusions",
+          "Encryption",
           "Speeding up compilation",
-          "Encryption"
+          "Security"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Include guards (#ifndef, #define, #endif pattern) prevent a header file from being included multiple times in the same translation unit."
       },
       {
@@ -113,12 +113,12 @@
         "type": "multiple_choice",
         "prompt": "What does #undef do?",
         "options": [
-          "Undefines a macro",
           "Causes undefined behavior",
           "Declares undefined variable",
-          "Undoes last include"
+          "Undoes last include",
+          "Undefines a macro"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "#undef removes a previously defined macro, allowing it to be redefined or left undefined."
       }
     ]
@@ -135,11 +135,11 @@
         "prompt": "What is a translation unit in C?",
         "options": [
           "A function",
+          "A header file",
           "A source file after preprocessing",
-          "A library",
-          "A header file"
+          "A library"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A translation unit is a source file after all #include directives are resolved and preprocessing is complete."
       },
       {
@@ -148,11 +148,11 @@
         "prompt": "What does the linker do?",
         "options": [
           "Preprocesses code",
-          "Compiles to assembly",
           "Combines object files into executable",
+          "Compiles to assembly",
           "Checks syntax"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The linker combines object files (.o) and resolves external symbols to create the final executable."
       },
       {
@@ -167,12 +167,12 @@
         "type": "multiple_choice",
         "prompt": "What file extension is typically used for object files?",
         "options": [
-          ".obj or .o",
-          ".exe",
           ".lib",
-          ".src"
+          ".exe",
+          ".src",
+          ".obj or .o"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Object files use .o on Unix/Linux and .obj on Windows. They contain compiled but not linked code."
       },
       {
@@ -180,12 +180,12 @@
         "type": "multiple_choice",
         "prompt": "In a Makefile, what does a target depend on?",
         "options": [
-          "Nothing",
           "Prerequisites listed after the colon",
           "All source files",
-          "The compiler"
+          "The compiler",
+          "Nothing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "In a Makefile rule \"target: prerequisites\", the target depends on the files listed after the colon."
       }
     ]

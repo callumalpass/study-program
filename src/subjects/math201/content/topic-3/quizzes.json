@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is NOT required for a set to be a vector space?",
         "options": [
-          "Closure under addition",
           "Closure under scalar multiplication",
+          "Existence of multiplicative identity",
           "Existence of additive identity",
-          "Existence of multiplicative identity"
+          "Closure under addition"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "A vector space requires closure under addition and scalar multiplication, additive identity and inverses, but NOT a multiplicative identity for vectors."
       },
       {
@@ -31,11 +31,11 @@
         "prompt": "A subspace of a vector space $V$ must:",
         "options": [
           "Be equal to $V$",
-          "Contain only the zero vector",
           "Be closed under addition and scalar multiplication",
+          "Contain only the zero vector",
           "Have the same dimension as $V$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "A subspace must be closed under vector addition and scalar multiplication, and must contain the zero vector. It need not equal $V$ or have the same dimension."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "The null space of matrix $A$ is:",
         "options": [
-          "The set of all vectors $x$ such that $Ax = 0$",
-          "The set of all vectors $x$ such that $Ax = b$",
           "The set of column vectors of $A$",
-          "The set of row vectors of $A$"
+          "The set of row vectors of $A$",
+          "The set of all vectors $x$ such that $Ax = b$",
+          "The set of all vectors $x$ such that $Ax = 0$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The null space (kernel) of $A$ is $\\text{Nul}(A) = \\{x : Ax = 0\\}$, the solution set of the homogeneous equation."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "The span of vectors $\\{v_1, v_2, \\ldots, v_k\\}$ is:",
         "options": [
-          "The largest vector",
-          "All linear combinations of the vectors",
           "The sum of the vectors",
-          "The product of the vectors"
+          "The product of the vectors",
+          "The largest vector",
+          "All linear combinations of the vectors"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Span$\\{v_1, \\ldots, v_k\\}$ is the set of all linear combinations $c_1v_1 + \\cdots + c_kv_k$ where $c_i$ are scalars."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "Vectors $v_1, v_2, \\ldots, v_k$ are linearly independent if:",
         "options": [
-          "They all have different lengths",
-          "The only solution to $c_1v_1 + \\cdots + c_kv_k = 0$ is all $c_i = 0$",
           "They span the entire space",
-          "They are orthogonal"
+          "They are orthogonal",
+          "The only solution to $c_1v_1 + \\cdots + c_kv_k = 0$ is all $c_i = 0$",
+          "They all have different lengths"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Vectors are linearly independent if the only linear combination that gives the zero vector is the trivial combination (all coefficients zero)."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "The dimension of the null space of $A$ is called:",
         "options": [
-          "The rank",
-          "The nullity",
           "The trace",
-          "The determinant"
+          "The rank",
+          "The determinant",
+          "The nullity"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The nullity of $A$ is the dimension of its null space, equal to the number of free variables in $Ax = 0$."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "If $\\{v_1, v_2, v_3\\}$ is a basis for vector space $V$, then $\\dim(V) = $:",
         "options": [
-          "$1$",
-          "$2$",
           "$3$",
-          "Cannot be determined"
+          "$1$",
+          "Cannot be determined",
+          "$2$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The dimension of a vector space equals the number of vectors in any basis. Since the basis has 3 vectors, $\\dim(V) = 3$."
       },
       {

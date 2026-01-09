@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What does Bayes' theorem allow us to compute?",
         "options": [
+          "The most likely state sequence in an HMM",
           "The posterior probability P(A|B) from the likelihood P(B|A) and prior P(A)",
           "The joint probability P(A,B) from marginal probabilities",
-          "The expected value of a random variable",
-          "The most likely state sequence in an HMM"
+          "The expected value of a random variable"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Bayes' theorem states P(A|B) = P(B|A)P(A) / P(B), allowing us to invert conditional probabilities. This is fundamental for reasoning from effects to causes - we can compute the probability of a hypothesis given evidence by using our knowledge of how likely the evidence is given the hypothesis. This enables diagnostic reasoning in AI systems."
       },
       {
@@ -45,12 +45,12 @@
         "type": "multiple_choice",
         "prompt": "What are the three types of connections where d-separation is blocked by evidence?",
         "options": [
-          "Causal chain, common cause, and common effect (only when evidence on effect or descendants)",
           "Series, parallel, and feedback connections",
           "Forward, backward, and bidirectional links",
-          "Root, leaf, and intermediate nodes"
+          "Root, leaf, and intermediate nodes",
+          "Causal chain, common cause, and common effect (only when evidence on effect or descendants)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "d-separation considers three structures: (1) causal chains X→Z→Y (blocked when Z observed), (2) common cause X←Z→Y (blocked when Z observed), and (3) common effect (v-structure) X→Z←Y (blocked when Z and descendants unobserved). Understanding these patterns is crucial for determining independence and designing efficient inference algorithms."
       }
     ]
@@ -66,12 +66,12 @@
         "type": "multiple_choice",
         "prompt": "What does the forward algorithm compute in Hidden Markov Models?",
         "options": [
-          "The filtering distribution P(X_t | e_1:t) for the current state given all evidence so far",
-          "The smoothing distribution P(X_t | e_1:T) using all evidence",
           "The most likely state sequence using Viterbi algorithm",
-          "The probability of the evidence sequence P(e_1:t)"
+          "The filtering distribution P(X_t | e_1:t) for the current state given all evidence so far",
+          "The probability of the evidence sequence P(e_1:t)",
+          "The smoothing distribution P(X_t | e_1:T) using all evidence"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The forward algorithm recursively computes the belief state P(X_t | e_1:t), which is the filtering distribution - the probability distribution over the current state given all observations up to time t. This is essential for online state estimation in temporal models and forms the basis for other HMM algorithms."
       },
       {
@@ -101,12 +101,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main purpose of particle filtering in probabilistic inference?",
         "options": [
-          "To approximate complex posterior distributions using a set of weighted samples",
           "To filter out noise from sensor readings",
-          "To discretize continuous state spaces",
-          "To find exact solutions faster than other methods"
+          "To approximate complex posterior distributions using a set of weighted samples",
+          "To find exact solutions faster than other methods",
+          "To discretize continuous state spaces"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Particle filtering (sequential Monte Carlo) represents the posterior distribution as a collection of weighted samples (particles). Each particle is a hypothesis about the state. Through resampling based on weights, particles concentrate in high-probability regions. This allows approximate inference for nonlinear, non-Gaussian models where exact inference is intractable."
       }
     ]
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is the Markov assumption in temporal models?",
         "options": [
-          "The current state depends only on a finite fixed number of previous states",
           "All states are equally likely",
-          "The future is independent of the past",
-          "The state space is discrete and finite"
+          "The current state depends only on a finite fixed number of previous states",
+          "The state space is discrete and finite",
+          "The future is independent of the past"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The Markov assumption (or Markov property) states that the current state X_t is conditionally independent of all earlier states given the immediately preceding state(s). In first-order Markov models, P(X_t | X_0:t-1) = P(X_t | X_t-1). This assumption dramatically simplifies temporal reasoning by bounding the relevant history."
       },
       {
@@ -157,12 +157,12 @@
         "type": "multiple_choice",
         "prompt": "What distinguishes Dynamic Bayesian Networks (DBNs) from Hidden Markov Models (HMMs)?",
         "options": [
-          "DBNs can represent multiple state variables and complex dependencies, while HMMs have a single discrete state variable",
-          "DBNs can only model discrete variables",
           "HMMs are more expressive than DBNs",
-          "DBNs cannot be used for temporal reasoning"
+          "DBNs can represent multiple state variables and complex dependencies, while HMMs have a single discrete state variable",
+          "DBNs cannot be used for temporal reasoning",
+          "DBNs can only model discrete variables"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "DBNs are a general framework for temporal reasoning that extends HMMs. While HMMs have a single discrete state variable, DBNs can represent multiple state variables (discrete or continuous) with complex dependencies between them. HMMs are actually a special case of DBNs, and DBNs provide much greater representational flexibility for modeling complex temporal processes."
       }
     ]

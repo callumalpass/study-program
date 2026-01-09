@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which join returns all rows from the left table and matching rows from the right?",
         "options": [
-          "INNER JOIN",
-          "LEFT JOIN",
           "RIGHT JOIN",
-          "FULL JOIN"
+          "FULL JOIN",
+          "LEFT JOIN",
+          "INNER JOIN"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "LEFT JOIN (LEFT OUTER JOIN) returns all left table rows with matched right table rows or NULL."
       },
       {
@@ -24,11 +24,11 @@
         "prompt": "What does CROSS JOIN produce?",
         "options": [
           "Only matching rows",
-          "Cartesian product of both tables",
           "Union of both tables",
-          "Intersection of tables"
+          "Intersection of tables",
+          "Cartesian product of both tables"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "CROSS JOIN produces the Cartesian product—every combination of rows from both tables."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "In an INNER JOIN, what happens to rows without matches?",
         "options": [
-          "They appear with NULL values",
           "They are excluded from results",
-          "They cause an error",
-          "They appear at the end"
+          "They appear at the end",
+          "They appear with NULL values",
+          "They cause an error"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "INNER JOIN only returns rows that have matches in both tables."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Which operator checks if a subquery returns any rows?",
         "options": [
-          "IN",
-          "EXISTS",
           "ANY",
-          "SOME"
+          "IN",
+          "SOME",
+          "EXISTS"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "EXISTS returns true if the subquery returns at least one row."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "What is a correlated subquery?",
         "options": [
+          "A subquery that returns one value",
           "A subquery that runs once",
-          "A subquery that references outer query columns",
           "A subquery in the FROM clause",
-          "A subquery that returns one value"
+          "A subquery that references outer query columns"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Correlated subqueries reference columns from the outer query and execute once per outer row."
       },
       {
@@ -105,12 +105,12 @@
         "prompt": "What does this query find?",
         "codeSnippet": "SELECT Name FROM Employees\nWHERE Salary > (SELECT AVG(Salary) FROM Employees);",
         "options": [
-          "Employees with maximum salary",
           "Employees earning above average",
-          "The average salary",
-          "All employee names"
+          "All employee names",
+          "Employees with maximum salary",
+          "The average salary"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The subquery calculates average salary, and the outer query finds employees earning more than that."
       },
       {
@@ -119,11 +119,11 @@
         "prompt": "Which clause allows a subquery to be treated as a table?",
         "options": [
           "WHERE",
-          "SELECT",
           "FROM",
-          "HAVING"
+          "HAVING",
+          "SELECT"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Subqueries in the FROM clause (derived tables) act as temporary tables."
       }
     ]
@@ -140,11 +140,11 @@
         "prompt": "What distinguishes window functions from GROUP BY aggregations?",
         "options": [
           "Window functions are faster",
-          "Window functions keep individual rows",
           "Window functions cannot use aggregates",
+          "Window functions keep individual rows",
           "Window functions require indexes"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Window functions compute values across rows while preserving individual rows in the output."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "What does ROW_NUMBER() do?",
         "options": [
-          "Counts total rows",
-          "Assigns sequential numbers to rows",
           "Numbers columns",
-          "Returns row data"
+          "Returns row data",
+          "Assigns sequential numbers to rows",
+          "Counts total rows"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "ROW_NUMBER() assigns a unique sequential integer to each row within a partition."
       },
       {

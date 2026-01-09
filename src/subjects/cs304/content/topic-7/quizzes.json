@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the heap used for in program execution?",
         "options": [
-          "Function calls",
           "Dynamically allocated data with programmer-controlled lifetime",
           "Local variables",
+          "Function calls",
           "Constants"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The heap stores dynamically allocated data whose lifetime is controlled by the programmer (or garbage collector)."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is fragmentation in heap management?",
         "options": [
-          "Memory corruption",
-          "Wasted space due to allocation patterns",
           "Memory overflow",
-          "Pointer errors"
+          "Memory corruption",
+          "Pointer errors",
+          "Wasted space due to allocation patterns"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Fragmentation occurs when free memory is broken into small, unusable pieces between allocations."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the mark-sweep garbage collection algorithm?",
         "options": [
-          "Sweeping memory",
-          "Mark reachable objects, then sweep (free) unmarked objects",
           "Marking errors",
-          "Memory cleanup"
+          "Sweeping memory",
+          "Memory cleanup",
+          "Mark reachable objects, then sweep (free) unmarked objects"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Mark-sweep traces from roots marking reachable objects, then frees all unmarked (unreachable) objects."
       },
       {
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is a stack-based virtual machine?",
         "options": [
-          "A VM using hardware stacks",
-          "A VM that uses a stack for operands instead of registers",
           "A VM for stack languages",
-          "A VM with call stacks"
+          "A VM with call stacks",
+          "A VM that uses a stack for operands instead of registers",
+          "A VM using hardware stacks"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Stack-based VMs use an operand stack for computation instead of named registers (e.g., JVM)."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is bytecode?",
         "options": [
-          "Binary code",
           "Portable intermediate code for virtual machines",
-          "Compressed code",
-          "Encrypted code"
+          "Binary code",
+          "Encrypted code",
+          "Compressed code"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Bytecode is a portable, compact intermediate representation executed by a virtual machine interpreter or JIT compiler."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What is JIT (Just-In-Time) compilation?",
         "options": [
-          "Ahead-of-time compilation",
           "Compiling code to native during execution",
+          "Incremental compilation",
           "Delayed compilation",
-          "Incremental compilation"
+          "Ahead-of-time compilation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "JIT compilation translates bytecode to native machine code at runtime, combining interpretation flexibility with native speed."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is a tracing JIT?",
         "options": [
+          "A sequential JIT",
           "A debugging JIT",
-          "A JIT that compiles frequently executed paths (traces)",
           "A JIT with logging",
-          "A sequential JIT"
+          "A JIT that compiles frequently executed paths (traces)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Tracing JITs record and compile hot execution paths (traces), optimizing the common case."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What is tiered compilation?",
         "options": [
+          "Parallel compilation",
           "Compilation in tiers",
           "Using multiple compilation levels based on method hotness",
-          "Parallel compilation",
           "Incremental compilation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Tiered compilation uses quick compilation for cold code and aggressive optimization for frequently executed hot code."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is the linker responsible for?",
         "options": [
+          "Memory allocation",
           "Compiling code",
-          "Combining object files and resolving external references",
           "Running programs",
-          "Memory allocation"
+          "Combining object files and resolving external references"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The linker combines object files, resolves symbol references, and produces an executable or library."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is relocation in linking?",
         "options": [
-          "Moving files",
-          "Adjusting addresses in object code when combined",
+          "Memory management",
           "Loading programs",
-          "Memory management"
+          "Moving files",
+          "Adjusting addresses in object code when combined"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Relocation patches addresses in object code to reflect the final layout when files are combined."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is dynamic linking?",
         "options": [
-          "Fast linking",
-          "Deferring library linking until runtime",
           "Linking during compilation",
-          "Automatic linking"
+          "Fast linking",
+          "Automatic linking",
+          "Deferring library linking until runtime"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Dynamic linking resolves library references at runtime, allowing shared libraries and late binding."
       },
       {

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is a proposition?",
         "options": [
-          "Close the door.",
-          "What time is it?",
           "x + 5 = 10",
-          "The Earth is flat."
+          "What time is it?",
+          "The Earth is flat.",
+          "Close the door."
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "A proposition is a declarative statement that is either true or false. \"The Earth is flat\" is a proposition (it's false, but it's still a proposition). Commands, questions, and statements with variables are not propositions."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the truth value of P ∨ Q when P is False and Q is True?",
         "options": [
-          "True",
           "False",
-          "Unknown",
-          "Neither"
+          "Neither",
+          "True",
+          "Unknown"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The disjunction (OR) is true when AT LEAST ONE operand is true. Since Q is True, P ∨ Q is True."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What is the negation of the proposition \"It is raining AND it is cold\"?",
         "options": [
-          "It is not raining AND it is not cold",
-          "It is not raining OR it is not cold",
+          "It is not raining AND it is cold",
           "It is raining OR it is cold",
-          "It is not raining AND it is cold"
+          "It is not raining OR it is not cold",
+          "It is not raining AND it is not cold"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "By De Morgan's Law, the negation of (P ∧ Q) is (¬P ∨ ¬Q). So \"NOT (raining AND cold)\" becomes \"NOT raining OR NOT cold\"."
       },
       {
@@ -92,11 +92,11 @@
         "prompt": "Which of the following is a tautology?",
         "options": [
           "P ∧ ¬P",
+          "P ∧ Q",
           "P ∨ ¬P",
-          "P → ¬P",
-          "P ∧ Q"
+          "P → ¬P"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "P ∨ ¬P (the law of excluded middle) is always true regardless of the truth value of P. Either P is true or its negation is true."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What is the contrapositive of \"If it rains, then the ground is wet\"?",
         "options": [
-          "If it does not rain, then the ground is not wet",
           "If the ground is wet, then it rains",
           "If the ground is not wet, then it does not rain",
-          "If it rains, then the ground is not wet"
+          "If it rains, then the ground is not wet",
+          "If it does not rain, then the ground is not wet"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The contrapositive of P → Q is ¬Q → ¬P. So \"If it rains → ground is wet\" becomes \"If ground is NOT wet → it does NOT rain.\""
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "Which statement is equivalent to \"p only if q\"?",
         "options": [
-          "q → p",
-          "p → q",
           "p ↔ q",
-          "¬p → q"
+          "¬p → q",
+          "q → p",
+          "p → q"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "\"p only if q\" means that p cannot be true unless q is also true, which is expressed as p → q."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "What is the result of applying De Morgan's Law to ¬(¬P ∨ Q)?",
         "options": [
-          "P ∧ ¬Q",
           "¬P ∧ Q",
-          "P ∨ ¬Q",
-          "¬P ∨ ¬Q"
+          "P ∧ ¬Q",
+          "¬P ∨ ¬Q",
+          "P ∨ ¬Q"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "¬(¬P ∨ Q) = ¬(¬P) ∧ ¬Q = P ∧ ¬Q by De Morgan's Law and double negation."
       },
       {

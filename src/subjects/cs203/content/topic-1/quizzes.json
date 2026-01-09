@@ -24,11 +24,11 @@
         "prompt": "In a DFA, the transition function δ maps to:",
         "options": [
           "A set of states",
-          "Exactly one state",
           "Zero or more states",
-          "The empty set"
+          "The empty set",
+          "Exactly one state"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "In a DFA, δ: Q × Σ → Q maps each (state, symbol) pair to exactly one state, making it deterministic."
       },
       {
@@ -50,11 +50,11 @@
         "prompt": "What distinguishes an NFA from a DFA?",
         "options": [
           "NFAs can have multiple start states",
-          "NFAs can have ε-transitions and multiple transitions on the same symbol",
           "NFAs have infinite states",
+          "NFAs can have ε-transitions and multiple transitions on the same symbol",
           "NFAs cannot accept the empty string"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "NFAs allow ε-transitions (transitions without consuming input) and multiple transitions from a state on the same input symbol."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "The subset construction algorithm converts:",
         "options": [
+          "DFA to PDA",
           "DFA to NFA",
           "NFA to DFA",
-          "NFA to regular expression",
-          "DFA to PDA"
+          "NFA to regular expression"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Subset construction (powerset construction) converts an NFA to an equivalent DFA by tracking sets of NFA states."
       }
     ]
@@ -84,11 +84,11 @@
         "prompt": "Two states p and q are distinguishable if:",
         "options": [
           "They have different incoming transitions",
-          "There exists a string w where exactly one of δ*(p,w) and δ*(q,w) is accepting",
+          "One is the start state",
           "They have the same outgoing transitions",
-          "One is the start state"
+          "There exists a string w where exactly one of δ*(p,w) and δ*(q,w) is accepting"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "States are distinguishable if some string w leads from one to an accepting state and from the other to a rejecting state."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "The minimal DFA for a regular language is:",
         "options": [
-          "Always exponentially smaller than any NFA",
           "Unique up to isomorphism",
+          "Always exponentially smaller than any NFA",
           "Always has exactly n states for n-symbol alphabet",
           "Not guaranteed to exist"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The Myhill-Nerode theorem guarantees a unique minimal DFA (up to state renaming) for each regular language."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is the worst-case blowup when converting an NFA with n states to a DFA?",
         "options": [
-          "O(n)",
-          "O(n²)",
+          "O(n!)",
           "O(2ⁿ)",
-          "O(n!)"
+          "O(n)",
+          "O(n²)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Subset construction can produce up to 2ⁿ states since each DFA state corresponds to a subset of the n NFA states."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "The table-filling algorithm for DFA minimization has time complexity:",
         "options": [
-          "O(n)",
-          "O(n log n)",
           "O(n²)",
+          "O(n log n)",
+          "O(n)",
           "O(2ⁿ)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The table-filling algorithm examines all pairs of states, giving O(n²) complexity where n is the number of states."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Regular languages are closed under:",
         "options": [
-          "Union only",
           "Intersection only",
-          "Union, intersection, and complement",
-          "None of the above"
+          "Union only",
+          "None of the above",
+          "Union, intersection, and complement"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Regular languages are closed under all Boolean operations including union, intersection, complement, as well as concatenation and Kleene star."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "The pumping lemma is used to:",
         "options": [
-          "Prove a language is regular",
           "Prove a language is not regular",
-          "Minimize DFAs",
-          "Convert NFAs to DFAs"
+          "Prove a language is regular",
+          "Convert NFAs to DFAs",
+          "Minimize DFAs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The pumping lemma provides a necessary condition for regularity. By showing a language violates it, we prove non-regularity."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "In the pumping lemma, if L is regular with pumping length p, then for s ∈ L with |s| ≥ p:",
         "options": [
-          "s can be written as xyz where xy^i z ∈ L for i ≥ 0",
           "s must contain exactly p symbols",
           "s can only be pumped once",
+          "s can be written as xyz where xy^i z ∈ L for i ≥ 0",
           "The y portion can be anywhere in s"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The pumping lemma states s = xyz where |y| > 0, |xy| ≤ p, and xy^i z ∈ L for all i ≥ 0."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "To prove closure under intersection, we use:",
         "options": [
+          "Subset construction",
           "State elimination",
           "Product construction",
-          "Subset construction",
           "Pumping lemma"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Product construction builds a DFA whose states are pairs from two DFAs, accepting when both components accept."
       }
     ]

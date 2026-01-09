@@ -10,10 +10,10 @@
         "type": "multiple_choice",
         "prompt": "Output of AND when inputs are 1, 1?",
         "options": [
-          "0",
-          "1"
+          "1",
+          "0"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "1 AND 1 = 1."
       },
       {
@@ -21,10 +21,10 @@
         "type": "multiple_choice",
         "prompt": "Output of XOR when inputs are 1, 1?",
         "options": [
-          "0",
-          "1"
+          "1",
+          "0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Exclusive OR means one or the other, but not both."
       },
       {
@@ -32,12 +32,12 @@
         "type": "multiple_choice",
         "prompt": "Which gate outputs 0 only when both inputs are 1?",
         "options": [
-          "OR",
-          "NAND",
           "NOR",
-          "XOR"
+          "OR",
+          "XOR",
+          "NAND"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "NAND is NOT AND. 1 AND 1 = 1, NOT 1 = 0."
       },
       {
@@ -83,11 +83,11 @@
         "prompt": "Which gate is \"Universal\"?",
         "options": [
           "AND",
+          "XOR",
           "OR",
-          "NAND",
-          "XOR"
+          "NAND"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "NAND (and NOR) can build all other gates."
       },
       {
@@ -102,12 +102,12 @@
         "type": "multiple_choice",
         "prompt": "Simplest form of A OR (A AND B)?",
         "options": [
-          "A",
-          "B",
+          "1",
           "A AND B",
-          "1"
+          "A",
+          "B"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Absorption Law."
       },
       {
@@ -143,12 +143,12 @@
         "type": "multiple_choice",
         "prompt": "Which expression is equivalent to A XOR B?",
         "options": [
-          "(A+B)(AB)",
-          "(A+B)(~A+~B)",
           "A+B",
-          "AB"
+          "AB",
+          "(A+B)(~A+~B)",
+          "(A+B)(AB)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "(A OR B) AND (NOT A OR NOT B) is equivalent to (A OR B) AND NOT(A AND B)."
       },
       {
@@ -163,12 +163,12 @@
         "type": "multiple_choice",
         "prompt": "The dual of expression (A + 1) is:",
         "options": [
-          "A . 1",
           "A . 0",
+          "0",
           "A + 0",
-          "0"
+          "A . 1"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Swap OR(+) with AND(.), and 1 with 0."
       },
       {

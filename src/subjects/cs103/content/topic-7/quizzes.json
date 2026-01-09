@@ -11,11 +11,11 @@
         "prompt": "“Composition over inheritance” mainly recommends:",
         "options": [
           "Never use inheritance",
-          "Prefer building behavior by combining objects rather than subclassing for reuse",
           "Always use multiple inheritance",
+          "Prefer building behavior by combining objects rather than subclassing for reuse",
           "Replace classes with global functions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Composition can reduce coupling and make designs more flexible."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which SOLID principle is most directly about “one reason to change”?",
         "options": [
-          "SRP",
           "OCP",
+          "SRP",
           "LSP",
           "DIP"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Single Responsibility Principle (SRP) recommends focused classes/modules."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "What is the best focus for a unit test of a class?",
         "options": [
-          "Private helper methods",
           "Public behavior and outputs",
-          "Exact line-by-line execution order",
-          "Internal variable names"
+          "Private helper methods",
+          "Internal variable names",
+          "Exact line-by-line execution order"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Unit tests should validate externally visible behavior, not internal implementation details."
       }
     ]
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What is a common symptom of high coupling?",
         "options": [
-          "Changes are localized",
-          "Small changes require edits in many places",
           "Tests are fast and simple",
-          "Classes are small and focused"
+          "Classes are small and focused",
+          "Changes are localized",
+          "Small changes require edits in many places"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "High coupling causes change ripples across the codebase."
       },
       {
@@ -106,12 +106,12 @@
         "type": "multiple_choice",
         "prompt": "Which is the best reason to introduce an interface/abstraction?",
         "options": [
-          "Because patterns require it",
-          "Because you have only one implementation",
+          "Because it makes code longer",
           "Because you need to swap implementations or isolate dependencies",
-          "Because it makes code longer"
+          "Because patterns require it",
+          "Because you have only one implementation"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Abstractions are useful when they reduce coupling and support extension/testing."
       }
     ]
@@ -127,12 +127,12 @@
         "type": "multiple_choice",
         "prompt": "Which change most strongly improves testability of a class?",
         "options": [
-          "Make all fields global",
           "Hard-code dependencies inside methods",
           "Inject dependencies through the constructor",
+          "Make all fields global",
           "Use inheritance everywhere"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Injected dependencies can be replaced by fakes in tests."
       },
       {

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the gradient ∇f for f(x,y) = x² + 2xy + y²?",
         "options": [
-          "<2x + 2y, 2x + 2y>",
           "<2x, 2y>",
           "<2x + 2y, 2y>",
-          "<x + y, x + y>"
+          "<x + y, x + y>",
+          "<2x + 2y, 2x + 2y>"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "∇f = <∂f/∂x, ∂f/∂y> = <2x + 2y, 2x + 2y>"
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What is the directional derivative D_u f at a point if u is a unit vector?",
         "options": [
-          "∇f · u",
-          "|∇f|",
           "∇f × u",
-          "f · u"
+          "∇f · u",
+          "f · u",
+          "|∇f|"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The directional derivative in the direction of unit vector u is D_u f = ∇f · u"
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "The gradient of f is perpendicular to what?",
         "options": [
-          "Level curves of f",
           "Direction of steepest ascent",
+          "Level curves of f",
           "All tangent vectors",
           "The xy-plane"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The gradient ∇f is perpendicular to the level curves (or level surfaces) of f"
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "What is the equation of the tangent plane to z = x² + y² at point (1, 2, 5)?",
         "options": [
-          "z = 2x + 4y - 1",
-          "z = x + 2y",
           "z = 2x + 4y + 5",
-          "z = 2x + 4y"
+          "z = 2x + 4y",
+          "z = 2x + 4y - 1",
+          "z = x + 2y"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "f_x(1,2) = 2, f_y(1,2) = 4. Tangent plane: z - 5 = 2(x-1) + 4(y-2) → z = 2x + 4y - 1"
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "The level curve f(x,y) = k represents what?",
         "options": [
-          "Points where f has the same value k",
-          "Points where ∇f = k",
+          "The maximum of f",
           "The tangent line to f",
-          "The maximum of f"
+          "Points where f has the same value k",
+          "Points where ∇f = k"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A level curve is the set of all points (x,y) where f(x,y) equals the constant k"
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "The linear approximation L(x,y) approximates f(x,y) near point (a,b) using what geometric object?",
         "options": [
-          "Tangent plane",
-          "Normal line",
           "Level curve",
-          "Gradient vector"
+          "Gradient vector",
+          "Normal line",
+          "Tangent plane"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The linear approximation is the tangent plane to the surface z = f(x,y) at the point"
       }
     ]
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "At what angle to the gradient is the directional derivative zero?",
         "options": [
-          "90°",
           "0°",
           "45°",
+          "90°",
           "180°"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "D_u f = ∇f · u = |∇f||u|cos(θ) = 0 when θ = 90°, meaning u is perpendicular to ∇f"
       },
       {
@@ -157,12 +157,12 @@
         "type": "multiple_choice",
         "prompt": "For f(x,y) = xe^y, what is the directional derivative at (1,0) in the direction of u = <3/5, 4/5>?",
         "options": [
+          "4/5",
           "1",
-          "7/5",
           "3/5",
-          "4/5"
+          "7/5"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "∇f = <e^y, xe^y>, at (1,0): ∇f = <1, 1>. D_u f = <1,1> · <3/5, 4/5> = 3/5 + 4/5 = 7/5"
       },
       {
@@ -177,12 +177,12 @@
         "type": "multiple_choice",
         "prompt": "What is the normal line to the surface z = x² + y² at point (1,1,2)?",
         "options": [
-          "r(t) = <1,1,2> + t<2,2,-1>",
+          "r(t) = <2,2,-1> + t<1,1,2>",
           "r(t) = <1,1,2> + t<1,1,1>",
           "r(t) = <1,1,2> + t<2,2,1>",
-          "r(t) = <2,2,-1> + t<1,1,2>"
+          "r(t) = <1,1,2> + t<2,2,-1>"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Normal vector is <f_x, f_y, -1> = <2x, 2y, -1> = <2, 2, -1> at (1,1,2). Normal line: r₀ + tn"
       },
       {

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "A function f is continuous at c if:",
         "options": [
+          "|f(x) - f(c)| < 1 for all x",
           "For every ε > 0, there exists δ > 0 such that |x - c| < δ implies |f(x) - f(c)| < ε",
           "lim(x→c) f(x) exists",
-          "f(c) is defined",
-          "|f(x) - f(c)| < 1 for all x"
+          "f(c) is defined"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "This is the precise ε-δ definition of continuity at a point. It requires f(c) to be defined, lim(x→c) f(x) to exist, and the two to be equal."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "A function f is continuous at c if and only if:",
         "options": [
+          "lim(x→c) f(x) exists",
           "lim(x→c) f(x) = f(c)",
           "f(c) exists",
-          "lim(x→c) f(x) exists",
           "f is defined on an interval containing c"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Continuity at c requires three conditions: f(c) is defined, lim(x→c) f(x) exists, and lim(x→c) f(x) = f(c)."
       },
       {
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "A function f is uniformly continuous on a set S if:",
         "options": [
-          "For every ε > 0, there exists δ > 0 such that |x - y| < δ implies |f(x) - f(y)| < ε for all x, y in S",
+          "f is bounded on S",
           "f is continuous at every point in S",
           "|f(x) - f(y)| ≤ |x - y| for all x, y in S",
-          "f is bounded on S"
+          "For every ε > 0, there exists δ > 0 such that |x - y| < δ implies |f(x) - f(y)| < ε for all x, y in S"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Uniform continuity requires δ to work for all points simultaneously, not just for individual points as in ordinary continuity."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "The function f(x) = x² on R is:",
         "options": [
-          "Continuous but not uniformly continuous",
-          "Uniformly continuous",
           "Not continuous",
-          "Uniformly continuous on every interval"
+          "Uniformly continuous",
+          "Uniformly continuous on every interval",
+          "Continuous but not uniformly continuous"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "f(x) = x² is continuous everywhere but not uniformly continuous on R. For large x, small changes in x can produce large changes in f(x)."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "If f is continuous on a closed bounded interval [a, b], then f is:",
         "options": [
-          "Uniformly continuous on [a, b]",
           "Not uniformly continuous on [a, b]",
+          "Not necessarily bounded on [a, b]",
           "Unbounded on [a, b]",
-          "Not necessarily bounded on [a, b]"
+          "Uniformly continuous on [a, b]"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "This is a fundamental theorem: every continuous function on a compact set (like [a, b]) is uniformly continuous."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "The Extreme Value Theorem states that if f is continuous on [a, b], then:",
         "options": [
+          "f is constant on [a, b]",
           "f attains both a maximum and minimum value on [a, b]",
           "f is differentiable on (a, b)",
-          "f is uniformly continuous on [a, b]",
-          "f is constant on [a, b]"
+          "f is uniformly continuous on [a, b]"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The EVT guarantees that a continuous function on a closed bounded interval attains both its supremum and infimum as actual values."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "A continuous function on a compact set is:",
         "options": [
+          "Constant",
           "Bounded",
           "Unbounded",
-          "Constant",
           "Differentiable"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "By the Extreme Value Theorem, a continuous function on a compact set (like [a, b]) is bounded and attains its bounds."
       },
       {

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What makes semidefinite programming (SDP) special?",
         "options": [
-          "Variables are vectors",
           "Constraints include matrix positive semidefiniteness",
+          "Variables are vectors",
           "Only linear objectives allowed",
           "Always has integer solutions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "SDP has constraints of the form X ⪰ 0 (matrix is positive semidefinite)."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "Second-order cone programming (SOCP) involves constraints of the form:",
         "options": [
-          "||Ax + b|| = c",
-          "||Ax + b|| ≤ cᵀx + d",
           "xᵀQx ≤ 1",
-          "Ax = b"
+          "Ax = b",
+          "||Ax + b|| ≤ cᵀx + d",
+          "||Ax + b|| = c"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "SOCP constraints have the form ||Ax + b|| ≤ cᵀx + d, defining a second-order (Lorentz) cone."
       },
       {
@@ -65,12 +65,12 @@
         "type": "multiple_choice",
         "prompt": "What transformation makes geometric programming convex?",
         "options": [
-          "Squaring variables",
-          "Log transformation of variables and objective",
           "Adding slack variables",
-          "Linearization"
+          "Linearization",
+          "Squaring variables",
+          "Log transformation of variables and objective"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Taking logarithms of variables (yᵢ = log xᵢ) transforms posynomial geometric programs into convex problems."
       },
       {
@@ -85,12 +85,12 @@
         "type": "multiple_choice",
         "prompt": "In robust optimization, the uncertainty set should be:",
         "options": [
-          "As large as possible",
           "A singleton",
-          "Convex for tractability",
-          "Always unbounded"
+          "Always unbounded",
+          "As large as possible",
+          "Convex for tractability"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "A convex uncertainty set keeps the robust counterpart tractable, often remaining convex."
       },
       {
@@ -127,11 +127,11 @@
         "prompt": "For matrix X ⪰ 0 to hold, all eigenvalues must be:",
         "options": [
           "Positive",
-          "Non-negative",
           "Equal to 1",
+          "Non-negative",
           "Real"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Positive semidefinite (⪰ 0) requires all eigenvalues ≥ 0. Positive definite (≻ 0) requires all eigenvalues > 0."
       },
       {
@@ -146,12 +146,12 @@
         "type": "multiple_choice",
         "prompt": "The worst-case robust optimization formulation min_x max_{u∈U} f(x,u) is:",
         "options": [
-          "Always convex",
           "Convex if f is convex in x for each u and U is convex",
-          "Never convex",
-          "Convex only if U is a singleton"
+          "Always convex",
+          "Convex only if U is a singleton",
+          "Never convex"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The pointwise maximum over u preserves convexity in x if each f(·,u) is convex and U is convex."
       },
       {
@@ -159,12 +159,12 @@
         "type": "multiple_choice",
         "prompt": "Which problem class is most general?",
         "options": [
-          "Linear Programming",
-          "Quadratic Programming",
+          "Semidefinite Programming",
           "Second-Order Cone Programming",
-          "Semidefinite Programming"
+          "Linear Programming",
+          "Quadratic Programming"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "SDP is most general: LP ⊂ SOCP ⊂ SDP. Each can be reformulated as the next more general class."
       },
       {

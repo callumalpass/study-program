@@ -11,11 +11,11 @@
         "prompt": "What determines the convergence rate of gradient descent on a quadratic function?",
         "options": [
           "The objective value",
-          "The condition number of the Hessian",
           "The dimension of the problem",
+          "The condition number of the Hessian",
           "The initial point"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The condition number κ = λ_max/λ_min determines convergence rate: (κ-1)/(κ+1)."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "The gradient descent update is: x_{k+1} = x_k - α_k ∇f(x_k). What does α_k represent?",
         "options": [
-          "The gradient",
           "The step size (learning rate)",
+          "The gradient",
           "The optimal solution",
           "The Hessian"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "α_k is the step size or learning rate, determining how far to move in the negative gradient direction."
       },
       {
@@ -85,12 +85,12 @@
         "type": "multiple_choice",
         "prompt": "BFGS is a:",
         "options": [
-          "First-order method",
           "Quasi-Newton method",
-          "Zero-order method",
-          "Exact Newton method"
+          "Exact Newton method",
+          "First-order method",
+          "Zero-order method"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "BFGS is a quasi-Newton method that approximates the Hessian using gradient information."
       },
       {
@@ -126,12 +126,12 @@
         "type": "multiple_choice",
         "prompt": "L-BFGS improves upon BFGS by:",
         "options": [
-          "Using exact Hessian",
           "Storing only recent gradient pairs",
           "Using higher-order derivatives",
+          "Using exact Hessian",
           "Requiring fewer iterations"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "L-BFGS stores only the last m gradient differences, making it suitable for large-scale problems with O(mn) memory."
       },
       {
@@ -159,12 +159,12 @@
         "type": "multiple_choice",
         "prompt": "The Wolfe conditions combine Armijo with a:",
         "options": [
-          "Gradient condition",
-          "Curvature condition",
           "Feasibility condition",
-          "Optimality condition"
+          "Optimality condition",
+          "Gradient condition",
+          "Curvature condition"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Wolfe conditions add a curvature condition |∇f(x+αd)ᵀd| ≤ c₂|∇f(x)ᵀd| to Armijo to ensure sufficient progress."
       },
       {

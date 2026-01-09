@@ -16,12 +16,12 @@
         "type": "multiple_choice",
         "prompt": "According to the NIST definition, which characteristic means cloud resources can be rapidly provisioned and released with minimal management effort?",
         "options": [
-          "Broad network access",
-          "Resource pooling",
           "Rapid elasticity",
+          "Resource pooling",
+          "Broad network access",
           "Measured service"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Rapid elasticity means resources can be quickly scaled up or down, often automatically, to meet changing demand. This is a core characteristic that enables cloud's flexibility."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary advantage of converting IT costs from CapEx to OpEx?",
         "options": [
-          "Eliminates all costs",
           "Better cash flow and no large upfront investment",
+          "Guarantees cost savings",
           "Reduces employee count",
-          "Guarantees cost savings"
+          "Eliminates all costs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Converting to OpEx eliminates large capital investments for hardware, improving cash flow and aligning costs with actual usage. Organizations pay as they go rather than investing upfront."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "Reserved instances typically offer what discount range compared to on-demand pricing?",
         "options": [
-          "5-10%",
           "10-30%",
-          "30-75%",
-          "80-90%"
+          "5-10%",
+          "80-90%",
+          "30-75%"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Reserved instances offer 30-75% discounts in exchange for 1 or 3-year commitments. Actual discount depends on commitment length, payment option, and instance convertibility."
       },
       {
@@ -83,11 +83,11 @@
         "prompt": "Which cloud provider currently holds the largest market share?",
         "options": [
           "Microsoft Azure",
-          "Google Cloud Platform",
           "Amazon Web Services",
-          "IBM Cloud"
+          "IBM Cloud",
+          "Google Cloud Platform"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "AWS holds approximately 32% of the cloud infrastructure market, followed by Azure (~23%) and Google Cloud (~11%). AWS pioneered cloud computing with EC2 and S3 in 2006."
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main difference between multi-cloud and hybrid cloud?",
         "options": [
-          "Multi-cloud uses multiple public clouds, hybrid combines public and private",
           "Multi-cloud is cheaper than hybrid",
           "Hybrid cloud uses only one provider",
+          "Multi-cloud uses multiple public clouds, hybrid combines public and private",
           "They are the same thing"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Multi-cloud uses multiple public cloud providers (AWS + Azure + GCP). Hybrid cloud combines public cloud with private/on-premises infrastructure."
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "What is the key architectural difference between Type 1 and Type 2 hypervisors?",
         "options": [
-          "Type 1 is faster than Type 2",
           "Type 1 runs on bare metal, Type 2 runs on a host OS",
           "Type 1 is open source, Type 2 is commercial",
+          "Type 1 is faster than Type 2",
           "Type 1 supports more VMs than Type 2"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Type 1 hypervisors run directly on hardware (VMware ESXi, Hyper-V, KVM). Type 2 hypervisors run as applications on a host OS (VirtualBox, VMware Workstation)."
       },
       {
@@ -143,12 +143,12 @@
         "type": "multiple_choice",
         "prompt": "Which hypervisor is built into the Linux kernel?",
         "options": [
-          "VMware ESXi",
           "Xen",
-          "KVM",
-          "Hyper-V"
+          "Hyper-V",
+          "VMware ESXi",
+          "KVM"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "KVM (Kernel-based Virtual Machine) is integrated into the Linux kernel, turning Linux into a Type 1 hypervisor. It's used by many cloud providers."
       },
       {
@@ -176,12 +176,12 @@
         "type": "multiple_choice",
         "prompt": "What is a vCPU?",
         "options": [
-          "A physical CPU core",
           "A virtual CPU thread allocated to a VM",
           "A type of CPU cache",
-          "A CPU scheduling algorithm"
+          "A CPU scheduling algorithm",
+          "A physical CPU core"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A vCPU (virtual CPU) represents CPU resources allocated to a VM. Each vCPU maps to physical CPU threads, and the hypervisor time-slices physical CPUs among vCPUs."
       },
       {
@@ -196,12 +196,12 @@
         "type": "multiple_choice",
         "prompt": "Which provisioning type allocates disk space on-demand as data is written?",
         "options": [
-          "Thick provisioning",
           "Thin provisioning",
-          "Lazy zeroed",
-          "Eager zeroed"
+          "Thick provisioning",
+          "Eager zeroed",
+          "Lazy zeroed"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Thin provisioning allocates space on demand, improving efficiency. Thick provisioning allocates full space upfront. Thin requires monitoring to avoid datastore exhaustion."
       },
       {
@@ -229,12 +229,12 @@
         "type": "multiple_choice",
         "prompt": "What is the fundamental difference between containers and virtual machines?",
         "options": [
-          "Containers are slower than VMs",
-          "Containers share the host OS kernel, VMs have separate kernels",
           "VMs use less resources than containers",
-          "Containers require a hypervisor, VMs do not"
+          "Containers are slower than VMs",
+          "Containers require a hypervisor, VMs do not",
+          "Containers share the host OS kernel, VMs have separate kernels"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Containers share the host OS kernel and provide process-level isolation (via namespaces). VMs have complete OS with separate kernels, providing stronger but heavier isolation."
       },
       {
@@ -262,12 +262,12 @@
         "type": "multiple_choice",
         "prompt": "Which Dockerfile instruction creates a new image layer?",
         "options": [
-          "ENV",
-          "RUN",
           "EXPOSE",
-          "LABEL"
+          "ENV",
+          "LABEL",
+          "RUN"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "RUN, COPY, and ADD create new layers. ENV, EXPOSE, LABEL, and other metadata instructions don't create layers. Minimize layers by combining RUN commands."
       },
       {
@@ -282,12 +282,12 @@
         "type": "multiple_choice",
         "prompt": "What is the default Docker networking mode?",
         "options": [
-          "host",
-          "bridge",
           "overlay",
-          "none"
+          "none",
+          "host",
+          "bridge"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Bridge is the default network mode. Containers get private IPs on a virtual bridge network and can communicate with each other. Port mapping (-p) exposes ports to the host."
       },
       {
@@ -349,12 +349,12 @@
         "type": "multiple_choice",
         "prompt": "Which characteristic best distinguishes cloud computing from traditional data centers?",
         "options": [
-          "Uses virtualization",
           "Has internet connectivity",
           "On-demand self-service with pay-per-use",
-          "Located off-site"
+          "Located off-site",
+          "Uses virtualization"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "While virtualization and internet access are common, on-demand self-service with pay-per-use pricing is the defining characteristic. Users provision resources instantly without human interaction and pay only for what they consume."
       },
       {
@@ -362,12 +362,12 @@
         "type": "multiple_choice",
         "prompt": "In which service model does the customer have NO access to the underlying operating system?",
         "options": [
-          "IaaS",
-          "PaaS",
           "SaaS",
-          "DaaS"
+          "IaaS",
+          "DaaS",
+          "PaaS"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "In SaaS, the provider manages everything including the OS, and customers only interact with the application. In PaaS, the provider manages the OS. In IaaS, customers have full OS access."
       },
       {
@@ -390,12 +390,12 @@
         "type": "multiple_choice",
         "prompt": "Which factor most commonly causes cloud security breaches?",
         "options": [
-          "Provider infrastructure failures",
+          "Encryption weaknesses",
           "DDoS attacks",
-          "Customer misconfiguration",
-          "Encryption weaknesses"
+          "Provider infrastructure failures",
+          "Customer misconfiguration"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Customer misconfiguration (public S3 buckets, overly permissive security groups, weak access controls) causes the majority of cloud breaches, not provider infrastructure issues."
       },
       {
@@ -404,11 +404,11 @@
         "prompt": "Which technology would you choose for maximum isolation between workloads?",
         "options": [
           "Containers",
-          "Virtual machines",
           "Processes",
-          "Threads"
+          "Threads",
+          "Virtual machines"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "VMs provide the strongest isolation with separate kernels and hardware virtualization. Containers share the host kernel (process-level isolation), while processes and threads offer even less isolation."
       },
       {
@@ -424,11 +424,11 @@
         "prompt": "What is the primary requirement for live migration (vMotion) between hosts?",
         "options": [
           "Same CPU manufacturer",
-          "Shared storage for VM disks",
+          "Same hypervisor version",
           "Same amount of RAM",
-          "Same hypervisor version"
+          "Shared storage for VM disks"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Live migration requires shared storage so both hosts can access VM disks. This enables moving only memory/CPU state. Storage vMotion can migrate storage separately."
       },
       {
@@ -443,12 +443,12 @@
         "type": "multiple_choice",
         "prompt": "Which hypervisor would be best for a Windows-heavy environment with Microsoft investments?",
         "options": [
-          "VMware ESXi",
           "Microsoft Hyper-V",
+          "Xen",
           "KVM",
-          "Xen"
+          "VMware ESXi"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Hyper-V is included with Windows Server, integrates with Active Directory and System Center, supports Azure hybrid benefits, and is optimized for Windows workloads."
       },
       {
@@ -484,12 +484,12 @@
         "type": "multiple_choice",
         "prompt": "Which Docker networking mode removes network isolation entirely?",
         "options": [
-          "bridge",
           "host",
           "overlay",
-          "none"
+          "none",
+          "bridge"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Host mode gives containers direct access to the host network stack, removing isolation. No port mapping needed but less secure. Useful for network-intensive applications."
       },
       {
@@ -510,12 +510,12 @@
         "type": "multiple_choice",
         "prompt": "What is the smallest deployable unit in Kubernetes?",
         "options": [
-          "Container",
           "Pod",
           "Deployment",
+          "Container",
           "ReplicaSet"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A Pod is the smallest deployable unit in Kubernetes. Pods can contain one or more containers that share network and storage. You deploy and manage Pods, not individual containers."
       },
       {
@@ -550,12 +550,12 @@
         "type": "multiple_choice",
         "prompt": "What does Helm provide for Kubernetes?",
         "options": [
-          "Container runtime",
-          "Package manager and templating",
+          "Storage provisioning",
           "Network policy enforcement",
-          "Storage provisioning"
+          "Package manager and templating",
+          "Container runtime"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Helm is a package manager for Kubernetes that uses charts (packages) with templating to deploy applications. It simplifies deploying and managing complex applications with many Kubernetes resources."
       },
       {
@@ -564,11 +564,11 @@
         "prompt": "What is the primary benefit of serverless computing (FaaS)?",
         "options": [
           "Servers are not involved",
-          "No server management, pay only per execution",
           "Always faster than containers",
+          "No server management, pay only per execution",
           "Guaranteed low latency"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Serverless eliminates server management and charges only for actual execution time (not idle time). The name is misleading—servers exist but are fully abstracted from developers."
       },
       {
@@ -583,12 +583,12 @@
         "type": "multiple_choice",
         "prompt": "What is a typical maximum execution time for AWS Lambda functions?",
         "options": [
-          "1 minute",
           "5 minutes",
-          "15 minutes",
-          "1 hour"
+          "1 hour",
+          "1 minute",
+          "15 minutes"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "AWS Lambda has a 15-minute maximum execution time. Azure Functions: 10 minutes (consumption plan), Google Cloud Functions: 9 minutes. Long-running processes need alternative solutions."
       },
       {
@@ -617,12 +617,12 @@
         "type": "multiple_choice",
         "prompt": "Which storage type is most appropriate for a relational database?",
         "options": [
-          "Object storage",
-          "Block storage",
+          "Glacier",
           "File storage",
-          "Glacier"
+          "Block storage",
+          "Object storage"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Block storage (EBS, Azure Disks) provides low-latency, high-IOPS storage suitable for databases. Object storage has higher latency, file storage can work but block is optimal for databases."
       },
       {
@@ -638,11 +638,11 @@
         "prompt": "What is the main advantage of storage lifecycle policies?",
         "options": [
           "Faster access times",
-          "Automatic cost optimization by transitioning data to cheaper tiers",
+          "Increased durability",
           "Better security",
-          "Increased durability"
+          "Automatic cost optimization by transitioning data to cheaper tiers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Lifecycle policies automatically transition objects to cheaper storage classes (Infrequent Access, Glacier) after specified periods, optimizing costs without manual intervention."
       },
       {
@@ -657,12 +657,12 @@
         "type": "multiple_choice",
         "prompt": "Which database type is best suited for unstructured data and horizontal scaling?",
         "options": [
-          "Relational (SQL)",
           "NoSQL",
-          "In-memory",
-          "Data warehouse"
+          "Relational (SQL)",
+          "Data warehouse",
+          "In-memory"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "NoSQL databases (DynamoDB, MongoDB, Cosmos DB) handle unstructured/semi-structured data well and scale horizontally. Relational databases excel at structured data with complex queries."
       },
       {
@@ -671,11 +671,11 @@
         "prompt": "Which principle from the 12-Factor App methodology emphasizes treating backing services (databases, queues) as attached resources?",
         "options": [
           "Codebase",
-          "Dependencies",
           "Backing services",
-          "Config"
+          "Config",
+          "Dependencies"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The Backing Services factor treats databases, queues, and other services as attached resources accessed via URLs. This enables swapping implementations without code changes."
       },
       {
@@ -698,12 +698,12 @@
         "type": "multiple_choice",
         "prompt": "What deployment strategy involves running two production environments and switching traffic between them?",
         "options": [
+          "A/B testing",
           "Rolling deployment",
           "Canary deployment",
-          "Blue-green deployment",
-          "A/B testing"
+          "Blue-green deployment"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Blue-green deployment runs two identical production environments. Deploy new version to inactive environment (green), test, then switch traffic from blue to green. Enables instant rollback."
       },
       {
@@ -724,12 +724,12 @@
         "type": "multiple_choice",
         "prompt": "In AWS API Gateway, what is the main difference between REST API and HTTP API?",
         "options": [
-          "REST API is free, HTTP API is paid",
           "HTTP API has lower latency and cost but fewer features",
           "REST API only supports GET requests",
-          "HTTP API requires Cognito authentication"
+          "HTTP API requires Cognito authentication",
+          "REST API is free, HTTP API is paid"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "HTTP API is ~70% cheaper with lower latency (~50ms vs ~100ms) but lacks features like caching, request validation, and usage plans. Choose REST API when you need full features, HTTP API for simple use cases with cost optimization."
       },
       {
@@ -744,12 +744,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of DynamoDB Streams?",
         "options": [
-          "To improve read performance",
-          "To capture item-level changes for real-time processing",
           "To compress data for storage",
-          "To replicate data across regions automatically"
+          "To replicate data across regions automatically",
+          "To improve read performance",
+          "To capture item-level changes for real-time processing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "DynamoDB Streams capture item-level changes (INSERT, MODIFY, REMOVE) in real-time, allowing you to trigger Lambda functions for replication, analytics, or updating other systems based on database changes."
       },
       {
@@ -757,12 +757,12 @@
         "type": "multiple_choice",
         "prompt": "Which S3 storage class automatically moves objects between access tiers based on usage patterns?",
         "options": [
+          "S3 One Zone-IA",
           "S3 Standard",
           "S3 Glacier",
-          "S3 Intelligent-Tiering",
-          "S3 One Zone-IA"
+          "S3 Intelligent-Tiering"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "S3 Intelligent-Tiering automatically monitors access patterns and moves objects between frequent and infrequent access tiers, optimizing costs without retrieval fees when access patterns change."
       },
       {
@@ -777,12 +777,12 @@
         "type": "multiple_choice",
         "prompt": "When would you use AWS Snowball instead of online data transfer?",
         "options": [
+          "For frequently changing data",
           "For small datasets under 1GB",
           "When you need real-time synchronization",
-          "For large datasets (TB to PB) where network transfer would take weeks",
-          "For frequently changing data"
+          "For large datasets (TB to PB) where network transfer would take weeks"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Snowball is ideal for large-scale migrations (10TB+) where network transfer would be impractical. The break-even point is typically around 10TB - below that, network transfer is usually faster and cheaper."
       },
       {

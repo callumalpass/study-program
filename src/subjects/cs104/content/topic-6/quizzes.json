@@ -38,11 +38,11 @@
         "prompt": "Which sorting algorithm has the same time complexity in best, average, and worst cases?",
         "options": [
           "Quick sort",
-          "Bubble sort",
           "Merge sort",
-          "Insertion sort"
+          "Insertion sort",
+          "Bubble sort"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Merge sort is always O(n log n) regardless of input distribution."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "Selection sort works by:",
         "options": [
-          "Swapping adjacent elements",
           "Finding minimum and placing at front",
+          "Swapping adjacent elements",
           "Dividing and conquering",
           "Using a heap"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Selection sort repeatedly finds the minimum from unsorted portion and places it in sorted position."
       }
     ]
@@ -79,12 +79,12 @@
         "type": "multiple_choice",
         "prompt": "Quick sort's worst-case O(n²) occurs when:",
         "options": [
+          "Array has duplicates",
           "Array is random",
           "Pivot is always median",
-          "Pivot is always minimum or maximum",
-          "Array has duplicates"
+          "Pivot is always minimum or maximum"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Poor pivot selection (always min/max) creates unbalanced partitions, degrading to O(n²)."
       },
       {
@@ -128,12 +128,12 @@
         "type": "multiple_choice",
         "prompt": "Which algorithm can find the kth largest element in O(n) average time?",
         "options": [
-          "Merge sort",
           "Quick select",
+          "Bubble sort",
           "Heap sort",
-          "Bubble sort"
+          "Merge sort"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Quick select partitions like quick sort but only recurses into one partition, achieving O(n) average."
       },
       {
@@ -168,12 +168,12 @@
         "type": "multiple_choice",
         "prompt": "For sorting a linked list, which algorithm is preferred?",
         "options": [
+          "Insertion sort",
           "Quick sort",
           "Merge sort",
-          "Heap sort",
-          "Insertion sort"
+          "Heap sort"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Merge sort works well on linked lists: O(1) space for splitting, no random access needed."
       }
     ]

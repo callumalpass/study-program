@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary difference between Type 1 and Type 2 hypervisors?",
         "options": [
-          "Type 1 runs on bare metal, Type 2 runs on a host OS",
-          "Type 1 is faster, Type 2 is cheaper",
+          "Type 1 is for Windows, Type 2 is for Linux",
           "Type 1 is open source, Type 2 is commercial",
-          "Type 1 is for Windows, Type 2 is for Linux"
+          "Type 1 runs on bare metal, Type 2 runs on a host OS",
+          "Type 1 is faster, Type 2 is cheaper"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Type 1 hypervisors (bare-metal) run directly on hardware. Type 2 hypervisors (hosted) run as applications on a conventional operating system."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the typical CPU overhead of modern virtualization with hardware support?",
         "options": [
-          "0-2%",
           "2-10%",
-          "20-30%",
-          "40-50%"
+          "40-50%",
+          "0-2%",
+          "20-30%"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Modern hypervisors with hardware virtualization support (VT-x/AMD-V) introduce only 2-10% CPU overhead, making virtualization very efficient."
       },
       {
@@ -92,11 +92,11 @@
         "prompt": "What is memory ballooning used for in virtualization?",
         "options": [
           "Increasing VM performance",
-          "Reclaiming unused memory from VMs",
+          "Compressing memory",
           "Expanding physical memory",
-          "Compressing memory"
+          "Reclaiming unused memory from VMs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Memory ballooning allows the hypervisor to reclaim unused memory from VMs by inflating a balloon driver in the guest OS, which then releases memory back to the hypervisor."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "Which virtual disk format is used by VMware?",
         "options": [
-          "VHD",
           "VMDK",
+          "VHD",
           "QCOW2",
           "IMG"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "VMDK (Virtual Machine Disk) is VMware's virtual disk format. VHD is used by Hyper-V, QCOW2 by KVM/QEMU."
       },
       {

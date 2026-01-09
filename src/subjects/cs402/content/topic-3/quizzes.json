@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What criterion does a decision tree use to split nodes?",
         "options": [
-          "Information gain or Gini impurity",
-          "Mean squared error",
           "Cross-entropy with softmax",
-          "Euclidean distance"
+          "Euclidean distance",
+          "Information gain or Gini impurity",
+          "Mean squared error"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Decision trees select splits that maximize information gain (entropy reduction) or minimize Gini impurity. Both measure how well a split separates classes."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "How does k-NN make predictions?",
         "options": [
-          "Finds k nearest training examples and returns majority class",
           "Uses k different models and combines them",
           "Trains k separate neural networks",
+          "Finds k nearest training examples and returns majority class",
           "Performs k iterations of gradient descent"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "k-Nearest Neighbors is a non-parametric method that classifies based on the k closest training examples in feature space, using majority vote for classification or mean for regression."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What assumption does Naive Bayes make?",
         "options": [
-          "Features are conditionally independent given the class",
-          "Classes are equally likely",
           "Features are normally distributed",
-          "The decision boundary is linear"
+          "The decision boundary is linear",
+          "Classes are equally likely",
+          "Features are conditionally independent given the class"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Naive Bayes assumes P(x₁,...,xₙ|y) = ∏P(xᵢ|y), i.e., features are independent given class. This \"naive\" assumption simplifies computation and often works well despite being unrealistic."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "Your decision tree is overfitting. What should you do?",
         "options": [
-          "Prune the tree or limit max depth",
           "Add more features",
+          "Use pure leaf nodes",
           "Increase tree depth",
-          "Use pure leaf nodes"
+          "Prune the tree or limit max depth"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Deep trees overfit by creating complex decision boundaries. Pruning (removing branches) or limiting depth (min_samples_split, max_depth) creates simpler trees that generalize better."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "When would you choose Random Forest over a single decision tree?",
         "options": [
+          "When training time must be minimal",
           "When you want better generalization and lower variance",
-          "When you need a simple, interpretable model",
           "When you have very little data",
-          "When training time must be minimal"
+          "When you need a simple, interpretable model"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Random Forests reduce variance through ensemble averaging, leading to better generalization. The tradeoff is less interpretability and longer training time compared to a single tree."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "Your data is not linearly separable. How can SVM handle this?",
         "options": [
-          "Use a kernel (e.g., RBF) to map data to higher dimensional space",
-          "Increase the number of support vectors",
           "Decrease the margin",
+          "Increase the number of support vectors",
+          "Use a kernel (e.g., RBF) to map data to higher dimensional space",
           "Use more training data"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The kernel trick allows SVM to implicitly map data to higher dimensions where it may be linearly separable, without explicitly computing the transformation. RBF (Gaussian) kernel is popular for non-linear problems."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is a key disadvantage of k-NN?",
         "options": [
+          "Requires extensive training",
           "Slow prediction time since it requires computing distances to all training points",
           "Cannot handle multi-class problems",
-          "Requires extensive training",
           "Cannot handle continuous features"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "k-NN has zero training time (lazy learning) but O(nm) prediction time where n is training set size. For large datasets, this becomes prohibitive. Solutions include KD-trees or approximate nearest neighbors."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is the information gain formula?",
         "options": [
-          "IG(D,A) = H(D) - Σ(|Dᵥ|/|D|)H(Dᵥ) where H is entropy",
-          "IG = 1 - Σpᵢ²",
           "IG = -Σpᵢ log pᵢ",
-          "IG = max(0, margin)"
+          "IG = 1 - Σpᵢ²",
+          "IG = max(0, margin)",
+          "IG(D,A) = H(D) - Σ(|Dᵥ|/|D|)H(Dᵥ) where H is entropy"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Information gain measures entropy reduction from splitting on attribute A. It's the parent entropy H(D) minus weighted average of children entropies. Higher IG means better split."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primal optimization problem for hard-margin SVM?",
         "options": [
-          "min (1/2)||w||² subject to yᵢ(wᵀxᵢ + b) ≥ 1",
           "min Σ(yᵢ - wᵀxᵢ)²",
+          "min -log p(y|x)",
           "max Σαᵢ - (1/2)ΣΣαᵢαⱼyᵢyⱼxᵢᵀxⱼ",
-          "min -log p(y|x)"
+          "min (1/2)||w||² subject to yᵢ(wᵀxᵢ + b) ≥ 1"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Hard-margin SVM minimizes ||w||² (maximizes margin 2/||w||) subject to correct classification with margin ≥1. This is a convex quadratic program solved via Lagrangian duality."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is the dual formulation of SVM important?",
         "options": [
-          "It enables the kernel trick by expressing solution in terms of dot products xᵢᵀxⱼ",
-          "It makes training faster",
           "It improves accuracy",
-          "It reduces memory usage"
+          "It enables the kernel trick by expressing solution in terms of dot products xᵢᵀxⱼ",
+          "It reduces memory usage",
+          "It makes training faster"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The dual formulation max Σαᵢ - (1/2)ΣΣαᵢαⱼyᵢyⱼxᵢᵀxⱼ depends only on dot products. Replacing xᵢᵀxⱼ with k(xᵢ,xⱼ) enables implicit feature mapping without computing φ(x)."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the out-of-bag (OOB) error in Random Forests?",
         "options": [
-          "Validation error estimated using samples not in each tree's bootstrap sample",
-          "Test error on held-out data",
           "Training error on all data",
-          "Error from trees that didn't converge"
+          "Test error on held-out data",
+          "Error from trees that didn't converge",
+          "Validation error estimated using samples not in each tree's bootstrap sample"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Since each tree uses ~63% of data (bootstrap), the remaining ~37% provide validation. OOB error averages predictions on these out-of-bag samples, providing unbiased error estimate without separate validation set."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "How does AdaBoost adjust weights?",
         "options": [
+          "Uses gradient descent",
           "Increases weight on misclassified examples so subsequent models focus on hard cases",
           "Decreases weight on all examples equally",
-          "Randomly adjusts weights",
-          "Uses gradient descent"
+          "Randomly adjusts weights"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "AdaBoost updates weights as wᵢ *= exp(α) for misclassified examples, where α depends on classifier error. This forces the next weak learner to focus on previously misclassified examples."
       }
     ]

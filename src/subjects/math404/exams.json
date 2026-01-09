@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "Which statement about convex functions is TRUE?",
         "options": [
-          "A convex function can have multiple local minima with different values",
           "Every local minimum of a convex function is a global minimum",
+          "All polynomial functions are convex",
           "The sum of two convex functions is concave",
-          "All polynomial functions are convex"
+          "A convex function can have multiple local minima with different values"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Convexity guarantees that any local minimum is also global."
       },
       {
@@ -69,12 +69,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following sets is NOT convex?",
         "options": [
-          "A line segment",
           "A subspace",
-          "The set of integers Z",
-          "A hyperplane"
+          "A hyperplane",
+          "A line segment",
+          "The set of integers Z"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "The set of integers is discrete; the midpoint between 0 and 1 (0.5) is not an integer."
       },
       {
@@ -82,12 +82,12 @@
         "type": "multiple_choice",
         "prompt": "The intersection of an arbitrary collection of convex sets is:",
         "options": [
-          "Always convex",
           "Sometimes convex",
           "Never convex",
-          "Concave"
+          "Concave",
+          "Always convex"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Intersection preserves convexity."
       },
       {
@@ -95,12 +95,12 @@
         "type": "multiple_choice",
         "prompt": "For a standard form LP (min c'x s.t. Ax=b, x>=0), the dual constraints are:",
         "options": [
-          "A'y >= c",
           "A'y <= c",
           "Ay = c",
+          "A'y >= c",
           "Ay >= b"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "For minimization with equality constraints, dual variables are free and constraints are <=."
       },
       {
@@ -122,11 +122,11 @@
         "prompt": "A function f is convex if and only if its epigraph is:",
         "options": [
           "Closed",
+          "Affine",
           "Bounded",
-          "Convex",
-          "Affine"
+          "Convex"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "This is the geometric definition of a convex function."
       },
       {
@@ -134,12 +134,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following operations preserves convexity?",
         "options": [
-          "Maximum of convex functions",
           "Minimum of convex functions",
-          "Product of convex functions",
-          "Difference of convex functions"
+          "Difference of convex functions",
+          "Maximum of convex functions",
+          "Product of convex functions"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The pointwise maximum of convex functions is convex."
       },
       {
@@ -147,12 +147,12 @@
         "type": "multiple_choice",
         "prompt": "The conjugate function f*(y) is always:",
         "options": [
-          "Differentiable",
           "Convex",
-          "Concave",
-          "Bounded"
+          "Bounded",
+          "Differentiable",
+          "Concave"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The conjugate is the pointwise supremum of affine functions, hence convex."
       },
       {
@@ -173,12 +173,12 @@
         "type": "multiple_choice",
         "prompt": "If f is twice differentiable, it is convex if and only if its Hessian is:",
         "options": [
-          "Positive definite",
-          "Positive semidefinite",
           "Negative semidefinite",
-          "Invertible"
+          "Positive definite",
+          "Invertible",
+          "Positive semidefinite"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Positive semidefiniteness (curving up) corresponds to convexity."
       },
       {
@@ -344,12 +344,12 @@
         "type": "multiple_choice",
         "prompt": "For an unconstrained strictly convex problem, a point where the gradient is zero is:",
         "options": [
-          "A global maximum",
-          "A global minimum",
+          "A local minimum but not necessarily global",
           "A saddle point",
-          "A local minimum but not necessarily global"
+          "A global maximum",
+          "A global minimum"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Strict convexity ensures the stationary point is the unique global minimum."
       },
       {
@@ -371,11 +371,11 @@
         "prompt": "BFGS is an example of what type of method?",
         "options": [
           "First-order method",
-          "Quasi-Newton method",
+          "Derivative-free method",
           "Exact Newton method",
-          "Derivative-free method"
+          "Quasi-Newton method"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "BFGS approximates the Hessian, making it a Quasi-Newton method."
       },
       {
@@ -384,11 +384,11 @@
         "prompt": "Which condition ensures that Strong Duality holds for a convex problem?",
         "options": [
           "Line search condition",
-          "Slater's condition",
           "Armijo condition",
-          "Lipschitz condition"
+          "Lipschitz condition",
+          "Slater's condition"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Slater's condition (existence of strictly feasible point) is sufficient for strong duality."
       },
       {
@@ -409,12 +409,12 @@
         "type": "multiple_choice",
         "prompt": "In Stochastic Gradient Descent (SGD), the step size must generally:",
         "options": [
+          "Be random",
           "Increase over time",
           "Stay constant",
-          "Decrease over time",
-          "Be random"
+          "Decrease over time"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Diminishing step sizes are needed to damp out the noise variance."
       },
       {
@@ -422,12 +422,12 @@
         "type": "multiple_choice",
         "prompt": "The 'Shadow Price' of a resource constraint in LP corresponds to:",
         "options": [
-          "The primal variable value",
           "The optimal dual variable value",
-          "The slack variable value",
-          "The reduced cost"
+          "The primal variable value",
+          "The reduced cost",
+          "The slack variable value"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Dual variables represent the marginal value of the constraint resource."
       },
       {
@@ -435,12 +435,12 @@
         "type": "multiple_choice",
         "prompt": "Robust Optimization with ellipsoidal uncertainty leads to what type of problem?",
         "options": [
-          "LP",
-          "QP",
           "SOCP",
-          "GP"
+          "GP",
+          "LP",
+          "QP"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Maximizing a linear function over an ellipsoid yields a second-order cone constraint."
       },
       {
@@ -448,12 +448,12 @@
         "type": "multiple_choice",
         "prompt": "Which method is best suited for L1-regularized least squares (Lasso)?",
         "options": [
-          "Newton's Method",
           "Coordinate Descent",
-          "Conjugate Gradient",
-          "Ellipsoid Method"
+          "Newton's Method",
+          "Ellipsoid Method",
+          "Conjugate Gradient"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Coordinate descent with soft-thresholding is very efficient for Lasso."
       },
       {

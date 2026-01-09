@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the fundamental concept of ray tracing?",
         "options": [
-          "Tracing light rays from the camera through pixels into the scene",
-          "Rasterizing triangles into pixels",
           "Computing vertex positions",
+          "Rasterizing triangles into pixels",
+          "Tracing light rays from the camera through pixels into the scene",
           "Applying texture filtering"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Ray tracing shoots rays from the camera through each pixel to determine what is visible, testing for intersections with scene geometry and recursively tracing reflection and refraction rays."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What acceleration structure is commonly used in ray tracing?",
         "options": [
-          "BVH (Bounding Volume Hierarchy)",
-          "Hash table",
+          "Array",
           "Linked list",
-          "Array"
+          "Hash table",
+          "BVH (Bounding Volume Hierarchy)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "BVH organizes geometry into a tree of bounding volumes, allowing ray tracers to quickly skip large portions of the scene that a ray doesn't intersect, dramatically reducing intersection tests."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is a primary ray in ray tracing?",
         "options": [
+          "Ray testing for shadows",
           "Ray shot from the camera through a pixel",
-          "Ray from a light source",
           "Ray after reflection",
-          "Ray testing for shadows"
+          "Ray from a light source"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Primary rays (or eye rays) are the initial rays cast from the camera position through each pixel into the scene to determine what is visible at that pixel."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of shadow rays?",
         "options": [
-          "Test if a point is occluded from a light source",
-          "Trace reflections",
           "Calculate refraction",
-          "Determine camera visibility"
+          "Trace reflections",
+          "Determine camera visibility",
+          "Test if a point is occluded from a light source"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Shadow rays are cast from a surface point toward each light source to determine if the point is in shadow (occluded) or directly illuminated, enabling accurate shadow rendering."
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "What is path tracing?",
         "options": [
-          "Monte Carlo ray tracing that simulates global illumination",
           "Drawing paths between objects",
+          "Texture mapping technique",
           "Optimizing ray traversal",
-          "Texture mapping technique"
+          "Monte Carlo ray tracing that simulates global illumination"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Path tracing extends ray tracing by randomly sampling indirect lighting paths, simulating complex light transport including color bleeding, caustics, and soft shadows for physically accurate global illumination."
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "What are caustics in rendering?",
         "options": [
-          "Focused light patterns from reflection or refraction",
           "Shadow artifacts",
-          "Texture distortions",
-          "Rendering errors"
+          "Rendering errors",
+          "Focused light patterns from reflection or refraction",
+          "Texture distortions"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Caustics are bright patterns created when light is focused by reflection (like light on the bottom of a pool) or refraction (through glass), requiring advanced techniques like photon mapping to render."
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "What is photon mapping?",
         "options": [
-          "Two-pass technique storing and using photon positions for indirect lighting",
           "High-resolution texture mapping",
-          "Direct lighting calculation",
-          "Shadow mapping method"
+          "Shadow mapping method",
+          "Two-pass technique storing and using photon positions for indirect lighting",
+          "Direct lighting calculation"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Photon mapping traces photons from lights into the scene, stores them at surface intersections, then uses this photon map during rendering to approximate indirect illumination and caustics efficiently."
       }
     ]
@@ -164,12 +164,12 @@
         "type": "multiple_choice",
         "prompt": "What is Russian Roulette in path tracing?",
         "options": [
-          "Probabilistic ray termination to limit bounce depth",
           "Random light selection",
+          "Probabilistic ray termination to limit bounce depth",
           "Texture sampling method",
           "Anti-aliasing technique"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Russian Roulette randomly terminates ray paths with probability based on energy, unbiasing the estimator while limiting recursion depth. Paths are weighted by survival probability to maintain correctness."
       },
       {
@@ -177,12 +177,12 @@
         "type": "multiple_choice",
         "prompt": "What is radiosity?",
         "options": [
-          "Finite element method for diffuse global illumination",
           "Direct lighting calculation",
+          "Shadow rendering algorithm",
           "Texture mapping technique",
-          "Shadow rendering algorithm"
+          "Finite element method for diffuse global illumination"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Radiosity divides surfaces into patches and solves for equilibrium light distribution considering diffuse inter-reflections. It's view-independent and excels at architectural scenes with diffuse surfaces."
       },
       {

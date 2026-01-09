@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which phase of a compiler converts source code into a stream of tokens?",
         "options": [
+          "Semantic analysis",
           "Parsing",
           "Lexical analysis",
-          "Semantic analysis",
           "Code generation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Lexical analysis (scanning) breaks source code into tokens like identifiers, keywords, and operators."
       },
       {
@@ -37,11 +37,11 @@
         "prompt": "Which compiler phase typically handles whitespace and comments?",
         "options": [
           "Parser",
-          "Scanner",
           "Semantic analyzer",
+          "Scanner",
           "Optimizer"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The scanner (lexical analyzer) typically discards whitespace and comments, not passing them to the parser."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What is the front-end of a compiler responsible for?",
         "options": [
-          "Code optimization",
           "Machine code generation",
-          "Analysis and IR generation",
-          "Linking"
+          "Linking",
+          "Code optimization",
+          "Analysis and IR generation"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "The front-end handles lexical, syntax, and semantic analysis, producing an intermediate representation."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "Which regular expression matches one or more digits?",
         "options": [
-          "[0-9]*",
-          "[0-9]+",
+          "[0-9]",
           "[0-9]?",
-          "[0-9]"
+          "[0-9]*",
+          "[0-9]+"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The + operator means one or more occurrences, while * means zero or more."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is the key difference between a DFA and an NFA?",
         "options": [
-          "DFAs are more powerful",
           "NFAs have exactly one transition per symbol per state",
           "DFAs have at most one transition per symbol per state",
-          "NFAs cannot have epsilon transitions"
+          "NFAs cannot have epsilon transitions",
+          "DFAs are more powerful"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "DFAs have exactly one transition for each symbol from each state, making them deterministic."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What is an epsilon (ε) transition in an NFA?",
         "options": [
-          "A transition that consumes any character",
-          "A transition that occurs without consuming input",
           "A transition to an error state",
-          "A transition that matches whitespace"
+          "A transition that matches whitespace",
+          "A transition that consumes any character",
+          "A transition that occurs without consuming input"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Epsilon transitions allow state changes without consuming any input character."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What does the regular expression a(b|c)*d match?",
         "options": [
+          "Any string with a and d",
           "abd or acd only",
           "Strings starting with a, ending with d, with any b/c sequence in between",
-          "abcd only",
-          "Any string with a and d"
+          "abcd only"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "It matches \"a\", followed by zero or more b's or c's (in any order), followed by \"d\"."
       }
     ]
@@ -170,11 +170,11 @@
         "prompt": "What tool is commonly used to generate scanners from regular expression specifications?",
         "options": [
           "yacc",
+          "make",
           "bison",
-          "lex/flex",
-          "make"
+          "lex/flex"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Lex and its GNU implementation flex generate C scanners from regular expression patterns."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "How does a scanner typically handle keywords vs identifiers?",
         "options": [
-          "Separate DFAs for each",
           "Match as identifier, then check keyword table",
-          "Keywords have higher DFA priority",
-          "Keywords are handled by the parser"
+          "Keywords are handled by the parser",
+          "Separate DFAs for each",
+          "Keywords have higher DFA priority"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A common approach matches identifiers first, then looks up in a reserved word table to distinguish keywords."
       },
       {

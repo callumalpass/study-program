@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What keyword is used to define a function in Python?",
         "options": [
+          "func",
           "function",
           "def",
-          "func",
           "define"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Python uses the \"def\" keyword to define functions, short for \"define\"."
       },
       {
@@ -38,12 +38,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between a parameter and an argument?",
         "options": [
-          "They are the same thing",
           "Parameter is in the function definition; argument is the value passed when calling",
           "Argument is in the function definition; parameter is the value passed",
+          "They are the same thing",
           "Parameters are for numbers; arguments are for strings"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Parameters are variables in the function definition (e.g., def greet(name)). Arguments are actual values passed when calling (e.g., greet(\"Alice\"))."
       },
       {
@@ -76,11 +76,11 @@
         "prompt": "What happens if you try to use a local variable outside its function?",
         "options": [
           "It works normally",
-          "Python returns None",
           "NameError is raised",
-          "The global value is used"
+          "The global value is used",
+          "Python returns None"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Local variables only exist inside the function. Trying to access them outside raises a NameError because the name is not defined in that scope."
       },
       {
@@ -128,11 +128,11 @@
         "prompt": "What does *args allow in a function definition?",
         "options": [
           "Required arguments only",
-          "Keyword arguments only",
           "Variable number of positional arguments",
+          "Keyword arguments only",
           "Exactly two arguments"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "*args collects any number of positional arguments into a tuple. def func(*args) can accept func(1), func(1,2), func(1,2,3), etc."
       },
       {

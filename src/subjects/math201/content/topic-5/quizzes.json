@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "The determinant of a $2 \\times 2$ matrix $\\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}$ is:",
         "options": [
-          "$a + d$",
-          "$ad - bc$",
           "$ac - bd$",
-          "$a - b - c + d$"
+          "$a - b - c + d$",
+          "$a + d$",
+          "$ad - bc$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "For a $2 \\times 2$ matrix, $\\det\\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix} = ad - bc$."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "If you swap two rows of a matrix $A$, the determinant:",
         "options": [
-          "Stays the same",
-          "Changes sign",
           "Becomes zero",
-          "Doubles"
+          "Stays the same",
+          "Doubles",
+          "Changes sign"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Swapping two rows (or two columns) of a matrix changes the sign of the determinant."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "The determinant of the identity matrix $I_n$ is:",
         "options": [
-          "$0$",
           "$1$",
-          "$n$",
-          "$-1$"
+          "$0$",
+          "$-1$",
+          "$n$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The determinant of any identity matrix is 1: $\\det(I_n) = 1$."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "If you multiply a row of matrix $A$ by scalar $k$, the determinant:",
         "options": [
-          "Is multiplied by $k$",
+          "Becomes zero",
           "Is multiplied by $k^2$",
-          "Stays the same",
-          "Becomes zero"
+          "Is multiplied by $k$",
+          "Stays the same"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Multiplying one row by $k$ multiplies the determinant by $k$. Therefore $\\det(kA) = k^n\\det(A)$ for an $n \\times n$ matrix."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "Cramer's Rule can be used to solve $Ax = b$ when:",
         "options": [
-          "$A$ is square and invertible",
-          "$A$ is any matrix",
+          "$\\det(A) = 1$",
           "$A$ is symmetric",
-          "$\\det(A) = 1$"
+          "$A$ is any matrix",
+          "$A$ is square and invertible"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Cramer's Rule applies when $A$ is square and invertible (i.e., $\\det(A) \\neq 0$). Each component is $x_i = \\frac{\\det(A_i)}{\\det(A)}$."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "The area of the parallelogram formed by vectors $\\begin{bmatrix} a \\\\ b \\end{bmatrix}$ and $\\begin{bmatrix} c \\\\ d \\end{bmatrix}$ is:",
         "options": [
-          "$|ad - bc|$",
-          "$ad + bc$",
           "$\\sqrt{a^2 + b^2}$",
-          "$ac + bd$"
+          "$ac + bd$",
+          "$|ad - bc|$",
+          "$ad + bc$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The area is the absolute value of the determinant: $|\\det\\begin{bmatrix} a & c \\\\ b & d \\end{bmatrix}| = |ad - bc|$."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "The adjugate (classical adjoint) of matrix $A$ is:",
         "options": [
-          "The transpose of $A$",
-          "The transpose of the cofactor matrix",
           "The inverse of $A$",
-          "The determinant of $A$"
+          "The determinant of $A$",
+          "The transpose of $A$",
+          "The transpose of the cofactor matrix"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The adjugate adj$(A)$ is the transpose of the cofactor matrix. It satisfies $A \\cdot \\text{adj}(A) = \\det(A) \\cdot I$."
       },
       {

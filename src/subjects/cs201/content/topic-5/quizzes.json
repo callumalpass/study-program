@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What are the two key properties required for Dynamic Programming?",
         "options": [
-          "Sorting and Searching",
-          "Optimal Substructure and Overlapping Subproblems",
           "Divide and Conquer",
-          "Greedy Choice and Local Optimum"
+          "Sorting and Searching",
+          "Greedy Choice and Local Optimum",
+          "Optimal Substructure and Overlapping Subproblems"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "DP requires optimal substructure (solution built from subproblem solutions) and overlapping subproblems (same subproblems solved multiple times)."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of Fibonacci with DP?",
         "options": [
-          "O(2^n)",
-          "O(n^2)",
+          "O(log n)",
           "O(n)",
-          "O(log n)"
+          "O(n^2)",
+          "O(2^n)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "With DP (memoization or tabulation), each subproblem is solved once, giving O(n) time."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "In the 0/1 Knapsack problem, what does \"0/1\" mean?",
         "options": [
+          "The knapsack has 1 compartment",
           "Items have binary weights",
           "Each item can be taken at most once (take or leave)",
-          "There are only 2 items",
-          "The knapsack has 1 compartment"
+          "There are only 2 items"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "0/1 means each item is either taken (1) or not taken (0) - no fractions allowed."
       },
       {
@@ -85,12 +85,12 @@
         "prompt": "What problem does this DP solve?",
         "codeSnippet": "dp[i][j] = dp[i-1][j-1] + 1 if s1[i-1] == s2[j-1]\n         else max(dp[i-1][j], dp[i][j-1])",
         "options": [
+          "Coin Change",
           "Edit Distance",
           "Longest Common Subsequence",
-          "Knapsack",
-          "Coin Change"
+          "Knapsack"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "This recurrence finds the Longest Common Subsequence (LCS) by matching characters or taking max of excluding either."
       },
       {
@@ -105,12 +105,12 @@
         "type": "multiple_choice",
         "prompt": "What is the space complexity of naive 2D DP for LCS of strings of length m and n?",
         "options": [
-          "O(1)",
           "O(m+n)",
-          "O(mn)",
-          "O(m^2 + n^2)"
+          "O(1)",
+          "O(m^2 + n^2)",
+          "O(mn)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Standard LCS DP uses a 2D table of size m×n, giving O(mn) space."
       },
       {
@@ -119,11 +119,11 @@
         "prompt": "The \"Climbing Stairs\" problem (ways to climb n stairs with 1 or 2 steps) is equivalent to:",
         "options": [
           "Binary Search",
-          "Fibonacci Sequence",
+          "Graph BFS",
           "Quick Sort partition",
-          "Graph BFS"
+          "Fibonacci Sequence"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Ways(n) = Ways(n-1) + Ways(n-2), which is exactly the Fibonacci recurrence."
       }
     ]
@@ -139,12 +139,12 @@
         "type": "multiple_choice",
         "prompt": "If dp[i] only depends on dp[i-1], what space optimization is possible?",
         "options": [
-          "No optimization possible",
-          "Reduce from O(n) to O(1)",
           "Reduce from O(n^2) to O(n)",
-          "Use recursion instead"
+          "No optimization possible",
+          "Use recursion instead",
+          "Reduce from O(n) to O(1)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "When only the previous state is needed, use two variables instead of an array, achieving O(1) space."
       },
       {
@@ -159,12 +159,12 @@
         "type": "multiple_choice",
         "prompt": "What is a key advantage of Tabulation over Memoization?",
         "options": [
-          "Easier to implement",
-          "No recursion stack overhead",
+          "Works on more problems",
           "Better time complexity",
-          "Works on more problems"
+          "No recursion stack overhead",
+          "Easier to implement"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Tabulation uses iteration, avoiding recursion stack overflow issues for large inputs."
       },
       {
@@ -173,12 +173,12 @@
         "prompt": "What is the space complexity of this optimized Fibonacci?",
         "codeSnippet": "def fib(n):\n    if n <= 1: return n\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b",
         "options": [
-          "O(n)",
-          "O(log n)",
           "O(1)",
-          "O(n^2)"
+          "O(n^2)",
+          "O(n)",
+          "O(log n)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Only two variables (a, b) are used regardless of n, giving O(1) space."
       },
       {

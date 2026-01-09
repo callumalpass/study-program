@@ -16,12 +16,12 @@
         "type": "multiple_choice",
         "prompt": "Which implication is known to be true?",
         "options": [
-          "P ⊆ NP",
-          "NP ⊆ P",
           "P = NP",
-          "P ∩ NP = ∅"
+          "P ⊆ NP",
+          "P ∩ NP = ∅",
+          "NP ⊆ P"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Any polynomial-time solvable problem can be verified in polynomial time (with a trivial certificate), so P is contained in NP."
       },
       {
@@ -29,12 +29,12 @@
         "type": "multiple_choice",
         "prompt": "A standard way to prove a decision problem X is NP-complete is to show:",
         "options": [
-          "X ∈ NP and A ≤p X for some known NP-complete A",
-          "X ∈ P and X ≤p A for some known NP-complete A",
           "X ∉ NP and A ≤p X",
-          "X has an exponential-time algorithm"
+          "X ∈ P and X ≤p A for some known NP-complete A",
+          "X has an exponential-time algorithm",
+          "X ∈ NP and A ≤p X for some known NP-complete A"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "NP-completeness requires membership in NP plus NP-hardness. NP-hardness is typically shown by reducing a known NP-complete problem A to X."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is NP-hard but not known to be in NP?",
         "options": [
-          "TSP optimization",
           "3-SAT",
-          "Hamiltonian Cycle (decision)",
-          "Vertex Cover (decision)"
+          "Vertex Cover (decision)",
+          "TSP optimization",
+          "Hamiltonian Cycle (decision)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Optimization versions of NP-complete decision problems are typically NP-hard, but the “in NP” notion applies to decision languages."
       },
       {
@@ -98,12 +98,12 @@
         "type": "multiple_choice",
         "prompt": "Which problem has a classic 2-approximation by taking both endpoints of each edge in a maximal matching?",
         "options": [
+          "Metric TSP",
           "Vertex Cover",
-          "Set Cover",
           "Knapsack",
-          "Metric TSP"
+          "Set Cover"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A maximal matching yields a set of disjoint edges. Any vertex cover must hit each edge, so taking both endpoints gives a 2-approximation."
       },
       {
@@ -118,12 +118,12 @@
         "type": "multiple_choice",
         "prompt": "Christofides’ algorithm applies to which TSP variant?",
         "options": [
-          "Metric TSP",
           "Arbitrary directed TSP",
           "Euclidean TSP in 1D only",
-          "TSP with negative edges"
+          "TSP with negative edges",
+          "Metric TSP"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Christofides requires the triangle inequality to relate MST + matching to an optimal tour."
       },
       {
@@ -159,12 +159,12 @@
         "type": "multiple_choice",
         "prompt": "A Monte Carlo algorithm is characterized by:",
         "options": [
-          "Bounded runtime but probabilistic correctness",
-          "Always correct output but random runtime",
           "Always correct and always polynomial time",
-          "No randomness in execution"
+          "No randomness in execution",
+          "Bounded runtime but probabilistic correctness",
+          "Always correct output but random runtime"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Monte Carlo algorithms may err with small probability but have guaranteed (usually polynomial) runtime."
       },
       {
@@ -172,12 +172,12 @@
         "type": "multiple_choice",
         "prompt": "Randomized quicksort has expected runtime:",
         "options": [
-          "O(n log n)",
           "O(n^2)",
-          "O(log n)",
-          "O(n)"
+          "O(n)",
+          "O(n log n)",
+          "O(log n)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The expected number of comparisons in randomized quicksort is O(n log n)."
       },
       {
@@ -192,12 +192,12 @@
         "type": "multiple_choice",
         "prompt": "Karger’s contraction algorithm succeeds with probability at least 2/(n(n−1)) in one run because:",
         "options": [
+          "It enumerates all cuts",
           "It must avoid contracting any edge in a fixed min-cut throughout n−2 contractions",
           "It always contracts min-cut edges first",
-          "It uses BFS to find cuts",
-          "It enumerates all cuts"
+          "It uses BFS to find cuts"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "If you never contract an edge in a particular min-cut, that min-cut survives to the end; the probability of avoiding those edges yields the bound."
       },
       {
@@ -253,12 +253,12 @@
         "type": "multiple_choice",
         "prompt": "Which paging algorithm evicts the page that was least recently used?",
         "options": [
-          "LRU",
           "FIFO",
+          "LFU",
           "OPT",
-          "LFU"
+          "LRU"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "LRU uses recency of access; it evicts the page with the oldest last access time."
       },
       {
@@ -273,12 +273,12 @@
         "type": "multiple_choice",
         "prompt": "In the ski rental problem with buy cost B and rent cost 1 per day, a classic deterministic strategy is to:",
         "options": [
-          "Rent for B days then buy",
+          "Randomly buy each day with probability 1/2",
           "Buy immediately",
-          "Never buy",
-          "Randomly buy each day with probability 1/2"
+          "Rent for B days then buy",
+          "Never buy"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Renting for B days and then buying yields a 2-competitive algorithm for ski rental."
       },
       {
@@ -286,12 +286,12 @@
         "type": "multiple_choice",
         "prompt": "The secretary problem aims to maximize the probability of selecting:",
         "options": [
-          "The best candidate",
           "Any candidate",
           "The median candidate",
-          "The first candidate"
+          "The first candidate",
+          "The best candidate"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The classic secretary problem’s goal is selecting the maximum-ranked item with one-pass irrevocable choices."
       },
       {
@@ -321,12 +321,12 @@
         "type": "multiple_choice",
         "prompt": "Which statement about NP-hardness is correct?",
         "options": [
-          "If A is NP-hard and A ≤p B, then B is NP-hard",
           "If A ≤p B and B is NP-hard, then A is NP-hard",
-          "If B is NP-hard, then B ∈ NP",
-          "NP-hard implies solvable in polynomial time"
+          "NP-hard implies solvable in polynomial time",
+          "If A is NP-hard and A ≤p B, then B is NP-hard",
+          "If B is NP-hard, then B ∈ NP"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Hardness propagates forward along reductions: if a hard problem reduces to B, then B is at least as hard."
       },
       {
@@ -334,12 +334,12 @@
         "type": "multiple_choice",
         "prompt": "Which is the most accurate statement about NP-complete problems?",
         "options": [
-          "They are the hardest problems in NP under polynomial-time many-one reductions",
           "They are all solvable in polynomial time",
           "They are all optimization problems",
+          "They are the hardest problems in NP under polynomial-time many-one reductions",
           "They are outside NP by definition"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "NP-complete problems are in NP and NP-hard, meaning every NP problem reduces to them."
       },
       {
@@ -369,12 +369,12 @@
         "type": "multiple_choice",
         "prompt": "Which reduction direction is correct for proving that X is NP-complete given a known NP-complete problem A?",
         "options": [
-          "A ≤p X",
+          "SAT ≤p A implies X is in P",
           "X ≤p A",
           "A ≤p SAT",
-          "SAT ≤p A implies X is in P"
+          "A ≤p X"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "To show NP-hardness of X, reduce a known hard problem A to X."
       },
       {
@@ -382,12 +382,12 @@
         "type": "multiple_choice",
         "prompt": "For metric TSP, the best-known guaranteed polynomial-time approximation ratio in this course is:",
         "options": [
-          "3/2",
           "2",
+          "3/2",
           "1 + ε for all ε",
           "No constant-factor approximation exists"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Christofides’ algorithm provides a 3/2 approximation for metric TSP."
       },
       {
@@ -395,12 +395,12 @@
         "type": "multiple_choice",
         "prompt": "The greedy Set Cover algorithm achieves approximation factor:",
         "options": [
-          "O(log n)",
-          "O(1)",
           "O(n)",
-          "O(log log n)"
+          "O(log n)",
+          "O(log log n)",
+          "O(1)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Greedy set cover is Θ(log n)-approximate in general."
       },
       {
@@ -415,12 +415,12 @@
         "type": "multiple_choice",
         "prompt": "A common technique to design approximation algorithms is:",
         "options": [
-          "LP relaxation and rounding",
-          "Always using brute force",
+          "Only using recursion",
           "Only using BFS",
-          "Only using recursion"
+          "Always using brute force",
+          "LP relaxation and rounding"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Relax to a fractional solution (LP) and round to an integral solution while bounding the loss."
       },
       {
@@ -463,12 +463,12 @@
         "type": "multiple_choice",
         "prompt": "A Chernoff bound is most appropriate when analyzing:",
         "options": [
-          "The concentration of sums of independent bounded random variables",
           "Worst-case sorting lower bounds",
-          "Exact TSP solutions",
-          "Flow conservation constraints"
+          "Flow conservation constraints",
+          "The concentration of sums of independent bounded random variables",
+          "Exact TSP solutions"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Chernoff bounds give exponentially decreasing tail probabilities for sums of independent random variables."
       },
       {
@@ -483,12 +483,12 @@
         "type": "multiple_choice",
         "prompt": "The one-run success probability of Karger’s min-cut is low; to obtain high probability, we:",
         "options": [
-          "Repeat the algorithm many times and take the best cut found",
           "Sort edges by capacity",
-          "Run Dijkstra from the source",
-          "Use dynamic programming"
+          "Use dynamic programming",
+          "Repeat the algorithm many times and take the best cut found",
+          "Run Dijkstra from the source"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Repeated independent runs amplify success probability; selecting the smallest cut found across runs is correct."
       },
       {
@@ -526,12 +526,12 @@
         "type": "multiple_choice",
         "prompt": "A competitive ratio compares an online algorithm to:",
         "options": [
-          "An optimal offline algorithm",
           "A random baseline",
           "The best greedy algorithm",
-          "The average input"
+          "The average input",
+          "An optimal offline algorithm"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The baseline is OPT, which knows the entire input sequence ahead of time."
       },
       {
@@ -546,12 +546,12 @@
         "type": "multiple_choice",
         "prompt": "For deterministic paging, LRU is:",
         "options": [
-          "k-competitive",
           "1-competitive",
           "O(log k)-competitive",
-          "Not competitive"
+          "Not competitive",
+          "k-competitive"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "LRU is k-competitive for cache size k, and this is optimal for deterministic algorithms."
       },
       {
@@ -566,12 +566,12 @@
         "type": "multiple_choice",
         "prompt": "The online bipartite matching “Ranking” algorithm achieves competitive ratio:",
         "options": [
-          "1 − 1/e",
           "1/2",
           "2/3",
-          "1/e"
+          "1/e",
+          "1 − 1/e"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Ranking achieves (1−1/e)-competitive against an oblivious adversary for online bipartite matching."
       },
       {
@@ -614,12 +614,12 @@
         "type": "multiple_choice",
         "prompt": "A common way to reduce space in DP tables is:",
         "options": [
-          "Use rolling arrays when transitions depend on limited previous rows/columns",
-          "Replace DP with brute force",
           "Avoid recursion at all costs",
-          "Randomize the input"
+          "Randomize the input",
+          "Replace DP with brute force",
+          "Use rolling arrays when transitions depend on limited previous rows/columns"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "If dp[i][*] depends only on dp[i−1][*] (or a constant window), you can keep only the needed rows/columns."
       },
       {
@@ -627,12 +627,12 @@
         "type": "multiple_choice",
         "prompt": "Which optimization technique can reduce certain O(n^3) interval DPs to O(n^2)?",
         "options": [
-          "Knuth optimization",
-          "Dijkstra",
+          "Reservoir sampling",
           "Kruskal",
-          "Reservoir sampling"
+          "Dijkstra",
+          "Knuth optimization"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Knuth optimization applies when the argmin is monotone and certain quadrangle inequalities hold."
       },
       {
@@ -697,12 +697,12 @@
         "type": "multiple_choice",
         "prompt": "Which problem reduces naturally to max flow using unit capacities?",
         "options": [
-          "Bipartite matching",
+          "Convex hull",
           "LCS",
-          "Quicksort",
-          "Convex hull"
+          "Bipartite matching",
+          "Quicksort"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Add source→left edges (1), left→right edges (1), right→sink edges (1). The max flow value equals maximum matching size."
       },
       {
@@ -758,12 +758,12 @@
         "type": "multiple_choice",
         "prompt": "A key geometric primitive used in many planar algorithms is:",
         "options": [
-          "Orientation (ccw) test via cross product",
           "Max-flow min-cut",
           "Knapsack DP",
-          "Chernoff bound"
+          "Chernoff bound",
+          "Orientation (ccw) test via cross product"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Orientation tests determine left/right turns and are central in convex hulls and segment intersection."
       },
       {
@@ -771,12 +771,12 @@
         "type": "multiple_choice",
         "prompt": "The closest pair of points problem can be solved in O(n log n) time using:",
         "options": [
+          "Only random sampling",
           "Divide and conquer with a strip merge step",
-          "Only dynamic programming",
           "Only max flow",
-          "Only random sampling"
+          "Only dynamic programming"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "After dividing, only a constant number of candidate neighbors in the strip need checking, leading to O(n log n)."
       },
       {

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary goal of abstraction?",
         "options": [
+          "Avoid using functions",
           "Make code shorter",
           "Hide internal details and expose essential capabilities",
-          "Force all classes to inherit from one base class",
-          "Avoid using functions"
+          "Force all classes to inherit from one base class"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Abstraction helps you focus on what an object can do, reducing coupling to implementation details."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "Which pattern is commonly used when a base class defines algorithm steps and subclasses fill in the details?",
         "options": [
+          "Singleton",
           "Factory",
           "Template Method",
-          "Singleton",
           "Observer"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Template Method defines a skeleton algorithm in a base class and defers steps to subclasses."
       }
     ]
@@ -79,12 +79,12 @@
         "type": "multiple_choice",
         "prompt": "What is a good reason to accept a dependency via a constructor parameter?",
         "options": [
-          "It guarantees faster code",
-          "It improves testability and reduces coupling",
           "It prevents polymorphism",
-          "It forces singletons"
+          "It forces singletons",
+          "It improves testability and reduces coupling",
+          "It guarantees faster code"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Dependency injection makes it easy to swap implementations and write unit tests."
       },
       {
@@ -128,11 +128,11 @@
         "prompt": "Which is a risk of overly large interfaces?",
         "options": [
           "They increase runtime speed",
-          "They force implementations to define irrelevant methods (poor cohesion)",
+          "They prevent polymorphism",
           "They eliminate the need for testing",
-          "They prevent polymorphism"
+          "They force implementations to define irrelevant methods (poor cohesion)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Large interfaces reduce cohesion and increase coupling; implementations end up with meaningless stubs."
       },
       {
@@ -162,12 +162,12 @@
         "type": "multiple_choice",
         "prompt": "When might an ABC be preferred over a Protocol?",
         "options": [
-          "When you need runtime `isinstance` checks and shared template logic",
-          "When you want to avoid any inheritance in your project",
           "When you want to prevent type checking entirely",
-          "When you need global variables"
+          "When you need runtime `isinstance` checks and shared template logic",
+          "When you need global variables",
+          "When you want to avoid any inheritance in your project"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "ABCs support runtime checks and can provide shared algorithm structure via base methods."
       }
     ]

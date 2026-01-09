@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "The term DDR (Double Data Rate) means:",
         "options": [
-          "Twice the memory capacity",
-          "Data transfers on both clock edges",
+          "Double the voltage",
           "Two memory channels",
-          "Double the voltage"
+          "Twice the memory capacity",
+          "Data transfers on both clock edges"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "DDR transfers data on both rising and falling clock edges, doubling the data rate compared to SDR."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "Why are there multiple cache levels (L1, L2, L3)?",
         "options": [
-          "For redundancy",
           "To balance speed vs. capacity trade-offs",
+          "Required by x86 architecture",
           "For power management",
-          "Required by x86 architecture"
+          "For redundancy"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Multiple levels allow small fast L1 caches for low latency and larger slower L2/L3 caches for capacity."
       }
     ]
@@ -84,11 +84,11 @@
         "prompt": "In DRAM, a row buffer hit means:",
         "options": [
           "The data is in the cache",
-          "The requested row is already open",
+          "The refresh is complete",
           "The memory controller found the data",
-          "The refresh is complete"
+          "The requested row is already open"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A row buffer hit occurs when the requested data's row is already in the sense amplifiers, requiring only a column access."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "SSDs are faster than HDDs for random access primarily because:",
         "options": [
-          "They have larger caches",
           "They have no mechanical seek time",
-          "They use faster memory chips",
-          "They have more bandwidth"
+          "They have more bandwidth",
+          "They have larger caches",
+          "They use faster memory chips"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "SSDs eliminate mechanical seek and rotation time, making random access nearly as fast as sequential."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "Wear leveling in SSDs ensures:",
         "options": [
-          "Even distribution of writes across all cells",
-          "Data is never lost",
           "Faster read speeds",
-          "Lower power consumption"
+          "Lower power consumption",
+          "Data is never lost",
+          "Even distribution of writes across all cells"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Wear leveling distributes writes evenly so no cells wear out prematurely, extending SSD lifespan."
       }
     ]
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "According to Little's Law, to achieve high memory bandwidth you need:",
         "options": [
-          "Faster memory chips",
-          "Many outstanding memory requests",
           "Larger cache",
-          "Lower latency only"
+          "Lower latency only",
+          "Faster memory chips",
+          "Many outstanding memory requests"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Little's Law: Bandwidth = Outstanding requests / Latency. More outstanding requests enable higher bandwidth despite latency."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "FR-FCFS memory scheduling prioritizes:",
         "options": [
-          "Oldest requests first",
-          "Row buffer hits, then oldest",
           "Smallest requests first",
-          "Random ordering"
+          "Oldest requests first",
+          "Random ordering",
+          "Row buffer hits, then oldest"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "FR-FCFS (First Ready, First Come First Served) prioritizes requests that hit the open row buffer, then by age."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "High Bandwidth Memory (HBM) achieves high bandwidth through:",
         "options": [
-          "Faster clock speeds",
-          "3D stacking with wide interfaces",
           "Larger capacitors",
-          "More refresh cycles"
+          "More refresh cycles",
+          "3D stacking with wide interfaces",
+          "Faster clock speeds"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "HBM stacks DRAM dies with through-silicon vias (TSVs) and uses a very wide (1024-bit) interface."
       }
     ]

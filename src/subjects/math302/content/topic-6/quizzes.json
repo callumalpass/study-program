@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "A point x₀ is an ordinary point of y″ + P(x)y′ + Q(x)y = 0 if:",
         "options": [
+          "The equation has no solution at x₀",
           "P(x) and Q(x) are analytic at x₀",
           "P(x₀) = Q(x₀) = 0",
-          "P(x) and Q(x) are undefined at x₀",
-          "The equation has no solution at x₀"
+          "P(x) and Q(x) are undefined at x₀"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "x₀ is ordinary if P(x) and Q(x) are analytic (have convergent power series) at x₀. Otherwise, it's a singular point."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "When substituting a series into a DE, we typically:",
         "options": [
+          "Set x = 0",
           "Shift indices to align powers of x",
           "Integrate each term",
-          "Set x = 0",
           "Use L'Hôpital's rule"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "To combine series, we shift indices so all terms have the same power x^k, then equate coefficients to find recurrence relations."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "A recurrence relation determines:",
         "options": [
-          "Coefficients a_n in terms of previous coefficients",
-          "The exact solution immediately",
           "The radius of convergence",
-          "The singular points"
+          "The singular points",
+          "The exact solution immediately",
+          "Coefficients a_n in terms of previous coefficients"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Equating coefficients of like powers gives a recurrence relation, expressing a_n in terms of a_(n-1), a_(n-2), etc."
       }
     ]
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "In the Frobenius method, we assume a solution of the form:",
         "options": [
+          "y = r^x",
           "y = x^r Σ(n=0 to ∞) a_n x^n with a₀ ≠ 0",
           "y = Σ(n=0 to ∞) a_n x^n",
-          "y = e^(rx)",
-          "y = r^x"
+          "y = e^(rx)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Frobenius method assumes y = x^r Σa_n x^n = Σa_n x^(n+r), where r is determined by the indicial equation."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "If the indicial equation has roots r₁ and r₂ with r₁ - r₂ = integer, then:",
         "options": [
-          "The second solution may involve logarithms",
-          "Both solutions are power series",
           "No solution exists",
-          "The solutions are identical"
+          "The second solution may involve logarithms",
+          "The solutions are identical",
+          "Both solutions are power series"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "When roots differ by an integer, the second solution may contain logarithmic terms: y₂ = y₁ ln(x) + x^r₂ Σb_n x^n."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "A point x₀ is a regular singular point if:",
         "options": [
+          "The equation has no solution at x₀",
           "(x-x₀)P(x) and (x-x₀)²Q(x) are analytic at x₀",
-          "P(x) and Q(x) are analytic at x₀",
           "P(x₀) = ∞",
-          "The equation has no solution at x₀"
+          "P(x) and Q(x) are analytic at x₀"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "x₀ is regular singular if (x-x₀)P(x) and (x-x₀)²Q(x) are analytic at x₀. Otherwise, it's irregular singular."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Bessel's equation of order ν is:",
         "options": [
-          "x²y″ + xy′ + (x² - ν²)y = 0",
-          "y″ + xy′ + y = 0",
+          "(1 - x²)y″ - 2xy′ + ν(ν+1)y = 0",
           "x²y″ - 2xy′ + 2y = 0",
-          "(1 - x²)y″ - 2xy′ + ν(ν+1)y = 0"
+          "y″ + xy′ + y = 0",
+          "x²y″ + xy′ + (x² - ν²)y = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Bessel's equation is x²y″ + xy′ + (x² - ν²)y = 0. It has regular singular point at x = 0 and arises in cylindrical coordinate problems."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "The Bessel function of the first kind J_ν(x) is:",
         "options": [
-          "A series solution to Bessel's equation",
-          "A polynomial",
           "An exponential function",
-          "Always zero at x = 0"
+          "A series solution to Bessel's equation",
+          "Always zero at x = 0",
+          "A polynomial"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "J_ν(x) is a fundamental solution to Bessel's equation, given by a power series. For integer ν, it's bounded at x = 0."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "Legendre's equation is:",
         "options": [
-          "(1 - x²)y″ - 2xy′ + n(n+1)y = 0",
           "x²y″ + xy′ + (x² - n²)y = 0",
           "y″ + xy = 0",
+          "(1 - x²)y″ - 2xy′ + n(n+1)y = 0",
           "y″ - 2xy′ + 2ny = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Legendre's equation is (1-x²)y″ - 2xy′ + n(n+1)y = 0, arising in spherical coordinate problems. Has singular points at x = ±1."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "When n is a non-negative integer, Legendre's equation has a polynomial solution called:",
         "options": [
+          "Chebyshev polynomial",
           "Legendre polynomial P_n(x)",
-          "Bessel function J_n(x)",
           "Hermite polynomial",
-          "Chebyshev polynomial"
+          "Bessel function J_n(x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For integer n ≥ 0, one solution to Legendre's equation is the Legendre polynomial P_n(x), a polynomial of degree n."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "The Legendre polynomials satisfy the orthogonality relation:",
         "options": [
-          "∫₋₁¹ P_m(x)P_n(x) dx = 0 for m ≠ n",
           "∫₀^∞ P_m(x)P_n(x) dx = 0 for m ≠ n",
+          "∫₋₁¹ P_m(x)P_n(x) dx = 0 for m ≠ n",
           "P_m(x)P_n(x) = 0 for all x",
           "∫₋₁¹ P_n(x) dx = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Legendre polynomials are orthogonal on [-1,1]: ∫₋₁¹ P_m(x)P_n(x) dx = 0 when m ≠ n, important for expansions."
       }
     ]

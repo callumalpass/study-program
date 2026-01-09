@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is the minimum number of edges in a connected graph with 10 vertices?",
         "options": [
-          "9",
-          "10",
           "45",
-          "90"
+          "90",
+          "9",
+          "10"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A tree is minimally connected with n-1 edges. So 10 vertices need at least 9 edges."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "A graph is bipartite if and only if it contains no cycles of:",
         "options": [
-          "Even length",
           "Odd length",
-          "Length 3",
-          "Length 4"
+          "Length 4",
+          "Even length",
+          "Length 3"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A graph is bipartite iff it contains no odd-length cycles."
       }
     ]
@@ -78,12 +78,12 @@
         "type": "multiple_choice",
         "prompt": "A graph has an Eulerian circuit if and only if:",
         "options": [
-          "All vertices have degree 2",
           "All vertices have even degree",
+          "The graph is bipartite",
           "Exactly 2 vertices have odd degree",
-          "The graph is bipartite"
+          "All vertices have degree 2"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Eulerian circuit exists iff the graph is connected and all vertices have even degree."
       },
       {
@@ -98,12 +98,12 @@
         "type": "multiple_choice",
         "prompt": "In a directed graph, the in-degree of a vertex is:",
         "options": [
-          "Number of edges leaving the vertex",
           "Number of edges entering the vertex",
           "Total number of incident edges",
+          "Number of edges leaving the vertex",
           "Number of self-loops"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "In-degree counts edges coming into a vertex; out-degree counts edges leaving."
       },
       {
@@ -128,10 +128,10 @@
         "options": [
           "Connectivity",
           "Bipartiteness",
-          "Hamiltonian path existence",
-          "Eulerian path existence"
+          "Eulerian path existence",
+          "Hamiltonian path existence"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Finding Hamiltonian paths is NP-complete. Eulerian paths have polynomial-time checks."
       },
       {
@@ -146,12 +146,12 @@
         "type": "multiple_choice",
         "prompt": "The chromatic number of a complete graph K_n is:",
         "options": [
-          "1",
-          "2",
+          "n",
           "n-1",
-          "n"
+          "2",
+          "1"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "In K_n, every vertex is adjacent to every other, so n colors are needed."
       },
       {

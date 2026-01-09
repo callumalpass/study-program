@@ -24,11 +24,11 @@
         "prompt": "What is the primary advantage of unit tests over integration tests?",
         "options": [
           "They test more code at once",
+          "They test real user scenarios",
           "They are faster and easier to debug",
-          "They don't require mocking",
-          "They test real user scenarios"
+          "They don't require mocking"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Unit tests are fast because they test small pieces in isolation, and failures pinpoint exactly which unit is broken."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "When writing tests, what does the \"Arrange-Act-Assert\" pattern mean?",
         "options": [
-          "Set up test data, execute code, verify results",
+          "Assert before acting to catch errors",
           "Write tests in alphabetical order",
-          "Test arrangement of UI components",
-          "Assert before acting to catch errors"
+          "Set up test data, execute code, verify results",
+          "Test arrangement of UI components"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "AAA pattern structures tests: Arrange (set up), Act (execute the code being tested), Assert (verify the outcome)."
       },
       {
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "What is a mock in unit testing?",
         "options": [
-          "A fake implementation of a dependency",
           "A test that always fails",
+          "A production database for testing",
           "A way to test UI components",
-          "A production database for testing"
+          "A fake implementation of a dependency"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Mocks are fake implementations of dependencies (APIs, databases) that let you test code in isolation without relying on external systems."
       },
       {
@@ -90,12 +90,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between a unit test and an integration test?",
         "options": [
+          "They are the same thing",
           "Unit tests are faster",
           "Unit tests test isolated functions; integration tests test components working together",
-          "Integration tests are more important",
-          "They are the same thing"
+          "Integration tests are more important"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Unit tests test individual functions in isolation. Integration tests verify multiple components work together correctly (e.g., API + database)."
       },
       {
@@ -103,12 +103,12 @@
         "type": "multiple_choice",
         "prompt": "What should you test in a unit test?",
         "options": [
-          "The entire application",
           "A single function or method behavior",
+          "The entire application",
           "Database performance",
           "UI layout"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Unit tests should focus on testing a single function or method's behavior: given specific inputs, does it produce expected outputs and side effects?"
       },
       {
@@ -145,11 +145,11 @@
         "prompt": "What is the purpose of end-to-end tests?",
         "options": [
           "To test individual functions",
+          "To measure code coverage",
           "To simulate real user workflows through the entire application",
-          "To test database queries",
-          "To measure code coverage"
+          "To test database queries"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "E2E tests simulate real user interactions through the entire application stack (frontend, backend, database) to verify complete workflows work."
       },
       {
@@ -183,12 +183,12 @@
         "type": "multiple_choice",
         "prompt": "What is a flaky test?",
         "options": [
-          "A test that always fails",
-          "A test that randomly passes or fails without code changes",
+          "A test that doesn't assert anything",
           "A test that runs slowly",
-          "A test that doesn't assert anything"
+          "A test that randomly passes or fails without code changes",
+          "A test that always fails"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Flaky tests randomly pass or fail without code changes, often due to timing issues, race conditions, or dependencies on external services."
       },
       {
@@ -196,12 +196,12 @@
         "type": "multiple_choice",
         "prompt": "What should be included in a bug report?",
         "options": [
+          "The fix for the bug",
           "Only the error message",
-          "Steps to reproduce, expected vs actual behavior, environment details",
           "Just a screenshot",
-          "The fix for the bug"
+          "Steps to reproduce, expected vs actual behavior, environment details"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Good bug reports include: steps to reproduce, expected behavior, actual behavior, environment (browser/OS), and screenshots/logs when relevant."
       }
     ]

@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Alpha-beta pruning reduces minimax search cost by:",
         "options": [
-          "Eliminating branches that cannot affect the final decision",
           "Using a better evaluation function",
-          "Searching fewer depth levels",
-          "Using parallel processing"
+          "Using parallel processing",
+          "Eliminating branches that cannot affect the final decision",
+          "Searching fewer depth levels"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Alpha-beta pruning safely eliminates branches where the optimal play makes them irrelevant, without affecting the minimax value. It maintains two values: alpha (best MAX can guarantee) and beta (best MIN can guarantee)."
       },
       {
@@ -66,12 +66,12 @@
         "type": "multiple_choice",
         "prompt": "What is the best-case time complexity of alpha-beta pruning?",
         "options": [
-          "O(b^(d/2))",
           "O(b^d)",
+          "O(b^2)",
           "O(bd)",
-          "O(b^2)"
+          "O(b^(d/2))"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "With perfect move ordering, alpha-beta prunes enough to reduce complexity from O(b^d) to O(b^(d/2)), effectively doubling searchable depth. This is achieved when the best moves are always examined first at each node."
       },
       {
@@ -79,12 +79,12 @@
         "type": "multiple_choice",
         "prompt": "Monte Carlo Tree Search balances exploration and exploitation using:",
         "options": [
+          "Evaluation functions",
           "UCB1 (Upper Confidence Bound) formula",
           "Alpha-beta pruning",
-          "Evaluation functions",
           "Random selection"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "MCTS uses UCB1 formula: wins/visits + c*sqrt(ln(parent_visits)/visits) to balance trying promising moves (exploitation) and exploring less-visited options (exploration). The constant c controls the exploration-exploitation tradeoff."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Expectiminimax extends minimax to handle:",
         "options": [
-          "Chance nodes with probabilistic outcomes",
+          "Continuous state spaces",
           "Multiple players",
-          "Imperfect information",
-          "Continuous state spaces"
+          "Chance nodes with probabilistic outcomes",
+          "Imperfect information"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Expectiminimax adds chance nodes that compute expected values over random outcomes, handling games like backgammon with dice. At chance nodes, the value is the weighted average of successor values based on probabilities."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What property should a good evaluation function for chess have?",
         "options": [
+          "It should be as complex as possible",
           "It should order terminal states identically to the true utility function",
-          "It should return exact minimax values",
           "It should consider only material count",
-          "It should be as complex as possible"
+          "It should return exact minimax values"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A good evaluation function must order terminal states (wins, losses, draws) the same as the utility function, correlate with winning chances for non-terminal states, and be computable in reasonable time. It's a heuristic approximation, not an exact value."
       },
       {

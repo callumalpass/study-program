@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary purpose of data replication?",
         "options": [
-          "Improve availability and fault tolerance",
-          "Reduce storage costs",
           "Simplify programming",
+          "Reduce storage costs",
+          "Improve availability and fault tolerance",
           "Increase latency"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Data replication maintains multiple copies of data across different nodes, improving availability (data accessible despite failures) and fault tolerance (surviving failures)."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is strong consistency?",
         "options": [
-          "All reads see the most recent write",
-          "Reads may see stale data",
           "Eventually consistent",
+          "Reads may see stale data",
+          "All reads see the most recent write",
           "No consistency guarantees"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Strong consistency (also called linearizability) guarantees that all reads return the value of the most recent write, making the system appear as if there is only one copy of the data."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What tradeoff does eventual consistency make?",
         "options": [
-          "Sacrifices immediate consistency for availability",
-          "Sacrifices availability for consistency",
           "Eliminates partitions",
+          "Sacrifices availability for consistency",
+          "Sacrifices immediate consistency for availability",
           "Requires synchronous replication"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Eventual consistency allows replicas to temporarily diverge (sacrificing immediate consistency) to remain available, guaranteeing only that replicas will converge if updates stop."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is read-your-writes consistency?",
         "options": [
-          "A client sees their own updates immediately",
-          "All clients see all updates immediately",
           "No guarantees on read ordering",
-          "Writes are never visible"
+          "All clients see all updates immediately",
+          "Writes are never visible",
+          "A client sees their own updates immediately"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Read-your-writes (also called read-after-write) consistency guarantees that a client will always see their own updates, even if other clients might see stale data temporarily."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What is monotonic reads consistency?",
         "options": [
-          "Reads never go backwards in time",
           "Reads are always increasing",
-          "All reads see same value",
-          "Reads are ordered by timestamp"
+          "Reads never go backwards in time",
+          "Reads are ordered by timestamp",
+          "All reads see same value"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Monotonic reads guarantee that if a client reads a value, any subsequent reads will see that value or a more recent one, never an older value."
       }
     ]
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is a quorum in distributed systems?",
         "options": [
-          "Minimum number of nodes needed for an operation",
           "All nodes in the system",
           "The leader node",
-          "Backup nodes"
+          "Backup nodes",
+          "Minimum number of nodes needed for an operation"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A quorum is the minimum number of nodes that must participate in an operation (read or write) to ensure consistency. Typically a majority to guarantee overlap between operations."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "In quorum-based replication with N replicas, what is a common quorum size?",
         "options": [
-          "N/2 + 1 (majority)",
+          "log(N)",
           "N (all replicas)",
           "1 (any replica)",
-          "log(N)"
+          "N/2 + 1 (majority)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A majority quorum (N/2 + 1) ensures that any two quorums overlap, guaranteeing that reads will see recent writes. This allows tolerating N/2 failures while maintaining consistency."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What are CRDTs (Conflict-free Replicated Data Types)?",
         "options": [
+          "Cloud-based databases",
           "Data structures that merge automatically without conflicts",
-          "Encrypted data types",
           "Compressed data formats",
-          "Cloud-based databases"
+          "Encrypted data types"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "CRDTs are data structures designed to be replicated across nodes where concurrent updates can be merged automatically without conflicts, enabling strong eventual consistency."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What property must CRDT merge operations satisfy?",
         "options": [
-          "Commutative, associative, and idempotent",
           "Fast and efficient",
           "Encrypted and secure",
-          "Ordered and sequential"
+          "Ordered and sequential",
+          "Commutative, associative, and idempotent"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "CRDT merges must be commutative (order doesn't matter), associative (grouping doesn't matter), and idempotent (applying twice has same effect), enabling automatic conflict resolution."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is an example of a state-based CRDT?",
         "options": [
-          "Grow-only counter",
           "String",
+          "Linked list",
           "Integer",
-          "Linked list"
+          "Grow-only counter"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "State-based CRDTs (like grow-only counters, grow-only sets) share entire state and merge using a semilattice structure, where merging is the join operation."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is an operation-based (Op-based) CRDT?",
         "options": [
-          "CRDTs that share operations instead of state",
-          "CRDTs for mathematical operations",
           "CRDTs that don't merge",
-          "CRDTs for encryption"
+          "CRDTs for encryption",
+          "CRDTs that share operations instead of state",
+          "CRDTs for mathematical operations"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Operation-based CRDTs share operations (like \"increment\", \"add element\") instead of full state. Operations must commute, and typically require causal delivery of operations."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is session consistency?",
         "options": [
-          "Consistency guarantees within a single client session",
-          "Consistency across all sessions",
           "No consistency guarantees",
-          "Physical clock synchronization"
+          "Consistency across all sessions",
+          "Physical clock synchronization",
+          "Consistency guarantees within a single client session"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Session consistency provides consistency guarantees (like read-your-writes, monotonic reads) within a single client session, but not across different clients or sessions."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the advantage of async replication over sync replication?",
         "options": [
-          "Lower latency and better availability",
-          "Stronger consistency",
+          "Simpler implementation",
           "No data loss",
-          "Simpler implementation"
+          "Stronger consistency",
+          "Lower latency and better availability"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Asynchronous replication doesn't wait for acknowledgment from replicas before confirming writes, providing lower latency and better availability, though risking data loss on failures."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What is linearizability?",
         "options": [
-          "Operations appear to execute atomically at some point between invocation and response",
           "Operations execute in a line",
-          "Linear time complexity",
-          "Sequential consistency"
+          "Operations appear to execute atomically at some point between invocation and response",
+          "Sequential consistency",
+          "Linear time complexity"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Linearizability (the strongest consistency model) requires that operations appear to execute instantaneously at some point between their invocation and response, with a total order consistent with real-time."
       }
     ]

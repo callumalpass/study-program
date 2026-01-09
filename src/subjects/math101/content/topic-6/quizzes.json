@@ -44,11 +44,11 @@
         "prompt": "What is the negation of ∀x P(x)?",
         "options": [
           "∀x ¬P(x)",
-          "∃x P(x)",
           "∃x ¬P(x)",
-          "¬∃x P(x)"
+          "¬∃x P(x)",
+          "∃x P(x)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The negation of \"for all x, P(x)\" is \"there exists x such that NOT P(x).\" ¬∀x P(x) ≡ ∃x ¬P(x)."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "How would you translate \"Some birds can swim\"? (B(x) = \"x is a bird\", S(x) = \"x can swim\")",
         "options": [
+          "∀x (B(x) ∧ S(x))",
           "∀x (B(x) → S(x))",
           "∃x (B(x) → S(x))",
-          "∃x (B(x) ∧ S(x))",
-          "∀x (B(x) ∧ S(x))"
+          "∃x (B(x) ∧ S(x))"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "\"Some birds can swim\" means: there exists something that IS a bird AND can swim. Use ∧ with ∃ for \"some A are B.\""
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "Which is the correct expansion of ∃!x P(x)?",
         "options": [
-          "∃x P(x)",
-          "∃x (P(x) ∧ ∀y (P(y) → y = x))",
           "∀x P(x)",
-          "∃x ∃y (P(x) ∧ P(y))"
+          "∃x P(x)",
+          "∃x ∃y (P(x) ∧ P(y))",
+          "∃x (P(x) ∧ ∀y (P(y) → y = x))"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "∃!x P(x) means \"exists x with P(x), and any y with P(y) must equal x.\" Uniqueness combines existence with the condition that anything else satisfying P is the same element."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "What does ∀x ∃y ∀z P(x, y, z) assert?",
         "options": [
-          "For all x, y, z: P(x, y, z)",
           "For each x, there is a y that works for all z",
           "There is some x such that for all y and z, P holds",
-          "For each pair (x, z), there is a y such that P holds"
+          "For each pair (x, z), there is a y such that P holds",
+          "For all x, y, z: P(x, y, z)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Reading left to right: for each x, we can find a y (depending on x) such that for all z, P(x, y, z) is true."
       },
       {

@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "What is the average-case time complexity for searching in a balanced BST?",
         "options": [
-          "O(1)",
           "O(log n)",
-          "O(n)",
-          "O(n log n)"
+          "O(1)",
+          "O(n log n)",
+          "O(n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "In a balanced BST, each comparison eliminates half the remaining nodes, giving O(log n) search time."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Which traversal visits nodes in sorted order for a BST?",
         "options": [
-          "Preorder",
-          "Inorder",
           "Postorder",
-          "Level-order"
+          "Preorder",
+          "Level-order",
+          "Inorder"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Inorder traversal (left-root-right) of a BST visits nodes in ascending sorted order."
       },
       {
@@ -128,12 +128,12 @@
         "type": "multiple_choice",
         "prompt": "Which tree type automatically maintains balance through rotations?",
         "options": [
-          "Binary Search Tree",
+          "Skewed Tree",
           "Binary Tree",
-          "AVL Tree",
-          "Skewed Tree"
+          "Binary Search Tree",
+          "AVL Tree"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "AVL trees (and Red-Black trees) are self-balancing BSTs that perform rotations to maintain balance."
       },
       {
@@ -148,12 +148,12 @@
         "type": "multiple_choice",
         "prompt": "To validate a BST, you should check:",
         "options": [
-          "Only immediate children",
-          "The entire subtree constraints",
           "Node values are unique",
-          "Tree height is balanced"
+          "Only immediate children",
+          "Tree height is balanced",
+          "The entire subtree constraints"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "BST validation requires checking that ALL left subtree values are less than the node and ALL right subtree values are greater."
       },
       {
@@ -168,12 +168,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of finding the diameter (longest path) of a binary tree?",
         "options": [
-          "O(1)",
-          "O(log n)",
           "O(n)",
-          "O(n²)"
+          "O(n²)",
+          "O(1)",
+          "O(log n)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Finding diameter requires visiting each node once to calculate heights, giving O(n) time."
       }
     ]

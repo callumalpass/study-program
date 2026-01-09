@@ -12,6 +12,14 @@ import type { QuizQuestion } from '../src/core/types';
 // Import the actual quiz data
 import quizzes from '../src/subjects/math204/content/topic-2/quizzes.json';
 
+/** Helper to get the correct answer text for a multiple choice question */
+function getCorrectAnswerText(q: QuizQuestion): string {
+  if (typeof q.correctAnswer === 'number' && q.options) {
+    return q.options[q.correctAnswer];
+  }
+  return String(q.correctAnswer);
+}
+
 describe('Math204 Topic 2 Quiz Fix Validation', () => {
   describe('math204-q2c-5 (average value formula question)', () => {
     // Find the specific quiz and question
@@ -32,33 +40,36 @@ describe('Math204 Topic 2 Quiz Fix Validation', () => {
       expect(question.options).toHaveLength(4);
     });
 
-    it('should have the integral as the correct answer (index 0)', () => {
-      expect(question.correctAnswer).toBe(0);
+    it('should have the integral as the correct answer', () => {
+      // The correct answer should be the integral formula, regardless of position
+      expect(getCorrectAnswerText(question)).toContain('\\int_a^b f(x)');
     });
 
     it('should have the integral option containing the correct formula', () => {
-      const integralOption = question.options?.[0];
-      expect(integralOption).toContain('\\int_a^b f(x)');
+      // One of the options should contain the integral formula
+      expect(question.options?.some(opt => opt.includes('\\int_a^b f(x)'))).toBe(true);
     });
 
     it('should have plausible distractor options', () => {
       const options = question.options || [];
-      // Option 1: f(b) - f(a) (the derivative relationship, not integral)
-      expect(options[1]).toContain('f(b) - f(a)');
-      // Option 2: midpoint formula
-      expect(options[2]).toContain('\\frac{f(a) + f(b)}{2}');
-      // Option 3: integral of derivative (which equals f(b) - f(a))
-      expect(options[3]).toContain("f'(x)");
+      // Should have these distractor concepts somewhere in the options
+      expect(options.some(opt => opt.includes('f(b) - f(a)'))).toBe(true);
+      expect(options.some(opt => opt.includes('\\frac{f(a) + f(b)}{2}'))).toBe(true);
+      expect(options.some(opt => opt.includes("f'(x)"))).toBe(true);
     });
 
     it('should correctly validate the right answer', () => {
-      expect(checkAnswer(question, 0)).toBe(true);
+      // checkAnswer should return true for the correct index
+      expect(checkAnswer(question, question.correctAnswer as number)).toBe(true);
     });
 
     it('should reject incorrect answers', () => {
-      expect(checkAnswer(question, 1)).toBe(false);
-      expect(checkAnswer(question, 2)).toBe(false);
-      expect(checkAnswer(question, 3)).toBe(false);
+      const correctIndex = question.correctAnswer as number;
+      [0, 1, 2, 3].forEach(idx => {
+        if (idx !== correctIndex) {
+          expect(checkAnswer(question, idx)).toBe(false);
+        }
+      });
     });
 
     it('should have an explanation that explains the concept', () => {

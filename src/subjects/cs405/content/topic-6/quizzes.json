@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What are the three main types of cloud storage?",
         "options": [
-          "Fast, Medium, Slow",
           "Object, Block, File",
           "SQL, NoSQL, Graph",
-          "Hot, Warm, Cold"
+          "Hot, Warm, Cold",
+          "Fast, Medium, Slow"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The three main types are: Object storage (S3, Blob), Block storage (EBS, persistent disks), and File storage (EFS, Azure Files)."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the maximum size of a single object in S3?",
         "options": [
-          "1 GB",
-          "5 GB",
           "100 GB",
-          "5 TB"
+          "5 TB",
+          "1 GB",
+          "5 GB"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "S3 supports objects up to 5 TB. Files larger than 100 MB should use multipart upload. Single PUT operations are limited to 5 GB."
       },
       {
@@ -72,11 +72,11 @@
         "prompt": "What is AWS EBS primarily used for?",
         "options": [
           "Object storage",
-          "Block storage for EC2 instances",
+          "Database backups",
           "File sharing between multiple instances",
-          "Database backups"
+          "Block storage for EC2 instances"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "EBS (Elastic Block Store) provides block-level storage volumes for EC2 instances. It's like a virtual hard drive attached to a VM."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "Which storage type allows multiple instances to access the same files simultaneously?",
         "options": [
-          "Object storage (S3)",
           "Block storage (EBS)",
-          "File storage (EFS)",
-          "Instance store"
+          "Instance store",
+          "Object storage (S3)",
+          "File storage (EFS)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "File storage like EFS (Elastic File System) allows multiple EC2 instances to mount and access the same file system concurrently using NFS protocol."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What is IOPS in the context of EBS?",
         "options": [
-          "Internet Operations Per Second",
           "Input/Output Operations Per Second",
-          "Instance Operations Per Second",
-          "Internal Only Processing Speed"
+          "Internet Operations Per Second",
+          "Internal Only Processing Speed",
+          "Instance Operations Per Second"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "IOPS (Input/Output Operations Per Second) measures storage performance. Higher IOPS means faster disk operations. Provisioned IOPS SSD (io1/io2) offers consistent performance."
       },
       {
@@ -133,11 +133,11 @@
         "prompt": "What type of database is DynamoDB?",
         "options": [
           "Relational",
-          "NoSQL Key-Value",
+          "Time-series",
           "Graph",
-          "Time-series"
+          "NoSQL Key-Value"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "DynamoDB is a fully managed NoSQL key-value and document database. It provides single-digit millisecond performance at any scale."
       },
       {
@@ -153,11 +153,11 @@
         "prompt": "Which AWS database is best for serverless applications requiring unpredictable workloads?",
         "options": [
           "RDS with provisioned capacity",
-          "DynamoDB on-demand",
           "Self-managed MySQL",
+          "DynamoDB on-demand",
           "Redis"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "DynamoDB on-demand mode automatically scales and charges per-request, ideal for unpredictable workloads. RDS requires provisioned capacity planning."
       },
       {

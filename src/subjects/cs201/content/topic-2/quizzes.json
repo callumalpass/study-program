@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is the average-case time complexity of Quick Sort?",
         "options": [
+          "O(log n)",
           "O(n)",
-          "O(n log n)",
           "O(n^2)",
-          "O(log n)"
+          "O(n log n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Quick Sort has an average-case complexity of O(n log n) when pivots divide the array reasonably well."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Which sorting algorithm is most efficient for nearly-sorted data?",
         "options": [
-          "Quick Sort",
-          "Selection Sort",
+          "Heap Sort",
           "Insertion Sort",
-          "Heap Sort"
+          "Quick Sort",
+          "Selection Sort"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Insertion Sort runs in O(n) time on nearly-sorted data because elements need minimal shifting."
       },
       {
@@ -87,10 +87,10 @@
         "options": [
           "The array is sorted",
           "The smallest element is at position 0",
-          "The largest element is at the last position",
-          "Nothing is guaranteed"
+          "Nothing is guaranteed",
+          "The largest element is at the last position"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Bubble Sort \"bubbles up\" the largest element to the end after each complete pass."
       },
       {
@@ -105,12 +105,12 @@
         "type": "multiple_choice",
         "prompt": "Which algorithm has the best worst-case time complexity?",
         "options": [
-          "Quick Sort",
-          "Bubble Sort",
+          "Insertion Sort",
           "Merge Sort",
-          "Insertion Sort"
+          "Quick Sort",
+          "Bubble Sort"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Merge Sort has O(n log n) worst-case, while Quick Sort can degrade to O(n^2) and Bubble/Insertion are O(n^2)."
       },
       {
@@ -118,12 +118,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary advantage of Heap Sort over Merge Sort?",
         "options": [
-          "Better average-case performance",
           "Stability",
           "O(1) auxiliary space",
-          "Simpler implementation"
+          "Simpler implementation",
+          "Better average-case performance"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Heap Sort sorts in-place using only O(1) extra space, while Merge Sort requires O(n) auxiliary space."
       }
     ]
@@ -140,12 +140,12 @@
         "prompt": "What sorting algorithm does this represent?",
         "codeSnippet": "def sort(arr):\n    for i in range(1, len(arr)):\n        key = arr[i]\n        j = i - 1\n        while j >= 0 and arr[j] > key:\n            arr[j + 1] = arr[j]\n            j -= 1\n        arr[j + 1] = key",
         "options": [
+          "Quick Sort",
           "Bubble Sort",
           "Selection Sort",
-          "Insertion Sort",
-          "Quick Sort"
+          "Insertion Sort"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "This is Insertion Sort - it takes each element and inserts it into its correct position in the sorted portion."
       },
       {
@@ -153,12 +153,12 @@
         "type": "multiple_choice",
         "prompt": "Python's built-in sort() uses which algorithm?",
         "options": [
-          "Quick Sort",
-          "Merge Sort",
           "Timsort",
+          "Merge Sort",
+          "Quick Sort",
           "Heap Sort"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Python uses Timsort, a hybrid of Merge Sort and Insertion Sort, optimized for real-world data."
       },
       {
@@ -173,12 +173,12 @@
         "type": "multiple_choice",
         "prompt": "When sorting records where maintaining original order of equal elements matters, which should you use?",
         "options": [
-          "Quick Sort",
           "Heap Sort",
-          "Merge Sort",
-          "Selection Sort"
+          "Selection Sort",
+          "Quick Sort",
+          "Merge Sort"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "When stability matters (preserving order of equal elements), use a stable sort like Merge Sort."
       },
       {

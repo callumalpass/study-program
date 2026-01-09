@@ -18,11 +18,11 @@
         "prompt": "Which compiler phase converts source code characters into tokens?",
         "options": [
           "Parser",
-          "Lexical analyzer",
+          "Code generator",
           "Semantic analyzer",
-          "Code generator"
+          "Lexical analyzer"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The lexical analyzer (scanner) breaks source code into tokens."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What regular expression matches valid C identifiers (starting with letter or underscore)?",
         "options": [
-          "[a-zA-Z_][a-zA-Z0-9_]*",
           "[a-zA-Z][a-zA-Z0-9]*",
-          "[a-zA-Z_]+",
-          "[a-z_][a-z0-9_]+"
+          "[a-z_][a-z0-9_]+",
+          "[a-zA-Z_][a-zA-Z0-9_]*",
+          "[a-zA-Z_]+"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "C identifiers start with a letter or underscore, followed by zero or more letters, digits, or underscores."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "What is the maximal munch rule in lexical analysis?",
         "options": [
-          "Prefer shorter tokens",
           "Prefer the longest possible token match",
           "Prefer alphabetically first tokens",
+          "Prefer shorter tokens",
           "Match one character at a time"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Maximal munch means the scanner should match the longest possible token."
       },
       {
@@ -100,12 +100,12 @@
         "type": "multiple_choice",
         "prompt": "What is an epsilon (ε) transition in an NFA?",
         "options": [
+          "A final state transition",
           "A transition consuming any character",
-          "A transition without consuming input",
           "An error transition",
-          "A final state transition"
+          "A transition without consuming input"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Epsilon transitions allow state changes without consuming input."
       },
       {
@@ -140,12 +140,12 @@
         "type": "multiple_choice",
         "prompt": "What is an ambiguous grammar?",
         "options": [
-          "A grammar with syntax errors",
-          "A grammar producing multiple parse trees for some string",
           "A grammar with no valid derivations",
-          "A grammar with left recursion"
+          "A grammar with left recursion",
+          "A grammar producing multiple parse trees for some string",
+          "A grammar with syntax errors"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Ambiguous grammars can produce more than one parse tree for the same input."
       },
       {
@@ -180,12 +180,12 @@
         "type": "multiple_choice",
         "prompt": "What are the two main actions in shift-reduce parsing?",
         "options": [
-          "Push and pop",
-          "Shift (push) and reduce (apply production)",
           "Read and write",
-          "Accept and reject"
+          "Accept and reject",
+          "Push and pop",
+          "Shift (push) and reduce (apply production)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Shift pushes a token; reduce applies a production in reverse."
       },
       {
@@ -214,11 +214,11 @@
         "prompt": "Which is more powerful: LL(1) or LR(1)?",
         "options": [
           "LL(1)",
+          "Depends on the grammar",
           "LR(1)",
-          "They are equivalent",
-          "Depends on the grammar"
+          "They are equivalent"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "LR(1) can handle a strictly larger class of grammars than LL(1)."
       },
       {
@@ -226,12 +226,12 @@
         "type": "multiple_choice",
         "prompt": "What is a synthesized attribute in an attribute grammar?",
         "options": [
-          "Computed from parent",
           "Computed from children",
-          "Always constant",
-          "Inherited from grammar"
+          "Computed from parent",
+          "Inherited from grammar",
+          "Always constant"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Synthesized attributes flow up the parse tree from children to parent."
       },
       {
@@ -246,12 +246,12 @@
         "type": "multiple_choice",
         "prompt": "What is structural type equivalence?",
         "options": [
-          "Types equal if same name",
-          "Types equal if same structure",
           "Types equal if declared together",
-          "All types are equivalent"
+          "All types are equivalent",
+          "Types equal if same name",
+          "Types equal if same structure"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Structural equivalence compares type structure, not names."
       },
       {
@@ -266,12 +266,12 @@
         "type": "multiple_choice",
         "prompt": "What is type coercion?",
         "options": [
-          "Type error detection",
-          "Implicit type conversion",
+          "Type inheritance",
           "Type declaration",
-          "Type inheritance"
+          "Type error detection",
+          "Implicit type conversion"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Type coercion automatically converts between compatible types."
       },
       {
@@ -364,12 +364,12 @@
         "type": "multiple_choice",
         "prompt": "What is a basic block?",
         "options": [
-          "Any code block",
           "Maximal straight-line code with one entry/exit",
-          "A function",
-          "A loop body"
+          "Any code block",
+          "A loop body",
+          "A function"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Basic blocks have no internal branches except at entry and exit."
       },
       {
@@ -385,11 +385,11 @@
         "prompt": "Where are phi functions placed in SSA construction?",
         "options": [
           "Everywhere",
-          "At dominance frontiers",
+          "At function entries",
           "Only at loop headers",
-          "At function entries"
+          "At dominance frontiers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Phi functions are placed at dominance frontiers of variable definitions."
       },
       {
@@ -404,12 +404,12 @@
         "type": "multiple_choice",
         "prompt": "What is LLVM IR?",
         "options": [
-          "A hardware language",
           "A typed SSA-based IR",
           "A virtual machine",
-          "An assembly language"
+          "An assembly language",
+          "A hardware language"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "LLVM IR is a typed SSA-based IR used in the LLVM compiler infrastructure."
       },
       {
@@ -424,12 +424,12 @@
         "type": "multiple_choice",
         "prompt": "What is instruction selection?",
         "options": [
-          "Removing instructions",
-          "Mapping IR to machine instructions",
           "Choosing algorithms",
-          "Register allocation"
+          "Register allocation",
+          "Mapping IR to machine instructions",
+          "Removing instructions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Instruction selection chooses machine instructions to implement IR operations."
       },
       {
@@ -485,11 +485,11 @@
         "prompt": "What is the ELF format?",
         "options": [
           "A fantasy creature",
+          "A virtual machine",
           "Executable and Linkable Format",
-          "A compiler",
-          "A virtual machine"
+          "A compiler"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "ELF is the standard object file format on Unix/Linux systems."
       },
       {
@@ -504,12 +504,12 @@
         "type": "multiple_choice",
         "prompt": "What is linear scan register allocation?",
         "options": [
-          "Scanning registers",
           "Faster alternative to graph coloring",
           "Sequential allocation",
+          "Scanning registers",
           "Linear search"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Linear scan processes live intervals in order, trading optimality for speed."
       },
       {
@@ -525,11 +525,11 @@
         "prompt": "What is constant folding?",
         "options": [
           "Folding code",
-          "Compile-time evaluation of constants",
+          "Removing constants",
           "Reducing constants",
-          "Removing constants"
+          "Compile-time evaluation of constants"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Constant folding evaluates constant expressions at compile time."
       },
       {
@@ -544,12 +544,12 @@
         "type": "multiple_choice",
         "prompt": "What is dead code elimination?",
         "options": [
+          "Removing old code",
           "Removing syntax errors",
-          "Removing unreachable or unused code",
           "Removing comments",
-          "Removing old code"
+          "Removing unreachable or unused code"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Dead code elimination removes code whose results are never used."
       },
       {
@@ -564,12 +564,12 @@
         "type": "multiple_choice",
         "prompt": "What is an induction variable?",
         "options": [
-          "Loop counter",
-          "Variable changing by constant each iteration",
           "Initialized variable",
-          "Global variable"
+          "Global variable",
+          "Loop counter",
+          "Variable changing by constant each iteration"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Induction variables change by a constant (or linear function) each iteration."
       },
       {
@@ -584,12 +584,12 @@
         "type": "multiple_choice",
         "prompt": "What is loop unrolling?",
         "options": [
-          "Removing loops",
-          "Replicating loop body to reduce overhead",
           "Flattening loops",
-          "Reversing loops"
+          "Reversing loops",
+          "Removing loops",
+          "Replicating loop body to reduce overhead"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Loop unrolling duplicates the body to reduce branch overhead."
       },
       {
@@ -634,12 +634,12 @@
         "type": "multiple_choice",
         "prompt": "What is strength reduction?",
         "options": [
-          "Weakening code",
           "Replacing expensive ops with cheaper ones",
-          "Reducing variables",
-          "Loop removal"
+          "Loop removal",
+          "Weakening code",
+          "Reducing variables"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Strength reduction replaces expensive operations with equivalent cheaper ones."
       },
       {
@@ -647,12 +647,12 @@
         "type": "multiple_choice",
         "prompt": "What is the heap used for?",
         "options": [
-          "Function calls",
-          "Dynamic allocation with programmer-controlled lifetime",
           "Local variables",
-          "Constants"
+          "Function calls",
+          "Constants",
+          "Dynamic allocation with programmer-controlled lifetime"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The heap stores dynamically allocated data with controlled lifetime."
       },
       {
@@ -667,12 +667,12 @@
         "type": "multiple_choice",
         "prompt": "What problem does copying garbage collection solve compared to mark-sweep?",
         "options": [
-          "Speed",
-          "Fragmentation by compacting live objects",
           "Memory usage",
-          "Cycles"
+          "Cycles",
+          "Fragmentation by compacting live objects",
+          "Speed"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Copying GC compacts memory by copying all live objects contiguously."
       },
       {
@@ -687,12 +687,12 @@
         "type": "multiple_choice",
         "prompt": "What is reference counting?",
         "options": [
-          "Counting references in code",
           "Tracking object reference counts for GC",
           "Counting variables",
-          "Memory counting"
+          "Memory counting",
+          "Counting references in code"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Reference counting tracks how many references point to each object."
       },
       {
@@ -728,11 +728,11 @@
         "prompt": "What is a tracing JIT?",
         "options": [
           "Debugging JIT",
-          "JIT that compiles hot execution paths",
+          "Sequential JIT",
           "JIT with logging",
-          "Sequential JIT"
+          "JIT that compiles hot execution paths"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Tracing JITs record and compile frequently executed paths (traces)."
       },
       {
@@ -748,11 +748,11 @@
         "prompt": "What is position-independent code (PIC)?",
         "options": [
           "Portable code",
+          "Relocatable code",
           "Code executing correctly at any address",
-          "Optimized code",
-          "Relocatable code"
+          "Optimized code"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "PIC executes correctly regardless of its load address."
       },
       {
@@ -767,12 +767,12 @@
         "type": "multiple_choice",
         "prompt": "What is the Global Offset Table (GOT)?",
         "options": [
+          "Symbol table",
           "Function table",
           "Table for position-independent global access",
-          "Hash table",
-          "Symbol table"
+          "Hash table"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "GOT enables PIC to access global data through indirection."
       },
       {

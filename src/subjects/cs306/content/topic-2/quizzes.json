@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which transformation preserves angles and lengths?",
         "options": [
-          "Rigid transformation",
-          "Affine transformation",
+          "Non-uniform scaling",
           "Perspective transformation",
-          "Non-uniform scaling"
+          "Rigid transformation",
+          "Affine transformation"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Rigid transformations (rotation and translation) preserve both angles and lengths, maintaining the shape and size of objects. They are also called isometric transformations."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What value is used for the w-component in homogeneous coordinates for a 3D point?",
         "options": [
-          "1",
-          "0",
+          "Any value",
           "-1",
-          "Any value"
+          "1",
+          "0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Points in homogeneous coordinates use w=1, while vectors (representing directions) use w=0. This distinction allows translation to affect points but not directions."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "Which transformation changes the size of an object?",
         "options": [
-          "Scaling",
           "Rotation",
-          "Translation",
-          "Shearing"
+          "Scaling",
+          "Shearing",
+          "Translation"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Scaling changes the size of an object by multiplying coordinates by scale factors. Uniform scaling maintains proportions, while non-uniform scaling can distort shapes."
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "What is the result of rotating a point 90 degrees counterclockwise around the Z-axis in 2D?",
         "options": [
-          "(x, y) → (-y, x)",
           "(x, y) → (y, -x)",
           "(x, y) → (-x, -y)",
+          "(x, y) → (-y, x)",
           "(x, y) → (x, -y)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A 90-degree counterclockwise rotation around the Z-axis transforms point (x, y) to (-y, x). This can be verified using the rotation matrix with θ=90°."
       },
       {
@@ -97,12 +97,12 @@
         "type": "multiple_choice",
         "prompt": "To rotate an object around an arbitrary point P, what is the correct sequence of transformations?",
         "options": [
-          "Translate(-P) → Rotate → Translate(P)",
           "Rotate → Translate(-P) → Translate(P)",
+          "Translate(-P) → Rotate → Translate(P)",
           "Translate(P) → Rotate → Translate(-P)",
           "Rotate → Translate(P)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "To rotate around point P: first translate P to origin, perform rotation around origin, then translate back to P. This is applied right-to-left in matrix multiplication."
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "Which representation avoids gimbal lock in 3D rotations?",
         "options": [
-          "Quaternions",
+          "Axis-angle",
           "Euler angles",
           "Rotation matrices",
-          "Axis-angle"
+          "Quaternions"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Quaternions provide a robust way to represent rotations without gimbal lock, which occurs with Euler angles when two rotation axes align. They also interpolate smoothly."
       }
     ]
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "What type of transformation is represented by a 3x3 matrix in 2D homogeneous coordinates?",
         "options": [
-          "Affine transformation",
-          "Perspective transformation",
           "Rigid transformation",
-          "Linear transformation"
+          "Linear transformation",
+          "Affine transformation",
+          "Perspective transformation"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A 3x3 matrix in 2D homogeneous coordinates represents affine transformations, which include translation, rotation, scaling, and shearing while preserving parallel lines."
       },
       {
@@ -164,12 +164,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary advantage of using homogeneous coordinates?",
         "options": [
-          "All transformations can be represented as matrix multiplication",
           "Faster computation",
           "Less memory usage",
-          "Better numerical precision"
+          "Better numerical precision",
+          "All transformations can be represented as matrix multiplication"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Homogeneous coordinates allow translation to be expressed as matrix multiplication, enabling all affine transformations to be composed and applied uniformly through matrix operations."
       },
       {
@@ -190,12 +190,12 @@
         "type": "multiple_choice",
         "prompt": "What is the result of composing a transformation matrix M with its inverse M⁻¹?",
         "options": [
-          "Identity matrix",
           "Zero matrix",
-          "Original matrix M",
-          "Transpose of M"
+          "Identity matrix",
+          "Transpose of M",
+          "Original matrix M"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "By definition, multiplying a matrix by its inverse yields the identity matrix (M × M⁻¹ = I), which represents no transformation."
       }
     ]

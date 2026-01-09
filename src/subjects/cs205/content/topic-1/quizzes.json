@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What property must a primary key satisfy?",
         "options": [
-          "It can contain NULL values",
           "It must be unique and not null",
           "It must be an integer",
-          "It can have duplicate values"
+          "It can have duplicate values",
+          "It can contain NULL values"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A primary key must uniquely identify each row and cannot contain NULL values."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What does referential integrity ensure?",
         "options": [
+          "Tables have at least one column",
           "All columns have unique names",
-          "Foreign key values exist in the referenced table",
           "All rows have primary keys",
-          "Tables have at least one column"
+          "Foreign key values exist in the referenced table"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Referential integrity ensures that foreign key values either match a primary key in the referenced table or are NULL."
       },
       {
@@ -72,11 +72,11 @@
         "prompt": "In an ER diagram, what shape represents an entity?",
         "options": [
           "Diamond",
-          "Rectangle",
           "Oval",
+          "Rectangle",
           "Triangle"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Entities are represented by rectangles, relationships by diamonds, and attributes by ovals."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "In a many-to-many relationship between Students and Courses, what happens during mapping?",
         "options": [
-          "Add StudentID to Courses table",
-          "Add CourseID to Students table",
           "Create a new junction table",
-          "Merge the two tables"
+          "Add StudentID to Courses table",
+          "Merge the two tables",
+          "Add CourseID to Students table"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Many-to-many relationships require a junction (bridge) table containing foreign keys to both participating entities."
       },
       {
@@ -139,11 +139,11 @@
         "prompt": "Which relational algebra operation selects rows based on a condition?",
         "options": [
           "Projection (π)",
-          "Selection (σ)",
           "Join (⋈)",
-          "Union (∪)"
+          "Union (∪)",
+          "Selection (σ)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Selection (σ) filters rows based on a predicate, while projection (π) selects columns."
       },
       {

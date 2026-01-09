@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Dynamic programming is most appropriate when a problem has:",
         "options": [
-          "Optimal substructure and overlapping subproblems",
           "Only optimal substructure",
+          "No repeated states",
           "Only overlapping subproblems",
-          "No repeated states"
+          "Optimal substructure and overlapping subproblems"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "DP exploits overlapping subproblems (reuse) and optimal substructure (optimal solution can be built from optimal subsolutions)."
       },
       {
@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "Which DP problem is commonly solved using an edit-distance table?",
         "options": [
+          "Set cover",
           "String similarity",
-          "Maximum flow",
           "Convex hull",
-          "Set cover"
+          "Maximum flow"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Edit distance computes the minimum number of edits to transform one string into another using a DP table over prefix lengths."
       },
       {
@@ -86,12 +86,12 @@
         "type": "multiple_choice",
         "prompt": "Held–Karp for TSP is an example of DP over:",
         "options": [
-          "Subsets",
           "Trees only",
+          "Greedy choices",
           "Matrices only",
-          "Greedy choices"
+          "Subsets"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Held–Karp uses DP over subsets of visited cities and an endpoint, leading to O(n^2 2^n) time."
       },
       {
@@ -106,12 +106,12 @@
         "type": "multiple_choice",
         "prompt": "Which optimization can reduce a DP from O(n^2) space to O(n) space in many problems?",
         "options": [
-          "Keeping only the previous row/column when transitions are local",
+          "Using a heap",
           "Using recursion instead of iteration",
           "Sorting the input first",
-          "Using a heap"
+          "Keeping only the previous row/column when transitions are local"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "If dp[i][*] depends only on dp[i-1][*] (or a constant number of prior rows), you can roll arrays and reduce space."
       }
     ]
@@ -127,12 +127,12 @@
         "type": "multiple_choice",
         "prompt": "Knuth optimization applies to certain interval DP recurrences when:",
         "options": [
-          "Quadrangle inequality / monotone optima conditions hold",
           "The DP is over subsets",
-          "The DP is randomized",
-          "The DP table is sparse"
+          "Quadrangle inequality / monotone optima conditions hold",
+          "The DP table is sparse",
+          "The DP is randomized"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Knuth optimization reduces O(n^3) interval DP to O(n^2) when the argmin is monotone and the cost function satisfies required properties."
       },
       {
@@ -154,12 +154,12 @@
         "type": "multiple_choice",
         "prompt": "For subset DP, a typical state is dp[S][v], where S is a subset and v is:",
         "options": [
-          "An endpoint/last element",
-          "A random seed",
           "A hash function",
-          "A heap size"
+          "An endpoint/last element",
+          "A heap size",
+          "A random seed"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Subset DP often tracks the cost of visiting exactly S and ending at v (e.g., Held–Karp). v encodes the “last” choice."
       },
       {
@@ -167,12 +167,12 @@
         "type": "multiple_choice",
         "prompt": "Which statement about DP is generally true?",
         "options": [
-          "DP trades space for time by reusing computed subproblems",
           "DP always yields exponential-time algorithms",
           "DP never uses recursion",
-          "DP requires randomness"
+          "DP requires randomness",
+          "DP trades space for time by reusing computed subproblems"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "DP stores intermediate results to avoid recomputation, often reducing exponential recursion to polynomial time at the cost of additional memory."
       }
     ]

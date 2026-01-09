@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "For F = <P, Q> in 2D, what is curl F?",
         "options": [
-          "∂Q/∂x - ∂P/∂y",
-          "∂P/∂x - ∂Q/∂y",
+          "∂P/∂x + ∂Q/∂y",
           "∂Q/∂y - ∂P/∂x",
-          "∂P/∂x + ∂Q/∂y"
+          "∂P/∂x - ∂Q/∂y",
+          "∂Q/∂x - ∂P/∂y"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "In 2D, curl F = ∂Q/∂x - ∂P/∂y (scalar representing the k-component of 3D curl)"
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "For F = <P, Q, R>, what is div F?",
         "options": [
-          "∂P/∂x + ∂Q/∂y + ∂R/∂z",
-          "∂P/∂y + ∂Q/∂x + ∂R/∂z",
+          "∇ × F",
           "P + Q + R",
-          "∇ × F"
+          "∂P/∂x + ∂Q/∂y + ∂R/∂z",
+          "∂P/∂y + ∂Q/∂x + ∂R/∂z"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Divergence is div F = ∇ · F = ∂P/∂x + ∂Q/∂y + ∂R/∂z"
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What does Green's Theorem relate?",
         "options": [
-          "Line integral around C to double integral over R",
-          "Surface integral to triple integral",
           "Flux to divergence",
+          "Surface integral to triple integral",
+          "Line integral around C to double integral over R",
           "Work to curl"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Green's Theorem: ∮_C P dx + Q dy = ∫∫_R (∂Q/∂x - ∂P/∂y) dA"
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "Green's Theorem states ∮_C F · dr equals what (for F = <P, Q>)?",
         "options": [
-          "∫∫_R (∂Q/∂x - ∂P/∂y) dA",
-          "∫∫_R (∂P/∂x + ∂Q/∂y) dA",
           "∫∫_R curl F dA",
+          "∫∫_R (∂P/∂x + ∂Q/∂y) dA",
+          "∫∫_R (∂Q/∂x - ∂P/∂y) dA",
           "∫∫_R ∇ · F dA"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Green's Theorem (circulation form): ∮_C P dx + Q dy = ∫∫_R (∂Q/∂x - ∂P/∂y) dA"
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "Stokes' Theorem relates a line integral around a closed curve to what?",
         "options": [
-          "Surface integral of curl F",
+          "Line integral of div F",
           "Double integral of div F",
           "Triple integral of F",
-          "Line integral of div F"
+          "Surface integral of curl F"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Stokes' Theorem: ∮_C F · dr = ∫∫_S (curl F) · n dS"
       },
       {
@@ -97,12 +97,12 @@
         "type": "multiple_choice",
         "prompt": "For F = <P, Q, R>, what is curl F?",
         "options": [
-          "<R_y - Q_z, P_z - R_x, Q_x - P_y>",
-          "<P_x, Q_y, R_z>",
+          "∇ × F = 0",
           "<R_z - Q_y, P_x - R_z, Q_y - P_x>",
-          "∇ × F = 0"
+          "<P_x, Q_y, R_z>",
+          "<R_y - Q_z, P_z - R_x, Q_x - P_y>"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "curl F = ∇ × F = <∂R/∂y - ∂Q/∂z, ∂P/∂z - ∂R/∂x, ∂Q/∂x - ∂P/∂y>"
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "The Divergence Theorem relates what two types of integrals?",
         "options": [
-          "Surface integral of F · n to triple integral of div F",
+          "Double integral to triple integral",
           "Line integral to double integral",
           "Surface integral to line integral",
-          "Double integral to triple integral"
+          "Surface integral of F · n to triple integral of div F"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Divergence Theorem: ∫∫_S F · n dS = ∫∫∫_E div F dV"
       },
       {
@@ -138,12 +138,12 @@
         "type": "multiple_choice",
         "prompt": "What is the physical interpretation of divergence at a point?",
         "options": [
-          "Rate of outflow per unit volume",
+          "Gradient magnitude",
           "Rotation per unit area",
           "Circulation around point",
-          "Gradient magnitude"
+          "Rate of outflow per unit volume"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Divergence measures the \"source strength\" or rate of outflow of a vector field per unit volume"
       },
       {
@@ -151,12 +151,12 @@
         "type": "multiple_choice",
         "prompt": "What is the physical interpretation of curl at a point?",
         "options": [
-          "Rotation or circulation per unit area",
+          "Magnitude of field",
           "Outflow per unit volume",
           "Direction of flow",
-          "Magnitude of field"
+          "Rotation or circulation per unit area"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Curl measures the rotation or angular velocity of a vector field at a point"
       },
       {

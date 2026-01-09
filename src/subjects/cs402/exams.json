@@ -17,12 +17,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary difference between supervised and unsupervised learning?",
         "options": [
-          "Supervised learning uses labeled data; unsupervised learning does not",
-          "Supervised learning is faster than unsupervised learning",
+          "Supervised learning does not require a training phase",
           "Unsupervised learning always produces better results",
-          "Supervised learning does not require a training phase"
+          "Supervised learning uses labeled data; unsupervised learning does not",
+          "Supervised learning is faster than unsupervised learning"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Supervised learning trains on input-output pairs (labeled data), while unsupervised learning finds patterns in unlabeled data without predefined targets."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is NOT a common step in the machine learning workflow?",
         "options": [
-          "Data collection and preprocessing",
           "Feature engineering",
-          "Manual code optimization for every prediction",
-          "Model evaluation and validation"
+          "Model evaluation and validation",
+          "Data collection and preprocessing",
+          "Manual code optimization for every prediction"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "The ML workflow includes data collection, preprocessing, feature engineering, model training, and evaluation. Manual code optimization per prediction is not a standard ML workflow step."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "In the bias-variance tradeoff, a model with high bias typically exhibits which behavior?",
         "options": [
-          "Underfitting: poor performance on both training and test data",
-          "Overfitting: good training performance but poor test performance",
+          "High sensitivity to small changes in training data",
           "Perfect generalization on unseen data",
-          "High sensitivity to small changes in training data"
+          "Underfitting: poor performance on both training and test data",
+          "Overfitting: good training performance but poor test performance"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "High bias models are too simple and underfit the data, performing poorly on both training and test sets. High variance models overfit."
       },
       {
@@ -63,12 +63,12 @@
         "type": "multiple_choice",
         "prompt": "The cost function for linear regression (ordinary least squares) is:",
         "options": [
-          "Mean Squared Error: J(w) = (1/2n) * sum((y - Xw)^2)",
           "Cross-entropy loss",
+          "Absolute error without squaring",
           "Hinge loss",
-          "Absolute error without squaring"
+          "Mean Squared Error: J(w) = (1/2n) * sum((y - Xw)^2)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Linear regression minimizes the Mean Squared Error (MSE), which measures the average squared difference between predictions and actual values."
       },
       {
@@ -76,12 +76,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of regularization in linear regression?",
         "options": [
-          "To prevent overfitting by penalizing large coefficients",
-          "To speed up training",
+          "To remove the need for feature scaling",
           "To increase model complexity",
-          "To remove the need for feature scaling"
+          "To speed up training",
+          "To prevent overfitting by penalizing large coefficients"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Regularization (L1/L2) adds a penalty term for large weights, preventing overfitting by constraining model complexity. L1 (Lasso) can also perform feature selection."
       },
       {
@@ -89,12 +89,12 @@
         "type": "multiple_choice",
         "prompt": "In L1 regularization (Lasso), which property makes it useful for feature selection?",
         "options": [
-          "It tends to produce sparse solutions with many coefficients exactly zero",
           "It always produces larger coefficients than L2",
-          "It requires less computation than L2",
-          "It works only with categorical features"
+          "It works only with categorical features",
+          "It tends to produce sparse solutions with many coefficients exactly zero",
+          "It requires less computation than L2"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "L1 regularization produces sparse solutions by driving some coefficients to exactly zero, effectively performing automatic feature selection."
       },
       {
@@ -102,12 +102,12 @@
         "type": "multiple_choice",
         "prompt": "What transformation does logistic regression apply to the linear combination of features?",
         "options": [
-          "Sigmoid function: sigma(z) = 1 / (1 + e^(-z))",
-          "ReLU function: max(0, z)",
           "Hyperbolic tangent: tanh(z)",
-          "No transformation; output is linear"
+          "Sigmoid function: sigma(z) = 1 / (1 + e^(-z))",
+          "No transformation; output is linear",
+          "ReLU function: max(0, z)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Logistic regression applies the sigmoid function to map the linear combination to a probability between 0 and 1."
       },
       {
@@ -115,12 +115,12 @@
         "type": "multiple_choice",
         "prompt": "The loss function used for logistic regression is:",
         "options": [
-          "Binary cross-entropy (log loss)",
           "Mean squared error",
-          "Hinge loss",
-          "Huber loss"
+          "Binary cross-entropy (log loss)",
+          "Huber loss",
+          "Hinge loss"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Logistic regression uses binary cross-entropy loss, which measures the difference between predicted probabilities and actual binary labels."
       },
       {
@@ -149,12 +149,12 @@
         "type": "multiple_choice",
         "prompt": "Which criterion is commonly used for splitting in classification decision trees?",
         "options": [
-          "Gini impurity or information gain (entropy)",
-          "Mean squared error",
           "Euclidean distance",
+          "Mean squared error",
+          "Gini impurity or information gain (entropy)",
           "Cosine similarity"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Classification trees use Gini impurity or information gain (based on entropy) to find splits that best separate classes."
       },
       {
@@ -162,12 +162,12 @@
         "type": "multiple_choice",
         "prompt": "What technique does Random Forest use to reduce overfitting compared to a single decision tree?",
         "options": [
-          "Bagging (bootstrap aggregating) with feature randomization",
           "Using deeper trees",
+          "Bagging (bootstrap aggregating) with feature randomization",
           "Training on more data",
           "Using a single best feature at each split"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Random Forest uses bagging (training on bootstrap samples) and random feature subsets at each split, reducing correlation between trees and variance in predictions."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "Support Vector Machines (SVM) find the hyperplane that:",
         "options": [
-          "Maximizes the margin between classes",
           "Minimizes the total distance to all points",
+          "Maximizes the margin between classes",
           "Passes through the centroid of each class",
           "Has the smallest number of support vectors"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "SVMs find the hyperplane that maximizes the margin (distance) between the closest points of each class (support vectors)."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the kernel trick in SVM?",
         "options": [
-          "To implicitly map data to higher dimensions where it becomes linearly separable",
           "To speed up training by reducing dimensions",
-          "To eliminate the need for the margin",
-          "To make predictions faster"
+          "To implicitly map data to higher dimensions where it becomes linearly separable",
+          "To make predictions faster",
+          "To eliminate the need for the margin"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The kernel trick allows SVMs to compute dot products in high-dimensional feature spaces without explicitly computing the transformation, enabling non-linear decision boundaries."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "In a neural network, what is the purpose of the activation function?",
         "options": [
-          "To introduce non-linearity, allowing the network to learn complex patterns",
           "To normalize the input data",
-          "To reduce the number of parameters",
-          "To speed up training"
+          "To speed up training",
+          "To introduce non-linearity, allowing the network to learn complex patterns",
+          "To reduce the number of parameters"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Activation functions introduce non-linearity. Without them, a multi-layer network would collapse to a single linear transformation, unable to learn complex patterns."
       },
       {
@@ -221,12 +221,12 @@
         "type": "multiple_choice",
         "prompt": "Which activation function is most commonly used in hidden layers of modern deep networks?",
         "options": [
-          "ReLU (Rectified Linear Unit)",
           "Sigmoid",
-          "Tanh",
-          "Step function"
+          "ReLU (Rectified Linear Unit)",
+          "Step function",
+          "Tanh"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "ReLU (max(0, x)) is preferred for hidden layers because it doesn't saturate for positive values, reducing vanishing gradient problems and being computationally efficient."
       },
       {
@@ -234,12 +234,12 @@
         "type": "multiple_choice",
         "prompt": "What does backpropagation compute?",
         "options": [
-          "Gradients of the loss with respect to all weights using the chain rule",
-          "The optimal learning rate",
           "The number of hidden layers needed",
+          "The optimal learning rate",
+          "Gradients of the loss with respect to all weights using the chain rule",
           "The activation values of all neurons"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Backpropagation efficiently computes gradients of the loss function with respect to all network weights by applying the chain rule from output to input layers."
       },
       {
@@ -255,12 +255,12 @@
         "type": "multiple_choice",
         "prompt": "What is the 'vanishing gradient problem' in deep neural networks?",
         "options": [
-          "Gradients become extremely small in early layers, preventing effective learning",
           "Gradients become too large, causing numerical overflow",
+          "Gradients become extremely small in early layers, preventing effective learning",
           "The network produces zero output",
           "Training takes too long"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "With certain activation functions (sigmoid, tanh), gradients can become very small when backpropagated through many layers, making it hard for early layers to learn."
       },
       {
@@ -268,12 +268,12 @@
         "type": "multiple_choice",
         "prompt": "Which optimizer adapts the learning rate for each parameter based on historical gradients?",
         "options": [
-          "Adam (Adaptive Moment Estimation)",
-          "Standard gradient descent",
           "L-BFGS",
-          "Coordinate descent"
+          "Adam (Adaptive Moment Estimation)",
+          "Coordinate descent",
+          "Standard gradient descent"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Adam maintains per-parameter learning rates by tracking first and second moments of gradients, adapting step sizes for faster and more stable convergence."
       },
       {
@@ -288,12 +288,12 @@
         "type": "multiple_choice",
         "prompt": "What is the softmax function used for in neural networks?",
         "options": [
-          "Converting output scores to probabilities that sum to 1 for multi-class classification",
-          "Normalizing input features",
           "Preventing vanishing gradients",
-          "Reducing overfitting"
+          "Converting output scores to probabilities that sum to 1 for multi-class classification",
+          "Reducing overfitting",
+          "Normalizing input features"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Softmax converts raw output scores (logits) into probabilities for multi-class classification by exponentiating and normalizing: softmax(z)_i = exp(z_i) / sum(exp(z_j))."
       },
       {
@@ -301,12 +301,12 @@
         "type": "multiple_choice",
         "prompt": "Batch normalization in neural networks:",
         "options": [
-          "Normalizes layer inputs to reduce internal covariate shift and enable higher learning rates",
-          "Reduces the batch size to prevent overfitting",
+          "Eliminates the need for activation functions",
           "Only works during inference, not training",
-          "Eliminates the need for activation functions"
+          "Reduces the batch size to prevent overfitting",
+          "Normalizes layer inputs to reduce internal covariate shift and enable higher learning rates"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Batch normalization normalizes activations within mini-batches, reducing internal covariate shift, allowing higher learning rates, and having a regularization effect."
       },
       {
@@ -314,12 +314,12 @@
         "type": "multiple_choice",
         "prompt": "When training a neural network, what is the purpose of the validation set?",
         "options": [
+          "To normalize the training data",
           "To tune hyperparameters and monitor for overfitting without touching the test set",
           "To provide additional training examples",
-          "To replace the test set for final evaluation",
-          "To normalize the training data"
+          "To replace the test set for final evaluation"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The validation set is used during training to tune hyperparameters and detect overfitting, keeping the test set completely unseen for final unbiased evaluation."
       }
     ]
@@ -342,12 +342,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary advantage of deep learning over traditional machine learning methods?",
         "options": [
-          "Automatic hierarchical feature learning from raw data",
-          "Faster training on small datasets",
           "No need for labeled data",
-          "Simpler model architectures"
+          "Simpler model architectures",
+          "Faster training on small datasets",
+          "Automatic hierarchical feature learning from raw data"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Deep learning automatically discovers hierarchical representations, eliminating manual feature engineering required by traditional ML methods."
       },
       {
@@ -355,12 +355,12 @@
         "type": "multiple_choice",
         "prompt": "According to the No Free Lunch theorem:",
         "options": [
+          "More data always improves model performance",
           "No algorithm is universally best across all possible problems",
           "Deep learning is always better than classical ML",
-          "More data always improves model performance",
           "Ensemble methods always outperform individual models"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The No Free Lunch theorem states that averaged over all possible problems, no algorithm outperforms random guessing. Algorithm selection must be problem-specific."
       },
       {
@@ -368,12 +368,12 @@
         "type": "multiple_choice",
         "prompt": "Polynomial regression with degree 10 on 20 training points is likely to exhibit:",
         "options": [
-          "High variance (overfitting)",
+          "No training error",
           "High bias (underfitting)",
           "Perfect generalization",
-          "No training error"
+          "High variance (overfitting)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A 10-degree polynomial has high capacity relative to 20 points, likely overfitting the training data (high variance) and generalizing poorly."
       },
       {
@@ -394,12 +394,12 @@
         "type": "multiple_choice",
         "prompt": "Ridge regression (L2 regularization) modifies the normal equation to:",
         "options": [
+          "w = (X^T X + lambda*X)^(-1) y",
           "w = (X^T X + lambda*I)^(-1) X^T y",
           "w = (X^T X)^(-1) X^T y + lambda",
-          "w = X^T y / lambda",
-          "w = (X^T X + lambda*X)^(-1) y"
+          "w = X^T y / lambda"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Ridge regression adds lambda*I to X^T X before inversion, shrinking coefficients toward zero and ensuring the matrix is invertible."
       },
       {
@@ -414,12 +414,12 @@
         "type": "multiple_choice",
         "prompt": "The decision boundary of logistic regression is:",
         "options": [
-          "A linear hyperplane in feature space",
+          "Determined by the kernel function",
           "Always curved",
-          "A circle around one class",
-          "Determined by the kernel function"
+          "A linear hyperplane in feature space",
+          "A circle around one class"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Logistic regression produces a linear decision boundary where w^T x + b = 0. The sigmoid function provides probabilities but doesn't change the boundary shape."
       },
       {
@@ -453,12 +453,12 @@
         "type": "multiple_choice",
         "prompt": "In SVM, the parameter C controls:",
         "options": [
-          "The tradeoff between margin size and classification errors",
-          "The number of support vectors",
+          "The learning rate",
           "The kernel function type",
-          "The learning rate"
+          "The tradeoff between margin size and classification errors",
+          "The number of support vectors"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Large C prioritizes correct classification (smaller margin, potential overfitting). Small C allows more errors for larger margin (potential underfitting)."
       },
       {
@@ -474,12 +474,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of pooling layers in CNNs?",
         "options": [
-          "To reduce spatial dimensions and provide translation invariance",
           "To increase the number of channels",
-          "To add non-linearity",
-          "To normalize activations"
+          "To normalize activations",
+          "To reduce spatial dimensions and provide translation invariance",
+          "To add non-linearity"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Pooling reduces spatial dimensions (reducing computation and parameters) and provides some translation invariance by summarizing local regions."
       },
       {
@@ -487,12 +487,12 @@
         "type": "multiple_choice",
         "prompt": "ResNet introduced skip connections (residual connections) to solve:",
         "options": [
+          "Memory constraints",
           "The degradation problem in very deep networks",
           "Vanishing gradients only",
-          "Computational efficiency",
-          "Memory constraints"
+          "Computational efficiency"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Skip connections allow training very deep networks by enabling gradient flow and letting layers learn residual mappings, solving the degradation problem."
       },
       {
@@ -500,12 +500,12 @@
         "type": "multiple_choice",
         "prompt": "In a basic RNN, what problem limits its ability to learn long-range dependencies?",
         "options": [
-          "Vanishing/exploding gradients during backpropagation through time",
           "Too few parameters",
           "Lack of non-linearity",
-          "Sequential processing speed"
+          "Sequential processing speed",
+          "Vanishing/exploding gradients during backpropagation through time"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "In basic RNNs, gradients can vanish or explode when backpropagated through many time steps, making it hard to learn long-range dependencies."
       },
       {
@@ -513,12 +513,12 @@
         "type": "multiple_choice",
         "prompt": "LSTMs address the vanishing gradient problem using:",
         "options": [
-          "Gating mechanisms that control information flow through cell state",
-          "Larger hidden layers",
           "Higher learning rates",
-          "Bidirectional processing"
+          "Larger hidden layers",
+          "Bidirectional processing",
+          "Gating mechanisms that control information flow through cell state"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "LSTMs use forget, input, and output gates to control what information to keep or discard, allowing gradients to flow through the cell state unimpeded."
       },
       {
@@ -526,12 +526,12 @@
         "type": "multiple_choice",
         "prompt": "What is the key innovation of the Transformer architecture?",
         "options": [
-          "Self-attention mechanism that processes all positions in parallel",
           "Deeper networks with residual connections",
           "Convolutional layers for sequence processing",
-          "Recurrent connections with gating"
+          "Recurrent connections with gating",
+          "Self-attention mechanism that processes all positions in parallel"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Transformers use self-attention to compute relationships between all positions simultaneously, eliminating sequential dependencies and enabling parallelization."
       },
       {
@@ -539,12 +539,12 @@
         "type": "multiple_choice",
         "prompt": "The scaled dot-product attention formula is:",
         "options": [
+          "Attention(Q,K,V) = tanh(QK^T) * V",
           "Attention(Q,K,V) = softmax(QK^T / sqrt(d_k)) * V",
-          "Attention(Q,K,V) = sigmoid(QKV)",
           "Attention(Q,K,V) = Q + K + V",
-          "Attention(Q,K,V) = tanh(QK^T) * V"
+          "Attention(Q,K,V) = sigmoid(QKV)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Attention computes similarity via QK^T, scales by sqrt(d_k) for stable gradients, applies softmax for weights, then multiplies by values V."
       },
       {
@@ -559,12 +559,12 @@
         "type": "multiple_choice",
         "prompt": "Transfer learning in deep learning typically involves:",
         "options": [
-          "Using a pre-trained model and fine-tuning it for a new task",
-          "Transferring data between training and test sets",
           "Using the same architecture for all problems",
-          "Randomly initializing weights"
+          "Randomly initializing weights",
+          "Transferring data between training and test sets",
+          "Using a pre-trained model and fine-tuning it for a new task"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Transfer learning leverages models pre-trained on large datasets (e.g., ImageNet), then fine-tunes them for specific tasks, dramatically reducing data and training requirements."
       },
       {
@@ -572,12 +572,12 @@
         "type": "multiple_choice",
         "prompt": "What distinguishes BERT from GPT in their Transformer usage?",
         "options": [
-          "BERT uses bidirectional encoder; GPT uses unidirectional decoder",
           "BERT is smaller than GPT",
           "BERT uses RNNs; GPT uses Transformers",
-          "They are architecturally identical"
+          "They are architecturally identical",
+          "BERT uses bidirectional encoder; GPT uses unidirectional decoder"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "BERT uses the Transformer encoder with bidirectional context. GPT uses the decoder with causal (left-to-right) masking for autoregressive generation."
       },
       {
@@ -598,12 +598,12 @@
         "type": "multiple_choice",
         "prompt": "Which clustering algorithm can discover clusters of arbitrary shape?",
         "options": [
+          "K-medoids",
           "DBSCAN (Density-Based Spatial Clustering)",
           "K-means",
-          "Gaussian Mixture Models (spherical covariance)",
-          "K-medoids"
+          "Gaussian Mixture Models (spherical covariance)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "DBSCAN uses density-based clustering, connecting points in dense regions regardless of shape. K-means assumes spherical clusters around centroids."
       },
       {
@@ -611,12 +611,12 @@
         "type": "multiple_choice",
         "prompt": "In hierarchical clustering, the 'linkage' criterion determines:",
         "options": [
-          "How distance between clusters is computed when merging",
-          "The final number of clusters",
           "The order of data points",
-          "Whether to use agglomerative or divisive approach"
+          "The final number of clusters",
+          "Whether to use agglomerative or divisive approach",
+          "How distance between clusters is computed when merging"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Linkage (single, complete, average, Ward's) defines how inter-cluster distance is measured when deciding which clusters to merge."
       },
       {
@@ -657,12 +657,12 @@
         "type": "multiple_choice",
         "prompt": "What does the silhouette score measure in clustering?",
         "options": [
-          "How similar points are to their own cluster compared to other clusters",
+          "The optimal number of clusters directly",
           "The number of outliers",
-          "Computational complexity",
-          "The optimal number of clusters directly"
+          "How similar points are to their own cluster compared to other clusters",
+          "Computational complexity"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Silhouette score measures cluster cohesion (intra-cluster distance) vs separation (nearest-cluster distance). Range [-1, 1], higher is better."
       },
       {
@@ -683,12 +683,12 @@
         "type": "multiple_choice",
         "prompt": "Precision is defined as:",
         "options": [
-          "TP / (TP + FP) - Of predicted positives, how many are correct",
-          "TP / (TP + FN) - Of actual positives, how many were found",
           "(TP + TN) / Total",
+          "TP / (TP + FN) - Of actual positives, how many were found",
+          "TP / (TP + FP) - Of predicted positives, how many are correct",
           "FP / (FP + TN)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Precision = TP/(TP+FP) measures the fraction of predicted positives that are actually positive. High precision means few false alarms."
       },
       {
@@ -722,12 +722,12 @@
         "type": "multiple_choice",
         "prompt": "ROC-AUC measures:",
         "options": [
+          "Training time efficiency",
           "The probability that a random positive ranks higher than a random negative",
-          "Classification accuracy at the optimal threshold",
           "The F1 score averaged over thresholds",
-          "Training time efficiency"
+          "Classification accuracy at the optimal threshold"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "AUC equals the probability that a randomly chosen positive example has a higher predicted probability than a randomly chosen negative example."
       },
       {
@@ -742,12 +742,12 @@
         "type": "multiple_choice",
         "prompt": "Mean Squared Error (MSE) vs Mean Absolute Error (MAE): MSE is more sensitive to:",
         "options": [
-          "Outliers and large errors",
+          "Computational speed",
           "Small errors",
-          "The number of features",
-          "Computational speed"
+          "Outliers and large errors",
+          "The number of features"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "MSE squares errors, so large errors are penalized quadratically. MAE treats all errors linearly, making it more robust to outliers."
       },
       {
@@ -755,12 +755,12 @@
         "type": "multiple_choice",
         "prompt": "R-squared (R^2) represents:",
         "options": [
-          "The proportion of variance in y explained by the model",
-          "The correlation between predictions and actuals",
+          "The number of features used",
           "The mean absolute error",
-          "The number of features used"
+          "The correlation between predictions and actuals",
+          "The proportion of variance in y explained by the model"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "R^2 = 1 - (SS_res/SS_tot) measures what fraction of target variance is explained by the model. 1 is perfect, 0 means no better than predicting the mean."
       },
       {
@@ -768,12 +768,12 @@
         "type": "multiple_choice",
         "prompt": "K-fold cross-validation provides:",
         "options": [
+          "Faster training than a single split",
           "More robust performance estimates by averaging over multiple train-test splits",
-          "A way to increase training data size",
           "Automatic hyperparameter tuning",
-          "Faster training than a single split"
+          "A way to increase training data size"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "K-fold CV trains and tests k times on different splits, averaging results for a more reliable performance estimate with lower variance."
       },
       {
@@ -781,12 +781,12 @@
         "type": "multiple_choice",
         "prompt": "Grid search for hyperparameter tuning:",
         "options": [
-          "Exhaustively tries all combinations in a predefined parameter grid",
-          "Randomly samples parameter combinations",
           "Uses Bayesian optimization",
-          "Only works for neural networks"
+          "Exhaustively tries all combinations in a predefined parameter grid",
+          "Only works for neural networks",
+          "Randomly samples parameter combinations"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Grid search evaluates every combination in the Cartesian product of parameter values. Thorough but computationally expensive for large grids."
       },
       {
@@ -794,12 +794,12 @@
         "type": "multiple_choice",
         "prompt": "Random search often outperforms grid search because:",
         "options": [
-          "It explores more unique values of important hyperparameters",
-          "It uses less memory",
           "It always finds the global optimum",
-          "It requires fewer total evaluations"
+          "It uses less memory",
+          "It requires fewer total evaluations",
+          "It explores more unique values of important hyperparameters"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "When some hyperparameters matter more than others, random search explores more unique values of important parameters, often finding better configurations."
       },
       {
@@ -814,12 +814,12 @@
         "type": "multiple_choice",
         "prompt": "Early stopping in neural network training:",
         "options": [
-          "Stops training when validation performance stops improving to prevent overfitting",
-          "Reduces the learning rate during training",
           "Uses a smaller batch size",
-          "Removes neurons from the network"
+          "Removes neurons from the network",
+          "Stops training when validation performance stops improving to prevent overfitting",
+          "Reduces the learning rate during training"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Early stopping monitors validation loss and stops training when it stops improving (or starts increasing), preventing the model from overfitting to training data."
       },
       {
@@ -827,12 +827,12 @@
         "type": "multiple_choice",
         "prompt": "When comparing two models using cross-validation, which statistical test is appropriate?",
         "options": [
-          "Paired t-test on the k fold scores",
-          "Independent t-test",
+          "ANOVA",
           "Chi-squared test",
-          "ANOVA"
+          "Paired t-test on the k fold scores",
+          "Independent t-test"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Since both models are evaluated on the same folds, their scores are paired. A paired t-test accounts for this dependency when testing for significant differences."
       },
       {
@@ -840,12 +840,12 @@
         "type": "multiple_choice",
         "prompt": "Ensemble methods (Random Forest, Gradient Boosting) typically work well because they:",
         "options": [
-          "Reduce variance (bagging) or bias (boosting) by combining multiple models",
-          "Use simpler base models",
           "Require less training data",
-          "Are always faster than single models"
+          "Reduce variance (bagging) or bias (boosting) by combining multiple models",
+          "Are always faster than single models",
+          "Use simpler base models"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Bagging (Random Forest) reduces variance by averaging uncorrelated models. Boosting reduces bias by sequentially correcting errors. Both improve over single models."
       }
     ]

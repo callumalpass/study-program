@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is polymorphism in OOP?",
         "options": [
+          "Storing objects in multiple lists",
           "A class having many constructors",
           "Different objects responding to the same interface in different ways",
-          "Using many variables in one function",
-          "Storing objects in multiple lists"
+          "Using many variables in one function"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Polymorphism means the same operation can work with different types that share an interface."
       },
       {
@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "Which built-in function demonstrates polymorphism across types in Python?",
         "options": [
-          "len",
-          "id",
           "type",
-          "dir"
+          "id",
+          "dir",
+          "len"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "`len()` works on strings, lists, dictionaries, and any object implementing `__len__`."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "Which approach is the most “Pythonic” way to support polymorphism?",
         "options": [
+          "Global variables",
           "Switch on type using many `if isinstance(...)` checks",
           "Duck typing and small interfaces",
-          "Global variables",
           "Deep inheritance trees"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Python favors duck typing and simple, behavior-based interfaces."
       }
     ]
@@ -79,12 +79,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main downside of writing many `if isinstance(x, ...)` branches to choose behavior?",
         "options": [
-          "It is too fast",
-          "It couples behavior to concrete types and is hard to extend",
           "It prevents unit tests",
-          "It makes inheritance impossible"
+          "It makes inheritance impossible",
+          "It is too fast",
+          "It couples behavior to concrete types and is hard to extend"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Type-check branching is brittle; adding a new type often requires editing many branches."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "In duck typing, what is the most reliable way to ensure compatibility?",
         "options": [
-          "Check the exact type",
           "Check method names and required behavior (interface)",
           "Use global flags",
-          "Avoid functions"
+          "Avoid functions",
+          "Check the exact type"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Compatibility is about required operations/behavior, not concrete types."
       },
       {
@@ -143,12 +143,12 @@
         "type": "multiple_choice",
         "prompt": "What does `functools.singledispatch` primarily provide?",
         "options": [
-          "Multiple inheritance",
-          "Runtime function overloading based on the first argument type",
           "Static method binding",
-          "Automatic property generation"
+          "Multiple inheritance",
+          "Automatic property generation",
+          "Runtime function overloading based on the first argument type"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "`singledispatch` selects an implementation based on the type of the first argument at runtime."
       },
       {

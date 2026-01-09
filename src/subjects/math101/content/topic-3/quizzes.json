@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "If A = {1, 2, 3} and B = {3, 4, 5}, what is A ∩ B?",
         "options": [
+          "∅",
           "{1, 2, 3, 4, 5}",
-          "{3}",
           "{1, 2}",
-          "∅"
+          "{3}"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The intersection A ∩ B contains only elements that are in both A and B. The only element common to both sets is 3."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "If A = {1, 2, 3} and B = {3, 4, 5}, what is A ∪ B?",
         "options": [
-          "{1, 2, 3, 4, 5}",
+          "{1, 2}",
           "{3}",
-          "{1, 2, 4, 5}",
-          "{1, 2}"
+          "{1, 2, 3, 4, 5}",
+          "{1, 2, 4, 5}"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The union A ∪ B contains all elements that are in A OR in B (or both). Combined: {1, 2, 3, 4, 5}."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "How many elements are in the power set of a set with 4 elements?",
         "options": [
-          "4",
-          "8",
           "16",
-          "32"
+          "8",
+          "32",
+          "4"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The power set of a set with n elements has 2^n elements. For n = 4, we get 2^4 = 16 subsets (including the empty set and the set itself)."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following equals (A ∪ B)̄ according to De Morgan's Law?",
         "options": [
+          "A ∪ B",
           "Ā ∪ B̄",
-          "Ā ∩ B̄",
           "A ∩ B",
-          "A ∪ B"
+          "Ā ∩ B̄"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "De Morgan's Law: The complement of a union is the intersection of the complements. (A ∪ B)̄ = Ā ∩ B̄."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What is the cardinality of A × B if |A| = 3 and |B| = 4?",
         "options": [
-          "7",
-          "12",
           "81",
-          "24"
+          "7",
+          "24",
+          "12"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The Cartesian product A × B contains all ordered pairs (a, b) where a ∈ A and b ∈ B. |A × B| = |A| × |B| = 3 × 4 = 12."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "For finite sets A and B, which formula gives |A ∪ B|?",
         "options": [
-          "|A| + |B|",
-          "|A| × |B|",
           "|A| + |B| - |A ∩ B|",
-          "|A| - |B|"
+          "|A| - |B|",
+          "|A| + |B|",
+          "|A| × |B|"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The inclusion-exclusion principle: |A ∪ B| = |A| + |B| - |A ∩ B|. We subtract the intersection to avoid counting common elements twice."
       },
       {
@@ -153,11 +153,11 @@
         "prompt": "Which property states that A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)?",
         "options": [
           "Commutative property",
-          "Associative property",
           "Distributive property",
+          "Associative property",
           "De Morgan's Law"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "This is the distributive property of union over intersection. Union distributes over intersection (and vice versa)."
       },
       {
@@ -167,10 +167,10 @@
         "options": [
           "{(1, a), (2, b)}",
           "{(a, 1), (b, 2)}",
-          "∅",
-          "{(1, 1), (2, 2)}"
+          "{(1, 1), (2, 2)}",
+          "∅"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "A × B contains pairs like (1, a), (1, b), etc. B × A contains pairs like (a, 1), (b, 2), etc. No ordered pair appears in both, so the intersection is empty."
       },
       {

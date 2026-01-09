@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "The differential operator D is defined as:",
         "options": [
-          "D = d/dx",
           "D = ∫ dx",
-          "D = x d/dx",
-          "D = d²/dx²"
+          "D = d/dx",
+          "D = d²/dx²",
+          "D = x d/dx"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The differential operator D represents differentiation: Dy = dy/dx, D²y = d²y/dx², etc."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "The equation (D² - 3D + 2)y = 0 factors as:",
         "options": [
+          "(D - 2)(D + 1)y = 0",
           "(D - 1)(D - 2)y = 0",
           "(D + 1)(D + 2)y = 0",
-          "(D - 2)(D + 1)y = 0",
           "D(D - 3)y = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The operator D² - 3D + 2 factors like a polynomial: (D - 1)(D - 2). This gives characteristic roots r = 1, 2."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "For a third-order equation y‴ + 6y″ + 11y′ + 6y = 0, how many linearly independent solutions exist?",
         "options": [
-          "3",
           "2",
+          "1",
           "6",
-          "1"
+          "3"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "An nth-order linear homogeneous equation has exactly n linearly independent solutions. For third-order, n = 3."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "The annihilator of e^(3x) is:",
         "options": [
-          "D - 3",
           "D + 3",
           "D² - 9",
+          "D - 3",
           "D³"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "An annihilator L is an operator such that L[f] = 0. Since (D - 3)e^(3x) = 3e^(3x) - 3e^(3x) = 0, the annihilator is D - 3."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "A Cauchy-Euler equation has the form:",
         "options": [
-          "x²y″ + axy′ + by = 0",
-          "y″ + axy′ + by = 0",
           "y″ + ay′ + bxy = 0",
+          "y″ + axy′ + by = 0",
+          "x²y″ + axy′ + by = 0",
           "x²y″ + xy′ + y = x"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Cauchy-Euler equations have the form x²y″ + axy′ + by = 0, where the power of x matches the order of derivative."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "The indicial equation for x²y″ - 2xy′ + 2y = 0 is:",
         "options": [
-          "r² - 3r + 2 = 0",
-          "r² - 2r + 2 = 0",
           "r² + 2r - 2 = 0",
+          "r² - 2r + 2 = 0",
+          "r² - 3r + 2 = 0",
           "r² - r + 2 = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Substituting y = x^r gives r(r-1) - 2r + 2 = 0, which simplifies to r² - 3r + 2 = 0, giving r = 1, 2."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "If the indicial equation has a repeated root r, the second solution is:",
         "options": [
-          "x^r ln(x)",
           "x^(r+1)",
           "x^r e^x",
-          "rx^(r-1)"
+          "rx^(r-1)",
+          "x^r ln(x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For a repeated root r in a Cauchy-Euler equation, the solutions are y₁ = x^r and y₂ = x^r ln(x)."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "If the indicial equation has complex roots α ± βi, the solutions are:",
         "options": [
-          "x^α cos(β ln x) and x^α sin(β ln x)",
           "x^α cos(βx) and x^α sin(βx)",
-          "e^(αx) cos(β ln x) and e^(αx) sin(β ln x)",
-          "x^α e^(βx) and x^α e^(-βx)"
+          "x^α cos(β ln x) and x^α sin(β ln x)",
+          "x^α e^(βx) and x^α e^(-βx)",
+          "e^(αx) cos(β ln x) and e^(αx) sin(β ln x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For complex roots α ± βi in Cauchy-Euler equations, the real solutions are x^α cos(β ln x) and x^α sin(β ln x)."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Reduction of order is used when:",
         "options": [
+          "The forcing function is zero",
           "One solution to the homogeneous equation is known",
           "The equation has constant coefficients",
-          "The forcing function is zero",
           "All solutions are known"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Reduction of order finds a second independent solution y₂ when one solution y₁ is already known, using the substitution y₂ = vy₁."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "For y″ + P(x)y′ + Q(x)y = 0 with known solution y₁, the substitution y = vy₁ leads to:",
         "options": [
-          "A first-order equation in v′",
           "A second-order equation in v",
           "An algebraic equation in v",
+          "A first-order equation in v′",
           "A separable equation in v"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Substituting y = vy₁ and simplifying gives a first-order linear equation in w = v′, which can be solved by integration."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "The general nth-order linear homogeneous equation requires:",
         "options": [
-          "n linearly independent solutions",
-          "2n solutions",
           "n + 1 solutions",
-          "1 solution"
+          "n linearly independent solutions",
+          "1 solution",
+          "2n solutions"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The solution space of an nth-order linear homogeneous equation is n-dimensional, requiring n linearly independent solutions."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "Abel's formula for the Wronskian W of an equation y″ + P(x)y′ + Q(x)y = 0 is:",
         "options": [
-          "W = Ce^(-∫P dx)",
-          "W = Ce^(∫P dx)",
           "W = Ce^(-∫Q dx)",
-          "W = Ce^(Px)"
+          "W = Ce^(Px)",
+          "W = Ce^(∫P dx)",
+          "W = Ce^(-∫P dx)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Abel's formula states that W(x) = Ce^(-∫P(x)dx), showing the Wronskian either is always zero or never zero."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "For the equation y⁽⁴⁾ - y = 0, how many distinct characteristic roots are there?",
         "options": [
-          "4",
-          "2",
           "1",
-          "3"
+          "3",
+          "4",
+          "2"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The characteristic equation r⁴ - 1 = 0 factors as (r² - 1)(r² + 1) = 0, giving r = ±1, ±i (four distinct roots)."
       }
     ]

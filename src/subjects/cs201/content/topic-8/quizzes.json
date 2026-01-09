@@ -11,11 +11,11 @@
         "prompt": "A loop invariant must be true at which points?",
         "options": [
           "Only at the start of the loop",
-          "Only at the end of the loop",
           "At initialization, before each iteration, and at termination",
-          "Only when the loop counter is even"
+          "Only when the loop counter is even",
+          "Only at the end of the loop"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Loop invariants must hold at initialization, be maintained by each iteration, and imply correctness at termination."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "To prove a recursive algorithm correct, which technique is most appropriate?",
         "options": [
-          "Loop invariants",
           "Mathematical induction",
           "Empirical testing",
-          "Big-O analysis"
+          "Big-O analysis",
+          "Loop invariants"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Induction mirrors recursion: prove base case, assume works for smaller inputs, prove it works for current input."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "For Insertion Sort, a good loop invariant is:",
         "options": [
-          "The array is fully sorted",
           "arr[0..i-1] contains the original elements in sorted order",
+          "The loop runs n times",
           "arr[i] is the minimum",
-          "The loop runs n times"
+          "The array is fully sorted"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "At each iteration, the subarray arr[0..i-1] is sorted and contains the original elements from those positions."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What does P stand for in complexity theory?",
         "options": [
-          "Polynomial time solvable problems",
-          "Probabilistic problems",
           "Parallel problems",
+          "Probabilistic problems",
+          "Polynomial time solvable problems",
           "Pseudo-polynomial problems"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "P is the class of problems solvable in polynomial time O(n^k) for some constant k."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "What does NP stand for?",
         "options": [
-          "Non-Polynomial",
-          "Not Practical",
           "Nondeterministic Polynomial",
-          "Nearly Polynomial"
+          "Non-Polynomial",
+          "Nearly Polynomial",
+          "Not Practical"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "NP means Nondeterministic Polynomial - problems whose solutions can be verified in polynomial time."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "If P = NP, what would it mean?",
         "options": [
-          "Computers would be infinitely fast",
           "All NP problems would have polynomial-time solutions",
-          "NP problems would become unsolvable",
-          "Nothing would change"
+          "Nothing would change",
+          "Computers would be infinitely fast",
+          "NP problems would become unsolvable"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "P = NP would mean every problem with efficiently verifiable solutions also has efficient solutions."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "Which of these is an NP-Complete problem?",
         "options": [
-          "Sorting",
-          "Binary Search",
           "Traveling Salesman (decision)",
-          "Finding GCD"
+          "Binary Search",
+          "Finding GCD",
+          "Sorting"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Traveling Salesman (decision version: is there a tour ≤ k?) is a classic NP-Complete problem."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "What is a reduction in complexity theory?",
         "options": [
-          "Making an algorithm faster",
           "Transforming one problem into another",
+          "Making an algorithm faster",
           "Removing redundant code",
           "Simplifying mathematical expressions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A reduction transforms problem A into problem B, showing that solving B would solve A."
       },
       {
@@ -178,12 +178,12 @@
         "type": "multiple_choice",
         "prompt": "SAT (Boolean Satisfiability) is significant because:",
         "options": [
-          "It was the first problem proven NP-Complete",
-          "It can be solved in linear time",
           "It has no applications",
+          "It can be solved in linear time",
+          "It was the first problem proven NP-Complete",
           "It is not in NP"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "SAT was proven NP-Complete by Cook in 1971, establishing the foundation of NP-Completeness theory."
       }
     ]

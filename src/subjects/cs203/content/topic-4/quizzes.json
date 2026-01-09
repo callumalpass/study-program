@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "A PDA differs from an NFA by having:",
         "options": [
+          "Two-way input head",
           "Multiple tapes",
-          "A stack",
           "Deterministic transitions",
-          "Two-way input head"
+          "A stack"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A PDA extends an NFA with a stack for auxiliary memory, enabling recognition of context-free languages."
       },
       {
@@ -50,11 +50,11 @@
         "prompt": "A configuration of a PDA is described by:",
         "options": [
           "Current state only",
-          "(current state, remaining input, stack contents)",
+          "Number of steps taken",
           "Stack contents only",
-          "Number of steps taken"
+          "(current state, remaining input, stack contents)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "An instantaneous description (ID) captures the complete PDA state: (q, w, γ) for state, unread input, and stack."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "PDAs are nondeterministic because:",
         "options": [
+          "They can read multiple symbols at once",
           "They can choose which transition to take",
-          "They have infinite states",
           "The stack is unbounded",
-          "They can read multiple symbols at once"
+          "They have infinite states"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "PDAs can have multiple applicable transitions from a configuration, allowing nondeterministic choice."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "Acceptance by final state requires:",
         "options": [
+          "All paths accept",
           "Empty stack and accepting state",
           "Input consumed and in accepting state",
-          "Stack has exactly one symbol",
-          "All paths accept"
+          "Stack has exactly one symbol"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Final state acceptance: input is consumed AND PDA is in an accepting state (stack contents don't matter)."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "Acceptance by empty stack requires:",
         "options": [
+          "Stack contains only the initial symbol",
           "Stack is empty after consuming input",
-          "Being in an accepting state",
           "Both empty stack and accepting state",
-          "Stack contains only the initial symbol"
+          "Being in an accepting state"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Empty stack acceptance: input is consumed AND stack is empty (no accepting states needed)."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "Final state acceptance and empty stack acceptance:",
         "options": [
-          "Accept different classes of languages",
           "Are equivalent in power",
           "Final state is strictly more powerful",
-          "Empty stack is strictly more powerful"
+          "Empty stack is strictly more powerful",
+          "Accept different classes of languages"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Both acceptance modes define exactly the context-free languages. Any PDA can be converted between modes."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "A PDA for balanced parentheses uses the stack to:",
         "options": [
-          "Count total symbols",
-          "Track unmatched open parentheses",
           "Store the entire input",
-          "Nothing - the stack is unused"
+          "Count total symbols",
+          "Nothing - the stack is unused",
+          "Track unmatched open parentheses"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Push for \"(\", pop for \")\". The string is balanced iff the stack empties exactly when input is consumed."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "The equivalence of PDAs and CFGs means:",
         "options": [
+          "CFGs are more powerful than PDAs",
           "Every PDA can be simulated by a DFA",
           "PDAs recognize exactly the context-free languages",
-          "CFGs are more powerful than PDAs",
           "PDAs cannot recognize regular languages"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "PDAs and CFGs are equivalent: L is context-free iff some PDA accepts L iff some CFG generates L."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "A DPDA (deterministic PDA):",
         "options": [
-          "Accepts exactly the regular languages",
-          "Accepts a proper subset of CFLs",
           "Is equivalent to nondeterministic PDAs",
-          "Cannot use ε-transitions"
+          "Cannot use ε-transitions",
+          "Accepts exactly the regular languages",
+          "Accepts a proper subset of CFLs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "DPDAs are strictly weaker than NPDAs. Some CFLs (like palindromes over {a,b}) are not recognizable by any DPDA."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "Which language is NOT recognizable by a DPDA?",
         "options": [
-          "{aⁿbⁿ}",
-          "{ww^R | w ∈ {a,b}*}",
           "{aⁿbⁿcⁿ}",
-          "Balanced parentheses"
+          "Balanced parentheses",
+          "{aⁿbⁿ}",
+          "{ww^R | w ∈ {a,b}*}"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Palindromes require \"guessing\" the middle, which needs nondeterminism. DPDAs cannot recognize them."
       },
       {

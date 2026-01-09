@@ -11,11 +11,11 @@
         "prompt": "Which ordering principle does a stack follow?",
         "options": [
           "FIFO (First-In-First-Out)",
-          "LIFO (Last-In-First-Out)",
           "Priority-based",
+          "LIFO (Last-In-First-Out)",
           "Random"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Stacks follow LIFO: the most recently added element is the first to be removed."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of push and pop operations on a stack?",
         "options": [
-          "O(1)",
           "O(log n)",
           "O(n)",
-          "Depends on implementation"
+          "Depends on implementation",
+          "O(1)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Both push and pop are O(1) operations as they only affect the top of the stack."
       }
     ]
@@ -79,12 +79,12 @@
         "type": "multiple_choice",
         "prompt": "Which application commonly uses a stack?",
         "options": [
-          "Print job scheduling",
-          "Function call management",
+          "Task scheduling by priority",
           "BFS traversal",
-          "Task scheduling by priority"
+          "Print job scheduling",
+          "Function call management"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The call stack manages function calls, pushing frames on call and popping on return."
       },
       {
@@ -108,11 +108,11 @@
         "prompt": "For checking balanced parentheses, which data structure is most appropriate?",
         "options": [
           "Queue",
-          "Stack",
           "Array",
-          "Linked List"
+          "Linked List",
+          "Stack"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Stack is ideal for matching brackets: push opening brackets, pop when closing brackets match."
       }
     ]
@@ -128,12 +128,12 @@
         "type": "multiple_choice",
         "prompt": "A deque (double-ended queue) allows:",
         "options": [
-          "Operations only at front",
+          "Random access by index",
           "Operations only at back",
-          "Operations at both front and back",
-          "Random access by index"
+          "Operations only at front",
+          "Operations at both front and back"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Deque supports efficient insertion and deletion at both ends."
       },
       {
@@ -148,12 +148,12 @@
         "type": "multiple_choice",
         "prompt": "A monotonic stack is useful for finding:",
         "options": [
-          "Maximum element in array",
-          "Next greater element for each element",
           "Median element",
-          "Duplicate elements"
+          "Duplicate elements",
+          "Next greater element for each element",
+          "Maximum element in array"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Monotonic stacks efficiently solve \"next greater/smaller element\" problems in O(n) time."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "Which traversal algorithm uses a queue?",
         "options": [
-          "Depth-First Search (DFS)",
-          "Breadth-First Search (BFS)",
           "Preorder traversal",
-          "Postorder traversal"
+          "Depth-First Search (DFS)",
+          "Postorder traversal",
+          "Breadth-First Search (BFS)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "BFS uses a queue to explore nodes level by level, while DFS uses a stack (or recursion)."
       }
     ]

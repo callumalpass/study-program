@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is encapsulation primarily about?",
         "options": [
-          "Making classes inherit from each other",
-          "Hiding internal state and exposing a controlled interface",
           "Overloading operators for custom types",
-          "Ensuring code runs faster"
+          "Ensuring code runs faster",
+          "Making classes inherit from each other",
+          "Hiding internal state and exposing a controlled interface"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Encapsulation protects internal state and provides a safe, stable API."
       },
       {
@@ -24,11 +24,11 @@
         "prompt": "In Python, a leading single underscore (e.g., `_balance`) conventionally means:",
         "options": [
           "Truly private and inaccessible",
-          "Protected/internal use by convention",
           "A constant value",
-          "A class variable"
+          "A class variable",
+          "Protected/internal use by convention"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Python relies on conventions: `_name` signals internal/protected usage."
       },
       {
@@ -79,12 +79,12 @@
         "type": "multiple_choice",
         "prompt": "Why might you return a copy from a getter like `def items(self): return list(self._items)`?",
         "options": [
-          "To speed up iteration",
           "To prevent callers from mutating internal state directly",
+          "To enable operator overloading",
           "To allow multiple inheritance",
-          "To enable operator overloading"
+          "To speed up iteration"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Defensive copies avoid leaking mutable internal state."
       },
       {
@@ -157,12 +157,12 @@
         "type": "multiple_choice",
         "prompt": "What is a good reason to use a custom exception class in an API?",
         "options": [
+          "It lets callers catch and handle domain-specific errors reliably",
           "It makes code shorter",
           "It creates faster stack traces",
-          "It lets callers catch and handle domain-specific errors reliably",
           "It prevents all runtime errors"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Custom exceptions communicate intent and enable targeted error handling."
       }
     ]

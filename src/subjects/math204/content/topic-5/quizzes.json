@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "An improper integral has:",
         "options": [
-          "A negative integrand",
           "Infinite limits or discontinuous integrand",
-          "Complex numbers",
-          "No antiderivative"
+          "No antiderivative",
+          "A negative integrand",
+          "Complex numbers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Improper integrals have infinite limits of integration or the integrand has infinite discontinuities."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What is $\\int_1^\\infty \\frac{1}{x^2} \\, dx$?",
         "options": [
+          "Diverges",
           "$0$",
-          "$1$",
           "$\\infty$",
-          "Diverges"
+          "$1$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "$\\int_1^\\infty \\frac{1}{x^2} \\, dx = \\lim_{t \\to \\infty} [-\\frac{1}{x}]_1^t = \\lim_{t \\to \\infty} (-\\frac{1}{t} + 1) = 0 + 1 = 1$."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Does $\\int_1^\\infty \\frac{1}{x} \\, dx$ converge or diverge?",
         "options": [
-          "Converges to 0",
-          "Converges to 1",
           "Diverges",
-          "Converges to e"
+          "Converges to 1",
+          "Converges to e",
+          "Converges to 0"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "$\\int_1^\\infty \\frac{1}{x} \\, dx = \\lim_{t \\to \\infty} [\\ln x]_1^t = \\lim_{t \\to \\infty} \\ln t = \\infty$, so it diverges."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "The Direct Comparison Test compares an integral to:",
         "options": [
-          "Its derivative",
           "A known convergent or divergent integral",
+          "Zero",
           "A polynomial",
-          "Zero"
+          "Its derivative"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Compare to a known integral: if $0 \\leq f(x) \\leq g(x)$ and $\\int g$ converges, then $\\int f$ converges."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "By the p-test, $\\int_1^\\infty \\frac{1}{x^{0.5}} \\, dx$:",
         "options": [
-          "Converges",
-          "Diverges",
           "Equals 1",
-          "Equals 0"
+          "Equals 0",
+          "Diverges",
+          "Converges"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Since $p = 0.5 < 1$, the integral diverges by the p-test."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "Evaluate $\\int_0^1 \\frac{1}{\\sqrt{x}} \\, dx$ (discontinuity at $x = 0$):",
         "options": [
-          "$0$",
           "$1$",
-          "$2$",
-          "Diverges"
+          "Diverges",
+          "$0$",
+          "$2$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "$\\int_0^1 \\frac{1}{\\sqrt{x}} \\, dx = \\lim_{t \\to 0^+} \\int_t^1 x^{-1/2} \\, dx = \\lim_{t \\to 0^+} [2\\sqrt{x}]_t^1 = \\lim_{t \\to 0^+} (2 - 2\\sqrt{t}) = 2$."
       },
       {

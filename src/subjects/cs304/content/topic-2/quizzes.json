@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "In a context-free grammar, what appears on the left side of a production?",
         "options": [
+          "A single non-terminal",
           "Only terminals",
           "Only non-terminals",
-          "A single non-terminal",
           "Any string of symbols"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "CFG productions have exactly one non-terminal on the left side, distinguishing them from unrestricted grammars."
       },
       {
@@ -24,11 +24,11 @@
         "prompt": "What is an ambiguous grammar?",
         "options": [
           "A grammar with errors",
-          "A grammar that can produce multiple parse trees for some input",
+          "A grammar with left recursion",
           "A grammar with no valid derivations",
-          "A grammar with left recursion"
+          "A grammar that can produce multiple parse trees for some input"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "An ambiguous grammar allows more than one parse tree (derivation) for the same input string."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is a leftmost derivation?",
         "options": [
-          "Deriving left-recursive rules first",
           "Always replacing the leftmost non-terminal",
+          "Using left-associative operators",
           "Starting from the left of the input",
-          "Using left-associative operators"
+          "Deriving left-recursive rules first"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A leftmost derivation always expands the leftmost non-terminal at each step."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What is the yield of a parse tree?",
         "options": [
-          "The root node",
-          "The leftmost leaf",
           "The string of terminals at the leaves read left to right",
+          "The leftmost leaf",
+          "The root node",
           "The number of nodes"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The yield is the string formed by concatenating the leaves (terminals) from left to right."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main challenge with left-recursive grammars in top-down parsing?",
         "options": [
+          "They are slower to parse",
           "They are ambiguous",
-          "They cause infinite recursion",
           "They cannot express all languages",
-          "They are slower to parse"
+          "They cause infinite recursion"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Left recursion causes recursive descent parsers to loop infinitely without consuming input."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is the FOLLOW set used for in LL parsing?",
         "options": [
+          "Optimizing the parse table",
           "Determining operator precedence",
-          "Deciding which production to use when FIRST sets overlap or contain ε",
           "Detecting left recursion",
-          "Optimizing the parse table"
+          "Deciding which production to use when FIRST sets overlap or contain ε"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "FOLLOW sets help choose productions when the current non-terminal can derive ε."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What does LL(1) mean?",
         "options": [
+          "Lexical, Logical, 1 phase",
           "Left-to-right, Leftmost derivation, 1 symbol lookahead",
-          "Left-to-right, Left recursion, 1 pass",
           "Linear time, Linear space, 1 table",
-          "Lexical, Logical, 1 phase"
+          "Left-to-right, Left recursion, 1 pass"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "LL(1): scan Left-to-right, produce Leftmost derivation, using 1 token of lookahead."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What are the two main actions in shift-reduce parsing?",
         "options": [
-          "Push and pop",
-          "Read and write",
           "Shift (push token) and reduce (apply production)",
-          "Accept and reject"
+          "Accept and reject",
+          "Push and pop",
+          "Read and write"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Shift pushes input onto the stack; reduce replaces a production's RHS with its LHS."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is a handle in bottom-up parsing?",
         "options": [
-          "The next token",
           "A string matching a production's RHS that should be reduced",
           "The stack top",
-          "An error condition"
+          "An error condition",
+          "The next token"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A handle is a substring matching a production body that, when reduced, leads to a valid parse."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is a shift-reduce conflict?",
         "options": [
-          "Two reductions possible",
           "Parser cannot decide between shifting and reducing",
-          "Invalid input detected",
-          "Stack overflow"
+          "Stack overflow",
+          "Two reductions possible",
+          "Invalid input detected"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A shift-reduce conflict occurs when the parser cannot decide whether to shift the next token or reduce the current handle."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What tool generates LALR parsers from grammar specifications?",
         "options": [
-          "lex",
-          "flex",
+          "make",
           "yacc/bison",
-          "make"
+          "lex",
+          "flex"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Yacc (and GNU bison) generate LALR(1) parsers from grammar specifications."
       }
     ]

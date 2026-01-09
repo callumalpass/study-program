@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "The regular expression (a|b)*abb represents:",
         "options": [
-          "All strings ending in abb",
           "All strings over {a,b} ending in abb",
           "Only the string abb",
-          "All strings containing abb"
+          "All strings containing abb",
+          "All strings ending in abb"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "(a|b)* matches any string over {a,b}, followed by the literal \"abb\", so the language is all strings over {a,b} ending in abb."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "The base cases in regular expression definition are:",
         "options": [
-          "∅, ε, and single symbols",
-          "Only single symbols",
+          "Any finite set of strings",
           "∅ and ε only",
-          "Any finite set of strings"
+          "∅, ε, and single symbols",
+          "Only single symbols"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Regular expressions are built from ∅ (empty language), ε (empty string), and single symbols a ∈ Σ using union, concatenation, and Kleene star."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "L(∅) equals:",
         "options": [
-          "{ε}",
           "{}",
           "Σ*",
+          "{ε}",
           "undefined"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "∅ represents the empty language containing no strings at all, denoted {} or ∅."
       }
     ]
@@ -97,11 +97,11 @@
         "prompt": "The state elimination method for FA to regex works by:",
         "options": [
           "Adding states until a pattern emerges",
+          "Using the pumping lemma",
           "Removing states while updating edge labels with regex",
-          "Converting to DFA first",
-          "Using the pumping lemma"
+          "Converting to DFA first"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "State elimination removes intermediate states one by one, combining their transitions into regular expression labels."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "Converting an n-state NFA to a regex can produce an expression of size:",
         "options": [
-          "O(n)",
-          "O(n²)",
           "O(4ⁿ)",
-          "O(n!)"
+          "O(n)",
+          "O(n!)",
+          "O(n²)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "State elimination can produce exponentially large regular expressions, with worst-case O(4ⁿ) size."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Which algebraic identity is correct for regular expressions?",
         "options": [
-          "r|r = ε",
+          "r* = r",
           "r·∅ = r",
-          "r|∅ = r",
-          "r* = r"
+          "r|r = ε",
+          "r|∅ = r"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "The empty language ∅ is the identity for union: r|∅ = r because adding no strings leaves the language unchanged."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "Testing if L(M) = ∅ for DFA M is:",
         "options": [
+          "NP-complete",
           "Undecidable",
           "Decidable in O(n²)",
-          "Decidable in O(n)",
-          "NP-complete"
+          "Decidable in O(n)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Emptiness is decidable in O(n) by checking if any accepting state is reachable from the start state (simple graph traversal)."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "Testing equivalence of two DFAs M₁ and M₂ involves:",
         "options": [
+          "Converting both to regular expressions and comparing",
           "Checking if they have the same number of states",
-          "Testing if L(M₁) △ L(M₂) = ∅",
           "Running both on all possible inputs",
-          "Converting both to regular expressions and comparing"
+          "Testing if L(M₁) △ L(M₂) = ∅"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Equivalence is tested by checking if the symmetric difference is empty: L(M₁) = L(M₂) iff (L(M₁)∩L̄(M₂)) ∪ (L̄(M₁)∩L(M₂)) = ∅."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "The membership problem for regular languages is:",
         "options": [
+          "NP-complete",
           "Undecidable",
           "O(n) where n is string length",
-          "O(2ⁿ)",
-          "NP-complete"
+          "O(2ⁿ)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Given a DFA and string w, membership is O(|w|) - just simulate the DFA on w and check if it ends in an accepting state."
       }
     ]

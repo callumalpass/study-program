@@ -67,7 +67,8 @@ describe('CS305 Content Quality', () => {
       expect(foundQuestion!.type).toBe('multiple_choice');
       // The question should mention "positioned ancestor" to disambiguate from fixed
       expect(foundQuestion!.prompt.toLowerCase()).toContain('positioned ancestor');
-      expect(foundQuestion!.correctAnswer).toBe(2); // index of "position: absolute"
+      // Correct answer should be "position: absolute"
+      expect(foundQuestion!.options![foundQuestion!.correctAnswer as number]).toContain('absolute');
     });
 
     it('cs305-q2-9 options should include all position values', () => {

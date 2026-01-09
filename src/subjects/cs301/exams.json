@@ -16,12 +16,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is NOT a valid process state?",
         "options": [
-          "Running",
-          "Ready",
           "Waiting",
-          "Compiled"
+          "Ready",
+          "Compiled",
+          "Running"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "Processes exist in states like New, Ready, Running, Waiting, and Terminated. Compiled is not a process state."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "The Process Control Block (PCB) contains:",
         "options": [
-          "Only the process ID",
           "Process state, program counter, CPU registers, memory management info",
           "Only memory addresses",
+          "Only the process ID",
           "Only scheduling information"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The PCB contains comprehensive information including PID, process state, program counter, CPU registers, memory management info, and scheduling information."
       },
       {
@@ -64,12 +64,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is shared between threads of the same process?",
         "options": [
-          "Stack",
-          "Program counter",
+          "Code and data sections",
           "Registers",
-          "Code and data sections"
+          "Stack",
+          "Program counter"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "Threads share the code, data, and heap sections. Each thread has its own stack, registers, and program counter."
       },
       {
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "In the many-to-one threading model:",
         "options": [
-          "Many user threads map to many kernel threads",
-          "Many user threads map to one kernel thread",
           "One user thread maps to one kernel thread",
-          "One user thread maps to many kernel threads"
+          "Many user threads map to many kernel threads",
+          "One user thread maps to many kernel threads",
+          "Many user threads map to one kernel thread"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Many-to-one maps multiple user threads to a single kernel thread. If one blocks, all block."
       },
       {
@@ -116,11 +116,11 @@
         "prompt": "A thread pool is beneficial because:",
         "options": [
           "It creates threads on demand for each request",
-          "It pre-creates threads to handle requests, avoiding creation overhead",
           "It eliminates the need for synchronization",
-          "It automatically detects deadlocks"
+          "It automatically detects deadlocks",
+          "It pre-creates threads to handle requests, avoiding creation overhead"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Thread pools pre-create a set of threads that can be reused, avoiding the overhead of creating and destroying threads for each request."
       },
       {
@@ -128,12 +128,12 @@
         "type": "multiple_choice",
         "prompt": "Which scheduling algorithm may cause starvation?",
         "options": [
-          "Round Robin",
-          "FCFS",
           "Shortest Job First",
-          "Random"
+          "Random",
+          "FCFS",
+          "Round Robin"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "SJF may cause starvation of long processes if short processes keep arriving. FCFS and RR do not cause starvation."
       },
       {
@@ -149,12 +149,12 @@
         "prompt": "Given processes P1(burst=8), P2(burst=4), P3(burst=2) arriving at time 0, what is the average waiting time using SJF?",
         "codeSnippet": "Order: P3(2) → P2(4) → P1(8)\nP3 waits: 0\nP2 waits: 2\nP1 waits: 6\nAverage = ?",
         "options": [
-          "2.67",
           "4.67",
-          "8/3",
-          "Both A and C"
+          "Both A and C",
+          "2.67",
+          "8/3"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "Average = (0 + 2 + 6) / 3 = 8/3 ≈ 2.67. Both A and C represent the same value."
       },
       {
@@ -162,12 +162,12 @@
         "type": "multiple_choice",
         "prompt": "Preemptive Priority Scheduling differs from non-preemptive in that:",
         "options": [
+          "It uses FCFS within priority levels",
           "It assigns priorities randomly",
-          "A running process can be interrupted if a higher priority process arrives",
           "It never causes context switches",
-          "It uses FCFS within priority levels"
+          "A running process can be interrupted if a higher priority process arrives"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "In preemptive scheduling, a running process can be interrupted when a higher priority process becomes ready."
       },
       {
@@ -190,12 +190,12 @@
         "type": "multiple_choice",
         "prompt": "A race condition occurs when:",
         "options": [
-          "Processes execute too quickly",
           "Multiple processes access shared data concurrently and the outcome depends on execution order",
           "The CPU cannot keep up with I/O",
-          "A process waits indefinitely"
+          "A process waits indefinitely",
+          "Processes execute too quickly"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A race condition occurs when the outcome of concurrent execution depends on the particular order of operations, leading to unpredictable results."
       },
       {
@@ -203,12 +203,12 @@
         "type": "multiple_choice",
         "prompt": "Which is NOT a requirement for a correct critical section solution?",
         "options": [
-          "Mutual exclusion",
+          "Simultaneous access",
           "Progress",
           "Bounded waiting",
-          "Simultaneous access"
+          "Mutual exclusion"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "A critical section solution must provide mutual exclusion (only one process in CS), progress (no deadlock), and bounded waiting (no starvation). Simultaneous access violates mutual exclusion."
       },
       {
@@ -254,12 +254,12 @@
         "type": "multiple_choice",
         "prompt": "In the Dining Philosophers problem, what causes deadlock?",
         "options": [
-          "All philosophers pick up their left fork simultaneously",
           "One philosopher eats too fast",
           "The forks are too small",
-          "There are too many philosophers"
+          "There are too many philosophers",
+          "All philosophers pick up their left fork simultaneously"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "If all philosophers simultaneously pick up their left fork and wait for the right fork, no one can eat and deadlock occurs."
       },
       {
@@ -288,12 +288,12 @@
         "prompt": "What is the turnaround time for P2 using Round Robin (quantum=3) for: P1(burst=5), P2(burst=3), P3(burst=4) all arriving at time 0?",
         "codeSnippet": "Timeline:\n0-3: P1 (2 remaining)\n3-6: P2 (done)\n6-9: P3 (1 remaining)\n9-11: P1 (done)\n11-12: P3 (done)",
         "options": [
+          "12",
           "3",
           "6",
-          "9",
-          "12"
+          "9"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "P2 completes at time 6. Turnaround time = completion - arrival = 6 - 0 = 6."
       },
       {
@@ -322,12 +322,12 @@
         "type": "multiple_choice",
         "prompt": "Which process state transition is NOT possible?",
         "options": [
-          "Running → Waiting",
           "Ready → Running",
-          "Waiting → Running",
-          "Running → Ready"
+          "Running → Ready",
+          "Running → Waiting",
+          "Waiting → Running"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "A waiting process must first become ready before it can run. Direct Waiting → Running transition is not allowed."
       },
       {
@@ -335,12 +335,12 @@
         "type": "multiple_choice",
         "prompt": "The advantage of user-level threads over kernel-level threads is:",
         "options": [
-          "They can take advantage of multiple CPUs",
-          "Thread operations are faster because they don't require kernel intervention",
+          "They provide better security",
           "They handle blocking system calls better",
-          "They provide better security"
+          "Thread operations are faster because they don't require kernel intervention",
+          "They can take advantage of multiple CPUs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "User-level thread operations (create, switch) are faster because they don't involve system calls. However, they can't utilize multiple CPUs or handle blocking I/O well."
       },
       {
@@ -362,12 +362,12 @@
         "type": "multiple_choice",
         "prompt": "Which is true about spinlocks?",
         "options": [
-          "They are ideal for long critical sections",
-          "They put the waiting thread to sleep",
+          "They cannot be used in multiprocessor systems",
           "They are efficient when the lock is expected to be held briefly",
-          "They cannot be used in multiprocessor systems"
+          "They are ideal for long critical sections",
+          "They put the waiting thread to sleep"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Spinlocks are efficient for short critical sections because the overhead of context switching would exceed the wait time. They waste CPU cycles spinning, so they're bad for long waits."
       },
       {
@@ -434,12 +434,12 @@
         "type": "multiple_choice",
         "prompt": "Which deadlock handling strategy is used by most operating systems?",
         "options": [
-          "Prevention",
+          "Ostrich algorithm (ignore it)",
           "Avoidance",
-          "Detection and recovery",
-          "Ostrich algorithm (ignore it)"
+          "Prevention",
+          "Detection and recovery"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "Most general-purpose operating systems ignore the deadlock problem (ostrich algorithm) because deadlocks are rare and the overhead of prevention/avoidance is high."
       },
       {
@@ -481,12 +481,12 @@
         "type": "multiple_choice",
         "prompt": "External fragmentation is a problem in which allocation scheme?",
         "options": [
-          "Paging",
           "Contiguous allocation",
-          "Both",
-          "Neither"
+          "Paging",
+          "Neither",
+          "Both"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Contiguous allocation suffers from external fragmentation (free memory exists but not contiguously). Paging eliminates external fragmentation by using fixed-size frames."
       },
       {
@@ -522,12 +522,12 @@
         "type": "multiple_choice",
         "prompt": "The Translation Lookaside Buffer (TLB) is used to:",
         "options": [
-          "Store recently translated page table entries for fast lookup",
           "Buffer disk writes",
-          "Cache frequently accessed files",
-          "Store process scheduling information"
+          "Store recently translated page table entries for fast lookup",
+          "Store process scheduling information",
+          "Cache frequently accessed files"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The TLB is a hardware cache that stores recent page table entries, reducing the need to access memory for address translation."
       },
       {
@@ -535,12 +535,12 @@
         "type": "multiple_choice",
         "prompt": "Multi-level page tables are used to:",
         "options": [
-          "Increase address translation speed",
-          "Reduce the memory required for page tables",
           "Increase page size",
-          "Enable shared memory"
+          "Enable shared memory",
+          "Reduce the memory required for page tables",
+          "Increase address translation speed"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Multi-level page tables allow sparse address spaces to use less memory because entire page table sections can be absent if unused."
       },
       {
@@ -572,12 +572,12 @@
         "type": "multiple_choice",
         "prompt": "In segmentation, a logical address consists of:",
         "options": [
-          "Page number and offset",
-          "Segment number and offset",
           "Frame number and offset",
-          "Base and limit"
+          "Base and limit",
+          "Segment number and offset",
+          "Page number and offset"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Segmentation uses segment number to index into the segment table, and offset to specify position within the segment."
       },
       {
@@ -585,12 +585,12 @@
         "type": "multiple_choice",
         "prompt": "Demand paging loads pages:",
         "options": [
-          "All at once when a program starts",
-          "Only when they are accessed (on demand)",
           "Based on predicted future access",
-          "In round-robin order"
+          "In round-robin order",
+          "All at once when a program starts",
+          "Only when they are accessed (on demand)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Demand paging loads pages into memory only when they are accessed, causing a page fault that triggers loading from disk."
       },
       {
@@ -619,12 +619,12 @@
         "type": "multiple_choice",
         "prompt": "Which page replacement algorithm is optimal but impractical to implement?",
         "options": [
+          "OPT (Optimal)",
           "FIFO",
           "LRU",
-          "OPT (Optimal)",
           "Clock"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "OPT replaces the page that will not be used for the longest time in the future. It's optimal but requires future knowledge, which is impossible in practice."
       },
       {
@@ -647,12 +647,12 @@
         "type": "multiple_choice",
         "prompt": "Memory-mapped files allow file access through:",
         "options": [
-          "read() and write() system calls only",
-          "Memory load and store operations",
           "Network protocols",
-          "Keyboard input"
+          "read() and write() system calls only",
+          "Keyboard input",
+          "Memory load and store operations"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Memory-mapped files map file contents to a region of virtual memory, allowing file access through normal memory operations (load/store) instead of read/write system calls."
       },
       {
@@ -660,12 +660,12 @@
         "type": "multiple_choice",
         "prompt": "An inode in Unix file systems contains:",
         "options": [
-          "Only the file name",
           "File metadata and pointers to data blocks",
-          "Only the file data",
-          "Only the directory structure"
+          "Only the directory structure",
+          "Only the file name",
+          "Only the file data"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "An inode contains file metadata (permissions, owner, size, timestamps) and pointers to data blocks (direct, indirect, double indirect)."
       },
       {
@@ -682,11 +682,11 @@
         "codeSnippet": "Block size = 4KB = 4096 bytes\nPointer size = 4 bytes\nPointers per block = 4096 / 4 = 1024\nSingle indirect block = 1024 × 4KB = ?",
         "options": [
           "1MB",
-          "4MB",
           "16MB",
-          "1GB"
+          "1GB",
+          "4MB"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "1024 pointers × 4KB per block = 4096KB = 4MB can be addressed through a single indirect block."
       },
       {
@@ -694,12 +694,12 @@
         "type": "multiple_choice",
         "prompt": "Which file system feature helps recover from crashes?",
         "options": [
-          "Compression",
-          "Encryption",
+          "Quotas",
           "Journaling",
-          "Quotas"
+          "Encryption",
+          "Compression"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Journaling logs operations before performing them, allowing the system to replay or undo incomplete operations after a crash."
       },
       {
@@ -707,12 +707,12 @@
         "type": "multiple_choice",
         "prompt": "Copy-on-write (COW) in file systems means:",
         "options": [
-          "Data is copied when read",
           "Modifications create new copies instead of overwriting originals",
-          "All writes are synchronous",
-          "Files cannot be modified"
+          "Data is copied when read",
+          "Files cannot be modified",
+          "All writes are synchronous"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "COW file systems like Btrfs and ZFS write modifications to new locations rather than overwriting original data, enabling features like snapshots."
       },
       {
@@ -720,12 +720,12 @@
         "type": "multiple_choice",
         "prompt": "The fork() system call:",
         "options": [
-          "Creates a new thread",
           "Creates a new process as a copy of the parent",
           "Terminates the current process",
+          "Creates a new thread",
           "Allocates memory"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "fork() creates a new process that is a copy of the parent process, including code, data, and resources. The child gets a copy of the parent's address space."
       },
       {
@@ -741,12 +741,12 @@
         "type": "multiple_choice",
         "prompt": "RAID-5 provides fault tolerance through:",
         "options": [
+          "Triple replication",
           "Mirroring all data",
-          "Distributed parity across disks",
           "Striping without redundancy",
-          "Triple replication"
+          "Distributed parity across disks"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "RAID-5 stripes data and parity information across all disks. If one disk fails, data can be reconstructed from the parity information on the remaining disks."
       },
       {
@@ -805,12 +805,12 @@
         "type": "multiple_choice",
         "prompt": "Which file allocation method provides the best sequential and random access performance?",
         "options": [
+          "None of the above",
           "Contiguous allocation",
-          "Linked allocation",
           "Indexed allocation",
-          "None of the above"
+          "Linked allocation"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Contiguous allocation provides excellent sequential access (blocks are adjacent) and random access (direct calculation of block address). However, it suffers from external fragmentation."
       }
     ]

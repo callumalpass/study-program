@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary difference between supervised and unsupervised learning?",
         "options": [
-          "Supervised learning uses labeled data, unsupervised learning does not",
-          "Supervised learning is faster than unsupervised learning",
+          "Supervised learning requires more computational power",
           "Unsupervised learning is more accurate",
-          "Supervised learning requires more computational power"
+          "Supervised learning is faster than unsupervised learning",
+          "Supervised learning uses labeled data, unsupervised learning does not"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The key distinction is that supervised learning trains on labeled examples (input-output pairs), while unsupervised learning finds patterns in unlabeled data without predefined target values."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is NOT a step in the typical ML workflow?",
         "options": [
-          "Manual code optimization for production",
+          "Feature engineering",
           "Data collection and preprocessing",
           "Model training and validation",
-          "Feature engineering"
+          "Manual code optimization for production"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The typical ML workflow includes data collection, preprocessing, feature engineering, model selection, training, validation, and deployment. Manual code optimization is not a standard ML workflow step."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What does the bias-variance tradeoff describe?",
         "options": [
-          "The balance between model simplicity (high bias) and flexibility (high variance)",
           "The choice between accuracy and speed",
           "The tradeoff between training and test set size",
+          "The balance between model simplicity (high bias) and flexibility (high variance)",
           "The balance between false positives and false negatives"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The bias-variance tradeoff describes how simple models have high bias (underfitting) but low variance, while complex models have low bias but high variance (overfitting). The goal is to minimize total error."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "Which ML framework is known for dynamic computational graphs and is widely used in research?",
         "options": [
-          "PyTorch",
-          "Scikit-learn",
+          "TensorFlow 1.x",
           "XGBoost",
-          "TensorFlow 1.x"
+          "PyTorch",
+          "Scikit-learn"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "PyTorch uses dynamic computational graphs (define-by-run), making it flexible and intuitive for research. TensorFlow 2.x also adopted this approach, but PyTorch was the pioneer in this area."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "You have a dataset with 100 features and 200 samples. What problem might you face?",
         "options": [
-          "Overfitting due to the curse of dimensionality",
-          "Underfitting due to too few features",
+          "The model will always generalize well",
           "Computational efficiency will be excellent",
-          "The model will always generalize well"
+          "Overfitting due to the curse of dimensionality",
+          "Underfitting due to too few features"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "With more features than samples (p > n), models can easily overfit. This is the curse of dimensionality - as dimensions increase, data becomes sparse and patterns harder to find reliably."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "When should you use stratified sampling for train-test split?",
         "options": [
-          "When you have imbalanced classes and want to preserve class proportions",
-          "When you have too much data",
           "When features are highly correlated",
-          "When the dataset is perfectly balanced"
+          "When the dataset is perfectly balanced",
+          "When you have imbalanced classes and want to preserve class proportions",
+          "When you have too much data"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Stratified sampling ensures that train and test sets have the same proportion of classes as the original dataset, which is crucial for imbalanced datasets to avoid biased evaluation."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of data normalization/standardization?",
         "options": [
-          "To put features on similar scales so they contribute equally to distance-based models",
+          "To reduce computational complexity",
           "To remove outliers from the dataset",
-          "To increase the size of the training set",
-          "To reduce computational complexity"
+          "To put features on similar scales so they contribute equally to distance-based models",
+          "To increase the size of the training set"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Normalization (scaling to [0,1]) or standardization (zero mean, unit variance) ensures features with different scales don't dominate distance calculations or gradient descent."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "Which technique helps prevent overfitting?",
         "options": [
-          "Regularization (L1/L2)",
-          "Adding more features",
+          "Training for more epochs",
           "Increasing model complexity",
-          "Training for more epochs"
+          "Regularization (L1/L2)",
+          "Adding more features"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Regularization adds a penalty term to the loss function that discourages complex models, helping prevent overfitting. L1 (Lasso) and L2 (Ridge) are common regularization techniques."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "In the bias-variance decomposition, what does the irreducible error represent?",
         "options": [
-          "Noise inherent in the data that no model can eliminate",
           "Error from using wrong model architecture",
-          "Error from insufficient training data",
-          "Error from poor hyperparameter tuning"
+          "Noise inherent in the data that no model can eliminate",
+          "Error from poor hyperparameter tuning",
+          "Error from insufficient training data"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Irreducible error (Bayes error) comes from noise in the data itself - random variation that cannot be predicted by any model. Total error = bias² + variance + irreducible error."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is the VC dimension?",
         "options": [
-          "A measure of model capacity - the maximum number of points that can be shattered",
-          "The number of features in a dataset",
           "The depth of a neural network",
-          "The training time complexity"
+          "The training time complexity",
+          "The number of features in a dataset",
+          "A measure of model capacity - the maximum number of points that can be shattered"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "VC (Vapnik-Chervonenkis) dimension measures hypothesis class complexity. A set of n points is \"shattered\" if the classifier can realize all 2^n possible labelings. Higher VC dimension means more capacity but higher overfitting risk."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "According to PAC learning theory, what does \"probably approximately correct\" mean?",
         "options": [
+          "Predictions are always correct within a small margin",
           "With high probability, the learned hypothesis has low error",
           "The algorithm always finds the optimal solution",
-          "The model is approximately 100% accurate",
-          "Predictions are always correct within a small margin"
+          "The model is approximately 100% accurate"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "PAC learning provides probabilistic guarantees: with probability ≥(1-δ), the learned hypothesis has error ≤ε, given sufficient samples. It doesn't guarantee perfect learning, just good learning with high probability."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the sample complexity bound for learning?",
         "options": [
+          "The memory required to store the dataset",
           "The number of training examples needed to achieve a given error with given confidence",
           "The computational time required for training",
-          "The number of parameters in the model",
-          "The memory required to store the dataset"
+          "The number of parameters in the model"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Sample complexity bounds (from PAC theory) specify how many training examples m are needed to learn a concept with error ≤ε and confidence ≥(1-δ). Generally m = O((1/ε)log(1/δ)log|H|)."
       },
       {

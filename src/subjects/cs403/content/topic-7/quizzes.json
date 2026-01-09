@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "The convex hull of a set of points in the plane is:",
         "options": [
-          "The smallest convex polygon containing all points",
           "The set of all points",
+          "The smallest convex polygon containing all points",
           "The Delaunay triangulation",
           "The minimum spanning tree"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The convex hull is the minimal convex set containing the points; in 2D it is a convex polygon whose vertices are a subset of the points."
       },
       {
@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "A sweep line algorithm is characterized by:",
         "options": [
-          "Processing events in sorted order while maintaining an active set",
           "Randomly sampling points",
-          "Always recursing on halves",
-          "Using max flow as a subroutine"
+          "Processing events in sorted order while maintaining an active set",
+          "Using max flow as a subroutine",
+          "Always recursing on halves"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Sweep line methods sort “events” (like segment endpoints) and maintain a data structure of active objects intersecting the sweep line."
       },
       {
@@ -66,12 +66,12 @@
         "type": "multiple_choice",
         "prompt": "The divide-and-conquer closest pair of points algorithm runs in:",
         "options": [
+          "O(n log^2 n)",
           "O(n log n)",
-          "O(n^2)",
           "O(log n)",
-          "O(n log^2 n)"
+          "O(n^2)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Closest pair can be solved in O(n log n) by sorting once and using a divide-and-conquer merge step that checks a constant number of neighbors in the strip."
       },
       {
@@ -93,12 +93,12 @@
         "type": "multiple_choice",
         "prompt": "A common data structure for 2D orthogonal range searching is a:",
         "options": [
+          "Trie",
           "Range tree",
           "Heap",
-          "Union-find",
-          "Trie"
+          "Union-find"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Range trees (and kd-trees) are standard structures for orthogonal range searching, enabling sublinear query times with preprocessing."
       },
       {
@@ -106,12 +106,12 @@
         "type": "multiple_choice",
         "prompt": "Polygon triangulation is often used to:",
         "options": [
-          "Decompose a polygon into triangles for rendering or dynamic programming",
           "Compute max flow",
-          "Solve set cover exactly",
-          "Generate random graphs"
+          "Decompose a polygon into triangles for rendering or dynamic programming",
+          "Generate random graphs",
+          "Solve set cover exactly"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Triangulation breaks a polygon into triangles, useful in graphics and as a basis for DP solutions on polygons."
       }
     ]
@@ -154,12 +154,12 @@
         "type": "multiple_choice",
         "prompt": "The output-sensitive convex hull algorithm Jarvis March runs in:",
         "options": [
-          "O(nh)",
-          "O(n log n)",
           "O(n^2)",
-          "O(h log n)"
+          "O(h log n)",
+          "O(nh)",
+          "O(n log n)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Jarvis March (gift wrapping) takes O(nh) time where h is the number of hull vertices, making it fast when the hull is small."
       },
       {

@@ -11,11 +11,11 @@
         "prompt": "What is a socket?",
         "options": [
           "A physical network connector",
-          "An endpoint for network communication",
           "A type of cable",
+          "An endpoint for network communication",
           "A routing protocol"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A socket is an endpoint for network communication, identified by an IP address and port number combination."
       },
       {
@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "Which socket function is used by a server to wait for incoming connections?",
         "options": [
-          "bind()",
-          "listen()",
           "accept()",
-          "connect()"
+          "bind()",
+          "connect()",
+          "listen()"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "accept() blocks until a client connects, then returns a new socket for that specific connection. listen() just enables incoming connections."
       },
       {
@@ -79,12 +79,12 @@
         "type": "multiple_choice",
         "prompt": "Which function is used to convert a hostname to an IP address?",
         "options": [
-          "socket()",
           "gethostbyname()",
+          "inet_aton()",
           "bind()",
-          "inet_aton()"
+          "socket()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "gethostbyname() (or the modern getaddrinfo()) performs DNS lookup to resolve a hostname to an IP address."
       },
       {
@@ -128,11 +128,11 @@
         "prompt": "What is the advantage of using non-blocking sockets?",
         "options": [
           "They are faster",
-          "The process can do other work while waiting for I/O",
           "They use less memory",
+          "The process can do other work while waiting for I/O",
           "They encrypt data automatically"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Non-blocking sockets return immediately if I/O cannot complete, allowing the program to handle other tasks or multiple connections."
       },
       {
@@ -148,11 +148,11 @@
         "prompt": "What approach does a multi-threaded server use to handle concurrent connections?",
         "options": [
           "Fork a new process for each connection",
-          "Create a new thread for each connection",
+          "Queue connections for sequential processing",
           "Use select() to multiplex",
-          "Queue connections for sequential processing"
+          "Create a new thread for each connection"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A multi-threaded server spawns a new thread (or uses a thread pool) for each connection, allowing parallel request handling."
       },
       {
@@ -167,12 +167,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of TLS in socket programming?",
         "options": [
-          "Improve connection speed",
-          "Reduce packet size",
+          "Enable multicast",
           "Provide encryption and authentication",
-          "Enable multicast"
+          "Reduce packet size",
+          "Improve connection speed"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "TLS (Transport Layer Security) provides encryption for confidentiality and certificates for authentication over socket connections."
       }
     ]

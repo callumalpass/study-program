@@ -15,12 +15,12 @@
         "type": "multiple_choice",
         "prompt": "What is machine epsilon (ε_mach) in IEEE 754 double precision?",
         "options": [
-          "2^-52",
           "2^-53",
           "2^-64",
-          "2^-23"
+          "2^-23",
+          "2^-52"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Machine epsilon for double precision is 2^-53, which represents the smallest number such that 1 + ε_mach ≠ 1 in floating-point arithmetic."
       },
       {
@@ -42,12 +42,12 @@
         "type": "multiple_choice",
         "prompt": "A problem is well-conditioned if:",
         "options": [
+          "The round-off error is minimized",
           "Small changes in input cause small changes in output",
           "Small changes in input cause large changes in output",
-          "The algorithm converges quickly",
-          "The round-off error is minimized"
+          "The algorithm converges quickly"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A well-conditioned problem is one where small perturbations in the input lead to small changes in the output. This is measured by the condition number."
       },
       {
@@ -63,12 +63,12 @@
         "type": "multiple_choice",
         "prompt": "The condition number of a matrix A is defined as:",
         "options": [
+          "||A - A^-1||",
           "||A|| × ||A^-1||",
-          "||A|| / ||A^-1||",
           "||A^-1|| / ||A||",
-          "||A - A^-1||"
+          "||A|| / ||A^-1||"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The condition number κ(A) = ||A|| × ||A^-1||, measuring the sensitivity of the solution to perturbations in the input."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "Lagrange interpolation of n+1 data points produces a polynomial of degree:",
         "options": [
-          "n+1",
           "n",
-          "n-1",
-          "2n"
+          "2n",
+          "n+1",
+          "n-1"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The Lagrange interpolating polynomial through n+1 points has degree at most n. This is the unique polynomial of minimal degree passing through all points."
       },
       {
@@ -180,12 +180,12 @@
         "type": "multiple_choice",
         "prompt": "Chebyshev nodes are used in polynomial interpolation to:",
         "options": [
-          "Minimize the maximum interpolation error",
-          "Maximize the convergence rate",
           "Simplify the computation",
-          "Ensure equal spacing"
+          "Ensure equal spacing",
+          "Maximize the convergence rate",
+          "Minimize the maximum interpolation error"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Chebyshev nodes minimize the maximum interpolation error by reducing the Runge phenomenon, which occurs with equally spaced nodes at high degrees."
       },
       {
@@ -193,12 +193,12 @@
         "type": "multiple_choice",
         "prompt": "In least squares fitting, the objective is to minimize:",
         "options": [
-          "The sum of absolute errors",
-          "The sum of squared residuals",
           "The maximum error",
-          "The number of parameters"
+          "The number of parameters",
+          "The sum of squared residuals",
+          "The sum of absolute errors"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Least squares fitting minimizes the sum of squared residuals, leading to the normal equations A^T A x = A^T b."
       },
       {
@@ -213,12 +213,12 @@
         "type": "multiple_choice",
         "prompt": "The composite trapezoidal rule with n subintervals has error of order:",
         "options": [
+          "O(h^4)",
           "O(h)",
-          "O(h^2)",
           "O(h^3)",
-          "O(h^4)"
+          "O(h^2)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The composite trapezoidal rule has global error O(h^2) where h is the subinterval width, despite the local error being O(h^3)."
       },
       {
@@ -281,12 +281,12 @@
         "type": "multiple_choice",
         "prompt": "In IEEE 754 single precision, how many bits are used for the exponent?",
         "options": [
+          "23 bits",
           "8 bits",
           "11 bits",
-          "23 bits",
           "52 bits"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "IEEE 754 single precision uses 8 bits for the exponent, 23 bits for the mantissa, and 1 bit for the sign."
       },
       {
@@ -308,12 +308,12 @@
         "type": "multiple_choice",
         "prompt": "Which operation is most susceptible to catastrophic cancellation?",
         "options": [
-          "Multiplying two large numbers",
-          "Subtracting nearly equal numbers",
+          "Dividing by a small number",
           "Adding numbers of different magnitudes",
-          "Dividing by a small number"
+          "Subtracting nearly equal numbers",
+          "Multiplying two large numbers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Subtracting nearly equal numbers causes catastrophic cancellation, where significant digits are lost, leaving only round-off error."
       },
       {
@@ -342,12 +342,12 @@
         "type": "multiple_choice",
         "prompt": "For Newton's method x_{n+1} = x_n - f(x_n)/f'(x_n), what happens at a multiple root where f(r) = f'(r) = 0?",
         "options": [
+          "The method diverges",
           "Quadratic convergence is maintained",
           "Convergence becomes only linear",
-          "The method diverges",
           "Convergence becomes cubic"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "At a multiple root, Newton's method converges only linearly instead of quadratically. Modified Newton's method can restore quadratic convergence."
       },
       {
@@ -377,12 +377,12 @@
         "type": "multiple_choice",
         "prompt": "Müller's method uses:",
         "options": [
-          "Linear interpolation through two points",
           "Quadratic interpolation through three points",
-          "Cubic interpolation through four points",
-          "The derivative at one point"
+          "Linear interpolation through two points",
+          "The derivative at one point",
+          "Cubic interpolation through four points"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Müller's method fits a parabola (quadratic) through three points and finds where it crosses the x-axis, allowing it to find complex roots."
       },
       {
@@ -397,11 +397,11 @@
         "prompt": "The error in polynomial interpolation can be bounded using:",
         "options": [
           "The maximum value of the polynomial",
+          "The spacing between data points",
           "The (n+1)st derivative of the function",
-          "The condition number of the Vandermonde matrix",
-          "The spacing between data points"
+          "The condition number of the Vandermonde matrix"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The interpolation error is bounded by max|f^(n+1)(ξ)|/(n+1)! times the product of distances to data points, involving the (n+1)st derivative."
       },
       {
@@ -445,11 +445,11 @@
         "prompt": "In least squares approximation with the normal equations A^T A x = A^T b, what happens when A^T A is nearly singular?",
         "options": [
           "The solution is more accurate",
-          "The problem is ill-conditioned and sensitive to errors",
           "The computation is faster",
-          "Multiple exact solutions exist"
+          "Multiple exact solutions exist",
+          "The problem is ill-conditioned and sensitive to errors"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "When A^T A is nearly singular, the condition number is large, making the problem ill-conditioned. Small errors in data lead to large errors in the solution."
       },
       {
@@ -457,12 +457,12 @@
         "type": "multiple_choice",
         "prompt": "The central difference approximation for f'(x) is:",
         "options": [
-          "(f(x+h) - f(x))/h",
-          "(f(x) - f(x-h))/h",
           "(f(x+h) - f(x-h))/(2h)",
-          "(f(x+h) - 2f(x) + f(x-h))/h"
+          "(f(x) - f(x-h))/h",
+          "(f(x+h) - 2f(x) + f(x-h))/h",
+          "(f(x+h) - f(x))/h"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The central difference formula f'(x) ≈ (f(x+h) - f(x-h))/(2h) has error O(h²), better than forward or backward differences which have error O(h)."
       },
       {
@@ -493,11 +493,11 @@
         "prompt": "Gaussian quadrature nodes are the zeros of:",
         "options": [
           "Chebyshev polynomials",
-          "Legendre polynomials",
           "Hermite polynomials",
+          "Legendre polynomials",
           "Laguerre polynomials"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "For the standard interval [-1, 1], Gaussian quadrature nodes are the zeros of Legendre polynomials, chosen to maximize the degree of exactness."
       },
       {
@@ -546,12 +546,12 @@
         "type": "multiple_choice",
         "prompt": "The condition number κ(A) of a matrix indicates:",
         "options": [
-          "How fast Gaussian elimination will be",
           "How sensitive the solution Ax=b is to perturbations in A and b",
+          "How fast Gaussian elimination will be",
           "The number of iterations needed for convergence",
           "The rank of the matrix"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The condition number measures sensitivity: a large κ(A) means small changes in A or b can cause large changes in the solution x."
       },
       {
@@ -559,12 +559,12 @@
         "type": "multiple_choice",
         "prompt": "QR decomposition expresses A as:",
         "options": [
-          "A = QR where Q is orthogonal and R is upper triangular",
-          "A = QR where Q is lower triangular and R is orthogonal",
           "A = QR where both Q and R are orthogonal",
-          "A = QR where both Q and R are triangular"
+          "A = QR where both Q and R are triangular",
+          "A = QR where Q is orthogonal and R is upper triangular",
+          "A = QR where Q is lower triangular and R is orthogonal"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "QR decomposition factors A = QR where Q is orthogonal (Q^T Q = I) and R is upper triangular, useful for solving least squares problems."
       },
       {
@@ -572,12 +572,12 @@
         "type": "multiple_choice",
         "prompt": "For which type of matrices does the Jacobi method guarantee convergence?",
         "options": [
-          "All invertible matrices",
-          "Strictly diagonally dominant matrices",
+          "Orthogonal matrices",
           "Upper triangular matrices",
-          "Orthogonal matrices"
+          "All invertible matrices",
+          "Strictly diagonally dominant matrices"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The Jacobi iterative method is guaranteed to converge for strictly diagonally dominant matrices, where |a_ii| > Σ_{j≠i} |a_ij| for all i."
       },
       {
@@ -607,12 +607,12 @@
         "type": "multiple_choice",
         "prompt": "The Conjugate Gradient (CG) method is designed for:",
         "options": [
+          "Upper triangular systems",
           "Any linear system",
           "Symmetric positive definite systems",
-          "Upper triangular systems",
           "Overdetermined systems"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "CG is specifically designed for symmetric positive definite (SPD) systems, where it theoretically converges in at most n iterations."
       },
       {
@@ -626,12 +626,12 @@
         "type": "multiple_choice",
         "prompt": "The forward Euler method for solving dy/dt = f(t,y) is:",
         "options": [
-          "y_{n+1} = y_n + h*f(t_n, y_n)",
-          "y_{n+1} = y_n + h*f(t_{n+1}, y_{n+1})",
           "y_{n+1} = y_n + (h/2)*(f(t_n, y_n) + f(t_{n+1}, y_{n+1}))",
-          "y_{n+1} = y_n + h*(f(t_n, y_n) + f(t_{n+1}, y_n + h*f(t_n, y_n)))/2"
+          "y_{n+1} = y_n + h*f(t_n, y_n)",
+          "y_{n+1} = y_n + h*(f(t_n, y_n) + f(t_{n+1}, y_n + h*f(t_n, y_n)))/2",
+          "y_{n+1} = y_n + h*f(t_{n+1}, y_{n+1})"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Forward (explicit) Euler is y_{n+1} = y_n + h*f(t_n, y_n), the simplest explicit one-step method with local error O(h²)."
       },
       {
@@ -661,12 +661,12 @@
         "type": "multiple_choice",
         "prompt": "Adams-Bashforth methods are:",
         "options": [
-          "Implicit multistep methods",
           "Explicit multistep methods",
-          "One-step Runge-Kutta methods",
-          "Boundary value problem solvers"
+          "Implicit multistep methods",
+          "Boundary value problem solvers",
+          "One-step Runge-Kutta methods"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Adams-Bashforth methods are explicit multistep methods that use function values from previous steps, while Adams-Moulton methods are implicit."
       },
       {

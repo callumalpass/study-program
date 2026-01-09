@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which component of the CIA triad ensures that data is protected from unauthorized modifications?",
         "options": [
-          "Confidentiality",
-          "Integrity",
           "Availability",
-          "Authentication"
+          "Authentication",
+          "Confidentiality",
+          "Integrity"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Integrity ensures that data remains accurate and unaltered by unauthorized parties. Confidentiality protects against unauthorized access, while Availability ensures systems remain accessible."
       },
       {
@@ -44,11 +44,11 @@
         "prompt": "In threat modeling, what does STRIDE stand for?",
         "options": [
           "Security, Threats, Risks, Implementation, Detection, Evaluation",
-          "Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege",
+          "Strategies, Tactics, Risks, Incidents, Defense, Escalation",
           "System, Testing, Review, Integration, Deployment, Execution",
-          "Strategies, Tactics, Risks, Incidents, Defense, Escalation"
+          "Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "STRIDE is a threat modeling framework developed by Microsoft that categorizes threats into six types: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Which security principle suggests that a system should fail in a secure state?",
         "options": [
-          "Fail-open",
-          "Fail-secure (fail-closed)",
           "Fail-fast",
-          "Fail-over"
+          "Fail-over",
+          "Fail-secure (fail-closed)",
+          "Fail-open"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Fail-secure (or fail-closed) means that when a system encounters an error or failure, it should default to a secure state that denies access rather than allowing unrestricted access."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary purpose of security through obscurity?",
         "options": [
-          "It is a recommended best practice for all security systems",
           "Hiding implementation details as the sole security measure",
           "Encrypting all data at rest",
-          "Using complex passwords"
+          "Using complex passwords",
+          "It is a recommended best practice for all security systems"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Security through obscurity relies on keeping the implementation secret. This is generally discouraged as a primary security measure because once the secret is discovered, the system is compromised. It may be used as an additional layer but never as the only defense."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What does the principle of \"complete mediation\" require?",
         "options": [
+          "Mediation should only occur during login",
           "All access attempts must be checked every time",
-          "Access checks should be cached for performance",
           "Only the first access attempt needs verification",
-          "Mediation should only occur during login"
+          "Access checks should be cached for performance"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Complete mediation requires that every access to every resource is checked against the access control mechanism. This prevents attackers from exploiting cached permissions or bypassing checks after initial authentication."
       },
       {
@@ -117,12 +117,12 @@
         "type": "multiple_choice",
         "prompt": "Which concept describes the attack surface of a system?",
         "options": [
-          "The total number of users in the system",
-          "The sum of all points where an attacker can try to enter or extract data",
+          "The number of lines of code in the application",
           "The physical size of the data center",
-          "The number of lines of code in the application"
+          "The total number of users in the system",
+          "The sum of all points where an attacker can try to enter or extract data"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The attack surface encompasses all the different points where an unauthorized user could potentially enter data or extract data from a system. Reducing the attack surface is a key security principle."
       }
     ]
@@ -178,12 +178,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main benefit of implementing defense in depth?",
         "options": [
-          "It eliminates the need for security updates",
           "It provides multiple layers of protection so compromise of one layer doesn't compromise the entire system",
           "It makes systems immune to all attacks",
+          "It eliminates the need for security updates",
           "It reduces the cost of security implementation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Defense in depth uses multiple, overlapping security controls. If one layer is compromised, additional layers continue to provide protection, making it significantly harder for attackers to breach the entire system."
       }
     ]

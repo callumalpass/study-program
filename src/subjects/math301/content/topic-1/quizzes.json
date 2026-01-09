@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the dot product of vectors u = <2, -3, 1> and v = <1, 4, -2>?",
         "options": [
-          "-12",
           "-8",
+          "-12",
           "8",
           "12"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The dot product is u·v = (2)(1) + (-3)(4) + (1)(-2) = 2 - 12 - 2 = -12"
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "If the angle between two unit vectors is 60°, what is their dot product?",
         "options": [
-          "0",
           "0.5",
+          "0",
           "0.866",
           "1"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "For unit vectors, u·v = |u||v|cos(θ) = (1)(1)cos(60°) = cos(60°) = 0.5"
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the magnitude of the cross product <1, 0, 0> × <0, 1, 0>?",
         "options": [
+          "2",
           "0",
-          "1",
           "√2",
-          "2"
+          "1"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "<1,0,0> × <0,1,0> = <0,0,1>, which has magnitude √(0²+0²+1²) = 1"
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "Which equation represents a line passing through point (1, 2, 3) parallel to vector <2, -1, 4>?",
         "options": [
-          "r(t) = <1+2t, 2-t, 3+4t>",
-          "r(t) = <2+t, -1+2t, 4+3t>",
+          "r(t) = t<2, -1, 4>",
           "r(t) = <1, 2, 3> + t",
-          "r(t) = t<2, -1, 4>"
+          "r(t) = <2+t, -1+2t, 4+3t>",
+          "r(t) = <1+2t, 2-t, 3+4t>"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The parametric equation of a line is r(t) = r₀ + tv, where r₀ is a point and v is the direction vector"
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "What is the equation of the plane passing through (1, 0, 2) with normal vector <3, -1, 2>?",
         "options": [
-          "3x - y + 2z = 7",
           "3x - y + 2z = 5",
           "x + 2z = 5",
-          "3x - y + 2z = 3"
+          "3x - y + 2z = 3",
+          "3x - y + 2z = 7"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Using n·(r - r₀) = 0: 3(x-1) - 1(y-0) + 2(z-2) = 0 → 3x - y + 2z = 7"
       },
       {
@@ -97,12 +97,12 @@
         "type": "multiple_choice",
         "prompt": "For the space curve r(t) = <cos(t), sin(t), t>, what is r'(t)?",
         "options": [
-          "<-sin(t), cos(t), 1>",
-          "<sin(t), -cos(t), 1>",
           "<-cos(t), -sin(t), 0>",
-          "<cos(t), sin(t), 0>"
+          "<cos(t), sin(t), 0>",
+          "<sin(t), -cos(t), 1>",
+          "<-sin(t), cos(t), 1>"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Differentiating each component: d/dt[cos(t)] = -sin(t), d/dt[sin(t)] = cos(t), d/dt[t] = 1"
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "What is the distance from point (2, 1, -1) to the plane x + 2y - 2z = 3?",
         "options": [
-          "1",
           "2",
-          "3",
-          "4"
+          "4",
+          "1",
+          "3"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Distance = |ax₀ + by₀ + cz₀ - d|/√(a² + b² + c²) = |1(2) + 2(1) + (-2)(-1) - 3|/√(1 + 4 + 4) = |2 + 2 + 2 - 3|/3 = 3/3 = 1"
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "The unit tangent vector T(t) is defined as T(t) = r'(t) divided by what?",
         "options": [
-          "|r'(t)|",
-          "|r(t)|",
+          "t",
           "r(t)",
-          "t"
+          "|r(t)|",
+          "|r'(t)|"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The unit tangent vector is T(t) = r'(t)/|r'(t)|, normalizing the velocity vector"
       }
     ]
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "What is the arc length of r(t) = <3t, 4t, 0> from t = 0 to t = 2?",
         "options": [
-          "5",
           "10",
-          "14",
-          "25"
+          "25",
+          "5",
+          "14"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "r'(t) = <3, 4, 0>, |r'(t)| = √(9 + 16) = 5. Arc length = ∫₀² 5 dt = 10"
       },
       {
@@ -164,12 +164,12 @@
         "type": "multiple_choice",
         "prompt": "For a curve r(t), the principal unit normal vector N(t) is perpendicular to which vector?",
         "options": [
-          "T(t)",
           "r(t)",
-          "r''(t)",
-          "B(t) only"
+          "B(t) only",
+          "T(t)",
+          "r''(t)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "N(t) = T'(t)/|T'(t)| is perpendicular to T(t) because T(t) has constant magnitude 1, so T·T' = 0"
       },
       {
@@ -177,12 +177,12 @@
         "type": "multiple_choice",
         "prompt": "The binormal vector B(t) is defined as which cross product?",
         "options": [
-          "T(t) × N(t)",
           "N(t) × T(t)",
-          "r'(t) × r''(t)",
-          "T(t) × r(t)"
+          "T(t) × N(t)",
+          "T(t) × r(t)",
+          "r'(t) × r''(t)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The binormal vector B(t) = T(t) × N(t), forming a right-handed coordinate system with T and N"
       },
       {

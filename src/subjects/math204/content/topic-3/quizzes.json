@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "The integration by parts formula is:",
         "options": [
-          "$\\int u \\, dv = uv - \\int v \\, du$",
-          "$\\int u \\, dv = uv + \\int v \\, du$",
+          "$\\int u \\, dv = u + v$",
           "$\\int u \\, v = uv$",
-          "$\\int u \\, dv = u + v$"
+          "$\\int u \\, dv = uv - \\int v \\, du$",
+          "$\\int u \\, dv = uv + \\int v \\, du$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Integration by parts: $\\int u \\, dv = uv - \\int v \\, du$. This comes from the product rule for differentiation."
       },
       {
@@ -31,11 +31,11 @@
         "prompt": "To integrate $\\int x e^x \\, dx$ by parts, choose:",
         "options": [
           "$u = e^x, dv = x \\, dx$",
+          "$u = 1, dv = xe^x \\, dx$",
           "$u = x, dv = e^x \\, dx$",
-          "$u = xe^x, dv = dx$",
-          "$u = 1, dv = xe^x \\, dx$"
+          "$u = xe^x, dv = dx$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Choose $u = x$ (gets simpler when differentiated) and $dv = e^x \\, dx$ (easy to integrate). Then $du = dx$ and $v = e^x$."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "For integrals containing $\\sqrt{a^2 - x^2}$, use the substitution:",
         "options": [
-          "$x = a \\tan \\theta$",
           "$x = a \\sin \\theta$",
+          "$x = a \\cos \\theta$",
           "$x = a \\sec \\theta$",
-          "$x = a \\cos \\theta$"
+          "$x = a \\tan \\theta$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "For $\\sqrt{a^2 - x^2}$, use $x = a \\sin \\theta$. Then $\\sqrt{a^2 - x^2} = \\sqrt{a^2(1 - \\sin^2 \\theta)} = a \\cos \\theta$."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "For integrals containing $\\sqrt{x^2 + a^2}$, use the substitution:",
         "options": [
-          "$x = a \\sin \\theta$",
-          "$x = a \\tan \\theta$",
           "$x = a \\sec \\theta$",
-          "$x = a \\cosh \\theta$"
+          "$x = a \\cosh \\theta$",
+          "$x = a \\tan \\theta$",
+          "$x = a \\sin \\theta$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "For $\\sqrt{x^2 + a^2}$, use $x = a \\tan \\theta$. Then $\\sqrt{x^2 + a^2} = \\sqrt{a^2(\\tan^2 \\theta + 1)} = a \\sec \\theta$."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What identity is used after substituting $x = a \\sin \\theta$ in $\\sqrt{a^2 - x^2}$?",
         "options": [
-          "$\\sin^2 \\theta + \\cos^2 \\theta = 1$",
+          "$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$",
           "$\\tan^2 \\theta + 1 = \\sec^2 \\theta$",
-          "$\\sec^2 \\theta - 1 = \\tan^2 \\theta$",
-          "$\\sin 2\\theta = 2\\sin\\theta\\cos\\theta$"
+          "$\\sin^2 \\theta + \\cos^2 \\theta = 1$",
+          "$\\sec^2 \\theta - 1 = \\tan^2 \\theta$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Use $1 - \\sin^2 \\theta = \\cos^2 \\theta$ to simplify $\\sqrt{a^2 - a^2\\sin^2 \\theta} = a\\cos\\theta$."
       },
       {
@@ -117,12 +117,12 @@
         "type": "multiple_choice",
         "prompt": "For $\\sqrt{x^2 - a^2}$, use the substitution $x = $",
         "options": [
-          "$a \\sin \\theta$",
           "$a \\tan \\theta$",
-          "$a \\sec \\theta$",
-          "$a \\cos \\theta$"
+          "$a \\cos \\theta$",
+          "$a \\sin \\theta$",
+          "$a \\sec \\theta$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Use $x = a \\sec \\theta$. Then $\\sqrt{x^2 - a^2} = \\sqrt{a^2(\\sec^2 \\theta - 1)} = a \\tan \\theta$."
       }
     ]
@@ -138,12 +138,12 @@
         "type": "multiple_choice",
         "prompt": "Partial fraction decomposition applies to:",
         "options": [
-          "Polynomial functions",
           "Rational functions",
           "Trigonometric functions",
-          "Exponential functions"
+          "Exponential functions",
+          "Polynomial functions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Partial fractions decompose rational functions (ratios of polynomials) into simpler fractions."
       },
       {
@@ -158,12 +158,12 @@
         "type": "multiple_choice",
         "prompt": "The decomposition of $\\frac{1}{(x-1)(x+2)}$ has the form:",
         "options": [
-          "$\\frac{A}{x-1} + \\frac{B}{x+2}$",
-          "$\\frac{Ax+B}{x-1}$",
           "$\\frac{A}{x^2+x-2}$",
-          "$A(x-1) + B(x+2)$"
+          "$\\frac{A}{x-1} + \\frac{B}{x+2}$",
+          "$A(x-1) + B(x+2)$",
+          "$\\frac{Ax+B}{x-1}$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For distinct linear factors, use: $\\frac{1}{(x-1)(x+2)} = \\frac{A}{x-1} + \\frac{B}{x+2}$."
       },
       {
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "For a repeated linear factor $(x-a)^2$ in the denominator, the partial fraction form includes:",
         "options": [
-          "$\\frac{A}{x-a}$",
-          "$\\frac{A}{x-a} + \\frac{B}{(x-a)^2}$",
           "$\\frac{Ax+B}{(x-a)^2}$",
-          "$\\frac{A}{(x-a)^2}$"
+          "$\\frac{A}{(x-a)^2}$",
+          "$\\frac{A}{x-a}$",
+          "$\\frac{A}{x-a} + \\frac{B}{(x-a)^2}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "For $(x-a)^2$, include both $\\frac{A}{x-a}$ and $\\frac{B}{(x-a)^2}$ in the decomposition."
       },
       {

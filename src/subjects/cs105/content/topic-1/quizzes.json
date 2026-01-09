@@ -44,12 +44,12 @@
         "type": "multiple_choice",
         "prompt": "What is the size of char data type in C?",
         "options": [
+          "Depends on system",
           "1 byte",
           "2 bytes",
-          "4 bytes",
-          "Depends on system"
+          "4 bytes"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The char type is always exactly 1 byte in C, which is guaranteed by the standard."
       },
       {
@@ -80,12 +80,12 @@
         "type": "multiple_choice",
         "prompt": "What is the value of x after: int x = 5; x += 3;",
         "options": [
+          "15",
           "5",
           "3",
-          "8",
-          "15"
+          "8"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "The += operator adds the right operand to the left operand. x += 3 is equivalent to x = x + 3."
       },
       {
@@ -101,12 +101,12 @@
         "type": "multiple_choice",
         "prompt": "Which operator has the highest precedence?",
         "options": [
-          "+",
-          "*",
+          "()",
           "==",
-          "()"
+          "*",
+          "+"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "Parentheses have the highest precedence and are used to override default operator precedence."
       },
       {
@@ -150,12 +150,12 @@
         "type": "multiple_choice",
         "prompt": "What happens if a function with return type int does not return a value?",
         "options": [
-          "Compilation error",
-          "Returns 0",
+          "Returns -1",
           "Undefined behavior",
-          "Returns -1"
+          "Returns 0",
+          "Compilation error"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Not returning a value from a non-void function is undefined behavior. The compiler may warn but typically allows it."
       },
       {

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary motivation for building distributed systems?",
         "options": [
-          "To share resources and improve scalability",
-          "To make systems more complex",
           "To increase single-point failures",
-          "To reduce system availability"
+          "To make systems more complex",
+          "To reduce system availability",
+          "To share resources and improve scalability"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Distributed systems are built to share resources across multiple nodes, improve scalability by adding more machines, and provide fault tolerance through redundancy."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What does transparency in distributed systems refer to?",
         "options": [
-          "Hiding the distributed nature from users",
-          "Making all system internals visible",
+          "Exposing network delays to applications",
           "Using clear glass in server racks",
-          "Exposing network delays to applications"
+          "Hiding the distributed nature from users",
+          "Making all system internals visible"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Transparency in distributed systems means hiding aspects of distribution (like location, replication, or failures) from users and applications, making the system appear as a single coherent entity."
       },
       {
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What architectural pattern uses a central server to coordinate requests?",
         "options": [
-          "Client-server architecture",
-          "Peer-to-peer architecture",
+          "Edge computing architecture",
           "Blockchain architecture",
-          "Edge computing architecture"
+          "Client-server architecture",
+          "Peer-to-peer architecture"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Client-server architecture uses a central server to handle requests from multiple clients, providing centralized control and coordination."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "In peer-to-peer systems, what is a primary advantage?",
         "options": [
-          "No single point of failure",
-          "Centralized control",
           "Simple security management",
-          "Guaranteed consistency"
+          "Centralized control",
+          "Guaranteed consistency",
+          "No single point of failure"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Peer-to-peer systems distribute functionality across all nodes, eliminating single points of failure and improving fault tolerance, though at the cost of coordination complexity."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What is Remote Procedure Call (RPC) designed to do?",
         "options": [
-          "Make remote function calls appear local",
-          "Directly access remote memory",
           "Share global variables across nodes",
-          "Eliminate network communication"
+          "Eliminate network communication",
+          "Directly access remote memory",
+          "Make remote function calls appear local"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "RPC provides location transparency by making remote procedure calls appear as if they were local function calls, hiding the complexity of network communication."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Which CAP property must be sacrificed during a network partition?",
         "options": [
-          "Either Consistency or Availability",
-          "Partition tolerance",
+          "None, all three can be maintained",
           "Both Consistency and Availability",
-          "None, all three can be maintained"
+          "Partition tolerance",
+          "Either Consistency or Availability"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "When network partitions occur (P in CAP), systems must choose between maintaining consistency (rejecting some requests) or availability (potentially serving stale data)."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What type of system prioritizes availability over consistency?",
         "options": [
-          "AP system (Availability + Partition tolerance)",
+          "None of the above",
           "CP system (Consistency + Partition tolerance)",
-          "CA system (Consistency + Availability)",
-          "None of the above"
+          "AP system (Availability + Partition tolerance)",
+          "CA system (Consistency + Availability)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "AP systems choose to remain available during partitions, accepting that different nodes may serve different data temporarily, using eventual consistency models."
       },
       {

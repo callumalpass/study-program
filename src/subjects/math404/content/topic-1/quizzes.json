@@ -11,11 +11,11 @@
         "prompt": "Which of the following is NOT a component of an optimization problem?",
         "options": [
           "Decision variables",
-          "Objective function",
+          "Probability distribution",
           "Constraints",
-          "Probability distribution"
+          "Objective function"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "Probability distributions are relevant for stochastic optimization but not required for deterministic optimization problems."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "For an unconstrained optimization problem, what is the first-order necessary condition for a local minimum at x*?",
         "options": [
-          "∇f(x*) > 0",
-          "∇f(x*) = 0",
+          "f(x*) = 0",
           "∇²f(x*) > 0",
-          "f(x*) = 0"
+          "∇f(x*) > 0",
+          "∇f(x*) = 0"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "At a local minimum, the gradient must vanish: ∇f(x*) = 0. This is the first-order necessary condition (FONC)."
       },
       {
@@ -72,11 +72,11 @@
         "prompt": "In a production problem, if x₁ represents units of product 1 and x₂ represents units of product 2, which constraint represents a labor limit of 100 hours if product 1 takes 2 hours and product 2 takes 3 hours?",
         "options": [
           "2x₁ + 3x₂ = 100",
-          "2x₁ + 3x₂ ≤ 100",
+          "x₁ + x₂ ≤ 100",
           "2x₁ + 3x₂ ≥ 100",
-          "x₁ + x₂ ≤ 100"
+          "2x₁ + 3x₂ ≤ 100"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The total labor used (2x₁ + 3x₂) must not exceed the available 100 hours, giving us the inequality constraint 2x₁ + 3x₂ ≤ 100."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "For which type of optimization problem can we guarantee finding a global optimum in polynomial time?",
         "options": [
-          "General nonlinear programming",
           "Integer linear programming",
           "Convex quadratic programming",
-          "Mixed-integer nonlinear programming"
+          "Mixed-integer nonlinear programming",
+          "General nonlinear programming"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Convex quadratic programming can be solved to global optimality in polynomial time using interior-point methods. The other problem classes are generally NP-hard."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What does LICQ (Linear Independence Constraint Qualification) require at a point x*?",
         "options": [
-          "All constraints are active",
           "Gradients of active constraints are linearly independent",
+          "The Hessian is positive definite",
           "The objective function is linear",
-          "The Hessian is positive definite"
+          "All constraints are active"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "LICQ requires that the gradients of all active inequality constraints and all equality constraints are linearly independent at x*."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "Consider f(x,y) = (x-2)² + (y-3)². What is the global minimum and where does it occur?",
         "options": [
-          "f = 0 at (2,3)",
           "f = 1 at (1,2)",
           "f = 5 at (0,0)",
+          "f = 0 at (2,3)",
           "f = 13 at (3,2)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "This is a paraboloid with vertex at (2,3). The minimum value is 0, achieved when both squared terms equal zero, i.e., at (2,3)."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "For a twice-differentiable function f, which condition is sufficient for x* to be a strict local minimum?",
         "options": [
-          "∇f(x*) = 0 only",
-          "∇f(x*) = 0 and ∇²f(x*) is positive semidefinite",
           "∇f(x*) = 0 and ∇²f(x*) is positive definite",
+          "∇f(x*) = 0 and ∇²f(x*) is positive semidefinite",
+          "∇f(x*) = 0 only",
           "∇²f(x*) is positive definite only"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "For a strict local minimum, we need ∇f(x*) = 0 (first-order condition) and ∇²f(x*) positive definite (second-order sufficient condition)."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "Which class of functions has the property that every local minimum is also a global minimum?",
         "options": [
-          "Continuous functions",
-          "Differentiable functions",
+          "Polynomial functions",
           "Convex functions",
-          "Polynomial functions"
+          "Continuous functions",
+          "Differentiable functions"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "This is a defining property of convex functions. For convex f, any local minimum is automatically a global minimum."
       },
       {

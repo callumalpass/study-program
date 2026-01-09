@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is gcd(48, 18) using Euclid's algorithm?",
         "options": [
-          "3",
-          "6",
+          "12",
           "9",
-          "12"
+          "3",
+          "6"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "gcd(48,18) = gcd(18,12) = gcd(12,6) = gcd(6,0) = 6."
       },
       {
@@ -44,12 +44,12 @@
         "type": "multiple_choice",
         "prompt": "lcm(12, 18) = ?",
         "options": [
-          "6",
           "36",
           "72",
-          "216"
+          "216",
+          "6"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "lcm(a,b) = a×b/gcd(a,b) = 216/6 = 36."
       }
     ]
@@ -66,11 +66,11 @@
         "prompt": "The modular inverse of 3 modulo 7 is:",
         "options": [
           "2",
+          "5",
           "3",
-          "4",
-          "5"
+          "4"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "3 × 5 = 15 ≡ 1 (mod 7). So 3⁻¹ ≡ 5 (mod 7)."
       },
       {
@@ -120,12 +120,12 @@
         "type": "multiple_choice",
         "prompt": "The Chinese Remainder Theorem applies when moduli are:",
         "options": [
+          "Pairwise coprime",
           "All equal",
           "All prime",
-          "Pairwise coprime",
           "In ascending order"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "CRT requires pairwise coprime moduli for a unique solution mod their product."
       },
       {
@@ -147,12 +147,12 @@
         "type": "multiple_choice",
         "prompt": "In RSA, the public key exponent e must be coprime to:",
         "options": [
-          "n",
-          "p",
+          "φ(n)",
           "q",
-          "φ(n)"
+          "n",
+          "p"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "e must be coprime to φ(n) = (p-1)(q-1) so that d = e⁻¹ mod φ(n) exists."
       },
       {

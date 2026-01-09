@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "A flow network is typically a:",
         "options": [
-          "Directed graph with capacities",
-          "Undirected graph with weights",
           "Tree with priorities",
-          "Planar graph only"
+          "Undirected graph with weights",
+          "Planar graph only",
+          "Directed graph with capacities"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Standard max-flow is defined on directed edges with nonnegative capacities, with a source and sink."
       },
       {
@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "Edmonds–Karp is Ford–Fulkerson where augmenting paths are found using:",
         "options": [
-          "BFS (shortest in edges)",
+          "Bellman–Ford",
           "DFS (deepest first)",
           "Dijkstra",
-          "Bellman–Ford"
+          "BFS (shortest in edges)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Edmonds–Karp chooses shortest augmenting paths by number of edges using BFS, yielding a polynomial-time bound."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "The max-flow min-cut theorem states that:",
         "options": [
-          "The value of the maximum s–t flow equals the capacity of the minimum s–t cut",
-          "The minimum cut is always unique",
+          "Max flow equals number of vertices",
           "Every flow is a cut",
-          "Max flow equals number of vertices"
+          "The value of the maximum s–t flow equals the capacity of the minimum s–t cut",
+          "The minimum cut is always unique"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Max-flow min-cut connects flows (primal) and cuts (dual): the maximum flow value equals the minimum cut capacity."
       }
     ]
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Bipartite matching can be reduced to max flow by:",
         "options": [
+          "Using dynamic programming over subsets",
           "Adding a source connected to left nodes and a sink connected from right nodes, all capacities 1",
           "Running Dijkstra on the bipartite graph",
-          "Taking the MST of the bipartite graph",
-          "Using dynamic programming over subsets"
+          "Taking the MST of the bipartite graph"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Construct a flow network with unit capacities: source→left (1), left→right edges (1), right→sink (1). The max flow equals maximum matching size."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "Minimum-cost flow extends max flow by also minimizing:",
         "options": [
-          "Total edge cost of the shipped flow",
           "Number of vertices used",
           "Graph diameter",
+          "Total edge cost of the shipped flow",
           "Maximum degree"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Min-cost flow assigns costs to edges and seeks a feasible flow of given value with minimum total cost."
       },
       {
@@ -111,12 +111,12 @@
         "type": "multiple_choice",
         "prompt": "Which application is a natural fit for max flow?",
         "options": [
-          "Project selection / closure problems",
           "Sorting numbers",
-          "Computing convex hull",
-          "Finding primes"
+          "Project selection / closure problems",
+          "Finding primes",
+          "Computing convex hull"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Many selection problems reduce to min-cut / max-flow (e.g., maximum closure, project selection with prerequisites) by building a flow network and taking an s–t cut."
       }
     ]
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "The min-cut in an s–t flow network can be recovered at termination by:",
         "options": [
-          "Taking vertices reachable from s in the final residual graph",
           "Taking vertices with maximum degree",
-          "Taking the smallest SCC",
-          "Sorting edges by capacity"
+          "Taking vertices reachable from s in the final residual graph",
+          "Sorting edges by capacity",
+          "Taking the smallest SCC"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "When no augmenting path exists, the reachable set S from s in the residual graph forms an s–t cut (S, V\\S) whose capacity equals the max flow value."
       },
       {

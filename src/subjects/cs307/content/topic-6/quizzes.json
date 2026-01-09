@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary purpose of TLS/SSL?",
         "options": [
-          "To compress network traffic",
-          "To provide encrypted, authenticated communication over networks",
           "To speed up web page loading",
-          "To prevent physical access to servers"
+          "To prevent physical access to servers",
+          "To provide encrypted, authenticated communication over networks",
+          "To compress network traffic"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "TLS (Transport Layer Security) provides encryption (confidentiality), authentication (verifying server identity via certificates), and integrity (detecting tampering) for network communications. HTTPS is HTTP over TLS, ensuring secure web browsing."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Which VPN protocol is considered most secure for modern use?",
         "options": [
-          "PPTP",
           "WireGuard or OpenVPN",
           "Telnet",
-          "FTP"
+          "FTP",
+          "PPTP"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "WireGuard and OpenVPN are modern, secure VPN protocols. WireGuard uses contemporary cryptography and has a smaller codebase. PPTP is obsolete and insecure. VPNs encrypt traffic and create secure tunnels over untrusted networks, protecting confidentiality and integrity."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What type of attack involves intercepting and potentially modifying communications between two parties?",
         "options": [
+          "Buffer Overflow",
           "Denial of Service",
-          "Man-in-the-Middle (MITM)",
           "SQL Injection",
-          "Buffer Overflow"
+          "Man-in-the-Middle (MITM)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Man-in-the-Middle attacks occur when an attacker intercepts communication between two parties, potentially reading or modifying data. TLS with proper certificate validation, HSTS, and certificate pinning help prevent MITM attacks by ensuring encrypted, authenticated connections."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary security benefit of network segmentation?",
         "options": [
-          "Faster network speeds",
           "Limiting the blast radius of security breaches by isolating critical systems",
+          "Eliminating the need for firewalls",
           "Reducing hardware costs",
-          "Eliminating the need for firewalls"
+          "Faster network speeds"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Network segmentation divides networks into isolated zones (DMZ, internal network, management network). If one segment is compromised, attackers cannot easily access other segments. This limits lateral movement and protects critical assets through defense in depth."
       },
       {
@@ -105,11 +105,11 @@
         "prompt": "Which attack technique amplifies traffic to overwhelm a target using publicly accessible servers?",
         "options": [
           "SQL Injection",
-          "DDoS Amplification (like DNS amplification, NTP amplification)",
           "Phishing",
+          "DDoS Amplification (like DNS amplification, NTP amplification)",
           "Privilege Escalation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Amplification attacks use public servers (DNS, NTP, memcached) to multiply traffic volume. Attackers send small requests with spoofed source IPs, causing servers to send large responses to victims. Mitigations include disabling recursion on public DNS servers and rate limiting."
       },
       {

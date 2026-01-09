@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "If A has eigenvalues λ₁ = -2, λ₂ = -3 with eigenvectors v₁, v₂, the general solution is:",
         "options": [
+          "X = (c₁v₁ + c₂v₂)e^(-2t)",
           "X = c₁v₁e^(-2t) + c₂v₂e^(-3t)",
           "X = c₁v₁e^(2t) + c₂v₂e^(3t)",
-          "X = (c₁v₁ + c₂v₂)e^(-2t)",
           "X = c₁e^(-2t) + c₂e^(-3t)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The general solution is a linear combination of all fundamental solutions: X = c₁v₁e^(λ₁t) + c₂v₂e^(λ₂t)."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "For complex eigenvalues λ = α ± βi, the solutions involve:",
         "options": [
-          "e^(αt)cos(βt) and e^(αt)sin(βt)",
-          "e^(αt) and e^(βt)",
           "cos(αt) and sin(βt)",
-          "e^(βt)cos(αt) and e^(βt)sin(αt)"
+          "e^(βt)cos(αt) and e^(βt)sin(αt)",
+          "e^(αt) and e^(βt)",
+          "e^(αt)cos(βt) and e^(αt)sin(βt)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Complex eigenvalues α ± βi give oscillatory solutions with exponential factor: e^(αt)cos(βt) and e^(αt)sin(βt)."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "An equilibrium point (critical point) of X′ = AX occurs at:",
         "options": [
+          "AX = 1",
           "X = 0",
           "X = A",
-          "X = 1",
-          "AX = 1"
+          "X = 1"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Equilibrium points satisfy X′ = 0. For X′ = AX, this gives AX = 0, so X = 0 (assuming A is non-singular)."
       }
     ]
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "A saddle point occurs when eigenvalues are:",
         "options": [
-          "Real with opposite signs",
           "Real with the same sign",
-          "Complex conjugates",
-          "Both zero"
+          "Both zero",
+          "Real with opposite signs",
+          "Complex conjugates"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A saddle point (unstable) occurs when eigenvalues are real with opposite signs (one positive, one negative)."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "A spiral (stable or unstable) occurs when eigenvalues are:",
         "options": [
-          "Complex with non-zero real part",
-          "Pure imaginary",
           "Real and distinct",
-          "Real and equal"
+          "Real and equal",
+          "Pure imaginary",
+          "Complex with non-zero real part"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Spiral behavior occurs with complex eigenvalues α ± βi where α ≠ 0. Stable if α < 0, unstable if α > 0."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "A center occurs when eigenvalues are:",
         "options": [
-          "Pure imaginary (±βi)",
           "Real and negative",
           "Real and positive",
+          "Pure imaginary (±βi)",
           "Complex with negative real part"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A center (neutrally stable) occurs when eigenvalues are pure imaginary λ = ±βi, producing periodic orbits."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "The trace and determinant of matrix A = [[a,b],[c,d]] are:",
         "options": [
-          "tr(A) = a + d, det(A) = ad - bc",
-          "tr(A) = ad, det(A) = a + d",
           "tr(A) = a - d, det(A) = ad + bc",
-          "tr(A) = ac + bd, det(A) = ad - bc"
+          "tr(A) = ad, det(A) = a + d",
+          "tr(A) = ac + bd, det(A) = ad - bc",
+          "tr(A) = a + d, det(A) = ad - bc"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For 2×2 matrix A, trace = sum of diagonal elements = a + d, determinant = ad - bc. These relate to eigenvalues."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "For a repeated eigenvalue λ with only one eigenvector v, the second solution is:",
         "options": [
-          "X = (vt + w)e^(λt) where (A - λI)w = v",
           "X = ve^(2λt)",
           "X = tv e^(λt)",
-          "X = we^(λt) for any vector w"
+          "X = we^(λt) for any vector w",
+          "X = (vt + w)e^(λt) where (A - λI)w = v"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For a defective eigenvalue, the second solution has form X = (vt + w)e^(λt) where w is a generalized eigenvector."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "The fundamental matrix Φ(t) for X′ = AX satisfies:",
         "options": [
+          "Both the first and third options",
           "Φ′ = AΦ and Φ(0) = I",
-          "Φ′ = Φ + A",
           "Φ = e^(At)",
-          "Both the first and third options"
+          "Φ′ = Φ + A"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "The fundamental matrix satisfies Φ′ = AΦ with Φ(0) = I. It equals the matrix exponential: Φ(t) = e^(At)."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "Variation of parameters for systems gives X_p as:",
         "options": [
-          "X_p = Φ(t)∫Φ^(-1)(t)F(t) dt",
-          "X_p = ∫F(t) dt",
           "X_p = Φ(t)F(t)",
-          "X_p = A^(-1)F(t)"
+          "X_p = Φ(t)∫Φ^(-1)(t)F(t) dt",
+          "X_p = A^(-1)F(t)",
+          "X_p = ∫F(t) dt"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The particular solution by variation of parameters is X_p = Φ(t)∫Φ^(-1)(s)F(s) ds, where Φ is the fundamental matrix."
       },
       {

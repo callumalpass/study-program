@@ -20,6 +20,14 @@ function loadQuizzes(path: string): Quiz[] {
   return JSON.parse(content) as Quiz[];
 }
 
+/** Helper to get the correct answer text for a multiple choice question */
+function getCorrectAnswerText(q: QuizQuestion): string {
+  if (typeof q.correctAnswer === 'number' && q.options) {
+    return q.options[q.correctAnswer];
+  }
+  return String(q.correctAnswer);
+}
+
 describe('Math301 Topic 2 Quiz Validation', () => {
   const quizzes = loadQuizzes(MATH301_TOPIC2_PATH);
 
@@ -64,46 +72,41 @@ describe('Math301 Topic 2 Quiz Validation', () => {
   });
 
   describe('specific questions regression tests', () => {
-    it('math301-q16 should have numeric correctAnswer 0 (partial derivative question)', () => {
+    it('math301-q16 should have correct answer "2xy + 3y²" (partial derivative question)', () => {
       const quiz = quizzes.find(q => q.id === 'math301-quiz-2-1');
       expect(quiz).toBeDefined();
 
       const question = quiz!.questions.find(q => q.id === 'math301-q16');
       expect(question).toBeDefined();
       expect(question!.type).toBe('multiple_choice');
-      expect(question!.correctAnswer).toBe(0);
-      expect(question!.options![0]).toBe('2xy + 3y²');
+      expect(getCorrectAnswerText(question!)).toBe('2xy + 3y²');
     });
 
-    it('math301-q17 should have numeric correctAnswer 0', () => {
+    it('math301-q17 should have correct answer "x² + 6xy"', () => {
       const quiz = quizzes.find(q => q.id === 'math301-quiz-2-1');
       const question = quiz!.questions.find(q => q.id === 'math301-q17');
-      expect(question!.correctAnswer).toBe(0);
-      expect(question!.options![0]).toBe('x² + 6xy');
+      expect(getCorrectAnswerText(question!)).toBe('x² + 6xy');
     });
 
-    it('math301-q22 should have numeric correctAnswer 2 (answer is "3" at index 2)', () => {
+    it('math301-q22 should have correct answer "3"', () => {
       const quiz = quizzes.find(q => q.id === 'math301-quiz-2-2');
       const question = quiz!.questions.find(q => q.id === 'math301-q22');
       expect(question).toBeDefined();
-      expect(question!.correctAnswer).toBe(2);
-      expect(question!.options![2]).toBe('3');
+      expect(getCorrectAnswerText(question!)).toBe('3');
     });
 
-    it('math301-q29 should have numeric correctAnswer 1 (answer is "2" at index 1)', () => {
+    it('math301-q29 should have correct answer "2"', () => {
       const quiz = quizzes.find(q => q.id === 'math301-quiz-2-3');
       const question = quiz!.questions.find(q => q.id === 'math301-q29');
       expect(question).toBeDefined();
-      expect(question!.correctAnswer).toBe(1);
-      expect(question!.options![1]).toBe('2');
+      expect(getCorrectAnswerText(question!)).toBe('2');
     });
 
-    it('math301-q30 should have numeric correctAnswer 0 (limit question)', () => {
+    it('math301-q30 should have correct answer "1/2" (limit question)', () => {
       const quiz = quizzes.find(q => q.id === 'math301-quiz-2-3');
       const question = quiz!.questions.find(q => q.id === 'math301-q30');
       expect(question).toBeDefined();
-      expect(question!.correctAnswer).toBe(0);
-      expect(question!.options![0]).toBe('1/2');
+      expect(getCorrectAnswerText(question!)).toBe('1/2');
     });
   });
 
@@ -172,46 +175,41 @@ describe('Math301 Topic 7 Quiz Validation', () => {
   });
 
   describe('specific questions regression tests', () => {
-    it('math301-q91 should have numeric correctAnswer 0 (curl F in 2D)', () => {
+    it('math301-q91 should have correct answer "∂Q/∂x - ∂P/∂y" (curl F in 2D)', () => {
       const quiz = quizzes.find(q => q.id === 'math301-quiz-7-1');
       expect(quiz).toBeDefined();
 
       const question = quiz!.questions.find(q => q.id === 'math301-q91');
       expect(question).toBeDefined();
       expect(question!.type).toBe('multiple_choice');
-      expect(question!.correctAnswer).toBe(0);
-      expect(question!.options![0]).toBe('∂Q/∂x - ∂P/∂y');
+      expect(getCorrectAnswerText(question!)).toBe('∂Q/∂x - ∂P/∂y');
     });
 
-    it('math301-q92 should have numeric correctAnswer 0 (div F)', () => {
+    it('math301-q92 should have correct answer "∂P/∂x + ∂Q/∂y + ∂R/∂z" (div F)', () => {
       const quiz = quizzes.find(q => q.id === 'math301-quiz-7-1');
       const question = quiz!.questions.find(q => q.id === 'math301-q92');
-      expect(question!.correctAnswer).toBe(0);
-      expect(question!.options![0]).toBe('∂P/∂x + ∂Q/∂y + ∂R/∂z');
+      expect(getCorrectAnswerText(question!)).toBe('∂P/∂x + ∂Q/∂y + ∂R/∂z');
     });
 
-    it('math301-q96 should have numeric correctAnswer 0 (Stokes\' Theorem)', () => {
+    it('math301-q96 should have correct answer "Surface integral of curl F" (Stokes\' Theorem)', () => {
       const quiz = quizzes.find(q => q.id === 'math301-quiz-7-2');
       const question = quiz!.questions.find(q => q.id === 'math301-q96');
       expect(question).toBeDefined();
-      expect(question!.correctAnswer).toBe(0);
-      expect(question!.options![0]).toBe('Surface integral of curl F');
+      expect(getCorrectAnswerText(question!)).toBe('Surface integral of curl F');
     });
 
-    it('math301-q101 should have numeric correctAnswer 0 (divergence interpretation)', () => {
+    it('math301-q101 should have correct answer "Rate of outflow per unit volume" (divergence interpretation)', () => {
       const quiz = quizzes.find(q => q.id === 'math301-quiz-7-3');
       const question = quiz!.questions.find(q => q.id === 'math301-q101');
       expect(question).toBeDefined();
-      expect(question!.correctAnswer).toBe(0);
-      expect(question!.options![0]).toBe('Rate of outflow per unit volume');
+      expect(getCorrectAnswerText(question!)).toBe('Rate of outflow per unit volume');
     });
 
-    it('math301-q105 should have numeric correctAnswer 0 (curl of gradient)', () => {
+    it('math301-q105 should have correct answer "0" (curl of gradient)', () => {
       const quiz = quizzes.find(q => q.id === 'math301-quiz-7-3');
       const question = quiz!.questions.find(q => q.id === 'math301-q105');
       expect(question).toBeDefined();
-      expect(question!.correctAnswer).toBe(0);
-      expect(question!.options![0]).toBe('0');
+      expect(getCorrectAnswerText(question!)).toBe('0');
     });
   });
 
@@ -292,8 +290,7 @@ describe('Math301 Mathematical Content Validation', () => {
       expect(q16!.prompt).toContain('∂f/∂x');
 
       // Verify the correct answer matches the mathematically correct result
-      const correctOptionIndex = q16!.correctAnswer as number;
-      expect(q16!.options![correctOptionIndex]).toBe('2xy + 3y²');
+      expect(getCorrectAnswerText(q16!)).toBe('2xy + 3y²');
     });
 
     it('chain rule question has correct dz/dt calculation', () => {
@@ -306,8 +303,7 @@ describe('Math301 Mathematical Content Validation', () => {
       expect(q21!.prompt).toContain('x = t²');
       expect(q21!.prompt).toContain('y = t³');
 
-      const correctOptionIndex = q21!.correctAnswer as number;
-      expect(q21!.options![correctOptionIndex]).toBe('7t⁶');
+      expect(getCorrectAnswerText(q21!)).toBe('7t⁶');
     });
 
     it('limit question has correct answer along y=x path', () => {
@@ -319,8 +315,7 @@ describe('Math301 Mathematical Content Validation', () => {
       expect(q30!.prompt).toContain('xy/(x² + y²)');
       expect(q30!.prompt).toContain('y = x');
 
-      const correctOptionIndex = q30!.correctAnswer as number;
-      expect(q30!.options![correctOptionIndex]).toBe('1/2');
+      expect(getCorrectAnswerText(q30!)).toBe('1/2');
     });
   });
 
@@ -333,8 +328,7 @@ describe('Math301 Mathematical Content Validation', () => {
       expect(q91!.prompt).toContain('curl F');
       expect(q91!.prompt).toContain('F = <P, Q>');
 
-      const correctOptionIndex = q91!.correctAnswer as number;
-      expect(q91!.options![correctOptionIndex]).toBe('∂Q/∂x - ∂P/∂y');
+      expect(getCorrectAnswerText(q91!)).toBe('∂Q/∂x - ∂P/∂y');
     });
 
     it('divergence formula is correct', () => {
@@ -345,8 +339,7 @@ describe('Math301 Mathematical Content Validation', () => {
       expect(q92!.prompt).toContain('div F');
       expect(q92!.prompt).toContain('F = <P, Q, R>');
 
-      const correctOptionIndex = q92!.correctAnswer as number;
-      expect(q92!.options![correctOptionIndex]).toBe('∂P/∂x + ∂Q/∂y + ∂R/∂z');
+      expect(getCorrectAnswerText(q92!)).toBe('∂P/∂x + ∂Q/∂y + ∂R/∂z');
     });
 
     it('curl of gradient equals zero (fundamental identity)', () => {
@@ -356,8 +349,7 @@ describe('Math301 Mathematical Content Validation', () => {
 
       expect(q105!.prompt).toContain('curl(∇f)');
 
-      const correctOptionIndex = q105!.correctAnswer as number;
-      expect(q105!.options![correctOptionIndex]).toBe('0');
+      expect(getCorrectAnswerText(q105!)).toBe('0');
     });
   });
 });

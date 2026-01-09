@@ -30,11 +30,11 @@
         "prompt": "In MIPS, how many bits are used for the opcode field in R-format instructions?",
         "options": [
           "4 bits",
+          "8 bits",
           "5 bits",
-          "6 bits",
-          "8 bits"
+          "6 bits"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "MIPS R-format uses 6 bits for opcode (bits 31-26), with the funct field providing additional operation specification."
       },
       {
@@ -43,11 +43,11 @@
         "prompt": "Which addressing mode is used by the instruction \"lw $t0, 8($s0)\"?",
         "options": [
           "Immediate",
+          "PC-relative",
           "Register",
-          "Base + Offset",
-          "PC-relative"
+          "Base + Offset"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Base + offset (displacement) addressing adds a constant offset (8) to the base register ($s0) to compute the effective address."
       },
       {
@@ -68,12 +68,12 @@
         "type": "multiple_choice",
         "prompt": "In a load-store architecture, which operations can access memory?",
         "options": [
-          "All arithmetic operations",
           "Only load and store instructions",
+          "All arithmetic operations",
           "Any instruction with an immediate operand",
           "Only branch instructions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Load-store architectures restrict memory access to dedicated load and store instructions; arithmetic operates only on registers."
       },
       {
@@ -82,11 +82,11 @@
         "prompt": "What is the maximum value that can be stored in a 16-bit unsigned immediate field?",
         "options": [
           "32,767",
+          "255",
           "65,535",
-          "127",
-          "255"
+          "127"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "2^16 - 1 = 65,535 is the maximum unsigned value in 16 bits."
       },
       {
@@ -94,12 +94,12 @@
         "type": "multiple_choice",
         "prompt": "Which MIPS instruction format uses a 26-bit address field?",
         "options": [
-          "R-format",
           "I-format",
-          "J-format",
-          "All formats"
+          "R-format",
+          "All formats",
+          "J-format"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "J-format (jump) uses 6 bits for opcode and 26 bits for the target address field."
       },
       {
@@ -120,12 +120,12 @@
         "type": "multiple_choice",
         "prompt": "What does \"sll $t0, $t1, 2\" compute?",
         "options": [
-          "$t1 + 2 stored in $t0",
           "$t1 shifted left by 2 bits stored in $t0",
-          "$t1 shifted right by 2 bits",
-          "$t1 × $t2 stored in $t0"
+          "$t1 × $t2 stored in $t0",
+          "$t1 + 2 stored in $t0",
+          "$t1 shifted right by 2 bits"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "sll (shift left logical) shifts $t1 left by 2 bits (equivalent to multiplying by 4) and stores in $t0."
       },
       {
@@ -134,11 +134,11 @@
         "prompt": "In the MIPS calling convention, which registers are callee-saved?",
         "options": [
           "$t0-$t9",
-          "$s0-$s7",
           "$a0-$a3",
+          "$s0-$s7",
           "$v0-$v1"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "$s0-$s7 are callee-saved; if a function uses them, it must save and restore their original values."
       },
       {
@@ -146,12 +146,12 @@
         "type": "multiple_choice",
         "prompt": "What is the syscall code to print an integer in MIPS?",
         "options": [
-          "1",
           "4",
-          "5",
-          "10"
+          "10",
+          "1",
+          "5"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Syscall 1 prints the integer in $a0. Code 4 prints string, 5 reads integer, 10 exits."
       },
       {
@@ -160,11 +160,11 @@
         "prompt": "When a function prologue allocates stack space, the stack pointer:",
         "options": [
           "Increases (moves to higher addresses)",
-          "Decreases (moves to lower addresses)",
           "Stays the same",
-          "Is reset to zero"
+          "Is reset to zero",
+          "Decreases (moves to lower addresses)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The stack grows downward in MIPS, so $sp decreases to allocate space for locals and saved registers."
       },
       {
@@ -172,12 +172,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the .asciiz directive?",
         "options": [
-          "Allocate space for integers",
-          "Define a null-terminated string",
           "Specify code alignment",
-          "Declare a function"
+          "Declare a function",
+          "Define a null-terminated string",
+          "Allocate space for integers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": ".asciiz creates a null-terminated ASCII string suitable for use with print_string syscall."
       },
       {
@@ -211,12 +211,12 @@
         "type": "multiple_choice",
         "prompt": "For an R-type instruction, what should the RegDst control signal be?",
         "options": [
-          "0 (rt)",
           "1 (rd)",
           "Don't care",
+          "0 (rt)",
           "Depends on opcode"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "R-type instructions write to rd (the destination register field), so RegDst=1."
       },
       {
@@ -238,11 +238,11 @@
         "prompt": "The CPU performance equation is: Time = Instructions × CPI × ?",
         "options": [
           "Memory latency",
+          "Pipeline depth",
           "Cache hit rate",
-          "Clock period",
-          "Pipeline depth"
+          "Clock period"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "CPU Time = Instructions × CPI × Clock Period. This is the fundamental performance equation."
       },
       {
@@ -250,12 +250,12 @@
         "type": "multiple_choice",
         "prompt": "What does the sign-extend unit do?",
         "options": [
-          "Extends 32-bit values to 64 bits",
           "Converts 16-bit immediate to 32 bits preserving sign",
-          "Handles overflow detection",
-          "Extends the opcode field"
+          "Extends 32-bit values to 64 bits",
+          "Extends the opcode field",
+          "Handles overflow detection"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The sign-extend unit converts 16-bit immediates to 32 bits by replicating the sign bit."
       },
       {
@@ -263,12 +263,12 @@
         "type": "multiple_choice",
         "prompt": "How many read ports does a typical MIPS register file have?",
         "options": [
-          "1",
           "2",
-          "3",
-          "4"
+          "1",
+          "4",
+          "3"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "MIPS register file has 2 read ports (for rs and rt) and 1 write port (for rd)."
       },
       {
@@ -276,12 +276,12 @@
         "type": "multiple_choice",
         "prompt": "What is the ideal speedup of a 5-stage pipeline over unpipelined execution?",
         "options": [
-          "2×",
-          "3×",
           "5×",
-          "10×"
+          "10×",
+          "2×",
+          "3×"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Ideally, an N-stage pipeline provides N× throughput improvement with N instructions in flight."
       },
       {
@@ -289,12 +289,12 @@
         "type": "multiple_choice",
         "prompt": "A RAW (Read After Write) hazard is also called:",
         "options": [
-          "Output dependency",
-          "Anti-dependency",
+          "Structural hazard",
           "True dependency",
-          "Structural hazard"
+          "Output dependency",
+          "Anti-dependency"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "RAW is a true dependency because the data flow requires the read to happen after the write."
       },
       {
@@ -302,12 +302,12 @@
         "type": "multiple_choice",
         "prompt": "Data forwarding (bypassing) reduces stalls by:",
         "options": [
-          "Predicting branch outcomes",
-          "Routing results directly to where they are needed",
+          "Using more memory",
           "Increasing register file ports",
-          "Using more memory"
+          "Predicting branch outcomes",
+          "Routing results directly to where they are needed"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Forwarding routes results from pipeline registers directly to ALU inputs before they reach the register file."
       },
       {
@@ -329,11 +329,11 @@
         "prompt": "A 2-bit branch predictor's key advantage over 1-bit is:",
         "options": [
           "Faster prediction",
-          "Tolerates one misprediction in a loop",
           "Uses less hardware",
+          "Tolerates one misprediction in a loop",
           "Predicts indirect jumps better"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A 2-bit predictor requires two mispredictions to change direction, avoiding double misprediction in loops."
       },
       {
@@ -355,11 +355,11 @@
         "prompt": "In a 5-stage pipeline, how many stall cycles are needed for \"lw $t0, 0($a0); add $t1, $t0, $t2\" with forwarding?",
         "options": [
           "0",
-          "1",
           "2",
-          "3"
+          "3",
+          "1"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "1 stall is needed because load data is available after MEM but add needs it in EX."
       }
     ]
@@ -382,11 +382,11 @@
         "prompt": "Which of the following is NOT part of the ISA?",
         "options": [
           "Instruction encoding",
-          "Register count",
           "Cache size",
-          "Addressing modes"
+          "Addressing modes",
+          "Register count"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Cache size is a microarchitecture detail, not part of the ISA visible to programmers."
       },
       {
@@ -395,11 +395,11 @@
         "prompt": "The instruction \"addi $t0, $zero, 100\" is equivalent to:",
         "options": [
           "add $t0, $zero, 100",
-          "li $t0, 100",
           "move $t0, 100",
-          "la $t0, 100"
+          "la $t0, 100",
+          "li $t0, 100"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "li (load immediate) is a pseudo-instruction that assembles to addi with $zero as source."
       },
       {
@@ -409,10 +409,10 @@
         "options": [
           "Only local variables",
           "Only $ra",
-          "$ra and registers the function modifies",
-          "All 32 registers"
+          "All 32 registers",
+          "$ra and registers the function modifies"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Recursive functions must save $ra (for nested calls) and any registers they need to preserve."
       },
       {
@@ -420,12 +420,12 @@
         "type": "multiple_choice",
         "prompt": "If CPI = 1.5 and clock rate = 2 GHz, what is the MIPS (millions of instructions per second)?",
         "options": [
-          "1333",
-          "2000",
           "3000",
-          "750"
+          "2000",
+          "750",
+          "1333"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "MIPS = Clock rate / CPI = 2000 MHz / 1.5 = 1333 MIPS."
       },
       {
@@ -433,12 +433,12 @@
         "type": "multiple_choice",
         "prompt": "Which control signal must be 1 for a store word instruction?",
         "options": [
-          "RegWrite",
           "MemWrite",
+          "Branch",
           "MemRead",
-          "Branch"
+          "RegWrite"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "MemWrite=1 enables writing data to memory, used by store instructions."
       },
       {
@@ -446,12 +446,12 @@
         "type": "multiple_choice",
         "prompt": "What is stored in pipeline registers?",
         "options": [
-          "Only instruction opcodes",
           "Intermediate data and control signals",
+          "Only instruction opcodes",
           "Memory addresses only",
           "Branch predictions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Pipeline registers hold all information needed by the next stage: data values and control signals."
       },
       {
@@ -459,12 +459,12 @@
         "type": "multiple_choice",
         "prompt": "A structural hazard can occur when:",
         "options": [
-          "Two instructions have data dependency",
-          "A branch target is unknown",
           "Two instructions need the same hardware resource simultaneously",
-          "The cache misses"
+          "The cache misses",
+          "Two instructions have data dependency",
+          "A branch target is unknown"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Structural hazards occur when hardware resources are insufficient for simultaneous access."
       },
       {
@@ -472,12 +472,12 @@
         "type": "multiple_choice",
         "prompt": "What does the Branch Target Buffer (BTB) store?",
         "options": [
-          "Branch prediction outcomes only",
           "Target addresses of recent branches",
-          "All instruction addresses",
-          "Register values"
+          "Branch prediction outcomes only",
+          "Register values",
+          "All instruction addresses"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "BTB caches target addresses so the target is known immediately, reducing branch penalty."
       },
       {
@@ -485,12 +485,12 @@
         "type": "multiple_choice",
         "prompt": "In MIPS, negative numbers are represented using:",
         "options": [
-          "Sign-magnitude",
-          "One's complement",
           "Two's complement",
-          "BCD"
+          "Sign-magnitude",
+          "BCD",
+          "One's complement"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "MIPS uses two's complement for signed integer representation."
       },
       {
@@ -498,12 +498,12 @@
         "type": "multiple_choice",
         "prompt": "The purpose of the ALU control unit is to:",
         "options": [
-          "Generate the next PC",
           "Determine the specific ALU operation from ALUOp and funct",
-          "Control memory access",
-          "Select registers"
+          "Generate the next PC",
+          "Select registers",
+          "Control memory access"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "ALU control takes ALUOp and funct fields to determine the specific ALU operation."
       },
       {
@@ -524,12 +524,12 @@
         "type": "multiple_choice",
         "prompt": "Which dependency type CANNOT be removed by register renaming?",
         "options": [
-          "WAR",
           "WAW",
           "RAW",
+          "WAR",
           "Both WAR and WAW"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "RAW is a true data dependency that cannot be eliminated; WAR and WAW are false dependencies."
       },
       {
@@ -537,12 +537,12 @@
         "type": "multiple_choice",
         "prompt": "Caches are effective because of:",
         "options": [
-          "Random memory access patterns",
           "Locality of reference",
-          "Unlimited memory bandwidth",
-          "Fast DRAM"
+          "Random memory access patterns",
+          "Fast DRAM",
+          "Unlimited memory bandwidth"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Caches exploit temporal and spatial locality in program memory access patterns."
       },
       {
@@ -550,12 +550,12 @@
         "type": "multiple_choice",
         "prompt": "In a direct-mapped cache, each memory block maps to:",
         "options": [
-          "Any cache line",
           "Exactly one cache line",
+          "Half the cache",
           "Two cache lines",
-          "Half the cache"
+          "Any cache line"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Direct-mapped caches have exactly one possible location for each memory block."
       },
       {
@@ -563,12 +563,12 @@
         "type": "multiple_choice",
         "prompt": "A 64KB, 4-way set-associative cache with 64-byte blocks has how many sets?",
         "options": [
-          "256",
-          "512",
           "1024",
-          "128"
+          "128",
+          "512",
+          "256"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Total blocks = 64KB/64B = 1024. Sets = 1024/4 = 256 sets."
       },
       {
@@ -576,12 +576,12 @@
         "type": "multiple_choice",
         "prompt": "What type of miss occurs on the first access to a memory block?",
         "options": [
-          "Conflict miss",
-          "Capacity miss",
           "Compulsory miss",
-          "Coherence miss"
+          "Coherence miss",
+          "Capacity miss",
+          "Conflict miss"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Compulsory (cold) misses occur on first access to a block, regardless of cache configuration."
       },
       {
@@ -589,12 +589,12 @@
         "type": "multiple_choice",
         "prompt": "Write-back policy differs from write-through by:",
         "options": [
-          "Writing to memory on every write",
-          "Writing to memory only on eviction",
+          "Using larger blocks",
           "Never writing to memory",
-          "Using larger blocks"
+          "Writing to memory only on eviction",
+          "Writing to memory on every write"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Write-back writes to memory only when a dirty block is evicted, reducing memory traffic."
       },
       {
@@ -603,11 +603,11 @@
         "prompt": "What does the dirty bit indicate in a cache line?",
         "options": [
           "The line is invalid",
+          "The line is locked",
           "The line has been modified and differs from memory",
-          "The line was recently accessed",
-          "The line is locked"
+          "The line was recently accessed"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The dirty bit indicates the cache block was modified and must be written back when evicted."
       },
       {
@@ -615,12 +615,12 @@
         "type": "multiple_choice",
         "prompt": "AMAT = 2 + 0.05 × 100 = ?",
         "options": [
+          "10 cycles",
           "5 cycles",
           "7 cycles",
-          "10 cycles",
           "12 cycles"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "AMAT = Hit time + Miss rate × Miss penalty = 2 + 0.05 × 100 = 2 + 5 = 7 cycles."
       },
       {
@@ -628,12 +628,12 @@
         "type": "multiple_choice",
         "prompt": "LRU replacement policy evicts:",
         "options": [
+          "The most frequently used block",
           "The newest block",
           "The least recently used block",
-          "A random block",
-          "The most frequently used block"
+          "A random block"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "LRU (Least Recently Used) evicts the block not accessed for the longest time."
       },
       {
@@ -641,12 +641,12 @@
         "type": "multiple_choice",
         "prompt": "VIPT caches avoid aliasing problems when:",
         "options": [
-          "Cache size equals page size",
           "Index bits fit within page offset",
           "Tags are virtual",
+          "Cache size equals page size",
           "Never"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "VIPT works without aliasing when index bits come entirely from the page offset (unchanged in translation)."
       },
       {
@@ -654,12 +654,12 @@
         "type": "multiple_choice",
         "prompt": "Which technique helps reduce compulsory misses?",
         "options": [
-          "Larger cache",
-          "Higher associativity",
           "Prefetching",
-          "Write-back"
+          "Write-back",
+          "Higher associativity",
+          "Larger cache"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Prefetching fetches data before it's needed, reducing compulsory misses."
       },
       {
@@ -667,12 +667,12 @@
         "type": "multiple_choice",
         "prompt": "The purpose of a write buffer is to:",
         "options": [
-          "Increase cache size",
           "Hide write latency from the processor",
+          "Buffer read data",
           "Store cache tags",
-          "Buffer read data"
+          "Increase cache size"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Write buffers queue writes allowing the CPU to continue without waiting for memory."
       },
       {
@@ -706,12 +706,12 @@
         "type": "multiple_choice",
         "prompt": "A row buffer hit in DRAM is fast because:",
         "options": [
-          "Data is in the CPU cache",
-          "The row is already in sense amplifiers",
           "Memory is pre-fetched",
-          "Refresh was just completed"
+          "Data is in the CPU cache",
+          "Refresh was just completed",
+          "The row is already in sense amplifiers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Row buffer hit means the requested row is already open, requiring only column access."
       },
       {
@@ -720,11 +720,11 @@
         "prompt": "SSDs are faster than HDDs for random access primarily because:",
         "options": [
           "Larger caches",
+          "More channels",
           "No mechanical seek time",
-          "Faster memory chips",
-          "More channels"
+          "Faster memory chips"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "SSDs eliminate mechanical seek and rotation latency that dominates HDD random access time."
       },
       {
@@ -745,12 +745,12 @@
         "type": "multiple_choice",
         "prompt": "Calculate bandwidth: DDR4-3200, 64-bit channel",
         "options": [
+          "6.4 GB/s",
           "12.8 GB/s",
-          "25.6 GB/s",
           "51.2 GB/s",
-          "6.4 GB/s"
+          "25.6 GB/s"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Bandwidth = 3200 MT/s × 8 bytes = 25,600 MB/s = 25.6 GB/s."
       },
       {
@@ -758,12 +758,12 @@
         "type": "multiple_choice",
         "prompt": "According to Little's Law, to increase memory throughput you need:",
         "options": [
-          "Faster clock only",
-          "Larger cache only",
           "More outstanding memory requests",
-          "Lower latency only"
+          "Lower latency only",
+          "Larger cache only",
+          "Faster clock only"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Little's Law: Throughput = Outstanding requests / Latency. More requests increase throughput."
       },
       {
@@ -771,12 +771,12 @@
         "type": "multiple_choice",
         "prompt": "FR-FCFS memory scheduling prioritizes:",
         "options": [
-          "Oldest requests always",
           "Row buffer hits, then by age",
+          "Oldest requests always",
           "Smallest requests first",
           "Write requests"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "FR-FCFS prioritizes requests hitting the open row buffer to exploit row locality."
       },
       {
@@ -785,11 +785,11 @@
         "prompt": "HBM achieves high bandwidth through:",
         "options": [
           "Higher clock speeds",
-          "3D stacking with wide interfaces",
           "Larger capacitors",
+          "3D stacking with wide interfaces",
           "More refresh"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "HBM uses 3D stacking with TSVs and 1024-bit wide interfaces for extreme bandwidth."
       },
       {
@@ -797,12 +797,12 @@
         "type": "multiple_choice",
         "prompt": "Which memory technology is non-volatile?",
         "options": [
-          "SRAM",
-          "DRAM",
+          "All of the above",
           "Flash",
-          "All of the above"
+          "DRAM",
+          "SRAM"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Flash retains data without power. SRAM and DRAM are volatile."
       },
       {
@@ -810,12 +810,12 @@
         "type": "multiple_choice",
         "prompt": "Instruction-Level Parallelism (ILP) refers to:",
         "options": [
-          "Running multiple programs",
-          "Executing multiple instructions simultaneously within one program",
           "Multiple CPU cores",
-          "SIMD operations"
+          "SIMD operations",
+          "Executing multiple instructions simultaneously within one program",
+          "Running multiple programs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "ILP is executing multiple instructions from a single instruction stream in parallel."
       },
       {
@@ -824,11 +824,11 @@
         "prompt": "In Tomasulo's algorithm, reservation stations:",
         "options": [
           "Store branch predictions",
-          "Hold instructions waiting for operands",
           "Cache memory data",
+          "Hold instructions waiting for operands",
           "Track program counter values"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Reservation stations hold instructions waiting for their source operands to become available."
       },
       {
@@ -849,12 +849,12 @@
         "type": "multiple_choice",
         "prompt": "Register renaming eliminates which hazards?",
         "options": [
-          "RAW only",
           "WAR and WAW",
           "All hazards",
+          "RAW only",
           "Control hazards"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Renaming eliminates false dependencies (WAR, WAW) but not true dependencies (RAW)."
       },
       {
@@ -862,12 +862,12 @@
         "type": "multiple_choice",
         "prompt": "VLIW processors rely on:",
         "options": [
-          "Hardware to find parallelism",
-          "Compiler to explicitly encode parallelism",
+          "Cache prefetching",
           "Branch prediction",
-          "Cache prefetching"
+          "Compiler to explicitly encode parallelism",
+          "Hardware to find parallelism"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "VLIW depends on the compiler to find and encode parallelism in wide instructions."
       },
       {
@@ -875,12 +875,12 @@
         "type": "multiple_choice",
         "prompt": "AVX-512 registers are how many bits wide?",
         "options": [
-          "128",
           "256",
-          "512",
-          "1024"
+          "128",
+          "1024",
+          "512"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "AVX-512 provides 512-bit registers for SIMD operations."
       },
       {
@@ -888,12 +888,12 @@
         "type": "multiple_choice",
         "prompt": "Speculative execution means:",
         "options": [
-          "Random instruction selection",
           "Executing instructions before knowing if they should execute",
           "Parallel memory access",
+          "Random instruction selection",
           "Multi-threading"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Speculative execution executes past branches before outcomes are known, recovering if wrong."
       },
       {
@@ -901,12 +901,12 @@
         "type": "multiple_choice",
         "prompt": "The Common Data Bus (CDB) in Tomasulo's:",
         "options": [
-          "Connects CPU to memory",
-          "Broadcasts results to all waiting units",
           "Handles instruction fetch",
-          "Manages branch prediction"
+          "Manages branch prediction",
+          "Broadcasts results to all waiting units",
+          "Connects CPU to memory"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "CDB broadcasts results to all reservation stations and registers simultaneously."
       },
       {
@@ -914,12 +914,12 @@
         "type": "multiple_choice",
         "prompt": "The main limit to increasing ILP is:",
         "options": [
-          "Clock speed",
           "True data dependencies and branches",
-          "Cache size",
-          "Register count"
+          "Register count",
+          "Clock speed",
+          "Cache size"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "True dependencies and control flow (branches) fundamentally limit available ILP."
       },
       {
@@ -927,12 +927,12 @@
         "type": "multiple_choice",
         "prompt": "SIMD is most effective for:",
         "options": [
-          "Branch-heavy code",
           "Irregular memory access",
           "Regular operations on arrays of data",
-          "Single-threaded applications"
+          "Single-threaded applications",
+          "Branch-heavy code"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "SIMD excels at applying the same operation to many data elements, common in array processing."
       }
     ]

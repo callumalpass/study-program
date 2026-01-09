@@ -15,12 +15,12 @@
         "type": "multiple_choice",
         "prompt": "Which paradigm emphasizes immutability and pure functions?",
         "options": [
-          "Imperative",
           "Object-oriented",
-          "Functional",
-          "Logic"
+          "Imperative",
+          "Logic",
+          "Functional"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Functional programming is characterized by immutability and pure functions without side effects."
       },
       {
@@ -28,12 +28,12 @@
         "type": "multiple_choice",
         "prompt": "What distinguishes declarative from imperative programming?",
         "options": [
-          "Focus on state mutation",
           "Specifying how to compute",
           "Specifying what to compute",
+          "Focus on state mutation",
           "Using classes"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Declarative programming focuses on what result is desired, not how to achieve it step by step."
       },
       {
@@ -55,11 +55,11 @@
         "prompt": "Polymorphism allows:",
         "options": [
           "Creating singletons",
-          "Multiple inheritance only",
           "Treating different types uniformly",
-          "Static type checking"
+          "Static type checking",
+          "Multiple inheritance only"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Polymorphism enables writing code that can work with objects of different types through a common interface."
       },
       {
@@ -67,12 +67,12 @@
         "type": "multiple_choice",
         "prompt": "In logic programming, what does backtracking accomplish?",
         "options": [
-          "Memory management",
           "Exploring alternative solutions",
           "Type checking",
+          "Memory management",
           "Code optimization"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Backtracking allows logic programming systems to explore alternative paths when one fails."
       },
       {
@@ -80,12 +80,12 @@
         "type": "multiple_choice",
         "prompt": "What is type inference?",
         "options": [
+          "Type coercion",
           "Manual type annotations",
           "Automatic deduction of types",
-          "Type coercion",
           "Dynamic typing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Type inference automatically determines types without explicit annotations from the programmer."
       },
       {
@@ -107,11 +107,11 @@
         "prompt": "Structural typing matches types based on:",
         "options": [
           "Type names",
-          "Type structure/shape",
+          "Declaration order",
           "Inheritance hierarchy",
-          "Declaration order"
+          "Type structure/shape"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Structural typing compares the shape/structure of types rather than their declared names."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "A phantom type parameter:",
         "options": [
-          "Must always be used",
-          "Appears at type level but not runtime",
           "Causes runtime errors",
-          "Is always inferred"
+          "Is always inferred",
+          "Appears at type level but not runtime",
+          "Must always be used"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Phantom types exist only at compile time for additional type safety without runtime overhead."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "In functional programming, map:",
         "options": [
+          "Sorts elements",
           "Reduces a list to a single value",
-          "Applies a function to each element",
           "Filters elements",
-          "Sorts elements"
+          "Applies a function to each element"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Map applies a transformation function to each element, producing a new collection."
       },
       {
@@ -158,12 +158,12 @@
         "type": "multiple_choice",
         "prompt": "A closure captures:",
         "options": [
-          "Only global variables",
           "Variables from enclosing scope",
+          "Only parameters",
           "All program state",
-          "Only parameters"
+          "Only global variables"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Closures capture and remember variables from the lexical scope where they were defined."
       },
       {
@@ -185,11 +185,11 @@
         "prompt": "Lazy evaluation means:",
         "options": [
           "Eager computation",
-          "Computing values only when needed",
           "Sequential execution",
+          "Computing values only when needed",
           "Parallel execution"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Lazy evaluation delays computation until the result is actually required."
       },
       {
@@ -197,12 +197,12 @@
         "type": "multiple_choice",
         "prompt": "A Functor in FP provides:",
         "options": [
+          "filter operation",
           "map operation",
           "flatMap operation",
-          "filter operation",
           "reduce operation"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Functors define the map operation for applying functions inside a context."
       },
       {
@@ -386,12 +386,12 @@
         "type": "multiple_choice",
         "prompt": "Which is NOT a programming paradigm?",
         "options": [
-          "Imperative",
+          "Logic",
           "Declarative",
-          "Recursive",
-          "Logic"
+          "Imperative",
+          "Recursive"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Recursive is a programming technique, not a paradigm. The main paradigms are imperative, declarative, functional, logic, and object-oriented."
       },
       {
@@ -399,12 +399,12 @@
         "type": "multiple_choice",
         "prompt": "The von Neumann architecture most directly influences which paradigm?",
         "options": [
+          "Declarative",
           "Functional",
-          "Imperative",
           "Logic",
-          "Declarative"
+          "Imperative"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The von Neumann architecture with its fetch-execute cycle directly maps to imperative programming with sequential state modification."
       },
       {
@@ -412,12 +412,12 @@
         "type": "multiple_choice",
         "prompt": "Duck typing is an example of:",
         "options": [
-          "Static nominal typing",
-          "Structural typing",
           "Gradual typing",
-          "Dependent typing"
+          "Static nominal typing",
+          "Dependent typing",
+          "Structural typing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Duck typing checks type compatibility based on the presence of methods/properties, not declared type names."
       },
       {
@@ -425,12 +425,12 @@
         "type": "multiple_choice",
         "prompt": "Type erasure means:",
         "options": [
-          "Types are enforced at runtime",
           "Generic types are removed after compilation",
+          "All types are dynamic",
           "Types cannot be inferred",
-          "All types are dynamic"
+          "Types are enforced at runtime"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Type erasure removes generic type information after compilation, used in Java generics."
       },
       {
@@ -451,12 +451,12 @@
         "type": "multiple_choice",
         "prompt": "Denotational semantics maps programs to:",
         "options": [
-          "Machine code",
           "Mathematical objects",
           "Execution traces",
+          "Machine code",
           "Test cases"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Denotational semantics gives meaning to programs by mapping them to mathematical objects like functions and sets."
       },
       {
@@ -477,12 +477,12 @@
         "type": "multiple_choice",
         "prompt": "Abstract interpretation provides:",
         "options": [
+          "Dynamic analysis",
           "Exact program behavior",
-          "Sound over-approximation",
           "Always terminates",
-          "Dynamic analysis"
+          "Sound over-approximation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Abstract interpretation analyzes programs using abstract domains, providing sound but potentially imprecise results."
       },
       {
@@ -503,12 +503,12 @@
         "type": "multiple_choice",
         "prompt": "A bytecode interpreter typically uses:",
         "options": [
-          "Direct AST traversal",
-          "Native compilation",
           "Virtual instructions",
+          "Native compilation",
+          "Direct AST traversal",
           "Text parsing"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Bytecode interpreters execute virtual machine instructions, providing portability and simpler implementation than native code."
       },
       {
@@ -516,12 +516,12 @@
         "type": "multiple_choice",
         "prompt": "Reference counting cannot detect:",
         "options": [
-          "Single references",
           "Null pointers",
-          "Cyclic references",
-          "Strong references"
+          "Strong references",
+          "Single references",
+          "Cyclic references"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Reference counting fails to collect cycles because objects in a cycle maintain non-zero counts pointing to each other."
       },
       {
@@ -529,12 +529,12 @@
         "type": "multiple_choice",
         "prompt": "Mark-and-sweep GC requires:",
         "options": [
-          "Reference counting",
-          "Tracing from roots",
           "Manual deallocation",
-          "Static analysis"
+          "Static analysis",
+          "Reference counting",
+          "Tracing from roots"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Mark-and-sweep traces from root references to find all reachable objects, then reclaims unreachable memory."
       },
       {
@@ -556,11 +556,11 @@
         "prompt": "Rusts ownership system prevents:",
         "options": [
           "All runtime errors",
-          "Data races at compile time",
           "Stack allocation",
-          "Function calls"
+          "Function calls",
+          "Data races at compile time"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Rusts ownership and borrowing rules guarantee memory safety and prevent data races without garbage collection."
       },
       {
@@ -570,10 +570,10 @@
         "options": [
           "At least once",
           "At most once",
-          "Exactly once",
-          "Never"
+          "Never",
+          "Exactly once"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Linear types require resources to be used exactly once, preventing both leaks and double-use."
       },
       {
@@ -581,12 +581,12 @@
         "type": "multiple_choice",
         "prompt": "First-class functions means functions can be:",
         "options": [
-          "Only called",
-          "Passed as arguments and returned",
+          "Only recursive",
           "Only defined at top level",
-          "Only recursive"
+          "Passed as arguments and returned",
+          "Only called"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "First-class functions can be passed as arguments, returned from functions, and assigned to variables like any other value."
       },
       {
@@ -594,12 +594,12 @@
         "type": "multiple_choice",
         "prompt": "A metaclass in Python controls:",
         "options": [
-          "Instance creation",
           "Class creation",
-          "Module import",
-          "Function calls"
+          "Function calls",
+          "Instance creation",
+          "Module import"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Metaclasses are classes of classes that control how classes themselves are created and behave."
       },
       {
@@ -607,12 +607,12 @@
         "type": "multiple_choice",
         "prompt": "Coroutines differ from subroutines by:",
         "options": [
-          "Being faster",
           "Supporting multiple entry/exit points",
+          "Being simpler",
           "Using less memory",
-          "Being simpler"
+          "Being faster"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Coroutines can suspend execution and resume later, allowing multiple entry and exit points."
       },
       {
@@ -620,12 +620,12 @@
         "type": "multiple_choice",
         "prompt": "Algebraic effects separate:",
         "options": [
-          "Data and functions",
-          "Effect definition and handling",
           "Types and values",
-          "Static and dynamic"
+          "Static and dynamic",
+          "Effect definition and handling",
+          "Data and functions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Algebraic effects separate effect operations from their handlers, providing modular effect management."
       },
       {
@@ -633,12 +633,12 @@
         "type": "multiple_choice",
         "prompt": "Multiple dispatch selects methods based on:",
         "options": [
-          "Only the first argument",
-          "Only the return type",
           "All argument types",
-          "Only the receiver"
+          "Only the receiver",
+          "Only the first argument",
+          "Only the return type"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Multiple dispatch considers the runtime types of all arguments to select the appropriate method implementation."
       },
       {
@@ -646,12 +646,12 @@
         "type": "multiple_choice",
         "prompt": "Continuation-passing style (CPS) transforms:",
         "options": [
-          "Data structures",
-          "Control flow to explicit continuations",
+          "Static to dynamic",
           "Types to values",
-          "Static to dynamic"
+          "Control flow to explicit continuations",
+          "Data structures"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "CPS makes control flow explicit by passing continuation functions representing what to do next."
       },
       {
@@ -659,12 +659,12 @@
         "type": "multiple_choice",
         "prompt": "A copying garbage collector:",
         "options": [
-          "Modifies objects in place",
-          "Copies live objects to new space",
           "Uses reference counting",
-          "Never moves objects"
+          "Modifies objects in place",
+          "Never moves objects",
+          "Copies live objects to new space"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Copying collectors move live objects to a new space, achieving compaction and fast allocation."
       },
       {

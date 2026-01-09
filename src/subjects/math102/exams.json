@@ -16,12 +16,12 @@
         "type": "multiple_choice",
         "prompt": "How many ways can you arrange the letters in the word \"MATH\"?",
         "options": [
-          "4",
-          "8",
           "16",
-          "24"
+          "4",
+          "24",
+          "8"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "With 4 distinct letters, the number of permutations is 4! = 24."
       },
       {
@@ -85,12 +85,12 @@
         "type": "multiple_choice",
         "prompt": "What is the closed-form solution to the recurrence T(n) = T(n-1) + 1 with T(0) = 0?",
         "options": [
-          "T(n) = n²",
           "T(n) = n",
+          "T(n) = log n",
           "T(n) = 2ⁿ",
-          "T(n) = log n"
+          "T(n) = n²"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "This recurrence adds 1 at each step, so T(n) = n."
       },
       {
@@ -168,12 +168,12 @@
         "type": "multiple_choice",
         "prompt": "What is the maximum number of edges in a simple undirected graph with 6 vertices?",
         "options": [
+          "36",
           "12",
           "15",
-          "18",
-          "36"
+          "18"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A complete graph on n vertices has n(n-1)/2 edges. For n=6: 6×5/2 = 15."
       },
       {
@@ -204,12 +204,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of BFS on a graph with V vertices and E edges using an adjacency list?",
         "options": [
-          "O(V)",
+          "O(V × E)",
           "O(E)",
-          "O(V + E)",
-          "O(V × E)"
+          "O(V)",
+          "O(V + E)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "BFS visits each vertex once and explores each edge once, giving O(V + E)."
       },
       {
@@ -330,12 +330,12 @@
         "type": "multiple_choice",
         "prompt": "What is F(7) in the Fibonacci sequence where F(0)=0, F(1)=1?",
         "options": [
-          "8",
-          "13",
+          "34",
           "21",
-          "34"
+          "13",
+          "8"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "F(7) = 0,1,1,2,3,5,8,13. The 7th Fibonacci number is 13."
       },
       {
@@ -359,11 +359,11 @@
         "prompt": "Using the Master Theorem, what is the complexity of T(n) = T(n/2) + O(1)?",
         "options": [
           "O(1)",
-          "O(log n)",
           "O(n)",
+          "O(log n)",
           "O(n log n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "With a=1, b=2, f(n)=O(1), we have n^(log₂1)=1 and f(n)=Θ(1), so case 2: T(n)=Θ(log n)."
       },
       {
@@ -394,12 +394,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is NOT a property of trees?",
         "options": [
-          "Connected",
-          "Acyclic",
           "Has n-1 edges for n vertices",
-          "Must contain at least one cycle"
+          "Connected",
+          "Must contain at least one cycle",
+          "Acyclic"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "Trees are by definition acyclic (contain no cycles). The other options are all true properties: trees are connected, acyclic, and have exactly n-1 edges for n vertices."
       },
       {
@@ -422,12 +422,12 @@
         "type": "multiple_choice",
         "prompt": "A connected graph with 10 vertices and 12 edges has a circuit rank (number of independent cycles) of:",
         "options": [
-          "0",
-          "1",
+          "3",
           "2",
-          "3"
+          "1",
+          "0"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "The circuit rank (cyclomatic number) of a connected graph is E - V + 1. For 10 vertices and 12 edges: 12 - 10 + 1 = 3 independent cycles."
       },
       {
@@ -444,11 +444,11 @@
         "prompt": "What is the time complexity of Dijkstra's algorithm using a binary heap?",
         "options": [
           "O(V²)",
+          "O((V + E) log V)",
           "O(E log V)",
-          "O(V + E)",
-          "O((V + E) log V)"
+          "O(V + E)"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "Using a binary heap: O((V + E) log V), often written as O(E log V) for connected graphs."
       },
       {
@@ -478,12 +478,12 @@
         "type": "multiple_choice",
         "prompt": "Which data structure does Prim's algorithm use to efficiently select the minimum-weight edge?",
         "options": [
-          "Queue",
-          "Stack",
           "Priority Queue",
-          "Hash Table"
+          "Hash Table",
+          "Stack",
+          "Queue"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Prim's algorithm uses a priority queue (min-heap) to efficiently extract the minimum-weight edge."
       },
       {
@@ -534,12 +534,12 @@
         "type": "multiple_choice",
         "prompt": "What is 17 mod 5?",
         "options": [
-          "2",
+          "5",
           "3",
           "4",
-          "5"
+          "2"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "17 = 3×5 + 2, so 17 mod 5 = 2."
       },
       {
@@ -562,12 +562,12 @@
         "type": "multiple_choice",
         "prompt": "How many ways can you partition the integer 4 into positive integers (order doesn't matter)?",
         "options": [
-          "3",
-          "4",
           "5",
-          "8"
+          "3",
+          "8",
+          "4"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Partitions of 4: {4}, {3,1}, {2,2}, {2,1,1}, {1,1,1,1} = 5 ways."
       },
       {
@@ -591,11 +591,11 @@
         "prompt": "What is the generating function for the sequence 1, 1, 1, 1, ...?",
         "options": [
           "1 + x + x² + x³ + ...",
-          "1/(1-x)",
           "Both A and B",
+          "1/(1-x)",
           "eˣ"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The geometric series 1 + x + x² + ... = 1/(1-x) for |x| < 1."
       },
       {
@@ -611,12 +611,12 @@
         "type": "multiple_choice",
         "prompt": "What is the probability of rolling a sum of 7 with two fair dice?",
         "options": [
-          "1/12",
-          "1/6",
+          "1/3",
           "1/4",
-          "1/3"
+          "1/6",
+          "1/12"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "There are 6 ways to roll 7: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1) out of 36 total outcomes: 6/36 = 1/6."
       },
       {
@@ -646,12 +646,12 @@
         "type": "multiple_choice",
         "prompt": "Using Bayes' Theorem, if P(A)=0.3, P(B|A)=0.8, and P(B)=0.5, what is P(A|B)?",
         "options": [
-          "0.24",
           "0.48",
-          "0.6",
-          "0.8"
+          "0.24",
+          "0.8",
+          "0.6"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "P(A|B) = P(B|A)×P(A)/P(B) = (0.8×0.3)/0.5 = 0.24/0.5 = 0.48."
       },
       {

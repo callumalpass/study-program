@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "A function φ: G → H between groups is a homomorphism if:",
         "options": [
-          "φ is bijective",
           "φ(ab) = φ(a)φ(b) for all a, b ∈ G",
+          "φ is bijective",
           "φ(a) = a for all a ∈ G",
           "φ maps the identity to the identity"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A homomorphism preserves the group operation: φ(ab) = φ(a)φ(b). This automatically implies φ(e_G) = e_H and φ(a⁻¹) = φ(a)⁻¹."
       },
       {
@@ -24,11 +24,11 @@
         "prompt": "If φ: G → H is a group homomorphism, then φ(e_G) equals:",
         "options": [
           "e_G",
-          "e_H",
+          "Depends on φ",
           "0",
-          "Depends on φ"
+          "e_H"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Every homomorphism maps the identity of G to the identity of H. This follows from φ(e_G) = φ(e_G · e_G) = φ(e_G)φ(e_G)."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is a homomorphism from (Z, +) to (Z, +)?",
         "options": [
-          "φ(n) = n²",
-          "φ(n) = 2n",
           "φ(n) = n + 1",
-          "φ(n) = |n|"
+          "φ(n) = n²",
+          "φ(n) = |n|",
+          "φ(n) = 2n"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "φ(n) = 2n is a homomorphism since φ(m+n) = 2(m+n) = 2m + 2n = φ(m) + φ(n). The others fail the homomorphism property."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "If φ: G → H is a homomorphism and a has order n in G, then φ(a) in H has order:",
         "options": [
-          "Exactly n",
           "A divisor of n",
           "A multiple of n",
-          "No relation to n"
+          "No relation to n",
+          "Exactly n"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "If |a| = n, then φ(a)ⁿ = φ(aⁿ) = φ(e) = e, so |φ(a)| divides n. The order can be less than n (e.g., if a is in the kernel)."
       }
     ]
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "A homomorphism φ: G → H is injective if and only if:",
         "options": [
+          "im(φ) = H",
           "ker(φ) = {e_G}",
           "ker(φ) = G",
-          "im(φ) = H",
           "φ is surjective"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "φ is injective (one-to-one) if and only if its kernel is trivial: ker(φ) = {e_G}."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "The image (range) of a homomorphism φ: G → H is:",
         "options": [
-          "Always equal to H",
-          "Always a subgroup of H",
           "Always equal to ker(φ)",
-          "Never a proper subgroup"
+          "Never a proper subgroup",
+          "Always a subgroup of H",
+          "Always equal to H"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The image im(φ) = {φ(g) : g ∈ G} is always a subgroup of H, though not necessarily all of H."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "A group action of G on a set X is a function G × X → X such that:",
         "options": [
-          "e · x = x and (gh) · x = g · (h · x) for all g, h ∈ G and x ∈ X",
           "g · x = x for all g and x",
-          "g · x ≠ x for all g ≠ e",
-          "X ⊆ G"
+          "e · x = x and (gh) · x = g · (h · x) for all g, h ∈ G and x ∈ X",
+          "X ⊆ G",
+          "g · x ≠ x for all g ≠ e"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A group action satisfies: (1) the identity acts trivially: e·x = x, and (2) the action respects composition: (gh)·x = g·(h·x)."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "The orbit of an element x ∈ X under a group action is:",
         "options": [
-          "{x}",
-          "{g · x : g ∈ G}",
+          "The identity element",
           "{g ∈ G : g · x = x}",
-          "The identity element"
+          "{x}",
+          "{g · x : g ∈ G}"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The orbit of x is Orb(x) = {g·x : g ∈ G}, the set of all elements that x can be moved to by the group action."
       },
       {
@@ -183,11 +183,11 @@
         "prompt": "The stabilizer of an element x ∈ X is:",
         "options": [
           "{g · x : g ∈ G}",
-          "{g ∈ G : g · x = x}",
+          "All of G",
           "{x}",
-          "All of G"
+          "{g ∈ G : g · x = x}"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The stabilizer of x is Stab(x) = {g ∈ G : g·x = x}, the subgroup of elements that fix x."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "An automorphism of a group G is:",
         "options": [
+          "The identity map only",
           "Any homomorphism from G to G",
           "An isomorphism from G to itself",
-          "A subgroup of G",
-          "The identity map only"
+          "A subgroup of G"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "An automorphism is an isomorphism φ: G → G. The set of all automorphisms forms a group Aut(G) under composition."
       }
     ]

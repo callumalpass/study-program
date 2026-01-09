@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which HTML element is used for the largest heading?",
         "options": [
-          "<head>",
           "<h6>",
           "<h1>",
-          "<heading>"
+          "<heading>",
+          "<head>"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "<h1> represents the highest level heading, with <h6> being the smallest. Headings range from <h1> to <h6>."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the alt attribute in an <img> tag?",
         "options": [
-          "To specify the image source",
-          "To provide alternative text if the image cannot be displayed",
           "To set the image alignment",
-          "To define the image dimensions"
+          "To define the image dimensions",
+          "To provide alternative text if the image cannot be displayed",
+          "To specify the image source"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The alt attribute provides alternative text for screen readers and displays when images fail to load, improving accessibility."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "Which attribute is used to open a link in a new tab?",
         "options": [
-          "target=\"_new\"",
           "target=\"_blank\"",
+          "tab=\"new\"",
           "new=\"true\"",
-          "tab=\"new\""
+          "target=\"_new\""
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The target=\"_blank\" attribute on an <a> tag opens the link in a new browser tab or window."
       },
       {
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "Which CSS selector has the highest specificity?",
         "options": [
+          "ID selector (#id)",
           "Element selector (p)",
           "Class selector (.class)",
-          "ID selector (#id)",
           "Universal selector (*)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "CSS specificity hierarchy: inline styles > IDs > classes/attributes/pseudo-classes > elements/pseudo-elements > universal selector."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is the CSS box model order from innermost to outermost?",
         "options": [
-          "Content, Padding, Border, Margin",
+          "Margin, Border, Padding, Content",
           "Content, Margin, Padding, Border",
           "Content, Border, Padding, Margin",
-          "Margin, Border, Padding, Content"
+          "Content, Padding, Border, Margin"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The CSS box model layers from inside out: content area, padding (inside border), border, and margin (outside border)."
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "Which CSS property is used to change the background color?",
         "options": [
-          "bgcolor",
-          "background-color",
           "color",
-          "bg-color"
+          "bg-color",
+          "background-color",
+          "bgcolor"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The background-color property sets the background color of an element. The color property sets text color."
       },
       {
@@ -150,12 +150,12 @@
         "type": "multiple_choice",
         "prompt": "Which keyword is used to declare a block-scoped variable in JavaScript?",
         "options": [
-          "var",
           "let",
-          "const",
-          "Both let and const"
+          "var",
+          "Both let and const",
+          "const"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "Both let and const are block-scoped. let allows reassignment while const does not. var is function-scoped."
       },
       {
@@ -177,12 +177,12 @@
         "type": "multiple_choice",
         "prompt": "What will this code output?\n```javascript\nconst arr = [1, 2, 3];\narr.push(4);\nconsole.log(arr.length);\n```",
         "options": [
+          "undefined",
           "3",
           "4",
-          "Error",
-          "undefined"
+          "Error"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "const prevents reassignment of the variable, but the array itself is mutable. push() adds an element, making length 4."
       },
       {
@@ -204,12 +204,12 @@
         "type": "multiple_choice",
         "prompt": "Which method is used to select a single element by its ID?",
         "options": [
-          "document.querySelector(\"#id\")",
-          "document.getElementById(\"id\")",
           "Both are correct",
-          "document.getElement(\"id\")"
+          "document.getElement(\"id\")",
+          "document.getElementById(\"id\")",
+          "document.querySelector(\"#id\")"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Both document.getElementById(\"id\") and document.querySelector(\"#id\") can select an element by ID, though getElementById is more specific."
       },
       {
@@ -217,12 +217,12 @@
         "type": "multiple_choice",
         "prompt": "What does the addEventListener() method do?",
         "options": [
-          "Creates a new DOM element",
-          "Attaches an event handler to an element",
           "Removes an element from the DOM",
-          "Modifies element attributes"
+          "Creates a new DOM element",
+          "Modifies element attributes",
+          "Attaches an event handler to an element"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "addEventListener() registers an event handler for a specific event type on an element, allowing response to user interactions."
       },
       {
@@ -266,12 +266,12 @@
         "type": "multiple_choice",
         "prompt": "Which HTML5 element is best for a self-contained composition like a blog post?",
         "options": [
-          "<div>",
           "<section>",
-          "<article>",
-          "<aside>"
+          "<aside>",
+          "<div>",
+          "<article>"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "<article> represents independent, self-contained content that could be distributed separately, like blog posts or news articles."
       },
       {
@@ -286,12 +286,12 @@
         "type": "multiple_choice",
         "prompt": "What is the correct way to include an external CSS file?",
         "options": [
-          "<style src=\"styles.css\">",
           "<link rel=\"stylesheet\" href=\"styles.css\">",
           "<css src=\"styles.css\">",
+          "<style src=\"styles.css\">",
           "<stylesheet>styles.css</stylesheet>"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The <link> tag with rel=\"stylesheet\" is used to include external CSS files in the <head> section."
       },
       {
@@ -307,11 +307,11 @@
         "prompt": "Which input type provides a color picker in HTML5?",
         "options": [
           "<input type=\"picker\">",
+          "<color-input>",
           "<input type=\"color\">",
-          "<input type=\"palette\">",
-          "<color-input>"
+          "<input type=\"palette\">"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "HTML5 introduced type=\"color\" which provides a native color picker interface in supporting browsers."
       },
       {
@@ -373,12 +373,12 @@
         "type": "multiple_choice",
         "prompt": "What is the output of: console.log(1 + \"2\" + 3)?",
         "options": [
+          "\"15\"",
           "6",
           "\"123\"",
-          "\"15\"",
           "Error"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "JavaScript converts 1 to string and concatenates: \"1\" + \"2\" = \"12\", then \"12\" + \"3\" = \"123\". Type coercion in action."
       },
       {
@@ -394,11 +394,11 @@
         "prompt": "Which array method creates a new array with all elements that pass a test?",
         "options": [
           "map()",
-          "filter()",
+          "forEach()",
           "reduce()",
-          "forEach()"
+          "filter()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "filter() returns a new array containing only elements that satisfy the provided testing function. map() transforms, reduce() accumulates."
       },
       {
@@ -427,12 +427,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between querySelector() and querySelectorAll()?",
         "options": [
-          "querySelector() is faster",
-          "querySelector() returns one element, querySelectorAll() returns a NodeList",
+          "They are the same",
           "querySelectorAll() only works with classes",
-          "They are the same"
+          "querySelector() is faster",
+          "querySelector() returns one element, querySelectorAll() returns a NodeList"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "querySelector() returns the first matching element or null. querySelectorAll() returns a NodeList of all matches."
       },
       {
@@ -455,11 +455,11 @@
         "prompt": "Which property contains the actual text content of an element without HTML tags?",
         "options": [
           "innerHTML",
-          "textContent",
+          "nodeValue",
           "innerText",
-          "nodeValue"
+          "textContent"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "textContent returns all text content. innerText is aware of styling (hidden elements). innerHTML includes HTML tags."
       },
       {
@@ -474,12 +474,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the viewport meta tag?",
         "options": [
-          "To set the page title",
-          "To control the page dimensions and scaling on mobile devices",
+          "To define SEO keywords",
           "To include external CSS",
-          "To define SEO keywords"
+          "To set the page title",
+          "To control the page dimensions and scaling on mobile devices"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"> ensures proper rendering on mobile devices."
       },
       {
@@ -487,12 +487,12 @@
         "type": "multiple_choice",
         "prompt": "Which approach to responsive design applies styles to larger screens?",
         "options": [
-          "Mobile-first (min-width media queries)",
-          "Desktop-first (max-width media queries)",
           "Both work the same",
-          "Neither uses media queries"
+          "Neither uses media queries",
+          "Desktop-first (max-width media queries)",
+          "Mobile-first (min-width media queries)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Mobile-first uses min-width to progressively enhance for larger screens. Desktop-first uses max-width to adapt down to smaller screens."
       },
       {
@@ -541,12 +541,12 @@
         "type": "multiple_choice",
         "prompt": "Which method is used to handle Promise rejections?",
         "options": [
-          "then()",
-          "catch()",
           "finally()",
-          "reject()"
+          "reject()",
+          "catch()",
+          "then()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "catch() handles rejected promises. then() handles resolution, finally() runs regardless of outcome."
       },
       {
@@ -583,11 +583,11 @@
         "prompt": "What does the fetch() API return?",
         "options": [
           "The response data directly",
-          "A Promise that resolves to a Response object",
           "A callback function",
-          "An XMLHttpRequest object"
+          "An XMLHttpRequest object",
+          "A Promise that resolves to a Response object"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "fetch() returns a Promise that resolves to a Response object. You need to call .json() or .text() to extract the data."
       },
       {
@@ -615,12 +615,12 @@
         "type": "multiple_choice",
         "prompt": "What is the Virtual DOM used for in frameworks like React?",
         "options": [
-          "To replace the real DOM entirely",
           "To efficiently update the UI by comparing changes before updating the real DOM",
-          "To store user data",
-          "To handle routing"
+          "To handle routing",
+          "To replace the real DOM entirely",
+          "To store user data"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Virtual DOM is an in-memory representation. Frameworks diff changes and update only what changed in the real DOM for performance."
       },
       {

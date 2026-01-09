@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the goal of K-means clustering?",
         "options": [
+          "Reduce dimensionality to K dimensions",
           "Partition data into K clusters minimizing within-cluster variance",
           "Find K nearest neighbors",
-          "Reduce dimensionality to K dimensions",
           "Select K best features"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "K-means aims to minimize the sum of squared distances between points and their assigned cluster centroids, creating K compact clusters."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "How does the K-means algorithm work?",
         "options": [
-          "Alternates between assigning points to nearest centroids and updating centroids",
-          "Builds a tree of clusters",
           "Uses density-based connectivity",
-          "Applies principal component analysis"
+          "Applies principal component analysis",
+          "Alternates between assigning points to nearest centroids and updating centroids",
+          "Builds a tree of clusters"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "K-means iteratively: (1) assigns each point to the nearest centroid, (2) recomputes centroids as cluster means. This process repeats until convergence."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is a major limitation of K-means?",
         "options": [
-          "Requires specifying K beforehand and sensitive to initialization",
-          "Cannot handle large datasets",
           "Only works with binary features",
-          "Requires labeled data"
+          "Cannot handle large datasets",
+          "Requires labeled data",
+          "Requires specifying K beforehand and sensitive to initialization"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "K-means requires knowing K in advance and can converge to poor local minima depending on initialization. K-means++ initialization helps, but the algorithm remains sensitive to initial centroids."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What does hierarchical clustering produce?",
         "options": [
-          "A dendrogram showing nested cluster relationships",
           "A single flat partition",
-          "K fixed clusters",
-          "A probability distribution over clusters"
+          "A probability distribution over clusters",
+          "A dendrogram showing nested cluster relationships",
+          "K fixed clusters"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Hierarchical clustering creates a tree structure (dendrogram) showing how clusters merge (agglomerative) or split (divisive), allowing different granularities of clustering."
       },
       {
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "How can you choose the optimal number of clusters K?",
         "options": [
-          "Use the elbow method or silhouette analysis on validation data",
           "Always use K=3",
+          "Use the square root of data size",
           "Use the number of features",
-          "Use the square root of data size"
+          "Use the elbow method or silhouette analysis on validation data"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The elbow method plots within-cluster sum of squares vs K (look for the \"elbow\"). Silhouette analysis measures how well points fit their clusters. Both help select K."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is Principal Component Analysis (PCA) used for?",
         "options": [
-          "Dimensionality reduction while preserving maximum variance",
-          "Clustering",
           "Classification",
-          "Feature selection"
+          "Dimensionality reduction while preserving maximum variance",
+          "Feature selection",
+          "Clustering"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "PCA finds orthogonal directions (principal components) of maximum variance in the data, enabling projection to lower dimensions while retaining most information."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "When would DBSCAN be preferred over K-means?",
         "options": [
+          "When speed is critical",
           "When clusters have arbitrary shapes or there are outliers",
-          "When K is known",
           "When clusters are spherical",
-          "When speed is critical"
+          "When K is known"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "DBSCAN handles non-spherical clusters and automatically identifies outliers as noise. K-means assumes spherical clusters and is sensitive to outliers."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is the K-means objective function?",
         "options": [
-          "J = Σᵢ Σₓ∈Cᵢ ||x - μᵢ||² (minimize within-cluster sum of squares)",
-          "J = Σᵢ ||μᵢ||² (minimize centroid norms)",
+          "J = log Σᵢ |Cᵢ| (balance cluster sizes)",
           "J = Σᵢ Σⱼ ||μᵢ - μⱼ||² (maximize between-cluster distance)",
-          "J = log Σᵢ |Cᵢ| (balance cluster sizes)"
+          "J = Σᵢ ||μᵢ||² (minimize centroid norms)",
+          "J = Σᵢ Σₓ∈Cᵢ ||x - μᵢ||² (minimize within-cluster sum of squares)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "K-means minimizes WCSS (within-cluster sum of squares), the sum of squared distances from each point to its cluster centroid. This is equivalent to maximizing cluster compactness."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "How does t-SNE differ from PCA for visualization?",
         "options": [
-          "t-SNE preserves local structure (neighborhoods), PCA preserves global variance",
-          "t-SNE is faster than PCA",
           "t-SNE is linear, PCA is non-linear",
-          "t-SNE requires labels, PCA does not"
+          "t-SNE requires labels, PCA does not",
+          "t-SNE is faster than PCA",
+          "t-SNE preserves local structure (neighborhoods), PCA preserves global variance"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "t-SNE uses probabilistic neighborhoods to preserve local relationships, making it better for visualization. PCA is linear and preserves global variance structure. t-SNE is slower and non-deterministic."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the Gaussian Mixture Model (GMM) approach to clustering?",
         "options": [
-          "Assumes data comes from K Gaussian distributions and uses EM to find parameters",
-          "Uses K-means with Gaussian kernels",
           "Applies Gaussian noise to data",
+          "Uses K-means with Gaussian kernels",
+          "Assumes data comes from K Gaussian distributions and uses EM to find parameters",
           "Normalizes data to Gaussian distribution"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "GMM models data as mixture of K Gaussians. The EM algorithm iteratively: E-step computes probability of each point belonging to each cluster; M-step updates means, covariances, and mixture weights."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What is an autoencoder?",
         "options": [
-          "A neural network that learns to compress and reconstruct data",
           "A clustering algorithm",
+          "A neural network that learns to compress and reconstruct data",
           "A classification model",
           "A data augmentation technique"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Autoencoders have encoder (compresses input to latent representation) and decoder (reconstructs from latent). They learn useful representations in an unsupervised manner by minimizing reconstruction error."
       }
     ]

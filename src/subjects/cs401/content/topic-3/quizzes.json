@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the distributed consensus problem?",
         "options": [
-          "Getting all nodes to agree on a single value",
           "Synchronizing physical clocks",
+          "Encrypting communications",
           "Load balancing requests",
-          "Encrypting communications"
+          "Getting all nodes to agree on a single value"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Distributed consensus requires all non-faulty nodes to agree on a single value, with the agreement being final and irrevocable, despite failures and asynchrony."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which property is NOT required for consensus?",
         "options": [
+          "Termination (all processes eventually decide)",
           "Fast execution",
-          "Agreement (all decide same value)",
           "Validity (decided value was proposed)",
-          "Termination (all processes eventually decide)"
+          "Agreement (all decide same value)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Consensus requires agreement, validity, and termination, but not necessarily fast execution. Speed is a practical concern but not a correctness requirement."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What does the FLP impossibility result state?",
         "options": [
-          "Consensus is impossible in asynchronous systems with one failure",
           "Consensus requires Byzantine fault tolerance",
+          "Physical clock synchronization is impossible",
           "Three-phase commit always works",
-          "Physical clock synchronization is impossible"
+          "Consensus is impossible in asynchronous systems with one failure"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The FLP (Fischer, Lynch, Paterson) impossibility result proves that no deterministic consensus algorithm can guarantee termination in an asynchronous system with even one crash failure."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "How do practical consensus algorithms overcome FLP impossibility?",
         "options": [
-          "Use timeouts and assume partial synchrony",
-          "Ignore the theorem",
           "Guarantee no failures occur",
-          "Use quantum computing"
+          "Ignore the theorem",
+          "Use quantum computing",
+          "Use timeouts and assume partial synchrony"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Practical algorithms like Raft and Paxos assume partial synchrony (timeouts eventually work) and use failure detectors, trading theoretical guarantees for practical functionality."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What is two-phase commit (2PC) used for?",
         "options": [
-          "Atomic distributed transactions",
-          "Leader election",
           "Clock synchronization",
-          "Load balancing"
+          "Load balancing",
+          "Atomic distributed transactions",
+          "Leader election"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Two-phase commit ensures that a distributed transaction either commits on all nodes or aborts on all nodes, maintaining atomicity across multiple participants."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What are the two phases in two-phase commit?",
         "options": [
-          "Prepare and Commit",
           "Request and Response",
+          "Prepare and Commit",
           "Lock and Unlock",
           "Send and Receive"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "In 2PC, the coordinator first asks participants to prepare (vote on whether they can commit), then based on votes, instructs them to commit or abort in the second phase."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is a major weakness of two-phase commit?",
         "options": [
-          "Coordinator failure blocks progress",
           "Too many network messages",
           "Cannot handle reads",
-          "Requires Byzantine fault tolerance"
+          "Requires Byzantine fault tolerance",
+          "Coordinator failure blocks progress"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "If the coordinator fails after participants prepare but before sending commit/abort decisions, participants are blocked indefinitely, unable to unilaterally decide the transaction outcome."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What does three-phase commit (3PC) add to avoid blocking?",
         "options": [
-          "A prepare-to-commit phase",
-          "More participants",
+          "Byzantine fault tolerance",
           "Faster networks",
-          "Byzantine fault tolerance"
+          "A prepare-to-commit phase",
+          "More participants"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "3PC adds a prepare-to-commit phase between prepare and commit, allowing participants to timeout and make progress if the coordinator fails, though this requires synchrony assumptions."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary goal of the Paxos algorithm?",
         "options": [
-          "Achieve consensus on a single value",
           "Synchronize clocks",
+          "Detect failures",
           "Implement transactions",
-          "Detect failures"
+          "Achieve consensus on a single value"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Paxos is a consensus algorithm that allows a collection of nodes to agree on a single value even in the presence of failures, forming the basis for many distributed systems."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "How does a candidate win a Raft election?",
         "options": [
-          "Receives votes from a majority of servers",
           "Has the highest ID",
           "Requests first",
-          "Has the most log entries"
+          "Has the most log entries",
+          "Receives votes from a majority of servers"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A candidate becomes leader by receiving votes from a majority of servers in the cluster, ensuring at most one leader per term since majorities overlap."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of log replication in Raft?",
         "options": [
+          "Performance optimization",
           "Keep state machine replicas synchronized",
           "Backup configuration",
-          "Audit trail",
-          "Performance optimization"
+          "Audit trail"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Raft replicates a log of commands to all nodes, ensuring all state machines execute the same commands in the same order, maintaining consistency across replicas."
       },
       {

@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "lim(n→∞) (2n + 1)/(3n - 5) equals:",
         "options": [
-          "2/3",
           "1",
           "0",
-          "Does not exist"
+          "Does not exist",
+          "2/3"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Divide numerator and denominator by n: (2 + 1/n)/(3 - 5/n) → 2/3 as n → ∞."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "The sequence xₙ = (-1)ⁿ:",
         "options": [
+          "Converges to 0",
           "Diverges",
           "Converges to 1",
-          "Converges to -1",
-          "Converges to 0"
+          "Converges to -1"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The sequence oscillates between 1 and -1, so it has no limit. For any proposed limit L, we can find terms arbitrarily far from L."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "If a sequence converges, then it is:",
         "options": [
-          "Bounded",
           "Monotone",
           "Unbounded",
+          "Bounded",
           "Eventually constant"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Every convergent sequence is bounded. This is a fundamental theorem: if xₙ → L, then there exists M such that |xₙ| ≤ M for all n."
       }
     ]
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "If (xₙ) is convergent, then (xₙ) is:",
         "options": [
+          "Unbounded",
           "Cauchy",
-          "Not necessarily Cauchy",
           "Monotone",
-          "Unbounded"
+          "Not necessarily Cauchy"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Every convergent sequence is Cauchy. If xₙ → L, then for large m, n, both xₘ and xₙ are close to L, hence close to each other."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Which is true about every Cauchy sequence?",
         "options": [
-          "It is bounded",
-          "It is unbounded",
           "It is eventually constant",
-          "It has a constant subsequence"
+          "It has a constant subsequence",
+          "It is unbounded",
+          "It is bounded"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Every Cauchy sequence is bounded. Choose ε = 1; then all but finitely many terms lie in a bounded interval, and we can bound the remaining finitely many terms."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "Let xₙ = ∑(k=1 to n) 1/k. Is (xₙ) Cauchy?",
         "options": [
+          "Yes, because it is monotone",
           "No, because the harmonic series diverges",
           "Yes, because each term is positive",
-          "Yes, because it is monotone",
           "Cannot be determined"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The sequence of partial sums of the harmonic series diverges to infinity, so it is not Cauchy. We can show |xₘ - xₙ| can be arbitrarily large."
       }
     ]
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "A sequence (xₙ) converges if and only if:",
         "options": [
-          "lim sup xₙ = lim inf xₙ",
-          "lim sup xₙ > lim inf xₙ",
           "lim sup xₙ exists",
-          "lim inf xₙ exists"
+          "lim sup xₙ = lim inf xₙ",
+          "lim inf xₙ exists",
+          "lim sup xₙ > lim inf xₙ"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A sequence converges if and only if lim sup xₙ = lim inf xₙ, and in this case, the common value is the limit."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "If every subsequence of (xₙ) converges to L, then:",
         "options": [
-          "The sequence (xₙ) converges to L",
-          "The sequence (xₙ) diverges",
           "L = 0",
-          "The sequence is unbounded"
+          "The sequence is unbounded",
+          "The sequence (xₙ) converges to L",
+          "The sequence (xₙ) diverges"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "If every subsequence converges to the same limit L, then the original sequence must also converge to L."
       }
     ]

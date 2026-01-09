@@ -11,11 +11,11 @@
         "prompt": "What is the space complexity of an adjacency matrix for a graph with V vertices?",
         "options": [
           "O(V)",
-          "O(E)",
           "O(V^2)",
+          "O(E)",
           "O(V + E)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "An adjacency matrix is a V×V 2D array, requiring O(V^2) space regardless of edge count."
       },
       {
@@ -24,11 +24,11 @@
         "prompt": "Which representation is better for sparse graphs?",
         "options": [
           "Adjacency Matrix",
-          "Adjacency List",
           "Both are equal",
-          "Edge List"
+          "Edge List",
+          "Adjacency List"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Adjacency List uses O(V + E) space, much better than O(V^2) for sparse graphs where E << V^2."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of BFS on a graph with V vertices and E edges?",
         "options": [
-          "O(V)",
-          "O(E)",
+          "O(V * E)",
           "O(V + E)",
-          "O(V * E)"
+          "O(V)",
+          "O(E)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "BFS visits each vertex once O(V) and examines each edge once O(E), giving O(V + E)."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of Bellman-Ford?",
         "options": [
-          "O(V + E)",
-          "O(E log V)",
           "O(V * E)",
-          "O(V^3)"
+          "O(V^3)",
+          "O(V + E)",
+          "O(E log V)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Bellman-Ford relaxes all E edges V-1 times, giving O(V * E)."
       },
       {
@@ -138,12 +138,12 @@
         "type": "multiple_choice",
         "prompt": "Topological sort is only possible for:",
         "options": [
-          "Undirected graphs",
-          "Directed Acyclic Graphs (DAGs)",
           "Complete graphs",
-          "Weighted graphs"
+          "Weighted graphs",
+          "Undirected graphs",
+          "Directed Acyclic Graphs (DAGs)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Topological ordering requires no cycles (a node can't come before itself), so only DAGs qualify."
       },
       {
@@ -160,11 +160,11 @@
         "codeSnippet": "def traverse(graph, start):\n    visited = set()\n    queue = deque([start])\n    visited.add(start)\n    dist = {start: 0}\n    while queue:\n        node = queue.popleft()\n        for neighbor in graph[node]:\n            if neighbor not in visited:\n                visited.add(neighbor)\n                dist[neighbor] = dist[node] + 1\n                queue.append(neighbor)\n    return dist",
         "options": [
           "DFS traversal order",
-          "Shortest distances from start (unweighted)",
           "Topological sort",
+          "Shortest distances from start (unweighted)",
           "Connected components"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "This is BFS tracking distances. Each neighbor is one step further than the current node."
       },
       {
@@ -172,12 +172,12 @@
         "type": "multiple_choice",
         "prompt": "What is a common application of topological sort?",
         "options": [
-          "Finding shortest paths",
-          "Build system dependencies",
           "Detecting cycles",
-          "Finding connected components"
+          "Finding connected components",
+          "Finding shortest paths",
+          "Build system dependencies"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Topological sort orders tasks so dependencies come first - essential for build systems and scheduling."
       },
       {

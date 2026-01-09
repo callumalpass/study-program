@@ -26,12 +26,12 @@
         "type": "multiple_choice",
         "prompt": "Which operation is commonly used to check if a bit is set?",
         "options": [
-          "OR",
           "AND",
+          "OR",
           "XOR",
           "NOT"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "AND with a mask checks if specific bits are set: if (value & (1 << bit)) tests if bit is set."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What is the size of a union?",
         "options": [
-          "Sum of all members",
           "Size of largest member",
           "Always 4 bytes",
-          "Size of first member"
+          "Size of first member",
+          "Sum of all members"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A union is large enough to hold its largest member, since all members share the same memory."
       },
       {
@@ -90,12 +90,12 @@
         "type": "multiple_choice",
         "prompt": "What are unions commonly used for?",
         "options": [
+          "Function overloading",
           "Inheritance",
           "Memory saving/type punning",
-          "Function overloading",
           "Encryption"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Unions save memory when only one of several types is needed at a time, and enable type punning."
       },
       {
@@ -104,11 +104,11 @@
         "prompt": "What is a tagged union?",
         "options": [
           "A union with a label",
-          "A union paired with an enum indicating active member",
           "A union of strings",
-          "A union in a struct"
+          "A union in a struct",
+          "A union paired with an enum indicating active member"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A tagged union combines a union with an enum or integer that tracks which member is currently valid."
       }
     ]
@@ -124,12 +124,12 @@
         "type": "multiple_choice",
         "prompt": "What does the volatile keyword indicate?",
         "options": [
+          "Variable is fast",
           "Variable is temporary",
-          "Variable may change unexpectedly",
           "Variable is thread-safe",
-          "Variable is fast"
+          "Variable may change unexpectedly"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "volatile tells the compiler the variable may be changed by external factors, preventing certain optimizations."
       },
       {
@@ -137,12 +137,12 @@
         "type": "multiple_choice",
         "prompt": "What does restrict mean for a pointer?",
         "options": [
-          "Pointer is read-only",
           "Pointer is the only way to access that memory",
-          "Pointer cannot be NULL",
-          "Pointer is aligned"
+          "Pointer is aligned",
+          "Pointer is read-only",
+          "Pointer cannot be NULL"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "restrict promises the compiler that the pointer is the only way to access its memory, enabling optimizations."
       },
       {
@@ -150,12 +150,12 @@
         "type": "multiple_choice",
         "prompt": "Which header is needed for variadic functions?",
         "options": [
-          "stdio.h",
-          "stdarg.h",
           "stdlib.h",
-          "varargs.h"
+          "stdio.h",
+          "varargs.h",
+          "stdarg.h"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "stdarg.h provides va_list, va_start, va_arg, and va_end for implementing variadic functions."
       },
       {
@@ -170,12 +170,12 @@
         "type": "multiple_choice",
         "prompt": "What does va_arg do?",
         "options": [
-          "Starts argument processing",
           "Retrieves next argument of specified type",
-          "Counts arguments",
-          "Ends argument processing"
+          "Starts argument processing",
+          "Ends argument processing",
+          "Counts arguments"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "va_arg(ap, type) retrieves the next argument from the va_list, interpreting it as the specified type."
       }
     ]

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "For a minimization problem, an algorithm is a ρ-approximation if:",
         "options": [
-          "It always returns a solution with cost ≤ ρ · OPT",
+          "It returns a solution with cost ≥ ρ · OPT",
           "It returns OPT with probability at least ρ",
-          "It runs in time O(n^ρ)",
-          "It returns a solution with cost ≥ ρ · OPT"
+          "It always returns a solution with cost ≤ ρ · OPT",
+          "It runs in time O(n^ρ)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "For minimization, approximation factor ρ means the algorithm’s solution cost is within a multiplicative factor ρ of the optimal cost."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which statement correctly defines an FPTAS?",
         "options": [
-          "A (1+ε)-approximation scheme with runtime polynomial in n and 1/ε",
-          "A constant-factor approximation with runtime polynomial in n",
           "An exact algorithm with expected polynomial runtime",
-          "A scheme with runtime polynomial in n and log(1/ε)"
+          "A constant-factor approximation with runtime polynomial in n",
+          "A scheme with runtime polynomial in n and log(1/ε)",
+          "A (1+ε)-approximation scheme with runtime polynomial in n and 1/ε"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "An FPTAS is a fully polynomial-time approximation scheme: it produces a (1+ε) solution in time poly(n, 1/ε)."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "A classic 2-approximation for Vertex Cover is based on:",
         "options": [
+          "Shortest paths",
           "Maximum matching",
           "Minimum spanning tree",
-          "Shortest paths",
           "Dynamic programming"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Take any maximal matching and include both endpoints of each matched edge; this yields a vertex cover at most twice optimal."
       }
     ]
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "You have a 2-approximation algorithm for a minimization problem. If OPT = 10, the algorithm guarantees a solution of cost at most:",
         "options": [
-          "5",
           "10",
           "20",
-          "40"
+          "40",
+          "5"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "A 2-approximation guarantees cost ≤ 2·OPT = 20 for minimization."
       },
       {
@@ -112,12 +112,12 @@
         "type": "multiple_choice",
         "prompt": "For 0/1 Knapsack, which statement is true?",
         "options": [
-          "There is an FPTAS",
-          "No approximation is possible unless P=NP",
+          "The problem is solvable exactly in O(n log n)",
           "A 2-approximation is impossible",
-          "The problem is solvable exactly in O(n log n)"
+          "No approximation is possible unless P=NP",
+          "There is an FPTAS"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "0/1 Knapsack admits an FPTAS via value scaling and dynamic programming, despite being NP-hard."
       }
     ]
@@ -133,12 +133,12 @@
         "type": "multiple_choice",
         "prompt": "Hardness of approximation results typically show that:",
         "options": [
-          "No polynomial-time algorithm can approximate within a certain factor unless P=NP (or stronger assumptions)",
+          "Greedy algorithms are always optimal",
           "No exponential-time algorithm exists",
           "Randomized algorithms always beat deterministic ones",
-          "Greedy algorithms are always optimal"
+          "No polynomial-time algorithm can approximate within a certain factor unless P=NP (or stronger assumptions)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Inapproximability results bound what approximation ratios are achievable in polynomial time under widely believed assumptions."
       },
       {
@@ -146,12 +146,12 @@
         "type": "multiple_choice",
         "prompt": "The integrality gap of an LP relaxation measures:",
         "options": [
-          "How much worse the best integer solution can be compared to the fractional LP optimum",
+          "The probability that rounding succeeds",
           "The runtime of the simplex algorithm",
           "The number of constraints in the LP",
-          "The probability that rounding succeeds"
+          "How much worse the best integer solution can be compared to the fractional LP optimum"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Integrality gap is the worst-case ratio between the optimal integer solution and the optimal fractional (LP) solution; it informs achievable approximation via rounding."
       },
       {

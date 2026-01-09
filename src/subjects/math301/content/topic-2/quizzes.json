@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is ∂f/∂y for f(x,y) = x²y + 3xy²?",
         "options": [
-          "x² + 6xy",
-          "2xy + 3y²",
           "x² + 3y²",
+          "2xy + 3y²",
+          "x² + 6xy",
           "2x + 6y"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Treating x as constant: ∂/∂y(x²y) = x² and ∂/∂y(3xy²) = 6xy"
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "For f(x,y) = sin(xy), what is ∂²f/∂x∂y?",
         "options": [
-          "cos(xy) - xy·sin(xy)",
           "-xy·sin(xy)",
+          "-sin(xy)",
           "cos(xy)",
-          "-sin(xy)"
+          "cos(xy) - xy·sin(xy)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "∂f/∂x = y·cos(xy), then ∂/∂y[y·cos(xy)] = cos(xy) + y·(-sin(xy))·x = cos(xy) - xy·sin(xy)"
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Given z = x²y and x = t², y = t³, what is dz/dt using the chain rule?",
         "options": [
+          "3t⁶",
           "7t⁶",
           "4t⁶",
-          "5t⁴",
-          "3t⁶"
+          "5t⁴"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Using the chain rule: dz/dt = (∂z/∂x)(dx/dt) + (∂z/∂y)(dy/dt). We have ∂z/∂x = 2xy, ∂z/∂y = x², dx/dt = 2t, dy/dt = 3t². Substituting x = t² and y = t³: dz/dt = 2(t²)(t³)·2t + (t²)²·3t² = 4t⁶ + 3t⁶ = 7t⁶. This can be verified by direct substitution: z = (t²)²(t³) = t⁷, so dz/dt = 7t⁶."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "For w = f(x,y,z) where x, y, z are all functions of t, how many terms are in dw/dt?",
         "options": [
-          "1",
-          "2",
           "3",
-          "4"
+          "1",
+          "4",
+          "2"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "dw/dt = (∂w/∂x)(dx/dt) + (∂w/∂y)(dy/dt) + (∂w/∂z)(dz/dt), which has 3 terms"
       },
       {
@@ -97,12 +97,12 @@
         "type": "multiple_choice",
         "prompt": "What is the second-order partial derivative ∂²f/∂x² for f(x,y) = e^(xy)?",
         "options": [
-          "y²e^(xy)",
           "ye^(xy)",
           "xye^(xy)",
-          "e^(xy)"
+          "e^(xy)",
+          "y²e^(xy)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "∂f/∂x = ye^(xy), then ∂²f/∂x² = y·ye^(xy) = y²e^(xy)"
       },
       {
@@ -138,12 +138,12 @@
         "type": "multiple_choice",
         "prompt": "For f(x,y) = x³ + y³ - 3xy, what is f_xx + f_yy (the Laplacian)?",
         "options": [
-          "6x + 6y",
-          "6xy",
           "3x² + 3y²",
-          "0"
+          "6xy",
+          "0",
+          "6x + 6y"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "f_x = 3x² - 3y, f_xx = 6x; f_y = 3y² - 3x, f_yy = 6y. Thus f_xx + f_yy = 6x + 6y"
       },
       {
@@ -151,12 +151,12 @@
         "type": "multiple_choice",
         "prompt": "What is the differential df for f(x,y,z) = x²yz?",
         "options": [
-          "2xyz dx + x²z dy + x²y dz",
-          "2xy dx + xz dy + xy dz",
+          "2xyz(dx + dy + dz)",
           "xyz(dx + dy + dz)",
-          "2xyz(dx + dy + dz)"
+          "2xyz dx + x²z dy + x²y dz",
+          "2xy dx + xz dy + xy dz"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "df = f_x dx + f_y dy + f_z dz = 2xyz dx + x²z dy + x²y dz"
       },
       {
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "For the chain rule with w = f(x,y), x = g(s,t), y = h(s,t), how many terms are in ∂w/∂s?",
         "options": [
-          "1",
-          "2",
+          "4",
           "3",
-          "4"
+          "1",
+          "2"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "∂w/∂s = (∂w/∂x)(∂x/∂s) + (∂w/∂y)(∂y/∂s), which has 2 terms"
       },
       {
@@ -184,12 +184,12 @@
         "type": "multiple_choice",
         "prompt": "What is the limit of f(x,y) = xy/(x² + y²) as (x,y) → (0,0) along the path y = x?",
         "options": [
-          "1/2",
-          "1",
           "0",
+          "1",
+          "1/2",
           "Does not exist"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Along y = x: f(x,x) = x²/(x² + x²) = x²/2x² = 1/2 for all x ≠ 0"
       }
     ]

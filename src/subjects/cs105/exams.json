@@ -17,12 +17,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is NOT a valid C data type?",
         "options": [
+          "string",
           "int",
           "float",
-          "string",
           "char"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "C does not have a native `string` type. Strings are represented as arrays of `char` terminated with a null character."
       },
       {
@@ -60,12 +60,12 @@
         "type": "multiple_choice",
         "prompt": "What is the correct way to declare a constant integer in C?",
         "options": [
-          "constant int x = 5;",
           "const int x = 5;",
-          "int const x == 5;",
-          "final int x = 5;"
+          "constant int x = 5;",
+          "final int x = 5;",
+          "int const x == 5;"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The `const` keyword is used in C to declare constants. `const int x = 5;` is correct."
       },
       {
@@ -201,11 +201,11 @@
         "prompt": "What is a memory leak?",
         "options": [
           "When memory is accessed after being freed",
-          "When allocated memory is never freed and becomes unreachable",
           "When a pointer points outside its allocated block",
-          "When the stack overflows"
+          "When the stack overflows",
+          "When allocated memory is never freed and becomes unreachable"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A memory leak occurs when dynamically allocated memory is never freed and becomes unreachable, gradually consuming available memory."
       },
       {
@@ -221,12 +221,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between malloc and calloc?",
         "options": [
-          "malloc is faster than calloc",
-          "calloc initializes memory to zero, malloc does not",
           "malloc can only allocate one element",
-          "calloc is deprecated in modern C"
+          "malloc is faster than calloc",
+          "calloc is deprecated in modern C",
+          "calloc initializes memory to zero, malloc does not"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "calloc (contiguous allocation) initializes all allocated bytes to zero. malloc leaves the memory uninitialized."
       },
       {
@@ -285,12 +285,12 @@
         "type": "multiple_choice",
         "prompt": "What is the result of sizeof(char) in C?",
         "options": [
-          "0",
-          "1",
           "2",
-          "Implementation-defined"
+          "Implementation-defined",
+          "1",
+          "0"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "sizeof(char) is always 1 byte by definition in the C standard. All other type sizes are measured relative to char."
       },
       {
@@ -336,12 +336,12 @@
         "type": "multiple_choice",
         "prompt": "What does the following declaration mean: const int *p?",
         "options": [
-          "p is a constant pointer to an int",
           "p is a pointer to a constant int (cannot modify *p)",
+          "This is invalid syntax",
           "Both p and *p are constant",
-          "This is invalid syntax"
+          "p is a constant pointer to an int"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "`const int *p` means p points to a const int - you cannot modify the value through this pointer (*p = x is not allowed), but you can change what p points to."
       },
       {
@@ -456,12 +456,12 @@
         "type": "multiple_choice",
         "prompt": "What happens when malloc() fails to allocate memory?",
         "options": [
-          "The program crashes immediately",
           "It returns NULL",
           "It throws an exception",
-          "It allocates from a reserve pool"
+          "It allocates from a reserve pool",
+          "The program crashes immediately"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "malloc returns NULL when it cannot allocate the requested memory. Programs should always check for NULL before using the returned pointer."
       },
       {
@@ -485,12 +485,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of typedef with structures?",
         "options": [
-          "To make structures faster",
-          "To create an alias so you do not need to write \"struct\" each time",
           "To make structures take less memory",
-          "To allow inheritance"
+          "To allow inheritance",
+          "To make structures faster",
+          "To create an alias so you do not need to write \"struct\" each time"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "typedef creates a type alias. `typedef struct Point Point;` lets you use `Point` instead of `struct Point`."
       },
       {
@@ -578,11 +578,11 @@
         "prompt": "What is the difference between text mode and binary mode when opening files?",
         "options": [
           "Binary mode is faster",
-          "Text mode performs newline translation, binary mode does not",
+          "There is no difference on all systems",
           "Binary mode can only handle numbers",
-          "There is no difference on all systems"
+          "Text mode performs newline translation, binary mode does not"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Text mode may translate newlines (\\n <-> \\r\\n on Windows). Binary mode (\"rb\", \"wb\") reads/writes bytes exactly as stored."
       },
       {
@@ -597,12 +597,12 @@
         "type": "multiple_choice",
         "prompt": "Which function reads a single character from a file?",
         "options": [
+          "fread",
           "fgets",
-          "fgetc",
           "fscanf",
-          "fread"
+          "fgetc"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "fgetc reads one character (as an int for EOF detection). fgets reads a line, fscanf does formatted input, fread reads blocks."
       },
       {
@@ -625,12 +625,12 @@
         "type": "multiple_choice",
         "prompt": "What does fseek(fp, 0, SEEK_SET) do?",
         "options": [
-          "Moves to the end of the file",
-          "Moves to the beginning of the file",
           "Moves forward by one byte",
-          "Returns the current position"
+          "Moves to the end of the file",
+          "Returns the current position",
+          "Moves to the beginning of the file"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "fseek with SEEK_SET and offset 0 moves the file position to the beginning. SEEK_END would go to the end."
       },
       {
@@ -646,12 +646,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the #define preprocessor directive?",
         "options": [
-          "To declare a variable",
           "To define a macro or symbolic constant",
-          "To include a header file",
-          "To define a function"
+          "To declare a variable",
+          "To define a function",
+          "To include a header file"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "#define creates macros (text substitution) or symbolic constants. The preprocessor replaces occurrences before compilation."
       },
       {

@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of BFS on a graph with V vertices and E edges?",
         "options": [
-          "O(V)",
           "O(E)",
           "O(V + E)",
+          "O(V)",
           "O(V × E)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "BFS visits each vertex and edge once: O(V + E)."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "DFS uses which data structure (implicitly via recursion)?",
         "options": [
-          "Queue",
           "Stack",
-          "Heap",
-          "Hash table"
+          "Queue",
+          "Hash table",
+          "Heap"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "DFS uses a stack - either explicit or via recursion call stack."
       }
     ]
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of Dijkstra's algorithm with a binary heap?",
         "options": [
-          "O(V)",
           "O(E log V)",
           "O((V + E) log V)",
+          "O(V)",
           "O(V²)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "With binary heap: O((V + E) log V) due to priority queue operations."
       },
       {
@@ -93,10 +93,10 @@
         "options": [
           "Any graph",
           "Connected graphs only",
-          "Directed acyclic graphs (DAGs)",
-          "Undirected graphs only"
+          "Undirected graphs only",
+          "Directed acyclic graphs (DAGs)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Topological ordering requires a DAG - no cycles allowed."
       },
       {
@@ -159,12 +159,12 @@
         "type": "multiple_choice",
         "prompt": "Which is true about Bellman-Ford vs Dijkstra?",
         "options": [
-          "Bellman-Ford is always faster",
           "Dijkstra handles negative edges",
           "Bellman-Ford detects negative cycles",
-          "They have the same complexity"
+          "They have the same complexity",
+          "Bellman-Ford is always faster"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Bellman-Ford can detect negative cycles; Dijkstra cannot handle negative edges."
       },
       {

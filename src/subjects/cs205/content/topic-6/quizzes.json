@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary purpose of a database index?",
         "options": [
-          "Reduce storage space",
           "Speed up data retrieval",
+          "Reduce storage space",
           "Enforce constraints",
           "Backup data"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Indexes speed up queries by providing quick access paths to data, avoiding full table scans."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "A clustered index determines:",
         "options": [
-          "Index naming convention",
           "Physical storage order of table data",
           "Number of indexes allowed",
-          "Query syntax"
+          "Query syntax",
+          "Index naming convention"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Clustered indexes sort and store table rows in order based on the index key."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main disadvantage of having many indexes on a table?",
         "options": [
-          "Slower reads",
           "Slower inserts/updates/deletes",
-          "Less accurate queries",
-          "Reduced security"
+          "Slower reads",
+          "Reduced security",
+          "Less accurate queries"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Each index must be maintained during write operations, adding overhead."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Why are B-trees ideal for database indexes?",
         "options": [
-          "They use minimal memory",
           "They minimize disk I/O with high fanout",
+          "They use minimal memory",
           "They are easier to implement",
           "They don't require maintenance"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "B-trees have high fanout (many children per node), keeping tree height low and reducing disk reads."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "In a B+ tree, where is all data stored?",
         "options": [
-          "Root node only",
           "Internal nodes",
-          "Leaf nodes only",
-          "All nodes equally"
+          "Root node only",
+          "All nodes equally",
+          "Leaf nodes only"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "B+ trees store all data pointers in leaf nodes; internal nodes contain only keys for navigation."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What operation is triggered when a B-tree node becomes full during insertion?",
         "options": [
-          "Rotation",
-          "Split",
+          "Compression",
           "Deletion",
-          "Compression"
+          "Split",
+          "Rotation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Node splits divide full nodes and promote the median key to the parent."
       },
       {
@@ -117,12 +117,12 @@
         "type": "multiple_choice",
         "prompt": "The time complexity for searching in a B-tree with n elements is:",
         "options": [
-          "O(1)",
           "O(log n)",
+          "O(1)",
           "O(n)",
           "O(n log n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "B-tree search is O(log n) due to the balanced tree structure."
       }
     ]
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "Which index type would you choose for full-text search?",
         "options": [
+          "GIN/Full-text",
           "B-tree",
           "Hash",
-          "GIN/Full-text",
           "Bitmap"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Full-text indexes (GIN in PostgreSQL) support word-based searches with relevance ranking."
       },
       {

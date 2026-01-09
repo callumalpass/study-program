@@ -11,11 +11,11 @@
         "prompt": "What is the difference between a program and a process?",
         "options": [
           "A program is executing code, a process is stored on disk",
+          "A process is compiled, a program is interpreted",
           "A process is an executing program instance, a program is passive code",
-          "They are the same thing",
-          "A process is compiled, a program is interpreted"
+          "They are the same thing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A program is passive code stored on disk, while a process is an active executing instance of a program with its own memory and state."
       },
       {
@@ -24,11 +24,11 @@
         "prompt": "Which process state indicates the process is waiting for I/O?",
         "options": [
           "Running",
-          "Ready",
           "Waiting/Blocked",
-          "Terminated"
+          "Terminated",
+          "Ready"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "A process in the waiting or blocked state is waiting for an event such as I/O completion."
       },
       {
@@ -37,11 +37,11 @@
         "prompt": "What does the Process Control Block (PCB) contain?",
         "options": [
           "Only the process ID",
-          "Only CPU registers",
           "Process state, registers, memory info, and scheduling info",
-          "Only file descriptors"
+          "Only file descriptors",
+          "Only CPU registers"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The PCB contains all information about a process including state, registers, memory management info, and scheduling information."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What happens during a context switch?",
         "options": [
-          "The CPU is turned off",
-          "State is saved and another process state is loaded",
           "Memory is cleared",
-          "The process terminates"
+          "The process terminates",
+          "The CPU is turned off",
+          "State is saved and another process state is loaded"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "During a context switch, the current process state is saved to its PCB and another process state is loaded from its PCB."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "Which system call creates a new process in Unix?",
         "options": [
-          "exec()",
-          "spawn()",
           "fork()",
-          "create()"
+          "exec()",
+          "create()",
+          "spawn()"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The fork() system call creates a new child process that is a copy of the parent process."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main advantage of shared memory IPC?",
         "options": [
-          "Security",
-          "Speed",
           "Simplicity",
-          "Portability"
+          "Portability",
+          "Speed",
+          "Security"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Shared memory is the fastest IPC method because processes can read/write directly without kernel involvement after setup."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What synchronization issue arises with shared memory?",
         "options": [
-          "Message ordering",
           "Buffer size limits",
           "Race conditions",
+          "Message ordering",
           "Network latency"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Race conditions occur when multiple processes access shared memory without proper synchronization."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "In message passing, what is a synchronous send?",
         "options": [
-          "Send that returns immediately",
           "Send that blocks until message is received",
           "Send that uses shared memory",
+          "Send that returns immediately",
           "Send that is encrypted"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A synchronous send blocks the sender until the receiver has received the message."
       },
       {
@@ -123,11 +123,11 @@
         "prompt": "What is a named pipe (FIFO)?",
         "options": [
           "Anonymous pipe",
+          "Shared memory segment",
           "Pipe with filesystem presence",
-          "Network socket",
-          "Shared memory segment"
+          "Network socket"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A named pipe or FIFO has a name in the filesystem, allowing unrelated processes to communicate."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the role of the dispatcher?",
         "options": [
-          "Creates new processes",
           "Gives control of CPU to selected process",
           "Manages memory allocation",
-          "Handles I/O requests"
+          "Handles I/O requests",
+          "Creates new processes"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The dispatcher gives control of the CPU to the process selected by the scheduler, handling context switching."
       },
       {

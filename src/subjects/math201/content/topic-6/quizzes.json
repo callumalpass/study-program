@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "A vector $v$ is an eigenvector of matrix $A$ if:",
         "options": [
-          "$Av = v$",
           "$Av = \\lambda v$ for some scalar $\\lambda$",
           "$Av = 0$",
-          "$v = 0$"
+          "$v = 0$",
+          "$Av = v$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "By definition, $v$ is an eigenvector if $Av = \\lambda v$ for some scalar $\\lambda$ (the eigenvalue), and $v \\neq 0$."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "For an $n \\times n$ matrix, the characteristic polynomial has degree:",
         "options": [
-          "$n-1$",
           "$n$",
           "$n+1$",
-          "$2n$"
+          "$2n$",
+          "$n-1$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The characteristic polynomial $\\det(A - \\lambda I)$ is a polynomial in $\\lambda$ of degree $n$ for an $n \\times n$ matrix."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "A matrix $A$ is diagonalizable if:",
         "options": [
-          "It has $n$ linearly independent eigenvectors",
-          "It is already diagonal",
           "It is symmetric",
+          "It is already diagonal",
+          "It has $n$ linearly independent eigenvectors",
           "It is invertible"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "An $n \\times n$ matrix is diagonalizable if and only if it has $n$ linearly independent eigenvectors, allowing $A = PDP^{-1}$ where $D$ is diagonal."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "If $A = PDP^{-1}$ where $D$ is diagonal, then the columns of $P$ are:",
         "options": [
-          "The eigenvalues of $A$",
-          "The eigenvectors of $A$",
+          "The diagonal entries of $D$",
           "The rows of $A$",
-          "The diagonal entries of $D$"
+          "The eigenvalues of $A$",
+          "The eigenvectors of $A$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "In the diagonalization $A = PDP^{-1}$, the columns of $P$ are eigenvectors of $A$, and the diagonal entries of $D$ are the corresponding eigenvalues."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "A symmetric matrix is always:",
         "options": [
-          "Invertible",
-          "Diagonalizable",
           "Upper triangular",
-          "Has determinant 1"
+          "Has determinant 1",
+          "Invertible",
+          "Diagonalizable"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The Spectral Theorem guarantees that every symmetric matrix is diagonalizable (in fact, orthogonally diagonalizable)."
       },
       {

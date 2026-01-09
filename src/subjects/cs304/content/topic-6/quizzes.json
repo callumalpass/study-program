@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is constant folding?",
         "options": [
-          "Folding code",
-          "Evaluating constant expressions at compile time",
+          "Inlining constants",
           "Reducing constants",
-          "Inlining constants"
+          "Folding code",
+          "Evaluating constant expressions at compile time"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Constant folding evaluates expressions with known constant values at compile time rather than runtime."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is strength reduction?",
         "options": [
-          "Making code weaker",
           "Replacing expensive operations with equivalent cheaper ones",
-          "Reducing variable count",
-          "Loop removal"
+          "Making code weaker",
+          "Loop removal",
+          "Reducing variable count"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Strength reduction replaces expensive operations (e.g., multiply) with cheaper equivalents (e.g., shift)."
       },
       {
@@ -37,11 +37,11 @@
         "prompt": "What is common subexpression elimination (CSE)?",
         "options": [
           "Removing duplicate code",
-          "Reusing previously computed values instead of recomputing",
           "Removing comments",
+          "Reusing previously computed values instead of recomputing",
           "Simplifying expressions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "CSE identifies expressions computed multiple times and reuses the first computation."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is dead code elimination?",
         "options": [
+          "Removing old code",
           "Removing syntax errors",
-          "Removing code whose results are never used",
           "Removing comments",
-          "Removing old code"
+          "Removing code whose results are never used"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Dead code elimination removes computations whose results are never used by the program."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is an induction variable?",
         "options": [
-          "A loop counter",
-          "A variable that changes by a constant amount each iteration",
           "An initialized variable",
-          "A global variable"
+          "A loop counter",
+          "A global variable",
+          "A variable that changes by a constant amount each iteration"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "An induction variable changes by a constant (or linear function of another induction variable) each iteration."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What is loop unrolling?",
         "options": [
-          "Removing loops",
-          "Replicating the loop body to reduce iteration overhead",
+          "Loop reversal",
           "Flattening nested loops",
-          "Loop reversal"
+          "Removing loops",
+          "Replicating the loop body to reduce iteration overhead"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Loop unrolling duplicates the loop body multiple times, reducing branch overhead and enabling more optimization."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is loop fusion?",
         "options": [
-          "Splitting loops",
           "Combining adjacent loops with the same iteration space",
-          "Removing loops",
-          "Parallelizing loops"
+          "Parallelizing loops",
+          "Splitting loops",
+          "Removing loops"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Loop fusion combines multiple loops with compatible iteration spaces into a single loop."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is reaching definitions analysis?",
         "options": [
-          "Checking if code is reachable",
-          "Finding which definitions may reach each program point",
+          "Code coverage",
           "Defining reach",
-          "Code coverage"
+          "Checking if code is reachable",
+          "Finding which definitions may reach each program point"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Reaching definitions determines which variable assignments might reach (still be valid at) each program point."
       },
       {
@@ -170,11 +170,11 @@
         "prompt": "What is live variable analysis?",
         "options": [
           "Checking if variables exist",
-          "Determining which variables may be used before being redefined",
           "Memory liveness",
-          "Variable counting"
+          "Variable counting",
+          "Determining which variables may be used before being redefined"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Live variable analysis finds variables whose values may be used in the future before being overwritten."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is a forward vs backward data flow analysis?",
         "options": [
+          "Backward is more accurate",
           "Same direction",
           "Forward propagates from entry; backward from exit",
-          "Forward is faster",
-          "Backward is more accurate"
+          "Forward is faster"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Forward analyses flow information from entry to exit; backward analyses flow from exit to entry."
       },
       {

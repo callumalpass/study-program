@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is a Convolutional Neural Network (CNN) primarily designed for?",
         "options": [
-          "Processing grid-like data such as images",
           "Processing sequential data like text",
           "Processing tabular data",
+          "Processing grid-like data such as images",
           "Processing graph-structured data"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "CNNs use convolutional layers with local connectivity and weight sharing, making them ideal for grid-like data (images, videos) where spatial relationships matter."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What does a convolutional layer learn?",
         "options": [
-          "Filters (kernels) that detect local patterns in the input",
-          "Global statistics of the entire image",
           "Individual pixel values",
-          "Image metadata"
+          "Filters (kernels) that detect local patterns in the input",
+          "Image metadata",
+          "Global statistics of the entire image"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Each filter in a convolutional layer learns to detect specific local patterns (edges, textures, shapes). Early layers detect simple patterns, deeper layers detect complex patterns."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of pooling layers in CNNs?",
         "options": [
-          "Reduce spatial dimensions while retaining important features",
           "Increase model capacity",
+          "Reduce spatial dimensions while retaining important features",
           "Add non-linearity",
           "Normalize activations"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Pooling layers downsample feature maps, reducing computation and providing some translation invariance. Max pooling and average pooling are common strategies."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What architectural pattern do ResNet and other modern CNNs use to train very deep networks?",
         "options": [
-          "Skip/residual connections that bypass layers",
-          "Larger learning rates",
           "Smaller batch sizes",
-          "Removing batch normalization"
+          "Removing batch normalization",
+          "Skip/residual connections that bypass layers",
+          "Larger learning rates"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Residual connections (skip connections) allow gradients to flow directly through the network, solving the degradation problem and enabling training of networks with 100+ layers."
       },
       {
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is a Recurrent Neural Network (RNN) best suited for?",
         "options": [
-          "Sequential data with temporal dependencies",
-          "Static images",
           "Tabular data",
-          "Graph-structured data"
+          "Sequential data with temporal dependencies",
+          "Graph-structured data",
+          "Static images"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "RNNs have recurrent connections that maintain hidden state across time steps, making them ideal for sequences like text, speech, and time series where order matters."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What problem do LSTM and GRU architectures solve?",
         "options": [
-          "Vanishing gradients in long sequences",
-          "Overfitting",
           "Slow training speed",
-          "High memory usage"
+          "High memory usage",
+          "Overfitting",
+          "Vanishing gradients in long sequences"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "LSTMs and GRUs use gating mechanisms to control information flow, allowing them to maintain long-term dependencies without suffering from vanishing gradients like vanilla RNNs."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What are the three gates in an LSTM cell?",
         "options": [
+          "Start gate, middle gate, end gate",
           "Forget gate, input gate, output gate",
-          "Read gate, write gate, erase gate",
           "Entry gate, exit gate, memory gate",
-          "Start gate, middle gate, end gate"
+          "Read gate, write gate, erase gate"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "LSTM cells use forget gate (what to remove from cell state), input gate (what new information to add), and output gate (what to output based on cell state)."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "Why are Transformers more efficient to train than RNNs?",
         "options": [
-          "They process all sequence positions in parallel rather than sequentially",
           "They have fewer parameters",
           "They use simpler operations",
-          "They require less memory"
+          "They require less memory",
+          "They process all sequence positions in parallel rather than sequentially"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Unlike RNNs that process sequences step-by-step, Transformers compute attention over all positions simultaneously, fully utilizing parallel computing hardware like GPUs."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is the formula for scaled dot-product attention in Transformers?",
         "options": [
-          "Attention(Q,K,V) = softmax(QK^T/√d_k)V",
-          "Attention(Q,K,V) = QKV",
           "Attention(Q,K,V) = softmax(Q+K)V",
-          "Attention(Q,K,V) = sigmoid(QK^T)V"
+          "Attention(Q,K,V) = sigmoid(QK^T)V",
+          "Attention(Q,K,V) = QKV",
+          "Attention(Q,K,V) = softmax(QK^T/√d_k)V"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Scaled dot-product attention computes similarity between queries and keys (QK^T), scales by √d_k for stability, applies softmax, and uses the result to weight values V."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What does the positional encoding in Transformers provide?",
         "options": [
-          "Information about the position of tokens in the sequence",
           "Better gradient flow",
+          "Information about the position of tokens in the sequence",
           "Faster training",
           "Regularization"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Since Transformers have no inherent notion of sequence order, positional encodings (often sinusoidal) are added to embeddings to inject positional information."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main difference between BERT and GPT architectures?",
         "options": [
-          "BERT is bidirectional (encoder), GPT is unidirectional (decoder)",
-          "BERT uses RNNs, GPT uses Transformers",
           "BERT is smaller than GPT",
-          "BERT is faster than GPT"
+          "BERT uses RNNs, GPT uses Transformers",
+          "BERT is faster than GPT",
+          "BERT is bidirectional (encoder), GPT is unidirectional (decoder)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "BERT uses the Transformer encoder with bidirectional context (masked language modeling), while GPT uses the decoder with causal (left-to-right) attention for autoregressive generation."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What technique allows models like GPT-3 to perform tasks with few examples?",
         "options": [
-          "In-context learning / few-shot learning",
           "Transfer learning",
-          "Meta-learning",
-          "Curriculum learning"
+          "Curriculum learning",
+          "In-context learning / few-shot learning",
+          "Meta-learning"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Large language models can perform new tasks by providing examples in the prompt (in-context learning), without updating weights, demonstrating emergent few-shot learning capabilities."
       }
     ]

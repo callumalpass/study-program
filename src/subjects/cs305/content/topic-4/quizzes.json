@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which method selects an element by its ID?",
         "options": [
-          "document.querySelector()",
           "document.getElementById()",
+          "document.selectById()",
           "document.getElement()",
-          "document.selectById()"
+          "document.querySelector()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "document.getElementById() selects a single element by its ID attribute. It returns the element or null if not found."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "How do you change the text content of an element?",
         "options": [
-          "element.text = \"new text\"",
-          "element.textContent = \"new text\"",
           "element.content = \"new text\"",
-          "element.setText(\"new text\")"
+          "element.text = \"new text\"",
+          "element.setText(\"new text\")",
+          "element.textContent = \"new text\""
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The textContent property sets or returns the text content of an element and its descendants."
       },
       {
@@ -72,11 +72,11 @@
         "prompt": "What is event delegation?",
         "options": [
           "Deleting events",
+          "Stopping event propagation",
           "Attaching events to parent instead of children",
-          "Preventing default behavior",
-          "Stopping event propagation"
+          "Preventing default behavior"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Event delegation attaches an event listener to a parent element to handle events from its children, leveraging event bubbling for efficiency."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What does event.stopPropagation() do?",
         "options": [
-          "Prevents default behavior",
-          "Stops event from bubbling up",
           "Removes event listener",
-          "Triggers parent events"
+          "Triggers parent events",
+          "Stops event from bubbling up",
+          "Prevents default behavior"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "stopPropagation() prevents the event from bubbling up to parent elements in the DOM tree."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "Which method removes an element from the DOM?",
         "options": [
+          "element.destroy()",
           "element.delete()",
-          "element.remove()",
           "element.removeNode()",
-          "element.destroy()"
+          "element.remove()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The remove() method removes the element from the DOM. Alternatively, you can use parentNode.removeChild(element)."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "What does element.getAttribute(\"href\") return if the attribute doesn't exist?",
         "options": [
-          "undefined",
-          "null",
           "empty string",
-          "Error"
+          "Error",
+          "undefined",
+          "null"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "getAttribute() returns null if the specified attribute does not exist on the element."
       },
       {

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "A function f: A → B is:",
         "options": [
-          "Any relation between A and B",
           "A relation where each element of A is related to exactly one element of B",
+          "Any relation between A and B",
           "A relation where each element of B is related to at least one element of A",
           "A bijection between A and B"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A function assigns to EACH element in the domain A EXACTLY ONE element in the codomain B. Not all relations are functions."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "A function f: A → B is surjective (onto) if:",
         "options": [
-          "Every element of A maps to a unique element of B",
           "Every element of B is the image of at least one element of A",
+          "Every element of A maps to a unique element of B",
           "f has an inverse function",
           "The domain equals the codomain"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Surjective means the range equals the codomain. Every element of B is \"hit\" by some element of A."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "A function f: ℝ → ℝ defined by f(x) = x² is:",
         "options": [
+          "Neither injective nor surjective",
           "Injective but not surjective",
-          "Surjective but not injective",
           "Both injective and surjective",
-          "Neither injective nor surjective"
+          "Surjective but not injective"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "f(x) = x² is not injective because f(-2) = f(2) = 4. It's not surjective because negative numbers are not in the range. So it's neither."
       },
       {
@@ -78,12 +78,12 @@
         "type": "multiple_choice",
         "prompt": "If f(x) = 2x + 1 and g(x) = x², what is (g ∘ f)(3)?",
         "options": [
+          "50",
           "19",
-          "49",
           "14",
-          "50"
+          "49"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "(g ∘ f)(3) = g(f(3)) = g(2·3 + 1) = g(7) = 7² = 49."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "If f: A → B has an inverse f⁻¹, what is f⁻¹(f(a)) for any a ∈ A?",
         "options": [
-          "f(a)",
           "a",
           "f⁻¹(a)",
-          "0"
+          "0",
+          "f(a)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "By definition of inverse: f⁻¹(f(a)) = a for all a in A, and f(f⁻¹(b)) = b for all b in B."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "If |A| = 5 and |B| = 3, how many surjective functions exist from A to B?",
         "options": [
-          "0 (impossible)",
-          "3⁵",
           "150",
-          "5!"
+          "3⁵",
+          "5!",
+          "0 (impossible)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Using inclusion-exclusion: 3⁵ - C(3,1)·2⁵ + C(3,2)·1⁵ = 243 - 96 + 3 = 150 surjective functions. (This counts onto functions from 5 elements to 3.)"
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "If f: ℤ → ℤ is defined by f(n) = n + 5, which properties does f have?",
         "options": [
-          "Injective only",
-          "Surjective only",
           "Bijective",
-          "Neither injective nor surjective"
+          "Neither injective nor surjective",
+          "Injective only",
+          "Surjective only"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "f(n) = n + 5 is injective (different n give different n+5) and surjective (every integer m equals n+5 for n = m-5). So f is bijective."
       },
       {

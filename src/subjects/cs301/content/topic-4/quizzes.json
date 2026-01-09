@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is a race condition?",
         "options": [
+          "Memory allocation",
           "Fast process execution",
-          "Outcome depends on execution order",
           "CPU competition",
-          "Memory allocation"
+          "Outcome depends on execution order"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A race condition occurs when the result depends on the timing/order of concurrent operations."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is mutual exclusion?",
         "options": [
-          "Only one process in critical section at a time",
           "Processes exclude each other from system",
+          "Only one process in critical section at a time",
           "Memory isolation",
           "Process termination"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Mutual exclusion ensures only one process can execute in its critical section at any time."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the progress requirement for critical section?",
         "options": [
-          "Processes must finish quickly",
           "Selection cannot be postponed indefinitely",
           "All processes must participate",
-          "CPU must be fast"
+          "CPU must be fast",
+          "Processes must finish quickly"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Progress requires that if no process is in CS, selection of next process cannot be delayed indefinitely."
       },
       {
@@ -91,11 +91,11 @@
         "prompt": "What is a counting semaphore?",
         "options": [
           "Semaphore limited to 0 and 1",
-          "Semaphore with integer value >= 0",
           "Hardware counter",
+          "Semaphore with integer value >= 0",
           "Process counter"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A counting semaphore can have any non-negative integer value, controlling access to multiple resources."
       },
       {
@@ -103,12 +103,12 @@
         "type": "multiple_choice",
         "prompt": "What does wait() (P operation) do to a semaphore?",
         "options": [
-          "Increments value",
           "Decrements value or blocks",
-          "Destroys semaphore",
-          "Creates semaphore"
+          "Creates semaphore",
+          "Increments value",
+          "Destroys semaphore"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Wait decrements the semaphore; if it would become negative, the process blocks."
       },
       {
@@ -116,12 +116,12 @@
         "type": "multiple_choice",
         "prompt": "What does signal() (V operation) do to a semaphore?",
         "options": [
+          "Terminates process",
           "Increments value",
           "Decrements value",
-          "Blocks process",
-          "Terminates process"
+          "Blocks process"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Signal increments the semaphore value and may wake a blocked process."
       },
       {
@@ -157,12 +157,12 @@
         "type": "multiple_choice",
         "prompt": "In readers-writers, when can a writer write?",
         "options": [
-          "Anytime",
           "When no readers or writers are active",
+          "Anytime",
           "When at least one reader is active",
           "Never"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A writer needs exclusive access: no other readers or writers can be in the critical section."
       },
       {
@@ -170,12 +170,12 @@
         "type": "multiple_choice",
         "prompt": "What causes deadlock in naive dining philosophers?",
         "options": [
-          "Eating too fast",
           "All pick up left fork simultaneously",
-          "Too many philosophers",
-          "Forks are broken"
+          "Eating too fast",
+          "Forks are broken",
+          "Too many philosophers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "If all philosophers pick up their left fork, no one can get their right fork, causing circular wait."
       },
       {
@@ -184,11 +184,11 @@
         "prompt": "What is a monitor?",
         "options": [
           "Display device",
+          "Operating system",
           "High-level synchronization construct",
-          "Low-level hardware",
-          "Operating system"
+          "Low-level hardware"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A monitor is a high-level construct that encapsulates shared data with synchronized access methods."
       },
       {
@@ -196,12 +196,12 @@
         "type": "multiple_choice",
         "prompt": "What do condition variables provide in monitors?",
         "options": [
-          "Mutual exclusion",
           "Way to wait for conditions",
+          "Priority scheduling",
           "Resource counting",
-          "Priority scheduling"
+          "Mutual exclusion"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Condition variables let threads wait for specific conditions and be signaled when conditions change."
       }
     ]

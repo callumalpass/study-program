@@ -11,11 +11,11 @@
         "prompt": "What is a core principle of cloud-native applications?",
         "options": [
           "Always use monolithic architecture",
-          "Design for failure and resilience",
+          "Never use managed services",
           "Avoid using containers",
-          "Never use managed services"
+          "Design for failure and resilience"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Cloud-native apps are designed for failure. They use distributed architectures, graceful degradation, retries, circuit breakers, and assume components can fail."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "According to the Twelve-Factor App, what is Factor IX about?",
         "options": [
+          "Never update dependencies",
           "Fast startup and shutdown (disposability)",
-          "Always run in production mode",
           "Use the largest servers available",
-          "Never update dependencies"
+          "Always run in production mode"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Factor IX (Disposability) emphasizes fast startup and graceful shutdown. Apps should start quickly and shut down gracefully when receiving SIGTERM."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What does \"cattle, not pets\" mean in cloud-native thinking?",
         "options": [
-          "Servers are named and manually managed",
-          "Servers are disposable and replaceable",
+          "Never delete old servers",
           "Only use expensive hardware",
-          "Never delete old servers"
+          "Servers are named and manually managed",
+          "Servers are disposable and replaceable"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "\"Cattle, not pets\" means treating servers as disposable and interchangeable (cattle), not unique and irreplaceable (pets). Automate provisioning and embrace immutability."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main advantage of microservices architecture?",
         "options": [
-          "Everything runs in one process",
           "Independent deployment and scaling of services",
-          "Simpler code",
-          "No need for APIs"
+          "No need for APIs",
+          "Everything runs in one process",
+          "Simpler code"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Microservices enable independent deployment, scaling, and technology choices. Teams can deploy services without coordinating with others. Services scale independently based on demand."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "What are the three pillars of observability?",
         "options": [
-          "Frontend, Backend, Database",
           "Logs, Metrics, Traces",
-          "CPU, Memory, Disk",
-          "Dev, Test, Prod"
+          "Dev, Test, Prod",
+          "Frontend, Backend, Database",
+          "CPU, Memory, Disk"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The three pillars of observability are: Logs (discrete events), Metrics (numeric measurements over time), and Traces (request flows through distributed systems)."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary goal of CI/CD?",
         "options": [
-          "Slow down deployments",
           "Automate testing and deployment for faster, reliable releases",
-          "Eliminate all testing",
-          "Deploy manually"
+          "Deploy manually",
+          "Slow down deployments",
+          "Eliminate all testing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "CI/CD (Continuous Integration/Continuous Deployment) automates building, testing, and deploying code. This enables frequent, reliable releases with reduced risk."
       },
       {
@@ -166,11 +166,11 @@
         "prompt": "Which deployment strategy updates a small percentage of instances first before rolling out to all?",
         "options": [
           "Big Bang",
-          "Canary",
+          "Blue-Green",
           "Recreate",
-          "Blue-Green"
+          "Canary"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Canary deployment gradually rolls out changes to a small subset of users first. If successful, it progressively rolls out to more users, reducing risk."
       },
       {

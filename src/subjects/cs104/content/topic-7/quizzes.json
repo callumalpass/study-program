@@ -11,11 +11,11 @@
         "prompt": "In a min-heap, the smallest element is at:",
         "options": [
           "A leaf node",
-          "The root",
           "The last position",
+          "The root",
           "A random position"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Min-heap property ensures every parent is smaller than its children, so root is minimum."
       },
       {
@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of extracting the minimum from a min-heap?",
         "options": [
-          "O(1)",
           "O(log n)",
-          "O(n)",
-          "O(n log n)"
+          "O(n log n)",
+          "O(1)",
+          "O(n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Extract-min removes root, replaces with last element, then heapifies down in O(log n)."
       },
       {
@@ -80,11 +80,11 @@
         "prompt": "To find the k largest elements efficiently, use:",
         "options": [
           "Max-heap of all elements",
-          "Min-heap of size k",
           "Sorting",
-          "Binary search"
+          "Binary search",
+          "Min-heap of size k"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Keep a min-heap of size k; the heap contains k largest, root is kth largest. O(n log k)."
       },
       {
@@ -148,12 +148,12 @@
         "type": "multiple_choice",
         "prompt": "Merging k sorted lists using a heap takes:",
         "options": [
-          "O(n)",
-          "O(n log n)",
           "O(n log k)",
-          "O(nk)"
+          "O(n)",
+          "O(nk)",
+          "O(n log n)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Each of n elements is pushed/popped once from a k-element heap: O(n log k)."
       },
       {

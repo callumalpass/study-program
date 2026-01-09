@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following differential equations is separable?",
         "options": [
-          "dy/dx = xy",
-          "dy/dx + y = x²",
           "dy/dx = x + y",
-          "dy/dx + xy = x"
+          "dy/dx = xy",
+          "dy/dx + xy = x",
+          "dy/dx + y = x²"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A separable equation can be written as dy/dx = g(x)h(y). The equation dy/dx = xy separates as dy/y = x dx."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Solve the separable equation dy/dx = 2xy with initial condition y(0) = 1.",
         "options": [
-          "y = e^(x²)",
-          "y = e^(2x)",
           "y = x² + 1",
-          "y = 2e^x"
+          "y = e^(x²)",
+          "y = 2e^x",
+          "y = e^(2x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Separating variables: dy/y = 2x dx. Integrating: ln|y| = x² + C. With y(0) = 1, we get C = 0, so y = e^(x²)."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the integrating factor for the linear equation dy/dx + 2y = x?",
         "options": [
-          "e^(2x)",
-          "e^(-2x)",
           "2e^x",
-          "e^(x²)"
+          "e^(x²)",
+          "e^(-2x)",
+          "e^(2x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For the standard form dy/dx + P(x)y = Q(x), the integrating factor is μ(x) = e^(∫P dx) = e^(∫2 dx) = e^(2x)."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "The general solution of dy/dx + y = e^x is:",
         "options": [
-          "y = (1/2)e^x + Ce^(-x)",
-          "y = xe^x + Ce^(-x)",
           "y = e^x + C",
-          "y = (x/2)e^x + Ce^(-x)"
+          "y = (1/2)e^x + Ce^(-x)",
+          "y = (x/2)e^x + Ce^(-x)",
+          "y = xe^x + Ce^(-x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Using integrating factor e^x: d/dx(ye^x) = e^(2x). Integrating gives ye^x = (1/2)e^(2x) + C, so y = (1/2)e^x + Ce^(-x)."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "Which method would you use first to solve dy/dx = (x² + y²)/xy?",
         "options": [
+          "Exact equation method",
           "Homogeneous substitution v = y/x",
           "Separation of variables",
-          "Integrating factor",
-          "Exact equation method"
+          "Integrating factor"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The equation can be written as dy/dx = x/y + y/x, which is homogeneous of degree 0. Use the substitution v = y/x."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "For M dx + N dy = 0 to be exact, what condition must hold?",
         "options": [
+          "∂M/∂x + ∂N/∂y = 0",
           "∂M/∂y = ∂N/∂x",
-          "∂M/∂x = ∂N/∂y",
           "M = N",
-          "∂M/∂x + ∂N/∂y = 0"
+          "∂M/∂x = ∂N/∂y"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "An equation M dx + N dy = 0 is exact if and only if ∂M/∂y = ∂N/∂x. This ensures the existence of a potential function F(x,y)."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "Is the equation (2xy + 3) dx + (x² - 1) dy = 0 exact?",
         "options": [
-          "Yes, because ∂M/∂y = ∂N/∂x = 2x",
           "No, because ∂M/∂y ≠ ∂N/∂x",
-          "Yes, because M and N are polynomials",
-          "Cannot determine without solving"
+          "Cannot determine without solving",
+          "Yes, because ∂M/∂y = ∂N/∂x = 2x",
+          "Yes, because M and N are polynomials"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "M = 2xy + 3, so ∂M/∂y = 2x. N = x² - 1, so ∂N/∂x = 2x. Since they are equal, the equation is exact."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "If an equation is not exact but (1/N)(∂M/∂y - ∂N/∂x) depends only on x, what is the integrating factor?",
         "options": [
-          "μ(x) = e^(∫[(∂M/∂y - ∂N/∂x)/N] dx)",
           "μ(y) = e^(∫[(∂N/∂x - ∂M/∂y)/M] dy)",
-          "μ(x) = e^(∫N dx)",
-          "μ(y) = e^(∫M dy)"
+          "μ(y) = e^(∫M dy)",
+          "μ(x) = e^(∫[(∂M/∂y - ∂N/∂x)/N] dx)",
+          "μ(x) = e^(∫N dx)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "When (1/N)(∂M/∂y - ∂N/∂x) is a function of x only, the integrating factor μ(x) = exp(∫[(∂M/∂y - ∂N/∂x)/N] dx)."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "For the exact equation 2x dx + 2y dy = 0, the implicit solution is:",
         "options": [
+          "2x² + 2y² = C",
           "x² + y² = C",
           "x² - y² = C",
-          "2x² + 2y² = C",
           "xy = C"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Since ∂/∂x(x²) = 2x and ∂/∂y(y²) = 2y, the potential function is F(x,y) = x² + y², giving the solution x² + y² = C."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What is the first step in solving an exact equation M dx + N dy = 0?",
         "options": [
-          "Find F such that ∂F/∂x = M and ∂F/∂y = N",
           "Separate variables",
+          "Find F such that ∂F/∂x = M and ∂F/∂y = N",
           "Find an integrating factor",
           "Apply Laplace transform"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For exact equations, we find the potential function F where ∂F/∂x = M and ∂F/∂y = N. The solution is then F(x,y) = C."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "The Picard-Lindelöf theorem (existence and uniqueness) requires that f and ∂f/∂y be:",
         "options": [
-          "Continuous in a region containing (x₀, y₀)",
-          "Differentiable everywhere",
           "Polynomial functions",
-          "Bounded for all x and y"
+          "Bounded for all x and y",
+          "Differentiable everywhere",
+          "Continuous in a region containing (x₀, y₀)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The theorem states that if f(x,y) and ∂f/∂y are continuous in a rectangle containing (x₀, y₀), then the IVP has a unique solution."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "For the IVP dy/dx = y^(1/3), y(0) = 0, what can we conclude?",
         "options": [
-          "Solution exists but may not be unique",
+          "Infinitely many solutions exist",
           "Solution exists and is unique",
           "No solution exists",
-          "Infinitely many solutions exist"
+          "Solution exists but may not be unique"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "f(x,y) = y^(1/3) is continuous, but ∂f/∂y = (1/3)y^(-2/3) is not continuous at y = 0. Existence is guaranteed but not uniqueness."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "Which initial value problem is guaranteed to have a unique solution?",
         "options": [
-          "dy/dx = x² + y², y(0) = 1",
-          "dy/dx = |y|^(1/2), y(0) = 0",
           "dy/dx = y^(2/3), y(0) = 0",
-          "dy/dx = 1/y, y(0) = 0"
+          "dy/dx = 1/y, y(0) = 0",
+          "dy/dx = |y|^(1/2), y(0) = 0",
+          "dy/dx = x² + y², y(0) = 1"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For f(x,y) = x² + y², both f and ∂f/∂y = 2y are continuous everywhere, including at (0,1), guaranteeing a unique solution."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "A direction field (slope field) is useful for:",
         "options": [
-          "Visualizing solution behavior without solving",
           "Computing exact solutions",
+          "Visualizing solution behavior without solving",
           "Proving existence theorems",
           "Finding integrating factors"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Direction fields show small line segments with slopes given by dy/dx = f(x,y), allowing us to visualize solution curves qualitatively."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "An autonomous equation is one where:",
         "options": [
-          "f depends only on y, not x",
-          "f depends only on x, not y",
+          "f is linear",
           "f is constant",
-          "f is linear"
+          "f depends only on x, not y",
+          "f depends only on y, not x"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "An autonomous equation has the form dy/dx = f(y), where the right side depends only on y. These equations have important qualitative properties."
       }
     ]

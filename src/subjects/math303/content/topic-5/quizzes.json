@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "The derivative of f at c is defined as:",
         "options": [
-          "lim(h→0) [f(c+h) - f(c)]/h",
-          "lim(x→c) [f(x) - f(c)]/(x - c)",
           "Both of the above",
+          "lim(x→c) [f(x) - f(c)]/(x - c)",
+          "lim(h→0) [f(c+h) - f(c)]/h",
           "Neither of the above"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Both definitions are equivalent. The first uses h → 0 and the second uses x → c. Both give f'(c) when the limit exists."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "If f is differentiable at c, then f is:",
         "options": [
-          "Continuous at c",
-          "Not necessarily continuous at c",
+          "Constant near c",
           "Discontinuous at c",
-          "Constant near c"
+          "Continuous at c",
+          "Not necessarily continuous at c"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Differentiability implies continuity. If f'(c) exists, then lim(x→c) f(x) = f(c), so f is continuous at c."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "If f and g are differentiable at c, then (fg)' at c equals:",
         "options": [
-          "f'(c)g(c) + f(c)g'(c)",
+          "[f(c) + g(c)]'(c)",
           "f'(c)g'(c)",
-          "f(c)g(c)",
-          "[f(c) + g(c)]'(c)"
+          "f'(c)g(c) + f(c)g'(c)",
+          "f(c)g(c)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "This is the Product Rule: (fg)' = f'g + fg'. It is one of the fundamental differentiation rules."
       },
       {
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "Rolle's Theorem requires f to be continuous on [a, b], differentiable on (a, b), and:",
         "options": [
-          "f(a) = f(b)",
-          "f'(a) = f'(b)",
+          "f(a) ≠ f(b)",
           "f is constant",
-          "f(a) ≠ f(b)"
+          "f(a) = f(b)",
+          "f'(a) = f'(b)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Rolle's Theorem states that if f(a) = f(b), then there exists c in (a, b) with f'(c) = 0."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "The Mean Value Theorem guarantees the existence of c in (a, b) such that:",
         "options": [
-          "f'(c) = [f(b) - f(a)]/(b - a)",
           "f(c) = [f(a) + f(b)]/2",
+          "f(c) = 0",
           "f'(c) = 0",
-          "f(c) = 0"
+          "f'(c) = [f(b) - f(a)]/(b - a)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The MVT states that there exists a point c where the instantaneous rate of change equals the average rate of change over [a, b]."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "If f'(x) > 0 for all x in (a, b), then f is:",
         "options": [
-          "Strictly increasing on (a, b)",
-          "Strictly decreasing on (a, b)",
           "Constant on (a, b)",
+          "Strictly decreasing on (a, b)",
+          "Strictly increasing on (a, b)",
           "Concave on (a, b)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "By the MVT, if f'(x) > 0 throughout an interval, then f is strictly increasing on that interval."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "The Mean Value Theorem does NOT apply to which function on the given interval?",
         "options": [
+          "f(x) = x³ on [-1, 1]",
           "f(x) = |x| on [-1, 1]",
-          "f(x) = x² on [0, 2]",
           "f(x) = sin(x) on [0, π]",
-          "f(x) = x³ on [-1, 1]"
+          "f(x) = x² on [0, 2]"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The MVT requires differentiability on (a, b). f(x) = |x| is not differentiable at x = 0, so the MVT does not apply."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Taylor's Theorem provides a polynomial approximation to f near a point a. The error term is given by:",
         "options": [
-          "The remainder term Rₙ(x)",
-          "The derivative f'(a)",
           "The function value f(a)",
-          "The second derivative f''(a)"
+          "The derivative f'(a)",
+          "The second derivative f''(a)",
+          "The remainder term Rₙ(x)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Taylor's Theorem states f(x) = Pₙ(x) + Rₙ(x), where Pₙ is the Taylor polynomial and Rₙ is the remainder (error) term."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "L'Hôpital's Rule applies to limits of the form 0/0 or ∞/∞ and states:",
         "options": [
-          "lim f(x)/g(x) = lim f'(x)/g'(x) (when the right limit exists)",
           "lim f(x)/g(x) = f'(x)/g'(x)",
-          "lim f(x)/g(x) = 0",
-          "lim f(x)/g(x) = ∞"
+          "lim f(x)/g(x) = ∞",
+          "lim f(x)/g(x) = lim f'(x)/g'(x) (when the right limit exists)",
+          "lim f(x)/g(x) = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "L'Hôpital's Rule allows us to evaluate indeterminate forms by taking derivatives of numerator and denominator separately."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "If f is n times differentiable at a, then f(x) - Pₙ₋₁(x) = o((x-a)ⁿ⁻¹) means:",
         "options": [
-          "The error goes to zero faster than (x-a)ⁿ⁻¹ as x → a",
-          "The error equals (x-a)ⁿ⁻¹",
+          "The error grows unboundedly",
           "The error is constant",
-          "The error grows unboundedly"
+          "The error equals (x-a)ⁿ⁻¹",
+          "The error goes to zero faster than (x-a)ⁿ⁻¹ as x → a"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The little-o notation o((x-a)ⁿ⁻¹) means the error term is negligible compared to (x-a)ⁿ⁻¹ near a."
       }
     ]

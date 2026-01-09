@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "How many conditions are necessary for deadlock?",
         "options": [
-          "1",
-          "2",
           "3",
-          "4"
+          "4",
+          "1",
+          "2"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "Four conditions must hold: mutual exclusion, hold and wait, no preemption, and circular wait."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is circular wait?",
         "options": [
-          "Processes wait in a line",
-          "Each process waits for resource held by next in cycle",
           "CPU cycles infinitely",
-          "Queue wraps around"
+          "Processes wait in a line",
+          "Queue wraps around",
+          "Each process waits for resource held by next in cycle"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Circular wait is when P0 waits for P1, P1 waits for P2, ..., Pn waits for P0."
       },
       {
@@ -44,11 +44,11 @@
         "prompt": "What does a Resource Allocation Graph represent?",
         "options": [
           "CPU usage",
-          "Process and resource relationships",
           "Memory layout",
-          "File system"
+          "File system",
+          "Process and resource relationships"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "RAG shows processes, resources, request edges, and assignment edges to detect potential deadlock."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "In RAG with single instances, what indicates deadlock?",
         "options": [
-          "Any edge",
-          "Cycle",
+          "Many nodes",
           "No edges",
-          "Many nodes"
+          "Cycle",
+          "Any edge"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "With single instance resources, a cycle in the RAG indicates deadlock."
       }
     ]
@@ -103,12 +103,12 @@
         "type": "multiple_choice",
         "prompt": "What is the Banker's Algorithm used for?",
         "options": [
-          "Financial calculations",
-          "Deadlock avoidance",
           "Memory allocation",
-          "CPU scheduling"
+          "Financial calculations",
+          "CPU scheduling",
+          "Deadlock avoidance"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Banker's Algorithm avoids deadlock by checking if granting a request leads to a safe state."
       },
       {
@@ -116,12 +116,12 @@
         "type": "multiple_choice",
         "prompt": "What is a safe state?",
         "options": [
+          "Minimum memory usage",
           "No processes running",
-          "A sequence exists where all processes can finish",
           "Maximum security",
-          "Minimum memory usage"
+          "A sequence exists where all processes can finish"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A safe state means there exists a safe sequence where all processes can complete."
       },
       {
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "How is deadlock detected with single instance resources?",
         "options": [
-          "Timer expiry",
-          "Cycle detection in wait-for graph",
+          "User report",
           "Memory analysis",
-          "User report"
+          "Cycle detection in wait-for graph",
+          "Timer expiry"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "With single instances, a cycle in the wait-for graph indicates deadlock."
       },
       {
@@ -157,12 +157,12 @@
         "type": "multiple_choice",
         "prompt": "What is deadlock recovery by termination?",
         "options": [
+          "Add resources",
           "Ignore the problem",
           "Kill deadlocked processes",
-          "Add resources",
           "Preempt memory"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "One recovery method is to terminate some or all deadlocked processes."
       },
       {
@@ -171,11 +171,11 @@
         "prompt": "What is resource preemption in deadlock recovery?",
         "options": [
           "Adding resources",
-          "Taking resources from processes to break deadlock",
           "Deleting resources",
-          "Sharing resources"
+          "Sharing resources",
+          "Taking resources from processes to break deadlock"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Resource preemption takes resources from some processes to give to others, breaking deadlock."
       },
       {
@@ -183,12 +183,12 @@
         "type": "multiple_choice",
         "prompt": "What is the ostrich algorithm?",
         "options": [
+          "Parallel deadlock handling",
           "Running from deadlock",
-          "Ignoring deadlock",
           "Complex deadlock solution",
-          "Parallel deadlock handling"
+          "Ignoring deadlock"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The ostrich algorithm ignores deadlock, assuming it's rare enough to not warrant overhead."
       },
       {

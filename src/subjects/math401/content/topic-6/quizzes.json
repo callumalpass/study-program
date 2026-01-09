@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "The residue theorem: ∫_γ f(z)dz = 2πi × what?",
         "options": [
+          "Number of poles",
           "Sum of residues inside γ",
-          "Product of residues",
           "Largest residue",
-          "Number of poles"
+          "Product of residues"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Residue theorem: ∫_γ f = 2πi Σ Res(f, aₖ) where aₖ are poles inside γ"
       },
       {
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "The residue at a pole of order n is found using which derivative?",
         "options": [
-          "0th",
-          "1st",
           "(n-1)th",
-          "nth"
+          "nth",
+          "1st",
+          "0th"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Res(f, a) = (1/(n-1)!) lim_{z→a} d^(n-1)/dz^(n-1) [(z-a)^n f(z)]"
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "Principal value integrals handle singularities on the real axis by:",
         "options": [
-          "Ignoring them",
           "Indenting around them",
-          "Removing them",
-          "Changing variables"
+          "Ignoring them",
+          "Changing variables",
+          "Removing them"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "P.V. uses small semicircular indents around real axis singularities"
       },
       {
@@ -159,11 +159,11 @@
         "prompt": "To evaluate ∫_{-∞}^∞ 1/(x²+1) dx using residues, which contour is typically used?",
         "options": [
           "Unit circle",
-          "Semicircle in upper half-plane",
           "Rectangle",
-          "Full circle"
+          "Full circle",
+          "Semicircle in upper half-plane"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Close the real axis with a semicircle in upper half-plane, capturing pole at z=i"
       },
       {
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "For ∫_0^(2π) dθ/(2+cos θ), substitute z = e^(iθ) to get:",
         "options": [
-          "Integral over |z|=1",
-          "Real integral",
           "Improper integral",
-          "Laurent series"
+          "Integral over |z|=1",
+          "Laurent series",
+          "Real integral"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Substitution z = e^(iθ) converts trigonometric integral to contour integral on unit circle"
       },
       {

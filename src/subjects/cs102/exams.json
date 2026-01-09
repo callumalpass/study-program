@@ -14,12 +14,12 @@
         "type": "multiple_choice",
         "prompt": "Convert decimal 45 to binary.",
         "options": [
-          "101101",
-          "101011",
           "00101101",
-          "110101"
+          "101101",
+          "110101",
+          "101011"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "32 + 8 + 4 + 1 = 45."
       },
       {
@@ -27,12 +27,12 @@
         "type": "multiple_choice",
         "prompt": "Convert hex C0 to decimal.",
         "options": [
+          "180",
           "190",
           "192",
-          "200",
-          "180"
+          "200"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "12 * 16 = 192."
       },
       {
@@ -48,11 +48,11 @@
         "prompt": "1100 + 0101 (binary) = ?",
         "options": [
           "10000",
-          "10001",
           "10010",
+          "10001",
           "11100"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "12 + 5 = 17 (10001)."
       },
       {
@@ -60,12 +60,12 @@
         "type": "multiple_choice",
         "prompt": "The 4-bit two's complement of -2 is:",
         "options": [
-          "1110",
+          "0010",
           "1101",
           "1010",
-          "0010"
+          "1110"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "2 is 0010. Invert 1101. Add 1 -> 1110."
       },
       {
@@ -80,12 +80,12 @@
         "type": "multiple_choice",
         "prompt": "ASCII value for space character is:",
         "options": [
+          "64",
           "0",
           "32",
-          "64",
           "127"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "0x20 = 32."
       },
       {
@@ -93,12 +93,12 @@
         "type": "multiple_choice",
         "prompt": "UTF-8 is:",
         "options": [
-          "Fixed width 16-bit",
-          "Variable width 1-4 bytes",
+          "Variable width 2-4 bytes",
           "Fixed width 8-bit",
-          "Variable width 2-4 bytes"
+          "Fixed width 16-bit",
+          "Variable width 1-4 bytes"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Variable width."
       },
       {
@@ -114,12 +114,12 @@
         "type": "multiple_choice",
         "prompt": "A NAND B is equivalent to:",
         "options": [
-          "NOT A AND NOT B",
-          "NOT A OR NOT B",
           "NOT A AND B",
-          "A OR NOT B"
+          "NOT A AND NOT B",
+          "A OR NOT B",
+          "NOT A OR NOT B"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "De Morgan's Law."
       },
       {
@@ -147,12 +147,12 @@
         "type": "multiple_choice",
         "prompt": "Which gate is shown by truth table: 0,0->1; 0,1->1; 1,0->1; 1,1->0?",
         "options": [
-          "NAND",
+          "AND",
           "NOR",
           "XOR",
-          "AND"
+          "NAND"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "NAND output is 0 only when both inputs are 1."
       },
       {
@@ -175,12 +175,12 @@
         "type": "multiple_choice",
         "prompt": "Big Endian stores the MSB at:",
         "options": [
-          "Lowest address",
           "Highest address",
-          "Middle address",
-          "Random address"
+          "Random address",
+          "Lowest address",
+          "Middle address"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Big Endian = Big End First."
       },
       {
@@ -188,12 +188,12 @@
         "type": "multiple_choice",
         "prompt": "What is the smallest signed 8-bit number?",
         "options": [
-          "-127",
           "-128",
+          "-127",
           "0",
           "-255"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "-128 (10000000)."
       },
       {
@@ -228,12 +228,12 @@
         "type": "multiple_choice",
         "prompt": "Sum of products (SOP) uses:",
         "options": [
-          "ANDs feeding an OR",
-          "ORs feeding an AND",
+          "NORs only",
           "NANDs only",
-          "NORs only"
+          "ANDs feeding an OR",
+          "ORs feeding an AND"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Minterms (AND) summed (OR)."
       },
       {
@@ -241,12 +241,12 @@
         "type": "multiple_choice",
         "prompt": "Which is a Universal Gate?",
         "options": [
-          "NOR",
           "XOR",
+          "NOT",
           "AND",
-          "NOT"
+          "NOR"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "NOR (and NAND) are universal."
       },
       {
@@ -261,12 +261,12 @@
         "type": "multiple_choice",
         "prompt": "Octal 10 equals Hex:",
         "options": [
+          "C",
           "8",
           "A",
-          "10",
-          "C"
+          "10"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Oct 10 = Dec 8 = Hex 8."
       },
       {
@@ -318,12 +318,12 @@
         "type": "multiple_choice",
         "prompt": "The register that points to the top of the stack is:",
         "options": [
-          "SP",
-          "PC",
           "IR",
-          "MAR"
+          "MAR",
+          "PC",
+          "SP"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Stack Pointer."
       },
       {
@@ -331,12 +331,12 @@
         "type": "multiple_choice",
         "prompt": "Which is NOT a step in instruction cycle?",
         "options": [
-          "Fetch",
-          "Decode",
           "Compile",
+          "Decode",
+          "Fetch",
           "Execute"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Compiling happens before runtime."
       },
       {
@@ -384,12 +384,12 @@
         "type": "multiple_choice",
         "prompt": "L1 Cache is:",
         "options": [
-          "Faster than L2",
           "Slower than L2",
           "Same as RAM",
-          "Non-volatile"
+          "Non-volatile",
+          "Faster than L2"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Fastest and smallest."
       },
       {
@@ -417,12 +417,12 @@
         "type": "multiple_choice",
         "prompt": "De Morgan: ~(A + B) = ?",
         "options": [
-          "~A . ~B",
           "~A + ~B",
+          "A . ~B",
           "~A . B",
-          "A . ~B"
+          "~A . ~B"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "NOR = NOT A AND NOT B."
       },
       {
@@ -430,12 +430,12 @@
         "type": "multiple_choice",
         "prompt": "Hex 100 in decimal is:",
         "options": [
-          "256",
           "255",
-          "100",
-          "16"
+          "256",
+          "16",
+          "100"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "16^2 = 256."
       },
       {
@@ -450,12 +450,12 @@
         "type": "multiple_choice",
         "prompt": "Pipelining hazard caused by data dependency is:",
         "options": [
-          "Data Hazard",
-          "Structural Hazard",
+          "Fire Hazard",
           "Control Hazard",
-          "Fire Hazard"
+          "Structural Hazard",
+          "Data Hazard"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Data hazard."
       },
       {
@@ -463,12 +463,12 @@
         "type": "multiple_choice",
         "prompt": "Zero Flag (ZF) is set when:",
         "options": [
-          "Result is 0",
+          "Carry",
           "Result is negative",
-          "Overflow",
-          "Carry"
+          "Result is 0",
+          "Overflow"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Result is zero."
       },
       {
@@ -476,12 +476,12 @@
         "type": "multiple_choice",
         "prompt": "Addressing mode where the instruction contains the value:",
         "options": [
-          "Immediate",
           "Direct",
           "Indirect",
+          "Immediate",
           "Register"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Immediate."
       },
       {
@@ -489,12 +489,12 @@
         "type": "multiple_choice",
         "prompt": "What logic gate simulates a light switch with two switches (staircase)?",
         "options": [
-          "XOR",
           "AND",
           "OR",
-          "NAND"
+          "NAND",
+          "XOR"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "XOR/XNOR allows toggling from either side."
       },
       {
@@ -502,12 +502,12 @@
         "type": "multiple_choice",
         "prompt": "Two's complement of -128 (8-bit) is:",
         "options": [
-          "10000000",
           "01111111",
+          "00000000",
           "11111111",
-          "00000000"
+          "10000000"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "It is its own two's complement (exception)."
       },
       {
@@ -522,12 +522,12 @@
         "type": "multiple_choice",
         "prompt": "Memory that maps virtual to physical addresses:",
         "options": [
-          "MMU",
           "ALU",
           "FPU",
-          "GPU"
+          "GPU",
+          "MMU"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Memory Management Unit."
       },
       {
@@ -542,12 +542,12 @@
         "type": "multiple_choice",
         "prompt": "Which is bigger?",
         "options": [
-          "1 TB",
           "1 GB",
+          "1 KB",
           "1 MB",
-          "1 KB"
+          "1 TB"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Terra > Giga."
       },
       {
@@ -555,12 +555,12 @@
         "type": "multiple_choice",
         "prompt": "Unicode code point U+0041 is:",
         "options": [
-          "A",
-          "a",
           "1",
+          "a",
+          "A",
           "@"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A."
       },
       {
@@ -575,12 +575,12 @@
         "type": "multiple_choice",
         "prompt": "The stored program concept is attributed to:",
         "options": [
-          "Von Neumann",
           "Turing",
+          "Lovelace",
           "Babbage",
-          "Lovelace"
+          "Von Neumann"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Von Neumann architecture."
       },
       {
@@ -595,12 +595,12 @@
         "type": "multiple_choice",
         "prompt": "Which is non-volatile?",
         "options": [
-          "ROM",
-          "RAM",
           "Cache",
-          "Registers"
+          "ROM",
+          "Registers",
+          "RAM"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Read Only Memory retains data."
       },
       {
@@ -621,12 +621,12 @@
         "type": "multiple_choice",
         "prompt": "A bus that allows data to flow in both directions is:",
         "options": [
-          "Bidirectional",
-          "Unidirectional",
           "Omnidirectional",
-          "None"
+          "None",
+          "Bidirectional",
+          "Unidirectional"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Data bus is bidirectional."
       },
       {
@@ -641,12 +641,12 @@
         "type": "multiple_choice",
         "prompt": "The binary equivalent of decimal 10 is:",
         "options": [
-          "1010",
           "1001",
+          "1010",
           "1100",
           "1110"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "8+2=10."
       },
       {
@@ -690,11 +690,11 @@
         "prompt": "You access a memory block for the first time and it is not in the cache. This miss is best described as:",
         "options": [
           "Conflict miss",
+          "Write-back miss",
           "Capacity miss",
-          "Compulsory miss",
-          "Write-back miss"
+          "Compulsory miss"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "The first access to a block must miss because the cache has never loaded it: a compulsory (cold) miss."
       },
       {
@@ -730,12 +730,12 @@
         "type": "multiple_choice",
         "prompt": "A pipeline hazard caused by a branch where the next instruction address is unknown is a:",
         "options": [
-          "Data hazard",
-          "Structural hazard",
           "Control hazard",
-          "Memory hazard"
+          "Memory hazard",
+          "Structural hazard",
+          "Data hazard"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Branches change control flow; until the branch is resolved, the pipeline may not know what to fetch next."
       },
       {
@@ -759,12 +759,12 @@
         "type": "multiple_choice",
         "prompt": "DMA (Direct Memory Access) primarily improves performance by:",
         "options": [
-          "Making the CPU clock faster",
-          "Allowing devices to transfer blocks to/from RAM without per-byte CPU involvement",
+          "Storing all programs in ROM",
           "Eliminating the need for caches",
-          "Storing all programs in ROM"
+          "Allowing devices to transfer blocks to/from RAM without per-byte CPU involvement",
+          "Making the CPU clock faster"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "DMA moves data between I/O devices and RAM with minimal CPU overhead; the CPU sets up the transfer and is notified when it completes."
       },
       {

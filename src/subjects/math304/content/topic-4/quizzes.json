@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "If H is a subgroup of G and a ∈ G, the left coset aH is:",
         "options": [
-          "{ah : h ∈ H}",
-          "{ha : h ∈ H}",
           "{a⁻¹h : h ∈ H}",
+          "{ha : h ∈ H}",
+          "{ah : h ∈ H}",
           "{h : ah ∈ H}"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The left coset of H containing a is aH = {ah : h ∈ H}. Similarly, the right coset is Ha = {ha : h ∈ H}."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Two left cosets aH and bH are equal if and only if:",
         "options": [
-          "a = b",
           "a⁻¹b ∈ H",
+          "a and b commute",
           "ab ∈ H",
-          "a and b commute"
+          "a = b"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "aH = bH if and only if a⁻¹b ∈ H (equivalently, b ∈ aH). This is a fundamental property of cosets."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "The set of all left cosets of H in G forms:",
         "options": [
-          "A group under coset multiplication",
           "A partition of G",
           "A subgroup of G",
-          "Always equals G"
+          "Always equals G",
+          "A group under coset multiplication"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The left cosets of H partition G: every element of G is in exactly one left coset. However, they don't always form a group under coset multiplication (only when H is normal)."
       }
     ]
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "If G is a group of order 35, what are the possible orders of subgroups of G?",
         "options": [
-          "1, 5, 7, 35",
-          "1, 7, 35",
           "1, 5, 35",
-          "1, 35"
+          "1, 5, 7, 35",
+          "1, 35",
+          "1, 7, 35"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "By Lagrange's Theorem, subgroup orders must divide |G| = 35 = 5·7. The divisors of 35 are 1, 5, 7, and 35."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "If G is a finite group and a ∈ G, then the order of a:",
         "options": [
-          "Must divide |G|",
           "Must equal |G|",
           "Can be any positive integer",
-          "Must be a prime number"
+          "Must be a prime number",
+          "Must divide |G|"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The order of element a equals the order of the cyclic subgroup ⟨a⟩. By Lagrange's Theorem, |⟨a⟩| divides |G|, so |a| divides |G|."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "If G is a group of order 17, then G must be:",
         "options": [
-          "Cyclic",
-          "Non-abelian",
           "Isomorphic to S₁₇",
-          "The trivial group"
+          "Non-abelian",
+          "The trivial group",
+          "Cyclic"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "If |G| = p where p is prime, then G is cyclic (and isomorphic to Zₚ). Any non-identity element generates the entire group."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "The index [G:H] of a subgroup H in G is:",
         "options": [
-          "The number of elements in H",
           "The number of distinct left (or right) cosets of H in G",
+          "The number of elements in H",
           "The order of G",
           "Always equal to 2"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The index [G:H] is the number of distinct left cosets of H in G. By Lagrange's Theorem, [G:H] = |G|/|H|."
       }
     ]
@@ -157,11 +157,11 @@
         "prompt": "A subgroup H of G is normal (H ⊴ G) if:",
         "options": [
           "H is abelian",
-          "gH = Hg for all g ∈ G",
           "H = G",
-          "H has index 2"
+          "H has index 2",
+          "gH = Hg for all g ∈ G"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "H is normal in G if the left and right cosets coincide for all g ∈ G. Equivalently, gHg⁻¹ = H for all g ∈ G."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "In an abelian group G, every subgroup H is:",
         "options": [
-          "Normal",
-          "Cyclic",
           "Trivial",
-          "Of prime order"
+          "Normal",
+          "Of prime order",
+          "Cyclic"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "In an abelian group, gH = Hg for all g and H, since gh = hg for all elements. Thus every subgroup is normal."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "If H is a normal subgroup of G, the quotient group G/H consists of:",
         "options": [
-          "Elements of G not in H",
-          "The set of all cosets of H with operation (aH)(bH) = abH",
           "All subgroups of G",
-          "Elements of G that commute with H"
+          "Elements of G not in H",
+          "Elements of G that commute with H",
+          "The set of all cosets of H with operation (aH)(bH) = abH"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "When H ⊴ G, the set of cosets G/H = {aH : a ∈ G} forms a group under coset multiplication (aH)(bH) = abH."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "If |G| = 30 and H is a subgroup of order 15, is H necessarily normal in G?",
         "options": [
-          "Yes, because |H| divides |G|",
           "Yes, because [G:H] = 2",
-          "No, normality depends on more than just the order",
-          "No, H cannot exist by Lagrange's Theorem"
+          "Yes, because |H| divides |G|",
+          "No, H cannot exist by Lagrange's Theorem",
+          "No, normality depends on more than just the order"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Any subgroup of index 2 is normal. Here [G:H] = 30/15 = 2, so H ⊴ G."
       },
       {

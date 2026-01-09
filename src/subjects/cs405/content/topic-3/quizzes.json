@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the key difference between containers and virtual machines?",
         "options": [
-          "Containers are slower than VMs",
-          "Containers share the host OS kernel, VMs have separate kernels",
           "VMs are more portable than containers",
-          "Containers require more resources than VMs"
+          "Containers require more resources than VMs",
+          "Containers are slower than VMs",
+          "Containers share the host OS kernel, VMs have separate kernels"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Containers share the host OS kernel and provide process-level isolation, making them lighter and faster. VMs have complete operating systems with separate kernels."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "Which Linux kernel feature provides process isolation for containers?",
         "options": [
-          "cgroups",
           "namespaces",
           "SELinux",
-          "iptables"
+          "iptables",
+          "cgroups"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Namespaces provide isolation (PID, network, mount, etc.). Cgroups limit resources. Together they form the foundation of container isolation."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "In a Dockerfile, which instruction creates a new layer?",
         "options": [
+          "EXPOSE",
           "ENV",
-          "RUN",
           "LABEL",
-          "EXPOSE"
+          "RUN"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "RUN, COPY, and ADD instructions create new layers. ENV, LABEL, EXPOSE, and other metadata instructions don't create layers."
       },
       {
@@ -92,11 +92,11 @@
         "prompt": "What is the default Docker network mode?",
         "options": [
           "host",
-          "bridge",
+          "none",
           "overlay",
-          "none"
+          "bridge"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Bridge network is the default. Containers get private IPs and can communicate with each other via the bridge. Port mapping is required for external access."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "Which Docker networking mode gives containers direct access to the host network stack?",
         "options": [
+          "overlay",
           "bridge",
           "host",
-          "overlay",
           "macvlan"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Host networking mode removes network isolation, giving containers direct access to the host's network stack. No port mapping needed but less isolation."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "What is the recommended way to persist data in Docker?",
         "options": [
+          "Store in Docker images",
           "Store in container filesystem",
-          "Use Docker volumes",
           "Use environment variables",
-          "Store in Docker images"
+          "Use Docker volumes"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Docker volumes are the recommended way to persist data. They're managed by Docker, exist outside containers, and survive container deletion."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "Why should containers avoid running as root?",
         "options": [
-          "Root containers run slower",
-          "Security risk if container compromised",
           "Root not supported in Docker",
-          "Licensing restrictions"
+          "Licensing restrictions",
+          "Root containers run slower",
+          "Security risk if container compromised"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Running as root is a security risk. If a container is compromised, the attacker has root privileges. Use USER instruction to run as non-root user."
       },
       {

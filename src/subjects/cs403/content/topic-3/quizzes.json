@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Karger’s min-cut algorithm finds the true min-cut in one run with probability at least:",
         "options": [
-          "2/(n(n-1))",
           "1/n",
+          "1/e",
           "1/2",
-          "1/e"
+          "2/(n(n-1))"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Karger’s contraction algorithm succeeds with probability ≥ 2/(n(n−1)) per run; repeating boosts success probability."
       },
       {
@@ -79,12 +79,12 @@
         "type": "multiple_choice",
         "prompt": "Which technique is commonly used to reduce error probability in a Monte Carlo algorithm?",
         "options": [
-          "Amplification via repetition and majority vote",
+          "Dynamic programming",
           "Memoization",
-          "Topological sorting",
-          "Dynamic programming"
+          "Amplification via repetition and majority vote",
+          "Topological sorting"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Repeating independent runs and taking a majority vote (or appropriate aggregation) reduces error exponentially in the number of repetitions."
       },
       {
@@ -127,12 +127,12 @@
         "type": "multiple_choice",
         "prompt": "Yao’s minimax principle is used to relate:",
         "options": [
-          "Randomized algorithm lower bounds to distributions over inputs",
-          "Approximation ratios to LP duals",
           "Competitive ratios to amortized costs",
-          "Hashing to sorting"
+          "Approximation ratios to LP duals",
+          "Hashing to sorting",
+          "Randomized algorithm lower bounds to distributions over inputs"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Yao’s principle states that the expected cost of the best randomized algorithm on the worst input is at least the expected cost of the best deterministic algorithm on some input distribution."
       },
       {
@@ -147,12 +147,12 @@
         "type": "multiple_choice",
         "prompt": "A Chernoff bound is most directly used to bound:",
         "options": [
-          "The probability that the sum of independent random variables deviates far from its mean",
-          "The worst-case runtime of deterministic algorithms",
           "Exact optimal solutions to NP-hard problems",
-          "The number of edges in a graph"
+          "The worst-case runtime of deterministic algorithms",
+          "The number of edges in a graph",
+          "The probability that the sum of independent random variables deviates far from its mean"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Chernoff bounds provide exponentially small tail bounds for sums of independent bounded random variables, commonly used to show concentration around the mean."
       },
       {
@@ -167,12 +167,12 @@
         "type": "multiple_choice",
         "prompt": "For Karger’s algorithm, repeating O(n² log n) times is enough to achieve:",
         "options": [
-          "High probability of finding the min-cut",
-          "Deterministic correctness",
           "Polynomial memory usage instead of linear",
-          "Exact max-flow computation"
+          "Exact max-flow computation",
+          "High probability of finding the min-cut",
+          "Deterministic correctness"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Each run succeeds with small probability, but repeating enough times amplifies success to high probability using the union bound and exponential decay."
       }
     ]

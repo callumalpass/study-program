@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What protocol does DNS use primarily?",
         "options": [
-          "TCP only",
-          "UDP only",
           "UDP primarily, TCP for large responses",
-          "Neither"
+          "Neither",
+          "UDP only",
+          "TCP only"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "DNS uses UDP (port 53) for most queries but falls back to TCP for responses larger than 512 bytes or for zone transfers."
       },
       {
@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "Which protocol is used for sending email?",
         "options": [
-          "POP3",
-          "IMAP",
           "SMTP",
+          "IMAP",
+          "POP3",
           "FTP"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "SMTP (Simple Mail Transfer Protocol) is used for sending email. POP3 and IMAP are used for retrieving email from a server."
       },
       {
@@ -106,12 +106,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the SSH protocol?",
         "options": [
-          "File transfer only",
           "Secure remote login and command execution",
+          "File transfer only",
           "Email encryption",
           "Web browsing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "SSH (Secure Shell) provides encrypted remote login, command execution, and can tunnel other protocols securely."
       }
     ]
@@ -140,12 +140,12 @@
         "type": "multiple_choice",
         "prompt": "What security mechanism prevents an attacker from reusing captured authentication tokens?",
         "options": [
-          "Encryption",
           "Replay attack prevention (nonces/timestamps)",
+          "Keep-alive",
           "Compression",
-          "Keep-alive"
+          "Encryption"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Nonces (numbers used once) and timestamps prevent replay attacks by ensuring each request is unique and time-limited."
       },
       {
@@ -168,11 +168,11 @@
         "prompt": "What is the purpose of the HTTP CORS mechanism?",
         "options": [
           "Compress HTTP responses",
-          "Allow cross-origin requests in browsers",
+          "Encrypt HTTP traffic",
           "Cache DNS responses",
-          "Encrypt HTTP traffic"
+          "Allow cross-origin requests in browsers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "CORS (Cross-Origin Resource Sharing) allows servers to specify which origins can access resources, enabling safe cross-origin requests in browsers."
       }
     ]

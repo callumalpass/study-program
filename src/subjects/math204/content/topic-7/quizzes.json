@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "To find the radius of convergence, we typically use:",
         "options": [
-          "The Ratio Test",
           "The Root Test",
-          "The Integral Test",
-          "Either A or B"
+          "The Ratio Test",
+          "Either A or B",
+          "The Integral Test"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "Both the Ratio Test and Root Test can determine the radius: $R = \\frac{1}{L}$ where $L = \\lim |a_{n+1}/a_n|$ or $L = \\lim \\sqrt[n]{|a_n|}$."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "The interval of convergence is:",
         "options": [
-          "Always $(-R, R)$",
           "$(c - R, c + R)$ plus possibly endpoints",
+          "Always includes endpoints",
           "The same as radius",
-          "Always includes endpoints"
+          "Always $(-R, R)$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The interval is $(c - R, c + R)$ where $R$ is the radius. Check endpoints separately."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "The Taylor series of $f(x)$ centered at $a$ is:",
         "options": [
+          "$\\sum \\frac{x^n}{n!}$",
           "$\\sum \\frac{f(n)}{n!}x^n$",
           "$\\sum \\frac{f^{(n)}(a)}{n!}(x-a)^n$",
-          "$\\sum f^{(n)}(x)$",
-          "$\\sum \\frac{x^n}{n!}$"
+          "$\\sum f^{(n)}(x)$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Taylor series: $\\sum_{n=0}^\\infty \\frac{f^{(n)}(a)}{n!}(x-a)^n$ where $f^{(n)}$ is the nth derivative."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "The Maclaurin series for $e^x$ is:",
         "options": [
+          "$\\sum \\frac{1}{x^n}$",
           "$\\sum \\frac{x^n}{n}$",
-          "$\\sum \\frac{x^n}{n!}$",
           "$\\sum nx^{n-1}$",
-          "$\\sum \\frac{1}{x^n}$"
+          "$\\sum \\frac{x^n}{n!}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "$e^x = \\sum_{n=0}^\\infty \\frac{x^n}{n!} = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + \\cdots$"
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "The Lagrange form of the Taylor remainder is:",
         "options": [
+          "Both B and C",
           "$R_n(x) = \\frac{f^{(n)}(c)}{n!}x^n$",
           "$R_n(x) = \\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$",
-          "$R_n(x) = f(x) - P_n(x)$",
-          "Both B and C"
+          "$R_n(x) = f(x) - P_n(x)$"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "The remainder $R_n(x) = f(x) - P_n(x) = \\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$ for some $c$ between $a$ and $x$."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "The Maclaurin series for $\\cos x$ is:",
         "options": [
+          "$\\sum \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$",
           "$\\sum \\frac{x^{2n}}{(2n)!}$",
           "$\\sum \\frac{(-1)^n x^{2n}}{(2n)!}$",
-          "$\\sum \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$",
           "$\\sum (-1)^n x^n$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "$\\cos x = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{(2n)!} = 1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} - \\cdots$"
       },
       {
@@ -167,10 +167,10 @@
         "options": [
           "The next term in the series",
           "The remainder formula",
-          "The alternating series error bound (if applicable)",
-          "All of the above"
+          "All of the above",
+          "The alternating series error bound (if applicable)"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "All methods can estimate error: remainder formula (general), alternating series bound (if alternating), or next term (rough estimate)."
       },
       {

@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is the derivative of $f(x) = e^x$?",
         "options": [
+          "$e^{x-1}$",
           "$xe^{x-1}$",
           "$e^x$",
-          "$e^{x-1}$",
           "$xe^x$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The exponential function $e^x$ is its own derivative: $\\frac{d}{dx}[e^x] = e^x$."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is $\\frac{d}{dx}[\\ln x]$?",
         "options": [
-          "$\\frac{1}{x}$",
-          "$\\ln x$",
+          "$e^x$",
           "$x \\ln x$",
-          "$e^x$"
+          "$\\frac{1}{x}$",
+          "$\\ln x$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The derivative of $\\ln x$ is $\\frac{1}{x}$ for $x > 0$."
       },
       {
@@ -73,10 +73,10 @@
         "options": [
           "$e^x$",
           "$xe^x$",
-          "$e^x + xe^x$",
-          "$e^x - xe^x$"
+          "$e^x - xe^x$",
+          "$e^x + xe^x$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Product rule: $(fg)' = f'g + fg'$. Here: $1 \\cdot e^x + x \\cdot e^x = e^x + xe^x = e^x(1 + x)$."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "What is $\\frac{d}{dx}[\\sin(3x)]$?",
         "options": [
-          "$\\cos(3x)$",
-          "$3\\cos(3x)$",
+          "$\\cos(x)$",
           "$-3\\sin(3x)$",
-          "$\\cos(x)$"
+          "$3\\cos(3x)$",
+          "$\\cos(3x)$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "By the chain rule: derivative of outer function times derivative of inner. $\\cos(3x) \\cdot 3 = 3\\cos(3x)$."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "Using the quotient rule, what is $\\frac{d}{dx}\\left[\\frac{x}{x+1}\\right]$?",
         "options": [
-          "$\\frac{1}{x+1}$",
           "$\\frac{1}{(x+1)^2}$",
           "$\\frac{x}{(x+1)^2}$",
-          "$\\frac{-1}{(x+1)^2}$"
+          "$\\frac{-1}{(x+1)^2}$",
+          "$\\frac{1}{x+1}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Quotient rule: $\\frac{(x+1)(1) - x(1)}{(x+1)^2} = \\frac{x+1-x}{(x+1)^2} = \\frac{1}{(x+1)^2}$."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "Find $\\frac{d}{dx}[e^{x^2}]$.",
         "options": [
-          "$e^{x^2}$",
           "$2xe^{x^2}$",
-          "$x^2 e^{x^2-1}$",
-          "$2e^{x^2}$"
+          "$e^{x^2}$",
+          "$2e^{x^2}$",
+          "$x^2 e^{x^2-1}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "By chain rule: $\\frac{d}{dx}[e^{x^2}] = e^{x^2} \\cdot 2x = 2xe^{x^2}$."
       },
       {
@@ -166,11 +166,11 @@
         "prompt": "What is $\\frac{d}{dx}[x^x]$ for $x > 0$?",
         "options": [
           "$x^x$",
-          "$x \\cdot x^{x-1}$",
           "$x^x(\\ln x + 1)$",
+          "$x \\cdot x^{x-1}$",
           "$x^x \\ln x$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Use logarithmic differentiation. Let $y = x^x$, so $\\ln y = x \\ln x$. Then $\\frac{y'}{y} = \\ln x + 1$, giving $y' = x^x(\\ln x + 1)$."
       },
       {

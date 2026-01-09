@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What keyword is used to define a structure in C?",
         "options": [
-          "class",
           "struct",
+          "object",
           "record",
-          "object"
+          "class"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The struct keyword is used to define structures in C."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What does typedef do when used with structures?",
         "options": [
-          "Creates a new structure type",
-          "Defines an alias for the structure type",
+          "Initializes the structure",
           "Makes the structure private",
-          "Initializes the structure"
+          "Creates a new structure type",
+          "Defines an alias for the structure type"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "typedef creates an alias, so you can use the alias name instead of \"struct StructName\" everywhere."
       },
       {
@@ -72,12 +72,12 @@
         "type": "multiple_choice",
         "prompt": "Why might sizeof(struct) be larger than the sum of its members?",
         "options": [
-          "Compiler bug",
           "Structure padding for alignment",
-          "Extra memory for methods",
-          "Virtual table pointer"
+          "Virtual table pointer",
+          "Compiler bug",
+          "Extra memory for methods"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Compilers add padding bytes between members to ensure proper memory alignment for efficiency."
       },
       {
@@ -92,12 +92,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the offsetof macro?",
         "options": [
-          "Get structure size",
-          "Get member offset from structure start",
           "Offset array indices",
-          "Calculate padding"
+          "Calculate padding",
+          "Get structure size",
+          "Get member offset from structure start"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "offsetof(struct_type, member) returns the byte offset of a member within the structure."
       },
       {
@@ -105,12 +105,12 @@
         "type": "multiple_choice",
         "prompt": "What does __attribute__((packed)) do in GCC?",
         "options": [
+          "Aligns to 64-bit boundary",
           "Compresses data",
           "Removes structure padding",
-          "Encrypts structure",
-          "Aligns to 64-bit boundary"
+          "Encrypts structure"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The packed attribute tells GCC to use minimal storage without padding, at potential cost to access speed."
       },
       {
@@ -134,11 +134,11 @@
         "prompt": "What is a self-referential structure?",
         "options": [
           "A structure that calls itself",
-          "A structure containing a pointer to its own type",
           "A recursive function structure",
-          "A structure with a name member"
+          "A structure with a name member",
+          "A structure containing a pointer to its own type"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A self-referential structure contains a pointer to another instance of the same structure type (e.g., linked list nodes)."
       },
       {
@@ -146,12 +146,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between a struct and a union?",
         "options": [
-          "No difference",
-          "Struct members share memory, union members don't",
+          "Unions can only have two members",
           "Union members share memory, struct members don't",
-          "Unions can only have two members"
+          "No difference",
+          "Struct members share memory, union members don't"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "In a union, all members share the same memory location. Only one member can be used at a time."
       },
       {
@@ -168,11 +168,11 @@
         "prompt": "What are bit fields in structures used for?",
         "options": [
           "Storing floating point bits",
-          "Packing multiple values into fewer bytes",
           "Defining bit-level functions",
-          "Binary file I/O"
+          "Binary file I/O",
+          "Packing multiple values into fewer bytes"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Bit fields allow specifying exact bit widths for members, useful for flags or protocol fields."
       },
       {

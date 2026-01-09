@@ -31,12 +31,12 @@
         "type": "multiple_choice",
         "prompt": "Which statement checks if x is greater than 10 AND less than 20?",
         "options": [
-          "if x > 10 and x < 20:",
           "if x > 10 or x < 20:",
+          "if x > 10 and x < 20:",
           "if x > 10 & x < 20:",
           "if x > 10 && x < 20:"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Use \"and\" to combine conditions that must both be true. Python uses \"and\"/\"or\", not \"&&\"/\"||\" like some other languages."
       },
       {
@@ -75,12 +75,12 @@
         "type": "multiple_choice",
         "prompt": "What does range(0, 10, 2) generate?",
         "options": [
+          "0, 1, 2, 3, 4, 5, 6, 7, 8, 9",
           "0, 2, 4, 6, 8, 10",
-          "0, 2, 4, 6, 8",
           "2, 4, 6, 8",
-          "0, 1, 2, 3, 4, 5, 6, 7, 8, 9"
+          "0, 2, 4, 6, 8"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "range(start, stop, step) with step=2 generates every second number. It stops before 10, so: 0, 2, 4, 6, 8."
       },
       {
@@ -128,11 +128,11 @@
         "prompt": "What happens when a while loop condition is never False?",
         "options": [
           "The loop runs once",
-          "The program crashes immediately",
           "The loop runs forever (infinite loop)",
-          "Python raises a SyntaxError"
+          "Python raises a SyntaxError",
+          "The program crashes immediately"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "If the condition never becomes False, the loop runs forever. This is called an infinite loop and usually requires Ctrl+C to stop."
       },
       {

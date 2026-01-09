@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of a .env file?",
         "options": [
-          "To store environment-specific configuration and secrets",
-          "To track environment changes in git",
+          "To configure text editors",
           "To document the project",
-          "To configure text editors"
+          "To store environment-specific configuration and secrets",
+          "To track environment changes in git"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": ".env files store environment-specific configuration like API keys and database URLs. They should never be committed to git."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is the advantage of feature branches in git?",
         "options": [
-          "Faster deployments",
-          "Isolate changes and allow parallel development",
+          "Automatic testing",
           "Smaller repository size",
-          "Automatic testing"
+          "Isolate changes and allow parallel development",
+          "Faster deployments"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Feature branches isolate changes for each feature, allowing multiple developers to work in parallel without interfering with each other or the main branch."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What should you do before committing code?",
         "options": [
-          "Run tests and linters locally",
-          "Deploy to production",
           "Delete all comments",
-          "Rewrite the entire codebase"
+          "Run tests and linters locally",
+          "Rewrite the entire codebase",
+          "Deploy to production"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Always run tests and linters before committing to catch issues early. This prevents breaking the build for other developers."
       },
       {
@@ -57,11 +57,11 @@
         "prompt": "What makes a good commit message?",
         "options": [
           "Single word like \"update\"",
-          "Describes what changed and why in clear, concise language",
           "Lists every file modified",
+          "Describes what changed and why in clear, concise language",
           "Includes the current date and time"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Good commit messages clearly describe what changed and why, using imperative mood (\"Add feature\" not \"Added feature\"), and are concise but informative."
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "What is middleware in Express.js?",
         "options": [
-          "A database layer",
-          "Functions that process requests before reaching route handlers",
+          "Database migration tools",
           "Frontend components",
-          "Database migration tools"
+          "Functions that process requests before reaching route handlers",
+          "A database layer"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Middleware are functions that have access to request/response objects and can modify them, run code, or end the request-response cycle."
       },
       {
@@ -90,12 +90,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of JWT (JSON Web Tokens)?",
         "options": [
-          "To format JSON responses",
-          "To securely transmit authentication information between parties",
           "To compress data",
-          "To validate JSON syntax"
+          "To format JSON responses",
+          "To validate JSON syntax",
+          "To securely transmit authentication information between parties"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "JWTs securely encode authentication/authorization information that can be verified without server-side session storage, making them stateless."
       },
       {
@@ -124,11 +124,11 @@
         "prompt": "What is the purpose of input validation?",
         "options": [
           "To make code run faster",
-          "To ensure data meets requirements and prevent security vulnerabilities",
           "To reduce database size",
-          "To format output"
+          "To format output",
+          "To ensure data meets requirements and prevent security vulnerabilities"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Input validation ensures data meets requirements (format, type, constraints) and prevents security issues like SQL injection or malformed data."
       }
     ]
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of React hooks like useState and useEffect?",
         "options": [
-          "To style components",
           "To manage component state and side effects in functional components",
           "To deploy applications",
+          "To style components",
           "To test components"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Hooks allow functional components to have state (useState) and perform side effects (useEffect) without needing class components."
       },
       {
@@ -158,11 +158,11 @@
         "prompt": "What is the difference between controlled and uncontrolled form inputs in React?",
         "options": [
           "Controlled inputs are disabled",
-          "Controlled inputs are managed by React state, uncontrolled use DOM refs",
+          "There is no difference",
           "Uncontrolled inputs are more secure",
-          "There is no difference"
+          "Controlled inputs are managed by React state, uncontrolled use DOM refs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Controlled inputs are driven by React state (value={state}), giving you control and validation. Uncontrolled inputs manage their own state via DOM refs."
       },
       {
@@ -170,12 +170,12 @@
         "type": "multiple_choice",
         "prompt": "Why should API calls typically be made in useEffect, not in the component body?",
         "options": [
-          "useEffect makes requests faster",
-          "To prevent infinite loops and control when requests are made",
           "It's required by React syntax",
-          "To improve SEO"
+          "To improve SEO",
+          "To prevent infinite loops and control when requests are made",
+          "useEffect makes requests faster"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "API calls in the component body would run on every render, causing infinite loops. useEffect with dependencies controls when calls are made."
       },
       {
@@ -183,12 +183,12 @@
         "type": "multiple_choice",
         "prompt": "What is AJAX and why is it important for modern web apps?",
         "options": [
-          "A CSS framework for styling",
           "Asynchronous JavaScript for updating pages without full reload",
           "A database query language",
+          "A CSS framework for styling",
           "A deployment automation tool"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "AJAX allows asynchronous HTTP requests to fetch/send data without page reloads, enabling dynamic, responsive user experiences."
       },
       {

@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "In the group (Z₁₂, +₁₂), what is the inverse of 5?",
         "options": [
-          "7",
           "5",
+          "7",
           "11",
           "1"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The inverse of 5 in Z₁₂ under addition is the element x such that 5 + x ≡ 0 (mod 12). Since 5 + 7 = 12 ≡ 0 (mod 12), the inverse is 7."
       },
       {
@@ -37,11 +37,11 @@
         "prompt": "Which of the following sets with the given operation forms a group?",
         "options": [
           "(N, +) where N is the natural numbers",
-          "(Z, -) where Z is the integers and - is subtraction",
           "(Q*, ·) where Q* is the nonzero rational numbers and · is multiplication",
-          "(Z, ·) where Z is the integers and · is multiplication"
+          "(Z, ·) where Z is the integers and · is multiplication",
+          "(Z, -) where Z is the integers and - is subtraction"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Q* under multiplication is a group: it has closure, associativity, identity (1), and every nonzero rational has a multiplicative inverse. N lacks inverses, Z under subtraction is not associative, and Z under multiplication lacks inverses for most elements."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "If G is a group and a, b are elements of G, the equation ax = b:",
         "options": [
+          "Has a solution only if a = b",
           "Has no solution in general",
-          "Has exactly one solution x = a⁻¹b",
           "Has infinitely many solutions",
-          "Has a solution only if a = b"
+          "Has exactly one solution x = a⁻¹b"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "In any group, the equation ax = b has a unique solution x = a⁻¹b. This follows from the existence of inverses and the cancellation property."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "The identity element in a group is:",
         "options": [
-          "Always unique",
           "Can be multiple elements",
+          "Always unique",
           "Only exists in finite groups",
           "Does not exist in abelian groups"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The identity element in any group is unique. If e and e' are both identities, then e = e * e' = e', so e = e'."
       }
     ]
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "The Two-Step Subgroup Test states that H is a subgroup of G if and only if:",
         "options": [
-          "H is non-empty and for all a, b in H, ab is in H",
           "H is non-empty and for all a, b in H, ab⁻¹ is in H",
+          "H is non-empty and for all a, b in H, ab is in H",
           "For all a in H, a² is in H",
           "H contains the identity and is closed under the operation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The Two-Step Subgroup Test: H ≤ G if and only if H is non-empty and ab⁻¹ ∈ H for all a, b ∈ H. This single condition implies closure and inverses."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "Which subset of (Z, +) is a subgroup?",
         "options": [
-          "{0, 1, 2, 3}",
-          "{..., -6, -3, 0, 3, 6, ...} (multiples of 3)",
+          "{-1, 0, 1}",
           "{1, 2, 3, 4, 5}",
-          "{-1, 0, 1}"
+          "{0, 1, 2, 3}",
+          "{..., -6, -3, 0, 3, 6, ...} (multiples of 3)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The set of multiples of 3 forms a subgroup of Z under addition: it's non-empty, and the sum of two multiples of 3 is a multiple of 3, and negatives are included."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "If H and K are subgroups of G, then H ∩ K (intersection) is:",
         "options": [
-          "Always a subgroup of G",
-          "Never a subgroup of G",
+          "A subgroup only if one contains the other",
           "A subgroup only if H = K",
-          "A subgroup only if one contains the other"
+          "Always a subgroup of G",
+          "Never a subgroup of G"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The intersection of any two subgroups is always a subgroup. It contains the identity, and is closed under the operation and inverses."
       },
       {
@@ -136,11 +136,11 @@
         "prompt": "The center of a group G, Z(G) = {x ∈ G : xg = gx for all g ∈ G}, is:",
         "options": [
           "Always the trivial subgroup {e}",
+          "Not necessarily a subgroup",
           "Always equal to G",
-          "Always a subgroup of G",
-          "Not necessarily a subgroup"
+          "Always a subgroup of G"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "The center Z(G) is always a subgroup. It's non-empty (contains e), and if a, b commute with everything, so does ab and a⁻¹."
       }
     ]
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "The order of the identity element in any group is:",
         "options": [
-          "0",
-          "1",
+          "Depends on the group",
           "Infinite",
-          "Depends on the group"
+          "1",
+          "0"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The identity e always has order 1, since e¹ = e and 1 is the smallest positive integer with this property."
       },
       {
@@ -209,11 +209,11 @@
         "prompt": "If a and b are elements of an abelian group with orders m and n where gcd(m,n) = 1, what is the order of ab?",
         "options": [
           "m + n",
-          "m - n",
           "mn",
+          "m - n",
           "max(m, n)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "In an abelian group, if |a| = m and |b| = n with gcd(m,n) = 1, then |ab| = mn. This follows from the fact that (ab)^(mn) = e and no smaller power works."
       }
     ]

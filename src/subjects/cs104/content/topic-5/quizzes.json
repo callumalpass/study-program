@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "An adjacency list is more space-efficient than an adjacency matrix for:",
         "options": [
-          "Dense graphs",
           "Sparse graphs",
           "Complete graphs",
+          "Dense graphs",
           "All graphs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Adjacency lists use O(V+E) space, better than O(V²) for sparse graphs where E << V²."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "Which graph traversal uses a queue?",
         "options": [
-          "Depth-First Search",
           "Breadth-First Search",
           "Both",
-          "Neither"
+          "Neither",
+          "Depth-First Search"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "BFS uses a queue to explore level by level. DFS uses a stack (or recursion)."
       }
     ]
@@ -72,11 +72,11 @@
         "prompt": "To find the shortest path in an unweighted graph, use:",
         "options": [
           "DFS",
-          "BFS",
           "Dijkstra's",
+          "BFS",
           "Floyd-Warshall"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "BFS finds shortest paths in unweighted graphs because it explores nodes level by level."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "Topological sort is possible only for:",
         "options": [
-          "Undirected graphs",
-          "Cyclic graphs",
           "Directed acyclic graphs (DAGs)",
-          "Weighted graphs"
+          "Cyclic graphs",
+          "Weighted graphs",
+          "Undirected graphs"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Topological ordering requires a DAG; cycles make it impossible to order dependencies."
       },
       {
@@ -112,12 +112,12 @@
         "type": "multiple_choice",
         "prompt": "The \"Number of Islands\" problem treats the grid as a graph where:",
         "options": [
+          "Columns are edges",
           "Each cell is a vertex",
           "Only land cells are vertices",
-          "Rows are vertices",
-          "Columns are edges"
+          "Rows are vertices"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Each cell is a vertex with edges to adjacent cells. Islands are connected components of land."
       }
     ]
@@ -133,12 +133,12 @@
         "type": "multiple_choice",
         "prompt": "Dijkstra's algorithm finds shortest paths in graphs with:",
         "options": [
-          "Negative edge weights",
-          "Non-negative edge weights",
+          "Cycles only",
           "Only unweighted edges",
-          "Cycles only"
+          "Negative edge weights",
+          "Non-negative edge weights"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Dijkstra's requires non-negative weights. Use Bellman-Ford for negative weights."
       },
       {

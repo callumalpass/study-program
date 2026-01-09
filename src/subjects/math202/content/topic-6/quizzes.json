@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "R² (coefficient of determination) represents:",
         "options": [
-          "The correlation",
-          "The slope",
           "The proportion of variance explained",
-          "The residual variance"
+          "The residual variance",
+          "The slope",
+          "The correlation"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "R² indicates the proportion of variance in Y explained by X. R² = 0.8 means 80% of variance is explained."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Which assumption is NOT required for linear regression?",
         "options": [
-          "Linearity",
-          "Independence of errors",
           "X and Y are normally distributed",
-          "Homoscedasticity"
+          "Homoscedasticity",
+          "Linearity",
+          "Independence of errors"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "We assume errors are normally distributed, not necessarily X and Y themselves."
       },
       {
@@ -92,11 +92,11 @@
         "prompt": "A residual plot showing a clear pattern suggests:",
         "options": [
           "Good model fit",
+          "Strong correlation",
           "Violation of assumptions",
-          "High R²",
-          "Strong correlation"
+          "High R²"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Patterns in residual plots indicate violations of regression assumptions (non-linearity, heteroscedasticity, etc.)."
       },
       {
@@ -105,11 +105,11 @@
         "prompt": "To test if the slope β₁ is significantly different from zero, we use:",
         "options": [
           "Chi-square test",
-          "t-test",
+          "Z-test",
           "F-test",
-          "Z-test"
+          "t-test"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "We use a t-test to test H₀: β₁ = 0 vs. H₁: β₁ ≠ 0."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "Adjusted R² is preferred over R² in multiple regression because:",
         "options": [
+          "It doesn't require assumptions",
           "It is always larger",
           "It accounts for the number of predictors",
-          "It is easier to calculate",
-          "It doesn't require assumptions"
+          "It is easier to calculate"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Adjusted R² penalizes models for including unnecessary predictors, preventing overfitting."
       },
       {
@@ -166,11 +166,11 @@
         "prompt": "The F-test in multiple regression tests:",
         "options": [
           "Individual coefficients",
+          "Homoscedasticity",
           "Overall model significance",
-          "Normality",
-          "Homoscedasticity"
+          "Normality"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The F-test tests H₀: β₁ = β₂ = ... = βₖ = 0 (whether the model as a whole is significant)."
       },
       {

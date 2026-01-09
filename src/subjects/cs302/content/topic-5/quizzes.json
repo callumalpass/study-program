@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "What is the standard port number for HTTP?",
         "options": [
-          "21",
-          "22",
           "80",
-          "443"
+          "22",
+          "443",
+          "21"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "HTTP uses port 80 by default. HTTPS uses 443, SSH uses 22, and FTP uses 20/21."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "How many bytes is the UDP header?",
         "options": [
+          "20 bytes",
           "4 bytes",
           "8 bytes",
-          "16 bytes",
-          "20 bytes"
+          "16 bytes"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The UDP header is 8 bytes: source port (2), destination port (2), length (2), and checksum (2)."
       }
     ]
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the TCP three-way handshake?",
         "options": [
-          "To encrypt the connection",
-          "To establish a connection and synchronize sequence numbers",
           "To negotiate compression",
-          "To verify user authentication"
+          "To encrypt the connection",
+          "To verify user authentication",
+          "To establish a connection and synchronize sequence numbers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The TCP three-way handshake (SYN, SYN-ACK, ACK) establishes a connection and allows both sides to synchronize sequence numbers."
       },
       {
@@ -99,12 +99,12 @@
         "type": "multiple_choice",
         "prompt": "What TCP flag is used to gracefully close a connection?",
         "options": [
-          "SYN",
           "ACK",
-          "FIN",
-          "RST"
+          "RST",
+          "SYN",
+          "FIN"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "The FIN (Finish) flag is used for graceful connection termination. RST is used for immediate, abrupt termination."
       },
       {
@@ -140,12 +140,12 @@
         "type": "multiple_choice",
         "prompt": "Which TCP congestion control algorithm uses packet loss as a signal of congestion?",
         "options": [
-          "TCP Tahoe",
-          "TCP Vegas",
           "DCTCP",
-          "All of the above"
+          "TCP Tahoe",
+          "All of the above",
+          "TCP Vegas"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "TCP Tahoe (and Reno) use packet loss as the primary congestion signal. TCP Vegas uses RTT changes, and DCTCP uses ECN marking."
       },
       {

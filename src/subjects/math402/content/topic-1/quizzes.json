@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "The absolute error is defined as:",
         "options": [
-          "|approximate - true| / |true|",
           "|approximate - true|",
+          "|approximate - true| / |true|",
           "|true - approximate| / |approximate|",
           "(approximate - true)^2"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Absolute error is simply the magnitude of the difference: |x̃ - x|, where x̃ is the approximation and x is the true value."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Which statement about floating-point representation is correct?",
         "options": [
-          "All real numbers can be exactly represented",
-          "Floating-point numbers are uniformly distributed",
           "The gap between consecutive floating-point numbers increases with magnitude",
-          "Addition is always associative in floating-point arithmetic"
+          "Addition is always associative in floating-point arithmetic",
+          "Floating-point numbers are uniformly distributed",
+          "All real numbers can be exactly represented"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The spacing between floating-point numbers grows exponentially with the magnitude of the numbers, leading to less precision for larger values."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Which operation is most prone to catastrophic cancellation?",
         "options": [
-          "Addition of numbers with similar magnitudes",
-          "Subtraction of nearly equal numbers",
           "Multiplication of small numbers",
-          "Division by large numbers"
+          "Addition of numbers with similar magnitudes",
+          "Division by large numbers",
+          "Subtraction of nearly equal numbers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Subtracting nearly equal numbers eliminates significant digits, leaving only roundoff error in the result—this is catastrophic cancellation."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "When computing √(x^2 + 1) - x for large x, which reformulation avoids cancellation?",
         "options": [
-          "√(x^2 + 1) - x (no change needed)",
           "1 / (√(x^2 + 1) + x)",
-          "x(√(1 + 1/x^2) - 1)",
-          "(x^2 + 1 - x^2) / (√(x^2 + 1) + x)"
+          "√(x^2 + 1) - x (no change needed)",
+          "(x^2 + 1 - x^2) / (√(x^2 + 1) + x)",
+          "x(√(1 + 1/x^2) - 1)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Multiplying by the conjugate: (√(x^2 + 1) - x)(√(x^2 + 1) + x)/(√(x^2 + 1) + x) = 1/(√(x^2 + 1) + x) avoids subtracting nearly equal numbers."
       },
       {
@@ -138,12 +138,12 @@
         "type": "multiple_choice",
         "prompt": "A backward stable algorithm guarantees that:",
         "options": [
-          "The computed result is the exact result for a slightly perturbed problem",
-          "The forward error is minimized",
+          "The condition number is less than 1",
           "The algorithm never amplifies errors",
-          "The condition number is less than 1"
+          "The computed result is the exact result for a slightly perturbed problem",
+          "The forward error is minimized"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Backward stability means the computed result f̃(x) equals f(x̃) for some x̃ close to x, i.e., the result is exact for a nearby problem."
       },
       {
@@ -151,12 +151,12 @@
         "type": "multiple_choice",
         "prompt": "For the problem of computing x - y where x ≈ y, what is the condition number?",
         "options": [
-          "1",
-          "x/(x-y)",
+          "Small (problem is ill-conditioned)",
           "Large (problem is well-conditioned)",
-          "Small (problem is ill-conditioned)"
+          "1",
+          "x/(x-y)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The condition number for subtraction is κ = (|x| + |y|)/|x - y|. When x ≈ y, the denominator is small, making κ very large (ill-conditioned)."
       },
       {
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "The condition number of evaluating f(x) = e^x near x = 0 is approximately:",
         "options": [
+          "1",
           "x",
           "|x|",
-          "1",
           "e^x"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "κ(x) = |xf'(x)/f(x)| = |x·e^x/e^x| = |x|. Near x = 0, the condition number is small, indicating a well-conditioned problem."
       },
       {
@@ -184,12 +184,12 @@
         "type": "multiple_choice",
         "prompt": "In IEEE 754 double precision, subnormal numbers exist to:",
         "options": [
-          "Increase the range of representable numbers",
-          "Allow gradual underflow and maintain relative error bounds near zero",
+          "Eliminate the need for special values like NaN",
           "Improve the speed of floating-point operations",
-          "Eliminate the need for special values like NaN"
+          "Allow gradual underflow and maintain relative error bounds near zero",
+          "Increase the range of representable numbers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Subnormal (denormalized) numbers fill the gap between zero and the smallest normalized number, preventing abrupt underflow to zero and maintaining error properties."
       }
     ]

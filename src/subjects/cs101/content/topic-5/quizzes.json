@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What method reads the entire contents of a file as a single string?",
         "options": [
-          "file.readline()",
-          "file.read()",
           "file.readlines()",
-          "file.readall()"
+          "file.readline()",
+          "file.readall()",
+          "file.read()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "file.read() reads the entire file content as one string. readline() reads one line, and readlines() reads all lines into a list."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What happens if you open a file with mode \"w\" and the file already exists?",
         "options": [
+          "The existing content is deleted",
           "An error is raised",
           "Content is added to the end",
-          "The existing content is deleted",
           "The file is renamed"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Mode \"w\" (write) overwrites the file, deleting all existing content. Use \"a\" to append instead."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Which module do you import to work with JSON files?",
         "options": [
-          "file",
-          "io",
           "json",
-          "data"
+          "data",
+          "file",
+          "io"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The json module provides json.load() to read JSON files and json.dump() to write them."
       },
       {
@@ -99,12 +99,12 @@
         "type": "multiple_choice",
         "prompt": "What does csv.DictReader do?",
         "options": [
-          "Reads CSV as a dictionary of lists",
           "Reads each row as a dictionary with column headers as keys",
           "Converts a dictionary to CSV format",
-          "Creates an empty dictionary for CSV data"
+          "Creates an empty dictionary for CSV data",
+          "Reads CSV as a dictionary of lists"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "csv.DictReader uses the first row as headers and returns each subsequent row as a dictionary with header keys."
       },
       {
@@ -128,12 +128,12 @@
         "type": "multiple_choice",
         "prompt": "What exception is raised when trying to open a non-existent file for reading?",
         "options": [
-          "IOError",
-          "FileNotFoundError",
           "ValueError",
-          "PermissionError"
+          "PermissionError",
+          "IOError",
+          "FileNotFoundError"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "FileNotFoundError is raised when the file does not exist. Use try/except to handle this gracefully."
       },
       {
@@ -157,11 +157,11 @@
         "prompt": "What is the best practice for iterating over a large file line by line?",
         "options": [
           "file.read().split(\"\\n\")",
-          "file.readlines()",
           "for line in file:",
-          "while file.readline():"
+          "while file.readline():",
+          "file.readlines()"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "\"for line in file:\" is memory-efficient as it reads one line at a time. readlines() loads the entire file into memory."
       },
       {

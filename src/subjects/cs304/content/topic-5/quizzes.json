@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is instruction selection?",
         "options": [
+          "Selecting the best algorithm",
           "Choosing which instructions to delete",
           "Mapping IR operations to target machine instructions",
-          "Selecting the best algorithm",
           "Choosing optimization levels"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Instruction selection chooses target machine instructions to implement each IR operation."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the maximal munch strategy for instruction selection?",
         "options": [
-          "Use smallest instructions",
           "Greedily select largest matching tile at each point",
+          "Use most common instructions",
           "Random selection",
-          "Use most common instructions"
+          "Use smallest instructions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Maximal munch greedily selects the largest (most operations) matching instruction pattern at each node."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is the advantage of CISC over RISC for code generation?",
         "options": [
-          "Simpler instruction selection",
-          "Complex instructions may do more work per instruction",
           "Faster execution always",
-          "More registers"
+          "Simpler instruction selection",
+          "More registers",
+          "Complex instructions may do more work per instruction"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "CISC instructions can perform complex operations in one instruction, potentially reducing code size."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What is peephole optimization in code generation?",
         "options": [
+          "Memory optimization",
           "Looking at small windows of instructions to improve them",
-          "Optimizing loops",
           "Global analysis",
-          "Memory optimization"
+          "Optimizing loops"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Peephole optimization examines small instruction windows to apply local improvements like strength reduction."
       }
     ]
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is a live range in register allocation?",
         "options": [
-          "A valid memory address",
           "The interval from a variable's definition to its last use",
           "A hardware register",
-          "A loop body"
+          "A loop body",
+          "A valid memory address"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A live range spans from where a variable is defined to where it is last used."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "How does graph coloring relate to register allocation?",
         "options": [
-          "Unrelated",
-          "Non-interfering live ranges can share registers (same color)",
+          "Graphs represent instructions",
           "Colors represent memory",
-          "Graphs represent instructions"
+          "Unrelated",
+          "Non-interfering live ranges can share registers (same color)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Graph coloring assigns registers: nodes are live ranges, edges connect simultaneously live ranges, colors are registers."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What is linear scan register allocation?",
         "options": [
-          "Scanning registers linearly",
           "A faster alternative to graph coloring using live intervals",
           "Allocating registers in order",
-          "Sequential allocation"
+          "Sequential allocation",
+          "Scanning registers linearly"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Linear scan processes live intervals in order, providing faster allocation than graph coloring with reasonable quality."
       }
     ]
@@ -157,11 +157,11 @@
         "prompt": "What does a calling convention specify?",
         "options": [
           "Function naming",
-          "How arguments are passed and results returned between functions",
           "Code formatting",
-          "Variable naming"
+          "Variable naming",
+          "How arguments are passed and results returned between functions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Calling conventions define parameter passing, return values, register usage, and stack management between caller/callee."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What are caller-saved vs callee-saved registers?",
         "options": [
+          "Caller-saved cannot be used",
           "Same thing",
           "Caller-saved are preserved by caller; callee-saved by callee",
-          "Caller-saved cannot be used",
           "Callee-saved are for return values"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Caller-saved registers may be clobbered by callee; callee-saved must be preserved across calls."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is an activation record (stack frame)?",
         "options": [
-          "A log entry",
-          "Memory allocated for a function invocation",
+          "A calling convention",
           "A hardware register",
-          "A calling convention"
+          "A log entry",
+          "Memory allocated for a function invocation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "An activation record holds a function's local variables, parameters, return address, and saved registers."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the frame pointer (FP) used for?",
         "options": [
+          "Pointing to globals",
           "Pointing to code",
           "Providing a stable reference to the current stack frame",
-          "Pointing to globals",
           "Heap management"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The frame pointer provides a stable base address for accessing local variables, even as SP changes."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What is the ELF format?",
         "options": [
-          "A fantasy creature",
           "Executable and Linkable Format for Unix object files",
-          "An optimization",
-          "A virtual machine"
+          "A fantasy creature",
+          "A virtual machine",
+          "An optimization"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "ELF (Executable and Linkable Format) is the standard object file format on Unix/Linux systems."
       }
     ]

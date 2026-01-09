@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What does weak duality guarantee for a primal maximization LP and its dual?",
         "options": [
-          "Primal optimal ≤ Dual optimal",
           "Primal optimal ≥ Dual optimal",
           "Primal optimal = Dual optimal",
-          "No relationship exists"
+          "No relationship exists",
+          "Primal optimal ≤ Dual optimal"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Weak duality states that any dual feasible solution provides an upper bound on the primal optimal value."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "In the dual of an LP, what does each dual variable correspond to?",
         "options": [
-          "A primal decision variable",
-          "A primal constraint",
           "An objective coefficient",
-          "A basis element"
+          "A basis element",
+          "A primal decision variable",
+          "A primal constraint"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Each dual variable corresponds to a primal constraint, representing its shadow price or marginal value."
       },
       {
@@ -65,12 +65,12 @@
         "type": "multiple_choice",
         "prompt": "What does complementary slackness state?",
         "options": [
-          "Primal and dual are both feasible",
           "λᵢ(bᵢ - aᵢᵀx) = 0 for all i",
+          "The duality gap is positive",
           "All constraints are binding",
-          "The duality gap is positive"
+          "Primal and dual are both feasible"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Complementary slackness: for each constraint i, either it is tight (bᵢ = aᵢᵀx) or the dual variable is zero (λᵢ = 0)."
       },
       {
@@ -85,12 +85,12 @@
         "type": "multiple_choice",
         "prompt": "Farkas' Lemma provides a certificate for what property?",
         "options": [
+          "Degeneracy",
           "Optimality",
           "Infeasibility",
-          "Boundedness",
-          "Degeneracy"
+          "Boundedness"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Farkas' Lemma gives a certificate of infeasibility: if no x satisfies Ax ≤ b, then there exists y such that Aᵀy = 0, bᵀy < 0, y ≥ 0."
       },
       {
@@ -98,12 +98,12 @@
         "type": "multiple_choice",
         "prompt": "What economic interpretation do dual variables have?",
         "options": [
-          "Production costs",
           "Shadow prices of resources",
-          "Profit margins",
-          "Inventory levels"
+          "Inventory levels",
+          "Production costs",
+          "Profit margins"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Dual variables are shadow prices, representing the marginal value of relaxing a constraint by one unit."
       },
       {
@@ -126,12 +126,12 @@
         "type": "multiple_choice",
         "prompt": "Given primal: max cᵀx s.t. Ax ≤ b, x ≥ 0, what is the dual?",
         "options": [
-          "min bᵀy s.t. Aᵀy ≥ c, y ≥ 0",
-          "max bᵀy s.t. Aᵀy ≤ c, y ≥ 0",
           "min bᵀy s.t. Aᵀy = c, y ≥ 0",
-          "max bᵀy s.t. Aᵀy ≥ c, y ≥ 0"
+          "min bᵀy s.t. Aᵀy ≥ c, y ≥ 0",
+          "max bᵀy s.t. Aᵀy ≥ c, y ≥ 0",
+          "max bᵀy s.t. Aᵀy ≤ c, y ≥ 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The dual of max cᵀx s.t. Ax ≤ b, x ≥ 0 is min bᵀy s.t. Aᵀy ≥ c, y ≥ 0."
       },
       {
@@ -146,12 +146,12 @@
         "type": "multiple_choice",
         "prompt": "If the primal is unbounded, what can we conclude about the dual?",
         "options": [
-          "Dual is also unbounded",
-          "Dual is infeasible",
           "Dual is feasible",
-          "Cannot determine"
+          "Dual is also unbounded",
+          "Cannot determine",
+          "Dual is infeasible"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "If the primal is unbounded, weak duality implies the dual must be infeasible (otherwise dual feasible would bound primal)."
       },
       {
@@ -159,12 +159,12 @@
         "type": "multiple_choice",
         "prompt": "For an equality constraint h(x) = 0 in the primal, what is the corresponding dual variable?",
         "options": [
-          "Must be non-negative",
-          "Must be non-positive",
+          "Must be zero",
           "Unrestricted in sign",
-          "Must be zero"
+          "Must be non-positive",
+          "Must be non-negative"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Equality constraints in the primal correspond to unrestricted (free) dual variables that can be positive, negative, or zero."
       },
       {

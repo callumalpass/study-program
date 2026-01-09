@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of accessing an element by index in an array?",
         "options": [
-          "O(1)",
           "O(log n)",
+          "O(n²)",
           "O(n)",
-          "O(n²)"
+          "O(1)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Arrays provide constant-time O(1) access because elements are stored in contiguous memory, allowing direct address calculation."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which operation is MORE efficient in a linked list compared to an array?",
         "options": [
-          "Random access by index",
-          "Insertion at the beginning",
           "Binary search",
-          "Cache locality"
+          "Cache locality",
+          "Insertion at the beginning",
+          "Random access by index"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Inserting at the beginning of a linked list is O(1) since it only requires updating the head pointer, while arrays require shifting all elements O(n)."
       },
       {
@@ -80,11 +80,11 @@
         "prompt": "Which technique is commonly used to find the middle element of a linked list efficiently?",
         "options": [
           "Binary search",
+          "Hash table",
           "Two pointers (slow and fast)",
-          "Recursion",
-          "Hash table"
+          "Recursion"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The slow/fast pointer technique uses two pointers where fast moves twice as fast. When fast reaches the end, slow is at the middle."
       },
       {
@@ -148,12 +148,12 @@
         "type": "multiple_choice",
         "prompt": "What data structures are typically combined to implement an LRU Cache with O(1) operations?",
         "options": [
-          "Two arrays",
-          "Array and stack",
           "Doubly linked list and hash map",
-          "Queue and heap"
+          "Two arrays",
+          "Queue and heap",
+          "Array and stack"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "LRU Cache uses a doubly linked list (for O(1) removal/insertion) and a hash map (for O(1) lookup)."
       },
       {
@@ -170,11 +170,11 @@
         "prompt": "Why do arrays generally have better cache performance than linked lists?",
         "options": [
           "Arrays use less memory",
-          "Array elements are stored contiguously",
           "Arrays have faster pointers",
+          "Array elements are stored contiguously",
           "Linked lists cannot be cached"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Arrays store elements contiguously in memory, so accessing one element likely brings neighboring elements into CPU cache. Linked list nodes can be scattered in memory."
       }
     ]

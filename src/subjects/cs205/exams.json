@@ -16,12 +16,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is NOT a property of a relation in the relational model?",
         "options": [
-          "Rows are unique",
           "Order of rows matters",
-          "Attributes are atomic",
-          "Each column has a distinct name"
+          "Each column has a distinct name",
+          "Rows are unique",
+          "Attributes are atomic"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "In the relational model, the order of tuples (rows) is irrelevant; relations are sets of tuples."
       },
       {
@@ -29,12 +29,12 @@
         "type": "multiple_choice",
         "prompt": "A superkey is:",
         "options": [
-          "A minimal key with no redundant attributes",
           "Any set of attributes that uniquely identifies tuples",
           "The primary key only",
+          "A minimal key with no redundant attributes",
           "A foreign key reference"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A superkey is any set of attributes that uniquely identifies tuples. A candidate key is a minimal superkey."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "Which cardinality represents \"an employee works in exactly one department\"?",
         "options": [
+          "N:M",
           "Many-to-many",
-          "1:N from Department to Employee",
           "1:1",
-          "N:M"
+          "1:N from Department to Employee"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Each employee belongs to one department, but a department can have many employees: 1:N from Department to Employee."
       },
       {
@@ -70,11 +70,11 @@
         "prompt": "Which relational algebra operation corresponds to SQL's UNION?",
         "options": [
           "Join (⋈)",
-          "Union (∪)",
+          "Selection (σ)",
           "Intersection (∩)",
-          "Selection (σ)"
+          "Union (∪)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The union operation combines tuples from two relations, removing duplicates."
       },
       {
@@ -96,12 +96,12 @@
         "prompt": "What does this query return?",
         "codeSnippet": "SELECT COUNT(DISTINCT Department) FROM Employees;",
         "options": [
-          "Total number of employees",
           "Number of unique departments",
-          "Department names",
-          "Error - invalid syntax"
+          "Error - invalid syntax",
+          "Total number of employees",
+          "Department names"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "COUNT(DISTINCT column) counts the number of unique non-NULL values in the column."
       },
       {
@@ -130,12 +130,12 @@
         "prompt": "What is wrong with this query?",
         "codeSnippet": "SELECT Department, Name, AVG(Salary)\nFROM Employees\nGROUP BY Department;",
         "options": [
-          "Nothing wrong",
-          "Name must be in GROUP BY or an aggregate",
           "AVG cannot be used with GROUP BY",
-          "FROM should come before SELECT"
+          "FROM should come before SELECT",
+          "Name must be in GROUP BY or an aggregate",
+          "Nothing wrong"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Non-aggregated columns in SELECT (Name) must appear in GROUP BY for a valid grouping."
       },
       {
@@ -150,12 +150,12 @@
         "type": "multiple_choice",
         "prompt": "Which constraint ensures values in a column match values in another table?",
         "options": [
-          "PRIMARY KEY",
+          "CHECK",
           "UNIQUE",
-          "FOREIGN KEY",
-          "CHECK"
+          "PRIMARY KEY",
+          "FOREIGN KEY"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "FOREIGN KEY establishes referential integrity between tables."
       },
       {
@@ -165,10 +165,10 @@
         "options": [
           "INNER JOIN",
           "RIGHT JOIN",
-          "LEFT JOIN",
-          "CROSS JOIN"
+          "CROSS JOIN",
+          "LEFT JOIN"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "LEFT JOIN returns all left table rows with matching right rows or NULL when no match exists."
       },
       {
@@ -177,12 +177,12 @@
         "prompt": "What does this query find?",
         "codeSnippet": "SELECT * FROM Employees E\nWHERE NOT EXISTS (\n    SELECT 1 FROM Orders O\n    WHERE O.SalesRepID = E.EmployeeID\n);",
         "options": [
-          "Employees with orders",
           "Employees without any orders",
-          "All orders",
-          "Employee-order pairs"
+          "Employees with orders",
+          "Employee-order pairs",
+          "All orders"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "NOT EXISTS returns rows where the subquery produces no results—employees with no matching orders."
       },
       {
@@ -197,12 +197,12 @@
         "type": "multiple_choice",
         "prompt": "UNION vs UNION ALL: which is faster and why?",
         "options": [
+          "They have identical performance",
           "UNION is faster; it uses indexes",
           "UNION ALL is faster; it doesn't remove duplicates",
-          "They have identical performance",
           "UNION ALL is slower due to extra processing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "UNION ALL simply concatenates results without the overhead of sorting and deduplication."
       },
       {
@@ -210,12 +210,12 @@
         "type": "multiple_choice",
         "prompt": "Which window function assigns ranks with gaps after ties?",
         "options": [
-          "ROW_NUMBER()",
           "RANK()",
-          "DENSE_RANK()",
-          "NTILE()"
+          "ROW_NUMBER()",
+          "NTILE()",
+          "DENSE_RANK()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "RANK() leaves gaps after ties (1,1,3), while DENSE_RANK() doesn't (1,1,2)."
       },
       {
@@ -224,12 +224,12 @@
         "prompt": "What does PARTITION BY do in this query?",
         "codeSnippet": "SELECT Name, Department,\n       AVG(Salary) OVER (PARTITION BY Department)\nFROM Employees;",
         "options": [
-          "Sorts results by department",
-          "Calculates average across all employees",
           "Calculates average separately for each department",
-          "Filters by department"
+          "Filters by department",
+          "Calculates average across all employees",
+          "Sorts results by department"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "PARTITION BY divides rows into groups; the window function operates within each partition."
       },
       {
@@ -245,11 +245,11 @@
         "prompt": "Which normal form requires elimination of partial dependencies?",
         "options": [
           "1NF",
+          "BCNF",
           "2NF",
-          "3NF",
-          "BCNF"
+          "3NF"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "2NF eliminates partial dependencies—attributes depending on only part of a composite key."
       },
       {
@@ -277,12 +277,12 @@
         "type": "multiple_choice",
         "prompt": "Given R(A,B,C,D) with FDs: A→B, A→C, C→D. What is the candidate key?",
         "options": [
-          "A",
+          "D",
           "B",
           "C",
-          "D"
+          "A"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A⁺ = {A,B,C,D} since A→B, A→C, and C→D. A determines all attributes, so A is a candidate key."
       },
       {
@@ -297,12 +297,12 @@
         "type": "multiple_choice",
         "prompt": "A transitive dependency X → Y → Z where Y is not a superkey violates:",
         "options": [
-          "1NF",
-          "2NF",
           "3NF",
+          "2NF",
+          "1NF",
           "All normal forms"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "3NF eliminates transitive dependencies where non-key attributes depend on other non-key attributes."
       }
     ]
@@ -324,12 +324,12 @@
         "type": "multiple_choice",
         "prompt": "Which key can have NULL values?",
         "options": [
-          "Primary key",
-          "Candidate key",
+          "Superkey",
           "Foreign key",
-          "Superkey"
+          "Primary key",
+          "Candidate key"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Foreign keys can be NULL (no reference), while primary/candidate keys cannot be NULL."
       },
       {
@@ -344,12 +344,12 @@
         "type": "multiple_choice",
         "prompt": "What does the CHECK constraint do?",
         "options": [
-          "Ensures foreign key references are valid",
-          "Enforces a boolean condition on column values",
           "Guarantees uniqueness",
-          "Prevents NULL values"
+          "Ensures foreign key references are valid",
+          "Prevents NULL values",
+          "Enforces a boolean condition on column values"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "CHECK enforces that column values satisfy a specified condition (e.g., Price > 0)."
       },
       {
@@ -364,12 +364,12 @@
         "type": "multiple_choice",
         "prompt": "In a window function, what does ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING define?",
         "options": [
-          "Current row only",
           "A 3-row window centered on current row",
           "All preceding rows",
-          "All following rows"
+          "All following rows",
+          "Current row only"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "This frame includes the previous row, current row, and next row—3 rows total."
       },
       {
@@ -398,12 +398,12 @@
         "prompt": "What type of subquery is this?",
         "codeSnippet": "SELECT Name FROM Employees E\nWHERE Salary > (\n    SELECT AVG(Salary) FROM Employees\n    WHERE DeptID = E.DeptID\n);",
         "options": [
+          "Derived table",
           "Scalar subquery",
           "Correlated subquery",
-          "Derived table",
           "Uncorrelated subquery"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The subquery references E.DeptID from the outer query, making it correlated."
       },
       {
@@ -411,12 +411,12 @@
         "type": "multiple_choice",
         "prompt": "Armstrong's axioms include all EXCEPT:",
         "options": [
-          "Reflexivity",
+          "Normalization",
           "Augmentation",
-          "Transitivity",
-          "Normalization"
+          "Reflexivity",
+          "Transitivity"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "Armstrong's axioms are Reflexivity, Augmentation, and Transitivity. Normalization is a process, not an axiom."
       },
       {
@@ -431,12 +431,12 @@
         "type": "multiple_choice",
         "prompt": "Which ACID property is violated if a transaction can read uncommitted data?",
         "options": [
-          "Atomicity",
-          "Consistency",
           "Isolation",
+          "Consistency",
+          "Atomicity",
           "Durability"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Reading uncommitted data (dirty read) violates Isolation between concurrent transactions."
       },
       {
@@ -451,12 +451,12 @@
         "type": "multiple_choice",
         "prompt": "Which isolation level provides the highest concurrency but lowest consistency?",
         "options": [
-          "SERIALIZABLE",
-          "REPEATABLE READ",
+          "READ UNCOMMITTED",
           "READ COMMITTED",
-          "READ UNCOMMITTED"
+          "SERIALIZABLE",
+          "REPEATABLE READ"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "READ UNCOMMITTED allows dirty reads, providing maximum concurrency but minimum isolation."
       },
       {
@@ -484,12 +484,12 @@
         "type": "multiple_choice",
         "prompt": "What problem does this scenario illustrate?\nT1: Read X (balance=100)\nT2: Read X (balance=100)\nT1: Write X = 100 - 50 = 50\nT2: Write X = 100 - 30 = 70",
         "options": [
-          "Dirty read",
-          "Lost update",
+          "Non-repeatable read",
           "Phantom read",
-          "Non-repeatable read"
+          "Dirty read",
+          "Lost update"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "T1's update is lost because T2 overwrites with a value based on stale data."
       },
       {
@@ -504,12 +504,12 @@
         "type": "multiple_choice",
         "prompt": "SAVEPOINT allows you to:",
         "options": [
-          "Save the database to disk",
-          "Create partial rollback points within a transaction",
+          "Create database backups",
           "Save query plans",
-          "Create database backups"
+          "Save the database to disk",
+          "Create partial rollback points within a transaction"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "SAVEPOINT creates a named point to which you can partially rollback without aborting the entire transaction."
       },
       {
@@ -537,12 +537,12 @@
         "type": "multiple_choice",
         "prompt": "What is the typical time complexity for B-tree search?",
         "options": [
+          "O(n)",
           "O(1)",
           "O(log n)",
-          "O(n)",
           "O(n log n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "B-tree search is O(log n) due to the balanced tree structure and high fanout."
       },
       {
@@ -557,12 +557,12 @@
         "type": "multiple_choice",
         "prompt": "Why are B+ tree leaves linked?",
         "options": [
-          "For faster insertions",
           "To enable efficient range queries",
           "To reduce tree height",
-          "For better compression"
+          "For better compression",
+          "For faster insertions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Linked leaves allow sequential scanning for range queries without revisiting internal nodes."
       },
       {
@@ -570,12 +570,12 @@
         "type": "multiple_choice",
         "prompt": "Hash indexes are NOT suitable for:",
         "options": [
+          "Point lookups",
           "Equality comparisons",
           "Range queries",
-          "Point lookups",
           "Primary key lookups"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Hash indexes only support equality (=); they cannot efficiently handle ranges (<, >, BETWEEN)."
       },
       {
@@ -591,12 +591,12 @@
         "prompt": "For index IDX(Status, OrderDate), which query can use the index efficiently?",
         "codeSnippet": "A) WHERE OrderDate > '2024-01-01'\nB) WHERE Status = 'Active'\nC) WHERE OrderDate > '2024-01-01' AND Status = 'Active'\nD) WHERE Status = 'Active' AND OrderDate > '2024-01-01'",
         "options": [
-          "A only",
-          "B and D",
           "A and C",
-          "B, C, and D"
+          "A only",
+          "B, C, and D",
+          "B and D"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "Status is the leading column. Queries B, C, and D all start with or include Status."
       },
       {
@@ -671,12 +671,12 @@
         "type": "multiple_choice",
         "prompt": "Which join type builds a hash table on one input?",
         "options": [
-          "Nested loop join",
           "Merge join",
           "Hash join",
+          "Nested loop join",
           "Index join"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Hash join builds a hash table on the smaller table and probes it with the larger table."
       },
       {
@@ -706,11 +706,11 @@
         "prompt": "Why is WHERE YEAR(date_column) = 2024 problematic for performance?",
         "options": [
           "YEAR() is deprecated",
+          "It requires more memory",
           "It prevents index usage on date_column",
-          "It returns wrong results",
-          "It requires more memory"
+          "It returns wrong results"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Functions on columns prevent index use. Use: date_column >= '2024-01-01' AND date_column < '2025-01-01'."
       },
       {
@@ -726,11 +726,11 @@
         "prompt": "Subquery unnesting converts a correlated subquery into:",
         "options": [
           "A view",
-          "A join",
+          "An index",
           "A procedure",
-          "An index"
+          "A join"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Unnesting rewrites correlated subqueries as joins for more efficient execution."
       },
       {
@@ -739,12 +739,12 @@
         "prompt": "What does this execution plan hint suggest?",
         "codeSnippet": "Sort Method: external merge  Disk: 50000kB",
         "options": [
-          "Sort was efficient",
-          "Sort spilled to disk due to insufficient work_mem",
           "Data was already sorted",
-          "No sort was needed"
+          "No sort was needed",
+          "Sort was efficient",
+          "Sort spilled to disk due to insufficient work_mem"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "External merge sort with disk usage indicates work_mem was insufficient for in-memory sort."
       },
       {
@@ -752,12 +752,12 @@
         "type": "multiple_choice",
         "prompt": "Which is the best approach to identify slow queries?",
         "options": [
-          "Guess based on query length",
-          "Use slow query logs and pg_stat_statements",
           "Run all queries manually",
-          "Check table sizes only"
+          "Guess based on query length",
+          "Check table sizes only",
+          "Use slow query logs and pg_stat_statements"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Database tools like slow query logs and statistics extensions identify actual slow queries."
       },
       {

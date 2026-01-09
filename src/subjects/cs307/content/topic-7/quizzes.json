@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary difference between vulnerability scanning and penetration testing?",
         "options": [
-          "There is no difference",
           "Vulnerability scanning automatically identifies potential vulnerabilities; penetration testing actively exploits them",
           "Vulnerability scanning is illegal; penetration testing is legal",
-          "Penetration testing is fully automated; vulnerability scanning is manual"
+          "Penetration testing is fully automated; vulnerability scanning is manual",
+          "There is no difference"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Vulnerability scanners (like Nessus, OpenVAS) automatically detect known vulnerabilities. Penetration testing involves security professionals actively attempting to exploit vulnerabilities to assess real-world impact. Both are valuable and complementary security testing approaches."
       },
       {
@@ -31,11 +31,11 @@
         "prompt": "Which testing approach executes the application and monitors its behavior to find vulnerabilities?",
         "options": [
           "Static Application Security Testing (SAST)",
+          "Threat Modeling",
           "Code Review",
-          "Dynamic Application Security Testing (DAST)",
-          "Threat Modeling"
+          "Dynamic Application Security Testing (DAST)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "DAST tools test running applications from the outside, similar to how an attacker would. They send various inputs and analyze responses to find vulnerabilities like XSS, SQL injection, or authentication issues. DAST complements SAST by finding runtime and configuration issues."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of a bug bounty program?",
         "options": [
+          "To test employee security awareness",
           "To pay employees for finding bugs",
-          "To incentivize external security researchers to report vulnerabilities responsibly",
           "To automatically fix security issues",
-          "To test employee security awareness"
+          "To incentivize external security researchers to report vulnerabilities responsibly"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Bug bounty programs reward external security researchers for discovering and responsibly disclosing vulnerabilities. This harnesses the collective expertise of the security community, often finding issues that internal teams miss. Programs like HackerOne and Bugcrowd facilitate these."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "What type of penetration testing provides testers with full knowledge of the system including source code and architecture?",
         "options": [
-          "Black box testing",
-          "Gray box testing",
           "White box testing",
-          "Red team testing"
+          "Red team testing",
+          "Gray box testing",
+          "Black box testing"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "White box testing (clear box) provides full knowledge including code, architecture, and credentials. Black box has no prior knowledge (simulating external attackers). Gray box has partial knowledge (simulating insider threats). Each approach has different benefits and use cases."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of threat modeling in the security development lifecycle?",
         "options": [
-          "To test the application after deployment",
-          "To proactively identify potential threats and design countermeasures during development",
+          "To train developers on coding standards",
           "To monitor production systems",
-          "To train developers on coding standards"
+          "To proactively identify potential threats and design countermeasures during development",
+          "To test the application after deployment"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Threat modeling is performed during design to identify potential security threats, assess risks, and plan mitigations before code is written. Using frameworks like STRIDE or PASTA, teams systematically analyze attack vectors and design secure architectures, catching issues early when they're cheaper to fix."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "Which metric is most useful for tracking security testing effectiveness over time?",
         "options": [
-          "Number of developers",
           "Mean Time to Remediate (MTTR) vulnerabilities",
+          "Number of developers",
           "Lines of code written",
           "Server uptime"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "MTTR measures how quickly vulnerabilities are fixed after discovery. Other useful metrics include vulnerability density (vulnerabilities per KLOC), time to detection, severity distribution, and recurrence rate. Tracking these over time shows security program maturity and effectiveness."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary benefit of shift-left security?",
         "options": [
+          "Delaying security testing until production",
           "Moving security testing to the end of development",
-          "Integrating security early in development to find and fix issues when they're cheaper to remediate",
           "Outsourcing security to third parties",
-          "Delaying security testing until production"
+          "Integrating security early in development to find and fix issues when they're cheaper to remediate"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Shift-left security integrates security practices early in the SDLC (design, development) rather than at the end. Finding vulnerabilities during design or development is far cheaper than fixing them in production. Tools like SAST in IDEs and security training enable shift-left."
       },
       {

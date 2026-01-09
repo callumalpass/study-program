@@ -11,11 +11,11 @@
         "prompt": "What is the most effective way to prevent SQL injection?",
         "options": [
           "Escaping special characters in user input",
-          "Using parameterized queries or prepared statements",
           "Validating input length",
+          "Using parameterized queries or prepared statements",
           "Encrypting database connections"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Parameterized queries (prepared statements) separate SQL code from data, ensuring user input is never interpreted as SQL commands. This is more reliable than escaping because it prevents all injection attacks regardless of input complexity. ORMs typically use parameterized queries."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "Which approach should be used when validating user input?",
         "options": [
-          "Blacklist known bad patterns",
           "Whitelist allowed patterns and reject everything else",
-          "Accept all input and fix issues later",
-          "Rely on client-side validation only"
+          "Blacklist known bad patterns",
+          "Rely on client-side validation only",
+          "Accept all input and fix issues later"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Whitelisting (allowing only known good input) is more secure than blacklisting because it's impossible to enumerate all malicious patterns. Define what is acceptable and reject everything else. For example, for a phone number, accept only digits and specific characters."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the proper way to handle sensitive information in error messages?",
         "options": [
-          "Display detailed technical errors to help users debug issues",
           "Show generic error messages to users; log detailed errors securely",
           "Hide all errors completely",
-          "Display stack traces to all users"
+          "Display stack traces to all users",
+          "Display detailed technical errors to help users debug issues"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Detailed error messages can leak sensitive information like database structure, file paths, or library versions. Show users generic messages (\"An error occurred\") while logging detailed information securely for developers to investigate. Never expose stack traces to users."
       },
       {
@@ -92,11 +92,11 @@
         "prompt": "What is the principle of \"fail-secure\" in error handling?",
         "options": [
           "Display detailed error messages",
+          "Retry failed operations indefinitely",
           "Default to denying access when errors occur rather than granting it",
-          "Continue execution despite errors",
-          "Retry failed operations indefinitely"
+          "Continue execution despite errors"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Fail-secure means that when errors occur, the system defaults to a secure state (denying access) rather than an insecure state. For example, if authorization checks fail, deny access rather than allowing it. This prevents security bypasses through error conditions."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "Which is the most secure way to store passwords in a database?",
         "options": [
-          "Plain text",
           "Encrypted with a reversible algorithm",
           "Hashed with a fast algorithm like MD5",
-          "Hashed with a slow, adaptive algorithm like bcrypt or Argon2 with unique salts"
+          "Hashed with a slow, adaptive algorithm like bcrypt or Argon2 with unique salts",
+          "Plain text"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "Passwords should be hashed with slow, adaptive algorithms (bcrypt, scrypt, Argon2) that resist brute-force attacks. Each password needs a unique salt. Never use fast algorithms (MD5, SHA-1) or encryption (which is reversible) for passwords."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of using secure random number generators for security-sensitive operations?",
         "options": [
-          "They are faster than standard random functions",
-          "They provide cryptographically unpredictable values suitable for tokens and keys",
           "They generate truly random hardware-based numbers",
-          "They compress data more efficiently"
+          "They compress data more efficiently",
+          "They provide cryptographically unpredictable values suitable for tokens and keys",
+          "They are faster than standard random functions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Cryptographically secure random number generators (like crypto.getRandomValues(), secrets module in Python) are essential for generating session tokens, password reset tokens, and encryption keys. Standard random functions (Math.random(), rand()) are predictable and unsuitable for security."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary purpose of input sanitization?",
         "options": [
-          "To make data look better for display",
-          "To remove or encode potentially dangerous characters before processing",
+          "To translate data between languages",
           "To compress data for storage",
-          "To translate data between languages"
+          "To make data look better for display",
+          "To remove or encode potentially dangerous characters before processing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Input sanitization modifies input to remove or neutralize potentially malicious content. However, context-specific output encoding is generally preferred over sanitization because sanitization can be incomplete. Validate input strictly, then encode output appropriately for the context."
       },
       {

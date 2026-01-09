@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is recursion in programming?",
         "options": [
-          "A loop that runs forever",
           "A function that calls itself",
+          "A loop that runs forever",
           "A way to iterate over lists",
           "A type of error handling"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Recursion is when a function calls itself to solve a problem by breaking it into smaller subproblems."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is the \"base case\" in a recursive function?",
         "options": [
-          "The first call to the function",
-          "The condition that stops the recursion",
+          "The return value",
           "The recursive call itself",
-          "The return value"
+          "The condition that stops the recursion",
+          "The first call to the function"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The base case is the condition that stops recursion. Without it, the function would call itself forever."
       },
       {
@@ -52,11 +52,11 @@
         "prompt": "What error occurs when a recursive function calls itself too many times?",
         "options": [
           "MemoryError",
-          "RecursionError",
           "StackOverflowError",
+          "RecursionError",
           "LoopError"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Python raises RecursionError when the maximum recursion depth is exceeded (typically around 1000 calls)."
       }
     ]
@@ -88,12 +88,12 @@
         "type": "multiple_choice",
         "prompt": "In the Fibonacci sequence, what is F(6)?",
         "options": [
-          "5",
           "8",
+          "21",
           "13",
-          "21"
+          "5"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "F(0)=0, F(1)=1, F(2)=1, F(3)=2, F(4)=3, F(5)=5, F(6)=8. Each number is the sum of the two before it."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "What is \"memoization\" in the context of recursion?",
         "options": [
-          "Writing down the algorithm steps",
-          "Caching results to avoid redundant calculations",
+          "Limiting recursion depth",
           "Converting recursion to iteration",
-          "Limiting recursion depth"
+          "Caching results to avoid redundant calculations",
+          "Writing down the algorithm steps"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Memoization caches the results of function calls so that repeated calls with the same arguments return instantly."
       },
       {
@@ -161,12 +161,12 @@
         "type": "multiple_choice",
         "prompt": "Why is the naive recursive Fibonacci function inefficient for large n?",
         "options": [
+          "The base case is wrong",
           "It uses too much memory",
-          "It recalculates the same values many times",
           "Python cannot handle large numbers",
-          "The base case is wrong"
+          "It recalculates the same values many times"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Naive Fibonacci has exponential time complexity because it recalculates F(k) multiple times. Memoization solves this."
       }
     ]

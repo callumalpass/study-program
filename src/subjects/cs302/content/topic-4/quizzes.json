@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "What is the maximum hop count in RIP before a network is considered unreachable?",
         "options": [
-          "10",
-          "15",
           "16",
-          "255"
+          "255",
+          "15",
+          "10"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "RIP uses hop count as its metric with a maximum of 15 hops. A hop count of 16 indicates an unreachable destination."
       },
       {
@@ -111,12 +111,12 @@
         "type": "multiple_choice",
         "prompt": "Which technique prevents routing loops in distance vector protocols by not advertising a route back to the router it was learned from?",
         "options": [
-          "Route poisoning",
-          "Hold-down timers",
           "Split horizon",
-          "Triggered updates"
+          "Triggered updates",
+          "Route poisoning",
+          "Hold-down timers"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Split horizon prevents routing loops by not advertising a route out of the interface through which it was learned."
       }
     ]
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "What type of protocol is BGP classified as?",
         "options": [
-          "Distance vector",
-          "Link state",
           "Path vector",
+          "Link state",
+          "Distance vector",
           "Hybrid"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "BGP is a path vector protocol that maintains the complete AS path to each destination, preventing routing loops between autonomous systems."
       },
       {
@@ -160,12 +160,12 @@
         "type": "multiple_choice",
         "prompt": "What BGP attribute is used to influence outbound routing decisions?",
         "options": [
-          "Local Preference",
           "MED (Multi-Exit Discriminator)",
+          "Local Preference",
           "AS Path",
           "Origin"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Local Preference is used within an AS to prefer one exit point over another for outbound traffic. Higher values are preferred."
       },
       {

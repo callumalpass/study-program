@@ -24,11 +24,11 @@
         "prompt": "Which of the following is NOT a standard stage in the classic 5-stage MIPS pipeline?",
         "options": [
           "Instruction Fetch (IF)",
+          "Cache Lookup (CL)",
           "Decode (ID)",
-          "Memory Access (MEM)",
-          "Cache Lookup (CL)"
+          "Memory Access (MEM)"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "The five stages are IF, ID, EX, MEM, WB. Cache lookup happens within IF and MEM, not as a separate stage."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What determines the clock period in a pipelined processor?",
         "options": [
-          "Sum of all stage delays",
           "Delay of the slowest stage",
           "Delay of the fastest stage",
+          "Sum of all stage delays",
           "Average of all stage delays"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The clock period must be at least as long as the slowest pipeline stage, as all stages must complete in one cycle."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is stored in pipeline registers?",
         "options": [
-          "Only instruction opcodes",
           "Intermediate results and control signals",
-          "Memory addresses only",
-          "Branch outcomes"
+          "Only instruction opcodes",
+          "Branch outcomes",
+          "Memory addresses only"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Pipeline registers store all information needed by the next stage: data values, register numbers, and control signals."
       },
       {
@@ -63,11 +63,11 @@
         "prompt": "Pipelining improves processor performance primarily by increasing:",
         "options": [
           "Instruction latency",
-          "Instruction throughput",
           "Register count",
+          "Instruction throughput",
           "Memory bandwidth"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Pipelining increases throughput (instructions completed per unit time) while latency for individual instructions may increase."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What type of hazard occurs when an instruction needs a result not yet produced?",
         "options": [
-          "Structural hazard",
-          "Data hazard (RAW)",
+          "WAW hazard",
           "Control hazard",
-          "WAW hazard"
+          "Structural hazard",
+          "Data hazard (RAW)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "RAW (Read After Write) hazards occur when an instruction needs to read a value that a previous instruction has not yet written."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "A structural hazard can be caused by:",
         "options": [
-          "Two instructions needing the same functional unit simultaneously",
+          "Cache misses",
           "A branch instruction",
           "Data dependencies",
-          "Cache misses"
+          "Two instructions needing the same functional unit simultaneously"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Structural hazards occur when hardware resources are insufficient for the instructions that need them simultaneously."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "How many stall cycles are needed for \"lw $t0, 0($a0); add $t1, $t0, $t2\" without forwarding?",
         "options": [
-          "0",
+          "3",
           "1",
-          "2",
-          "3"
+          "0",
+          "2"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Without forwarding, the add must wait for lw to reach WB (2 cycles after lw's MEM stage when data is available)."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Control hazards are caused by:",
         "options": [
-          "Memory access conflicts",
-          "Register file port limitations",
           "Branch and jump instructions",
-          "Long ALU operations"
+          "Register file port limitations",
+          "Long ALU operations",
+          "Memory access conflicts"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Control hazards occur because the next instruction address isn't known until branch/jump instructions are resolved."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "Data forwarding (bypassing) gets values from:",
         "options": [
+          "The instruction cache",
           "The register file only",
-          "Pipeline registers before values reach the register file",
           "Main memory",
-          "The instruction cache"
+          "Pipeline registers before values reach the register file"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Forwarding paths route results from EX/MEM or MEM/WB pipeline registers directly to the ALU inputs."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "Why can't forwarding completely eliminate the load-use hazard?",
         "options": [
-          "Memory is too slow",
           "The loaded data isn't available until after MEM, too late for EX",
           "The register file is unavailable",
-          "Forwarding paths don't exist for loads"
+          "Forwarding paths don't exist for loads",
+          "Memory is too slow"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Load data is available after MEM, but the dependent instruction needs it in EX, one cycle earlier."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "In a 5-stage pipeline with branches resolved in ID, the branch penalty is:",
         "options": [
-          "0 cycles",
           "1 cycle",
           "2 cycles",
-          "4 cycles"
+          "4 cycles",
+          "0 cycles"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "If the branch is resolved in ID (stage 2), one instruction (in IF) may have been fetched wrongly, giving 1 cycle penalty."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "The branch target buffer (BTB) stores:",
         "options": [
-          "Branch prediction outcomes only",
           "Target addresses of recently taken branches",
-          "All instruction addresses",
-          "Register values"
+          "Branch prediction outcomes only",
+          "Register values",
+          "All instruction addresses"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The BTB caches target addresses of branches so the target is known immediately, reducing branch penalty."
       }
     ]

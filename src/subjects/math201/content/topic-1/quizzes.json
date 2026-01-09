@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the first step in Gaussian elimination?",
         "options": [
-          "Find the determinant",
           "Create the augmented matrix",
           "Find the inverse",
-          "Calculate eigenvalues"
+          "Calculate eigenvalues",
+          "Find the determinant"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Gaussian elimination begins by writing the system as an augmented matrix, which combines the coefficient matrix and the constant vector."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What does it mean for a system to be in row echelon form?",
         "options": [
-          "All zeros are at the bottom",
           "Leading entries move to the right in successive rows",
           "All entries below leading entries are zero",
-          "All of the above"
+          "All of the above",
+          "All zeros are at the bottom"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "Row echelon form requires: (1) all zero rows at the bottom, (2) the leading entry of each row is to the right of the leading entry above it, and (3) all entries below a leading entry are zero."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "A homogeneous system of linear equations always has at least:",
         "options": [
-          "One solution",
           "Two solutions",
+          "One solution",
           "No solution",
           "Infinitely many solutions"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A homogeneous system (where all constants are zero) always has at least the trivial solution (all variables equal zero)."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "Which operation is NOT an elementary row operation?",
         "options": [
-          "Swap two rows",
           "Multiply a row by a nonzero scalar",
           "Add a multiple of one row to another",
-          "Add two rows together and replace both"
+          "Add two rows together and replace both",
+          "Swap two rows"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "The three elementary row operations are: (1) swap rows, (2) multiply a row by a nonzero scalar, and (3) add a multiple of one row to another row. We never replace both rows."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "A system with more equations than unknowns is called:",
         "options": [
-          "Overdetermined",
           "Underdetermined",
-          "Square",
-          "Homogeneous"
+          "Overdetermined",
+          "Homogeneous",
+          "Square"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "An overdetermined system has more equations than unknowns. Such systems are often inconsistent unless there is redundancy."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "If a homogeneous system has more unknowns than equations, it must have:",
         "options": [
-          "Only the trivial solution",
           "No solution",
-          "Infinitely many solutions",
-          "Exactly one nontrivial solution"
+          "Only the trivial solution",
+          "Exactly one nontrivial solution",
+          "Infinitely many solutions"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "When a homogeneous system has more variables than equations, there are free variables, guaranteeing infinitely many solutions beyond the trivial solution."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "The solution set of a consistent nonhomogeneous system $Ax = b$ can be written as:",
         "options": [
-          "$x = p$ where $p$ is a particular solution",
           "$x = p + v_h$ where $p$ is particular and $v_h$ is from homogeneous",
           "Only as a unique solution",
-          "As the null space of $A$"
+          "As the null space of $A$",
+          "$x = p$ where $p$ is a particular solution"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The general solution is $x = p + v_h$ where $p$ is any particular solution to $Ax = b$ and $v_h$ is the general solution to the homogeneous system $Ax = 0$."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "The equation $Ax = 0$ has only the trivial solution if and only if:",
         "options": [
+          "$A$ is symmetric",
           "The columns of $A$ are linearly independent",
-          "The columns of $A$ are linearly dependent",
           "$A$ has more rows than columns",
-          "$A$ is symmetric"
+          "The columns of $A$ are linearly dependent"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The homogeneous equation $Ax = 0$ has only the trivial solution if and only if the columns of $A$ are linearly independent."
       },
       {

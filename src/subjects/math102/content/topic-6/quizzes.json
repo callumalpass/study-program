@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "The generating function for the sequence 1, 1, 1, 1, ... is:",
         "options": [
-          "1/(1+x)",
-          "1/(1-x)",
+          "1/(1-x)²",
           "x/(1-x)",
-          "1/(1-x)²"
+          "1/(1-x)",
+          "1/(1+x)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "1 + x + x² + x³ + ... = 1/(1-x) for |x| < 1."
       },
       {
@@ -44,12 +44,12 @@
         "type": "multiple_choice",
         "prompt": "S(4, 2), the Stirling number of the second kind, equals:",
         "options": [
-          "3",
           "6",
           "7",
+          "3",
           "11"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "S(4,2) = 7. Partitions of {1,2,3,4} into 2 non-empty subsets."
       }
     ]
@@ -120,12 +120,12 @@
         "type": "multiple_choice",
         "prompt": "The unsigned Stirling number |s(4, 2)| counts:",
         "options": [
-          "Partitions into 2 subsets",
           "Permutations with 2 cycles",
+          "Derangements",
           "Rising factorials",
-          "Derangements"
+          "Partitions into 2 subsets"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "First kind Stirling numbers count permutations by number of cycles."
       },
       {
@@ -147,12 +147,12 @@
         "type": "multiple_choice",
         "prompt": "The Bell number B(n) satisfies:",
         "options": [
-          "B(n) = Σ S(n,k)",
           "B(n) = n!",
           "B(n) = 2^n",
+          "B(n) = Σ S(n,k)",
           "B(n) = C(2n,n)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "B(n) = Σ(k=0 to n) S(n,k), the total number of partitions."
       },
       {

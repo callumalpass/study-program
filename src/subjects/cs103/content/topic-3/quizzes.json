@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "What does `super()` allow you to do?",
         "options": [
+          "Disable inheritance",
           "Call methods on a child class",
           "Call methods on the next class in the MRO (often the parent)",
-          "Skip method overriding",
-          "Disable inheritance"
+          "Skip method overriding"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "`super()` calls the next implementation in the MRO, enabling cooperative inheritance."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "What is MRO in Python?",
         "options": [
-          "Memory read-only",
-          "Method resolution order",
+          "Multi-return output",
           "Module runtime override",
-          "Multi-return output"
+          "Memory read-only",
+          "Method resolution order"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "MRO determines which method implementation is chosen in multiple inheritance."
       }
     ]
@@ -87,12 +87,12 @@
         "type": "multiple_choice",
         "prompt": "If you override `__init__` in a subclass, what is commonly necessary to preserve base initialization?",
         "options": [
-          "Call `Base.__new__()`",
           "Call `super().__init__()`",
           "Call `del self`",
-          "Nothing is needed"
+          "Nothing is needed",
+          "Call `Base.__new__()`"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Calling `super().__init__()` ensures the base class sets up its part of the object."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Which is a common warning sign that inheritance may be the wrong tool?",
         "options": [
-          "You need polymorphic behavior",
           "You are modeling a clear “is-a” relationship",
           "You are inheriting only to reuse a couple of methods",
+          "You need polymorphic behavior",
           "You need a shared interface across implementations"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Using inheritance mainly for code reuse can create tight coupling; composition is often better."
       },
       {

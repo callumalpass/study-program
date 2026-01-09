@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity solution to T(n) = 2T(n/2) + n using the Master Theorem?",
         "options": [
-          "O(n)",
           "O(n log n)",
+          "O(n)",
           "O(n²)",
           "O(log n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Case 2 of Master Theorem: a=2, b=2, f(n)=n, log_b(a)=1, so T(n) = Θ(n log n)."
       },
       {
@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "What is the closed form for T(n) = 2T(n-1) with T(0) = 1?",
         "options": [
-          "n",
-          "2n",
           "2^n",
-          "n²"
+          "n²",
+          "2n",
+          "n"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "T(n) = 2^n. Each step doubles: T(0)=1, T(1)=2, T(2)=4, etc."
       },
       {
@@ -65,12 +65,12 @@
         "type": "multiple_choice",
         "prompt": "What is the complexity of T(n) = T(n/2) + c using Master Theorem?",
         "options": [
+          "O(n log n)",
           "O(1)",
-          "O(log n)",
           "O(n)",
-          "O(n log n)"
+          "O(log n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Case 2 with f(n) = 1: a=1, b=2, log_b(a)=0, f(n)=Θ(1), so T(n)=Θ(log n)."
       },
       {
@@ -105,12 +105,12 @@
         "type": "multiple_choice",
         "prompt": "What is T(n) = 4T(n/2) + n² using Master Theorem?",
         "options": [
+          "O(n⁴)",
           "O(n²)",
           "O(n² log n)",
-          "O(n³)",
-          "O(n⁴)"
+          "O(n³)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "log_2(4)=2, f(n)=n²=Θ(n²), Case 2 applies: T(n) = Θ(n² log n)."
       }
     ]
@@ -126,12 +126,12 @@
         "type": "multiple_choice",
         "prompt": "The roots of x² - x - 1 = 0 (Fibonacci characteristic) are:",
         "options": [
-          "1 and -1",
           "(1±√5)/2",
           "1 and 2",
-          "(-1±√5)/2"
+          "(-1±√5)/2",
+          "1 and -1"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "x = (1±√5)/2. The positive root φ ≈ 1.618 is the golden ratio."
       },
       {
@@ -146,12 +146,12 @@
         "type": "multiple_choice",
         "prompt": "For T(n) = 7T(n/2) + n², what is the asymptotic complexity using the Master Theorem?",
         "options": [
-          "Θ(n²)",
-          "Θ(n² log n)",
           "Θ(n^log₂(7)) ≈ Θ(n^2.81)",
+          "Θ(n² log n)",
+          "Θ(n²)",
           "Θ(n³)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Here a=7, b=2, f(n)=n². Since log_2(7) ≈ 2.81 > 2, Case 1 of the Master Theorem applies: T(n) = Θ(n^log_b(a)) = Θ(n^log₂(7))."
       },
       {
@@ -167,11 +167,11 @@
         "prompt": "Which recurrence describes Strassen's matrix multiplication?",
         "options": [
           "T(n) = 8T(n/2) + n²",
-          "T(n) = 7T(n/2) + n²",
           "T(n) = 4T(n/2) + n",
-          "T(n) = 2T(n/2) + n²"
+          "T(n) = 2T(n/2) + n²",
+          "T(n) = 7T(n/2) + n²"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Strassen uses 7 recursive multiplications of n/2 × n/2 matrices, giving O(n^2.81)."
       }
     ]

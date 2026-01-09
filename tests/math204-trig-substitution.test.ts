@@ -12,6 +12,14 @@ import type { QuizQuestion } from '../src/core/types';
 // Load Math204 Topic 3 quizzes
 import math204Topic3Quizzes from '../src/subjects/math204/content/topic-3/quizzes.json';
 
+/** Helper to get the correct answer text for a multiple choice question */
+function getCorrectAnswerText(q: QuizQuestion): string {
+  if (typeof q.correctAnswer === 'number' && q.options) {
+    return q.options[q.correctAnswer];
+  }
+  return String(q.correctAnswer);
+}
+
 describe('Math204 Trigonometric Substitution Questions', () => {
   // Helper to find a question by ID
   function findQuestion(id: string): QuizQuestion | undefined {
@@ -25,20 +33,18 @@ describe('Math204 Trigonometric Substitution Questions', () => {
       const question = findQuestion('math204-q3b-1');
       expect(question).toBeDefined();
       expect(question?.type).toBe('multiple_choice');
-      expect(question?.correctAnswer).toBe(1); // $a \sin \theta$
 
-      // Verify the correct option text
-      expect(question?.options?.[1]).toContain('sin');
+      // Verify the correct answer contains sin
+      expect(getCorrectAnswerText(question!)).toContain('sin');
     });
 
     it('math204-q3b-3: √(x² + a²) uses x = a tan θ', () => {
       const question = findQuestion('math204-q3b-3');
       expect(question).toBeDefined();
       expect(question?.type).toBe('multiple_choice');
-      expect(question?.correctAnswer).toBe(1); // $a \tan \theta$
 
-      // Verify the correct option text
-      expect(question?.options?.[1]).toContain('tan');
+      // Verify the correct answer contains tan
+      expect(getCorrectAnswerText(question!)).toContain('tan');
     });
 
     it('math204-q3b-5: √(x² - a²) uses x = a sec θ (converted from fill_blank)', () => {
@@ -47,17 +53,16 @@ describe('Math204 Trigonometric Substitution Questions', () => {
 
       // This question was converted from fill_blank to multiple_choice
       expect(question?.type).toBe('multiple_choice');
-      expect(question?.correctAnswer).toBe(2); // $a \sec \theta$
+
+      // Verify the correct answer contains sec
+      expect(getCorrectAnswerText(question!)).toContain('sec');
 
       // Verify all options are present
       expect(question?.options).toHaveLength(4);
-      expect(question?.options?.[0]).toContain('sin');
-      expect(question?.options?.[1]).toContain('tan');
-      expect(question?.options?.[2]).toContain('sec');
-      expect(question?.options?.[3]).toContain('cos');
-
-      // Verify the correct option text
-      expect(question?.options?.[2]).toContain('sec');
+      expect(question?.options?.some(opt => opt.includes('sin'))).toBe(true);
+      expect(question?.options?.some(opt => opt.includes('tan'))).toBe(true);
+      expect(question?.options?.some(opt => opt.includes('sec'))).toBe(true);
+      expect(question?.options?.some(opt => opt.includes('cos'))).toBe(true);
     });
   });
 
@@ -67,23 +72,30 @@ describe('Math204 Trigonometric Substitution Questions', () => {
       expect(question).toBeDefined();
 
       if (question) {
-        // Correct answer (index 2)
-        expect(checkAnswer(question, 2)).toBe(true);
+        const correctIndex = question.correctAnswer as number;
+
+        // Correct answer should be validated properly
+        expect(checkAnswer(question, correctIndex)).toBe(true);
 
         // Wrong answers
-        expect(checkAnswer(question, 0)).toBe(false); // sin θ
-        expect(checkAnswer(question, 1)).toBe(false); // tan θ
-        expect(checkAnswer(question, 3)).toBe(false); // cos θ
+        [0, 1, 2, 3].forEach(idx => {
+          if (idx !== correctIndex) {
+            expect(checkAnswer(question, idx)).toBe(false);
+          }
+        });
       }
     });
 
-    it('getCorrectOptionIndex should return correct index for trig substitution question', () => {
+    it('getCorrectOptionIndex should return a valid index for trig substitution question', () => {
       const question = findQuestion('math204-q3b-5');
       expect(question).toBeDefined();
 
       if (question) {
         const correctIndex = getCorrectOptionIndex(question);
-        expect(correctIndex).toBe(2);
+        expect(correctIndex).toBeGreaterThanOrEqual(0);
+        expect(correctIndex).toBeLessThan(4);
+        // The correct option should contain "sec"
+        expect(question.options?.[correctIndex]).toContain('sec');
       }
     });
   });
@@ -92,15 +104,15 @@ describe('Math204 Trigonometric Substitution Questions', () => {
     it('all trig substitution rules map to correct identities', () => {
       // √(a² - x²) → x = a sin θ → √(a²(1 - sin²θ)) = a cos θ
       const q1 = findQuestion('math204-q3b-1');
-      expect(q1?.correctAnswer).toBe(1); // sin option
+      expect(getCorrectAnswerText(q1!)).toContain('sin');
 
       // √(x² + a²) → x = a tan θ → √(a²(tan²θ + 1)) = a sec θ
       const q3 = findQuestion('math204-q3b-3');
-      expect(q3?.correctAnswer).toBe(1); // tan option
+      expect(getCorrectAnswerText(q3!)).toContain('tan');
 
       // √(x² - a²) → x = a sec θ → √(a²(sec²θ - 1)) = a tan θ
       const q5 = findQuestion('math204-q3b-5');
-      expect(q5?.correctAnswer).toBe(2); // sec option (index 2)
+      expect(getCorrectAnswerText(q5!)).toContain('sec');
     });
 
     it('question explanations reference correct Pythagorean identities', () => {

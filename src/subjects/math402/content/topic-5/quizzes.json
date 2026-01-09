@@ -24,11 +24,11 @@
         "prompt": "The computational complexity of Gaussian elimination for an n×n system is:",
         "options": [
           "O(n)",
-          "O(n^2)",
           "O(n^3)",
+          "O(n^2)",
           "O(2^n)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Gaussian elimination requires approximately (2/3)n^3 floating-point operations for the forward elimination phase, making it O(n^3)."
       },
       {
@@ -66,12 +66,12 @@
         "type": "multiple_choice",
         "prompt": "Partial pivoting in Gaussian elimination involves:",
         "options": [
-          "Swapping rows to maximize the pivot element in the current column",
           "Swapping both rows and columns",
           "Dividing by the largest element in the matrix",
-          "Scaling each row by its maximum element"
+          "Scaling each row by its maximum element",
+          "Swapping rows to maximize the pivot element in the current column"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Partial pivoting selects the row with the largest absolute value in the current column as the pivot row, improving numerical stability by avoiding small pivots."
       },
       {
@@ -88,11 +88,11 @@
         "prompt": "Cholesky decomposition A = LL^T can be applied when A is:",
         "options": [
           "Any invertible matrix",
-          "Symmetric positive definite",
           "Upper triangular",
-          "Diagonal"
+          "Diagonal",
+          "Symmetric positive definite"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Cholesky requires A to be symmetric positive definite (SPD). It computes L such that A = LL^T, using only (1/3)n^3 operations—half the cost of standard LU."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "The growth factor in Gaussian elimination with partial pivoting measures:",
         "options": [
-          "The increase in the condition number",
           "How much the elements grow during elimination",
+          "The increase in the condition number",
           "The number of row swaps performed",
           "The error in the computed solution"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Growth factor ρ = max_{i,j,k}|a_{ij}^{(k)}| / max_{i,j}|a_{ij}| measures element growth. For partial pivoting, ρ ≤ 2^{n-1}, though this worst case is rarely observed in practice."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "The Singular Value Decomposition (SVD) A = UΣV^T provides:",
         "options": [
-          "A faster alternative to LU for solving linear systems",
           "Optimal low-rank approximations and condition number computation",
-          "A method only applicable to square matrices",
-          "Lower computational cost than QR factorization"
+          "Lower computational cost than QR factorization",
+          "A faster alternative to LU for solving linear systems",
+          "A method only applicable to square matrices"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "SVD reveals the rank, null space, condition number (κ = σ_max/σ_min), and optimal low-rank approximations of any matrix. It's computationally expensive but extremely informative."
       },
       {

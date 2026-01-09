@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "If the series ∑aₙ converges, then:",
         "options": [
-          "lim aₙ = 0",
-          "lim aₙ = 1",
           "lim aₙ does not exist",
-          "aₙ > 0 for all n"
+          "lim aₙ = 0",
+          "aₙ > 0 for all n",
+          "lim aₙ = 1"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "This is the Divergence Test (contrapositive): if ∑aₙ converges, then the terms must approach 0. However, lim aₙ = 0 does not guarantee convergence."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "The series ∑(n=1 to ∞) 1/n²:",
         "options": [
+          "Converges to 1",
           "Converges",
           "Diverges",
-          "Converges to 1",
           "Cannot be determined"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "This is the p-series with p = 2 > 1, which converges. It can be shown using the integral test or comparison test."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "The p-series ∑(n=1 to ∞) 1/nᵖ converges if and only if:",
         "options": [
-          "p > 1",
-          "p ≥ 1",
+          "p = 1",
           "p < 1",
-          "p = 1"
+          "p ≥ 1",
+          "p > 1"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The p-series converges if and only if p > 1. When p ≤ 1, the series diverges (including the harmonic series when p = 1)."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "For the ratio test, if lim |aₙ₊₁/aₙ| = L < 1, then ∑aₙ:",
         "options": [
-          "Converges absolutely",
-          "Diverges",
           "May converge or diverge",
-          "Converges conditionally"
+          "Diverges",
+          "Converges conditionally",
+          "Converges absolutely"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The Ratio Test states that if lim |aₙ₊₁/aₙ| = L < 1, then the series converges absolutely."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "The series ∑(n=1 to ∞) 1/n (harmonic series):",
         "options": [
+          "Converges to π",
           "Diverges",
           "Converges to 1",
-          "Converges to e",
-          "Converges to π"
+          "Converges to e"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The harmonic series diverges, which can be shown by the integral test, comparison test, or Cauchy condensation test."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "If ∑|aₙ| converges, then ∑aₙ:",
         "options": [
+          "May converge or diverge",
           "Converges",
           "Diverges",
-          "May converge or diverge",
           "Converges to 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "This is the Absolute Convergence Theorem: if a series converges absolutely (∑|aₙ| converges), then it converges (∑aₙ converges)."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "The alternating harmonic series ∑(n=1 to ∞) (-1)ⁿ⁺¹/n:",
         "options": [
-          "Converges conditionally",
+          "Converges to 0",
           "Converges absolutely",
-          "Diverges",
-          "Converges to 0"
+          "Converges conditionally",
+          "Diverges"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The alternating harmonic series converges (by the Alternating Series Test) but not absolutely (since the harmonic series diverges), so it converges conditionally."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "A series that converges but not absolutely is said to converge:",
         "options": [
-          "Conditionally",
           "Absolutely",
           "Uniformly",
+          "Conditionally",
           "Pointwise"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Conditional convergence means ∑aₙ converges but ∑|aₙ| diverges. The alternating harmonic series is a classic example."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "For the root test, if lim sup |aₙ|^(1/n) = L < 1, then ∑aₙ:",
         "options": [
+          "Converges conditionally",
           "Converges absolutely",
           "Diverges",
-          "May converge or diverge",
-          "Converges conditionally"
+          "May converge or diverge"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The Root Test (Cauchy's Test) states that if lim sup |aₙ|^(1/n) < 1, the series converges absolutely."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "The comparison test states that if 0 ≤ aₙ ≤ bₙ and ∑bₙ converges, then:",
         "options": [
+          "∑aₙ = ∑bₙ",
           "∑aₙ converges",
           "∑aₙ diverges",
-          "∑aₙ = ∑bₙ",
           "Cannot determine convergence of ∑aₙ"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The Comparison Test: if 0 ≤ aₙ ≤ bₙ for all n and ∑bₙ converges, then ∑aₙ converges (smaller series converges)."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "The limit comparison test compares ∑aₙ and ∑bₙ using:",
         "options": [
-          "lim (aₙ/bₙ)",
+          "lim (aₙbₙ)",
           "lim (aₙ - bₙ)",
           "lim (aₙ + bₙ)",
-          "lim (aₙbₙ)"
+          "lim (aₙ/bₙ)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The Limit Comparison Test: if aₙ, bₙ > 0 and lim(aₙ/bₙ) = L where 0 < L < ∞, then ∑aₙ and ∑bₙ both converge or both diverge."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "The integral test can be applied to ∑aₙ if:",
         "options": [
+          "lim aₙ = 0",
           "There exists f(x) continuous, positive, and decreasing with f(n) = aₙ",
           "aₙ > 0 for all n",
-          "aₙ is decreasing",
-          "lim aₙ = 0"
+          "aₙ is decreasing"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The Integral Test requires a continuous, positive, decreasing function f with f(n) = aₙ. Then ∑aₙ and ∫f(x)dx have the same convergence behavior."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "If lim |aₙ₊₁/aₙ| = 1, the ratio test:",
         "options": [
+          "Proves conditional convergence",
           "Is inconclusive",
           "Proves convergence",
-          "Proves divergence",
-          "Proves conditional convergence"
+          "Proves divergence"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "When the ratio test gives L = 1, the test is inconclusive - the series may converge or diverge. Other tests must be used."
       }
     ]

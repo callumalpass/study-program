@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is the order of the symmetric group S₅?",
         "options": [
-          "5",
-          "25",
           "60",
-          "120"
+          "120",
+          "5",
+          "25"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "The order of Sₙ is n!. For S₅, this is 5! = 5·4·3·2·1 = 120."
       },
       {
@@ -37,11 +37,11 @@
         "prompt": "The cycle (1 3 5 2) in S₅ sends 1 to:",
         "options": [
           "1",
-          "2",
           "3",
+          "2",
           "5"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "In cycle notation, (1 3 5 2) means 1→3, 3→5, 5→2, 2→1. So 1 is sent to 3."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is the order of the permutation (1 2 3)(4 5) in S₅?",
         "options": [
+          "6",
           "2",
-          "3",
           "5",
-          "6"
+          "3"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "The order of a product of disjoint cycles is the lcm of their lengths. Here lcm(3,2) = 6."
       },
       {
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "A permutation is even if:",
         "options": [
-          "It can be written as a product of an even number of transpositions",
-          "It has even order",
           "It moves an even number of elements",
+          "It has even order",
+          "It can be written as a product of an even number of transpositions",
           "It is in Sₙ where n is even"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A permutation is even if it can be expressed as a product of an even number of transpositions (2-cycles)."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is the parity of the permutation (1 2 3 4 5)?",
         "options": [
+          "Neither",
           "Even",
           "Odd",
-          "Neither",
           "Depends on the context"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "An n-cycle has parity (-1)^(n-1). The 5-cycle (1 2 3 4 5) has parity (-1)^4 = 1, so it's even. Alternatively, (1 2 3 4 5) = (1 2)(2 3)(3 4)(4 5), which is 4 transpositions, hence even."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "The alternating group Aₙ consists of:",
         "options": [
-          "All permutations in Sₙ",
-          "All even permutations in Sₙ",
           "All odd permutations in Sₙ",
-          "All cyclic permutations in Sₙ"
+          "All cyclic permutations in Sₙ",
+          "All permutations in Sₙ",
+          "All even permutations in Sₙ"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The alternating group Aₙ is the subgroup of Sₙ consisting of all even permutations."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "The product of two even permutations is:",
         "options": [
-          "Always even",
           "Always odd",
+          "Always even",
           "Sometimes even, sometimes odd",
           "The identity"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The product of two even permutations is even. This is why the set of even permutations forms a subgroup (Aₙ)."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "The dihedral group Dₙ represents:",
         "options": [
-          "Rotations of a regular n-gon",
           "Symmetries (rotations and reflections) of a regular n-gon",
           "Permutations of n elements",
-          "n×n diagonal matrices"
+          "n×n diagonal matrices",
+          "Rotations of a regular n-gon"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The dihedral group Dₙ consists of all symmetries of a regular n-gon, including n rotations and n reflections."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is the order of the dihedral group D₄ (symmetries of a square)?",
         "options": [
+          "16",
           "4",
           "6",
-          "8",
-          "16"
+          "8"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "D₄ has order 2n = 2(4) = 8. It consists of 4 rotations (including the identity) and 4 reflections."
       },
       {

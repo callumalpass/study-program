@@ -33,8 +33,8 @@ describe('Math304 Subgroup Test Questions', () => {
       expect(question?.prompt).toContain('ab⁻¹');
 
       // The One-Step Subgroup Test requires checking ab⁻¹ ∈ H for all a, b ∈ H
-      // Answer should be "One-Step Subgroup Test" which is index 0
-      expect(question?.correctAnswer).toBe(0);
+      // Answer should be "One-Step Subgroup Test"
+      expect(question?.options?.[question?.correctAnswer as number]?.toLowerCase()).toContain('one-step');
 
       // Verify the explanation mentions that this single condition implies both closure properties
       expect(question?.explanation?.toLowerCase()).toContain('one-step');
@@ -61,8 +61,8 @@ describe('Math304 Subgroup Test Questions', () => {
       expect(question?.prompt?.toLowerCase()).toContain('finite');
 
       // The Finite Subgroup Test: H non-empty and closed under operation
-      // Answer should be "H is non-empty and closed under the operation" which is index 1
-      expect(question?.correctAnswer).toBe(1);
+      // Answer should mention "closed" and "operation"
+      expect(question?.options?.[question?.correctAnswer as number]?.toLowerCase()).toMatch(/closed.*operation|non-empty.*closed/);
 
       // Verify the explanation mentions this is for finite groups
       expect(question?.explanation?.toLowerCase()).toContain('finite');
@@ -107,9 +107,9 @@ describe('Math304 Subgroup Test Questions', () => {
 
       if (oneStepQ && finiteQ) {
         // They should have different correct answers (different tests)
-        // One-Step answer at index 0, Finite test condition at index 1
-        expect(oneStepQ.correctAnswer).toBe(0);
-        expect(finiteQ.correctAnswer).toBe(1);
+        // One-Step should mention "one-step", Finite should mention "closed"
+        expect(oneStepQ.options?.[oneStepQ.correctAnswer as number]?.toLowerCase()).toContain('one-step');
+        expect(finiteQ.options?.[finiteQ.correctAnswer as number]?.toLowerCase()).toMatch(/closed|non-empty/);
 
         // One-Step question should mention ab⁻¹
         expect(oneStepQ.prompt).toContain('ab⁻¹');

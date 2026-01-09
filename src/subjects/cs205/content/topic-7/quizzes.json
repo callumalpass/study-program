@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "The query optimizer's main goal is to:",
         "options": [
-          "Guarantee correctness",
           "Choose the most efficient execution plan",
+          "Manage memory",
           "Parse SQL syntax",
-          "Manage memory"
+          "Guarantee correctness"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The optimizer evaluates different execution strategies and chooses the one with lowest estimated cost."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Which join algorithm requires sorted input?",
         "options": [
-          "Nested loop",
           "Hash join",
           "Merge join",
+          "Nested loop",
           "Cross join"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Merge join merges two sorted inputs and is efficient when data is already sorted or indexes exist."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "Which is generally better in an execution plan?",
         "options": [
-          "Table Scan on large table",
           "Index Seek on selective column",
-          "Sort with disk spillover",
-          "Nested Loop with large inner table"
+          "Table Scan on large table",
+          "Nested Loop with large inner table",
+          "Sort with disk spillover"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Index Seek efficiently finds specific rows without scanning the entire table."
       },
       {
@@ -117,12 +117,12 @@
         "type": "multiple_choice",
         "prompt": "\"Index Only Scan\" means:",
         "options": [
-          "Only indexes were created",
           "Query was satisfied entirely from the index",
           "Only primary key was used",
+          "Only indexes were created",
           "Index was exclusively locked"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Index-only scan retrieves all needed data from the index without accessing the table."
       }
     ]
@@ -151,12 +151,12 @@
         "type": "multiple_choice",
         "prompt": "Why should functions on indexed columns be avoided in WHERE clauses?",
         "options": [
-          "They are syntactically incorrect",
-          "They prevent index usage",
           "They cause NULL values",
-          "They are slower to compute"
+          "They are slower to compute",
+          "They prevent index usage",
+          "They are syntactically incorrect"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Functions on columns (e.g., UPPER(name)) prevent the optimizer from using indexes on those columns."
       },
       {
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "Converting a correlated subquery to a join is called:",
         "options": [
+          "Query expansion",
           "Query folding",
           "Subquery unnesting",
-          "Query expansion",
           "Join promotion"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Subquery unnesting (decorrelation) converts correlated subqueries to more efficient joins."
       },
       {

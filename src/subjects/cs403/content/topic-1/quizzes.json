@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which complexity class contains all decision problems solvable by a deterministic algorithm in polynomial time?",
         "options": [
-          "P",
+          "PSPACE",
           "NP",
-          "co-NP",
-          "PSPACE"
+          "P",
+          "co-NP"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "P is the class of decision problems solvable in polynomial time on a deterministic model. NP instead captures problems whose solutions can be verified in polynomial time."
       },
       {
@@ -92,12 +92,12 @@
         "type": "multiple_choice",
         "prompt": "Which is a valid polynomial-time verifier statement for a decision problem in NP?",
         "options": [
-          "Given an instance and a certificate, verify in polynomial time that the certificate proves a YES answer",
           "Given an instance, find a certificate in polynomial time",
-          "Given a certificate, decide the problem without the instance",
-          "Given an instance, verify all possible certificates in polynomial time"
+          "Given an instance, verify all possible certificates in polynomial time",
+          "Given an instance and a certificate, verify in polynomial time that the certificate proves a YES answer",
+          "Given a certificate, decide the problem without the instance"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "NP is defined by polynomial-time verification of a proposed certificate for YES instances. Finding certificates (search) is a different requirement."
       },
       {
@@ -140,12 +140,12 @@
         "type": "multiple_choice",
         "prompt": "If a language L is NP-complete, then its complement is:",
         "options": [
-          "Not known to be NP-complete unless NP = co-NP",
-          "Always NP-complete",
           "Always in P",
-          "Always outside NP"
+          "Not known to be NP-complete unless NP = co-NP",
+          "Always outside NP",
+          "Always NP-complete"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Whether complements of NP-complete languages are NP-complete is tied to whether NP equals co-NP, which is unknown. (co-NP contains complements of NP languages.)"
       },
       {
@@ -160,12 +160,12 @@
         "type": "multiple_choice",
         "prompt": "A polynomial-time Turing reduction (oracle reduction) is generally:",
         "options": [
+          "Equivalent to taking complements",
           "At least as powerful as a polynomial-time many-one reduction",
           "Strictly weaker than a many-one reduction",
-          "Only defined for optimization problems",
-          "Equivalent to taking complements"
+          "Only defined for optimization problems"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Many-one reductions make one call after transforming the instance; Turing reductions can make multiple adaptive oracle queries, making them at least as powerful."
       },
       {

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is a discrete random variable?",
         "options": [
-          "Height of students in a class",
           "Number of heads in 10 coin flips",
-          "Time until a light bulb fails",
-          "Temperature at noon"
+          "Height of students in a class",
+          "Temperature at noon",
+          "Time until a light bulb fails"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The number of heads is countable (0, 1, 2, ..., 10), making it discrete. The others are continuous."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "For a discrete random variable X, what must be true about its probability mass function (PMF)?",
         "options": [
-          "All probabilities must be equal",
-          "Sum of all probabilities equals 1",
+          "It must be symmetric",
           "All probabilities must be > 0.5",
-          "It must be symmetric"
+          "All probabilities must be equal",
+          "Sum of all probabilities equals 1"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The fundamental property of a PMF is that the sum of all probabilities must equal 1."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "If E[X] = 5 and Var(X) = 4, what is the standard deviation of X?",
         "options": [
-          "2",
-          "4",
           "9",
-          "16"
+          "4",
+          "16",
+          "2"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Standard deviation σ = √Var(X) = √4 = 2."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "For constants a and b, what is E[aX + b]?",
         "options": [
-          "aE[X]",
-          "aE[X] + b",
           "E[X] + b",
-          "a + bE[X]"
+          "aE[X]",
+          "a + bE[X]",
+          "aE[X] + b"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Expected value is linear: E[aX + b] = aE[X] + b."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "The moment generating function (MGF) M(t) is defined as:",
         "options": [
+          "E[t^X]",
           "E[X^t]",
           "E[e^(tX)]",
-          "E[t^X]",
           "E[X/t]"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The MGF is defined as M(t) = E[e^(tX)]."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "What is the first moment (n=1) of a random variable?",
         "options": [
-          "The variance",
           "The mean",
+          "The median",
           "The standard deviation",
-          "The median"
+          "The variance"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The first moment E[X] is the mean of the distribution."
       },
       {
@@ -166,11 +166,11 @@
         "prompt": "If X and Y are independent random variables, what is the MGF of X + Y?",
         "options": [
           "M_X(t) + M_Y(t)",
-          "M_X(t) × M_Y(t)",
           "M_X(t) - M_Y(t)",
+          "M_X(t) × M_Y(t)",
           "M_X(t) / M_Y(t)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "For independent variables, M_{X+Y}(t) = M_X(t) × M_Y(t)."
       },
       {

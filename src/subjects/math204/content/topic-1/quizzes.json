@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What is $\\int e^x \\, dx$?",
         "options": [
-          "$e^x + C$",
-          "$xe^x + C$",
           "$\\frac{e^{x+1}}{x+1} + C$",
-          "$e + C$"
+          "$e + C$",
+          "$xe^x + C$",
+          "$e^x + C$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The exponential function $e^x$ is its own antiderivative: $\\int e^x \\, dx = e^x + C$."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is $\\int \\frac{1}{x} \\, dx$?",
         "options": [
-          "$\\frac{1}{x^2} + C$",
-          "$\\ln|x| + C$",
           "$\\frac{x^2}{2} + C$",
-          "$-\\frac{1}{x^2} + C$"
+          "$-\\frac{1}{x^2} + C$",
+          "$\\frac{1}{x^2} + C$",
+          "$\\ln|x| + C$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The antiderivative of $\\frac{1}{x}$ is $\\ln|x| + C$. This is a fundamental integral formula."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "To evaluate $\\int 2x \\cos(x^2) \\, dx$, what substitution should you use?",
         "options": [
-          "$u = 2x$",
-          "$u = \\cos(x^2)$",
           "$u = x^2$",
-          "$u = 2x \\cos(x^2)$"
+          "$u = 2x \\cos(x^2)$",
+          "$u = 2x$",
+          "$u = \\cos(x^2)$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Let $u = x^2$, then $du = 2x \\, dx$, which matches the form of the integral."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "What is $\\int \\sin x \\, dx$?",
         "options": [
-          "$\\cos x + C$",
           "$-\\cos x + C$",
           "$\\sin^2 x + C$",
-          "$-\\sin x + C$"
+          "$-\\sin x + C$",
+          "$\\cos x + C$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The antiderivative of $\\sin x$ is $-\\cos x + C$. You can verify this by differentiating."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What is $\\int x e^{x^2} \\, dx$?",
         "options": [
-          "$e^{x^2} + C$",
-          "$\\frac{1}{2}e^{x^2} + C$",
           "$x^2 e^{x^2} + C$",
-          "$2x e^{x^2} + C$"
+          "$2x e^{x^2} + C$",
+          "$\\frac{1}{2}e^{x^2} + C$",
+          "$e^{x^2} + C$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Let $u = x^2$, $du = 2x \\, dx$, so $x \\, dx = \\frac{1}{2}du$. Then $\\int x e^{x^2} \\, dx = \\frac{1}{2}\\int e^u \\, du = \\frac{1}{2}e^u + C = \\frac{1}{2}e^{x^2} + C$."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "If $f'(x) = 6x - 2$ and $f(0) = 5$, what is $f(x)$?",
         "options": [
+          "$6x - 2$",
           "$3x^2 - 2x + 5$",
-          "$6x^2 - 2x + 5$",
           "$3x^2 - 2x$",
-          "$6x - 2$"
+          "$6x^2 - 2x + 5$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Integrate: $f(x) = \\int (6x - 2) \\, dx = 3x^2 - 2x + C$. Use initial condition: $f(0) = 5$ gives $C = 5$. So $f(x) = 3x^2 - 2x + 5$."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "What is $\\int \\sec^2 x \\, dx$?",
         "options": [
-          "$\\tan x + C$",
-          "$\\sec x + C$",
+          "$\\cot x + C$",
           "$\\sec x \\tan x + C$",
-          "$\\cot x + C$"
+          "$\\tan x + C$",
+          "$\\sec x + C$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The antiderivative of $\\sec^2 x$ is $\\tan x + C$. This follows from the derivative formula $\\frac{d}{dx}[\\tan x] = \\sec^2 x$."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "What is $\\int (x^2 + 3x - 1) \\, dx$?",
         "options": [
-          "$\\frac{x^3}{3} + \\frac{3x^2}{2} - x + C$",
-          "$x^3 + 3x^2 - x + C$",
           "$2x + 3 + C$",
-          "$\\frac{x^3}{3} + 3x - 1 + C$"
+          "$\\frac{x^3}{3} + \\frac{3x^2}{2} - x + C$",
+          "$\\frac{x^3}{3} + 3x - 1 + C$",
+          "$x^3 + 3x^2 - x + C$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Integrate term by term: $\\int x^2 \\, dx + \\int 3x \\, dx - \\int 1 \\, dx = \\frac{x^3}{3} + \\frac{3x^2}{2} - x + C$."
       },
       {
@@ -178,12 +178,12 @@
         "type": "multiple_choice",
         "prompt": "What is $\\int \\cos x \\, dx$?",
         "options": [
-          "$\\sin x + C$",
           "$-\\sin x + C$",
           "$\\cos x + C$",
-          "$-\\cos x + C$"
+          "$-\\cos x + C$",
+          "$\\sin x + C$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Since $\\frac{d}{dx}[\\sin x] = \\cos x$, we have $\\int \\cos x \\, dx = \\sin x + C$."
       }
     ]

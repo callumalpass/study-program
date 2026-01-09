@@ -11,11 +11,11 @@
         "prompt": "The null hypothesis (H₀) typically represents:",
         "options": [
           "The research hypothesis",
-          "No effect or status quo",
+          "The most interesting outcome",
           "The alternative we want to prove",
-          "The most interesting outcome"
+          "No effect or status quo"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "H₀ represents the null state, no effect, or status quo that we test against."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "A Type I error occurs when we:",
         "options": [
+          "Correctly fail to reject H₀",
           "Reject H₀ when it is true",
-          "Fail to reject H₀ when it is false",
           "Correctly reject H₀",
-          "Correctly fail to reject H₀"
+          "Fail to reject H₀ when it is false"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Type I error (false positive) is rejecting a true null hypothesis. Its probability is α."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "A Type II error occurs when we:",
         "options": [
-          "Reject H₀ when it is true",
-          "Fail to reject H₀ when it is false",
           "Correctly reject H₀",
-          "Correctly fail to reject H₀"
+          "Correctly fail to reject H₀",
+          "Fail to reject H₀ when it is false",
+          "Reject H₀ when it is true"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Type II error (false negative) is failing to reject a false null hypothesis. Its probability is β."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "A z-test is appropriate when:",
         "options": [
-          "Sample size is small and σ is unknown",
           "Sample size is large or σ is known",
-          "Testing proportions only",
-          "Data is categorical"
+          "Sample size is small and σ is unknown",
+          "Data is categorical",
+          "Testing proportions only"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Z-tests are used when the population standard deviation σ is known, or when n is large enough for CLT."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "When should you use a t-test instead of a z-test?",
         "options": [
-          "When n > 30",
-          "When σ is known",
+          "When testing proportions",
           "When n is small and σ is unknown",
-          "When testing proportions"
+          "When n > 30",
+          "When σ is known"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Use a t-test when the population standard deviation is unknown and sample size is small."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "For a two-sample t-test, we assume:",
         "options": [
-          "The populations are identical",
           "Both populations are approximately normal",
           "The samples have equal size",
-          "The means are equal"
+          "The means are equal",
+          "The populations are identical"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Two-sample t-tests assume both populations are approximately normally distributed (or large samples)."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "A chi-square test of independence is used to:",
         "options": [
-          "Compare means",
-          "Test relationships between categorical variables",
           "Test normality",
-          "Calculate correlation"
+          "Calculate correlation",
+          "Compare means",
+          "Test relationships between categorical variables"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Chi-square tests of independence examine whether two categorical variables are related."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "In ANOVA, if the null hypothesis is true, all population means are:",
         "options": [
+          "Positive",
           "Different",
-          "Equal",
           "Zero",
-          "Positive"
+          "Equal"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "H₀ in ANOVA states that all population means are equal: μ₁ = μ₂ = ... = μₖ."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "The F-statistic in ANOVA compares:",
         "options": [
-          "Between-group variance to within-group variance",
-          "Sample means to population means",
           "Two proportions",
+          "Sample means to population means",
+          "Between-group variance to within-group variance",
           "Categorical frequencies"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "F = (between-group variance)/(within-group variance). Large F suggests group means differ."
       },
       {

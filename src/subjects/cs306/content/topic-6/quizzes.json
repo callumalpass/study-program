@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What are texture coordinates typically called?",
         "options": [
-          "UV coordinates",
-          "XY coordinates",
           "ST coordinates",
-          "RGB coordinates"
+          "RGB coordinates",
+          "XY coordinates",
+          "UV coordinates"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Texture coordinates are commonly called UV coordinates (u, v), representing 2D positions in texture space, typically normalized to [0,1] range, distinct from spatial XYZ coordinates."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is texture filtering used for?",
         "options": [
-          "Determine color when texture coordinates fall between pixels",
           "Compress texture data",
-          "Apply lighting to textures",
-          "Generate texture coordinates"
+          "Determine color when texture coordinates fall between pixels",
+          "Generate texture coordinates",
+          "Apply lighting to textures"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Texture filtering (magnification and minification) determines how to sample textures when UVs don't align with texel centers, using methods like nearest neighbor, bilinear, or trilinear filtering."
       },
       {
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "What is trilinear filtering?",
         "options": [
-          "Bilinear filtering on two mipmap levels then blending between them",
-          "Filtering in three color channels",
           "Sampling three texels",
-          "Three-dimensional texture lookup"
+          "Three-dimensional texture lookup",
+          "Filtering in three color channels",
+          "Bilinear filtering on two mipmap levels then blending between them"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Trilinear filtering performs bilinear filtering on the two nearest mipmap levels, then linearly interpolates between those results based on distance, eliminating visible mipmap transitions."
       },
       {
@@ -97,12 +97,12 @@
         "type": "multiple_choice",
         "prompt": "What is a normal map?",
         "options": [
+          "Texture for transparency",
           "Texture storing surface normal directions as RGB values",
           "Texture storing height information",
-          "Texture for color mapping",
-          "Texture for transparency"
+          "Texture for color mapping"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Normal maps encode surface normal vectors as RGB colors (R=X, G=Y, B=Z), allowing per-pixel lighting detail on low-polygon meshes by perturbing surface normals during shading."
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "What does the clamp wrapping mode do?",
         "options": [
-          "Clamps UV coordinates to [0,1] range",
+          "Uses a specified border color",
           "Repeats the texture",
           "Mirrors the texture",
-          "Uses a specified border color"
+          "Clamps UV coordinates to [0,1] range"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Clamp mode restricts UV coordinates to [0,1], extending edge pixels infinitely beyond the texture boundary. UVs outside this range sample the nearest edge texel."
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "What is displacement mapping?",
         "options": [
-          "Modifying vertex positions based on a texture",
           "Changing surface colors",
+          "Filtering texture samples",
           "Adjusting texture coordinates",
-          "Filtering texture samples"
+          "Modifying vertex positions based on a texture"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Displacement mapping actually moves vertex positions based on a heightmap texture, creating real geometric detail. Unlike normal mapping, it changes the silhouette and can produce self-shadowing."
       }
     ]
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "What is a cube map used for?",
         "options": [
-          "Environment mapping and reflections",
           "Terrain height mapping",
+          "UI elements",
           "Character skin textures",
-          "UI elements"
+          "Environment mapping and reflections"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Cube maps consist of six square textures forming a cube around a point, used for environment mapping, reflections, and skyboxes. They're sampled using 3D direction vectors."
       },
       {
@@ -164,12 +164,12 @@
         "type": "multiple_choice",
         "prompt": "What is texture atlas used for?",
         "options": [
-          "Combining multiple textures into a single large texture",
-          "Generating mipmaps",
           "Filtering textures",
-          "Compressing texture data"
+          "Generating mipmaps",
+          "Compressing texture data",
+          "Combining multiple textures into a single large texture"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "A texture atlas packs multiple smaller textures into one large texture, reducing draw calls and texture binding overhead. Each sub-texture is accessed via specific UV coordinate ranges."
       },
       {
@@ -177,12 +177,12 @@
         "type": "multiple_choice",
         "prompt": "What does a specular map define?",
         "options": [
-          "Per-pixel shininess or reflectivity",
-          "Surface height variation",
           "Texture coordinates",
-          "Light positions"
+          "Light positions",
+          "Surface height variation",
+          "Per-pixel shininess or reflectivity"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Specular maps control the intensity and potentially color of specular highlights on a per-pixel basis, allowing different parts of a surface to have varying shininess (e.g., worn vs. polished metal)."
       },
       {
@@ -190,12 +190,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary advantage of texture compression?",
         "options": [
-          "Reduced memory usage and bandwidth",
-          "Better visual quality",
           "Faster texture creation",
-          "Simplified UV mapping"
+          "Simplified UV mapping",
+          "Better visual quality",
+          "Reduced memory usage and bandwidth"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Texture compression (like DXT/BC, ASTC) significantly reduces memory footprint and bandwidth usage, crucial for GPU performance. Modern formats can decompress on-the-fly with minimal quality loss."
       }
     ]

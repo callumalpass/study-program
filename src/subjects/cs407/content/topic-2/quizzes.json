@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What does MCAR stand for in missing data analysis?",
         "options": [
-          "Missing Completely At Random",
-          "Missing Conditionally At Random",
           "Missing Continuously At Random",
-          "Missing Categorically At Random"
+          "Missing Conditionally At Random",
+          "Missing Categorically At Random",
+          "Missing Completely At Random"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "MCAR means missingness is independent of both observed and unobserved data."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which imputation method uses nearby observations to estimate missing values?",
         "options": [
+          "Mode imputation",
           "Mean imputation",
           "KNN imputation",
-          "Forward fill",
-          "Mode imputation"
+          "Forward fill"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "K-Nearest Neighbors imputation uses values from similar observations."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the IQR method used for?",
         "options": [
+          "Data validation",
           "Missing data imputation",
-          "Outlier detection",
           "Feature scaling",
-          "Data validation"
+          "Outlier detection"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The Interquartile Range (IQR) method identifies outliers based on quartile statistics."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "Which method is best for detecting outliers in multivariate data?",
         "options": [
-          "Z-score",
           "IQR method",
-          "Mahalanobis distance",
-          "Visual inspection"
+          "Visual inspection",
+          "Z-score",
+          "Mahalanobis distance"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Mahalanobis distance measures how far a point is from the center of a multivariate distribution."
       },
       {
@@ -110,11 +110,11 @@
         "prompt": "What is winsorization?",
         "options": [
           "Removing all outliers",
+          "Transforming data to remove outliers",
           "Replacing outliers with mean values",
-          "Capping extreme values at specified percentiles",
-          "Transforming data to remove outliers"
+          "Capping extreme values at specified percentiles"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Winsorization caps extreme values at specified percentiles instead of removing them."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Which imputation method preserves the original distribution best?",
         "options": [
-          "Mean imputation",
-          "Median imputation",
           "Multiple imputation",
-          "Zero imputation"
+          "Zero imputation",
+          "Median imputation",
+          "Mean imputation"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Multiple imputation creates several plausible values, preserving uncertainty and distribution characteristics."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of Min-Max scaling?",
         "options": [
-          "Remove outliers",
-          "Scale features to a specific range (usually 0-1)",
           "Center data around zero",
-          "Reduce skewness"
+          "Reduce skewness",
+          "Remove outliers",
+          "Scale features to a specific range (usually 0-1)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Min-Max scaling transforms features to a specified range, typically [0, 1]."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "When should you use robust scaling instead of standard scaling?",
         "options": [
-          "When data is normally distributed",
           "When data contains many outliers",
+          "When data is normally distributed",
           "When features are categorical",
           "When data is already normalized"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Robust scaling uses median and IQR, making it resistant to outliers unlike standard scaling."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is the Box-Cox transformation used for?",
         "options": [
-          "Detecting outliers",
-          "Making data more normally distributed",
+          "Splitting datasets",
           "Encoding categorical variables",
-          "Splitting datasets"
+          "Detecting outliers",
+          "Making data more normally distributed"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Box-Cox transformation stabilizes variance and makes data more normally distributed."
       },
       {
@@ -196,11 +196,11 @@
         "prompt": "Which technique is used to check if data follows a normal distribution?",
         "options": [
           "T-test",
-          "Chi-square test",
           "Shapiro-Wilk test",
+          "Chi-square test",
           "F-test"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The Shapiro-Wilk test is specifically designed to test for normality in a dataset."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What is data deduplication?",
         "options": [
-          "Removing duplicate records",
-          "Creating backup copies",
           "Splitting data into training and test sets",
-          "Merging multiple datasets"
+          "Removing duplicate records",
+          "Merging multiple datasets",
+          "Creating backup copies"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Data deduplication identifies and removes duplicate records to ensure data quality."
       }
     ]

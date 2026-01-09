@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is sharding in distributed databases?",
         "options": [
-          "Partitioning data across multiple nodes",
-          "Encrypting data",
           "Compressing data",
-          "Caching data"
+          "Encrypting data",
+          "Caching data",
+          "Partitioning data across multiple nodes"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Sharding (horizontal partitioning) splits data across multiple nodes based on a shard key, distributing load and enabling horizontal scaling beyond single-node capacity."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is consistent hashing used for?",
         "options": [
-          "Distributing data with minimal rebalancing when nodes change",
-          "Encrypting data",
+          "Sorting data",
           "Validating data integrity",
-          "Sorting data"
+          "Encrypting data",
+          "Distributing data with minimal rebalancing when nodes change"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Consistent hashing maps both data and nodes to a hash ring, minimizing data movement when nodes are added or removed, making it ideal for dynamic distributed systems."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What problem does the MapReduce programming model solve?",
         "options": [
+          "Single-machine computation",
           "Processing large datasets in parallel across many nodes",
-          "Real-time data processing",
           "Small dataset analysis",
-          "Single-machine computation"
+          "Real-time data processing"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "MapReduce provides a simple programming model for processing massive datasets in parallel across clusters, handling distribution, fault tolerance, and load balancing automatically."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What does the Map function in MapReduce do?",
         "options": [
-          "Transforms input records into key-value pairs",
+          "Deletes data",
           "Merges results",
-          "Sorts data",
-          "Deletes data"
+          "Transforms input records into key-value pairs",
+          "Sorts data"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The Map function processes input records and emits intermediate key-value pairs, which are then grouped by key and passed to Reduce functions for aggregation."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What does the Reduce function in MapReduce do?",
         "options": [
-          "Aggregates values for each key",
           "Filters input data",
-          "Distributes data",
-          "Validates data"
+          "Aggregates values for each key",
+          "Validates data",
+          "Distributes data"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The Reduce function receives all values for a particular key and aggregates them (e.g., sum, count, average) to produce the final output for that key."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between batch and stream processing?",
         "options": [
+          "They are the same",
           "Batch processes bounded datasets; Stream processes unbounded data",
           "Batch is faster",
-          "Stream uses less memory",
-          "They are the same"
+          "Stream uses less memory"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Batch processing handles finite datasets with delayed results, while stream processing handles infinite data streams with near real-time results, each optimized for different use cases."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is a distributed file system?",
         "options": [
-          "File system spanning multiple machines",
+          "Database",
           "Cloud storage",
           "Local file system",
-          "Database"
+          "File system spanning multiple machines"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Distributed file systems (like HDFS, GFS) store files across multiple machines, providing fault tolerance through replication and enabling massive storage capacity and parallel access."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is the role of the NameNode in HDFS?",
         "options": [
-          "Manages metadata and namespace",
           "Stores actual data",
+          "Manages metadata and namespace",
           "Processes MapReduce jobs",
           "Encrypts data"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The NameNode is the master server that manages the file system namespace and metadata (which blocks belong to which files, where blocks are stored), while DataNodes store actual data."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What is a key-value store?",
         "options": [
+          "Cache only",
           "NoSQL database storing data as key-value pairs",
           "Relational database",
-          "File system",
-          "Cache only"
+          "File system"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Key-value stores are NoSQL databases that store data as simple key-value pairs, providing fast access, easy partitioning, and horizontal scaling at the cost of limited query capabilities."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is Amazon DynamoDB's consistency model?",
         "options": [
-          "Eventual consistency by default, optional strong consistency",
-          "Always strongly consistent",
           "No consistency guarantees",
-          "Causal consistency only"
+          "Causal consistency only",
+          "Eventual consistency by default, optional strong consistency",
+          "Always strongly consistent"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "DynamoDB uses eventual consistency by default for better performance and availability, but allows applications to request strongly consistent reads when needed, trading performance for consistency."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is a document store (like MongoDB)?",
         "options": [
-          "NoSQL database storing semi-structured documents",
           "File storage system",
+          "Cache",
           "Relational database",
-          "Cache"
+          "NoSQL database storing semi-structured documents"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Document stores manage semi-structured documents (JSON, BSON, XML), allowing flexible schemas, nested data, and richer queries than key-value stores while maintaining horizontal scalability."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of a distributed cache?",
         "options": [
-          "Reduce latency by caching frequently accessed data",
           "Permanent storage",
-          "Data processing",
-          "Authentication"
+          "Reduce latency by caching frequently accessed data",
+          "Authentication",
+          "Data processing"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Distributed caches (like Redis, Memcached) store frequently accessed data in memory across multiple nodes, providing extremely low latency access and reducing load on backend databases."
       }
     ]

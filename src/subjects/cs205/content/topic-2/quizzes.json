@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which SQL command is used to create a new table?",
         "options": [
+          "CREATE TABLE",
           "INSERT TABLE",
           "MAKE TABLE",
-          "CREATE TABLE",
           "NEW TABLE"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "CREATE TABLE is the DDL command for defining a new table structure."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Which command removes a table and all its data permanently?",
         "options": [
-          "DELETE TABLE",
           "REMOVE TABLE",
-          "DROP TABLE",
-          "CLEAR TABLE"
+          "DELETE TABLE",
+          "CLEAR TABLE",
+          "DROP TABLE"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "DROP TABLE removes the table structure and all data permanently."
       },
       {
@@ -112,11 +112,11 @@
         "prompt": "Which operator is used to match patterns in strings?",
         "options": [
           "MATCH",
-          "LIKE",
           "PATTERN",
+          "LIKE",
           "SIMILAR"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "LIKE operator with wildcards (% and _) is used for pattern matching."
       },
       {
@@ -139,12 +139,12 @@
         "type": "multiple_choice",
         "prompt": "Which aggregate function counts non-NULL values in a column?",
         "options": [
-          "COUNT(*)",
-          "COUNT(column)",
           "SUM(column)",
-          "TOTAL(column)"
+          "COUNT(*)",
+          "TOTAL(column)",
+          "COUNT(column)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "COUNT(column) counts non-NULL values, while COUNT(*) counts all rows."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "Which clause filters groups after aggregation?",
         "options": [
-          "WHERE",
-          "HAVING",
           "FILTER",
-          "GROUP FILTER"
+          "GROUP FILTER",
+          "WHERE",
+          "HAVING"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "HAVING filters groups after GROUP BY, while WHERE filters rows before grouping."
       },
       {
@@ -173,12 +173,12 @@
         "prompt": "What does this query return?",
         "codeSnippet": "SELECT Department, COUNT(*), AVG(Salary)\nFROM Employees\nGROUP BY Department\nHAVING COUNT(*) > 5;",
         "options": [
+          "All employees grouped by salary",
           "All departments with employee count and average salary",
-          "Departments with more than 5 employees",
           "Departments with average salary over 5",
-          "All employees grouped by salary"
+          "Departments with more than 5 employees"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "HAVING COUNT(*) > 5 filters to only departments with more than 5 employees."
       },
       {
@@ -186,12 +186,12 @@
         "type": "multiple_choice",
         "prompt": "What is the result of AVG() on an empty group?",
         "options": [
-          "0",
-          "NULL",
+          "Error",
           "1",
-          "Error"
+          "NULL",
+          "0"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Most aggregate functions return NULL for empty groups or when all values are NULL."
       }
     ]

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main benefit of Continuous Integration (CI)?",
         "options": [
-          "Automatic deployment to production",
-          "Early detection of integration issues",
           "Eliminates need for testing",
-          "Reduces code complexity"
+          "Reduces code complexity",
+          "Early detection of integration issues",
+          "Automatic deployment to production"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "CI automatically builds and tests code on every commit, catching integration issues early before they compound."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which platform is recommended for deploying Next.js applications?",
         "options": [
-          "AWS EC2",
-          "Vercel",
           "Kubernetes",
-          "Traditional web hosting"
+          "AWS EC2",
+          "Traditional web hosting",
+          "Vercel"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Vercel is built specifically for Next.js (by the same team), offering automatic deployments, serverless functions, and excellent developer experience."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main purpose of application monitoring tools like Sentry?",
         "options": [
+          "To automatically fix bugs",
           "To prevent errors from occurring",
           "To detect and track errors in production",
-          "To automatically fix bugs",
           "To improve application performance"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Monitoring tools track errors and exceptions in production, providing stack traces and context to help debug issues."
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between Continuous Integration and Continuous Deployment?",
         "options": [
-          "They are the same thing",
-          "CI automates testing; CD automates deployment to production",
+          "CI is older technology",
           "CD is for databases only",
-          "CI is older technology"
+          "CI automates testing; CD automates deployment to production",
+          "They are the same thing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "CI automatically builds and tests code on every commit. CD extends this by automatically deploying passing builds to production."
       },
       {
@@ -91,11 +91,11 @@
         "prompt": "What is Docker and why is it useful?",
         "options": [
           "A programming language",
-          "A containerization platform that packages apps with dependencies",
+          "A testing framework",
           "A database system",
-          "A testing framework"
+          "A containerization platform that packages apps with dependencies"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Docker containers package applications with all dependencies, ensuring consistent behavior across development, testing, and production environments."
       },
       {
@@ -103,12 +103,12 @@
         "type": "multiple_choice",
         "prompt": "What is a Dockerfile?",
         "options": [
-          "A Docker configuration file",
           "A text file with instructions to build a Docker image",
+          "A deployment script",
           "A database schema",
-          "A deployment script"
+          "A Docker configuration file"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A Dockerfile contains instructions (FROM, RUN, COPY, CMD) to build a Docker image, defining the environment and how to run the application."
       },
       {
@@ -116,12 +116,12 @@
         "type": "multiple_choice",
         "prompt": "What should a CI/CD pipeline include at minimum?",
         "options": [
-          "Only deployment steps",
           "Build, test, and deploy stages with failure notifications",
           "Just compilation",
+          "Only deployment steps",
           "Only manual approval steps"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A good CI/CD pipeline includes automated build, test (unit/integration), and deployment stages with notifications when steps fail."
       },
       {
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "What metrics should you monitor in production?",
         "options": [
-          "Only error rates",
-          "Error rates, response times, resource usage, and user activity",
           "Just server uptime",
-          "No monitoring is needed"
+          "Only error rates",
+          "No monitoring is needed",
+          "Error rates, response times, resource usage, and user activity"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Monitor error rates, API response times, CPU/memory usage, database performance, and user activity to catch issues early."
       },
       {
@@ -170,12 +170,12 @@
         "type": "multiple_choice",
         "prompt": "What is a rollback strategy and why is it important?",
         "options": [
+          "A database migration tool",
           "A backup plan",
           "A way to quickly revert to previous version when deployment fails",
-          "A testing technique",
-          "A database migration tool"
+          "A testing technique"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A rollback strategy allows you to quickly revert to the previous working version if a deployment introduces critical bugs, minimizing downtime."
       },
       {
@@ -183,12 +183,12 @@
         "type": "multiple_choice",
         "prompt": "What is health check endpoint and why is it important?",
         "options": [
-          "An API to check user health data",
-          "An endpoint that verifies the application is running correctly",
           "A security feature",
-          "A testing utility"
+          "An API to check user health data",
+          "A testing utility",
+          "An endpoint that verifies the application is running correctly"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Health check endpoints (like /health) verify application and dependencies are working, allowing load balancers and monitoring to detect failures."
       },
       {
@@ -196,12 +196,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between logs and metrics?",
         "options": [
-          "They are the same thing",
-          "Logs are event records; metrics are numerical measurements over time",
+          "Logs are only for errors",
           "Metrics are only for databases",
-          "Logs are only for errors"
+          "Logs are event records; metrics are numerical measurements over time",
+          "They are the same thing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Logs are detailed event records (timestamped messages). Metrics are numerical measurements over time (CPU usage, request count, response time)."
       }
     ]

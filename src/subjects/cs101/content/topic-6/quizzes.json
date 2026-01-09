@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What keyword is used to handle exceptions in Python?",
         "options": [
-          "catch",
           "except",
-          "handle",
-          "error"
+          "catch",
+          "error",
+          "handle"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Python uses \"except\" to catch exceptions. The syntax is try/except, not try/catch like in some other languages."
       },
       {
@@ -24,11 +24,11 @@
         "prompt": "What exception is raised when you try to divide by zero?",
         "options": [
           "ValueError",
+          "MathError",
           "TypeError",
-          "ZeroDivisionError",
-          "MathError"
+          "ZeroDivisionError"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "ZeroDivisionError is raised when attempting to divide a number by zero."
       },
       {
@@ -51,12 +51,12 @@
         "type": "multiple_choice",
         "prompt": "What exception is raised when accessing a dictionary key that does not exist?",
         "options": [
-          "IndexError",
           "KeyError",
-          "ValueError",
-          "AttributeError"
+          "AttributeError",
+          "IndexError",
+          "ValueError"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "KeyError is raised when a dictionary key is not found. IndexError is for lists, not dictionaries."
       }
     ]
@@ -80,12 +80,12 @@
         "type": "multiple_choice",
         "prompt": "When does the \"else\" clause in a try/except/else block execute?",
         "options": [
-          "Always",
-          "Only when an exception occurs",
           "Only when no exception occurs",
+          "Only when an exception occurs",
+          "Always",
           "Never - else is not valid with try"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The else clause runs only if the try block completes without raising any exceptions."
       },
       {
@@ -108,12 +108,12 @@
         "type": "multiple_choice",
         "prompt": "How do you catch multiple exception types in a single except clause?",
         "options": [
+          "except ValueError or TypeError:",
           "except ValueError, TypeError:",
           "except (ValueError, TypeError):",
-          "except ValueError or TypeError:",
           "except ValueError and TypeError:"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Use a tuple of exception types: except (ValueError, TypeError). The parentheses are required."
       }
     ]
@@ -137,12 +137,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of \"raise\" without an argument inside an except block?",
         "options": [
+          "It is a syntax error",
           "It raises a new exception",
           "It re-raises the current exception",
-          "It clears the current exception",
-          "It is a syntax error"
+          "It clears the current exception"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Using \"raise\" alone inside an except block re-raises the exception that was just caught, preserving the original traceback."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "What does \"raise ValueError from original_error\" do?",
         "options": [
-          "Replaces the original error",
           "Chains the exceptions, preserving context",
+          "Replaces the original error",
           "Raises both exceptions simultaneously",
           "Ignores the original error"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The \"from\" clause chains exceptions. The new exception's __cause__ attribute references the original, preserving the error context."
       }
     ]

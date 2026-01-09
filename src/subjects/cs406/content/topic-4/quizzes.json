@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main purpose of the AC-3 algorithm in CSP?",
         "options": [
-          "To find the optimal solution quickly",
           "To enforce arc consistency by removing inconsistent values from domains",
-          "To select which variable to assign next",
-          "To backtrack when a dead end is reached"
+          "To backtrack when a dead end is reached",
+          "To find the optimal solution quickly",
+          "To select which variable to assign next"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "AC-3 (Arc Consistency Algorithm 3) enforces arc consistency by iteratively removing values from variable domains that have no supporting values in constrained neighbor variables. This preprocessing step can significantly reduce the search space before or during backtracking search."
       },
       {
@@ -67,11 +67,11 @@
         "prompt": "What does forward checking do after assigning a value to a variable?",
         "options": [
           "Checks if the goal state has been reached",
-          "Removes inconsistent values from domains of unassigned neighboring variables",
+          "Selects the next variable to assign using MRV",
           "Verifies that all constraints in the problem are satisfied",
-          "Selects the next variable to assign using MRV"
+          "Removes inconsistent values from domains of unassigned neighboring variables"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Forward checking is a constraint propagation technique that, after each assignment, immediately removes values from the domains of unassigned variables that are neighbors of the assigned variable if those values would violate constraints. This early detection of failures reduces unnecessary search."
       },
       {
@@ -94,12 +94,12 @@
         "type": "multiple_choice",
         "prompt": "In the min-conflicts algorithm, how is the next variable selected?",
         "options": [
+          "The variable with the fewest legal values",
           "The variable with the most remaining values",
           "A randomly chosen conflicted variable",
-          "The variable with the fewest legal values",
           "The first unassigned variable in order"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Min-conflicts randomly selects a variable that is currently in conflict (violating at least one constraint). It then changes that variable's value to the one that minimizes the number of conflicts. This random selection helps avoid getting stuck and provides good practical performance."
       },
       {
@@ -157,12 +157,12 @@
         "type": "multiple_choice",
         "prompt": "What is the time complexity of the AC-3 algorithm in the worst case?",
         "options": [
+          "O(d^n) where d is domain size and n is variables",
           "O(n²d) where n is variables and d is domain size",
           "O(ed³) where e is arcs and d is domain size",
-          "O(n!) where n is the number of variables",
-          "O(d^n) where d is domain size and n is variables"
+          "O(n!) where n is the number of variables"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "AC-3 has worst-case time complexity O(ed³) where e is the number of arcs (constraints) and d is the maximum domain size. Each arc can be added to the queue at most d times, and checking consistency for each value takes O(d²) time in the worst case. This is polynomial in the problem size, making AC-3 practical for preprocessing."
       }
     ]

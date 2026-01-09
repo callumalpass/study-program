@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Why do neural networks need non-linear activation functions?",
         "options": [
-          "Without them, multiple layers collapse to a single linear transformation",
           "To speed up training",
-          "To prevent overfitting",
-          "To handle missing data"
+          "To handle missing data",
+          "Without them, multiple layers collapse to a single linear transformation",
+          "To prevent overfitting"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Composing linear transformations yields another linear transformation: f(Wx + b) = Wx + b without non-linearity. Activation functions enable learning complex non-linear functions."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the most commonly used activation function in modern deep learning?",
         "options": [
-          "ReLU (Rectified Linear Unit)",
-          "Sigmoid",
           "Tanh",
-          "Step function"
+          "Step function",
+          "Sigmoid",
+          "ReLU (Rectified Linear Unit)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "ReLU(x) = max(0,x) is popular because it's computationally efficient, doesn't saturate for positive values, and enables sparse activations. It largely replaced sigmoid/tanh in hidden layers."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What algorithm is used to train neural networks?",
         "options": [
-          "Backpropagation with gradient descent",
-          "Decision tree induction",
           "K-means clustering",
-          "Genetic algorithms"
+          "Backpropagation with gradient descent",
+          "Genetic algorithms",
+          "Decision tree induction"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Backpropagation efficiently computes gradients by applying the chain rule backward through the network. These gradients are used with gradient descent (or variants) to update weights."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What problem can occur with sigmoid/tanh activations in deep networks?",
         "options": [
-          "Vanishing gradients",
-          "Exploding gradients",
           "Too fast convergence",
-          "Memory overflow"
+          "Memory overflow",
+          "Exploding gradients",
+          "Vanishing gradients"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Sigmoid and tanh have small derivatives (<0.25) near their saturation regions. When multiplied across many layers during backprop, gradients exponentially decay, preventing learning in early layers."
       }
     ]
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is dropout?",
         "options": [
-          "Randomly deactivating neurons during training to prevent co-adaptation",
-          "Removing layers from the network",
+          "Removing features from input",
           "Stopping training early",
-          "Removing features from input"
+          "Randomly deactivating neurons during training to prevent co-adaptation",
+          "Removing layers from the network"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Dropout randomly sets neuron outputs to 0 with probability p during training, forcing the network to learn redundant representations. At test time, all neurons are active but scaled by (1-p)."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "When should you use batch normalization?",
         "options": [
-          "To stabilize training by normalizing layer inputs and enable higher learning rates",
-          "To reduce model size",
           "To speed up inference",
-          "To handle imbalanced classes"
+          "To stabilize training by normalizing layer inputs and enable higher learning rates",
+          "To handle imbalanced classes",
+          "To reduce model size"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Batch normalization normalizes layer inputs to have mean 0 and variance 1 per mini-batch, reducing internal covariate shift. This stabilizes training and allows higher learning rates."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "How many hidden units should you use?",
         "options": [
-          "Start with a reasonable size and tune via validation performance",
-          "Always use 100 hidden units",
+          "Use as many as possible",
           "Use exactly as many as input features",
-          "Use as many as possible"
+          "Always use 100 hidden units",
+          "Start with a reasonable size and tune via validation performance"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "There's no universal rule. Start with a moderate size (e.g., similar to input dimension), then increase if underfitting or decrease/regularize if overfitting, guided by validation error."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is the universal approximation theorem?",
         "options": [
-          "A neural network with one hidden layer can approximate any continuous function",
+          "Backpropagation always finds the global minimum",
           "Neural networks can learn any function",
-          "Deep networks are always better than shallow ones",
-          "Backpropagation always finds the global minimum"
+          "A neural network with one hidden layer can approximate any continuous function",
+          "Deep networks are always better than shallow ones"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The UAT states a 2-layer network with enough hidden units can approximate any continuous function on a compact domain arbitrarily well. However, depth can make learning much more efficient."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is the backpropagation chain rule for a neuron?",
         "options": [
-          "∂L/∂wᵢⱼ = ∂L/∂zⱼ · ∂zⱼ/∂wᵢⱼ = δⱼ · aᵢ",
           "∂L/∂wᵢⱼ = zⱼ - yⱼ",
           "∂L/∂wᵢⱼ = Σwᵢⱼ²",
+          "∂L/∂wᵢⱼ = ∂L/∂zⱼ · ∂zⱼ/∂wᵢⱼ = δⱼ · aᵢ",
           "∂L/∂wᵢⱼ = log(aⱼ)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Backprop applies chain rule: gradient w.r.t. weight wᵢⱼ is the error term δⱼ = ∂L/∂zⱼ times the input activation aᵢ. Error terms propagate backward via δⱼ = (Σwⱼₖδₖ)·f'(zⱼ)."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the gradient of ReLU?",
         "options": [
-          "∂ReLU(z)/∂z = 1 if z>0, else 0 (undefined at 0)",
+          "∂ReLU(z)/∂z = 1-tanh²(z)",
           "∂ReLU(z)/∂z = z",
-          "∂ReLU(z)/∂z = 1/(1+e^(-z))",
-          "∂ReLU(z)/∂z = 1-tanh²(z)"
+          "∂ReLU(z)/∂z = 1 if z>0, else 0 (undefined at 0)",
+          "∂ReLU(z)/∂z = 1/(1+e^(-z))"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "ReLU gradient is simple: 1 for positive inputs (allows gradient flow) and 0 for negative (blocks gradient). This simplicity and lack of saturation for positive values helps deep networks train."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What is the dying ReLU problem?",
         "options": [
-          "Neurons can get stuck outputting 0 for all inputs due to large negative bias",
           "ReLU causes overfitting",
-          "ReLU is too slow to compute",
-          "ReLU requires too much memory"
+          "Neurons can get stuck outputting 0 for all inputs due to large negative bias",
+          "ReLU requires too much memory",
+          "ReLU is too slow to compute"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A neuron with large negative weighted sum will output 0, receive gradient 0, and never recover. This \"dies\" the neuron. Leaky ReLU (small negative slope) prevents this by allowing small gradient for negative inputs."
       }
     ]

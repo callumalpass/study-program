@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "In \"MOV AX, 5\", \"MOV\" is the:",
         "options": [
-          "Operand",
           "Opcode",
+          "Operand",
           "Label",
           "Comment"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Opcode (Operation Code)."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which instruction adds values?",
         "options": [
-          "MOV",
           "JMP",
           "ADD",
-          "CMP"
+          "CMP",
+          "MOV"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "ADD is for addition."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "JMP represents a:",
         "options": [
-          "Conditional Jump",
-          "Unconditional Jump",
           "Function Call",
-          "Stop"
+          "Conditional Jump",
+          "Stop",
+          "Unconditional Jump"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Jump always."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "CMP A, B followed by JE Label means:",
         "options": [
-          "Jump if A > B",
-          "Jump if A < B",
           "Jump if A = B",
-          "Jump always"
+          "Jump if A < B",
+          "Jump always",
+          "Jump if A > B"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Jump if Equal."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "Stack operates on LIFO principle. LIFO means:",
         "options": [
-          "Last In First Out",
           "Low Interest First Option",
           "Last Int First Op",
+          "Last In First Out",
           "Linear Input"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Last In First Out."
       },
       {
@@ -117,12 +117,12 @@
         "type": "multiple_choice",
         "prompt": "If AX=5, \"SUB AX, 5\" sets the Zero Flag to:",
         "options": [
+          "No change",
           "0",
           "1",
-          "Undefined",
-          "No change"
+          "Undefined"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Result is 0, so Zero Flag becomes 1 (True)."
       }
     ]
@@ -139,11 +139,11 @@
         "prompt": "CALL instruction typically does what extra step compared to JMP?",
         "options": [
           "Clears registers",
-          "Pushes return address to stack",
           "Halts CPU",
+          "Pushes return address to stack",
           "None"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "So RET can return to the correct location."
       },
       {
@@ -151,12 +151,12 @@
         "type": "multiple_choice",
         "prompt": "The Stack Pointer (SP) usually grows:",
         "options": [
-          "Upwards (higher addresses)",
           "Downwards (lower addresses)",
-          "Randomly",
-          "It doesn't move"
+          "It doesn't move",
+          "Upwards (higher addresses)",
+          "Randomly"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "In most architectures (like x86), stack grows down."
       },
       {
@@ -172,11 +172,11 @@
         "prompt": "Which flag is set if a signed arithmetic result is too large?",
         "options": [
           "Carry Flag",
+          "Parity Flag",
           "Zero Flag",
-          "Overflow Flag",
-          "Parity Flag"
+          "Overflow Flag"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Overflow flag (OF)."
       },
       {

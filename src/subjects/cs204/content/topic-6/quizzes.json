@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between centralized and distributed version control?",
         "options": [
+          "Centralized is faster",
           "They are the same",
           "Centralized has one central repository; distributed gives each developer a complete repository",
-          "Centralized is faster",
           "Distributed does not support branching"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Centralized VCS has one central repository (e.g., SVN), while distributed VCS (e.g., Git) gives each developer a complete local repository with full history."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is a commit in version control?",
         "options": [
-          "Deleting code",
           "A snapshot of changes saved to the repository",
           "Running tests",
-          "Deploying code"
+          "Deploying code",
+          "Deleting code"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A commit is a snapshot of changes saved to the repository with a message describing what changed and why."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is a branch in version control?",
         "options": [
-          "A copy of the codebase for independent development",
           "A deleted file",
+          "A copy of the codebase for independent development",
           "A test case",
           "A deployment target"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A branch is an independent line of development, allowing you to work on features or fixes without affecting the main codebase."
       },
       {
@@ -63,11 +63,11 @@
         "prompt": "What does merging in version control do?",
         "options": [
           "Deletes branches",
-          "Combines changes from different branches",
           "Commits changes",
+          "Combines changes from different branches",
           "Reverts changes"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Merging integrates changes from one branch into another, combining the work from different lines of development."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "In Git, what is the purpose of \"git clone\"?",
         "options": [
-          "To delete a repository",
           "To create a local copy of a remote repository",
+          "To commit changes",
           "To merge branches",
-          "To commit changes"
+          "To delete a repository"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "\"git clone\" creates a local copy of a remote repository, including all files, branches, and commit history."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is a pull request (or merge request)?",
         "options": [
-          "Downloading code",
           "A request to merge changes from one branch into another for review",
+          "Downloading code",
           "Deleting a branch",
           "Creating a new repository"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A pull request is a request to merge changes from one branch into another, enabling code review and discussion before integration."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What is Git Flow?",
         "options": [
-          "A Git command",
           "A branching strategy with specific branch types (main, develop, feature, release, hotfix)",
+          "A deployment tool",
           "A testing framework",
-          "A deployment tool"
+          "A Git command"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Git Flow is a branching strategy that defines specific branch types and rules for how they interact, suitable for release-based workflows."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is trunk-based development?",
         "options": [
-          "Using many long-lived branches",
-          "Developers integrate small changes frequently into a single main branch",
           "Never using branches",
-          "Only using Git"
+          "Only using Git",
+          "Using many long-lived branches",
+          "Developers integrate small changes frequently into a single main branch"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Trunk-based development has developers integrate small changes frequently into a single main branch (trunk), with short-lived feature branches if any."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What is a merge conflict?",
         "options": [
+          "A failed test",
           "An error in the code",
           "When Git cannot automatically merge changes because of overlapping edits",
-          "A deleted file",
-          "A failed test"
+          "A deleted file"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A merge conflict occurs when Git cannot automatically merge changes because the same lines were modified differently in the branches being merged."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is Continuous Integration (CI)?",
         "options": [
-          "Deploying to production continuously",
           "Automatically building and testing code on every commit",
-          "Manual testing only",
-          "Writing documentation"
+          "Writing documentation",
+          "Deploying to production continuously",
+          "Manual testing only"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Continuous Integration automatically builds and tests code whenever changes are committed, providing rapid feedback on integration issues."
       },
       {
@@ -170,11 +170,11 @@
         "prompt": "What is Continuous Deployment (CD)?",
         "options": [
           "Manual deployment only",
+          "Writing code",
           "Automatically deploying every change that passes tests to production",
-          "Testing code",
-          "Writing code"
+          "Testing code"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Continuous Deployment automatically deploys every change that passes the automated tests to production, with no manual intervention."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is a CI/CD pipeline?",
         "options": [
-          "A water pipe",
           "An automated sequence of stages (build, test, deploy) triggered by code changes",
+          "A water pipe",
           "A manual process",
           "A database"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A CI/CD pipeline is an automated sequence of stages (like build, test, and deploy) that code changes pass through, ensuring quality and enabling rapid delivery."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What is a key benefit of CI/CD?",
         "options": [
-          "Eliminates need for testing",
-          "Faster feedback, reduced integration issues, and more frequent releases",
+          "No need for version control",
           "Makes code perfect",
-          "No need for version control"
+          "Faster feedback, reduced integration issues, and more frequent releases",
+          "Eliminates need for testing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "CI/CD provides faster feedback on changes, reduces integration issues by integrating frequently, and enables more frequent and reliable releases."
       }
     ]

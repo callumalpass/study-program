@@ -11,11 +11,11 @@
         "prompt": "The forward difference approximation f'(x) ≈ (f(x+h) - f(x))/h has truncation error of order:",
         "options": [
           "O(h^2)",
-          "O(h)",
           "O(1)",
-          "O(h^3)"
+          "O(h^3)",
+          "O(h)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "By Taylor expansion: f(x+h) = f(x) + hf'(x) + (h^2/2)f''(x) + ..., so the forward difference has error O(h)."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which formula provides a better approximation for f'(x)?",
         "options": [
+          "Centered difference: (f(x+h) - f(x-h))/(2h)",
           "Forward difference: (f(x+h) - f(x))/h",
           "Backward difference: (f(x) - f(x-h))/h",
-          "Centered difference: (f(x+h) - f(x-h))/(2h)",
           "All are equally accurate"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Centered difference is O(h^2) accurate (even terms in Taylor series cancel), while forward and backward differences are only O(h)."
       },
       {
@@ -66,12 +66,12 @@
         "type": "multiple_choice",
         "prompt": "The composite trapezoidal rule with n subintervals has error of order:",
         "options": [
-          "O(h)",
           "O(h^2)",
-          "O(h^3)",
-          "O(h^4)"
+          "O(h)",
+          "O(h^4)",
+          "O(h^3)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The composite trapezoidal rule has global error O(h^2), where h = (b-a)/n. Each panel has local error O(h^3), but summing n = O(1/h) panels gives O(h^2)."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Gaussian quadrature with n points integrates exactly polynomials of degree up to:",
         "options": [
+          "2n-1",
           "n-1",
           "n",
-          "2n-1",
           "2n"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Gaussian quadrature optimally chooses both nodes and weights, achieving exactness for polynomials of degree up to 2n-1 using n points (compared to 2n-1 for Newton-Cotes with n points)."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "The optimal step size h for centered difference approximation balancing truncation O(h^2) and roundoff O(ε/h) is approximately:",
         "options": [
-          "ε",
-          "√ε",
           "ε^{1/3}",
-          "ε^{2/3}"
+          "ε^{2/3}",
+          "ε",
+          "√ε"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Total error is Ch^2 + Dε/h. Minimizing: 2Ch - Dε/h^2 = 0 gives h ∝ (ε/C)^{1/3} = O(ε^{1/3}). For ε ≈ 10^{-16}, optimal h ≈ 10^{-5}."
       },
       {

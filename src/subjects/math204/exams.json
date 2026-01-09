@@ -44,11 +44,11 @@
         "prompt": "Evaluate $\\int \\frac{2x}{x^2 + 1} \\, dx$ using u-substitution.",
         "options": [
           "$2\\ln|x^2 + 1| + C$",
-          "$\\ln|x^2 + 1| + C$",
           "$\\ln(x^2 + 1) + C$",
+          "$\\ln|x^2 + 1| + C$",
           "$\\arctan(x) + C$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Let $u = x^2 + 1$, $du = 2x \\, dx$. Then $\\int \\frac{2x}{x^2+1} \\, dx = \\int \\frac{1}{u} \\, du = \\ln|u| + C = \\ln(x^2+1) + C$ (absolute value not needed since $x^2+1 > 0$)."
       },
       {
@@ -63,12 +63,12 @@
         "type": "multiple_choice",
         "prompt": "Find the function $f(x)$ if $f'(x) = 3x^2 - 4x$ and $f(1) = 2$.",
         "options": [
-          "$x^3 - 2x^2 + 3$",
+          "$3x^2 - 4x + 2$",
           "$x^3 - 2x^2 + 2$",
           "$x^3 - 2x^2 + 1$",
-          "$3x^2 - 4x + 2$"
+          "$x^3 - 2x^2 + 3$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "$f(x) = \\int (3x^2 - 4x) \\, dx = x^3 - 2x^2 + C$. Using $f(1) = 2$: $1 - 2 + C = 2$, so $C = 3$. Thus $f(x) = x^3 - 2x^2 + 3$."
       },
       {
@@ -85,11 +85,11 @@
         "prompt": "Evaluate: $\\int_0^\\pi \\sin x \\, dx$",
         "options": [
           "$0$",
-          "$1$",
           "$2$",
+          "$1$",
           "$\\pi$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "$\\int_0^\\pi \\sin x \\, dx = [-\\cos x]_0^\\pi = -\\cos(\\pi) - (-\\cos 0) = 1 + 1 = 2$."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "The average value of $f(x) = x^2$ on $[1, 3]$ is:",
         "options": [
-          "$\\frac{13}{3}$",
           "$\\frac{26}{3}$",
           "$4$",
+          "$\\frac{13}{3}$",
           "$\\frac{8}{3}$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Average = $\\frac{1}{3-1}\\int_1^3 x^2 \\, dx = \\frac{1}{2}\\left[\\frac{x^3}{3}\\right]_1^3 = \\frac{1}{2} \\cdot \\frac{26}{3} = \\frac{13}{3}$."
       },
       {
@@ -125,11 +125,11 @@
         "prompt": "Evaluate $\\int_0^2 x(x^2+1)^2 \\, dx$ using substitution.",
         "options": [
           "$\\frac{124}{6}$",
-          "$\\frac{31}{3}$",
           "$\\frac{62}{3}$",
+          "$\\frac{31}{3}$",
           "$20$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Let $u = x^2+1$, $du = 2x \\, dx$. When $x=0$, $u=1$; when $x=2$, $u=5$. $\\int_0^2 x(x^2+1)^2 \\, dx = \\frac{1}{2}\\int_1^5 u^2 \\, du = \\frac{1}{2}\\left[\\frac{u^3}{3}\\right]_1^5 = \\frac{1}{6}(125-1) = \\frac{124}{6} = \\frac{62}{3}$."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "Using integration by parts, $\\int x e^x \\, dx$ equals:",
         "options": [
-          "$xe^x - e^x + C$",
           "$xe^x + e^x + C$",
           "$\\frac{x^2}{2}e^x + C$",
+          "$xe^x - e^x + C$",
           "$e^x(x+1) + C$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Let $u = x$, $dv = e^x \\, dx$. Then $du = dx$, $v = e^x$. $\\int x e^x \\, dx = xe^x - \\int e^x \\, dx = xe^x - e^x + C$."
       },
       {
@@ -158,12 +158,12 @@
         "type": "multiple_choice",
         "prompt": "For the integral $\\int \\sqrt{9-x^2} \\, dx$, what is the appropriate trigonometric substitution?",
         "options": [
-          "$x = 3\\sin\\theta$",
-          "$x = 3\\tan\\theta$",
           "$x = 3\\sec\\theta$",
-          "$x = \\sin(3\\theta)$"
+          "$x = 3\\tan\\theta$",
+          "$x = \\sin(3\\theta)$",
+          "$x = 3\\sin\\theta$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For $\\sqrt{a^2 - x^2}$, use $x = a\\sin\\theta$. Here $a = 3$, so $x = 3\\sin\\theta$. This substitution converts the radical to $\\sqrt{9 - 9\\sin^2\\theta} = 3\\cos\\theta$."
       },
       {
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "The partial fraction decomposition of $\\frac{1}{(x-1)(x+2)}$ is:",
         "options": [
-          "$\\frac{A}{x-1} + \\frac{B}{x+2}$",
           "$\\frac{Ax+B}{(x-1)(x+2)}$",
           "$\\frac{A}{(x-1)^2} + \\frac{B}{(x+2)^2}$",
-          "$A(x-1) + B(x+2)$"
+          "$A(x-1) + B(x+2)$",
+          "$\\frac{A}{x-1} + \\frac{B}{x+2}$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For distinct linear factors, use $\\frac{A}{x-1} + \\frac{B}{x+2}$."
       },
       {
@@ -191,12 +191,12 @@
         "type": "multiple_choice",
         "prompt": "Evaluate $\\int \\ln x \\, dx$ using integration by parts.",
         "options": [
+          "$x\\ln x + C$",
           "$x\\ln x + x + C$",
-          "$x\\ln x - x + C$",
           "$\\frac{1}{x} + C$",
-          "$x\\ln x + C$"
+          "$x\\ln x - x + C$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Let $u = \\ln x$, $dv = dx$. Then $du = \\frac{1}{x}dx$, $v = x$. $\\int \\ln x \\, dx = x\\ln x - \\int x \\cdot \\frac{1}{x} \\, dx = x\\ln x - x + C$."
       },
       {
@@ -204,12 +204,12 @@
         "type": "multiple_choice",
         "prompt": "Which substitution is appropriate for $\\int \\sqrt{x^2 + 16} \\, dx$?",
         "options": [
+          "No trig substitution needed",
           "$x = 4\\sin\\theta$",
-          "$x = 4\\tan\\theta$",
           "$x = 4\\sec\\theta$",
-          "No trig substitution needed"
+          "$x = 4\\tan\\theta$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "For $\\sqrt{x^2 + a^2}$, use $x = a\\tan\\theta$. Here $a = 4$."
       },
       {
@@ -225,12 +225,12 @@
         "type": "multiple_choice",
         "prompt": "The area between $y = x^2$ and $y = x$ from $x = 0$ to $x = 1$ is:",
         "options": [
+          "$\\frac{2}{3}$",
           "$\\frac{1}{6}$",
           "$\\frac{1}{3}$",
-          "$\\frac{1}{2}$",
-          "$\\frac{2}{3}$"
+          "$\\frac{1}{2}$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Area = $\\int_0^1 (x - x^2) \\, dx = \\left[\\frac{x^2}{2} - \\frac{x^3}{3}\\right]_0^1 = \\frac{1}{2} - \\frac{1}{3} = \\frac{1}{6}$."
       },
       {
@@ -238,12 +238,12 @@
         "type": "multiple_choice",
         "prompt": "The volume of a solid of revolution obtained by rotating $y = f(x)$ about the x-axis from $a$ to $b$ using the disk method is:",
         "options": [
-          "$\\int_a^b \\pi [f(x)]^2 \\, dx$",
-          "$\\int_a^b 2\\pi x f(x) \\, dx$",
           "$\\int_a^b \\pi f(x) \\, dx$",
+          "$\\int_a^b 2\\pi x f(x) \\, dx$",
+          "$\\int_a^b \\pi [f(x)]^2 \\, dx$",
           "$\\int_a^b [f(x)]^2 \\, dx$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Disk method: $V = \\int_a^b \\pi [f(x)]^2 \\, dx$. The cross-sectional area of each disk is $\\pi r^2 = \\pi[f(x)]^2$."
       },
       {
@@ -251,12 +251,12 @@
         "type": "multiple_choice",
         "prompt": "Find the volume when the region bounded by $y = x$, $y = 0$, and $x = 2$ is rotated about the x-axis.",
         "options": [
-          "$\\frac{8\\pi}{3}$",
           "$\\frac{4\\pi}{3}$",
+          "$4\\pi$",
           "$2\\pi$",
-          "$4\\pi$"
+          "$\\frac{8\\pi}{3}$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "$V = \\int_0^2 \\pi x^2 \\, dx = \\pi\\left[\\frac{x^3}{3}\\right]_0^2 = \\frac{8\\pi}{3}$."
       },
       {
@@ -271,12 +271,12 @@
         "type": "multiple_choice",
         "prompt": "The arc length of $y = x^{3/2}$ from $x = 0$ to $x = 4$ requires evaluating:",
         "options": [
-          "$\\int_0^4 \\sqrt{1 + \\frac{9x}{4}} \\, dx$",
+          "$\\int_0^4 x^{3/2} \\, dx$",
           "$\\int_0^4 \\sqrt{1 + \\frac{3\\sqrt{x}}{2}} \\, dx$",
-          "$\\int_0^4 \\sqrt{1 + x^3} \\, dx$",
-          "$\\int_0^4 x^{3/2} \\, dx$"
+          "$\\int_0^4 \\sqrt{1 + \\frac{9x}{4}} \\, dx$",
+          "$\\int_0^4 \\sqrt{1 + x^3} \\, dx$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "$y' = \\frac{3}{2}x^{1/2}$, so $L = \\int_0^4 \\sqrt{1 + (\\frac{3}{2}x^{1/2})^2} \\, dx = \\int_0^4 \\sqrt{1 + \\frac{9x}{4}} \\, dx$."
       },
       {
@@ -284,12 +284,12 @@
         "type": "multiple_choice",
         "prompt": "The work done to stretch a spring from its natural length to 0.2 m beyond, with spring constant $k = 50$ N/m, is:",
         "options": [
-          "$1$ J",
-          "$2$ J",
+          "$10$ J",
           "$5$ J",
-          "$10$ J"
+          "$1$ J",
+          "$2$ J"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "$W = \\int_0^{0.2} 50x \\, dx = 50\\left[\\frac{x^2}{2}\\right]_0^{0.2} = 25(0.04) = 1$ J."
       },
       {
@@ -333,12 +333,12 @@
         "type": "multiple_choice",
         "prompt": "$\\int \\frac{1}{x^2+9} \\, dx = $",
         "options": [
-          "$\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right) + C$",
           "$\\arctan(x) + C$",
+          "$\\ln|x^2+9| + C$",
           "$\\frac{1}{9}\\arctan(x) + C$",
-          "$\\ln|x^2+9| + C$"
+          "$\\frac{1}{3}\\arctan\\left(\\frac{x}{3}\\right) + C$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Use the formula $\\int \\frac{1}{x^2+a^2} \\, dx = \\frac{1}{a}\\arctan\\left(\\frac{x}{a}\\right) + C$ with $a = 3$."
       },
       {
@@ -347,11 +347,11 @@
         "prompt": "Which substitution would you use for $\\int x^2 \\sqrt{x^3 + 1} \\, dx$?",
         "options": [
           "$u = x^3$",
-          "$u = x^3 + 1$",
           "$u = \\sqrt{x^3+1}$",
-          "$u = x^2$"
+          "$u = x^2$",
+          "$u = x^3 + 1$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Let $u = x^3 + 1$, then $du = 3x^2 \\, dx$, which matches the form of the integral."
       },
       {
@@ -366,12 +366,12 @@
         "type": "multiple_choice",
         "prompt": "Evaluate $\\int \\sec x \\tan x \\, dx$.",
         "options": [
-          "$\\sec x + C$",
-          "$\\tan x + C$",
           "$\\ln|\\sec x| + C$",
-          "$\\sec^2 x + C$"
+          "$\\sec x + C$",
+          "$\\sec^2 x + C$",
+          "$\\tan x + C$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The derivative of $\\sec x$ is $\\sec x \\tan x$, so $\\int \\sec x \\tan x \\, dx = \\sec x + C$."
       },
       {
@@ -379,12 +379,12 @@
         "type": "multiple_choice",
         "prompt": "Evaluate: $\\int_1^e \\frac{1}{x} \\, dx$",
         "options": [
-          "$0$",
           "$1$",
-          "$e$",
-          "$\\ln e$"
+          "$0$",
+          "$\\ln e$",
+          "$e$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "$\\int_1^e \\frac{1}{x} \\, dx = [\\ln x]_1^e = \\ln e - \\ln 1 = 1 - 0 = 1$."
       },
       {
@@ -392,12 +392,12 @@
         "type": "multiple_choice",
         "prompt": "If $f$ is even, then $\\int_{-a}^a f(x) \\, dx = $",
         "options": [
-          "$2\\int_0^a f(x) \\, dx$",
           "$0$",
           "$\\int_0^a f(x) \\, dx$",
-          "$\\int_{-a}^0 f(x) \\, dx$"
+          "$\\int_{-a}^0 f(x) \\, dx$",
+          "$2\\int_0^a f(x) \\, dx$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "For even functions ($f(-x) = f(x)$), the area from $-a$ to $0$ equals the area from $0$ to $a$, so $\\int_{-a}^a f(x) \\, dx = 2\\int_0^a f(x) \\, dx$."
       },
       {
@@ -406,11 +406,11 @@
         "prompt": "Find $\\frac{d}{dx}\\int_x^3 t^2 \\, dt$.",
         "options": [
           "$x^2$",
-          "$-x^2$",
           "$9 - x^2$",
-          "$3^2 - x^2$"
+          "$3^2 - x^2$",
+          "$-x^2$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "$\\int_x^3 t^2 \\, dt = -\\int_3^x t^2 \\, dt$. By FTC Part 1: $\\frac{d}{dx}(-\\int_3^x t^2 \\, dt) = -x^2$."
       },
       {
@@ -425,12 +425,12 @@
         "type": "multiple_choice",
         "prompt": "The average value of $f(x) = \\cos x$ on $[0, \\pi]$ is:",
         "options": [
-          "$0$",
+          "$1$",
           "$\\frac{1}{\\pi}$",
           "$\\frac{2}{\\pi}$",
-          "$1$"
+          "$0$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Average = $\\frac{1}{\\pi}\\int_0^\\pi \\cos x \\, dx = \\frac{1}{\\pi}[\\sin x]_0^\\pi = \\frac{1}{\\pi}(0-0) = 0$."
       },
       {
@@ -451,12 +451,12 @@
         "type": "multiple_choice",
         "prompt": "For $\\int \\sqrt{x^2 - 25} \\, dx$, the appropriate trigonometric substitution is $x = $",
         "options": [
-          "$5\\sec\\theta$",
-          "$5\\sin\\theta$",
           "$5\\tan\\theta$",
-          "$5\\cos\\theta$"
+          "$5\\cos\\theta$",
+          "$5\\sec\\theta$",
+          "$5\\sin\\theta$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "For $\\sqrt{x^2 - a^2}$, use $x = a\\sec\\theta$ because $\\sec^2\\theta - 1 = \\tan^2\\theta$. Here $a = 5$."
       },
       {
@@ -464,12 +464,12 @@
         "type": "multiple_choice",
         "prompt": "The partial fraction decomposition of $\\frac{2x}{(x-1)(x+1)}$ is:",
         "options": [
-          "$\\frac{1}{x-1} + \\frac{1}{x+1}$",
           "$\\frac{1}{x-1} - \\frac{1}{x+1}$",
-          "$\\frac{-1}{x-1} + \\frac{1}{x+1}$",
-          "$\\frac{2}{x-1} + \\frac{2}{x+1}$"
+          "$\\frac{1}{x-1} + \\frac{1}{x+1}$",
+          "$\\frac{2}{x-1} + \\frac{2}{x+1}$",
+          "$\\frac{-1}{x-1} + \\frac{1}{x+1}$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "$\\frac{2x}{(x-1)(x+1)} = \\frac{A}{x-1} + \\frac{B}{x+1}$. Solving: $2x = A(x+1) + B(x-1)$. Set $x=1$: $A=1$. Set $x=-1$: $B=1$."
       },
       {
@@ -484,12 +484,12 @@
         "type": "multiple_choice",
         "prompt": "Evaluate $\\int e^x \\cos x \\, dx$ (hint: integrate by parts twice).",
         "options": [
-          "$\\frac{e^x(\\sin x + \\cos x)}{2} + C$",
-          "$e^x \\sin x + C$",
           "$e^x(\\sin x - \\cos x) + C$",
-          "$\\frac{e^x \\sin x}{2} + C$"
+          "$e^x \\sin x + C$",
+          "$\\frac{e^x \\sin x}{2} + C$",
+          "$\\frac{e^x(\\sin x + \\cos x)}{2} + C$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Use integration by parts twice. After the second application, you get an equation with the original integral on both sides, allowing you to solve for it. Result: $\\frac{e^x(\\sin x + \\cos x)}{2} + C$."
       },
       {
@@ -505,12 +505,12 @@
         "type": "multiple_choice",
         "prompt": "The area between $y = x^2$ and $y = 2x$ is:",
         "options": [
+          "$2$",
           "$\\frac{2}{3}$",
           "$\\frac{4}{3}$",
-          "$2$",
           "$\\frac{8}{3}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Intersection points: $x^2 = 2x \\Rightarrow x = 0, 2$. Area = $\\int_0^2 (2x - x^2) \\, dx = [x^2 - \\frac{x^3}{3}]_0^2 = 4 - \\frac{8}{3} = \\frac{4}{3}$."
       },
       {
@@ -518,12 +518,12 @@
         "type": "multiple_choice",
         "prompt": "The washer method formula for volume when rotating about the x-axis with outer radius $R(x)$ and inner radius $r(x)$ is $V = $",
         "options": [
-          "$\\int_a^b \\pi([R(x)]^2 - [r(x)]^2) \\, dx$",
           "$\\int_a^b \\pi(R(x) - r(x))^2 \\, dx$",
+          "$\\int_a^b \\pi([R(x)]^2 - [r(x)]^2) \\, dx$",
           "$\\int_a^b 2\\pi x(R(x) - r(x)) \\, dx$",
           "$\\int_a^b \\pi R(x) r(x) \\, dx$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Washer method: $V = \\int_a^b \\pi([R(x)]^2 - [r(x)]^2) \\, dx$. This is the difference of two disk areas."
       },
       {
@@ -531,12 +531,12 @@
         "type": "multiple_choice",
         "prompt": "The arc length of $y = \\frac{2}{3}x^{3/2}$ from $x = 0$ to $x = 3$ is:",
         "options": [
-          "$4$",
           "$6$",
           "$\\frac{14}{3}$",
-          "$\\frac{8}{3}$"
+          "$\\frac{8}{3}$",
+          "$4$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "$y' = x^{1/2}$. $L = \\int_0^3 \\sqrt{1+x} \\, dx = \\frac{2}{3}[(1+x)^{3/2}]_0^3 = \\frac{2}{3}(8-1) = \\frac{14}{3}$."
       },
       {
@@ -551,12 +551,12 @@
         "type": "multiple_choice",
         "prompt": "A tank in the shape of an inverted cone (vertex down) is filled with water. The work to pump all water out the top uses:",
         "options": [
-          "Only the weight of water",
+          "Both B and C",
           "Weight times distance for each slice",
-          "Integration of force over distance",
-          "Both B and C"
+          "Only the weight of water",
+          "Integration of force over distance"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "Work = $\\int$ (weight of slice)(distance lifted), which is integrating force over distance."
       },
       {
@@ -572,12 +572,12 @@
         "type": "multiple_choice",
         "prompt": "Evaluate: $\\int_1^\\infty \\frac{1}{x^3} \\, dx$",
         "options": [
-          "$\\frac{1}{2}$",
           "$1$",
           "$\\infty$",
+          "$\\frac{1}{2}$",
           "Diverges"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "$\\int_1^\\infty \\frac{1}{x^3} \\, dx = \\lim_{t\\to\\infty} [-\\frac{1}{2x^2}]_1^t = \\lim_{t\\to\\infty} (-\\frac{1}{2t^2} + \\frac{1}{2}) = \\frac{1}{2}$."
       },
       {
@@ -592,12 +592,12 @@
         "type": "multiple_choice",
         "prompt": "Does $\\int_1^\\infty \\frac{1}{x\\ln x} \\, dx$ converge or diverge?",
         "options": [
+          "Cannot determine",
           "Converges to 1",
           "Converges to $\\ln 2$",
-          "Diverges",
-          "Cannot determine"
+          "Diverges"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Let $u = \\ln x$, $du = \\frac{1}{x}dx$. $\\int_1^\\infty \\frac{1}{x\\ln x} \\, dx = \\int_{\\ln 1}^\\infty \\frac{1}{u} \\, du = \\int_0^\\infty \\frac{1}{u} \\, du$, which diverges."
       },
       {
@@ -612,12 +612,12 @@
         "type": "multiple_choice",
         "prompt": "Evaluate $\\int_0^1 \\frac{1}{\\sqrt{x}} \\, dx$ (improper at $x=0$).",
         "options": [
+          "Diverges",
           "$1$",
           "$2$",
-          "$\\frac{1}{2}$",
-          "Diverges"
+          "$\\frac{1}{2}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "$\\int_0^1 x^{-1/2} \\, dx = \\lim_{t\\to 0^+} [2x^{1/2}]_t^1 = \\lim_{t\\to 0^+} (2 - 2\\sqrt{t}) = 2$."
       },
       {
@@ -645,12 +645,12 @@
         "type": "multiple_choice",
         "prompt": "Does $\\sum_{n=1}^\\infty \\frac{1}{n\\sqrt{n}}$ converge or diverge?",
         "options": [
-          "Converges by p-test",
-          "Diverges by p-test",
+          "Diverges by nth term test",
           "Converges by comparison",
-          "Diverges by nth term test"
+          "Diverges by p-test",
+          "Converges by p-test"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "$\\sum \\frac{1}{n^{3/2}}$ is a p-series with $p = 3/2 > 1$, so it converges."
       },
       {
@@ -665,12 +665,12 @@
         "type": "multiple_choice",
         "prompt": "Use the Ratio Test on $\\sum_{n=1}^\\infty \\frac{n^2}{2^n}$. The series:",
         "options": [
-          "Converges",
-          "Diverges",
+          "Converges conditionally",
           "Test is inconclusive",
-          "Converges conditionally"
+          "Diverges",
+          "Converges"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "$L = \\lim \\frac{(n+1)^2/2^{n+1}}{n^2/2^n} = \\lim \\frac{(n+1)^2}{2n^2} = \\frac{1}{2} < 1$, so converges."
       },
       {
@@ -686,12 +686,12 @@
         "type": "multiple_choice",
         "prompt": "The Maclaurin series for $e^x$ is:",
         "options": [
-          "$\\sum_{n=0}^\\infty \\frac{x^n}{n!}$",
-          "$\\sum_{n=0}^\\infty \\frac{(-1)^n x^n}{n!}$",
           "$\\sum_{n=0}^\\infty \\frac{x^{2n}}{(2n)!}$",
-          "$\\sum_{n=0}^\\infty x^n$"
+          "$\\sum_{n=0}^\\infty x^n$",
+          "$\\sum_{n=0}^\\infty \\frac{x^n}{n!}$",
+          "$\\sum_{n=0}^\\infty \\frac{(-1)^n x^n}{n!}$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "$e^x = \\sum_{n=0}^\\infty \\frac{x^n}{n!} = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + \\cdots$"
       },
       {
@@ -706,12 +706,12 @@
         "type": "multiple_choice",
         "prompt": "The interval of convergence for $\\sum_{n=0}^\\infty \\frac{(x-2)^n}{3^n}$ is:",
         "options": [
+          "$[-1, 5)$",
           "$(-1, 5)$",
-          "$[-1, 5]$",
           "$(-1, 5]$",
-          "$[-1, 5)$"
+          "$[-1, 5]$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Geometric series centered at 2 with $r = \\frac{x-2}{3}$. Converges when $|\\frac{x-2}{3}| < 1$, i.e., $|x-2| < 3$, giving $-1 < x < 5$. Check endpoints separately: both diverge."
       },
       {
@@ -726,12 +726,12 @@
         "type": "multiple_choice",
         "prompt": "The Taylor series for $\\sin x$ centered at $x = 0$ is:",
         "options": [
-          "$\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$",
-          "$\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{(2n)!}$",
           "$\\sum_{n=0}^\\infty \\frac{x^n}{n!}$",
-          "$\\sum_{n=0}^\\infty (-1)^n x^n$"
+          "$\\sum_{n=0}^\\infty (-1)^n x^n$",
+          "$\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$",
+          "$\\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n}}{(2n)!}$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "$\\sin x = x - \\frac{x^3}{3!} + \\frac{x^5}{5!} - \\cdots = \\sum_{n=0}^\\infty \\frac{(-1)^n x^{2n+1}}{(2n+1)!}$"
       },
       {
@@ -739,12 +739,12 @@
         "type": "multiple_choice",
         "prompt": "Find the third-degree Taylor polynomial for $f(x) = \\ln(1+x)$ centered at $x = 0$.",
         "options": [
+          "$x - \\frac{x^2}{2} - \\frac{x^3}{3}$",
           "$x - \\frac{x^2}{2} + \\frac{x^3}{3}$",
           "$1 + x + \\frac{x^2}{2} + \\frac{x^3}{6}$",
-          "$x + \\frac{x^2}{2} + \\frac{x^3}{3}$",
-          "$x - \\frac{x^2}{2} - \\frac{x^3}{3}$"
+          "$x + \\frac{x^2}{2} + \\frac{x^3}{3}$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "$f(x) = \\ln(1+x)$: $f(0)=0$, $f'(0)=1$, $f''(0)=-1$, $f'''(0)=2$. $P_3(x) = x - \\frac{x^2}{2} + \\frac{2x^3}{6} = x - \\frac{x^2}{2} + \\frac{x^3}{3}$."
       },
       {
@@ -760,12 +760,12 @@
         "type": "multiple_choice",
         "prompt": "Which technique would be most appropriate for $\\int x^2 \\ln x \\, dx$?",
         "options": [
-          "U-substitution",
-          "Integration by parts",
           "Partial fractions",
-          "Trigonometric substitution"
+          "U-substitution",
+          "Trigonometric substitution",
+          "Integration by parts"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Integration by parts is appropriate when you have a product of a polynomial and logarithm."
       },
       {

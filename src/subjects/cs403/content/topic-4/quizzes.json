@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "An online algorithm is one that:",
         "options": [
-          "Makes decisions without knowledge of future inputs",
           "Runs only on the internet",
+          "Always has a polynomial-time guarantee",
           "Is randomized by definition",
-          "Always has a polynomial-time guarantee"
+          "Makes decisions without knowledge of future inputs"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Online algorithms must decide as inputs arrive, without seeing the future. This is why competitive analysis compares them to an optimal offline algorithm."
       },
       {
@@ -50,12 +50,12 @@
         "type": "multiple_choice",
         "prompt": "In the secretary problem, the optimal strategy rejects about the first:",
         "options": [
-          "n/e candidates",
           "n/2 candidates",
           "n/3 candidates",
+          "n/e candidates",
           "log n candidates"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The classic optimal stopping rule observes the first ~n/e candidates, then selects the next candidate better than all observed, achieving success probability ~1/e."
       }
     ]
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Suppose ski rental buy cost B = 10 and rent cost per day is 1. If you rent for 10 days and then buy, your cost is:",
         "options": [
-          "10",
-          "11",
           "20",
+          "11",
+          "10",
           "100"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Renting 10 days costs 10, then buying costs 10, total 20."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "For paging with cache size k=2, consider request sequence A, B, C, A, B, C. Which algorithm tends to do poorly on this cyclic pattern?",
         "options": [
-          "LRU",
           "OPT",
-          "An offline algorithm",
-          "A clairvoyant algorithm"
+          "LRU",
+          "A clairvoyant algorithm",
+          "An offline algorithm"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "With cache size 2 and a cycle of 3 pages, LRU will fault on every request after warm-up because it always evicts the page needed soon. OPT would keep the two pages used soonest."
       },
       {
@@ -147,12 +147,12 @@
         "type": "multiple_choice",
         "prompt": "In online bipartite matching, the classic Karp–Vazirani–Vazirani algorithm achieves competitive ratio:",
         "options": [
-          "1 - 1/e",
-          "1/2",
+          "1/e",
           "2/3",
-          "1/e"
+          "1 - 1/e",
+          "1/2"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The randomized Ranking algorithm achieves a (1−1/e)-competitive ratio for online bipartite matching under standard models."
       },
       {

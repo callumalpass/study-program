@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary purpose of rasterization?",
         "options": [
-          "Convert geometric primitives to discrete pixels/fragments",
           "Transform vertices to screen space",
           "Calculate lighting and shading",
+          "Convert geometric primitives to discrete pixels/fragments",
           "Apply texture mapping"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Rasterization is the process of determining which pixels are covered by geometric primitives (triangles, lines) and generating fragments for those pixels."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which algorithm is commonly used for line rasterization?",
         "options": [
+          "Binary search",
           "Bresenham's algorithm",
           "Depth-first search",
-          "Quick sort",
-          "Binary search"
+          "Quick sort"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Bresenham's algorithm efficiently rasterizes lines using only integer arithmetic and addition, making it fast for determining which pixels to draw along a line."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "In triangle rasterization, what does the edge function test determine?",
         "options": [
+          "The texture coordinate",
           "Whether a point is inside or outside the triangle",
           "The depth of a fragment",
-          "The color of a pixel",
-          "The texture coordinate"
+          "The color of a pixel"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The edge function evaluates which side of an edge a point lies on. A point is inside the triangle if it's on the correct side of all three edges."
       }
     ]
@@ -97,12 +97,12 @@
         "type": "multiple_choice",
         "prompt": "What coordinate system do barycentric coordinates (α, β, γ) satisfy?",
         "options": [
-          "α + β + γ = 1",
           "α² + β² + γ² = 1",
           "α × β × γ = 1",
-          "α - β + γ = 0"
+          "α - β + γ = 0",
+          "α + β + γ = 1"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Barycentric coordinates sum to 1, where each coordinate represents the weight of the corresponding vertex. A point is inside the triangle when all three are between 0 and 1."
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "What is MSAA (Multi-Sample Anti-Aliasing)?",
         "options": [
-          "Sampling coverage at multiple points per pixel but shading once",
-          "Rendering the scene multiple times",
           "Sampling and shading multiple times per pixel",
+          "Rendering the scene multiple times",
+          "Sampling coverage at multiple points per pixel but shading once",
           "Post-processing blur filter"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "MSAA samples geometric coverage at multiple sub-pixel locations but runs the pixel shader only once per pixel, making it more efficient than SSAA while still reducing edge aliasing."
       },
       {
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "What is perspective-correct interpolation used for?",
         "options": [
-          "Correctly interpolating attributes in screen space accounting for depth",
           "Faster rasterization",
-          "Anti-aliasing",
-          "Depth buffer optimization"
+          "Depth buffer optimization",
+          "Correctly interpolating attributes in screen space accounting for depth",
+          "Anti-aliasing"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Perspective-correct interpolation accounts for perspective division by interpolating in 3D space rather than 2D screen space, preventing distortion in texture coordinates and other attributes."
       },
       {

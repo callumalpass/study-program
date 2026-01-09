@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What does immutability mean?",
         "options": [
+          "Cannot be copied",
           "Cannot be moved",
           "Data cannot be changed after creation",
-          "Cannot be deleted",
-          "Cannot be copied"
+          "Cannot be deleted"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Immutability means once data is created, it cannot be modified. New data structures are created instead."
       },
       {
@@ -37,11 +37,11 @@
         "prompt": "What is a higher-order function?",
         "options": [
           "A function in a higher directory",
-          "A function that takes functions as arguments or returns functions",
           "A more important function",
+          "A function that takes functions as arguments or returns functions",
           "A recursive function"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Higher-order functions can accept functions as parameters and/or return functions as results."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What is function composition?",
         "options": [
-          "Writing functions",
           "Combining functions so output of one becomes input of another",
-          "Decomposing functions",
-          "Function documentation"
+          "Function documentation",
+          "Writing functions",
+          "Decomposing functions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Function composition creates a new function by chaining functions: (f ∘ g)(x) = f(g(x))."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is tail recursion?",
         "options": [
+          "Infinite recursion",
           "Recursion at the end of a list",
           "Recursion where the recursive call is the last operation",
-          "Recursion without a base case",
-          "Infinite recursion"
+          "Recursion without a base case"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Tail recursion has the recursive call as the final operation, allowing compiler optimization to avoid stack growth."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is a fold/reduce operation?",
         "options": [
-          "Folding paper",
           "Combining collection elements into a single value using a function",
+          "Folding paper",
           "Reducing code size",
           "Compressing data"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Fold/reduce traverses a collection, combining elements into an accumulated result using a combining function."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "In lambda calculus, what is β-reduction?",
         "options": [
-          "Removing variables",
           "Substituting arguments into function bodies",
+          "Removing variables",
           "Reducing complexity",
           "Beta testing"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "β-reduction applies a function by substituting the argument for the bound variable in the function body."
       },
       {
@@ -123,11 +123,11 @@
         "prompt": "What is lazy evaluation?",
         "options": [
           "Slow evaluation",
-          "Delaying evaluation until the result is needed",
+          "Parallel evaluation",
           "Incomplete evaluation",
-          "Parallel evaluation"
+          "Delaying evaluation until the result is needed"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Lazy evaluation defers computation until the result is actually needed, enabling infinite data structures."
       },
       {
@@ -136,11 +136,11 @@
         "prompt": "What is a thunk?",
         "options": [
           "A sound effect",
-          "A suspended computation awaiting evaluation",
           "A type of error",
+          "A suspended computation awaiting evaluation",
           "A memory block"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A thunk is a deferred computation that captures an expression and its environment for later evaluation."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is a Functor in functional programming?",
         "options": [
-          "A type of function",
           "A type that can be mapped over",
+          "A debugging tool",
           "A function factory",
-          "A debugging tool"
+          "A type of function"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A Functor is a type with a map operation that applies a function to values inside a context."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What operations must a Monad support?",
         "options": [
-          "map and filter",
-          "return/unit and bind/flatMap",
           "get and set",
-          "read and write"
+          "read and write",
+          "map and filter",
+          "return/unit and bind/flatMap"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Monads require return (wrap a value) and bind/flatMap (sequence computations that return wrapped values)."
       },
       {
@@ -183,11 +183,11 @@
         "prompt": "What problem does the IO Monad solve in Haskell?",
         "options": [
           "Memory management",
-          "Sequencing side effects in a pure language",
           "Parallel I/O",
+          "Sequencing side effects in a pure language",
           "File compression"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The IO Monad allows Haskell to sequence I/O operations while maintaining purity and referential transparency."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between foldl and foldr?",
         "options": [
-          "No difference",
-          "foldl processes left-to-right, foldr right-to-left",
+          "foldr is safer",
           "foldl is faster",
-          "foldr is safer"
+          "foldl processes left-to-right, foldr right-to-left",
+          "No difference"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "foldl accumulates from the left (beginning), foldr from the right (end), affecting associativity and laziness."
       },
       {

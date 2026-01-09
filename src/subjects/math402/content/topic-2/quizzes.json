@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "The bisection method requires which condition to guarantee convergence?",
         "options": [
-          "f must be differentiable",
           "f must be continuous and f(a)·f(b) < 0",
-          "f must be monotonic",
-          "The initial guess must be close to the root"
+          "f must be differentiable",
+          "The initial guess must be close to the root",
+          "f must be monotonic"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The bisection method requires a continuous function and an interval [a,b] where f(a) and f(b) have opposite signs (Intermediate Value Theorem)."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is the convergence order of the bisection method?",
         "options": [
-          "Linear with rate 1/2",
           "Quadratic",
-          "Superlinear",
-          "No guaranteed convergence"
+          "Linear with rate 1/2",
+          "No guaranteed convergence",
+          "Superlinear"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Bisection has linear convergence with rate 1/2, as the error is reduced by half in each iteration: |e_{n+1}| ≤ (1/2)|e_n|."
       },
       {
@@ -87,12 +87,12 @@
         "type": "multiple_choice",
         "prompt": "Which method requires two initial guesses?",
         "options": [
-          "Bisection method",
           "Newton's method",
           "Secant method",
-          "Fixed-point iteration"
+          "Fixed-point iteration",
+          "Bisection method"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The secant method needs two initial guesses x_0 and x_1 to approximate the derivative: f'(x_n) ≈ (f(x_n) - f(x_{n-1}))/(x_n - x_{n-1})."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "For a root of multiplicity m > 1, what is the convergence order of standard Newton's method?",
         "options": [
-          "Quadratic",
           "Linear",
+          "Quadratic",
           "No convergence",
           "Cubic"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "For a root with multiplicity m > 1, Newton's method degrades to linear convergence. The modified Newton's method x_{n+1} = x_n - m·f(x_n)/f'(x_n) restores quadratic convergence."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "The order of convergence of the secant method is:",
         "options": [
-          "1 (linear)",
-          "φ = (1 + √5)/2 ≈ 1.618 (golden ratio)",
           "2 (quadratic)",
-          "3 (cubic)"
+          "3 (cubic)",
+          "1 (linear)",
+          "φ = (1 + √5)/2 ≈ 1.618 (golden ratio)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The secant method has superlinear convergence with order φ = (1 + √5)/2 ≈ 1.618, the golden ratio. It's faster than linear but slower than quadratic."
       },
       {

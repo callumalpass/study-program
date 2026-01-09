@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "At a critical point of f(x,y), what condition must the gradient satisfy?",
         "options": [
-          "∇f = 0",
-          "∇f = 1",
           "|∇f| = maximum",
-          "∇f is undefined"
+          "∇f = 1",
+          "∇f is undefined",
+          "∇f = 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Critical points occur where ∇f = 0 (or where partial derivatives don't exist)"
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "For f(x,y) = x² + y² - 4x - 6y, what is the critical point?",
         "options": [
-          "(2, 3)",
-          "(4, 6)",
           "(-2, -3)",
-          "(0, 0)"
+          "(0, 0)",
+          "(2, 3)",
+          "(4, 6)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "f_x = 2x - 4 = 0 → x = 2; f_y = 2y - 6 = 0 → y = 3. Critical point: (2, 3)"
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "The discriminant D for the second derivative test is D = f_xx·f_yy - (f_xy)². What indicates a saddle point?",
         "options": [
-          "D < 0",
-          "D > 0 and f_xx > 0",
           "D > 0 and f_xx < 0",
-          "D = 0"
+          "D > 0 and f_xx > 0",
+          "D = 0",
+          "D < 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "When D < 0, the critical point is a saddle point (neither max nor min)"
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "For f(x,y) = x² - y², what type of critical point is (0,0)?",
         "options": [
+          "Local maximum",
           "Saddle point",
           "Local minimum",
-          "Local maximum",
           "Not a critical point"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "f_xx = 2, f_yy = -2, f_xy = 0. D = (2)(-2) - 0 = -4 < 0, so (0,0) is a saddle point"
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "The method of Lagrange multipliers is used to find extrema subject to what?",
         "options": [
-          "A constraint",
           "No restrictions",
+          "A constraint",
           "A bounded region",
           "Initial conditions"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Lagrange multipliers find extrema of f(x,y) subject to a constraint g(x,y) = k"
       },
       {
@@ -90,12 +90,12 @@
         "type": "multiple_choice",
         "prompt": "For Lagrange multipliers, the condition ∇f = λ∇g means what geometrically?",
         "options": [
-          "∇f and ∇g are parallel",
-          "∇f and ∇g are perpendicular",
           "∇f = ∇g",
-          "|∇f| = |∇g|"
+          "∇f and ∇g are parallel",
+          "|∇f| = |∇g|",
+          "∇f and ∇g are perpendicular"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The equation ∇f = λ∇g means the gradients are parallel (one is a scalar multiple of the other)"
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "To maximize f(x,y) = xy subject to x + y = 10, what is the Lagrange function L?",
         "options": [
-          "L = xy - λ(x + y - 10)",
-          "L = xy + λ(x + y)",
           "L = xy - (x + y - 10)",
-          "L = xy + x + y - 10"
+          "L = xy + x + y - 10",
+          "L = xy + λ(x + y)",
+          "L = xy - λ(x + y - 10)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The Lagrange function is L(x,y,λ) = f(x,y) - λ(g(x,y) - c) = xy - λ(x + y - 10)"
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "For the optimization problem: maximize x²y subject to x² + y² = 1, how many equations do we get from ∇f = λ∇g and the constraint?",
         "options": [
-          "3",
-          "2",
           "4",
-          "1"
+          "1",
+          "2",
+          "3"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "∇f = λ∇g gives 2 equations (one per variable), plus 1 constraint equation = 3 total"
       }
     ]
@@ -164,12 +164,12 @@
         "type": "multiple_choice",
         "prompt": "What is the second derivative test conclusion when D > 0 and f_xx > 0?",
         "options": [
-          "Local minimum",
-          "Local maximum",
           "Saddle point",
-          "Inconclusive"
+          "Local maximum",
+          "Inconclusive",
+          "Local minimum"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "When D = f_xx f_yy - (f_xy)² > 0 and f_xx > 0, the surface is concave up → local minimum"
       },
       {
@@ -177,12 +177,12 @@
         "type": "multiple_choice",
         "prompt": "What is the second derivative test conclusion when D > 0 and f_xx < 0?",
         "options": [
-          "Local maximum",
-          "Local minimum",
           "Saddle point",
-          "Inconclusive"
+          "Inconclusive",
+          "Local maximum",
+          "Local minimum"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "When D > 0 and f_xx < 0, the surface is concave down → local maximum"
       },
       {
@@ -190,12 +190,12 @@
         "type": "multiple_choice",
         "prompt": "When D = 0 in the second derivative test, the test is what?",
         "options": [
-          "Inconclusive",
-          "Saddle point",
           "Maximum",
-          "Minimum"
+          "Minimum",
+          "Inconclusive",
+          "Saddle point"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "When D = 0, the second derivative test fails and we need other methods to classify the critical point"
       }
     ]

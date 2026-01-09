@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the view frustum in computer graphics?",
         "options": [
-          "The region of 3D space visible to the camera",
           "The entire 3D world space",
+          "The object coordinate system",
           "The screen coordinate system",
-          "The object coordinate system"
+          "The region of 3D space visible to the camera"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The view frustum is a truncated pyramid defining the visible region between the near and far clipping planes, bounded by the field of view."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which projection preserves parallel lines?",
         "options": [
+          "Stereographic projection",
           "Orthographic projection",
           "Perspective projection",
-          "Stereographic projection",
           "Cylindrical projection"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Orthographic projection is a parallel projection that preserves parallel lines and does not apply perspective foreshortening, making objects the same size regardless of distance."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "Which coordinate system has the camera at the origin looking down the negative Z-axis?",
         "options": [
-          "View space (camera space)",
+          "Screen space",
           "World space",
           "Object space",
-          "Screen space"
+          "View space (camera space)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "In view space (or camera space), the coordinate system is centered at the camera position, typically with the camera looking down the negative Z-axis by convention."
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the near clipping plane?",
         "options": [
-          "Prevent rendering objects too close to the camera",
           "Define the farthest visible distance",
+          "Prevent rendering objects too close to the camera",
           "Set the camera position",
           "Control the field of view"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The near clipping plane defines the closest distance at which objects are rendered. Objects closer than this are clipped, preventing numerical issues and unwanted extreme foreshortening."
       },
       {
@@ -97,12 +97,12 @@
         "type": "multiple_choice",
         "prompt": "What does the look-at transformation define?",
         "options": [
-          "Camera position, target point, and up vector",
+          "Projection type and viewport",
           "Field of view and aspect ratio",
-          "Near and far clipping planes",
-          "Projection type and viewport"
+          "Camera position, target point, and up vector",
+          "Near and far clipping planes"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The look-at transformation constructs the view matrix using the camera (eye) position, the target point to look at, and an up vector to define orientation."
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "In normalized device coordinates (NDC), what is the typical range for x, y, and z?",
         "options": [
-          "[-1, 1] for all axes",
-          "[0, 1] for all axes",
           "[-1, 1] for x and y, [0, 1] for z",
-          "[0, width] for x, [0, height] for y"
+          "[0, width] for x, [0, height] for y",
+          "[-1, 1] for all axes",
+          "[0, 1] for all axes"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "In most graphics APIs (OpenGL convention), normalized device coordinates range from -1 to 1 for all three axes after perspective division (though some APIs use [0,1] for z)."
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "What transformation converts from view space to clip space?",
         "options": [
-          "Projection matrix",
+          "Viewport transformation",
           "View matrix",
-          "Model matrix",
-          "Viewport transformation"
+          "Projection matrix",
+          "Model matrix"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The projection matrix transforms coordinates from view/camera space to clip space, applying either perspective or orthographic projection based on the camera settings."
       }
     ]
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "What happens during perspective division?",
         "options": [
-          "Divide x, y, z by w to get normalized device coordinates",
-          "Multiply coordinates by the projection matrix",
           "Transform from world to view space",
+          "Multiply coordinates by the projection matrix",
+          "Divide x, y, z by w to get normalized device coordinates",
           "Apply viewport scaling"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Perspective division divides the homogeneous coordinates (x, y, z) by w to convert from clip space to normalized device coordinates, creating the perspective effect."
       },
       {
@@ -164,12 +164,12 @@
         "type": "multiple_choice",
         "prompt": "Which type of projection is typically used for technical drawings and CAD applications?",
         "options": [
-          "Orthographic projection",
           "Perspective projection",
           "Fisheye projection",
-          "Spherical projection"
+          "Spherical projection",
+          "Orthographic projection"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Orthographic projection is preferred for technical drawings because it preserves measurements and parallel lines, making it easier to interpret dimensions and angles."
       },
       {
@@ -177,12 +177,12 @@
         "type": "multiple_choice",
         "prompt": "What is the vanishing point in perspective projection?",
         "options": [
-          "The point where parallel lines appear to converge",
           "The camera position",
-          "The center of the screen",
-          "The far clipping plane"
+          "The point where parallel lines appear to converge",
+          "The far clipping plane",
+          "The center of the screen"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Vanishing points are where parallel lines in 3D space appear to converge in the 2D projection, a key characteristic of perspective projection that creates depth perception."
       },
       {

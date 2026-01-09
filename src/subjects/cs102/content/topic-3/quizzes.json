@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Range of 8-bit unsigned integer?",
         "options": [
-          "0-255",
-          "-128 to 127",
           "0-256",
-          "0-512"
+          "0-512",
+          "0-255",
+          "-128 to 127"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "2^8 - 1 = 255."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which encoding supports emojis?",
         "options": [
+          "ANSI",
           "ASCII",
-          "UTF-8",
           "Base64",
-          "ANSI"
+          "UTF-8"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "UTF-8 (Unicode)."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "IEEE 754 defines standard for:",
         "options": [
-          "Integers",
-          "Floating Point",
+          "Images",
           "Characters",
-          "Images"
+          "Floating Point",
+          "Integers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Floating point arithmetic standard."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "How many bits in a standard double precision float?",
         "options": [
+          "128",
           "32",
-          "64",
           "80",
-          "128"
+          "64"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Double is 64-bit."
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "Which hex byte represents the ASCII letter \"A\"?",
         "options": [
-          "41",
-          "61",
           "30",
+          "61",
+          "41",
           "20"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A is 65 decimal, which is 0x41."
       },
       {
@@ -117,12 +117,12 @@
         "type": "multiple_choice",
         "prompt": "UTF-8 uses variable length encoding. A character can be:",
         "options": [
-          "Always 1 byte",
           "1 to 4 bytes",
-          "Always 2 bytes",
-          "Always 4 bytes"
+          "Always 4 bytes",
+          "Always 1 byte",
+          "Always 2 bytes"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "ASCII is 1 byte, others are 2-4."
       }
     ]
@@ -138,12 +138,12 @@
         "type": "multiple_choice",
         "prompt": "What special value corresponds to exponent=All-Ones and fraction=Non-Zero in IEEE 754?",
         "options": [
-          "Infinity",
           "Zero",
           "NaN",
+          "Infinity",
           "Denormalized"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "NaN (Not a Number)."
       },
       {
@@ -151,12 +151,12 @@
         "type": "multiple_choice",
         "prompt": "To convert \"A\" (0x41) to \"a\" (0x61), you can:",
         "options": [
-          "Add 0x20",
-          "Subtract 0x20",
           "XOR with 0xFF",
-          "AND with 0xDF"
+          "Add 0x20",
+          "AND with 0xDF",
+          "Subtract 0x20"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "0x41 + 0x20 = 0x61."
       },
       {

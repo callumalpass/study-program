@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "A context-free grammar consists of:",
         "options": [
-          "States, transitions, and accepting states",
           "Variables, terminals, productions, and start symbol",
           "Stack, input tape, and control unit",
-          "Regular expressions only"
+          "Regular expressions only",
+          "States, transitions, and accepting states"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A CFG G = (V, Σ, R, S) has variables (non-terminals), terminals, production rules, and a start symbol."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "In the production A → aAb | ε, what language does A generate?",
         "options": [
+          "{ab}*",
           "{aⁿbⁿ | n ≥ 0}",
-          "{aⁿbᵐ | n,m ≥ 0}",
           "All strings over {a,b}",
-          "{ab}*"
+          "{aⁿbᵐ | n,m ≥ 0}"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Each application of A → aAb adds one \"a\" to the left and one \"b\" to the right. A → ε terminates, giving equal counts."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "The yield of a parse tree is:",
         "options": [
-          "The root symbol",
-          "The sequence of leaves read left to right",
+          "The number of internal nodes",
           "The depth of the tree",
-          "The number of internal nodes"
+          "The root symbol",
+          "The sequence of leaves read left to right"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The yield (or frontier) of a parse tree is the string of terminal symbols at the leaves, read from left to right."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "In Chomsky Normal Form, productions have the form:",
         "options": [
+          "A → BCD or A → ab",
           "A → BC or A → a",
-          "A → aB or A → a",
           "A → α where |α| ≤ 2",
-          "A → BCD or A → ab"
+          "A → aB or A → a"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "CNF requires all productions to be A → BC (two variables) or A → a (single terminal), plus S → ε if needed."
       },
       {
@@ -110,11 +110,11 @@
         "prompt": "Converting to CNF requires eliminating:",
         "options": [
           "Only ε-productions",
-          "ε-productions, unit productions, and useless symbols",
           "Only long productions",
+          "ε-productions, unit productions, and useless symbols",
           "All recursive rules"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "CNF conversion eliminates: ε-productions (except S→ε), unit productions (A→B), useless symbols, and long/mixed productions."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "Greibach Normal Form requires:",
         "options": [
-          "All productions A → BC",
-          "All productions A → aα where a is terminal",
           "No recursive productions",
-          "Binary branching only"
+          "Binary branching only",
+          "All productions A → aα where a is terminal",
+          "All productions A → BC"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "GNF requires every production to start with a terminal: A → aα where a ∈ Σ and α ∈ V*."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "The CYK parsing algorithm requires the grammar to be in:",
         "options": [
-          "Any form",
-          "Chomsky Normal Form",
+          "Backus-Naur Form",
           "Greibach Normal Form",
-          "Backus-Naur Form"
+          "Any form",
+          "Chomsky Normal Form"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "CYK uses dynamic programming based on substring lengths, which relies on the binary branching structure of CNF."
       }
     ]
@@ -170,11 +170,11 @@
         "prompt": "Context-free languages are NOT closed under:",
         "options": [
           "Union",
-          "Concatenation",
           "Intersection",
+          "Concatenation",
           "Kleene star"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "CFLs are closed under union, concatenation, and Kleene star, but NOT under intersection or complement."
       },
       {
@@ -183,11 +183,11 @@
         "prompt": "{aⁿbⁿcⁿ | n ≥ 0} is:",
         "options": [
           "Regular",
-          "Context-free",
           "Not context-free",
-          "Undecidable"
+          "Undecidable",
+          "Context-free"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "This language requires matching three counts simultaneously, which CFGs cannot do. The CFL pumping lemma proves this."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "CFLs are closed under intersection with:",
         "options": [
-          "Other CFLs",
           "Regular languages",
+          "Both",
           "Neither",
-          "Both"
+          "Other CFLs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Intersection of a CFL with a regular language is always context-free (proven by product construction with PDA and DFA)."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "An inherently ambiguous language is:",
         "options": [
-          "One with no grammar",
           "One where every grammar is ambiguous",
           "One that is not context-free",
-          "One with only one string"
+          "One with only one string",
+          "One with no grammar"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "An inherently ambiguous CFL has no unambiguous grammar - every CFG for it is ambiguous."
       }
     ]

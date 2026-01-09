@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which keyword is used to declare a block-scoped variable in JavaScript?",
         "options": [
-          "var",
+          "Both let and const",
           "let",
           "const",
-          "Both let and const"
+          "var"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "Both let and const create block-scoped variables. The difference is that const creates a constant reference that cannot be reassigned."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What is the correct way to declare a function in JavaScript?",
         "options": [
+          "function: myFunc() {}",
           "function myFunc() {}",
-          "def myFunc() {}",
           "func myFunc() {}",
-          "function: myFunc() {}"
+          "def myFunc() {}"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Functions are declared using the \"function\" keyword followed by the function name and parentheses."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Which method adds an element to the end of an array?",
         "options": [
-          "push()",
           "pop()",
           "shift()",
-          "unshift()"
+          "unshift()",
+          "push()"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "push() adds one or more elements to the end of an array. pop() removes from end, shift() removes from beginning, unshift() adds to beginning."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What does [...arr1, ...arr2] do in JavaScript?",
         "options": [
-          "Creates nested arrays",
           "Combines arrays into one",
+          "Creates nested arrays",
           "Subtracts arr2 from arr1",
           "Compares two arrays"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The spread operator (...) expands array elements. [...arr1, ...arr2] creates a new array combining all elements from both arrays."
       },
       {
@@ -85,11 +85,11 @@
         "prompt": "What is array destructuring in ES6?",
         "options": [
           "Deleting array elements",
-          "Extracting values into variables",
           "Breaking arrays into pieces",
+          "Extracting values into variables",
           "Sorting array elements"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Array destructuring allows unpacking values from arrays into distinct variables: const [a, b] = [1, 2]."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What does the map() method do?",
         "options": [
-          "Filters array elements",
-          "Creates a new array by transforming each element",
           "Finds a specific element",
-          "Sorts the array"
+          "Sorts the array",
+          "Creates a new array by transforming each element",
+          "Filters array elements"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "map() creates a new array by calling a function on every element of the original array and using the return values."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "What is the output of: const obj = {a: 1}; const {a: b} = obj; console.log(b);",
         "options": [
-          "undefined",
-          "1",
+          "Error",
           "a",
-          "Error"
+          "1",
+          "undefined"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "This is destructuring with renaming. {a: b} extracts the property \"a\" from obj and assigns it to a new variable \"b\", so b equals 1."
       },
       {
@@ -146,11 +146,11 @@
         "prompt": "What is a closure in JavaScript?",
         "options": [
           "A way to close programs",
-          "A function with access to outer scope variables",
           "A syntax error",
-          "A type of loop"
+          "A type of loop",
+          "A function with access to outer scope variables"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A closure is a function that has access to variables in its outer (enclosing) lexical scope, even after the outer function has returned."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between == and === in JavaScript?",
         "options": [
-          "No difference",
-          "== checks value, === checks value and type",
           "=== is for strings only",
-          "== is deprecated"
+          "== is deprecated",
+          "== checks value, === checks value and type",
+          "No difference"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "== performs type coercion before comparison, while === (strict equality) checks both value and type without coercion."
       },
       {

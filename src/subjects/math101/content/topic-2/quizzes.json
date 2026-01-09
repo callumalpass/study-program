@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What is the contrapositive of \"If n² is even, then n is even\"?",
         "options": [
-          "If n is even, then n² is even",
-          "If n is odd, then n² is odd",
+          "If n is not even, then n² is not even",
           "If n² is odd, then n is odd",
-          "If n is not even, then n² is not even"
+          "If n is even, then n² is even",
+          "If n is odd, then n² is odd"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The contrapositive of \"If P then Q\" is \"If not Q then not P\". So we prove: if n is not even (odd), then n² is not even (odd)."
       },
       {
@@ -44,11 +44,11 @@
         "prompt": "Which proof technique is best suited for proving \"√2 is irrational\"?",
         "options": [
           "Direct proof",
-          "Proof by contrapositive",
           "Proof by contradiction",
-          "Proof by cases"
+          "Proof by cases",
+          "Proof by contrapositive"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The classic proof of √2 being irrational uses contradiction: assume √2 = a/b in lowest terms, derive that both a and b must be even, contradicting \"lowest terms.\""
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "In mathematical induction, what must be shown in the inductive step?",
         "options": [
+          "If the statement is true for n = k, then it is true for n = k + 1",
           "The statement is true for n = 1",
           "The statement is true for all n",
-          "If the statement is true for n = k, then it is true for n = k + 1",
           "The statement is false for some n"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The inductive step proves that if the statement holds for an arbitrary value k, it must also hold for k+1. This creates a chain of implications."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "What is a counterexample?",
         "options": [
-          "An example that proves a universal statement",
           "An example that disproves a universal statement",
           "A proof by contradiction",
-          "The contrapositive of an example"
+          "The contrapositive of an example",
+          "An example that proves a universal statement"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A counterexample is a specific case that shows a universal statement is false. One counterexample is sufficient to disprove \"For all x, P(x).\""
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "Which proof technique divides the proof into several exhaustive scenarios?",
         "options": [
-          "Direct proof",
-          "Proof by contradiction",
           "Proof by cases",
-          "Proof by induction"
+          "Proof by induction",
+          "Proof by contradiction",
+          "Direct proof"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Proof by cases (or proof by exhaustion) divides the problem into all possible cases and proves each one separately."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "To prove \"For all integers n, if n² is odd, then n is odd\" by contrapositive, what would you prove?",
         "options": [
-          "If n is odd, then n² is odd",
-          "If n is even, then n² is even",
           "If n² is even, then n is even",
-          "There exists n such that n² is odd and n is even"
+          "If n is odd, then n² is odd",
+          "There exists n such that n² is odd and n is even",
+          "If n is even, then n² is even"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The contrapositive of \"n² odd → n odd\" is \"n not odd → n² not odd\", i.e., \"n even → n² even.\""
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "What distinguishes a constructive existence proof from a non-constructive one?",
         "options": [
-          "Constructive proofs are shorter",
           "Constructive proofs actually exhibit a witness satisfying the property",
+          "Constructive proofs only work for finite sets",
           "Non-constructive proofs use contradiction",
-          "Constructive proofs only work for finite sets"
+          "Constructive proofs are shorter"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A constructive proof provides an explicit example or method to find an object satisfying the property. Non-constructive proofs show existence without providing a specific example."
       },
       {

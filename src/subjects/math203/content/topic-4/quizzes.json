@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "A critical point of $f$ occurs where:",
         "options": [
-          "$f(x) = 0$",
-          "$f'(x) = 0$ or $f'(x)$ is undefined",
           "$f''(x) = 0$",
-          "$f$ is discontinuous"
+          "$f$ is discontinuous",
+          "$f(x) = 0$",
+          "$f'(x) = 0$ or $f'(x)$ is undefined"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Critical points occur where the first derivative is zero or undefined. These are candidates for local extrema."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "An inflection point occurs where:",
         "options": [
-          "$f'(x) = 0$",
           "$f''(x) = 0$ and $f''$ changes sign",
+          "$f'(x) = 0$",
           "$f(x) = 0$",
           "The function has a maximum"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "An inflection point is where concavity changes. This requires $f''$ to change sign, which typically occurs where $f''(x) = 0$ or is undefined."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "If $f'(c) = 0$ and $f''(c) = 0$, then $x = c$ is:",
         "options": [
-          "A local maximum",
+          "The second derivative test is inconclusive",
           "A local minimum",
           "An inflection point",
-          "The second derivative test is inconclusive"
+          "A local maximum"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "When both $f'(c) = 0$ and $f''(c) = 0$, the second derivative test fails. You must use the first derivative test or higher derivatives."
       },
       {
@@ -104,12 +104,12 @@
         "type": "multiple_choice",
         "prompt": "Find the critical points of $f(x) = x^3 - 3x^2 + 2$.",
         "options": [
-          "$x = 0$ only",
+          "$x = 1$ only",
           "$x = 2$ only",
-          "$x = 0$ and $x = 2$",
-          "$x = 1$ only"
+          "$x = 0$ only",
+          "$x = 0$ and $x = 2$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "$f'(x) = 3x^2 - 6x = 3x(x - 2) = 0$. So $x = 0$ and $x = 2$ are critical points."
       },
       {
@@ -117,12 +117,12 @@
         "type": "multiple_choice",
         "prompt": "The Extreme Value Theorem states that a continuous function on a closed interval $[a,b]$ attains:",
         "options": [
-          "An absolute maximum only",
-          "An absolute minimum only",
           "Both an absolute maximum and an absolute minimum",
+          "An absolute minimum only",
+          "An absolute maximum only",
           "Neither a maximum nor a minimum"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The EVT guarantees that a continuous function on a closed bounded interval achieves its absolute maximum and minimum values somewhere on that interval."
       }
     ]
@@ -138,12 +138,12 @@
         "type": "multiple_choice",
         "prompt": "Find the absolute maximum of $f(x) = x^3 - 3x$ on $[-2, 2]$.",
         "options": [
-          "2",
           "4",
-          "0",
-          "-2"
+          "2",
+          "-2",
+          "0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "$f'(x) = 3x^2 - 3 = 0$ gives $x = \\pm 1$. Check: $f(-2) = -2$, $f(-1) = 2$, $f(1) = -2$, $f(2) = 2$. Maximum is 2 at $x = -1$ and $x = 2$."
       },
       {
@@ -151,12 +151,12 @@
         "type": "multiple_choice",
         "prompt": "Rolle's Theorem is a special case of MVT when:",
         "options": [
-          "$f$ is not differentiable",
           "$f(a) = f(b)$",
+          "$f$ is not differentiable",
           "$a = b$",
           "$f'(x) = 0$ everywhere"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Rolle's Theorem applies when $f(a) = f(b)$. It guarantees there exists $c \\in (a,b)$ where $f'(c) = 0$."
       },
       {
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "For $f(x) = xe^{-x}$, the local maximum occurs at:",
         "options": [
-          "$x = 0$",
           "$x = 1$",
-          "$x = e$",
-          "$x = -1$"
+          "$x = -1$",
+          "$x = 0$",
+          "$x = e$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "$f'(x) = e^{-x} - xe^{-x} = e^{-x}(1-x) = 0$ gives $x = 1$. Since $f''(1) = -e^{-1} < 0$, this is a local maximum."
       },
       {

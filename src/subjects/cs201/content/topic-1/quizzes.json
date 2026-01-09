@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What does Big-O notation describe regarding an algorithm?",
         "options": [
-          "The exact time it takes to run in seconds",
           "The worst-case growth rate of operations as input size increases",
-          "The best-case memory usage",
-          "The average time taken on a specific CPU"
+          "The exact time it takes to run in seconds",
+          "The average time taken on a specific CPU",
+          "The best-case memory usage"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Big-O notation provides an upper bound on the growth rate of the algorithm's running time relative to the input size, independent of hardware."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following represents constant time complexity?",
         "options": [
+          "O(n^2)",
           "O(1)",
-          "O(n)",
           "O(log n)",
-          "O(n^2)"
+          "O(n)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "O(1) implies the operation takes the same amount of time regardless of the input size."
       },
       {
@@ -44,11 +44,11 @@
         "prompt": "What is the time complexity of iterating through a list of size n?",
         "options": [
           "O(1)",
+          "O(n^2)",
           "O(n)",
-          "O(log n)",
-          "O(n^2)"
+          "O(log n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Visiting every element once performs n operations, resulting in linear time O(n)."
       },
       {
@@ -72,12 +72,12 @@
         "prompt": "What is the Big-O complexity of this code?",
         "codeSnippet": "def func(n):\n    for i in range(n):\n        print(i)\n    for j in range(n):\n        print(j)",
         "options": [
-          "O(n)",
-          "O(n^2)",
+          "O(2n)",
           "O(1)",
-          "O(2n)"
+          "O(n^2)",
+          "O(n)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The loops are sequential, not nested. O(n) + O(n) = O(2n), which simplifies to O(n)."
       },
       {
@@ -86,12 +86,12 @@
         "prompt": "What is the Big-O complexity of this code?",
         "codeSnippet": "def func(n):\n    for i in range(n):\n        for j in range(n):\n            print(i, j)",
         "options": [
-          "O(n)",
           "O(n^2)",
           "O(log n)",
-          "O(n!)"
+          "O(n!)",
+          "O(n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The loops are nested. For each of the n iterations of i, the inner loop runs n times. n * n = n^2."
       },
       {
@@ -99,12 +99,12 @@
         "type": "multiple_choice",
         "prompt": "Which complexity class is generally considered better (faster) for large n?",
         "options": [
-          "O(n)",
-          "O(n log n)",
           "O(n^2)",
-          "O(2^n)"
+          "O(2^n)",
+          "O(n)",
+          "O(n log n)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "O(n) grows slower than O(n log n), O(n^2), and O(2^n)."
       },
       {
@@ -112,12 +112,12 @@
         "type": "multiple_choice",
         "prompt": "Binary Search has a time complexity of:",
         "options": [
-          "O(n)",
           "O(log n)",
+          "O(n)",
           "O(1)",
           "O(n^2)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Binary search divides the search space in half at each step, resulting in logarithmic complexity."
       },
       {
@@ -126,12 +126,12 @@
         "prompt": "What is the complexity if the loop runs `i = i * 2` instead of `i++` up to n?",
         "codeSnippet": "i = 1\nwhile i < n:\n    print(i)\n    i = i * 2",
         "options": [
-          "O(n)",
-          "O(n^2)",
           "O(log n)",
-          "O(1)"
+          "O(n^2)",
+          "O(1)",
+          "O(n)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The variable i doubles each time, so it reaches n in log2(n) steps."
       }
     ]
@@ -167,12 +167,12 @@
         "type": "multiple_choice",
         "prompt": "What is the complexity of accessing the nth element in a Linked List?",
         "options": [
-          "O(1)",
-          "O(n)",
           "O(log n)",
-          "O(n^2)"
+          "O(n^2)",
+          "O(n)",
+          "O(1)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Unlike arrays (O(1)), you must traverse the linked list pointers from the head to reach the nth node."
       },
       {
@@ -181,12 +181,12 @@
         "prompt": "Analyze this complexity:",
         "codeSnippet": "def func(n):\n    if n <= 1: return\n    func(n - 1)\n    func(n - 1)",
         "options": [
-          "O(n)",
           "O(n^2)",
-          "O(2^n)",
-          "O(log n)"
+          "O(n)",
+          "O(log n)",
+          "O(2^n)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Each call branches into two recursive calls, creating a binary tree of depth n. 2^0 + 2^1 + ... + 2^n nodes."
       },
       {

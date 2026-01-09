@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which function is used to open a file in C?",
         "options": [
-          "open()",
-          "fopen()",
+          "readfile()",
           "file_open()",
-          "readfile()"
+          "fopen()",
+          "open()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "fopen() is the standard library function used to open files in C."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What does the file mode \"w\" do when opening a file?",
         "options": [
+          "Opens for writing only if exists",
           "Opens for reading",
           "Opens for writing (creates/truncates)",
-          "Opens for appending",
-          "Opens for writing only if exists"
+          "Opens for appending"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Mode \"w\" opens a file for writing, creating it if it doesn't exist and truncating it if it does."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between \"r\" and \"r+\" modes?",
         "options": [
-          "No difference",
           "r+ allows writing too",
           "r is faster",
-          "r+ creates file if missing"
+          "r+ creates file if missing",
+          "No difference"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "\"r\" is read-only, while \"r+\" opens for both reading and writing. Both require the file to exist."
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "Which function reads a line of text from a file?",
         "options": [
-          "fscanf()",
           "fgets()",
           "fread()",
+          "fscanf()",
           "getline()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "fgets() reads a line (up to newline or buffer size) from a file. It's the safest way to read lines."
       },
       {
@@ -97,12 +97,12 @@
         "type": "multiple_choice",
         "prompt": "What is the return value of fgetc() when end of file is reached?",
         "options": [
-          "0",
+          "-1",
           "NULL",
-          "EOF",
-          "-1"
+          "0",
+          "EOF"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "fgetc() returns EOF (typically -1) when end of file is reached or an error occurs."
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "Which function writes formatted data to a file?",
         "options": [
-          "printf()",
           "fprintf()",
           "fwrite()",
+          "printf()",
           "fputs()"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "fprintf() writes formatted data to a file, similar to printf() but with a file stream argument."
       }
     ]
@@ -170,12 +170,12 @@
         "type": "multiple_choice",
         "prompt": "What does SEEK_END mean in fseek()?",
         "options": [
-          "Seek to end and stop",
           "Position relative to end of file",
           "End seeking mode",
-          "Close file after seek"
+          "Close file after seek",
+          "Seek to end and stop"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "SEEK_END means the offset is relative to the end of the file. Often used with offset 0 to go to EOF."
       },
       {

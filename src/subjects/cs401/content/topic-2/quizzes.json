@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Why is clock synchronization difficult in distributed systems?",
         "options": [
-          "No shared physical clock and network delays",
           "Computers run at different speeds",
-          "Time zones differ",
-          "Hardware clock precision"
+          "No shared physical clock and network delays",
+          "Hardware clock precision",
+          "Time zones differ"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Without a shared physical clock and with variable network delays, achieving precise clock synchronization across distributed nodes is fundamentally challenging."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is clock drift?",
         "options": [
-          "Gradual divergence of a clock from actual time",
           "Moving servers to different locations",
-          "Network delay variations",
-          "Time zone changes"
+          "Time zone changes",
+          "Gradual divergence of a clock from actual time",
+          "Network delay variations"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Clock drift occurs when a computer's clock gradually runs faster or slower than actual time due to hardware imperfections, requiring periodic synchronization."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What does the Network Time Protocol (NTP) provide?",
         "options": [
-          "Clock synchronization across networks",
           "Logical time ordering",
-          "Network bandwidth measurement",
-          "Packet routing"
+          "Packet routing",
+          "Clock synchronization across networks",
+          "Network bandwidth measurement"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "NTP synchronizes computer clocks across networks using a hierarchy of time servers, accounting for network delays to achieve millisecond-level accuracy."
       },
       {
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What happens when a process receives a message in Lamport clocks?",
         "options": [
-          "Sets clock to max(local, message) + 1",
           "Uses the message timestamp",
           "Decrements its clock",
+          "Sets clock to max(local, message) + 1",
           "Resets clock to zero"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "When receiving a message, a process updates its clock to the maximum of its local clock and the message timestamp, then increments, ensuring consistency with the happens-before relation."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What limitation do Lamport clocks have?",
         "options": [
-          "Cannot detect concurrent events",
           "Require physical clock synchronization",
-          "Too complex to implement",
-          "Don't work with more than two processes"
+          "Don't work with more than two processes",
+          "Cannot detect concurrent events",
+          "Too complex to implement"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Lamport clocks can determine if events are ordered but cannot distinguish concurrent events (those that don't causally affect each other) since concurrent events may have different timestamps."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What do vector clocks provide that Lamport clocks don't?",
         "options": [
+          "Physical time accuracy",
           "Detection of concurrent events",
-          "Faster execution",
           "Less memory usage",
-          "Physical time accuracy"
+          "Faster execution"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Vector clocks maintain a vector of logical times (one per process), allowing them to detect concurrent events by comparing vectors, which Lamport clocks cannot do."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is the happens-before relation in distributed systems?",
         "options": [
+          "Process ID-based ordering",
           "A partial ordering of events based on causality",
-          "Strict time-based ordering",
           "Random event ordering",
-          "Process ID-based ordering"
+          "Strict time-based ordering"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The happens-before relation (→) is a partial order that captures causal dependencies: if event a could affect event b, then a → b, but concurrent events are unordered."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is total ordering in distributed systems?",
         "options": [
-          "Every pair of events has a defined order",
-          "Only causally related events are ordered",
           "Events are unordered",
-          "Only local events are ordered"
+          "Only local events are ordered",
+          "Every pair of events has a defined order",
+          "Only causally related events are ordered"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Total ordering means every pair of events has a defined order, even concurrent ones. This is stronger than the partial ordering provided by causality alone."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is causal ordering of messages?",
         "options": [
-          "Messages are delivered in causal order",
           "Messages arrive in send order",
+          "Messages are delivered randomly",
           "Messages are sorted by timestamp",
-          "Messages are delivered randomly"
+          "Messages are delivered in causal order"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Causal ordering ensures that if message m1 causally precedes m2, then m1 is delivered before m2 at all common destinations, preserving causal relationships."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "Why might causal ordering be preferred over total ordering?",
         "options": [
-          "Allows more concurrency and better performance",
-          "Easier to implement",
           "Requires less bandwidth",
-          "Works without network"
+          "Works without network",
+          "Allows more concurrency and better performance",
+          "Easier to implement"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Causal ordering only orders causally related events, allowing concurrent events to be processed in parallel, enabling better performance than total ordering which orders everything."
       }
     ]

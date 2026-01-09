@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "What is resolution in propositional logic?",
         "options": [
-          "Combining two clauses that contain complementary literals to produce a new clause",
+          "Converting a formula to conjunctive normal form",
           "Resolving conflicts between contradictory rules",
-          "Finding a satisfying assignment for a formula",
-          "Converting a formula to conjunctive normal form"
+          "Combining two clauses that contain complementary literals to produce a new clause",
+          "Finding a satisfying assignment for a formula"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Resolution is an inference rule that takes two clauses containing complementary literals (P and ¬P) and produces a new clause containing all other literals from both clauses. For example, from (P ∨ Q) and (¬P ∨ R), resolution produces (Q ∨ R). This single rule is sufficient for complete inference in propositional logic."
       },
       {
@@ -66,12 +66,12 @@
         "type": "multiple_choice",
         "prompt": "In first-order logic, what does the existential quantifier ∃ mean?",
         "options": [
-          "There exists at least one object in the domain for which the statement is true",
           "The statement is true for all objects in the domain",
+          "The statement may or may not be true",
           "The statement is true for exactly one object",
-          "The statement may or may not be true"
+          "There exists at least one object in the domain for which the statement is true"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The existential quantifier ∃x P(x) means 'there exists at least one x such that P(x) is true'. For example, ∃x Mortal(x) means at least one thing is mortal. This is distinct from the universal quantifier ∀, which requires the statement to hold for all objects in the domain."
       },
       {
@@ -101,12 +101,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of unification in first-order logic?",
         "options": [
-          "To find a substitution that makes different logical expressions identical",
           "To combine multiple knowledge bases",
-          "To convert sentences to CNF",
-          "To eliminate quantifiers from formulas"
+          "To eliminate quantifiers from formulas",
+          "To find a substitution that makes different logical expressions identical",
+          "To convert sentences to CNF"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Unification finds the most general substitution (most general unifier, MGU) that makes two expressions syntactically identical. For example, unifying P(x, B) and P(A, y) gives the substitution {x/A, y/B}. Unification is crucial for resolution in FOL and for pattern matching in logic programming."
       }
     ]
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is Skolemization used for in first-order logic?",
         "options": [
-          "Eliminating existential quantifiers by introducing new function symbols",
+          "Proving theorems more efficiently",
           "Converting universal quantifiers to existential ones",
           "Simplifying propositional formulas",
-          "Proving theorems more efficiently"
+          "Eliminating existential quantifiers by introducing new function symbols"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Skolemization removes existential quantifiers by replacing existentially quantified variables with Skolem functions whose arguments are the universally quantified variables in whose scope the existential appears. For example, ∀x ∃y Loves(x,y) becomes ∀x Loves(x, f(x)) where f is a Skolem function. This preserves satisfiability while enabling resolution."
       },
       {
@@ -157,12 +157,12 @@
         "type": "multiple_choice",
         "prompt": "Which inference algorithm for FOL uses backward chaining?",
         "options": [
-          "Logic programming systems like Prolog",
-          "Forward chaining with modus ponens",
+          "Model checking",
           "Resolution refutation",
-          "Model checking"
+          "Logic programming systems like Prolog",
+          "Forward chaining with modus ponens"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Logic programming languages like Prolog use backward chaining, starting from the query goal and working backwards to find facts that support it. The algorithm tries to match the goal with rule heads, generating subgoals from rule bodies. This goal-directed approach is efficient when you have a specific query and many irrelevant facts in the KB."
       }
     ]

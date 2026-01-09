@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is three-address code?",
         "options": [
-          "Code with three functions",
           "IR where each instruction has at most three operands",
+          "Code with three functions",
           "Code for 3-bit machines",
           "Assembly with three registers"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Three-address code uses instructions of the form x = y op z, with at most two sources and one destination."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is a basic block?",
         "options": [
-          "A simple function",
           "A maximal sequence of instructions with one entry and one exit",
-          "A block of memory",
-          "The smallest unit of code"
+          "A simple function",
+          "The smallest unit of code",
+          "A block of memory"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A basic block is a maximal sequence of straight-line code with no branches except at entry and exit."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is a control flow graph (CFG)?",
         "options": [
-          "A graph of function calls",
           "A directed graph of basic blocks showing control flow",
+          "A graph of function calls",
           "A data structure",
           "A parse tree"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A CFG is a directed graph where nodes are basic blocks and edges represent control flow between them."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What distinguishes high-level IR from low-level IR?",
         "options": [
+          "Low-level is more portable",
           "High-level is faster",
           "High-level preserves more source structure; low-level is closer to machine code",
-          "Low-level is more portable",
           "They are the same"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "High-level IRs retain source-like constructs; low-level IRs are closer to target machine operations."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is Static Single Assignment (SSA) form?",
         "options": [
-          "Code with only one statement",
-          "Each variable is assigned exactly once in the program text",
+          "Code without loops",
           "Single-threaded code",
-          "Code without loops"
+          "Each variable is assigned exactly once in the program text",
+          "Code with only one statement"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "In SSA form, each variable has exactly one definition (assignment) in the static program text."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is a phi (φ) function in SSA?",
         "options": [
-          "A mathematical function",
           "A function that selects a value based on control flow path taken",
+          "A mathematical function",
           "A hashing function",
           "An optimization function"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Phi functions merge values at control flow join points, selecting the value from the incoming edge taken."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "Where are phi functions placed in SSA form?",
         "options": [
-          "At function entries",
           "At dominance frontiers of variable definitions",
+          "Everywhere",
           "At loop exits",
-          "Everywhere"
+          "At function entries"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Phi functions are placed at dominance frontiers, where multiple definitions of a variable may reach."
       },
       {
@@ -124,10 +124,10 @@
         "options": [
           "Smaller code",
           "Faster execution",
-          "Explicit def-use chains simplify many analyses",
-          "Fewer variables"
+          "Fewer variables",
+          "Explicit def-use chains simplify many analyses"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "SSA makes def-use relationships explicit, simplifying optimizations like constant propagation and dead code elimination."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What is \"destruction\" of SSA form?",
         "options": [
-          "Deleting the IR",
           "Converting back to non-SSA form by eliminating phi functions",
+          "Memory deallocation",
           "Removing optimizations",
-          "Memory deallocation"
+          "Deleting the IR"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "SSA destruction converts SSA to conventional form by replacing phi functions with copies."
       }
     ]
@@ -157,11 +157,11 @@
         "prompt": "What is LLVM IR?",
         "options": [
           "A hardware description language",
-          "A typed, SSA-based IR used by LLVM compilers",
           "A virtual machine",
+          "A typed, SSA-based IR used by LLVM compilers",
           "An assembly language"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "LLVM IR is a typed, SSA-based intermediate representation used throughout the LLVM compiler infrastructure."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between quadruples and triples in three-address code?",
         "options": [
-          "No difference",
-          "Quadruples store result name; triples use instruction position",
           "Triples are larger",
-          "Quadruples are deprecated"
+          "Quadruples are deprecated",
+          "No difference",
+          "Quadruples store result name; triples use instruction position"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Quadruples explicitly name the result; triples reference results by instruction number (position)."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What is IR lowering?",
         "options": [
-          "Reducing IR quality",
-          "Translating high-level constructs to lower-level operations",
           "Compressing IR",
-          "Removing optimizations"
+          "Removing optimizations",
+          "Reducing IR quality",
+          "Translating high-level constructs to lower-level operations"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "IR lowering transforms high-level operations (like array access) into sequences of simpler operations."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is a dominator in a control flow graph?",
         "options": [
-          "The entry block",
           "A block through which all paths to another block must pass",
-          "The most executed block",
-          "A recursive block"
+          "The entry block",
+          "A recursive block",
+          "The most executed block"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Block A dominates block B if every path from entry to B goes through A."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "Why might a compiler use multiple IR levels?",
         "options": [
-          "To confuse readers",
-          "Different optimizations work better at different abstraction levels",
           "Required by standards",
-          "To increase compilation time"
+          "To increase compilation time",
+          "To confuse readers",
+          "Different optimizations work better at different abstraction levels"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Multiple IR levels allow optimizations appropriate to each abstraction level (high-level restructuring, low-level register work)."
       }
     ]

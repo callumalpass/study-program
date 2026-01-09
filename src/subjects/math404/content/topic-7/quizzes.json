@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What does complementary slackness require?",
         "options": [
-          "All constraints are active",
+          "The gradient is zero",
           "All multipliers are positive",
-          "λᵢgᵢ(x) = 0 for all i",
-          "The gradient is zero"
+          "All constraints are active",
+          "λᵢgᵢ(x) = 0 for all i"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Complementary slackness: either the constraint is active (gᵢ = 0) or its multiplier is zero (λᵢ = 0)."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "The Lagrangian for min f(x) s.t. g(x) ≤ 0, h(x) = 0 is:",
         "options": [
-          "L = f(x) + λᵀg(x)",
-          "L = f(x) + λᵀg(x) + μᵀh(x)",
+          "L = f(x) + μᵀh(x)",
           "L = f(x) - λᵀg(x)",
-          "L = f(x) + μᵀh(x)"
+          "L = f(x) + λᵀg(x) + μᵀh(x)",
+          "L = f(x) + λᵀg(x)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The Lagrangian is L(x,λ,μ) = f(x) + λᵀg(x) + μᵀh(x), with λ ≥ 0 for inequalities."
       },
       {
@@ -65,12 +65,12 @@
         "type": "multiple_choice",
         "prompt": "The augmented Lagrangian method adds what to the Lagrangian?",
         "options": [
-          "A linear penalty term",
           "A quadratic penalty term",
+          "A linear penalty term",
           "An exponential term",
           "A logarithmic barrier"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Augmented Lagrangian adds (ρ/2)||g(x)||² to improve conditioning while maintaining exact penalty at convergence."
       },
       {
@@ -85,12 +85,12 @@
         "type": "multiple_choice",
         "prompt": "Interior-point methods for NLP use:",
         "options": [
-          "Exact penalties",
           "Barrier functions",
           "Active set strategies",
-          "Gradient projection"
+          "Gradient projection",
+          "Exact penalties"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Interior-point methods use barrier functions (e.g., -log(-g(x))) to keep iterates in the interior of the feasible region."
       },
       {
@@ -98,12 +98,12 @@
         "type": "multiple_choice",
         "prompt": "Sequential Quadratic Programming (SQP) solves a sequence of:",
         "options": [
+          "Integer programs",
           "Linear programs",
-          "Quadratic programs",
           "Unconstrained problems",
-          "Integer programs"
+          "Quadratic programs"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "SQP solves QP subproblems that locally approximate the original NLP using quadratic models."
       },
       {
@@ -126,12 +126,12 @@
         "type": "multiple_choice",
         "prompt": "LICQ (Linear Independence Constraint Qualification) requires:",
         "options": [
+          "All multipliers are positive",
           "All constraints are linear",
           "Gradients of active constraints are linearly independent",
-          "The feasible region is convex",
-          "All multipliers are positive"
+          "The feasible region is convex"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "LICQ requires linear independence of gradients of active inequality constraints and all equality constraints at x*."
       },
       {
@@ -146,12 +146,12 @@
         "type": "multiple_choice",
         "prompt": "The central path in interior-point methods:",
         "options": [
-          "Lies on the boundary",
           "Connects all vertices",
           "Passes through the interior approaching the optimum",
-          "Is always a straight line"
+          "Is always a straight line",
+          "Lies on the boundary"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The central path parameterized by barrier parameter μ lies in the interior and converges to the optimum as μ → 0."
       },
       {
@@ -159,12 +159,12 @@
         "type": "multiple_choice",
         "prompt": "The QP subproblem in SQP approximates the original problem using:",
         "options": [
-          "Linear objective and linear constraints",
-          "Quadratic objective and linearized constraints",
+          "Quadratic objective and constraints",
           "Linear objective and quadratic constraints",
-          "Quadratic objective and constraints"
+          "Quadratic objective and linearized constraints",
+          "Linear objective and linear constraints"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "SQP uses quadratic approximation of the objective (using Hessian or quasi-Newton) and first-order Taylor expansion of constraints."
       },
       {

@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "The order of accuracy of Euler's method is:",
         "options": [
-          "1",
           "2",
-          "3",
-          "4"
+          "1",
+          "4",
+          "3"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Euler's method has order 1: the global error is O(h). Each step introduces local truncation error O(h^2), but accumulating over O(1/h) steps gives O(h) global error."
       },
       {
@@ -66,12 +66,12 @@
         "type": "multiple_choice",
         "prompt": "The trapezoidal method (implicit Euler) for y' = f(t,y) is:",
         "options": [
-          "y_{n+1} = y_n + h·f(t_n, y_n)",
           "y_{n+1} = y_n + (h/2)·[f(t_n, y_n) + f(t_{n+1}, y_{n+1})]",
           "y_{n+1} = y_n + h·f(t_{n+1}, y_{n+1})",
+          "y_{n+1} = y_n + h·f(t_n, y_n)",
           "y_{n+1} = 2y_n - y_{n-1} + h^2·f(t_n, y_n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The trapezoidal (Crank-Nicolson) method averages slopes at t_n and t_{n+1}. It's implicit (requires solving for y_{n+1}), second-order accurate, and A-stable."
       },
       {
@@ -87,12 +87,12 @@
         "type": "multiple_choice",
         "prompt": "Multistep methods (like Adams-Bashforth) use:",
         "options": [
+          "Random sampling points",
           "Only the current point y_n",
           "Values from multiple previous steps y_{n}, y_{n-1}, ...",
-          "Multiple stages within a single step",
-          "Random sampling points"
+          "Multiple stages within a single step"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Multistep methods use values from k previous steps: y_{n+1} = Σ a_i y_{n-i} + h Σ b_i f(t_{n-i}, y_{n-i}). They achieve high order efficiently but require special starting procedures."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "A-stability for an ODE method means:",
         "options": [
-          "The method has high accuracy",
           "The stability region contains the entire left half-plane Re(z) ≤ 0",
-          "The method is explicit",
-          "The method works for all ODEs"
+          "The method has high accuracy",
+          "The method works for all ODEs",
+          "The method is explicit"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A-stable methods have stability regions containing {z ∈ ℂ : Re(z) ≤ 0}, making them stable for all h on stiff problems (where λ has large negative real part). Backward Euler and trapezoidal method are A-stable."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "Adaptive step size control typically uses:",
         "options": [
-          "Fixed reduction/increase of h",
           "Error estimates from comparing methods of different orders",
           "User-specified h",
-          "Random step sizes"
+          "Random step sizes",
+          "Fixed reduction/increase of h"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Adaptive methods estimate local error (e.g., Richardson extrapolation or embedded RK pairs like RK45) and adjust h to maintain error within tolerance: h_new ≈ h(tol/error)^{1/(p+1)}."
       },
       {

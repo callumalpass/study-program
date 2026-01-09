@@ -16,12 +16,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is logically equivalent to P → Q?",
         "options": [
-          "P ∧ Q",
-          "¬P ∨ Q",
           "Q → P",
-          "¬P ∧ ¬Q"
+          "¬P ∧ ¬Q",
+          "¬P ∨ Q",
+          "P ∧ Q"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "An implication P → Q is equivalent to ¬P ∨ Q. The implication is only false when P is true and Q is false."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the contrapositive of \"If it rains, then the streets are wet\"?",
         "options": [
+          "If the streets are not wet, then it does not rain",
           "If it does not rain, then the streets are not wet",
           "If the streets are wet, then it rains",
-          "If the streets are not wet, then it does not rain",
           "It rains if and only if the streets are wet"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The contrapositive of P → Q is ¬Q → ¬P. \"Streets not wet\" → \"It did not rain.\""
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is a tautology?",
         "options": [
+          "(P ∧ Q) → P",
           "P ∨ Q",
           "(P → Q) ∨ (Q → P)",
-          "P → ¬P",
-          "(P ∧ Q) → P"
+          "P → ¬P"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "(P ∧ Q) → P is always true. If both P and Q are true, then certainly P is true. This is called simplification."
       },
       {
@@ -70,11 +70,11 @@
         "prompt": "The negation of \"All cats are mammals\" is:",
         "options": [
           "No cats are mammals",
-          "All cats are not mammals",
           "Some cats are not mammals",
-          "Some cats are mammals"
+          "Some cats are mammals",
+          "All cats are not mammals"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The negation of \"All A are B\" is \"Some A are not B.\" Not all cats need to fail; just one counterexample suffices."
       },
       {
@@ -171,12 +171,12 @@
         "type": "multiple_choice",
         "prompt": "How many elements are in the power set of {a, b, c}?",
         "options": [
-          "3",
           "6",
           "8",
-          "9"
+          "9",
+          "3"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The power set of a set with n elements has 2^n elements. 2³ = 8."
       },
       {
@@ -198,12 +198,12 @@
         "type": "multiple_choice",
         "prompt": "If |A| = 5, |B| = 7, and |A ∩ B| = 3, what is |A ∪ B|?",
         "options": [
+          "15",
           "12",
           "9",
-          "15",
           "10"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "By inclusion-exclusion: |A ∪ B| = |A| + |B| - |A ∩ B| = 5 + 7 - 3 = 9."
       },
       {
@@ -225,11 +225,11 @@
         "prompt": "A relation R on set A is reflexive if:",
         "options": [
           "For some a ∈ A, (a, a) ∈ R",
-          "For all a ∈ A, (a, a) ∈ R",
           "For all a, b ∈ A, (a, b) ∈ R implies (b, a) ∈ R",
-          "For all a ∈ A, (a, a) ∉ R"
+          "For all a ∈ A, (a, a) ∉ R",
+          "For all a ∈ A, (a, a) ∈ R"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Reflexive means every element is related to itself: aRa for all a in A."
       },
       {
@@ -244,12 +244,12 @@
         "type": "multiple_choice",
         "prompt": "A partial order is:",
         "options": [
+          "Reflexive, symmetric, antisymmetric",
           "Reflexive, symmetric, transitive",
-          "Reflexive, antisymmetric, transitive",
           "Irreflexive, symmetric, transitive",
-          "Reflexive, symmetric, antisymmetric"
+          "Reflexive, antisymmetric, transitive"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A partial order is reflexive, antisymmetric, and transitive. Examples: ≤ on numbers, ⊆ on sets."
       },
       {
@@ -257,12 +257,12 @@
         "type": "multiple_choice",
         "prompt": "The relation \"is a divisor of\" on positive integers is:",
         "options": [
-          "Symmetric",
           "Antisymmetric",
           "Neither symmetric nor antisymmetric",
-          "Both symmetric and antisymmetric"
+          "Both symmetric and antisymmetric",
+          "Symmetric"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "If a|b and b|a for positive integers, then a = b. Thus it's antisymmetric. It's not symmetric (2|4 but 4∤2)."
       },
       {
@@ -319,12 +319,12 @@
         "type": "multiple_choice",
         "prompt": "If P is false and Q is true, what is the truth value of P → Q?",
         "options": [
-          "True",
-          "False",
+          "Undefined",
           "Unknown",
-          "Undefined"
+          "False",
+          "True"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "An implication with a false antecedent is vacuously true. P → Q is only false when P is true and Q is false."
       },
       {
@@ -339,12 +339,12 @@
         "type": "multiple_choice",
         "prompt": "Which represents \"Neither P nor Q\"?",
         "options": [
-          "P ∧ Q",
           "P ∨ Q",
           "¬P ∧ ¬Q",
+          "P ∧ Q",
           "¬(P ∧ Q)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "\"Neither P nor Q\" means both are false: ¬P ∧ ¬Q."
       },
       {
@@ -352,12 +352,12 @@
         "type": "multiple_choice",
         "prompt": "Which proof technique directly shows that assuming P leads to Q?",
         "options": [
-          "Direct proof",
-          "Proof by contrapositive",
+          "Proof by cases",
           "Proof by contradiction",
-          "Proof by cases"
+          "Direct proof",
+          "Proof by contrapositive"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A direct proof assumes P and derives Q through logical steps."
       },
       {
@@ -372,12 +372,12 @@
         "type": "multiple_choice",
         "prompt": "In the inductive step of mathematical induction, what do you assume?",
         "options": [
-          "P(1) is true",
           "P(k) is true for some arbitrary k",
           "P(n) is true for all n",
+          "P(1) is true",
           "P(k+1) is true"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The inductive hypothesis assumes P(k) is true for an arbitrary k ≥ base case."
       },
       {
@@ -392,12 +392,12 @@
         "type": "multiple_choice",
         "prompt": "The contrapositive of P → Q is:",
         "options": [
-          "Q → P",
           "¬P → ¬Q",
           "¬Q → ¬P",
+          "Q → P",
           "¬P ↔ ¬Q"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The contrapositive swaps and negates: P → Q becomes ¬Q → ¬P."
       },
       {
@@ -405,12 +405,12 @@
         "type": "multiple_choice",
         "prompt": "If A = {1, 2, 3} and B = {2, 3, 4}, what is A △ B (symmetric difference)?",
         "options": [
-          "{1, 4}",
-          "{2, 3}",
           "{1, 2, 3, 4}",
+          "{2, 3}",
+          "{1, 4}",
           "∅"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "A △ B = (A - B) ∪ (B - A) = {1} ∪ {4} = {1, 4}."
       },
       {
@@ -445,12 +445,12 @@
         "type": "multiple_choice",
         "prompt": "Which property states A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)?",
         "options": [
-          "Associative",
           "Commutative",
-          "Distributive",
-          "Absorption"
+          "Absorption",
+          "Associative",
+          "Distributive"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Intersection distributes over union (and vice versa)."
       },
       {
@@ -458,12 +458,12 @@
         "type": "multiple_choice",
         "prompt": "Which property is NOT required for an equivalence relation?",
         "options": [
+          "Antisymmetric",
           "Reflexive",
           "Symmetric",
-          "Antisymmetric",
           "Transitive"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Equivalence relations are reflexive, symmetric, and transitive. Antisymmetric is for partial orders."
       },
       {
@@ -478,12 +478,12 @@
         "type": "multiple_choice",
         "prompt": "If an equivalence relation on a 12-element set has 4 equivalence classes, what is true about the class sizes?",
         "options": [
-          "All classes have 3 elements",
-          "The sizes sum to 12",
           "Each class has at least 4 elements",
-          "All classes have the same size"
+          "All classes have the same size",
+          "All classes have 3 elements",
+          "The sizes sum to 12"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Equivalence classes partition the set, so the sizes must sum to 12. They need not be equal."
       },
       {
@@ -498,12 +498,12 @@
         "type": "multiple_choice",
         "prompt": "The transitive closure of R adds which pairs?",
         "options": [
-          "All (a, a) pairs",
-          "All (b, a) if (a, b) ∈ R",
           "All (a, c) if there's a path from a to c in R",
-          "All pairs not in R"
+          "All pairs not in R",
+          "All (a, a) pairs",
+          "All (b, a) if (a, b) ∈ R"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Transitive closure adds (a, c) whenever there's a sequence a→b₁→b₂→...→c in R."
       },
       {
@@ -513,10 +513,10 @@
         "options": [
           "Injective only",
           "Surjective only",
-          "Both injective and surjective",
-          "Neither injective nor surjective"
+          "Neither injective nor surjective",
+          "Both injective and surjective"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "A bijection is both one-to-one (injective) and onto (surjective)."
       },
       {
@@ -531,12 +531,12 @@
         "type": "multiple_choice",
         "prompt": "If f(x) = x² with domain ℝ, f is:",
         "options": [
+          "None of the above",
           "Injective",
           "Surjective",
-          "Bijective",
-          "None of the above"
+          "Bijective"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "f is not injective (f(-2) = f(2)) and not surjective (negative numbers not in range)."
       },
       {
@@ -551,12 +551,12 @@
         "type": "multiple_choice",
         "prompt": "The floor function ⌊3.7⌋ equals:",
         "options": [
+          "0",
           "4",
           "3",
-          "3.7",
-          "0"
+          "3.7"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The floor function gives the greatest integer ≤ the input. ⌊3.7⌋ = 3."
       },
       {
@@ -571,12 +571,12 @@
         "type": "multiple_choice",
         "prompt": "The negation of ∀x P(x) is:",
         "options": [
-          "∀x ¬P(x)",
           "∃x ¬P(x)",
-          "¬∃x P(x)",
-          "∃x P(x)"
+          "∃x P(x)",
+          "∀x ¬P(x)",
+          "¬∃x P(x)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "¬∀x P(x) ≡ ∃x ¬P(x). \"Not all have P\" means \"some don't have P.\""
       },
       {
@@ -591,12 +591,12 @@
         "type": "multiple_choice",
         "prompt": "How do you express \"All dogs are mammals\" in predicate logic? (D(x) = dog, M(x) = mammal)",
         "options": [
-          "∀x (D(x) ∧ M(x))",
           "∀x (D(x) → M(x))",
-          "∃x (D(x) ∧ M(x))",
-          "∃x (D(x) → M(x))"
+          "∃x (D(x) → M(x))",
+          "∀x (D(x) ∧ M(x))",
+          "∃x (D(x) ∧ M(x))"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "\"All A are B\" translates to ∀x (A(x) → B(x)). Use implication with ∀."
       },
       {
@@ -611,12 +611,12 @@
         "type": "multiple_choice",
         "prompt": "What is the negation of ∃x (P(x) ∧ Q(x))?",
         "options": [
-          "∃x (¬P(x) ∧ ¬Q(x))",
+          "Both B and C are correct",
           "∀x (¬P(x) ∨ ¬Q(x))",
           "∀x (P(x) → ¬Q(x))",
-          "Both B and C are correct"
+          "∃x (¬P(x) ∧ ¬Q(x))"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "¬∃x(P∧Q) ≡ ∀x¬(P∧Q) ≡ ∀x(¬P∨¬Q) ≡ ∀x(P→¬Q). Both B and C are equivalent."
       },
       {
@@ -632,12 +632,12 @@
         "type": "multiple_choice",
         "prompt": "What is the 15th term of the arithmetic sequence 3, 7, 11, 15, ...?",
         "options": [
-          "55",
-          "59",
           "63",
-          "67"
+          "67",
+          "59",
+          "55"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "a₁ = 3, d = 4. a₁₅ = 3 + (15-1)·4 = 3 + 56 = 59."
       },
       {
@@ -645,12 +645,12 @@
         "type": "multiple_choice",
         "prompt": "What is Σ(i=1 to 50) i using the formula?",
         "options": [
-          "1250",
-          "1275",
+          "2550",
           "2500",
-          "2550"
+          "1250",
+          "1275"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Σi = n(n+1)/2 = 50(51)/2 = 1275."
       },
       {
@@ -673,11 +673,11 @@
         "prompt": "The sum Σ(i=0 to ∞) (1/3)ⁱ equals:",
         "options": [
           "1",
-          "3/2",
           "2",
-          "3"
+          "3",
+          "3/2"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Infinite geometric series with a=1, r=1/3: S = a/(1-r) = 1/(1-1/3) = 1/(2/3) = 3/2."
       },
       {
@@ -685,12 +685,12 @@
         "type": "multiple_choice",
         "prompt": "Which recurrence relation has solution aₙ = 2ⁿ?",
         "options": [
-          "aₙ = aₙ₋₁ + 2",
           "aₙ = 2aₙ₋₁",
           "aₙ = aₙ₋₁ + n",
-          "aₙ = n·aₙ₋₁"
+          "aₙ = n·aₙ₋₁",
+          "aₙ = aₙ₋₁ + 2"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "If aₙ = 2aₙ₋₁ and a₀ = 1, then aₙ = 2ⁿ."
       },
       {
@@ -706,12 +706,12 @@
         "type": "multiple_choice",
         "prompt": "If R is an equivalence relation and S is a partial order on the same set A, which statement is generally FALSE?",
         "options": [
-          "R partitions A into equivalence classes",
-          "S may have incomparable elements",
+          "R is always antisymmetric",
           "R is always transitive",
-          "R is always antisymmetric"
+          "R partitions A into equivalence classes",
+          "S may have incomparable elements"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "Equivalence relations are symmetric, not antisymmetric. The only relation both symmetric and antisymmetric has only (a,a) pairs."
       },
       {
@@ -734,12 +734,12 @@
         "type": "multiple_choice",
         "prompt": "Which statement correctly combines quantifiers and set notation?",
         "options": [
-          "∀x ∈ A, ∃y ∈ B: x + y = 0  means every element of A has an additive inverse in B",
-          "∃x ∈ A, ∀y ∈ B: x < y  means A has a lower bound in B",
           "∀x ∈ A ∩ B: P(x) means P holds for elements in both A and B",
-          "All of the above are correct interpretations"
+          "∃x ∈ A, ∀y ∈ B: x < y  means A has a lower bound in B",
+          "All of the above are correct interpretations",
+          "∀x ∈ A, ∃y ∈ B: x + y = 0  means every element of A has an additive inverse in B"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "All three statements correctly interpret the combination of quantifiers and set notation."
       },
       {

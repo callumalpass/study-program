@@ -31,11 +31,11 @@
         "prompt": "In OAuth 2.0, what is the purpose of an access token?",
         "options": [
           "To store the user's password",
-          "To grant limited access to resources without sharing credentials",
+          "To authenticate the user's identity",
           "To encrypt network traffic",
-          "To authenticate the user's identity"
+          "To grant limited access to resources without sharing credentials"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "An OAuth access token is a credential that allows applications to access specific resources on behalf of a user without requiring the user's password. Tokens can have limited scope and expiration times for enhanced security."
       },
       {
@@ -44,11 +44,11 @@
         "prompt": "What does RBAC stand for in access control?",
         "options": [
           "Rule-Based Access Control",
+          "Recursive-Based Access Control",
           "Role-Based Access Control",
-          "Remote-Based Access Control",
-          "Recursive-Based Access Control"
+          "Remote-Based Access Control"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "RBAC (Role-Based Access Control) assigns permissions to roles rather than individual users. Users are then assigned roles, simplifying permission management in large organizations. For example, all \"Managers\" might have the same set of permissions."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main security advantage of using a password manager?",
         "options": [
-          "It eliminates the need for passwords",
-          "It allows you to use strong, unique passwords for every service without memorizing them",
           "It automatically detects phishing attempts",
-          "It encrypts all network traffic"
+          "It encrypts all network traffic",
+          "It allows you to use strong, unique passwords for every service without memorizing them",
+          "It eliminates the need for passwords"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Password managers securely store unique, complex passwords for each service. This prevents password reuse attacks where a breach on one service compromises other accounts. Users only need to remember one strong master password."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "What security risk does OAuth 2.0 mitigate by using authorization codes and redirect URIs?",
         "options": [
-          "SQL injection",
-          "Token theft through compromised client applications",
+          "Man-in-the-middle attacks during token exchange",
           "DDoS attacks",
-          "Man-in-the-middle attacks during token exchange"
+          "SQL injection",
+          "Token theft through compromised client applications"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 0,
         "explanation": "OAuth 2.0's authorization code flow with PKCE (Proof Key for Code Exchange) prevents attackers from intercepting authorization codes and exchanging them for tokens. The code is exchanged for tokens on the backend, and PKCE ensures the same client that requested the code exchanges it."
       },
       {
@@ -133,11 +133,11 @@
         "prompt": "What is the primary purpose of JWT (JSON Web Token) in authentication?",
         "options": [
           "To encrypt user passwords",
-          "To provide a self-contained token that carries claims about the user",
           "To replace HTTPS",
+          "To provide a self-contained token that carries claims about the user",
           "To store session data on the server"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "JWTs are self-contained tokens that include claims (like user ID, roles, expiration) and are digitally signed. Servers can verify and trust the token without storing session state, making them useful for stateless authentication in distributed systems."
       },
       {

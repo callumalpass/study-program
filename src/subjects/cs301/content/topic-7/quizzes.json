@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is demand paging?",
         "options": [
-          "Loading all pages at once",
-          "Loading pages only when needed",
           "Deleting pages",
-          "Caching pages"
+          "Caching pages",
+          "Loading all pages at once",
+          "Loading pages only when needed"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Demand paging loads pages into memory only when they are accessed (on demand)."
       },
       {
@@ -24,11 +24,11 @@
         "prompt": "What happens during a page fault?",
         "options": [
           "CPU crashes",
-          "Requested page is loaded from disk",
           "Memory is cleared",
+          "Requested page is loaded from disk",
           "Process terminates"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "A page fault triggers loading the requested page from secondary storage."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What is the optimal page replacement algorithm?",
         "options": [
-          "Replace random page",
           "Replace page that won't be used longest",
-          "Replace newest page",
-          "Replace smallest page"
+          "Replace random page",
+          "Replace smallest page",
+          "Replace newest page"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Optimal replaces the page that won't be used for the longest time in the future."
       },
       {
@@ -50,11 +50,11 @@
         "prompt": "Why is optimal replacement impractical?",
         "options": [
           "Too slow",
-          "Requires knowing future references",
           "Too complex",
+          "Requires knowing future references",
           "Hardware limitation"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Optimal requires knowing future page references, which is impossible in practice."
       },
       {
@@ -90,12 +90,12 @@
         "type": "multiple_choice",
         "prompt": "What is the clock algorithm?",
         "options": [
-          "Time-based scheduling",
           "Second-chance FIFO with reference bit",
           "Hardware clock",
+          "Time-based scheduling",
           "Real-time algorithm"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Clock algorithm is a circular queue with reference bits giving pages a second chance."
       },
       {
@@ -103,12 +103,12 @@
         "type": "multiple_choice",
         "prompt": "What is thrashing?",
         "options": [
+          "CPU overload",
           "Fast paging",
           "Excessive paging reducing performance",
-          "Memory overflow",
-          "CPU overload"
+          "Memory overflow"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Thrashing occurs when the system spends more time paging than executing."
       },
       {
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "What is an inode in Unix?",
         "options": [
-          "File name",
-          "Data structure containing file metadata",
           "Directory",
-          "Disk sector"
+          "Disk sector",
+          "Data structure containing file metadata",
+          "File name"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "An inode stores file metadata and pointers to data blocks, but not the file name."
       },
       {
@@ -157,12 +157,12 @@
         "type": "multiple_choice",
         "prompt": "What does journaling provide?",
         "options": [
+          "Larger capacity",
           "Faster access",
           "Crash recovery by logging changes",
-          "Larger capacity",
           "Better security"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Journaling records operations before committing, enabling recovery after crashes."
       },
       {
@@ -183,12 +183,12 @@
         "type": "multiple_choice",
         "prompt": "What file allocation method does ext4 primarily use?",
         "options": [
-          "Contiguous",
           "Linked",
           "Indexed with extents",
+          "Contiguous",
           "FAT"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "ext4 uses extents, which are contiguous block ranges, for efficient allocation."
       },
       {

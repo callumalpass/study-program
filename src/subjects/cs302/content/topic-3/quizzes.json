@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "How many bits are in an IPv4 address?",
         "options": [
+          "128 bits",
           "16 bits",
           "32 bits",
-          "48 bits",
-          "128 bits"
+          "48 bits"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "IPv4 addresses are 32 bits long, typically written as four decimal octets (e.g., 192.168.1.1). IPv6 uses 128 bits."
       },
       {
@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "What is the CIDR notation for a subnet mask of 255.255.255.0?",
         "options": [
+          "/24",
           "/8",
           "/16",
-          "/24",
           "/32"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "255.255.255.0 has 24 bits set to 1 (network portion), so the CIDR notation is /24."
       },
       {
@@ -80,11 +80,11 @@
         "prompt": "What ICMP message type is used by the ping command?",
         "options": [
           "Destination Unreachable",
-          "Time Exceeded",
           "Echo Request/Reply",
-          "Redirect"
+          "Redirect",
+          "Time Exceeded"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Ping uses ICMP Echo Request (type 8) and Echo Reply (type 0) to test network connectivity."
       },
       {
@@ -99,12 +99,12 @@
         "type": "multiple_choice",
         "prompt": "Which field in the IPv4 header identifies the upper-layer protocol?",
         "options": [
-          "Version",
           "Protocol",
-          "TTL",
-          "Header Checksum"
+          "Header Checksum",
+          "Version",
+          "TTL"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The Protocol field indicates which protocol is encapsulated in the payload (e.g., 6 for TCP, 17 for UDP, 1 for ICMP)."
       },
       {
@@ -168,12 +168,12 @@
         "type": "multiple_choice",
         "prompt": "Which private address range provides the largest number of addresses?",
         "options": [
+          "10.0.0.0/8",
           "192.168.0.0/16",
           "172.16.0.0/12",
-          "10.0.0.0/8",
           "169.254.0.0/16"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "10.0.0.0/8 provides about 16.7 million addresses. 172.16.0.0/12 provides about 1 million, and 192.168.0.0/16 provides 65,536."
       }
     ]

@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the value of ∫₀¹ ∫₀² xy dy dx?",
         "options": [
-          "1",
           "2",
           "1/2",
+          "1",
           "4"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "∫₀¹ ∫₀² xy dy dx = ∫₀¹ [xy²/2]₀² dx = ∫₀¹ 2x dx = [x²]₀¹ = 1"
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What does the double integral ∫∫_R 1 dA represent geometrically?",
         "options": [
+          "Center of mass",
           "Area of region R",
           "Perimeter of R",
-          "Volume above R",
-          "Center of mass"
+          "Volume above R"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The double integral of 1 over a region gives the area of that region"
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "For the region bounded by y = x² and y = 4, which integral setup is correct for ∫∫_R f(x,y) dA?",
         "options": [
-          "∫₋₂² ∫_{x²}⁴ f(x,y) dy dx",
           "∫₀⁴ ∫₋₂² f(x,y) dx dy",
           "∫₀² ∫_{x²}⁴ f(x,y) dy dx",
-          "∫₋₂² ∫₀⁴ f(x,y) dy dx"
+          "∫₋₂² ∫₀⁴ f(x,y) dy dx",
+          "∫₋₂² ∫_{x²}⁴ f(x,y) dy dx"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The curves intersect at x = ±2. For each x ∈ [-2,2], y ranges from x² to 4"
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "In polar coordinates, what is the area element dA?",
         "options": [
-          "r dr dθ",
           "dr dθ",
           "r² dr dθ",
+          "r dr dθ",
           "r dθ dr"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The Jacobian of the polar coordinate transformation gives dA = r dr dθ (the extra r factor is crucial)"
       }
     ]
@@ -97,12 +97,12 @@
         "type": "multiple_choice",
         "prompt": "What is the volume element dV in cylindrical coordinates?",
         "options": [
+          "r² dz dr dθ",
           "r dz dr dθ",
           "dz dr dθ",
-          "r² dz dr dθ",
           "r dz dθ dr"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "In cylindrical coordinates (r,θ,z), the volume element is dV = r dz dr dθ"
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "In cylindrical coordinates, which conversion formula is correct?",
         "options": [
-          "x = r cos(θ), y = r sin(θ), z = z",
-          "x = r sin(θ), y = r cos(θ), z = z",
           "x = r, y = θ, z = z",
-          "x = r cos(z), y = r sin(z)"
+          "x = r cos(z), y = r sin(z)",
+          "x = r sin(θ), y = r cos(θ), z = z",
+          "x = r cos(θ), y = r sin(θ), z = z"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Cylindrical coordinates extend polar coordinates by adding the z-component unchanged"
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "What is the volume element dV in spherical coordinates?",
         "options": [
-          "ρ² sin(φ) dρ dφ dθ",
-          "ρ² dρ dφ dθ",
+          "ρ² cos(φ) dρ dφ dθ",
           "ρ sin(φ) dρ dφ dθ",
-          "ρ² cos(φ) dρ dφ dθ"
+          "ρ² sin(φ) dρ dφ dθ",
+          "ρ² dρ dφ dθ"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The Jacobian for spherical coordinates gives dV = ρ² sin(φ) dρ dφ dθ"
       }
     ]
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "In spherical coordinates, what is the conversion formula for z?",
         "options": [
-          "z = ρ cos(φ)",
-          "z = ρ sin(φ)",
           "z = ρ sin(φ) cos(θ)",
-          "z = ρ cos(θ)"
+          "z = ρ cos(θ)",
+          "z = ρ cos(φ)",
+          "z = ρ sin(φ)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "In spherical coordinates (ρ,φ,θ), we have z = ρ cos(φ), where φ is the angle from the positive z-axis"
       },
       {
@@ -164,12 +164,12 @@
         "type": "multiple_choice",
         "prompt": "What is the mass of a solid with density δ(x,y,z) occupying region E?",
         "options": [
+          "∫∫_E δ(x,y,z) dA",
           "∫∫∫_E δ(x,y,z) dV",
-          "∫∫∫_E dV",
           "∫∫∫_E 1/δ(x,y,z) dV",
-          "∫∫_E δ(x,y,z) dA"
+          "∫∫∫_E dV"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Mass = ∫∫∫_E δ(x,y,z) dV, where δ is the density function"
       },
       {
@@ -177,12 +177,12 @@
         "type": "multiple_choice",
         "prompt": "For a lamina (thin plate) with density δ(x,y), what is the formula for mass?",
         "options": [
-          "∫∫_R δ(x,y) dA",
-          "∫∫_R dA",
+          "∫_R δ(x,y) ds",
           "∫∫_R 1/δ(x,y) dA",
-          "∫_R δ(x,y) ds"
+          "∫∫_R δ(x,y) dA",
+          "∫∫_R dA"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "For a 2D lamina, mass = ∫∫_R δ(x,y) dA"
       },
       {
@@ -190,12 +190,12 @@
         "type": "multiple_choice",
         "prompt": "The center of mass x̄ of a lamina is M_y divided by what?",
         "options": [
-          "m",
           "M_x",
-          "A",
-          "ρ"
+          "ρ",
+          "m",
+          "A"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "x̄ = M_y/m, where M_y is the moment about the y-axis and m is the total mass"
       }
     ]

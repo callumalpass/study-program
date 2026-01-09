@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "A function f is Riemann integrable on [a, b] if:",
         "options": [
-          "The upper and lower Riemann sums converge to the same value",
           "f is continuous on [a, b]",
+          "f is differentiable on [a, b]",
           "f is bounded on [a, b]",
-          "f is differentiable on [a, b]"
+          "The upper and lower Riemann sums converge to the same value"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Riemann integrability requires that sup(L(f, P)) = inf(U(f, P)) where L and U are lower and upper sums over all partitions P."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Every continuous function on [a, b] is:",
         "options": [
-          "Riemann integrable",
-          "Not Riemann integrable",
           "Unbounded",
-          "Not differentiable"
+          "Riemann integrable",
+          "Not differentiable",
+          "Not Riemann integrable"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Continuity on a closed bounded interval guarantees Riemann integrability. This is a fundamental theorem of integration."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "A bounded function with finitely many discontinuities on [a, b] is:",
         "options": [
-          "Riemann integrable",
+          "Not bounded",
           "Not Riemann integrable",
-          "Continuous",
-          "Not bounded"
+          "Riemann integrable",
+          "Continuous"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Functions with finitely many discontinuities are Riemann integrable, provided they are bounded. This extends the continuity criterion."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "The function f(x) = 1 if x is rational, 0 if x is irrational, on [0, 1] is:",
         "options": [
+          "Riemann integrable with integral 0",
           "Not Riemann integrable",
           "Riemann integrable with integral 1",
-          "Riemann integrable with integral 0",
           "Riemann integrable with integral 1/2"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "This is Dirichlet's function. It has discontinuities everywhere, so upper sums equal 1 and lower sums equal 0, making it non-integrable."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "If f is Riemann integrable on [a, b], then f is:",
         "options": [
-          "Bounded on [a, b]",
+          "Constant on [a, b]",
           "Continuous on [a, b]",
           "Differentiable on [a, b]",
-          "Constant on [a, b]"
+          "Bounded on [a, b]"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Riemann integrability requires boundedness. However, the function need not be continuous or differentiable."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "If f is integrable on [a, b] and f(x) ≥ 0 for all x, then:",
         "options": [
-          "∫ₐᵇ f(x)dx ≥ 0",
           "∫ₐᵇ f(x)dx < 0",
           "∫ₐᵇ f(x)dx = 0",
-          "f is constant"
+          "f is constant",
+          "∫ₐᵇ f(x)dx ≥ 0"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "This is the positivity property of the integral: if f ≥ 0, then its integral is non-negative."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "The Fundamental Theorem of Calculus (Part 1) states that if f is continuous on [a, b] and F(x) = ∫ₐˣ f(t)dt, then:",
         "options": [
-          "F'(x) = f(x)",
           "F(x) = f'(x)",
-          "F(x) is constant",
-          "f(x) is constant"
+          "f(x) is constant",
+          "F'(x) = f(x)",
+          "F(x) is constant"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "FTC Part 1: the derivative of the integral function F(x) = ∫ₐˣ f(t)dt is f(x). Integration and differentiation are inverse operations."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "The Fundamental Theorem of Calculus (Part 2) states that if f is continuous on [a, b] and F is an antiderivative of f, then:",
         "options": [
-          "∫ₐᵇ f(x)dx = F(b) - F(a)",
           "∫ₐᵇ f(x)dx = F'(b) - F'(a)",
+          "∫ₐᵇ f(x)dx = F(b) - F(a)",
           "∫ₐᵇ f(x)dx = F(a) - F(b)",
           "∫ₐᵇ f(x)dx = F(b) + F(a)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "FTC Part 2: the definite integral equals the antiderivative evaluated at the endpoints. This is the evaluation theorem."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "If f and g are integrable on [a, b], then ∫ₐᵇ [f(x) + g(x)]dx equals:",
         "options": [
+          "0",
           "∫ₐᵇ f(x)dx + ∫ₐᵇ g(x)dx",
           "∫ₐᵇ f(x)dx · ∫ₐᵇ g(x)dx",
-          "∫ₐᵇ f(x)dx - ∫ₐᵇ g(x)dx",
-          "0"
+          "∫ₐᵇ f(x)dx - ∫ₐᵇ g(x)dx"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "This is the linearity property of integration: the integral of a sum is the sum of the integrals."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "The improper integral ∫₁^∞ 1/xᵖ dx converges if and only if:",
         "options": [
-          "p > 1",
           "p ≥ 1",
-          "p < 1",
-          "p = 1"
+          "p > 1",
+          "p = 1",
+          "p < 1"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "This is analogous to the p-series test for infinite series. The integral converges when p > 1 and diverges when p ≤ 1."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "If f is integrable on [a, b] and m ≤ f(x) ≤ M for all x in [a, b], then:",
         "options": [
-          "m(b - a) ≤ ∫ₐᵇ f(x)dx ≤ M(b - a)",
-          "∫ₐᵇ f(x)dx = m",
           "∫ₐᵇ f(x)dx = M",
-          "m ≤ ∫ₐᵇ f(x)dx ≤ M"
+          "m ≤ ∫ₐᵇ f(x)dx ≤ M",
+          "∫ₐᵇ f(x)dx = m",
+          "m(b - a) ≤ ∫ₐᵇ f(x)dx ≤ M(b - a)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "This is the estimation property: the integral of a bounded function is bounded by the area of rectangles with heights m and M."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "Integration by parts for definite integrals states:",
         "options": [
-          "∫ₐᵇ u dv = [uv]ₐᵇ - ∫ₐᵇ v du",
           "∫ₐᵇ u dv = ∫ₐᵇ u · ∫ₐᵇ dv",
+          "∫ₐᵇ u dv = [uv]ₐᵇ - ∫ₐᵇ v du",
           "∫ₐᵇ u dv = ∫ₐᵇ du dv",
           "∫ₐᵇ u dv = uv"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Integration by parts is the integral analogue of the product rule for differentiation."
       }
     ]

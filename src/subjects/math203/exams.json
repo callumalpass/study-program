@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following limits equals $e$?",
         "options": [
-          "$\\lim_{x \\to 0} \\frac{e^x - 1}{x}$",
-          "$\\lim_{x \\to \\infty} \\left(1 + \\frac{1}{x}\\right)^x$",
           "$\\lim_{x \\to 0} \\frac{\\sin x}{x}$",
-          "$\\lim_{x \\to \\infty} \\frac{x}{e^x}$"
+          "$\\lim_{x \\to 0} \\frac{e^x - 1}{x}$",
+          "$\\lim_{x \\to \\infty} \\frac{x}{e^x}$",
+          "$\\lim_{x \\to \\infty} \\left(1 + \\frac{1}{x}\\right)^x$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The definition of $e$ is $\\lim_{x \\to \\infty} (1 + 1/x)^x = e$. The other limits equal 1, 1, and 0 respectively."
       },
       {
@@ -70,12 +70,12 @@
         "type": "multiple_choice",
         "prompt": "What is $\\lim_{x \\to \\infty} \\frac{5x^3 - 2x}{3x^3 + x^2}$?",
         "options": [
-          "$0$",
           "$\\frac{5}{3}$",
+          "$1$",
           "$\\infty$",
-          "$1$"
+          "$0$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Same degree numerator and denominator: limit is ratio of leading coefficients $\\frac{5}{3}$."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "The derivative $f'(a)$ represents:",
         "options": [
+          "The slope of the tangent line at $x = a$",
           "The average rate of change from 0 to $a$",
           "The slope of the secant line at $x = a$",
-          "The slope of the tangent line at $x = a$",
           "The area under the curve at $x = a$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The derivative at a point gives the instantaneous rate of change, which is the slope of the tangent line."
       },
       {
@@ -131,12 +131,12 @@
         "type": "multiple_choice",
         "prompt": "Using the limit definition, find the derivative of $f(x) = 3x^2 - 2x$ at $x = 1$.",
         "options": [
-          "$1$",
           "$4$",
           "$6$",
-          "$3$"
+          "$3$",
+          "$1$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "$f'(x) = 6x - 2$, so $f'(1) = 6(1) - 2 = 4$."
       },
       {
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "If position is given by $s(t) = t^3 - 6t^2 + 9t$, what is the velocity at $t = 2$?",
         "options": [
+          "$-6$",
           "$-3$",
           "$0$",
-          "$3$",
-          "$-6$"
+          "$3$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Velocity $v(t) = s'(t) = 3t^2 - 12t + 9$. At $t = 2$: $v(2) = 12 - 24 + 9 = -3$."
       },
       {
@@ -166,11 +166,11 @@
         "prompt": "Find $\\frac{d}{dx}[x^4 \\ln x]$.",
         "options": [
           "$4x^3 \\ln x$",
-          "$x^3(4\\ln x + 1)$",
+          "$4x^3 + \\frac{1}{x}$",
           "$x^3(1 + 4\\ln x)$",
-          "$4x^3 + \\frac{1}{x}$"
+          "$x^3(4\\ln x + 1)$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Product rule: $4x^3 \\ln x + x^4 \\cdot \\frac{1}{x} = 4x^3 \\ln x + x^3 = x^3(4\\ln x + 1)$."
       },
       {
@@ -186,11 +186,11 @@
         "prompt": "Find $\\frac{d}{dx}\\left[\\frac{e^x}{x^2}\\right]$.",
         "options": [
           "$\\frac{e^x}{2x}$",
-          "$\\frac{e^x(x-2)}{x^3}$",
           "$\\frac{e^x(x^2 - 2x)}{x^4}$",
+          "$\\frac{e^x(x-2)}{x^3}$",
           "$\\frac{e^x - 2x}{x^2}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Quotient rule: $\\frac{e^x \\cdot x^2 - e^x \\cdot 2x}{x^4} = \\frac{e^x x(x - 2)}{x^4} = \\frac{e^x(x-2)}{x^3}$."
       },
       {
@@ -199,11 +199,11 @@
         "prompt": "What is $\\frac{d}{dx}[\\sin^3(x)]$?",
         "options": [
           "$3\\sin^2(x)$",
+          "$\\cos^3(x)$",
           "$3\\cos^2(x)\\sin(x)$",
-          "$3\\sin^2(x)\\cos(x)$",
-          "$\\cos^3(x)$"
+          "$3\\sin^2(x)\\cos(x)$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Chain rule: $3\\sin^2(x) \\cdot \\cos(x) = 3\\sin^2(x)\\cos(x)$."
       },
       {
@@ -219,11 +219,11 @@
         "prompt": "Find $\\frac{d}{dx}[e^{\\sin x}]$.",
         "options": [
           "$e^{\\sin x}$",
-          "$e^{\\cos x}$",
           "$\\cos(x) e^{\\sin x}$",
-          "$\\sin(x) e^{\\cos x}$"
+          "$\\sin(x) e^{\\cos x}$",
+          "$e^{\\cos x}$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Chain rule: $e^{\\sin x} \\cdot \\cos x$."
       },
       {
@@ -239,12 +239,12 @@
         "type": "multiple_choice",
         "prompt": "Find the critical points of $f(x) = x^3 - 6x^2 + 9x + 1$.",
         "options": [
-          "$x = 1, 3$",
           "$x = 0, 3$",
+          "$x = 1, -3$",
           "$x = -1, 3$",
-          "$x = 1, -3$"
+          "$x = 1, 3$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "$f'(x) = 3x^2 - 12x + 9 = 3(x^2 - 4x + 3) = 3(x-1)(x-3) = 0$ gives $x = 1$ and $x = 3$."
       },
       {
@@ -279,12 +279,12 @@
         "type": "multiple_choice",
         "prompt": "Find the absolute maximum of $f(x) = x^2 - 4x + 3$ on $[0, 4]$.",
         "options": [
-          "$-1$",
           "$0$",
-          "$3$",
-          "$4$"
+          "$-1$",
+          "$4$",
+          "$3$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "$f'(x) = 2x - 4 = 0$ gives $x = 2$. Check: $f(0) = 3$, $f(2) = -1$, $f(4) = 3$. Maximum is $3$ at $x = 0$ and $x = 4$."
       },
       {
@@ -292,12 +292,12 @@
         "type": "multiple_choice",
         "prompt": "The inflection points of $f(x) = x^4 - 6x^2$ occur at:",
         "options": [
-          "$x = 0$",
-          "$x = \\pm 1$",
+          "$x = 0, \\pm\\sqrt{3}$",
           "$x = \\pm\\sqrt{3}$",
-          "$x = 0, \\pm\\sqrt{3}$"
+          "$x = \\pm 1$",
+          "$x = 0$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "$f''(x) = 12x^2 - 12 = 12(x^2 - 1) = 0$ gives $x = \\pm 1$. Sign changes at both, confirming inflection points."
       },
       {
@@ -342,11 +342,11 @@
         "prompt": "What is $\\lim_{x \\to 0} \\frac{\\tan(3x)}{x}$?",
         "options": [
           "$0$",
+          "$\\frac{1}{3}$",
           "$1$",
-          "$3$",
-          "$\\frac{1}{3}$"
+          "$3$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "$\\frac{\\tan(3x)}{x} = \\frac{\\sin(3x)}{x\\cos(3x)} = 3 \\cdot \\frac{\\sin(3x)}{3x} \\cdot \\frac{1}{\\cos(3x)} \\to 3 \\cdot 1 \\cdot 1 = 3$."
       },
       {
@@ -368,12 +368,12 @@
         "type": "multiple_choice",
         "prompt": "Which statement correctly describes a jump discontinuity?",
         "options": [
-          "The function approaches infinity",
           "The limit exists but doesn't equal the function value",
-          "The left and right limits both exist but are different",
-          "The function oscillates without settling"
+          "The function approaches infinity",
+          "The function oscillates without settling",
+          "The left and right limits both exist but are different"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "A jump discontinuity occurs when both one-sided limits exist but have different values."
       },
       {
@@ -381,12 +381,12 @@
         "type": "multiple_choice",
         "prompt": "Using the Squeeze Theorem, evaluate $\\lim_{x \\to \\infty} \\frac{\\cos x}{x}$.",
         "options": [
+          "Does not exist",
           "$1$",
-          "$0$",
           "$-1$",
-          "Does not exist"
+          "$0$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "$-\\frac{1}{x} \\leq \\frac{\\cos x}{x} \\leq \\frac{1}{x}$, and both bounds approach $0$."
       },
       {
@@ -395,11 +395,11 @@
         "prompt": "The difference quotient $\\frac{f(a+h) - f(a)}{h}$ geometrically represents:",
         "options": [
           "The slope of the tangent line at $x = a$",
+          "The average value of $f$ from $a$ to $a+h$",
           "The slope of the secant line through $(a, f(a))$ and $(a+h, f(a+h))$",
-          "The instantaneous rate of change",
-          "The average value of $f$ from $a$ to $a+h$"
+          "The instantaneous rate of change"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The difference quotient is the slope of the secant line. The tangent slope comes from taking the limit."
       },
       {
@@ -434,12 +434,12 @@
         "type": "multiple_choice",
         "prompt": "Find the equation of the tangent line to $f(x) = x^3$ at $x = 2$.",
         "options": [
-          "$y = 12x - 16$",
           "$y = 12x - 8$",
           "$y = 6x - 4$",
-          "$y = 8x - 8$"
+          "$y = 8x - 8$",
+          "$y = 12x - 16$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "$f(2) = 8$, $f'(x) = 3x^2$, $f'(2) = 12$. Line: $y - 8 = 12(x - 2)$, so $y = 12x - 16$."
       },
       {
@@ -447,12 +447,12 @@
         "type": "multiple_choice",
         "prompt": "Find $\\frac{d}{dx}[(2x+1)^5]$.",
         "options": [
-          "$5(2x+1)^4$",
-          "$10(2x+1)^4$",
           "$2(2x+1)^4$",
-          "$5(2x+1)^4 \\cdot 2x$"
+          "$5(2x+1)^4$",
+          "$5(2x+1)^4 \\cdot 2x$",
+          "$10(2x+1)^4$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Chain rule: $5(2x+1)^4 \\cdot 2 = 10(2x+1)^4$."
       },
       {
@@ -467,12 +467,12 @@
         "type": "multiple_choice",
         "prompt": "Find $\\frac{d}{dx}[\\ln(\\cos x)]$.",
         "options": [
+          "$-\\frac{\\sin x}{\\cos x}$",
           "$\\frac{1}{\\cos x}$",
           "$-\\tan x$",
-          "$\\tan x$",
-          "$-\\frac{\\sin x}{\\cos x}$"
+          "$\\tan x$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Chain rule: $\\frac{1}{\\cos x} \\cdot (-\\sin x) = -\\tan x$."
       },
       {
@@ -501,11 +501,11 @@
         "prompt": "Find $\\frac{d^2y}{dx^2}$ for $y = e^{2x}$.",
         "options": [
           "$2e^{2x}$",
-          "$4e^{2x}$",
+          "$2e^x$",
           "$e^{2x}$",
-          "$2e^x$"
+          "$4e^{2x}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "$y' = 2e^{2x}$, $y'' = 4e^{2x}$."
       },
       {
@@ -513,12 +513,12 @@
         "type": "multiple_choice",
         "prompt": "For $f(x) = x^3 - 3x + 2$, classify the critical point at $x = -1$.",
         "options": [
+          "Cannot determine",
           "Local maximum",
           "Local minimum",
-          "Neither (inflection point)",
-          "Cannot determine"
+          "Neither (inflection point)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "$f'(x) = 3x^2 - 3 = 0$ at $x = \\pm 1$. $f''(x) = 6x$, $f''(-1) = -6 < 0$, so local max."
       },
       {
@@ -533,12 +533,12 @@
         "type": "multiple_choice",
         "prompt": "On what interval is $f(x) = x^3 - 3x^2$ concave up?",
         "options": [
-          "$(-\\infty, 1)$",
           "$(1, \\infty)$",
-          "$(0, 2)$",
-          "$(-\\infty, 0)$"
+          "$(-\\infty, 0)$",
+          "$(-\\infty, 1)$",
+          "$(0, 2)$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "$f''(x) = 6x - 6 > 0$ when $x > 1$."
       },
       {
@@ -553,12 +553,12 @@
         "type": "multiple_choice",
         "prompt": "The absolute minimum of $f(x) = x^3 - 12x$ on $[-3, 3]$ is:",
         "options": [
-          "$-16$",
+          "$-27$",
           "$-9$",
-          "$16$",
-          "$-27$"
+          "$-16$",
+          "$16$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "$f'(x) = 3x^2 - 12 = 0$ at $x = \\pm 2$. Check: $f(-3)=9$, $f(-2)=16$, $f(2)=-16$, $f(3)=-9$. Min is $-16$."
       },
       {
@@ -566,12 +566,12 @@
         "type": "multiple_choice",
         "prompt": "For the function $f(x) = \\frac{1}{1+x^2}$, the inflection points are at:",
         "options": [
+          "No inflection points",
           "$x = 0$",
           "$x = \\pm 1$",
-          "$x = \\pm\\frac{1}{\\sqrt{3}}$",
-          "No inflection points"
+          "$x = \\pm\\frac{1}{\\sqrt{3}}$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "$f''(x) = 0$ gives inflection points at $x = \\pm\\frac{1}{\\sqrt{3}}$ where concavity changes."
       },
       {
@@ -599,12 +599,12 @@
         "type": "multiple_choice",
         "prompt": "A box with square base and no top has volume 32 cm³. To minimize surface area, the base side length should be:",
         "options": [
-          "$2$ cm",
           "$4$ cm",
           "$8$ cm",
-          "$\\sqrt[3]{32}$ cm"
+          "$\\sqrt[3]{32}$ cm",
+          "$2$ cm"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Let base = $s$, height = $h$. $V = s^2h = 32$. $S = s^2 + 4sh$. Minimize to get $s = 4$ cm."
       },
       {
@@ -627,12 +627,12 @@
         "type": "multiple_choice",
         "prompt": "The point on the curve $y = \\sqrt{x}$ closest to $(4, 0)$ is:",
         "options": [
-          "$(1, 1)$",
-          "$(4, 2)$",
           "$(\\frac{7}{2}, \\sqrt{\\frac{7}{2}})$",
-          "$(2, \\sqrt{2})$"
+          "$(2, \\sqrt{2})$",
+          "$(4, 2)$",
+          "$(1, 1)$"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Minimize $D^2 = (x-4)^2 + x$. $\\frac{d(D^2)}{dx} = 2(x-4) + 1 = 0$ gives $x = 7/2$."
       },
       {
@@ -640,12 +640,12 @@
         "type": "multiple_choice",
         "prompt": "In a related rates problem, known constant values should be substituted:",
         "options": [
-          "Before differentiating",
-          "After differentiating",
+          "Never - keep variables throughout",
           "Either before or after",
-          "Never - keep variables throughout"
+          "Before differentiating",
+          "After differentiating"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Always differentiate first, then substitute values. Substituting before treats variables as constants."
       },
       {
@@ -660,12 +660,12 @@
         "type": "multiple_choice",
         "prompt": "A 10-foot ladder leans against a wall. The bottom slides away at 2 ft/s. When the bottom is 6 ft from the wall, how fast is the top sliding down?",
         "options": [
-          "$\\frac{3}{2}$ ft/s",
-          "$\\frac{6}{4}$ ft/s",
           "$\\frac{3}{4}$ ft/s",
-          "$2$ ft/s"
+          "$2$ ft/s",
+          "$\\frac{3}{2}$ ft/s",
+          "$\\frac{6}{4}$ ft/s"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "$x^2 + y^2 = 100$. When $x=6$, $y=8$. $2x\\frac{dx}{dt} + 2y\\frac{dy}{dt} = 0$. $\\frac{dy}{dt} = -\\frac{6 \\cdot 2}{8} = -\\frac{3}{2}$ ft/s."
       },
       {
@@ -680,12 +680,12 @@
         "type": "multiple_choice",
         "prompt": "An oil spill spreads as a circle. If area increases at 50 m²/min, how fast is the radius increasing when $r = 10$ m?",
         "options": [
-          "$\\frac{5}{2\\pi}$ m/min",
-          "$\\frac{50}{20\\pi}$ m/min",
+          "$\\frac{1}{\\pi}$ m/min",
           "$\\frac{5}{\\pi}$ m/min",
-          "$\\frac{1}{\\pi}$ m/min"
+          "$\\frac{50}{20\\pi}$ m/min",
+          "$\\frac{5}{2\\pi}$ m/min"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "$A = \\pi r^2$, $\\frac{dA}{dt} = 2\\pi r \\frac{dr}{dt}$. $50 = 2\\pi(10)\\frac{dr}{dt}$, so $\\frac{dr}{dt} = \\frac{50}{20\\pi} = \\frac{5}{2\\pi}$."
       },
       {
@@ -701,12 +701,12 @@
         "type": "multiple_choice",
         "prompt": "For $f(x) = \\frac{x^2 - 1}{x^2 - 4}$, the horizontal asymptote is:",
         "options": [
+          "No horizontal asymptote",
           "$y = 0$",
           "$y = 1$",
-          "$y = \\frac{1}{4}$",
-          "No horizontal asymptote"
+          "$y = \\frac{1}{4}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Same degree numerator and denominator: $y = \\frac{1}{1} = 1$."
       },
       {
@@ -714,12 +714,12 @@
         "type": "multiple_choice",
         "prompt": "The function $f(x) = \\frac{x^3 + 1}{x^2}$ has:",
         "options": [
-          "A horizontal asymptote",
           "An oblique (slant) asymptote",
+          "A curved asymptote",
           "No asymptote as $x \\to \\infty$",
-          "A curved asymptote"
+          "A horizontal asymptote"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Degree of numerator (3) = degree of denominator (2) + 1, so there is an oblique asymptote."
       },
       {
@@ -741,12 +741,12 @@
         "type": "multiple_choice",
         "prompt": "For $f(x) = xe^{-x}$, as $x \\to +\\infty$:",
         "options": [
-          "$f(x) \\to +\\infty$",
           "$f(x) \\to 0$",
+          "$f(x) \\to +\\infty$",
           "$f(x) \\to -\\infty$",
           "$f(x) \\to 1$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Exponential decay dominates polynomial growth: $\\lim_{x \\to \\infty} xe^{-x} = 0$."
       },
       {
@@ -754,12 +754,12 @@
         "type": "multiple_choice",
         "prompt": "The graph of $f(x) = \\frac{x}{x^2+1}$ is:",
         "options": [
-          "Even (symmetric about y-axis)",
           "Odd (symmetric about origin)",
-          "Neither",
-          "Both"
+          "Even (symmetric about y-axis)",
+          "Both",
+          "Neither"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "$f(-x) = \\frac{-x}{x^2+1} = -f(x)$, so the function is odd."
       },
       {

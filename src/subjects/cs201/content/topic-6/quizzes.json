@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the Greedy Choice Property?",
         "options": [
-          "Always choose the largest element",
-          "A globally optimal solution can be reached by making locally optimal choices",
+          "Use recursion for all decisions",
           "Sort the input before processing",
-          "Use recursion for all decisions"
+          "A globally optimal solution can be reached by making locally optimal choices",
+          "Always choose the largest element"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Greedy algorithms work when making the best local choice at each step leads to a global optimum."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "Which problem can be solved optimally with a greedy algorithm?",
         "options": [
+          "Activity Selection",
           "0/1 Knapsack",
           "Longest Common Subsequence",
-          "Activity Selection",
           "Traveling Salesman"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Activity Selection (choosing non-overlapping activities) has the greedy choice property."
       },
       {
@@ -71,12 +71,12 @@
         "type": "multiple_choice",
         "prompt": "Why does greedy fail for 0/1 Knapsack?",
         "options": [
+          "Sorting is too slow",
           "Items are too heavy",
           "Taking the \"best\" item may prevent better combinations",
-          "The problem is NP-hard",
-          "Sorting is too slow"
+          "The problem is NP-hard"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Taking a high-ratio item might use capacity that could hold multiple smaller items with greater total value."
       },
       {
@@ -93,10 +93,10 @@
         "options": [
           "O(1)",
           "O(n)",
-          "O(n log n)",
-          "O(2^n)"
+          "O(2^n)",
+          "O(n log n)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Most greedy algorithms involve sorting O(n log n) followed by a linear scan O(n)."
       },
       {
@@ -105,12 +105,12 @@
         "prompt": "This greedy approach fails for which coin set?",
         "codeSnippet": "def min_coins(coins, amount):\n    coins.sort(reverse=True)\n    count = 0\n    for coin in coins:\n        while amount >= coin:\n            amount -= coin\n            count += 1\n    return count",
         "options": [
+          "coins = [1]",
           "coins = [1, 5, 10, 25]",
           "coins = [1, 3, 4]",
-          "coins = [1, 2, 5]",
-          "coins = [1]"
+          "coins = [1, 2, 5]"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "For coins [1,3,4] and amount 6: greedy gives 4+1+1=3 coins, but optimal is 3+3=2 coins."
       },
       {
@@ -118,12 +118,12 @@
         "type": "multiple_choice",
         "prompt": "When should you use DP instead of Greedy?",
         "options": [
+          "When the input is small",
           "When the input is sorted",
           "When local choices affect future options in complex ways",
-          "When the input is small",
           "When speed is critical"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Use DP when the optimal choice depends on exploring multiple possibilities, not just the locally best one."
       }
     ]
@@ -139,12 +139,12 @@
         "type": "multiple_choice",
         "prompt": "Huffman Coding is a greedy algorithm for:",
         "options": [
+          "Graph traversal",
           "Sorting data",
           "Data compression",
-          "Graph traversal",
           "Searching"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Huffman Coding creates optimal prefix-free codes for data compression by greedily combining lowest-frequency nodes."
       },
       {
@@ -172,12 +172,12 @@
         "type": "multiple_choice",
         "prompt": "Which Minimum Spanning Tree algorithm is greedy?",
         "options": [
-          "Only Kruskal's",
+          "Neither",
           "Only Prim's",
-          "Both Kruskal's and Prim's",
-          "Neither"
+          "Only Kruskal's",
+          "Both Kruskal's and Prim's"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Both are greedy: Kruskal's picks smallest edges globally, Prim's picks smallest edges from current tree."
       },
       {

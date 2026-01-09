@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "To find the maximum area of a rectangle with a fixed perimeter, you should:",
         "options": [
-          "Make it as long as possible",
           "Make it as wide as possible",
           "Make it a square",
-          "Make all sides different"
+          "Make all sides different",
+          "Make it as long as possible"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "A square maximizes area for a given perimeter. This can be proven using calculus by setting up the area function and finding its maximum."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "In an optimization problem, the constraint equation is used to:",
         "options": [
-          "Find the critical points directly",
           "Reduce the objective function to one variable",
-          "Determine the domain",
-          "Both B and C"
+          "Both B and C",
+          "Find the critical points directly",
+          "Determine the domain"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "The constraint helps express the objective function in terms of one variable AND often determines the valid domain for that variable."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Which step comes first in solving an optimization problem?",
         "options": [
-          "Take the derivative",
           "Set up the objective function and constraint",
-          "Find critical points",
-          "Check the second derivative"
+          "Take the derivative",
+          "Check the second derivative",
+          "Find critical points"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Always start by identifying what you want to optimize (objective function) and any constraints. Then reduce to one variable before taking derivatives."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "A farmer wants to enclose a rectangular field using 200 meters of fencing, with a river forming one side (no fence needed). What dimensions maximize area?",
         "options": [
-          "$50 \\times 100$",
+          "$40 \\times 60$",
           "$100 \\times 50$",
-          "$50 \\times 50$",
-          "$40 \\times 60$"
+          "$50 \\times 100$",
+          "$50 \\times 50$"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Let width be $w$ and length be $L$. Constraint: $2w + L = 200$. Area $A = wL = w(200-2w) = 200w - 2w^2$. $A'(w) = 200 - 4w = 0$ gives $w = 50$, $L = 100$."
       },
       {
@@ -133,11 +133,11 @@
         "prompt": "A cylindrical can must hold 1000 cm³. To minimize surface area, the optimal ratio of height to radius is:",
         "options": [
           "$h = r$",
-          "$h = 2r$",
+          "$h = \\frac{r}{2}$",
           "$h = 3r$",
-          "$h = \\frac{r}{2}$"
+          "$h = 2r$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "For a cylinder with fixed volume, the surface area is minimized when $h = 2r$. This classic result comes from setting $\\frac{dS}{dr} = 0$."
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "In a closed interval optimization problem, the absolute maximum occurs:",
         "options": [
-          "Only at critical points",
-          "Only at endpoints",
           "At critical points or endpoints",
-          "Where the second derivative is negative"
+          "Where the second derivative is negative",
+          "Only at endpoints",
+          "Only at critical points"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "On a closed interval, check all critical points AND endpoints. The absolute maximum is the largest value among all candidates."
       },
       {

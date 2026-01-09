@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is a fail-stop failure?",
         "options": [
-          "Process halts and others can detect it",
           "Process sends corrupted data",
-          "Process continues with wrong behavior",
-          "Network partition"
+          "Process halts and others can detect it",
+          "Network partition",
+          "Process continues with wrong behavior"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "In fail-stop failures, a process halts completely and other processes can reliably detect that it has failed, making it easier to handle than other failure types."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What is a Byzantine failure?",
         "options": [
-          "Arbitrary or malicious behavior",
           "Process crashes",
           "Network delay",
-          "Disk failure"
+          "Disk failure",
+          "Arbitrary or malicious behavior"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Byzantine failures involve arbitrary or malicious behavior where nodes may send incorrect or contradictory information. This is the most difficult failure type to handle."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "How many failures can Byzantine Fault Tolerance (BFT) tolerate with N nodes?",
         "options": [
-          "(N-1)/3 failures",
-          "N/2 failures",
           "N-1 failures",
-          "Any number"
+          "(N-1)/3 failures",
+          "Any number",
+          "N/2 failures"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "BFT systems require at least 3f+1 nodes to tolerate f Byzantine failures, meaning they can tolerate less than one-third failures, which is more expensive than crash tolerance."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is a failure detector?",
         "options": [
-          "Component that monitors and reports process failures",
           "Hardware that prevents failures",
-          "Software that fixes bugs",
-          "Network monitoring tool"
+          "Component that monitors and reports process failures",
+          "Network monitoring tool",
+          "Software that fixes bugs"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A failure detector is a distributed system component that monitors processes and reports suspected failures, typically using heartbeats and timeouts, though it may be unreliable."
       },
       {
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "What is an eventually perfect failure detector?",
         "options": [
-          "Eventually stops making mistakes about correct processes",
           "Immediately detects all failures",
-          "Never makes mistakes",
-          "Detects Byzantine failures"
+          "Detects Byzantine failures",
+          "Eventually stops making mistakes about correct processes",
+          "Never makes mistakes"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "An eventually perfect failure detector may make mistakes initially but eventually accurately identifies all crashed processes and stops suspecting correct ones, useful in practice."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "What is checkpointing in fault tolerance?",
         "options": [
-          "Periodically saving process state for recovery",
           "Validating data correctness",
           "Testing system security",
-          "Monitoring performance"
+          "Monitoring performance",
+          "Periodically saving process state for recovery"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Checkpointing involves periodically saving the state of a process to stable storage, allowing it to recover to a consistent state after a failure without restarting from the beginning."
       },
       {
@@ -109,12 +109,12 @@
         "type": "multiple_choice",
         "prompt": "What is message logging used for in fault tolerance?",
         "options": [
-          "Recording messages to replay after recovery",
           "Debugging message content",
+          "Routing messages",
           "Compressing messages",
-          "Routing messages"
+          "Recording messages to replay after recovery"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Message logging records received messages so that after a failure, a process can recover from a checkpoint and replay logged messages to reach a consistent state."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "What is the orphan problem in recovery?",
         "options": [
-          "Recovered process doesn't know about messages it sent before failure",
-          "Lost child processes",
           "Undelivered messages",
-          "Memory leaks"
+          "Memory leaks",
+          "Recovered process doesn't know about messages it sent before failure",
+          "Lost child processes"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The orphan problem occurs when a recovered process doesn't remember sending messages before failure, but other processes have received them and acted on them, causing inconsistencies."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is the bulkhead pattern in fault tolerance?",
         "options": [
-          "Isolating resources to prevent failure propagation",
           "Adding more servers",
-          "Encrypting communications",
-          "Load balancing"
+          "Load balancing",
+          "Isolating resources to prevent failure propagation",
+          "Encrypting communications"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Bulkhead pattern isolates resources (like thread pools or connection pools) so that failure in one part doesn't consume all resources and affect other parts of the system."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is retry with exponential backoff?",
         "options": [
-          "Retrying failed operations with increasing delays",
           "Retrying immediately many times",
+          "Retrying with random delays",
           "Never retrying",
-          "Retrying with random delays"
+          "Retrying failed operations with increasing delays"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Exponential backoff increases delay between retries exponentially (e.g., 1s, 2s, 4s, 8s), preventing overwhelming a failing service while giving it time to recover."
       },
       {
@@ -208,12 +208,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of timeout in distributed systems?",
         "options": [
-          "Detecting failures and preventing indefinite waiting",
           "Measuring performance",
+          "Detecting failures and preventing indefinite waiting",
           "Scheduling tasks",
           "Encrypting data"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Timeouts prevent processes from waiting indefinitely for responses, allowing failure detection and recovery. However, setting appropriate timeout values is challenging."
       }
     ]

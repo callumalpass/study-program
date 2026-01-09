@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "The derivative of $f(x)$ at $x = a$ is defined as:",
         "options": [
-          "$\\frac{f(a+h) - f(a)}{h}$",
           "$\\lim_{h \\to 0} \\frac{f(a+h) - f(a)}{h}$",
+          "$\\frac{f(b) - f(a)}{b - a}$",
           "$\\lim_{x \\to a} f(x)$",
-          "$\\frac{f(b) - f(a)}{b - a}$"
+          "$\\frac{f(a+h) - f(a)}{h}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The derivative is the limit of the difference quotient as h approaches 0, not just the difference quotient itself."
       },
       {
@@ -31,11 +31,11 @@
         "prompt": "What does the derivative $f'(a)$ represent geometrically?",
         "options": [
           "The y-intercept of the tangent line",
-          "The slope of the tangent line at $x = a$",
           "The area under the curve",
+          "The slope of the tangent line at $x = a$",
           "The x-intercept of the function"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "The derivative at a point gives the slope of the tangent line to the curve at that point."
       },
       {
@@ -44,11 +44,11 @@
         "prompt": "Using the limit definition, what is the derivative of $f(x) = x^2$?",
         "options": [
           "$x$",
+          "$2$",
           "$2x$",
-          "$x^2$",
-          "$2$"
+          "$x^2$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "$f'(x) = \\lim_{h \\to 0} \\frac{(x+h)^2 - x^2}{h} = \\lim_{h \\to 0} \\frac{2xh + h^2}{h} = \\lim_{h \\to 0} (2x + h) = 2x$"
       },
       {
@@ -72,11 +72,11 @@
         "prompt": "At which type of point is a function NOT differentiable?",
         "options": [
           "A point where the function is continuous",
-          "A corner or cusp",
           "An interior point of the domain",
+          "A corner or cusp",
           "A point where f'(x) = 0"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Functions are not differentiable at corners, cusps, vertical tangents, and discontinuities. A corner or cusp has different left and right derivatives."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "If $f(x) = \\sqrt{x}$, find $f'(4)$ using the limit definition.",
         "options": [
+          "2",
           "$\\frac{1}{2}$",
           "$\\frac{1}{4}$",
-          "$\\frac{1}{8}$",
-          "2"
+          "$\\frac{1}{8}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "$f'(x) = \\frac{1}{2\\sqrt{x}}$, so $f'(4) = \\frac{1}{2\\sqrt{4}} = \\frac{1}{4}$."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "Using the limit definition, find the derivative of $f(x) = \\frac{1}{x}$.",
         "options": [
-          "$\\frac{1}{x^2}$",
-          "$-\\frac{1}{x^2}$",
           "$-\\frac{1}{x}$",
-          "$\\frac{-2}{x^2}$"
+          "$\\frac{1}{x^2}$",
+          "$\\frac{-2}{x^2}$",
+          "$-\\frac{1}{x^2}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "$f'(x) = \\lim_{h \\to 0} \\frac{\\frac{1}{x+h} - \\frac{1}{x}}{h} = \\lim_{h \\to 0} \\frac{x - (x+h)}{h \\cdot x(x+h)} = \\lim_{h \\to 0} \\frac{-1}{x(x+h)} = -\\frac{1}{x^2}$"
       },
       {
@@ -145,12 +145,12 @@
         "type": "multiple_choice",
         "prompt": "If the velocity $v(t) = s'(t)$ is negative, what does this indicate about the motion?",
         "options": [
+          "The acceleration is negative",
           "The object is speeding up",
           "The object is moving in the negative direction",
-          "The object has stopped",
-          "The acceleration is negative"
+          "The object has stopped"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Negative velocity means the object is moving in the negative direction (decreasing position). This is independent of acceleration."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "The average rate of change of $f(x)$ from $x = a$ to $x = b$ is given by:",
         "options": [
-          "$f'(a)$",
           "$\\frac{f(b) - f(a)}{b - a}$",
-          "$\\lim_{h \\to 0} \\frac{f(a+h) - f(a)}{h}$",
-          "$f(b) - f(a)$"
+          "$f'(a)$",
+          "$f(b) - f(a)$",
+          "$\\lim_{h \\to 0} \\frac{f(a+h) - f(a)}{h}$"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The average rate of change is the slope of the secant line: $\\frac{f(b) - f(a)}{b - a}$. This is the difference quotient without the limit."
       },
       {

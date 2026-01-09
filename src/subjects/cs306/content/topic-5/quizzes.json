@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "Which shading model uses ambient, diffuse, and specular components?",
         "options": [
+          "Cook-Torrance model",
           "Phong reflection model",
           "Flat shading",
-          "Cook-Torrance model",
           "Toon shading"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The Phong reflection model computes lighting as the sum of ambient (uniform background), diffuse (matte reflection), and specular (shiny highlights) components."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What does the diffuse component of lighting represent?",
         "options": [
-          "Matte, view-independent reflection",
           "Shiny highlights",
-          "Background illumination",
-          "Emitted light"
+          "Emitted light",
+          "Matte, view-independent reflection",
+          "Background illumination"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Diffuse reflection represents light scattering equally in all directions from a matte surface, depending only on the angle between the surface normal and light direction (Lambertian reflection)."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "What is the formula for Lambertian (diffuse) reflection?",
         "options": [
-          "I = kd × (N · L)",
-          "I = ks × (R · V)ⁿ",
           "I = ka × Ia",
-          "I = N × L × V"
+          "I = N × L × V",
+          "I = ks × (R · V)ⁿ",
+          "I = kd × (N · L)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Lambertian diffuse reflection is proportional to the cosine of the angle between the surface normal (N) and light direction (L), expressed as their dot product, scaled by the diffuse coefficient kd."
       },
       {
@@ -56,12 +56,12 @@
         "type": "multiple_choice",
         "prompt": "What determines the size of specular highlights in the Phong model?",
         "options": [
-          "The shininess exponent",
-          "The light intensity",
           "The ambient coefficient",
-          "The surface color"
+          "The shininess exponent",
+          "The surface color",
+          "The light intensity"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The shininess exponent (n) in the specular term (R·V)ⁿ controls highlight size: larger values create smaller, sharper highlights characteristic of very shiny surfaces."
       }
     ]
@@ -77,12 +77,12 @@
         "type": "multiple_choice",
         "prompt": "What is the difference between Phong shading and Gouraud shading?",
         "options": [
+          "They are the same technique",
           "Phong interpolates normals, Gouraud interpolates colors",
           "Phong is faster than Gouraud",
-          "Phong uses flat shading, Gouraud uses smooth shading",
-          "They are the same technique"
+          "Phong uses flat shading, Gouraud uses smooth shading"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Gouraud shading computes lighting at vertices and interpolates colors across triangles. Phong shading interpolates normals and computes lighting per pixel, producing better specular highlights."
       },
       {
@@ -97,12 +97,12 @@
         "type": "multiple_choice",
         "prompt": "What is the Blinn-Phong model's main advantage over Phong?",
         "options": [
-          "Uses halfway vector, more efficient and physically plausible",
-          "Produces more accurate ambient lighting",
           "Better diffuse reflection",
+          "Produces more accurate ambient lighting",
+          "Uses halfway vector, more efficient and physically plausible",
           "Faster ambient occlusion"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Blinn-Phong uses the halfway vector between light and view directions instead of the reflection vector, reducing computation and behaving more like real materials at grazing angles."
       },
       {
@@ -110,12 +110,12 @@
         "type": "multiple_choice",
         "prompt": "What does attenuation model in lighting?",
         "options": [
-          "Light intensity decreasing with distance",
-          "Surface roughness",
           "Shadow darkness",
-          "Color saturation"
+          "Light intensity decreasing with distance",
+          "Color saturation",
+          "Surface roughness"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Attenuation models how light intensity decreases with distance from the source, typically using a quadratic falloff (1/(a + b×d + c×d²)) to approximate physical light behavior."
       },
       {
@@ -123,12 +123,12 @@
         "type": "multiple_choice",
         "prompt": "Which lighting technique evaluates illumination only at vertices?",
         "options": [
-          "Gouraud shading",
-          "Phong shading",
           "Deferred shading",
+          "Phong shading",
+          "Gouraud shading",
           "Ray tracing"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Gouraud shading computes lighting at triangle vertices and interpolates the resulting colors across the surface, making it faster but less accurate than per-pixel lighting."
       }
     ]
@@ -144,12 +144,12 @@
         "type": "multiple_choice",
         "prompt": "What is ambient occlusion?",
         "options": [
+          "Specular reflection calculation",
           "Approximation of how exposed each point is to ambient lighting",
           "Direct shadow computation",
-          "Specular reflection calculation",
           "Texture filtering method"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "Ambient occlusion estimates how much ambient light reaches each surface point, darkening crevices and contact areas to add depth and realism without expensive global illumination."
       },
       {
@@ -177,12 +177,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of a BRDF (Bidirectional Reflectance Distribution Function)?",
         "options": [
-          "Describe how light reflects off a surface from different angles",
           "Calculate shadow intensity",
+          "Describe how light reflects off a surface from different angles",
           "Determine texture coordinates",
           "Compute vertex positions"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A BRDF defines the ratio of reflected light for any pair of incoming and outgoing directions, characterizing surface appearance. Different BRDFs model materials like plastic, metal, or skin."
       },
       {
@@ -190,12 +190,12 @@
         "type": "multiple_choice",
         "prompt": "Which technique stores geometric and material information in textures for later lighting?",
         "options": [
-          "Deferred shading",
+          "Gouraud shading",
           "Forward rendering",
           "Flat shading",
-          "Gouraud shading"
+          "Deferred shading"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Deferred shading renders geometry to a G-buffer (storing position, normal, albedo, etc.) then applies lighting in a second pass, efficiently handling many lights by processing each visible pixel once."
       }
     ]

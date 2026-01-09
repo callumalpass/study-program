@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "What is the hypothesis function for linear regression?",
         "options": [
-          "h(x) = θ₀ + θ₁x₁ + θ₂x₂ + ... + θₙxₙ",
           "h(x) = 1/(1 + e^(-θᵀx))",
           "h(x) = max(0, θᵀx)",
+          "h(x) = θ₀ + θ₁x₁ + θ₂x₂ + ... + θₙxₙ",
           "h(x) = sign(θᵀx)"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Linear regression uses a linear combination of features: h(x) = θᵀx where θ are parameters to learn. This represents a hyperplane in feature space."
       },
       {
@@ -23,12 +23,12 @@
         "type": "multiple_choice",
         "prompt": "What loss function is typically used for linear regression?",
         "options": [
-          "Mean Squared Error (MSE)",
+          "0-1 loss",
           "Cross-entropy",
-          "Hinge loss",
-          "0-1 loss"
+          "Mean Squared Error (MSE)",
+          "Hinge loss"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Linear regression minimizes MSE: (1/2m)Σ(h(x⁽ⁱ⁾) - y⁽ⁱ⁾)². This is equivalent to maximum likelihood estimation under Gaussian noise assumptions."
       },
       {
@@ -36,12 +36,12 @@
         "type": "multiple_choice",
         "prompt": "What does gradient descent do?",
         "options": [
-          "Iteratively updates parameters in the direction that decreases the loss function",
-          "Computes the exact optimal solution analytically",
           "Randomly searches for good parameters",
+          "Computes the exact optimal solution analytically",
+          "Iteratively updates parameters in the direction that decreases the loss function",
           "Increases the loss function to find maximum"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Gradient descent updates parameters as θⱼ := θⱼ - α(∂J/∂θⱼ), moving downhill on the loss surface. The learning rate α controls step size."
       },
       {
@@ -49,12 +49,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of the sigmoid function in logistic regression?",
         "options": [
+          "To handle missing values",
           "To map linear predictions to probability range [0,1]",
           "To increase model accuracy",
-          "To speed up training",
-          "To handle missing values"
+          "To speed up training"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "The sigmoid function σ(z) = 1/(1+e^(-z)) squashes any real number to (0,1), allowing interpretation as probability. Logistic regression uses h(x) = σ(θᵀx)."
       },
       {
@@ -62,12 +62,12 @@
         "type": "multiple_choice",
         "prompt": "What is L2 regularization (Ridge) also known as?",
         "options": [
-          "Weight decay",
-          "Feature selection",
           "Lasso",
-          "Dropout"
+          "Feature selection",
+          "Dropout",
+          "Weight decay"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "L2 regularization adds λΣθⱼ² to the loss, penalizing large weights. This is equivalent to weight decay in gradient descent: weights shrink toward zero at each step."
       }
     ]
@@ -83,12 +83,12 @@
         "type": "multiple_choice",
         "prompt": "Your gradient descent is oscillating and not converging. What should you do?",
         "options": [
-          "Decrease the learning rate",
-          "Increase the learning rate",
+          "Use fewer training iterations",
           "Add more features",
-          "Use fewer training iterations"
+          "Decrease the learning rate",
+          "Increase the learning rate"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Oscillation indicates the learning rate is too high, causing overshooting. Decreasing α makes smaller, more stable steps toward the minimum."
       },
       {
@@ -96,12 +96,12 @@
         "type": "multiple_choice",
         "prompt": "When would you use L1 (Lasso) regularization over L2 (Ridge)?",
         "options": [
-          "When you want feature selection by driving some weights to exactly zero",
-          "When all features are important",
           "When you have no multicollinearity",
-          "When you want all weights to be small but non-zero"
+          "When you want feature selection by driving some weights to exactly zero",
+          "When you want all weights to be small but non-zero",
+          "When all features are important"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "L1 regularization (λΣ|θⱼ|) creates sparse solutions with many exact zeros due to its non-differentiable corners, effectively performing feature selection. L2 only shrinks weights."
       },
       {
@@ -122,12 +122,12 @@
         "type": "multiple_choice",
         "prompt": "For multiclass logistic regression, which approach uses multiple binary classifiers?",
         "options": [
+          "Binary cross-entropy",
           "One-vs-All (OvA)",
           "Softmax regression",
-          "Binary cross-entropy",
           "Sigmoid activation"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "One-vs-All trains K binary classifiers (one per class vs rest), then selects the class with highest confidence. Softmax regression directly models all K classes in one model."
       },
       {
@@ -135,12 +135,12 @@
         "type": "multiple_choice",
         "prompt": "What is the closed-form solution for linear regression called?",
         "options": [
-          "Normal equation: θ = (XᵀX)⁻¹Xᵀy",
-          "Gradient descent",
           "Newton's method",
-          "Backpropagation"
+          "Gradient descent",
+          "Backpropagation",
+          "Normal equation: θ = (XᵀX)⁻¹Xᵀy"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The normal equation provides an analytical solution by setting gradient to zero and solving. It works well for small n but is O(n³) due to matrix inversion, while gradient descent is O(kn²) for k iterations."
       }
     ]
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What is the probabilistic interpretation of linear regression?",
         "options": [
-          "Maximum likelihood estimation assuming Gaussian noise: y = θᵀx + ε where ε ~ N(0,σ²)",
-          "Maximum a posteriori estimation with uniform prior",
+          "Bayesian inference with conjugate prior",
           "Minimizing KL divergence",
-          "Bayesian inference with conjugate prior"
+          "Maximum likelihood estimation assuming Gaussian noise: y = θᵀx + ε where ε ~ N(0,σ²)",
+          "Maximum a posteriori estimation with uniform prior"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Under Gaussian noise assumptions, minimizing MSE is equivalent to maximum likelihood estimation. This explains why squared loss is natural for regression."
       },
       {
@@ -169,12 +169,12 @@
         "type": "multiple_choice",
         "prompt": "What is the gradient of logistic regression loss with respect to θⱼ?",
         "options": [
-          "(1/m)Σ(h(x⁽ⁱ⁾) - y⁽ⁱ⁾)xⱼ⁽ⁱ⁾",
-          "(1/m)Σ(y⁽ⁱ⁾ - h(x⁽ⁱ⁾))xⱼ⁽ⁱ⁾",
           "Σ(h(x⁽ⁱ⁾) - y⁽ⁱ⁾)²",
+          "(1/m)Σ(y⁽ⁱ⁾ - h(x⁽ⁱ⁾))xⱼ⁽ⁱ⁾",
+          "(1/m)Σ(h(x⁽ⁱ⁾) - y⁽ⁱ⁾)xⱼ⁽ⁱ⁾",
           "-Σy⁽ⁱ⁾log(h(x⁽ⁱ⁾))"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Remarkably, logistic regression has the same gradient form as linear regression, even though h(x) = σ(θᵀx) is nonlinear. This comes from the cancellation between sigmoid derivative and log-likelihood."
       },
       {
@@ -182,12 +182,12 @@
         "type": "multiple_choice",
         "prompt": "What does the condition number of XᵀX indicate?",
         "options": [
-          "Numerical stability of the normal equation; high condition number indicates ill-conditioning",
-          "The rank of the design matrix",
           "The number of features",
-          "The optimal learning rate"
+          "The optimal learning rate",
+          "The rank of the design matrix",
+          "Numerical stability of the normal equation; high condition number indicates ill-conditioning"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "Condition number κ(XᵀX) = λ_max/λ_min measures sensitivity to numerical errors. High κ (near-singular matrix) makes (XᵀX)⁻¹ unstable. Regularization improves conditioning by adding λI to XᵀX."
       },
       {
@@ -195,12 +195,12 @@
         "type": "multiple_choice",
         "prompt": "What is the relationship between ridge regression and MAP estimation?",
         "options": [
-          "Ridge is MAP with Gaussian prior on weights: p(θ) ~ N(0, σ²I)",
           "Ridge is MAP with Laplace prior",
+          "Ridge is MAP with Gaussian prior on weights: p(θ) ~ N(0, σ²I)",
           "Ridge is unrelated to Bayesian inference",
           "Ridge is maximum likelihood estimation"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "L2 regularization emerges naturally from Bayesian inference with Gaussian prior on weights. The penalty term λΣθⱼ² corresponds to -log p(θ) for a Gaussian prior."
       },
       {

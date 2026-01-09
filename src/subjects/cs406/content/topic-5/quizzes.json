@@ -37,12 +37,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main idea behind the delete-relaxation heuristic?",
         "options": [
-          "Remove all delete effects from actions to create an easier problem",
-          "Delete unnecessary actions from the plan",
           "Remove impossible goal states",
-          "Delete redundant preconditions"
+          "Delete unnecessary actions from the plan",
+          "Delete redundant preconditions",
+          "Remove all delete effects from actions to create an easier problem"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "The delete-relaxation heuristic ignores all delete effects from actions, creating a relaxed problem where facts, once achieved, remain true forever. The cost of solving this easier problem provides an admissible heuristic for the original problem, as any solution to the original problem is also valid for the relaxed problem."
       },
       {
@@ -66,12 +66,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary advantage of Hierarchical Task Network (HTN) planning?",
         "options": [
-          "It always finds optimal solutions",
           "It incorporates domain knowledge through task decomposition",
+          "It always finds optimal solutions",
           "It requires no search at all",
           "It works without defining preconditions"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "HTN planning uses domain knowledge encoded as methods that decompose high-level tasks into subtasks. This hierarchical structure mirrors how humans think about complex problems and can dramatically reduce the search space by incorporating expert knowledge about how tasks should be accomplished in specific domains."
       },
       {
@@ -101,12 +101,12 @@
         "type": "multiple_choice",
         "prompt": "Which planning heuristic counts the number of unsatisfied goals without considering interactions?",
         "options": [
-          "Hadd - additive heuristic",
+          "h^0 - zero heuristic",
           "Hmax - max heuristic",
-          "h^FF - FF heuristic",
-          "h^0 - zero heuristic"
+          "Hadd - additive heuristic",
+          "h^FF - FF heuristic"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "The additive heuristic (hadd) sums the costs of achieving each goal independently, ignoring positive interactions between subgoals. While not admissible due to this independence assumption, it is often more informative than the max heuristic and provides good guidance for satisficing planners like FF."
       }
     ]
@@ -157,12 +157,12 @@
         "type": "multiple_choice",
         "prompt": "What distinguishes satisficing planners from optimal planners?",
         "options": [
-          "Satisficing planners find any valid plan, not necessarily the shortest or cheapest",
           "Satisficing planners always run faster",
           "Satisficing planners cannot handle complex domains",
+          "Satisficing planners find any valid plan, not necessarily the shortest or cheapest",
           "Satisficing planners use backward search exclusively"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 2,
         "explanation": "Satisficing planners (like FF) aim to find any valid plan quickly, without guaranteeing optimality. They use non-admissible heuristics and greedy search strategies. Optimal planners (like those using A* with admissible heuristics) guarantee finding the lowest-cost plan but may take much longer. The choice depends on whether solution quality or speed is more important."
       }
     ]

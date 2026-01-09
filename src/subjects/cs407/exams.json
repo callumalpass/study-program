@@ -17,12 +17,12 @@
         "type": "multiple_choice",
         "prompt": "Which HTTP method is typically used to retrieve data from a REST API without modifying server state?",
         "options": [
-          "POST",
           "GET",
           "PUT",
-          "DELETE"
+          "DELETE",
+          "POST"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "GET requests are used to retrieve data without modifying server state, making them idempotent and safe for data collection."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "What is web scraping?",
         "options": [
-          "A method for cleaning data in spreadsheets",
           "Extracting data from websites by parsing HTML content",
+          "A method for cleaning data in spreadsheets",
           "A database query optimization technique",
           "A machine learning feature selection method"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Web scraping involves programmatically extracting data from websites by parsing their HTML content, typically using libraries like BeautifulSoup or Scrapy."
       },
       {
@@ -67,11 +67,11 @@
         "prompt": "Which imputation method is most appropriate for data that is NOT missing at random (MNAR)?",
         "options": [
           "Mean imputation",
+          "Forward fill",
           "Median imputation",
-          "Multiple imputation with domain knowledge",
-          "Forward fill"
+          "Multiple imputation with domain knowledge"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "MNAR requires careful handling with domain knowledge because the missingness depends on the unobserved values themselves. Simple imputation methods can introduce significant bias."
       },
       {
@@ -115,12 +115,12 @@
         "type": "multiple_choice",
         "prompt": "Which measure of central tendency is most robust to outliers?",
         "options": [
-          "Mean",
           "Median",
           "Mode",
+          "Mean",
           "Range"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The median is the middle value when data is sorted and is not affected by extreme values, making it robust to outliers unlike the mean."
       },
       {
@@ -136,12 +136,12 @@
         "type": "multiple_choice",
         "prompt": "In exploratory data analysis, which visualization is most appropriate for examining the distribution of a continuous variable?",
         "options": [
-          "Bar chart",
-          "Pie chart",
           "Histogram",
-          "Scatter plot"
+          "Pie chart",
+          "Scatter plot",
+          "Bar chart"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Histograms display the frequency distribution of continuous data by dividing it into bins, making it easy to see the shape, spread, and central tendency."
       },
       {
@@ -156,12 +156,12 @@
         "type": "multiple_choice",
         "prompt": "What does a Pearson correlation coefficient of -0.85 indicate?",
         "options": [
-          "A weak positive relationship",
-          "A strong negative linear relationship",
+          "A perfect positive relationship",
           "No relationship",
-          "A perfect positive relationship"
+          "A weak positive relationship",
+          "A strong negative linear relationship"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A correlation of -0.85 indicates a strong negative linear relationship: as one variable increases, the other tends to decrease consistently."
       },
       {
@@ -190,12 +190,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following algorithms does NOT typically require feature scaling?",
         "options": [
-          "K-Nearest Neighbors (k-NN)",
-          "Support Vector Machines (SVM)",
           "Decision Trees",
-          "Gradient Descent-based algorithms"
+          "Gradient Descent-based algorithms",
+          "Support Vector Machines (SVM)",
+          "K-Nearest Neighbors (k-NN)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Decision trees and tree-based algorithms (Random Forests, XGBoost) do not require feature scaling because they make decisions based on splitting thresholds, not distances."
       },
       {
@@ -212,11 +212,11 @@
         "prompt": "Which encoding method is most appropriate for a categorical variable with natural ordering (e.g., 'low', 'medium', 'high')?",
         "options": [
           "One-hot encoding",
-          "Ordinal encoding",
           "Binary encoding",
-          "Hash encoding"
+          "Hash encoding",
+          "Ordinal encoding"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Ordinal encoding preserves the natural order of categories by assigning sequential integers, which is appropriate when categories have a meaningful order."
       },
       {
@@ -307,12 +307,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following is NOT a common data format for API responses?",
         "options": [
-          "JSON",
           "XML",
-          "CSV",
-          "HTML"
+          "HTML",
+          "JSON",
+          "CSV"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 1,
         "explanation": "APIs typically return structured data formats like JSON, XML, or CSV. HTML is a presentation format for web pages, not typically used for API data exchange."
       },
       {
@@ -328,12 +328,12 @@
         "type": "multiple_choice",
         "prompt": "When using KNN imputation, missing values are filled based on:",
         "options": [
-          "The global mean of the column",
           "Random values from the same column",
-          "Values from similar observations (nearest neighbors)",
-          "The mode of the column"
+          "The global mean of the column",
+          "The mode of the column",
+          "Values from similar observations (nearest neighbors)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "KNN imputation finds the k most similar complete observations and uses their values (typically weighted by distance) to impute missing values."
       },
       {
@@ -349,11 +349,11 @@
         "prompt": "What is the purpose of the Box-Cox transformation?",
         "options": [
           "To remove outliers from the dataset",
-          "To make data more normally distributed",
           "To encode categorical variables",
-          "To reduce dimensionality"
+          "To reduce dimensionality",
+          "To make data more normally distributed"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Box-Cox transformation applies a power transformation to make data more normally distributed, which can improve the performance of many statistical methods."
       },
       {
@@ -369,12 +369,12 @@
         "type": "multiple_choice",
         "prompt": "Which statistical test would you use to compare means of more than two independent groups?",
         "options": [
+          "ANOVA",
           "t-test",
           "Chi-square test",
-          "ANOVA",
           "Pearson correlation"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "ANOVA (Analysis of Variance) is used to compare means across more than two groups, while t-tests are limited to comparing two groups."
       },
       {
@@ -431,12 +431,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main advantage of using StandardScaler over MinMaxScaler?",
         "options": [
-          "StandardScaler is faster to compute",
-          "StandardScaler is less sensitive to outliers",
           "StandardScaler preserves the original data range",
-          "StandardScaler is more robust to outliers than MinMaxScaler"
+          "StandardScaler is faster to compute",
+          "StandardScaler is more robust to outliers than MinMaxScaler",
+          "StandardScaler is less sensitive to outliers"
         ],
-        "correctAnswer": 3,
+        "correctAnswer": 2,
         "explanation": "StandardScaler uses mean and standard deviation which are less affected by extreme values than the min/max used by MinMaxScaler."
       },
       {
@@ -445,11 +445,11 @@
         "prompt": "Which of the following is NOT a characteristic of a good machine learning feature?",
         "options": [
           "Strong correlation with the target variable",
-          "Low correlation with other features (low multicollinearity)",
           "High cardinality with unique values for each observation",
-          "Available at prediction time"
+          "Available at prediction time",
+          "Low correlation with other features (low multicollinearity)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Features with unique values for each observation (like IDs) do not generalize well. Good features balance predictive power with generalizability."
       },
       {
@@ -465,12 +465,12 @@
         "type": "multiple_choice",
         "prompt": "What is the purpose of target encoding for categorical variables?",
         "options": [
+          "To create binary columns for each category",
           "To convert text to lowercase",
           "To replace categories with the mean of the target variable for that category",
-          "To remove rare categories",
-          "To create binary columns for each category"
+          "To remove rare categories"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "Target encoding replaces each category with the mean (or other aggregate) of the target variable for observations in that category, encoding the relationship with the target."
       },
       {
@@ -485,12 +485,12 @@
         "type": "multiple_choice",
         "prompt": "Which visualization type is best for showing the relationship between two continuous variables?",
         "options": [
-          "Bar chart",
           "Pie chart",
-          "Scatter plot",
-          "Box plot"
+          "Box plot",
+          "Bar chart",
+          "Scatter plot"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Scatter plots display each data point's position on two axes, making them ideal for visualizing relationships between two continuous variables."
       },
       {
@@ -518,12 +518,12 @@
         "type": "multiple_choice",
         "prompt": "Which color scheme is recommended for sequential data (e.g., temperature from low to high)?",
         "options": [
-          "Diverging color scheme",
-          "Qualitative color scheme",
           "Sequential color scheme",
-          "Rainbow color scheme"
+          "Diverging color scheme",
+          "Rainbow color scheme",
+          "Qualitative color scheme"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Sequential color schemes use a gradient of a single hue to represent ordered data, making it easy to perceive relative magnitude."
       },
       {
@@ -552,12 +552,12 @@
         "type": "multiple_choice",
         "prompt": "What is Apache Spark's primary advantage over Hadoop MapReduce?",
         "options": [
-          "Spark can process larger datasets",
           "Spark processes data in-memory, making it much faster",
           "Spark is easier to install",
-          "Spark is open-source while Hadoop is not"
+          "Spark is open-source while Hadoop is not",
+          "Spark can process larger datasets"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Spark's in-memory processing can be up to 100x faster than Hadoop MapReduce's disk-based approach for iterative algorithms."
       },
       {
@@ -565,12 +565,12 @@
         "type": "multiple_choice",
         "prompt": "In a star schema, what is a fact table?",
         "options": [
-          "A table containing only primary keys",
           "A central table containing measurable, quantitative data and foreign keys to dimension tables",
           "A table containing only text descriptions",
+          "A table containing only primary keys",
           "A backup table for data recovery"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A fact table in a star schema contains quantitative measures (facts) and foreign keys linking to dimension tables that provide context."
       },
       {
@@ -622,11 +622,11 @@
         "prompt": "What is differential privacy?",
         "options": [
           "A method for encrypting data in transit",
-          "A technique that adds noise to data or queries to protect individual privacy while allowing aggregate analysis",
+          "A method for detecting data leaks",
           "A type of data compression",
-          "A method for detecting data leaks"
+          "A technique that adds noise to data or queries to protect individual privacy while allowing aggregate analysis"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Differential privacy adds mathematical noise to data or query results to ensure individual records cannot be identified while still allowing meaningful aggregate analysis."
       },
       {
@@ -655,12 +655,12 @@
         "type": "multiple_choice",
         "prompt": "Under GDPR, what is the 'right to be forgotten'?",
         "options": [
+          "The right to automatic data backup",
           "The right to unlimited data storage",
-          "The right to have personal data deleted upon request",
           "The right to access competitor data",
-          "The right to automatic data backup"
+          "The right to have personal data deleted upon request"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "The right to erasure (right to be forgotten) allows individuals to request deletion of their personal data when there's no compelling reason for its continued processing."
       },
       {
@@ -675,12 +675,12 @@
         "type": "multiple_choice",
         "prompt": "What is the main purpose of a confusion matrix in classification problems?",
         "options": [
-          "To visualize feature correlations",
           "To show the distribution of predicted vs actual classes",
           "To normalize feature values",
+          "To visualize feature correlations",
           "To perform dimensionality reduction"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A confusion matrix displays the counts of true positives, true negatives, false positives, and false negatives, helping evaluate classification model performance."
       },
       {
@@ -688,12 +688,12 @@
         "type": "multiple_choice",
         "prompt": "Which metric would be most appropriate for evaluating a highly imbalanced classification problem where positive class is rare?",
         "options": [
+          "R-squared",
           "Accuracy",
-          "F1-score or AUC-ROC",
           "Mean Squared Error",
-          "R-squared"
+          "F1-score or AUC-ROC"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "For imbalanced datasets, F1-score (harmonic mean of precision and recall) or AUC-ROC are better than accuracy, which can be misleadingly high by predicting the majority class."
       },
       {

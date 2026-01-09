@@ -17,11 +17,11 @@
         "prompt": "Which of the following is a valid variable name in Python?",
         "options": [
           "2nd_place",
+          "class",
           "my-variable",
-          "first_name",
-          "class"
+          "first_name"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "Variable names cannot start with a number, contain hyphens, or be reserved keywords. \"first_name\" uses valid characters (letters, underscores)."
       },
       {
@@ -87,12 +87,12 @@
         "type": "multiple_choice",
         "prompt": "What does `list(range(1, 5))` produce?",
         "options": [
-          "[1, 2, 3, 4, 5]",
           "[0, 1, 2, 3, 4]",
-          "[1, 2, 3, 4]",
-          "[0, 1, 2, 3]"
+          "[0, 1, 2, 3]",
+          "[1, 2, 3, 4, 5]",
+          "[1, 2, 3, 4]"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 3,
         "explanation": "range(1, 5) generates numbers from 1 up to (but not including) 5."
       },
       {
@@ -108,12 +108,12 @@
         "type": "multiple_choice",
         "prompt": "What is the result of `True and False or True`?",
         "options": [
-          "True",
-          "False",
           "None",
-          "Error"
+          "False",
+          "Error",
+          "True"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 3,
         "explanation": "`and` has higher precedence than `or`. So: (True and False) or True = False or True = True."
       },
       {
@@ -129,12 +129,12 @@
         "type": "multiple_choice",
         "prompt": "What is the primary reason to wrap logic in functions?",
         "options": [
-          "To make code longer",
           "To reuse logic, reduce repetition, and improve readability",
-          "To slow down execution",
-          "To avoid using variables"
+          "To make code longer",
+          "To avoid using variables",
+          "To slow down execution"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Functions encapsulate behavior for reuse, clarity, testing, and separation of concerns."
       },
       {
@@ -150,12 +150,12 @@
         "type": "multiple_choice",
         "prompt": "What happens if a function does not have a return statement?",
         "options": [
-          "It raises an error",
-          "It returns 0",
           "It returns None",
-          "It returns an empty string"
+          "It returns an empty string",
+          "It raises an error",
+          "It returns 0"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "Functions without an explicit return statement return None by default."
       },
       {
@@ -299,12 +299,12 @@
         "type": "multiple_choice",
         "prompt": "What is the output of `bool([])` and `bool([0])`?",
         "options": [
-          "True, True",
-          "False, False",
+          "True, False",
           "False, True",
-          "True, False"
+          "False, False",
+          "True, True"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Empty sequences are falsy (False), while non-empty sequences are truthy (True), even if they contain falsy values like 0."
       },
       {
@@ -320,12 +320,12 @@
         "type": "multiple_choice",
         "prompt": "Which statement correctly checks if a key exists in a dictionary?",
         "options": [
-          "if key in dict.keys():",
-          "if dict.has(key):",
           "if key in dict:",
-          "if dict.contains(key):"
+          "if dict.has(key):",
+          "if dict.contains(key):",
+          "if key in dict.keys():"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The idiomatic way is 'if key in dict:', which is both readable and efficient (O(1) lookup)."
       }
     ]
@@ -368,12 +368,12 @@
         "type": "multiple_choice",
         "prompt": "Which expression evaluates to `True`?",
         "options": [
-          "\"apple\" > \"banana\"",
-          "10 == \"10\"",
+          "type(3) == type(3.0)",
           "len(\"hello\") == 5",
-          "type(3) == type(3.0)"
+          "10 == \"10\"",
+          "\"apple\" > \"banana\""
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "\"hello\" has 5 characters, so len(\"hello\") == 5 is True."
       },
       {
@@ -500,12 +500,12 @@
         "type": "multiple_choice",
         "prompt": "What does *args allow in a function definition?",
         "options": [
-          "Required arguments only",
-          "Keyword arguments only",
           "Variable number of positional arguments",
+          "Keyword arguments only",
+          "Required arguments only",
           "Exactly two arguments"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "*args collects any number of positional arguments into a tuple."
       },
       {
@@ -541,12 +541,12 @@
         "type": "multiple_choice",
         "prompt": "Which of the following creates a tuple with one element?",
         "options": [
-          "(1)",
           "(1,)",
           "[1]",
+          "(1)",
           "{1}"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A single-element tuple requires a trailing comma: (1,). Without it, (1) is just the integer 1 in parentheses."
       },
       {
@@ -599,12 +599,12 @@
         "type": "multiple_choice",
         "prompt": "Which file mode appends to a file without overwriting existing content?",
         "options": [
-          "\"r\"",
-          "\"w\"",
+          "\"x\"",
           "\"a\"",
-          "\"x\""
+          "\"r\"",
+          "\"w\""
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "\"a\" (append) mode adds new content to the end of the file without truncating."
       },
       {
@@ -612,12 +612,12 @@
         "type": "multiple_choice",
         "prompt": "What does `file.readlines()` return?",
         "options": [
-          "A single string with all content",
           "A list of lines from the file",
           "The first line of the file",
+          "A single string with all content",
           "The number of lines in the file"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "readlines() returns a list where each element is a line from the file (including newlines)."
       },
       {
@@ -655,11 +655,11 @@
         "prompt": "When does the `else` clause in a try/except/else block execute?",
         "options": [
           "Always after the try block",
-          "Only when an exception occurs",
           "Only when no exception occurs in the try block",
+          "Only when an exception occurs",
           "Only when the finally block is missing"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "The else clause runs only if the try block completes successfully without raising any exceptions."
       },
       {
@@ -712,12 +712,12 @@
         "type": "multiple_choice",
         "prompt": "What is the \"base case\" in a recursive function?",
         "options": [
-          "The first call to the function",
           "The condition that stops the recursion",
           "The recursive call itself",
-          "The return type of the function"
+          "The return type of the function",
+          "The first call to the function"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The base case is the condition where the function returns a result without making another recursive call."
       },
       {
@@ -741,12 +741,12 @@
         "type": "multiple_choice",
         "prompt": "What error occurs when a recursive function has no base case or never reaches it?",
         "options": [
-          "ValueError",
           "RecursionError",
+          "ValueError",
           "StackOverflowError",
           "InfiniteLoopError"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Python raises RecursionError when the maximum recursion depth is exceeded."
       },
       {
@@ -792,12 +792,12 @@
         "type": "multiple_choice",
         "prompt": "What is wrong with this code?\n\n```python\ndef sum_evens(nums):\n    total = 0\n    for i in range(len(nums)):\n        if nums[i] % 2 == 0:\n            total += nums[i + 1]\n    return total\n```",
         "options": [
-          "The modulo operator is wrong",
           "It adds nums[i + 1] instead of nums[i]",
           "The range should start at 1",
+          "The modulo operator is wrong",
           "total should start at 1"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "The bug is adding nums[i + 1] instead of nums[i]. This adds the wrong element and may cause IndexError."
       },
       {
@@ -805,12 +805,12 @@
         "type": "multiple_choice",
         "prompt": "What is the output of this buggy code?\n\n```python\ndef print_1_to_n(n):\n    for i in range(n):\n        print(i)\n\nprint_1_to_n(3)\n```",
         "options": [
-          "1 2 3",
           "0 1 2",
           "1 2",
-          "0 1 2 3"
+          "0 1 2 3",
+          "1 2 3"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "range(n) produces 0 to n-1, so it prints 0, 1, 2 instead of 1, 2, 3. Should use range(1, n+1)."
       },
       {
@@ -873,11 +873,11 @@
         "prompt": "What is the time complexity of looking up a key in a Python dictionary?",
         "options": [
           "O(n)",
-          "O(log n)",
           "O(1) average case",
-          "O(n²)"
+          "O(n²)",
+          "O(log n)"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 1,
         "explanation": "Python dictionaries use hash tables, providing O(1) average-case lookup time."
       },
       {

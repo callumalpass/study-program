@@ -11,11 +11,11 @@
         "prompt": "What are the three steps of Divide and Conquer?",
         "options": [
           "Split, Sort, Merge",
+          "Partition, Recurse, Return",
           "Divide, Conquer, Combine",
-          "Break, Solve, Join",
-          "Partition, Recurse, Return"
+          "Break, Solve, Join"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "D&C has three steps: Divide the problem, Conquer (solve) subproblems recursively, Combine solutions."
       },
       {
@@ -44,11 +44,11 @@
         "prompt": "What is the recurrence relation for Merge Sort?",
         "options": [
           "T(n) = T(n-1) + O(n)",
-          "T(n) = 2T(n/2) + O(n)",
           "T(n) = T(n/2) + O(1)",
-          "T(n) = 2T(n-1) + O(1)"
+          "T(n) = 2T(n-1) + O(1)",
+          "T(n) = 2T(n/2) + O(n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "Merge Sort splits into 2 halves (2T(n/2)) and merges in linear time (O(n))."
       },
       {
@@ -84,12 +84,12 @@
         "type": "multiple_choice",
         "prompt": "For T(n) = T(n/2) + O(1) (Binary Search), what is the complexity?",
         "options": [
-          "O(n)",
-          "O(log n)",
+          "O(1)",
           "O(n log n)",
-          "O(1)"
+          "O(n)",
+          "O(log n)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "a=1, b=2, d=0. Since a = b^d (1 = 1), T(n) = O(n^d log n) = O(log n)."
       },
       {
@@ -172,12 +172,12 @@
         "type": "multiple_choice",
         "prompt": "The Closest Pair of Points problem has what complexity using D&C?",
         "options": [
+          "O(n^3)",
           "O(n)",
           "O(n log n)",
-          "O(n^2)",
-          "O(n^3)"
+          "O(n^2)"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "D&C achieves O(n log n) for closest pair, much better than brute force O(n^2)."
       },
       {

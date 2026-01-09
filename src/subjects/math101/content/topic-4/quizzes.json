@@ -10,12 +10,12 @@
         "type": "multiple_choice",
         "prompt": "A relation R on set A is reflexive if:",
         "options": [
-          "For all a ∈ A: (a, a) ∈ R",
-          "For all a, b ∈ A: if (a, b) ∈ R then (b, a) ∈ R",
           "For all a ∈ A: (a, a) ∉ R",
-          "There exist a, b such that (a, b) ∈ R"
+          "For all a ∈ A: (a, a) ∈ R",
+          "There exist a, b such that (a, b) ∈ R",
+          "For all a, b ∈ A: if (a, b) ∈ R then (b, a) ∈ R"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "A relation is reflexive if every element is related to itself. For all a in A, (a, a) must be in R."
       },
       {
@@ -30,12 +30,12 @@
         "type": "multiple_choice",
         "prompt": "A relation R on set A is symmetric if:",
         "options": [
-          "For all a ∈ A: (a, a) ∈ R",
           "For all a, b ∈ A: if (a, b) ∈ R then (b, a) ∈ R",
+          "For all a ∈ A: (a, a) ∈ R",
           "For all a, b, c ∈ A: if (a, b) ∈ R and (b, c) ∈ R then (a, c) ∈ R",
           "For all a ∈ A: (a, a) ∉ R"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "A relation is symmetric if whenever a is related to b, then b is also related to a."
       },
       {
@@ -43,12 +43,12 @@
         "type": "multiple_choice",
         "prompt": "Which property does the relation \"less than\" (<) on integers NOT have?",
         "options": [
-          "Transitive",
-          "Antisymmetric",
           "Reflexive",
-          "Irreflexive"
+          "Irreflexive",
+          "Transitive",
+          "Antisymmetric"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The < relation is not reflexive because no number is less than itself. It IS transitive (a<b and b<c implies a<c), antisymmetric, and irreflexive."
       },
       {
@@ -91,12 +91,12 @@
         "type": "multiple_choice",
         "prompt": "Which combination of properties defines a partial order?",
         "options": [
-          "Reflexive, symmetric, transitive",
-          "Reflexive, antisymmetric, transitive",
           "Irreflexive, symmetric, transitive",
-          "Reflexive, symmetric, antisymmetric"
+          "Reflexive, symmetric, transitive",
+          "Reflexive, symmetric, antisymmetric",
+          "Reflexive, antisymmetric, transitive"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "A partial order is reflexive, antisymmetric, and transitive. Example: ≤ on integers, ⊆ on sets."
       },
       {
@@ -105,11 +105,11 @@
         "prompt": "The relation \"is a sibling of\" on a set of people (excluding oneself) is:",
         "options": [
           "Reflexive and symmetric",
-          "Symmetric but not reflexive",
           "Transitive and reflexive",
-          "Antisymmetric and transitive"
+          "Antisymmetric and transitive",
+          "Symmetric but not reflexive"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 3,
         "explanation": "You are not your own sibling (not reflexive), but if A is B's sibling, B is A's sibling (symmetric). It's not transitive (siblings of siblings might be the same person, not siblings)."
       },
       {
@@ -132,12 +132,12 @@
         "type": "multiple_choice",
         "prompt": "The transitive closure of a relation R is:",
         "options": [
-          "The smallest reflexive relation containing R",
-          "The smallest symmetric relation containing R",
           "The smallest transitive relation containing R",
-          "The largest relation contained in R"
+          "The largest relation contained in R",
+          "The smallest symmetric relation containing R",
+          "The smallest reflexive relation containing R"
         ],
-        "correctAnswer": 2,
+        "correctAnswer": 0,
         "explanation": "The transitive closure is the smallest transitive relation that contains R. It adds all pairs needed to make R transitive."
       },
       {
@@ -152,12 +152,12 @@
         "type": "multiple_choice",
         "prompt": "If R is an equivalence relation on a set of 10 elements and creates 3 equivalence classes, what can we say?",
         "options": [
-          "Each class has exactly 3 elements",
           "The sum of the sizes of the classes is 10",
+          "Each class has exactly 3 elements",
           "R contains exactly 30 ordered pairs",
           "At least one class has 10 elements"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 0,
         "explanation": "Equivalence classes partition the set, so every element belongs to exactly one class. The sizes must sum to 10."
       },
       {
@@ -165,12 +165,12 @@
         "type": "multiple_choice",
         "prompt": "The composition R ∘ S of relations R and S contains (a, c) if:",
         "options": [
-          "There exists b such that (a, b) ∈ S and (b, c) ∈ R",
           "There exists b such that (a, b) ∈ R and (b, c) ∈ S",
-          "(a, c) ∈ R and (a, c) ∈ S",
-          "(a, c) ∈ R or (a, c) ∈ S"
+          "There exists b such that (a, b) ∈ S and (b, c) ∈ R",
+          "(a, c) ∈ R or (a, c) ∈ S",
+          "(a, c) ∈ R and (a, c) ∈ S"
         ],
-        "correctAnswer": 0,
+        "correctAnswer": 1,
         "explanation": "For composition R ∘ S, we apply S first then R. So (a, c) ∈ R ∘ S if there exists b with (a, b) ∈ S and (b, c) ∈ R."
       },
       {
