@@ -55,6 +55,7 @@ function createProgress(overrides: Partial<SubjectProgress> = {}): SubjectProgre
 function createUserProgress(subjects: Record<string, SubjectProgress> = {}): UserProgress {
   return {
     version: 4,
+    startedAt: new Date().toISOString(),
     subjects,
     settings: {
       theme: 'auto',
