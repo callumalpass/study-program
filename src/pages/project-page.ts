@@ -68,7 +68,7 @@ export function renderProjectPage(
       <section class="project-requirements">
         <h2>Requirements</h2>
         <ul class="requirements-list">
-          ${project.requirements.map(req => `<li>${req}</li>`).join('')}
+          ${project.requirements.map(req => `<li>${escapeHtml(req)}</li>`).join('')}
         </ul>
       </section>
 
@@ -78,7 +78,7 @@ export function renderProjectPage(
           ${project.rubric.map(criterion => `
             <div class="rubric-criterion">
               <div class="criterion-header">
-                <h3>${criterion.name}</h3>
+                <h3>${escapeHtml(criterion.name)}</h3>
                 <span class="criterion-weight">${criterion.weight}%</span>
               </div>
               <div class="criterion-levels">
@@ -86,8 +86,8 @@ export function renderProjectPage(
                   <div class="rubric-level">
                     <div class="level-score">${level.score}</div>
                     <div class="level-content">
-                      <div class="level-label">${level.label}</div>
-                      <div class="level-description">${level.description}</div>
+                      <div class="level-label">${escapeHtml(level.label)}</div>
+                      <div class="level-description">${escapeHtml(level.description)}</div>
                     </div>
                   </div>
                 `).join('')}
@@ -267,7 +267,7 @@ function renderProjectScaffolding(project: Project): string {
     <section class="project-scaffolding">
       <div class="project-scaffolding-header">
         <h2>Scaffolding & Milestones</h2>
-        ${scaffolding.overview ? `<p class="scaffolding-overview">${scaffolding.overview}</p>` : ''}
+        ${scaffolding.overview ? `<p class="scaffolding-overview">${escapeHtml(scaffolding.overview)}</p>` : ''}
       </div>
       <div class="scaffolding-grid">
         ${renderScaffoldingList('Getting Started', scaffolding.gettingStarted)}
@@ -283,9 +283,9 @@ function renderScaffoldingList(title: string, items?: string[]): string {
   if (!items || items.length === 0) return '';
   return `
     <div class="scaffolding-card">
-      <h3>${title}</h3>
+      <h3>${escapeHtml(title)}</h3>
       <ul>
-        ${items.map(item => `<li>${item}</li>`).join('')}
+        ${items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
       </ul>
     </div>
   `;
@@ -300,8 +300,8 @@ function renderScaffoldingResources(resources?: StarterResource[]): string {
       <ul class="resource-list">
         ${resources.map(res => `
           <li>
-            <div class="resource-label">${res.label}${res.link ? ` <a href="${res.link}" target="_blank" rel="noopener">Open</a>` : ''}</div>
-            ${res.description ? `<div class="resource-description">${res.description}</div>` : ''}
+            <div class="resource-label">${escapeHtml(res.label)}${res.link ? ` <a href="${escapeHtml(res.link)}" target="_blank" rel="noopener">Open</a>` : ''}</div>
+            ${res.description ? `<div class="resource-description">${escapeHtml(res.description)}</div>` : ''}
           </li>
         `).join('')}
       </ul>
@@ -372,7 +372,7 @@ function attachProjectEventListeners(container: HTMLElement, subjectId: string, 
         <div class="selected-files">
           <strong>Selected files (${formatFileSize(totalSize)}):</strong>
           <ul>
-            ${Array.from(files).map(f => `<li>${f.name} (${formatFileSize(f.size)})</li>`).join('')}
+            ${Array.from(files).map(f => `<li>${escapeHtml(f.name)} (${formatFileSize(f.size)})</li>`).join('')}
           </ul>
         </div>
       `;

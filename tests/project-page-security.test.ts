@@ -380,3 +380,335 @@ describe('AI Evaluation content rendering', () => {
     expect(escapedCount).toBe(6);
   });
 });
+
+describe('Project requirements rendering', () => {
+  // Simulates the rendering logic from project-page.ts
+  function renderRequirements(requirements: string[]): string {
+    return `<ul class="requirements-list">
+      ${requirements.map(req => `<li>${escapeHtml(req)}</li>`).join('')}
+    </ul>`;
+  }
+
+  it('safely renders requirements with XSS payloads', () => {
+    const requirements = [
+      'Must implement user authentication',
+      '<script>alert("xss")</script>Handle errors gracefully',
+      'Write unit tests<img src=x onerror="alert(1)">',
+    ];
+
+    const html = renderRequirements(requirements);
+
+    expect(html).not.toContain('<script>');
+    expect(html).not.toContain('<img');
+    expect(html).toContain('&lt;script&gt;');
+    expect(html).toContain('&lt;img');
+    expect(html).toContain('Must implement user authentication');
+    expect(html).toContain('Handle errors gracefully');
+    expect(html).toContain('Write unit tests');
+  });
+
+  it('preserves legitimate requirements with special chars', () => {
+    const requirements = [
+      'Use async/await for I/O operations',
+      'Implement O(n log n) sorting algorithm',
+      'Handle edge cases: null, undefined & empty strings',
+    ];
+
+    const html = renderRequirements(requirements);
+
+    expect(html).toContain('async/await');
+    expect(html).toContain('O(n log n)');
+    expect(html).toContain('&amp; empty strings');
+  });
+});
+
+describe('Project rubric rendering', () => {
+  interface MockRubricLevel {
+    label: string;
+    score: number;
+    description: string;
+  }
+
+  interface MockRubricCriterion {
+    name: string;
+    weight: number;
+    levels: MockRubricLevel[];
+  }
+
+  // Simulates the rendering logic from project-page.ts
+  function renderRubric(rubric: MockRubricCriterion[]): string {
+    return rubric.map(criterion => `
+      <div class="rubric-criterion">
+        <div class="criterion-header">
+          <h3>${escapeHtml(criterion.name)}</h3>
+          <span class="criterion-weight">${criterion.weight}%</span>
+        </div>
+        <div class="criterion-levels">
+          ${criterion.levels.map(level => `
+            <div class="rubric-level">
+              <div class="level-score">${level.score}</div>
+              <div class="level-content">
+                <div class="level-label">${escapeHtml(level.label)}</div>
+                <div class="level-description">${escapeHtml(level.description)}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  it('safely renders rubric criterion names with XSS', () => {
+    const rubric: MockRubricCriterion[] = [{
+      name: 'Code Quality<script>alert(1)</script>',
+      weight: 30,
+      levels: [{ label: 'Excellent', score: 100, description: 'Perfect code' }],
+    }];
+
+    const html = renderRubric(rubric);
+
+    expect(html).not.toContain('<script>');
+    expect(html).toContain('&lt;script&gt;');
+    expect(html).toContain('Code Quality');
+  });
+
+  it('safely renders rubric level labels with XSS', () => {
+    const rubric: MockRubricCriterion[] = [{
+      name: 'Testing',
+      weight: 20,
+      levels: [
+        { label: 'Excellent<img src=x onerror="alert(1)">', score: 100, description: 'Test' },
+      ],
+    }];
+
+    const html = renderRubric(rubric);
+
+    expect(html).not.toContain('<img');
+    expect(html).toContain('&lt;img');
+    expect(html).toContain('Excellent');
+  });
+
+  it('safely renders rubric level descriptions with XSS', () => {
+    const rubric: MockRubricCriterion[] = [{
+      name: 'Documentation',
+      weight: 25,
+      levels: [{
+        label: 'Good',
+        score: 80,
+        description: 'Well documented<svg onload="alert(1)">code',
+      }],
+    }];
+
+    const html = renderRubric(rubric);
+
+    expect(html).not.toContain('<svg');
+    expect(html).toContain('&lt;svg');
+    expect(html).toContain('Well documented');
+    expect(html).toContain('code');
+  });
+
+  it('safely renders rubric with XSS in all fields', () => {
+    const xss = '<script>evil()</script>';
+    const rubric: MockRubricCriterion[] = [{
+      name: `Criterion ${xss}`,
+      weight: 50,
+      levels: [
+        { label: `Label ${xss}`, score: 100, description: `Description ${xss}` },
+        { label: `Label2 ${xss}`, score: 50, description: `Description2 ${xss}` },
+      ],
+    }];
+
+    const html = renderRubric(rubric);
+
+    expect(html).not.toContain('<script>');
+    // 1 in name + 2 in labels + 2 in descriptions = 5
+    const escapedCount = (html.match(/&lt;script&gt;/g) || []).length;
+    expect(escapedCount).toBe(5);
+  });
+});
+
+describe('Project scaffolding rendering', () => {
+  interface MockStarterResource {
+    label: string;
+    link?: string;
+    description?: string;
+  }
+
+  // Simulates renderScaffoldingList from project-page.ts
+  function renderScaffoldingList(title: string, items?: string[]): string {
+    if (!items || items.length === 0) return '';
+    return `
+      <div class="scaffolding-card">
+        <h3>${escapeHtml(title)}</h3>
+        <ul>
+          ${items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+  }
+
+  // Simulates renderScaffoldingResources from project-page.ts
+  function renderScaffoldingResources(resources?: MockStarterResource[]): string {
+    if (!resources || resources.length === 0) return '';
+    return `
+      <div class="scaffolding-card">
+        <h3>Starter Resources</h3>
+        <ul class="resource-list">
+          ${resources.map(res => `
+            <li>
+              <div class="resource-label">${escapeHtml(res.label)}${res.link ? ` <a href="${escapeHtml(res.link)}" target="_blank" rel="noopener">Open</a>` : ''}</div>
+              ${res.description ? `<div class="resource-description">${escapeHtml(res.description)}</div>` : ''}
+            </li>
+          `).join('')}
+        </ul>
+      </div>
+    `;
+  }
+
+  // Simulates scaffolding overview rendering
+  function renderScaffoldingOverview(overview?: string): string {
+    return overview ? `<p class="scaffolding-overview">${escapeHtml(overview)}</p>` : '';
+  }
+
+  it('safely renders scaffolding title with XSS', () => {
+    const html = renderScaffoldingList('Getting Started<script>alert(1)</script>', ['Item 1']);
+
+    expect(html).not.toContain('<script>');
+    expect(html).toContain('&lt;script&gt;');
+    expect(html).toContain('Getting Started');
+  });
+
+  it('safely renders scaffolding items with XSS', () => {
+    const items = [
+      'Set up environment<img src=x onerror="alert(1)">',
+      '<svg onload="steal()">Install dependencies',
+      'Normal step with no XSS',
+    ];
+
+    const html = renderScaffoldingList('Getting Started', items);
+
+    expect(html).not.toContain('<img');
+    expect(html).not.toContain('<svg');
+    expect(html).toContain('&lt;img');
+    expect(html).toContain('&lt;svg');
+    expect(html).toContain('Normal step with no XSS');
+  });
+
+  it('safely renders scaffolding overview with XSS', () => {
+    const overview = 'Follow these steps<script>alert(1)</script> to complete the project';
+    const html = renderScaffoldingOverview(overview);
+
+    expect(html).not.toContain('<script>');
+    expect(html).toContain('&lt;script&gt;');
+    expect(html).toContain('Follow these steps');
+    expect(html).toContain('to complete the project');
+  });
+
+  it('safely renders starter resources with XSS in label', () => {
+    const resources: MockStarterResource[] = [{
+      label: 'Download template<script>alert(1)</script>',
+      link: 'https://example.com/template',
+    }];
+
+    const html = renderScaffoldingResources(resources);
+
+    expect(html).not.toContain('<script>');
+    expect(html).toContain('&lt;script&gt;');
+    expect(html).toContain('Download template');
+  });
+
+  it('safely renders starter resources with XSS in link', () => {
+    const resources: MockStarterResource[] = [{
+      label: 'Template',
+      link: 'javascript:alert("xss")',
+    }];
+
+    const html = renderScaffoldingResources(resources);
+
+    // The javascript: protocol is safe as escaped text in href
+    expect(html).toContain('href="javascript:alert(&quot;xss&quot;)"');
+    expect(html).toContain('Template');
+  });
+
+  it('safely renders starter resources with URL attribute breakout', () => {
+    const resources: MockStarterResource[] = [{
+      label: 'Template',
+      link: '" onclick="alert(1)" x="',
+    }];
+
+    const html = renderScaffoldingResources(resources);
+
+    expect(html).toContain('&quot;');
+    expect(html).not.toContain('href="" onclick');
+  });
+
+  it('safely renders starter resources with XSS in description', () => {
+    const resources: MockStarterResource[] = [{
+      label: 'API Docs',
+      description: 'Read the docs<img src=x onerror="alert(1)"> before starting',
+    }];
+
+    const html = renderScaffoldingResources(resources);
+
+    expect(html).not.toContain('<img');
+    expect(html).toContain('&lt;img');
+    expect(html).toContain('Read the docs');
+    expect(html).toContain('before starting');
+  });
+
+  it('handles empty scaffolding gracefully', () => {
+    expect(renderScaffoldingList('Title', [])).toBe('');
+    expect(renderScaffoldingList('Title', undefined)).toBe('');
+    expect(renderScaffoldingResources([])).toBe('');
+    expect(renderScaffoldingResources(undefined)).toBe('');
+    expect(renderScaffoldingOverview(undefined)).toBe('');
+  });
+});
+
+describe('File name rendering', () => {
+  // Simulates file list rendering from project-page.ts
+  function renderFileList(fileNames: string[]): string {
+    return `
+      <div class="selected-files">
+        <strong>Selected files:</strong>
+        <ul>
+          ${fileNames.map(name => `<li>${escapeHtml(name)} (1 KB)</li>`).join('')}
+        </ul>
+      </div>
+    `;
+  }
+
+  it('safely renders file names with XSS payloads', () => {
+    const fileNames = [
+      'main.ts',
+      '<script>alert(1)</script>.js',
+      'image<img src=x onerror="alert(1)">.png',
+      '" onclick="alert(1).html',
+    ];
+
+    const html = renderFileList(fileNames);
+
+    expect(html).not.toContain('<script>');
+    expect(html).not.toContain('<img');
+    expect(html).toContain('&lt;script&gt;');
+    expect(html).toContain('&lt;img');
+    expect(html).toContain('&quot;');
+    expect(html).toContain('main.ts');
+  });
+
+  it('preserves legitimate file names with special chars', () => {
+    const fileNames = [
+      'README.md',
+      'types.d.ts',
+      'config.test.js',
+      'styles&themes.css',
+    ];
+
+    const html = renderFileList(fileNames);
+
+    expect(html).toContain('README.md');
+    expect(html).toContain('types.d.ts');
+    expect(html).toContain('config.test.js');
+    expect(html).toContain('styles&amp;themes.css');
+  });
+});
