@@ -192,6 +192,15 @@ export async function runTests(
 }
 
 /**
+ * Escape special regex characters in a string.
+ * This ensures function names with special characters (like $, +, etc.)
+ * are treated as literal characters in regex patterns.
+ */
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
  * Prepare code for function-based testing.
  * Strips existing print/test calls and adds a call with test input.
  */
@@ -205,9 +214,12 @@ function prepareFunctionTestCode(code: string, funcName: string, input: string):
   const functionLines: string[] = [];
   const otherLines: string[] = [];
 
+  // Escape function name for safe use in regex
+  const escapedFuncName = escapeRegex(funcName);
+
   for (const line of lines) {
     // Check if this is the start of the target function
-    if (line.match(new RegExp(`^def\\s+${funcName}\\s*\\(`))) {
+    if (line.match(new RegExp(`^def\\s+${escapedFuncName}\\s*\\(`))) {
       inFunction = true;
       functionIndent = line.search(/\S/);
       functionLines.push(line);
@@ -233,7 +245,7 @@ function prepareFunctionTestCode(code: string, funcName: string, input: string):
       }
     } else {
       // Skip test calls and print statements that call our function
-      if (!isTestCall(line) && !line.match(new RegExp(`print\\s*\\(\\s*${funcName}\\s*\\(`))) {
+      if (!isTestCall(line) && !line.match(new RegExp(`print\\s*\\(\\s*${escapedFuncName}\\s*\\(`))) {
         otherLines.push(line);
       }
     }
@@ -510,8 +522,11 @@ function prepareCFunctionTestCode(code: string, funcName: string, input: string)
     return code;
   }
 
+  // Escape function name for safe use in regex
+  const escapedFuncName = escapeRegex(funcName);
+
   // Detect return type of the function (supports compound types like "unsigned int", "long long", etc.)
-  const funcMatch = code.match(new RegExp(`((?:(?:unsigned|signed|static|const)\\s+)*(?:int|void|float|double|char|long|short)(?:\\s+(?:long|int))?)\\s+${funcName}\\s*\\(`));
+  const funcMatch = code.match(new RegExp(`((?:(?:unsigned|signed|static|const)\\s+)*(?:int|void|float|double|char|long|short)(?:\\s+(?:long|int))?)\\s+${escapedFuncName}\\s*\\(`));
   const returnType = funcMatch ? funcMatch[1] : 'int';
 
   // Build the function call statement based on return type
