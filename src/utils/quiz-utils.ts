@@ -20,12 +20,17 @@ export function normalizeAnswer(value: string | number | boolean | undefined | n
  * In addition to standard normalization, this also normalizes whitespace around
  * punctuation so that "[1, 2, 3]" matches "[1,2,3]" and "(a, b)" matches "(a,b)".
  * This is important for code_output questions where users might type without spaces.
+ * Also collapses multiple consecutive spaces to single spaces to handle NumPy-style
+ * array formatting where elements are space-padded for alignment.
  */
 export function normalizeCodeOutput(value: string | number | boolean | undefined | null): string {
   if (value === undefined || value === null) return '';
   return String(value)
     .trim()
     .toLowerCase()
+    // Collapse multiple consecutive spaces to single space (handles NumPy array formatting)
+    // Uses ' +' instead of '\s+' to preserve newlines and tabs
+    .replace(/ +/g, ' ')
     // Normalize whitespace around common punctuation: commas, colons, brackets
     .replace(/\s*,\s*/g, ', ')      // Standardize comma spacing
     .replace(/\s*:\s*/g, ': ')      // Standardize colon spacing (for dicts)

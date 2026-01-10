@@ -124,7 +124,7 @@ describe('normalizeCodeOutput', () => {
 
     it('should handle multi-value output', () => {
       expect(normalizeCodeOutput('2 1')).toBe('2 1');
-      expect(normalizeCodeOutput('  2   1  ')).toBe('2   1');
+      expect(normalizeCodeOutput('  2   1  ')).toBe('2 1'); // Multiple spaces normalized to single
     });
 
     it('should handle type output', () => {

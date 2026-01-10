@@ -188,7 +188,7 @@ describe('quiz mathematical answers', () => {
       };
 
       expect(checkAnswer(question, '2 1')).toBe(true);
-      expect(checkAnswer(question, '2  1')).toBe(false); // Extra space
+      expect(checkAnswer(question, '2  1')).toBe(true); // Extra spaces normalized to single space
     });
 
     it('matches boolean output', () => {

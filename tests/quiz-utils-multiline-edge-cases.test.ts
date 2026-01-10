@@ -62,10 +62,12 @@ describe('normalizeCodeOutput - multiline handling', () => {
       expect(result.endsWith('line2')).toBe(true);
     });
 
-    it('preserves internal whitespace on lines', () => {
+    it('normalizes consecutive spaces on lines', () => {
       const input = 'line1\n  indented\nline3';
       const result = normalizeCodeOutput(input);
-      expect(result).toContain('  indented');
+      // Multiple spaces are normalized to single space
+      expect(result).toContain(' indented');
+      expect(result).not.toContain('  indented'); // Double space collapsed
     });
   });
 

@@ -348,10 +348,10 @@ describe('Code Output - Whitespace Boundary Cases', () => {
     expect(checkAnswer(q, '\t42\t')).toBe(true);
   });
 
-  it('preserves internal whitespace in multiword answers', () => {
+  it('normalizes multiple consecutive spaces in multiword answers', () => {
     const q = createCodeOutputQuestion('hello world');
-    expect(checkAnswer(q, 'hello  world')).toBe(false); // extra space
-    expect(checkAnswer(q, 'hello\tworld')).toBe(false); // tab instead of space
+    expect(checkAnswer(q, 'hello  world')).toBe(true); // extra spaces normalized to single space
+    expect(checkAnswer(q, 'hello\tworld')).toBe(false); // tab is different from space
   });
 
   it('handles answer that is just whitespace', () => {

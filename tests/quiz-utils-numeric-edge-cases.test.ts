@@ -287,7 +287,7 @@ describe('Whitespace handling in numeric answers', () => {
     expect(checkAnswer(question, '  2  ')).toBe(true);
   });
 
-  it('does not normalize internal whitespace in multi-word numeric answers', () => {
+  it('normalizes multiple consecutive spaces to single space in code output', () => {
     const question: QuizQuestion = {
       id: 'ws2',
       type: 'code_output',
@@ -297,8 +297,8 @@ describe('Whitespace handling in numeric answers', () => {
       explanation: 'Print with spaces',
     };
     expect(checkAnswer(question, '1 2')).toBe(true);
-    expect(checkAnswer(question, '1  2')).toBe(false); // Double space
-    expect(checkAnswer(question, '12')).toBe(false); // No space
+    expect(checkAnswer(question, '1  2')).toBe(true); // Double space now matches (normalized)
+    expect(checkAnswer(question, '12')).toBe(false); // No space - still different
   });
 });
 

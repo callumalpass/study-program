@@ -301,6 +301,19 @@ describe('normalizeCodeOutput', () => {
       // Internal whitespace that's not around punctuation is preserved
       expect(normalizeCodeOutput('a\tb')).toBe('a\tb');
     });
+
+    it('collapses multiple consecutive spaces to single space', () => {
+      // NumPy arrays often have variable spacing for alignment
+      expect(normalizeCodeOutput('[0.  0.5 1.]')).toBe('[0. 0.5 1.]');
+      expect(normalizeCodeOutput('a    b')).toBe('a b');
+      expect(normalizeCodeOutput('hello   world')).toBe('hello world');
+    });
+
+    it('matches NumPy array output with different spacing', () => {
+      // Real-world case: NumPy outputs "[0.  0.5 1. ]" but user types "[0. 0.5 1.]"
+      const expected = normalizeCodeOutput('[0.  0.5 1. ]');
+      expect(normalizeCodeOutput('[0. 0.5 1.]')).toBe(expected);
+    });
   });
 });
 
