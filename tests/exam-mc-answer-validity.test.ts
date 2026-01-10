@@ -186,6 +186,19 @@ describe('Fixed Letter-Reference Questions', () => {
       expect(correctIndex).toBeGreaterThanOrEqual(0);
       expect(correctIndex).toBeLessThan(options.length);
     });
+
+    it('correct answer should be the operation that changes the solution set', () => {
+      const question = math201Exam?.questions.find(q => q.id === 'math201-final-q5');
+      expect(question).toBeDefined();
+
+      // The question asks which operation CHANGES the solution set
+      // The answer should be "Multiplying a row by zero" which loses information
+      const correctIndex = question!.correctAnswer as number;
+      const options = question!.options!;
+      const correctOption = options[correctIndex].toLowerCase();
+
+      expect(correctOption).toContain('zero');
+    });
   });
 
   describe('MATH301 Gradient Direction Question (math301-mid-q15)', () => {
