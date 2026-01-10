@@ -588,16 +588,15 @@
       {
         "id": "fin-q26",
         "type": "multiple_choice",
-        "prompt": "For index IDX(Status, OrderDate), which query can use the index efficiently?",
-        "codeSnippet": "A) WHERE OrderDate > '2024-01-01'\nB) WHERE Status = 'Active'\nC) WHERE OrderDate > '2024-01-01' AND Status = 'Active'\nD) WHERE Status = 'Active' AND OrderDate > '2024-01-01'",
+        "prompt": "For a composite index IDX(Status, OrderDate), which type of WHERE clause can use the index efficiently?",
         "options": [
-          "A and C",
-          "A only",
-          "B, C, and D",
-          "B and D"
+          "Only queries filtering on OrderDate alone",
+          "Only queries filtering on Status alone",
+          "Any query that includes Status in the filter, regardless of condition order",
+          "Only queries that filter on both columns in exact index order"
         ],
         "correctAnswer": 2,
-        "explanation": "Status is the leading column. Queries B, C, and D all start with or include Status."
+        "explanation": "Composite indexes follow the leftmost prefix rule. Any query filtering on Status (the leading column) can use the index, regardless of whether OrderDate is also filtered or the order of conditions in the WHERE clause. The optimizer can reorder conditions to match the index."
       },
       {
         "id": "fin-q27",

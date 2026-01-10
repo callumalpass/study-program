@@ -76,9 +76,9 @@ describe('Multiple Choice Answer Index Validity', () => {
 
     // Known existing questions with this issue (pre-existing, not introduced by recent changes)
     // These should be fixed in future cleanups but are excluded from test failures
-    // NOTE: math102, math201, math204 issues were fixed - removed from this list
-    const knownIssues = new Set([
-      'cs205-exam-final/fin-q26',
+    // NOTE: All known issues have been fixed and removed from this list
+    const knownIssues = new Set<string>([
+      // Empty - all issues fixed
     ]);
 
     mcQuestions.forEach(({ exam, question }) => {
@@ -251,6 +251,39 @@ describe('Fixed Letter-Reference Questions', () => {
       expect(correctOption).toContain('∀');
       expect(correctOption).toContain('∨');
     });
+  });
+});
+
+describe('CS205 Composite Index Question (fin-q26)', () => {
+  const cs205Exam = allExams.find(e => e.id === 'cs205-exam-final');
+
+  it('should find CS205 final exam', () => {
+    expect(cs205Exam).toBeDefined();
+  });
+
+  it('question should not reference other options by letter', () => {
+    const question = cs205Exam?.questions.find(q => q.id === 'fin-q26');
+    expect(question).toBeDefined();
+    const options = question!.options!;
+
+    // Verify no options like "A and C", "B, C, and D"
+    const hasLetterReference = options.some(opt =>
+      /[a-d]\s+(and|,)/i.test(opt) && !/index/i.test(opt)
+    );
+    expect(hasLetterReference).toBe(false);
+  });
+
+  it('correct answer should explain leftmost prefix rule behavior', () => {
+    const question = cs205Exam?.questions.find(q => q.id === 'fin-q26');
+    const correctIndex = question!.correctAnswer as number;
+    const options = question!.options!;
+
+    expect(correctIndex).toBeGreaterThanOrEqual(0);
+    expect(correctIndex).toBeLessThan(options.length);
+
+    // The correct answer should mention that Status (leading column) is key
+    const correctOption = options[correctIndex].toLowerCase();
+    expect(correctOption).toContain('status');
   });
 });
 
