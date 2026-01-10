@@ -191,10 +191,16 @@
       },
       {
         "id": "q5",
-        "type": "fill_blank",
-        "prompt": "If T(n) = 2T(n/2) + O(n), then by Master Theorem, T(n) is O(_______).",
-        "correctAnswer": "n log n",
-        "explanation": "This is the standard Merge Sort recurrence case where work is balanced."
+        "type": "multiple_choice",
+        "prompt": "If T(n) = 2T(n/2) + O(n), then by Master Theorem, T(n) is:",
+        "options": [
+          "O(n)",
+          "O(n log n)",
+          "O(n²)",
+          "O(log n)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "This is the standard Merge Sort recurrence case where work is balanced. By Master Theorem Case 2, when a = b^k, the solution is O(n^k log n) = O(n log n)."
       }
     ]
   }
