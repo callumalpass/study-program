@@ -53,11 +53,16 @@
       },
       {
         "id": "mid-q5",
-        "type": "code_output",
-        "prompt": "What is the PDU name at the Transport layer?",
-        "codeSnippet": "# OSI PDU names from top to bottom:\n# Layer 7,6,5: Data\n# Layer 4: ?\n# Layer 3: Packet\n# Layer 2: Frame\n# Layer 1: Bits",
-        "correctAnswer": "segment",
-        "explanation": "At the Transport layer, the PDU is called a Segment (for TCP) or Datagram (for UDP)."
+        "type": "multiple_choice",
+        "prompt": "What is the PDU name for TCP at the Transport layer?",
+        "options": [
+          "Packet",
+          "Segment",
+          "Frame",
+          "Datagram"
+        ],
+        "correctAnswer": 1,
+        "explanation": "TCP's Transport layer PDU is called a Segment. UDP's Transport layer PDU is called a Datagram. Packet is used at the Network layer, and Frame at the Data Link layer."
       },
       {
         "id": "mid-q6",
