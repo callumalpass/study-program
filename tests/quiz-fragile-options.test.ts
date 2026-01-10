@@ -343,6 +343,28 @@ describe('Quiz Fragile Options Detection', () => {
       // This is informational - we track but don't fail
       expect(true).toBe(true);
     });
+
+    it('should have no questions where "All of the above" is the correct answer', () => {
+      // "All of the above" as the correct answer is particularly problematic because:
+      // 1. It relies on positional references that can break if options are reordered
+      // 2. It's confusing when "All of the above" appears anywhere other than the last position
+      // 3. It encourages lazy question writing rather than testing specific knowledge
+      const allOfAboveCorrect = aboveUsages.filter(u =>
+        u.isCorrectAnswer && /\b[Aa]ll of the above\b/.test(u.option)
+      );
+
+      if (allOfAboveCorrect.length > 0) {
+        console.log('\nQuestions where "All of the above" is the correct answer:');
+        for (const q of allOfAboveCorrect) {
+          console.log(`  ${q.file} - ${q.assessmentId}/${q.questionId}`);
+        }
+      }
+
+      expect(
+        allOfAboveCorrect,
+        `Found ${allOfAboveCorrect.length} questions where "All of the above" is correct - rewrite these questions`
+      ).toHaveLength(0);
+    });
   });
 });
 
