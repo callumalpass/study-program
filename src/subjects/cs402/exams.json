@@ -128,8 +128,8 @@
         "type": "code_output",
         "prompt": "What is the predicted probability for the positive class?",
         "codeSnippet": "import numpy as np\n\ndef sigmoid(z):\n    return 1 / (1 + np.exp(-z))\n\nweights = np.array([0.5, -0.3, 0.8])\nbias = -0.2\nx = np.array([1.0, 2.0, 0.5])\n\nz = np.dot(weights, x) + bias\nprob = sigmoid(z)\nprint(f\"{prob:.4f}\")",
-        "correctAnswer": "0.5498",
-        "explanation": "z = 0.5*1 + (-0.3)*2 + 0.8*0.5 + (-0.2) = 0.5 - 0.6 + 0.4 - 0.2 = 0.1. sigmoid(0.1) = 1/(1+e^(-0.1)) ≈ 0.5498"
+        "correctAnswer": "0.5250",
+        "explanation": "z = 0.5*1 + (-0.3)*2 + 0.8*0.5 + (-0.2) = 0.5 - 0.6 + 0.4 - 0.2 = 0.1. sigmoid(0.1) = 1/(1+e^(-0.1)) ≈ 0.5250"
       },
       {
         "id": "cs402-mid-q11",
