@@ -681,3 +681,179 @@ describe('Exam Structure Validation', () => {
     }
   });
 });
+
+/**
+ * Fragile Letter Reference Detection
+ *
+ * These tests detect quiz/exam questions that use positional letter references
+ * like "Both (a) and (c)" or "Option (b) is false" which are fragile because
+ * they break if options are reordered.
+ */
+describe('Fragile Letter Reference Detection', () => {
+  const quizFiles = findQuizFiles(SUBJECTS_DIR);
+  const examFiles = findExamFiles(SUBJECTS_DIR);
+
+  // Patterns that indicate fragile letter references in options
+  const fragileOptionPatterns = [
+    /^Both \([a-d]\) and \([a-d]\)$/i,           // "Both (a) and (c)"
+    /^Neither \([a-d]\) nor \([a-d]\)$/i,        // "Neither (a) nor (b)"
+    /^Options? \([a-d]\) and \([a-d]\)$/i,       // "Options (a) and (b)"
+    /^All of \([a-d]\),? \([a-d]\),? and \([a-d]\)$/i,  // "All of (a), (b), and (c)"
+    /^\([a-d]\) and \([a-d]\)$/i,                // "(a) and (b)"
+    /^\([a-d]\), \([a-d]\),? and \([a-d]\)$/i,   // "(a), (b), and (c)"
+  ];
+
+  // Patterns that indicate fragile letter references in explanations
+  const fragileExplanationPatterns = [
+    /\bOption \([a-d]\) is/i,                    // "Option (b) is false"
+    /\bOptions? \([a-d]\),? \([a-d]\)/i,         // "Options (a), (b) are..."
+  ];
+
+  function hasFragileOptionReference(option: string): boolean {
+    return fragileOptionPatterns.some(pattern => pattern.test(option.trim()));
+  }
+
+  function hasFragileExplanationReference(explanation: string): boolean {
+    return fragileExplanationPatterns.some(pattern => pattern.test(explanation));
+  }
+
+  describe('quiz options should not use fragile letter references', () => {
+    it('detects and rejects fragile option patterns in quizzes', () => {
+      const fragileOptions: string[] = [];
+
+      for (const filePath of quizFiles) {
+        const quizzes = loadJsonFile<Quiz[]>(filePath);
+
+        for (const quiz of quizzes) {
+          for (const question of quiz.questions) {
+            if (question.type === 'multiple_choice' && question.options) {
+              for (const option of question.options) {
+                if (hasFragileOptionReference(option)) {
+                  fragileOptions.push(
+                    `${filePath.replace(SUBJECTS_DIR, '')} - ${quiz.id}/${question.id}: "${option}"`
+                  );
+                }
+              }
+            }
+          }
+        }
+      }
+
+      expect(
+        fragileOptions,
+        `Found ${fragileOptions.length} quiz options with fragile letter references:\n${fragileOptions.join('\n')}`
+      ).toHaveLength(0);
+    });
+  });
+
+  describe('exam options should not use fragile letter references', () => {
+    it('detects and rejects fragile option patterns in exams', () => {
+      const fragileOptions: string[] = [];
+
+      for (const filePath of examFiles) {
+        const exams = loadJsonFile<{ id: string; questions: QuizQuestion[] }[]>(filePath);
+
+        for (const exam of exams) {
+          for (const question of exam.questions) {
+            if (question.type === 'multiple_choice' && question.options) {
+              for (const option of question.options) {
+                if (hasFragileOptionReference(option)) {
+                  fragileOptions.push(
+                    `${filePath.replace(SUBJECTS_DIR, '')} - ${exam.id}/${question.id}: "${option}"`
+                  );
+                }
+              }
+            }
+          }
+        }
+      }
+
+      expect(
+        fragileOptions,
+        `Found ${fragileOptions.length} exam options with fragile letter references:\n${fragileOptions.join('\n')}`
+      ).toHaveLength(0);
+    });
+  });
+
+  describe('explanations should not use fragile letter references', () => {
+    it('detects fragile letter references in quiz explanations', () => {
+      const fragileExplanations: string[] = [];
+
+      for (const filePath of quizFiles) {
+        const quizzes = loadJsonFile<Quiz[]>(filePath);
+
+        for (const quiz of quizzes) {
+          for (const question of quiz.questions) {
+            if (question.explanation && hasFragileExplanationReference(question.explanation)) {
+              fragileExplanations.push(
+                `${filePath.replace(SUBJECTS_DIR, '')} - ${quiz.id}/${question.id}: "${question.explanation.substring(0, 80)}..."`
+              );
+            }
+          }
+        }
+      }
+
+      expect(
+        fragileExplanations,
+        `Found ${fragileExplanations.length} quiz explanations with fragile letter references:\n${fragileExplanations.join('\n')}`
+      ).toHaveLength(0);
+    });
+
+    it('detects fragile letter references in exam explanations', () => {
+      const fragileExplanations: string[] = [];
+
+      for (const filePath of examFiles) {
+        const exams = loadJsonFile<{ id: string; questions: QuizQuestion[] }[]>(filePath);
+
+        for (const exam of exams) {
+          for (const question of exam.questions) {
+            if (question.explanation && hasFragileExplanationReference(question.explanation)) {
+              fragileExplanations.push(
+                `${filePath.replace(SUBJECTS_DIR, '')} - ${exam.id}/${question.id}: "${question.explanation.substring(0, 80)}..."`
+              );
+            }
+          }
+        }
+      }
+
+      expect(
+        fragileExplanations,
+        `Found ${fragileExplanations.length} exam explanations with fragile letter references:\n${fragileExplanations.join('\n')}`
+      ).toHaveLength(0);
+    });
+  });
+
+  describe('unit tests for fragile reference detection', () => {
+    it('should detect "Both (a) and (c)" pattern', () => {
+      expect(hasFragileOptionReference('Both (a) and (c)')).toBe(true);
+      expect(hasFragileOptionReference('Both (b) and (d)')).toBe(true);
+    });
+
+    it('should detect "(a) and (b)" pattern', () => {
+      expect(hasFragileOptionReference('(a) and (b)')).toBe(true);
+      expect(hasFragileOptionReference('(c) and (d)')).toBe(true);
+    });
+
+    it('should not flag legitimate options', () => {
+      expect(hasFragileOptionReference('Every compact space is connected')).toBe(false);
+      expect(hasFragileOptionReference('X cannot be separated AND has no proper clopen subsets')).toBe(false);
+      expect(hasFragileOptionReference('The space is path connected with π₁ trivial')).toBe(false);
+    });
+
+    it('should detect "Option (b) is false" pattern in explanations', () => {
+      expect(hasFragileExplanationReference('Option (b) is false')).toBe(true);
+      expect(hasFragileExplanationReference('Option (a) is incorrect because...')).toBe(true);
+    });
+
+    it('should detect "Options (a), (b)" pattern in explanations', () => {
+      expect(hasFragileExplanationReference('Options (a), (b) are both correct')).toBe(true);
+      expect(hasFragileExplanationReference('Options (c) (d) are the valid ones')).toBe(true);
+    });
+
+    it('should not flag legitimate explanations', () => {
+      expect(hasFragileExplanationReference('The statement about connectedness is false')).toBe(false);
+      expect(hasFragileExplanationReference('Not every compact space is connected')).toBe(false);
+      expect(hasFragileExplanationReference('X is connected iff it cannot be separated')).toBe(false);
+    });
+  });
+});

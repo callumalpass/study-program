@@ -11,12 +11,12 @@
         "prompt": "A space X is connected if and only if:",
         "options": [
           "X cannot be written as a union of two disjoint nonempty open sets",
-          "Both (a) and (c)",
           "X is path connected",
-          "Every continuous function f: X → {0, 1} is constant"
+          "Every continuous function f: X → {0, 1} is constant",
+          "X cannot be separated into disjoint open sets AND every map to {0, 1} is constant"
         ],
-        "correctAnswer": 1,
-        "explanation": "X is connected iff it cannot be separated into two disjoint nonempty open sets, which is equivalent to every continuous function to the discrete space {0, 1} being constant."
+        "correctAnswer": 3,
+        "explanation": "X is connected iff it cannot be separated into two disjoint nonempty open sets, which is equivalent to every continuous function to the discrete space {0, 1} being constant. Both conditions characterize connectedness."
       },
       {
         "id": "math403-q4-1-2",
@@ -78,10 +78,10 @@
         "type": "multiple_choice",
         "prompt": "If A ⊆ B ⊆ cl(A) and A is connected, then:",
         "options": [
-          "cl(A) is connected",
+          "cl(A) may or may not be connected",
           "B may or may not be connected",
-          "Both (a) and (c)",
-          "B must be connected"
+          "B must be connected, and so must cl(A)",
+          "Only B must be connected, but cl(A) may not be"
         ],
         "correctAnswer": 2,
         "explanation": "If A is connected and A ⊆ B ⊆ cl(A), then B is connected. In particular, the closure of a connected set is connected."
@@ -132,13 +132,13 @@
         "type": "multiple_choice",
         "prompt": "A space X is locally connected if:",
         "options": [
-          "Every connected component is open",
           "X is connected",
-          "Both (a) and (c)",
-          "Every point has arbitrarily small connected neighborhoods"
+          "Every connected component is closed but not necessarily open",
+          "Every point has arbitrarily small connected neighborhoods",
+          "Every open subset is connected"
         ],
         "correctAnswer": 2,
-        "explanation": "X is locally connected iff every point has a local basis of connected sets, which is equivalent to connected components being open."
+        "explanation": "X is locally connected iff every point has a local basis of connected sets (i.e., arbitrarily small connected neighborhoods), which is equivalent to connected components of open sets being open."
       },
       {
         "id": "math403-q4-3-2",
