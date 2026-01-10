@@ -611,13 +611,13 @@
         "type": "multiple_choice",
         "prompt": "What is the negation of ∃x (P(x) ∧ Q(x))?",
         "options": [
-          "Both B and C are correct",
           "∀x (¬P(x) ∨ ¬Q(x))",
-          "∀x (P(x) → ¬Q(x))",
-          "∃x (¬P(x) ∧ ¬Q(x))"
+          "∃x (¬P(x) ∨ ¬Q(x))",
+          "∃x (¬P(x) ∧ ¬Q(x))",
+          "∀x (¬P(x) ∧ ¬Q(x))"
         ],
         "correctAnswer": 0,
-        "explanation": "¬∃x(P∧Q) ≡ ∀x¬(P∧Q) ≡ ∀x(¬P∨¬Q) ≡ ∀x(P→¬Q). Both B and C are equivalent."
+        "explanation": "¬∃x(P∧Q) ≡ ∀x¬(P∧Q) ≡ ∀x(¬P∨¬Q) by De Morgan's laws for quantifiers and propositional logic."
       },
       {
         "id": "final-q32",

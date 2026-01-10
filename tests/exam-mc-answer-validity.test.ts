@@ -76,11 +76,9 @@ describe('Multiple Choice Answer Index Validity', () => {
 
     // Known existing questions with this issue (pre-existing, not introduced by recent changes)
     // These should be fixed in future cleanups but are excluded from test failures
+    // NOTE: math102, math201, math204 issues were fixed - removed from this list
     const knownIssues = new Set([
       'cs205-exam-final/fin-q26',
-      'math102-exam-final/final-q35',
-      'math201-exam-final/math201-final-q5',
-      'math204-exam-final/math204-final-q21',
     ]);
 
     mcQuestions.forEach(({ exam, question }) => {
@@ -155,6 +153,104 @@ describe('CS301 SJF Waiting Time Question (mid-q13)', () => {
       hasBothOption,
       'Options should not reference other options (e.g., "Both A and C")'
     ).toBe(false);
+  });
+});
+
+describe('Fixed Letter-Reference Questions', () => {
+  // These questions previously had "Both A and C" style options and have been fixed
+  // These tests ensure the fixes are correct and the questions remain valid
+
+  describe('MATH201 Row Operations Question (math201-final-q5)', () => {
+    const math201Exam = allExams.find(e => e.id === 'math201-exam-final');
+
+    it('should find MATH201 final exam', () => {
+      expect(math201Exam).toBeDefined();
+    });
+
+    it('question should not reference other options by letter', () => {
+      const question = math201Exam?.questions.find(q => q.id === 'math201-final-q5');
+      expect(question).toBeDefined();
+      const options = question!.options!;
+
+      const hasLetterReference = options.some(opt =>
+        /both\s+[a-d]/i.test(opt) || /^[a-d]\s+and\s+[a-d]$/i.test(opt)
+      );
+      expect(hasLetterReference).toBe(false);
+    });
+
+    it('correct answer should be valid', () => {
+      const question = math201Exam?.questions.find(q => q.id === 'math201-final-q5');
+      const correctIndex = question!.correctAnswer as number;
+      const options = question!.options!;
+
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(options.length);
+    });
+  });
+
+  describe('MATH301 Gradient Direction Question (math301-mid-q15)', () => {
+    const math301Exam = allExams.find(e => e.id === 'math301-midterm');
+
+    it('should find MATH301 midterm exam', () => {
+      expect(math301Exam).toBeDefined();
+    });
+
+    it('question should not reference other options by letter', () => {
+      const question = math301Exam?.questions.find(q => q.id === 'math301-mid-q15');
+      expect(question).toBeDefined();
+      const options = question!.options!;
+
+      const hasLetterReference = options.some(opt =>
+        /both\s+[a-d]/i.test(opt) || /^[a-d]\s+and\s+[a-d]$/i.test(opt)
+      );
+      expect(hasLetterReference).toBe(false);
+    });
+
+    it('correct answer should point to maximum increase direction', () => {
+      const question = math301Exam?.questions.find(q => q.id === 'math301-mid-q15');
+      const correctIndex = question!.correctAnswer as number;
+      const options = question!.options!;
+
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(options.length);
+
+      // The gradient points in the direction of maximum INCREASE, not decrease
+      const correctOption = options[correctIndex].toLowerCase();
+      expect(correctOption).toContain('increase');
+    });
+  });
+
+  describe('MATH101 Negation Question (final-q31)', () => {
+    const math101Exam = allExams.find(e => e.id === 'math101-exam-final');
+
+    it('should find MATH101 final exam', () => {
+      expect(math101Exam).toBeDefined();
+    });
+
+    it('question should not reference other options by letter', () => {
+      const question = math101Exam?.questions.find(q => q.id === 'final-q31');
+      expect(question).toBeDefined();
+      const options = question!.options!;
+
+      const hasLetterReference = options.some(opt =>
+        /both\s+[a-d]/i.test(opt) || /^[a-d]\s+and\s+[a-d]$/i.test(opt)
+      );
+      expect(hasLetterReference).toBe(false);
+    });
+
+    it('correct answer should be the De Morgan negation', () => {
+      const question = math101Exam?.questions.find(q => q.id === 'final-q31');
+      const correctIndex = question!.correctAnswer as number;
+      const options = question!.options!;
+
+      expect(correctIndex).toBeGreaterThanOrEqual(0);
+      expect(correctIndex).toBeLessThan(options.length);
+
+      // ¬∃x(P∧Q) ≡ ∀x(¬P∨¬Q) - should have universal quantifier with disjunction of negations
+      const correctOption = options[correctIndex];
+      expect(correctOption).toContain('∀');
+      expect(correctOption).toContain('∨');
+    });
   });
 });
 
