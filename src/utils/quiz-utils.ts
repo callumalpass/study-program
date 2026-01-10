@@ -53,12 +53,12 @@ export function getCorrectOptionIndex(question: QuizQuestion): number {
   const correctAnswer = question.correctAnswer;
   const optionsLength = question.options?.length ?? 0;
 
-  // If already a number, validate it's within bounds
+  // If already a number, validate it's a valid integer index within bounds
   if (typeof correctAnswer === 'number') {
-    if (correctAnswer >= 0 && correctAnswer < optionsLength) {
+    if (Number.isInteger(correctAnswer) && correctAnswer >= 0 && correctAnswer < optionsLength) {
       return correctAnswer;
     }
-    // Out of bounds numeric index
+    // Not a valid integer index or out of bounds
     return -1;
   }
 
