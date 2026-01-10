@@ -97,11 +97,21 @@ function getReviewItemUrl(item: ReviewItem): string {
 }
 
 /**
- * Render the daily review section
+ * Render the daily review section.
+ * Only shows review items from subjects the user has selected.
  */
 function renderDailyReviewSection(): string {
-  const dueItems = progressStorage.getDueReviewItems(5);
-  const totalDue = progressStorage.getDueReviewCount();
+  const selectedIds = progressStorage.getSelectedSubjects();
+
+  // If user has selected subjects, filter review items to only those subjects
+  // If no subjects selected (legacy user or new user without selection), show all
+  const allDueItems = progressStorage.getDueReviewItems(100); // Get more items so we can filter
+  const filteredItems = selectedIds.length > 0
+    ? allDueItems.filter(item => selectedIds.includes(item.subjectId))
+    : allDueItems;
+
+  const dueItems = filteredItems.slice(0, 5);
+  const totalDue = filteredItems.length;
 
   if (dueItems.length === 0) {
     return '';
