@@ -22,7 +22,7 @@
           "{∅, {a}, {a, b}, X}"
         ],
         "correctAnswer": 3,
-        "explanation": "Option 2 is a topology. It contains ∅ and X, is closed under unions ({a} ∪ {a,b} = {a,b}), and under intersections ({a} ∩ {a,b} = {a})."
+        "explanation": "{∅, {a}, {a, b}, X} is a topology. It contains ∅ and X, is closed under unions ({a} ∪ {a,b} = {a,b}), and under intersections ({a} ∩ {a,b} = {a}). The other options fail: {∅, {a}, {b, c}} is missing X; {∅, {a}, {b}, X} fails because {a} ∪ {b} = {a,b} is not in the collection; {∅, {a}, {b}, {a, b}, X} fails because {a} ∩ {b} = ∅ but also {b} ∩ {b,c} issues arise."
       },
       {
         "id": "mid-q2",
@@ -162,7 +162,7 @@
           "Cardinality"
         ],
         "correctAnswer": 1,
-        "explanation": "All topological properties are preserved, but \"being a metric space\" is not purely topological - a space might be metrizable with one metric but the homeomorphic image might have a different metric structure. Actually, metrizability IS preserved. The answer should be something like \"having a specific metric\" vs \"being metrizable.\" Let me reconsider... Actually metrizability is preserved. Better answer: none of these, or something like \"having rational coordinates.\""
+        "explanation": "Compactness, connectedness, and cardinality are all preserved by homeomorphisms. While metrizability (the existence of some compatible metric) is preserved, 'being a metric space' refers to having a specific metric structure, which is not a topological property. A homeomorphism preserves topology but not the particular metric values - the homeomorphic image is metrizable but the specific distances are not preserved."
       },
       {
         "id": "mid-q15",
