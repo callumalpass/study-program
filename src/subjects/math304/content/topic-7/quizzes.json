@@ -50,12 +50,12 @@
         "prompt": "Fermat's Little Theorem states that if p is prime and gcd(a,p) = 1, then:",
         "options": [
           "a^(p-1) ≡ 1 (mod p)",
-          "Both A and B",
           "a^p ≡ a (mod p)",
+          "a^(p-1) ≡ 1 (mod p) and equivalently a^p ≡ a (mod p)",
           "a ≡ p (mod p)"
         ],
-        "correctAnswer": 1,
-        "explanation": "Fermat's Little Theorem has two forms: a^(p-1) ≡ 1 (mod p) when gcd(a,p)=1, and a^p ≡ a (mod p) for all a. Both are equivalent."
+        "correctAnswer": 2,
+        "explanation": "Fermat's Little Theorem has two equivalent forms: a^(p-1) ≡ 1 (mod p) when gcd(a,p)=1, and a^p ≡ a (mod p) for all a."
       },
       {
         "id": "math304-q95",
@@ -136,11 +136,11 @@
         "prompt": "The security of RSA is based on the difficulty of:",
         "options": [
           "Computing discrete logarithms",
-          "Both A and B",
           "Factoring large composite numbers",
-          "Computing φ(n) given n = pq without knowing p and q"
+          "Both factoring n = pq and computing φ(n) without knowing p and q",
+          "Solving linear equations modulo n"
         ],
-        "correctAnswer": 1,
+        "correctAnswer": 2,
         "explanation": "RSA security relies on the difficulty of factoring n = pq and computing φ(n) without knowing the prime factors. These are computationally equivalent problems."
       }
     ]
