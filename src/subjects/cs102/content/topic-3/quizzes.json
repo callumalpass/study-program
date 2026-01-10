@@ -88,9 +88,9 @@
       {
         "id": "cs102-q3-b-2",
         "type": "fill_blank",
-        "prompt": "If a system is Little Endian, the 32-bit int 0x12345678 is stored in memory as bytes: 78 56 ... ... (fill the last byte)",
+        "prompt": "If a system is Little Endian, the 32-bit int 0x12345678 is stored in memory as bytes: 78 56 34 ____ (fill the most significant byte)",
         "correctAnswer": "12",
-        "explanation": "Reverse order: 78 56 34 12."
+        "explanation": "Little Endian stores the least significant byte first, so 0x12345678 becomes: 78 (LSB), 56, 34, 12 (MSB)."
       },
       {
         "id": "cs102-q3-b-3",
