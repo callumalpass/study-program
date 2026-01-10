@@ -167,10 +167,16 @@
       },
       {
         "id": "cs305-mid-q17",
-        "type": "true_false",
-        "prompt": "In JavaScript, \"==\" compares both value and type, while \"===\" only compares value.",
-        "correctAnswer": false,
-        "explanation": "This is backwards. \"==\" performs type coercion and only compares values, while \"===\" (strict equality) compares both value and type."
+        "type": "multiple_choice",
+        "prompt": "Which JavaScript equality operator compares both value and type without type coercion?",
+        "options": [
+          "== (loose equality)",
+          "=== (strict equality)",
+          "= (assignment)",
+          "!= (loose inequality)"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The \"===\" (strict equality) operator compares both value and type without performing type coercion. The \"==\" operator performs type coercion and only compares values after conversion."
       },
       {
         "id": "cs305-mid-q18",
@@ -512,9 +518,9 @@
       {
         "id": "cs305-final-q27",
         "type": "fill_blank",
-        "prompt": "The CSS property _____ makes images responsive by preventing them from exceeding their container width.",
-        "correctAnswer": "max-width: 100%",
-        "explanation": "max-width: 100% ensures images scale down to fit containers while maintaining aspect ratio."
+        "prompt": "The CSS property _____ is commonly set to 100% to make images responsive by preventing them from exceeding their container width.",
+        "correctAnswer": "max-width",
+        "explanation": "Setting max-width: 100% ensures images scale down to fit their containers while maintaining aspect ratio. This is a fundamental responsive design technique."
       },
       {
         "id": "cs305-final-q28",
