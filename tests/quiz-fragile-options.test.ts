@@ -387,6 +387,28 @@ describe('Quiz Fragile Options Detection', () => {
         `Found ${bothOfAboveCorrect.length} questions where "Both of the above" is correct - rewrite these questions`
       ).toHaveLength(0);
     });
+
+    it('should have no questions where "None of the above" is the correct answer', () => {
+      // "None of the above" as the correct answer is similarly problematic:
+      // 1. It relies on positional references that break if options are reordered
+      // 2. It doesn't test specific knowledge - just recognition that none of the options are right
+      // 3. It can be rewritten with a more explicit correct answer
+      const noneOfAboveCorrect = aboveUsages.filter(u =>
+        u.isCorrectAnswer && /\b[Nn]one of the above\b/.test(u.option)
+      );
+
+      if (noneOfAboveCorrect.length > 0) {
+        console.log('\nQuestions where "None of the above" is the correct answer:');
+        for (const q of noneOfAboveCorrect) {
+          console.log(`  ${q.file} - ${q.assessmentId}/${q.questionId}`);
+        }
+      }
+
+      expect(
+        noneOfAboveCorrect,
+        `Found ${noneOfAboveCorrect.length} questions where "None of the above" is correct - rewrite these questions`
+      ).toHaveLength(0);
+    });
   });
 });
 
