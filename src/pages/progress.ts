@@ -320,14 +320,20 @@ interface Achievement {
 function calculateAchievements(subjects: Subject[], userProgress: UserProgress): Achievement[] {
   const overallProgress = calculateOverallProgress(subjects, userProgress);
 
-  // Count total quizzes and exercises completed
+  // Create a set of selected subject IDs for filtering
+  const selectedSubjectIds = new Set(subjects.map(s => s.id));
+
+  // Count total quizzes and exercises completed (only from filtered subjects)
   let totalQuizzesPassed = 0;
   let totalExercisesPassed = 0;
 
-  // Find the earliest completion date for the "first subject" achievement
+  // Find the earliest completion date for the "first subject" achievement (only from filtered subjects)
   let firstCompletionDate: string | undefined;
 
-  Object.values(userProgress.subjects).forEach((subjectProgress: SubjectProgress) => {
+  Object.entries(userProgress.subjects).forEach(([subjectId, subjectProgress]) => {
+    // Only count stats for subjects in the filtered list
+    if (!selectedSubjectIds.has(subjectId)) return;
+
     // Track the earliest subject completion date
     if (subjectProgress.status === 'completed' && subjectProgress.completedAt) {
       if (!firstCompletionDate || subjectProgress.completedAt < firstCompletionDate) {
