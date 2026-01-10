@@ -163,6 +163,50 @@ describe('CS305 Exam Question Format Validation', () => {
   });
 });
 
+describe('CS305 DOM method questions', () => {
+  it('cs305-mid-q21 should test a valid DOM method as the correct answer', () => {
+    const midterm = exams.find(e => e.id === 'cs305-midterm');
+    expect(midterm).toBeDefined();
+
+    const q21 = midterm!.questions.find(q => q.id === 'cs305-mid-q21');
+    expect(q21).toBeDefined();
+    expect(q21!.type).toBe('multiple_choice');
+
+    // The question should ask about selecting elements by ID
+    expect(q21!.prompt.toLowerCase()).toContain('id');
+
+    // The correct answer should be document.getElementById (which exists)
+    const correctIndex = q21!.correctAnswer as number;
+    const correctOption = q21!.options![correctIndex];
+    expect(correctOption).toContain('getElementById');
+
+    // Should not use ambiguous meta-options like "Both are correct"
+    for (const option of q21!.options!) {
+      expect(option.toLowerCase()).not.toContain('both are correct');
+      expect(option.toLowerCase()).not.toContain('all of the above');
+      expect(option.toLowerCase()).not.toContain('none of the above');
+    }
+  });
+
+  it('should not have "document.getElement()" as a standalone method since it does not exist', () => {
+    // document.getElement() is not a valid DOM method - only document.getElementById(),
+    // document.getElementsByClassName(), document.getElementsByTagName() etc. exist
+    for (const exam of exams) {
+      for (const question of exam.questions) {
+        if (question.type === 'multiple_choice' && question.options) {
+          const correctIndex = question.correctAnswer as number;
+          const correctOption = question.options[correctIndex];
+          // The correct answer should never be the non-existent "document.getElement()"
+          expect(
+            !correctOption.includes('document.getElement(') || correctOption.includes('getElementById'),
+            `${exam.id}:${question.id} should not have "document.getElement()" as a correct answer since this method does not exist`
+          ).toBe(true);
+        }
+      }
+    }
+  });
+});
+
 describe('CS305 JavaScript keyword questions consistency', () => {
   it('should correctly identify let and const as block-scoped', () => {
     const midterm = exams.find(e => e.id === 'cs305-midterm');
