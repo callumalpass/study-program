@@ -166,15 +166,15 @@
       {
         "id": "q3c-5",
         "type": "multiple_choice",
-        "prompt": "Which private address range provides the largest number of addresses?",
+        "prompt": "Which RFC 1918 private address range provides the largest number of addresses?",
         "options": [
           "10.0.0.0/8",
           "192.168.0.0/16",
           "172.16.0.0/12",
-          "169.254.0.0/16"
+          "172.31.0.0/16"
         ],
         "correctAnswer": 0,
-        "explanation": "10.0.0.0/8 provides about 16.7 million addresses. 172.16.0.0/12 provides about 1 million, and 192.168.0.0/16 provides 65,536."
+        "explanation": "10.0.0.0/8 provides about 16.7 million addresses (2^24). 172.16.0.0/12 provides about 1 million (2^20), and 192.168.0.0/16 provides 65,536 (2^16). 172.31.0.0/16 is within the 172.16.0.0/12 range."
       }
     ]
   }
