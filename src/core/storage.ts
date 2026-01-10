@@ -273,6 +273,21 @@ export class ProgressStorage {
     // Add reviewQueue if missing (v3+)
     if (!migrated.reviewQueue) {
       migrated.reviewQueue = [];
+    } else {
+      // Migrate legacy reviewQueue field names (nextReviewDate -> nextReviewAt)
+      migrated.reviewQueue = migrated.reviewQueue.map(item => {
+        const migratedItem = { ...item } as ReviewItem & { nextReviewDate?: string };
+        // Handle legacy field name
+        if ('nextReviewDate' in migratedItem && !migratedItem.nextReviewAt) {
+          migratedItem.nextReviewAt = migratedItem.nextReviewDate!;
+          delete migratedItem.nextReviewDate;
+        }
+        // Ensure interval exists (default to 1 if missing)
+        if (migratedItem.interval === undefined) {
+          migratedItem.interval = 1;
+        }
+        return migratedItem as ReviewItem;
+      });
     }
 
     // Add selectedSubjectIds if missing (v4+)

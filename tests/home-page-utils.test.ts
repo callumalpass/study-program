@@ -66,22 +66,18 @@ const createQuizReviewItem = (itemId: string, subjectId: string): ReviewItem => 
   itemId,
   subjectId,
   itemType: 'quiz',
-  dueDate: new Date().toISOString(),
-  lastReviewDate: new Date().toISOString(),
+  nextReviewAt: new Date().toISOString(),
   interval: 1,
   streak: 1,
-  lastScore: 80,
 });
 
 const createExerciseReviewItem = (itemId: string, subjectId: string): ReviewItem => ({
   itemId,
   subjectId,
   itemType: 'exercise',
-  dueDate: new Date().toISOString(),
-  lastReviewDate: new Date().toISOString(),
+  nextReviewAt: new Date().toISOString(),
   interval: 1,
   streak: 1,
-  lastScore: 100,
 });
 
 describe('formatReviewItemTitle', () => {

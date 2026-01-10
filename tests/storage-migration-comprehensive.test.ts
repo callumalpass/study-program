@@ -234,6 +234,71 @@ describe('Storage Migration', () => {
       expect(migrated.reviewQueue![0].itemId).toBe('quiz-1');
       expect(migrated.reviewQueue![0].streak).toBe(2);
     });
+
+    it('migrates legacy nextReviewDate field to nextReviewAt', () => {
+      const legacyProgress = {
+        version: 3,
+        startedAt: '2024-01-01T00:00:00.000Z',
+        subjects: {},
+        reviewQueue: [
+          {
+            itemId: 'quiz-1',
+            itemType: 'quiz',
+            subjectId: 'cs101',
+            nextReviewDate: '2024-01-15T00:00:00.000Z',
+            streak: 2,
+          },
+        ],
+        settings: {
+          theme: 'auto',
+          codeEditorFontSize: 14,
+          showCompletedItems: true,
+        },
+      };
+
+      localStorageMock.setItem(STORAGE_KEY, JSON.stringify(legacyProgress));
+
+      const storage = new ProgressStorage();
+      const migrated = storage.getProgress();
+
+      expect(migrated.reviewQueue).toHaveLength(1);
+      // Should have migrated nextReviewDate to nextReviewAt
+      expect(migrated.reviewQueue![0].nextReviewAt).toBe('2024-01-15T00:00:00.000Z');
+      // Should not have the legacy field anymore
+      expect('nextReviewDate' in migrated.reviewQueue![0]).toBe(false);
+    });
+
+    it('adds missing interval field to legacy review items', () => {
+      const legacyProgress = {
+        version: 3,
+        startedAt: '2024-01-01T00:00:00.000Z',
+        subjects: {},
+        reviewQueue: [
+          {
+            itemId: 'quiz-1',
+            itemType: 'quiz',
+            subjectId: 'cs101',
+            nextReviewAt: '2024-01-15T00:00:00.000Z',
+            streak: 2,
+            // interval is missing
+          },
+        ],
+        settings: {
+          theme: 'auto',
+          codeEditorFontSize: 14,
+          showCompletedItems: true,
+        },
+      };
+
+      localStorageMock.setItem(STORAGE_KEY, JSON.stringify(legacyProgress));
+
+      const storage = new ProgressStorage();
+      const migrated = storage.getProgress();
+
+      expect(migrated.reviewQueue).toHaveLength(1);
+      // Should have added default interval
+      expect(migrated.reviewQueue![0].interval).toBe(1);
+    });
   });
 
   describe('missing field migrations', () => {
