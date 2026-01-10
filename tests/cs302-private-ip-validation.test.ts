@@ -29,6 +29,7 @@ const NON_PRIVATE_SPECIAL_RANGES = [
 // Subranges within RFC 1918 ranges (valid private but subsets)
 const RFC1918_SUBRANGES = [
   '172.31.0.0/16',    // Within 172.16.0.0/12
+  '172.16.0.0/16',    // Within 172.16.0.0/12 (first /16 block)
   '10.0.0.0/16',      // Within 10.0.0.0/8
   '192.168.1.0/24',   // Within 192.168.0.0/16
 ];
