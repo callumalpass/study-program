@@ -89,15 +89,15 @@
       {
         "id": "q4b-3",
         "type": "multiple_choice",
-        "prompt": "What is the maximum hop count in RIP before a network is considered unreachable?",
+        "prompt": "What is the maximum number of hops a RIP route can have while still being considered reachable?",
         "options": [
           "16",
           "255",
           "15",
           "10"
         ],
-        "correctAnswer": 0,
-        "explanation": "RIP uses hop count as its metric with a maximum of 15 hops. A hop count of 16 indicates an unreachable destination."
+        "correctAnswer": 2,
+        "explanation": "RIP uses hop count as its metric with a maximum of 15 hops for reachable destinations. A hop count of 16 indicates the network is unreachable (infinity)."
       },
       {
         "id": "q4b-4",
