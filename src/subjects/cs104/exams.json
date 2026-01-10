@@ -456,7 +456,7 @@
         "prompt": "What is printed?",
         "codeSnippet": "from collections import Counter\ns = \"aabbbcc\"\nc = Counter(s)\nprint(c.most_common(2))",
         "correctAnswer": "[('b', 3), ('a', 2)]",
-        "explanation": "Counter counts: a:2, b:3, c:2. most_common(2) returns the top 2 by count. When counts are tied (a and c both have 2), insertion order is preserved, so 'a' comes before 'c'. Result: [('b', 3), ('a', 2)]."
+        "explanation": "Counter counts: a:2, b:3, c:2. most_common(2) returns the top 2 by count. 'b' has count 3 (highest), 'a' has count 2 (next highest, encountered first in the string). Result: [('b', 3), ('a', 2)]."
       },
       {
         "id": "final-q21",

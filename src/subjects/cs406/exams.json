@@ -182,8 +182,8 @@
         "type": "code_output",
         "prompt": "Given this minimax game tree with MAX to move at root, what value is backed up to the root?",
         "codeSnippet": "       MAX\n      /   \\\n    MIN   MIN\n   /  \\   /  \\\n  3   5  2   9\n\nLeaf values: 3, 5, 2, 9",
-        "correctAnswer": "5",
-        "explanation": "The left MIN node chooses min(3,5)=3. The right MIN node chooses min(2,9)=2. The root MAX node chooses max(3,2)=5. Wait, that's wrong. Left MIN=3, right MIN=2, root MAX=max(3,2)=3. Actually reviewing: root is MAX, children are MIN. Left MIN picks min(3,5)=3, right MIN picks min(2,9)=2, MAX picks max(3,2)=3. The answer should be 3, but let me reconsider the tree structure."
+        "correctAnswer": "3",
+        "explanation": "The left MIN node chooses min(3,5)=3. The right MIN node chooses min(2,9)=2. The root MAX node chooses max(3,2)=3. MAX picks the larger of the two MIN values."
       },
       {
         "id": "cs406-midterm-q17",
