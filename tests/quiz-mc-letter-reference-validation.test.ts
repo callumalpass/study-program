@@ -74,18 +74,9 @@ describe('Quiz Multiple Choice Letter Reference Validation', () => {
     ];
 
     // Known existing issues (pre-existing, excluded from test failures)
-    // These should be fixed in future cleanups
+    // Most issues have been fixed - only cs102 issue remains
     const knownIssues = new Set<string>([
       'cs102-quiz-4-b/cs102-q4-b-4',
-      'math102-q5b/math102-q5b-4',
-      'math201-quiz-4a/math201-q4a-1',
-      'math203-quiz-5a/math203-q5a-3',
-      'math204-quiz-4c/math204-q4c-3',
-      'math204-quiz-5c/math204-q5c-4',
-      'math204-quiz-6a/math204-q6a-1',
-      'math204-quiz-7c/math204-q7c-1',
-      'math304-quiz-3-1/math304-q35',
-      'math404-quiz-2b/q1',
     ]);
 
     mcQuestions.forEach(({ quiz, question }) => {
@@ -116,11 +107,8 @@ describe('Quiz Multiple Choice Letter Reference Validation', () => {
 
   describe('self-referential options should not exist', () => {
     // Check for options like "Both A and B" at position B (index 1), which is self-referential
-    // Known issues that existed before this PR (excluded from test failures)
+    // Known issues have been fixed
     const knownSelfRefIssues = new Set<string>([
-      'math201-quiz-4a/math201-q4a-1',
-      'math203-quiz-5a/math203-q5a-3',
-      'math404-quiz-2b/q1',
     ]);
 
     mcQuestions.forEach(({ quiz, question }) => {

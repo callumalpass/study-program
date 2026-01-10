@@ -96,7 +96,7 @@
         "type": "multiple_choice",
         "prompt": "Which instruction would you use to implement \"if (a >= b)\" where a is in $t0 and b is in $t1?",
         "options": [
-          "Both B and C are correct",
+          "slt with beq, or bge pseudo-instruction",
           "slt $t2, $t1, $t0; bne $t2, $zero, target",
           "bge $t0, $t1, target (pseudo)",
           "slt $t2, $t0, $t1; beq $t2, $zero, target"
