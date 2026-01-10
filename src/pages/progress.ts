@@ -324,7 +324,17 @@ function calculateAchievements(subjects: Subject[], userProgress: UserProgress):
   let totalQuizzesPassed = 0;
   let totalExercisesPassed = 0;
 
+  // Find the earliest completion date for the "first subject" achievement
+  let firstCompletionDate: string | undefined;
+
   Object.values(userProgress.subjects).forEach((subjectProgress: SubjectProgress) => {
+    // Track the earliest subject completion date
+    if (subjectProgress.status === 'completed' && subjectProgress.completedAt) {
+      if (!firstCompletionDate || subjectProgress.completedAt < firstCompletionDate) {
+        firstCompletionDate = subjectProgress.completedAt;
+      }
+    }
+
     Object.values(subjectProgress.quizAttempts).forEach((attempts: QuizAttempt[]) => {
       if (attempts && attempts.length > 0) {
         const bestScore = Math.max(...attempts.map((a: QuizAttempt) => a.score));
@@ -346,7 +356,7 @@ function calculateAchievements(subjects: Subject[], userProgress: UserProgress):
       description: 'Complete your first subject',
       icon: Icons.StatTarget,
       unlocked: overallProgress.completedSubjects >= 1,
-      unlockedDate: overallProgress.completedSubjects >= 1 ? userProgress.startedAt : undefined,
+      unlockedDate: firstCompletionDate,
       progress: Math.min(100, (overallProgress.completedSubjects / 1) * 100),
     },
     {
