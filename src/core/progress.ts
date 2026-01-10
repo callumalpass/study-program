@@ -207,8 +207,10 @@ export function calculateOverallProgress(
     return sum + (subject.estimatedHours * completion) / 100;
   }, 0);
 
-  const percentageComplete = totalSubjects > 0
-    ? Math.round((completedSubjects / totalSubjects) * 100)
+  // Use hours-based calculation for accurate progress percentage
+  // This accounts for partial progress in subjects, not just fully completed ones
+  const percentageComplete = totalHours > 0
+    ? Math.round((completedHours / totalHours) * 100)
     : 0;
 
   return {

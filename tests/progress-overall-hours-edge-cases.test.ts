@@ -305,31 +305,31 @@ describe('calculateOverallProgress completedHours edge cases', () => {
   });
 
   describe('percentage calculations', () => {
-    it('calculates percentageComplete based on subject count not hours', () => {
+    it('calculates percentageComplete based on hours for accurate progress', () => {
       const subjects = [
         createSubject({ id: 'cs101', estimatedHours: 100 }),
         createSubject({ id: 'cs102', estimatedHours: 10 }),
       ];
 
       const userProgress = createUserProgress({
-        cs101: { status: 'completed' }, // 100 hours but only 1/2 subjects
+        cs101: { status: 'completed' }, // 100 hours completed
       });
 
       const result = calculateOverallProgress(subjects, userProgress);
-      // 1 out of 2 subjects = 50%, regardless of hours
-      expect(result.percentageComplete).toBe(50);
+      // 100 out of 110 hours = 91% (hours-based for accurate progress)
+      expect(result.percentageComplete).toBe(91);
     });
 
     it('rounds percentage correctly', () => {
       const subjects = [
-        createSubject({ id: 'cs101' }),
-        createSubject({ id: 'cs102' }),
-        createSubject({ id: 'cs103' }),
+        createSubject({ id: 'cs101', estimatedHours: 40 }),
+        createSubject({ id: 'cs102', estimatedHours: 40 }),
+        createSubject({ id: 'cs103', estimatedHours: 40 }),
       ];
 
       const userProgress = createUserProgress({
         cs101: { status: 'completed' },
-        // 1/3 = 33.33%, rounds to 33%
+        // 40/120 hours = 33.33%, rounds to 33%
       });
 
       const result = calculateOverallProgress(subjects, userProgress);
@@ -361,10 +361,10 @@ describe('calculateOverallProgress completedHours edge cases', () => {
   describe('in-progress counting', () => {
     it('correctly counts in-progress subjects separate from completed', () => {
       const subjects = [
-        createSubject({ id: 'cs101' }),
-        createSubject({ id: 'cs102' }),
-        createSubject({ id: 'cs103' }),
-        createSubject({ id: 'cs104' }),
+        createSubject({ id: 'cs101', estimatedHours: 40 }),
+        createSubject({ id: 'cs102', estimatedHours: 40 }),
+        createSubject({ id: 'cs103', estimatedHours: 40 }),
+        createSubject({ id: 'cs104', estimatedHours: 40 }),
       ];
 
       const userProgress = createUserProgress({
@@ -377,7 +377,7 @@ describe('calculateOverallProgress completedHours edge cases', () => {
       const result = calculateOverallProgress(subjects, userProgress);
       expect(result.completedSubjects).toBe(1);
       expect(result.inProgressSubjects).toBe(2);
-      // percentageComplete is based on completed subjects only
+      // 40 hours completed out of 160 total = 25% (hours-based)
       expect(result.percentageComplete).toBe(25);
     });
   });

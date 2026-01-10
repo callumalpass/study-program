@@ -590,7 +590,7 @@ describe('calculateOverallProgress', () => {
     expect(overall.percentageComplete).toBe(0);
   });
 
-  it('calculates completed percentage based on subjects not hours', () => {
+  it('calculates completed percentage based on hours for accurate progress', () => {
     const subjects = [
       makeSubject({ id: 'a', estimatedHours: 100 }),
       makeSubject({ id: 'b', estimatedHours: 10 }),
@@ -600,7 +600,8 @@ describe('calculateOverallProgress', () => {
     });
 
     const overall = calculateOverallProgress(subjects, progress);
-    expect(overall.percentageComplete).toBe(50); // 1/2 subjects
+    // 100/110 hours = 91% (rounded)
+    expect(overall.percentageComplete).toBe(91);
     expect(overall.completedHours).toBe(100);
   });
 

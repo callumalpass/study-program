@@ -576,7 +576,8 @@ describe('overall progress calculation', () => {
     expect(overall.completedSubjects).toBe(1);
     expect(overall.inProgressSubjects).toBe(1);
     expect(overall.totalHours).toBe(150);
-    expect(overall.percentageComplete).toBe(33); // 1/3 = 33%
+    // 40 hours completed out of 150 total = 27% (hours-based calculation)
+    expect(overall.percentageComplete).toBe(27);
   });
 
   it('handles empty subjects array', () => {

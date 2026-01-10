@@ -618,5 +618,74 @@ describe('progress helpers edge cases', () => {
       expect(result.totalHours).toBe(100);
       expect(result.completedHours).toBe(50);  // 50% of 100 hours
     });
+
+    it('calculates percentageComplete based on hours for accurate progress tracking', () => {
+      // This test verifies that percentageComplete uses hours-based calculation
+      // rather than simple subject count, which provides more accurate progress representation
+      const subjects = [
+        createSubject({ id: 's1', estimatedHours: 200 }),  // Large subject
+        createSubject({ id: 's2', estimatedHours: 50 }),   // Small subject
+      ];
+
+      const userProgress: UserProgress = {
+        version: 1,
+        subjects: {
+          // Complete the large subject, leave small subject untouched
+          's1': {
+            status: 'completed',
+            quizAttempts: {},
+            examAttempts: {},
+            exerciseCompletions: {},
+            projectSubmissions: {},
+            subtopicViews: {},
+          },
+        },
+        settings: { theme: 'auto' },
+      };
+
+      const result = calculateOverallProgress(subjects, userProgress);
+
+      // With hours-based: 200/250 = 80%
+      // Old subject-based would have been: 1/2 = 50%
+      expect(result.percentageComplete).toBe(80);
+      expect(result.completedHours).toBe(200);
+      expect(result.totalHours).toBe(250);
+    });
+
+    it('includes partial progress from in-progress subjects in percentageComplete', () => {
+      const subjects = [
+        createSubject({
+          id: 's1',
+          estimatedHours: 100,
+          topics: [
+            { id: 't1', title: 'T1', content: '', quizIds: ['q1', 'q2'], exerciseIds: [] },
+          ],
+        }),
+        createSubject({ id: 's2', estimatedHours: 100 }),
+      ];
+
+      const userProgress: UserProgress = {
+        version: 1,
+        subjects: {
+          's1': {
+            status: 'in_progress',
+            quizAttempts: {
+              'q1': [createQuizAttempt(80)],  // 1/2 quizzes passed = 50% of 100 hours = 50 hours
+            },
+            examAttempts: {},
+            exerciseCompletions: {},
+            projectSubmissions: {},
+            subtopicViews: {},
+          },
+        },
+        settings: { theme: 'auto' },
+      };
+
+      const result = calculateOverallProgress(subjects, userProgress);
+
+      // 50 hours completed out of 200 total = 25%
+      expect(result.completedHours).toBe(50);
+      expect(result.percentageComplete).toBe(25);
+    });
   });
 });
