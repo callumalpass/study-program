@@ -365,6 +365,28 @@ describe('Quiz Fragile Options Detection', () => {
         `Found ${allOfAboveCorrect.length} questions where "All of the above" is correct - rewrite these questions`
       ).toHaveLength(0);
     });
+
+    it('should have no questions where "Both of the above" is the correct answer', () => {
+      // "Both of the above" as the correct answer is similarly problematic:
+      // 1. It relies on positional references that break if options are reordered
+      // 2. It creates ambiguity about which two options are being referred to
+      // 3. It can be rewritten as a clearer question with explicit options
+      const bothOfAboveCorrect = aboveUsages.filter(u =>
+        u.isCorrectAnswer && /\b[Bb]oth of the above\b/.test(u.option)
+      );
+
+      if (bothOfAboveCorrect.length > 0) {
+        console.log('\nQuestions where "Both of the above" is the correct answer:');
+        for (const q of bothOfAboveCorrect) {
+          console.log(`  ${q.file} - ${q.assessmentId}/${q.questionId}`);
+        }
+      }
+
+      expect(
+        bothOfAboveCorrect,
+        `Found ${bothOfAboveCorrect.length} questions where "Both of the above" is correct - rewrite these questions`
+      ).toHaveLength(0);
+    });
   });
 });
 
