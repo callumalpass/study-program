@@ -109,11 +109,16 @@
       },
       {
         "id": "q5b-5",
-        "type": "code_output",
-        "prompt": "If a file contains \"Hello\\nWorld\", what will file.read().strip() return?",
-        "codeSnippet": "# File content: \"Hello\\nWorld\\n\"\ncontent = file.read().strip()\nprint(repr(content))",
-        "correctAnswer": "'Hello\\nWorld'",
-        "explanation": "strip() removes leading/trailing whitespace including newlines. The \\n between words is preserved."
+        "type": "multiple_choice",
+        "prompt": "If a file contains two lines \"Hello\" and \"World\" (with a trailing newline), what will file.read().strip() return?",
+        "options": [
+          "\"Hello\\nWorld\" (preserves the newline between lines)",
+          "\"HelloWorld\" (removes all whitespace)",
+          "\"Hello World\" (replaces newline with space)",
+          "\"Hello\" (only the first line)"
+        ],
+        "correctAnswer": 0,
+        "explanation": "strip() only removes leading and trailing whitespace. The newline character between 'Hello' and 'World' is preserved because it's in the middle of the string, not at the beginning or end."
       }
     ]
   },
