@@ -117,6 +117,42 @@ npm run dev
 
 Opens at http://localhost:5173
 
+## Student CLI (`stup`)
+
+The repository also ships with a student CLI that works against the same content and Gist backend as the web app.
+
+```bash
+# Initialize local CLI workspace
+npm run stup -- init
+
+# List subjects / pull content locally
+npm run stup -- subject list
+npm run stup -- content pull --subject cs101
+
+# Quiz flow
+npm run stup -- quiz start --id cs101-quiz-1 --open
+npm run stup -- quiz check --id cs101-quiz-1
+npm run stup -- quiz submit --id cs101-quiz-1
+
+# Exercise flow
+npm run stup -- exercise start --id cs101-exercise-1 --open
+npm run stup -- exercise check --id cs101-exercise-1
+npm run stup -- exercise submit --id cs101-exercise-1
+
+# Progress + Gist sync
+npm run stup -- progress show
+npm run stup -- next
+npm run stup -- next --type reading --open
+npm run stup -- sync init --token <github-token>
+npm run stup -- sync push
+npm run stup -- sync pull
+# force-import remote gist progress regardless of timestamp
+npm run stup -- sync pull --force
+```
+
+Local CLI state is stored under `.stup/` and sync uses `study-program-progress.json` in your private GitHub Gist.
+Coding checks use local runtimes (`python3`, `node`, and `gcc/clang`/`g++`/`clang++` depending on language).
+
 ## Building
 
 ```bash

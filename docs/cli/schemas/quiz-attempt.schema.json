@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stup.local/schemas/quiz-attempt.schema.json",
+  "title": "Quiz Attempt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "kind",
+    "quizId",
+    "attemptId",
+    "createdAt",
+    "updatedAt",
+    "status",
+    "answers"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "kind": {
+      "type": "string",
+      "const": "quiz_attempt"
+    },
+    "quizId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "attemptId": {
+      "type": "string",
+      "pattern": "^[0-9]{8}T[0-9]{6}Z$"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "in_progress",
+        "checked",
+        "submitted"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    },
+    "answers": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/answerEntry"
+      }
+    }
+  },
+  "$defs": {
+    "questionType": {
+      "type": "string",
+      "enum": [
+        "multiple_choice",
+        "true_false",
+        "fill_blank",
+        "code_output",
+        "coding",
+        "written"
+      ]
+    },
+    "baseAnswer": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/questionType"
+        },
+        "language": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "answerEntry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/baseAnswer"
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "multiple_choice"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "answer"
+            ],
+            "properties": {
+              "answer": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^[A-Za-z]$"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "true_false"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "answer"
+            ],
+            "properties": {
+              "answer": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "fill_blank",
+                  "code_output",
+                  "written"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "answer"
+            ],
+            "properties": {
+              "answer": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "coding"
+              }
+            }
+          },
+          "then": {
+            "oneOf": [
+              {
+                "required": [
+                  "code"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              {
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
