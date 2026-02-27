@@ -4,7 +4,7 @@ import katex from 'katex';
 import mermaid from 'mermaid';
 import functionPlot from 'function-plot';
 import 'katex/dist/katex.min.css';
-import { escapeHtml } from '@/utils/html';
+import { decodeQuoteEntities, escapeHtml } from '@/utils/html';
 import { parseFrontmatter } from '@/subjects/loader';
 
 // Initialize mermaid with default config
@@ -49,17 +49,26 @@ marked.setOptions({
 // Custom renderer for code blocks with syntax highlighting
 const renderer = new marked.Renderer();
 
+function decodeQuoteEntitiesForCode(text: string): string {
+  const unwrapped = text
+    .replace(/&amp;(quot;|#34;|#x22;)/gi, '&$1')
+    .replace(/&amp;(apos;|#39;|#x27;)/gi, '&$1');
+  return decodeQuoteEntities(unwrapped);
+}
+
 renderer.code = function(code: string, language: string | undefined): string {
+  const displayCode = decodeQuoteEntitiesForCode(code);
+
   // Handle Mermaid diagrams - output as <pre class="mermaid"> for client-side rendering
   if (language === 'mermaid') {
-    return `<pre class="mermaid">${escapeHtml(code)}</pre>`;
+    return `<pre class="mermaid">${escapeHtml(displayCode)}</pre>`;
   }
 
   // Handle function plots - output as <div class="function-plot"> for client-side rendering
   // Use base64 encoding to avoid HTML attribute escaping issues with JSON
   if (language === 'plot') {
     // Convert string to UTF-8 bytes, then to base64
-    const bytes = new TextEncoder().encode(code);
+    const bytes = new TextEncoder().encode(displayCode);
     const binary = Array.from(bytes, byte => String.fromCharCode(byte)).join('');
     const encoded = btoa(binary);
     return `<div class="function-plot" data-plot-b64="${encoded}"></div>`;
@@ -70,13 +79,13 @@ renderer.code = function(code: string, language: string | undefined): string {
   let highlighted: string;
   try {
     if (validLanguage !== 'plaintext') {
-      highlighted = Prism.highlight(code, Prism.languages[validLanguage], validLanguage);
+      highlighted = Prism.highlight(displayCode, Prism.languages[validLanguage], validLanguage);
     } else {
-      highlighted = escapeHtml(code);
+      highlighted = escapeHtml(displayCode);
     }
   } catch (error) {
     console.error('Syntax highlighting error:', error);
-    highlighted = escapeHtml(code);
+    highlighted = escapeHtml(displayCode);
   }
 
   return `<pre class="language-${validLanguage}"><code class="language-${validLanguage}">${highlighted}</code></pre>`;
@@ -84,7 +93,7 @@ renderer.code = function(code: string, language: string | undefined): string {
 
 // Custom renderer for inline code
 renderer.codespan = function(code: string): string {
-  return `<code class="inline-code">${escapeHtml(code)}</code>`;
+  return `<code class="inline-code">${escapeHtml(decodeQuoteEntitiesForCode(code))}</code>`;
 };
 
 // Custom renderer for links (open external links in new tab)

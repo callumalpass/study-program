@@ -24,3 +24,19 @@ export function escapeHtml(text: string | null | undefined): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
+/**
+ * Decode quote-related HTML entities for display in plain text contexts.
+ *
+ * This is useful when stored/output strings contain entities like &quot;
+ * but should be shown to users as normal quote characters.
+ */
+export function decodeQuoteEntities(text: string | null | undefined): string {
+  if (text == null) {
+    return '';
+  }
+
+  return text
+    .replace(/&quot;|&#34;|&#x22;/gi, '"')
+    .replace(/&apos;|&#39;|&#x27;/gi, '\'');
+}

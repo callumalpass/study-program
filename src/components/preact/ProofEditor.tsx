@@ -6,6 +6,7 @@ import { Icons } from '@/components/icons';
 import { renderMarkdown } from '@/components/markdown';
 import { progressStorage } from '@/core/storage';
 import { evaluateWrittenExercise, type EvaluationResult } from '@/utils/gemini-eval';
+import { decodeQuoteEntities } from '@/utils/html';
 
 export interface ProofEditorProps {
   initialValue?: string;
@@ -404,7 +405,7 @@ export function ProofEditor({
             <div class="hints-content">
               {hints.slice(0, hintsRevealed).map((hint, i) => (
                 <div key={i} class="hint-item">
-                  <span class="hint-number">Hint {i + 1}:</span> {hint}
+                  <span class="hint-number">Hint {i + 1}:</span> {decodeQuoteEntities(hint)}
                 </div>
               ))}
             </div>
@@ -425,7 +426,7 @@ export function ProofEditor({
           </div>
           {showSolution && (
             <div class="solution-content">
-              <pre class="solution-code">{solution}</pre>
+              <pre class="solution-code">{decodeQuoteEntities(solution)}</pre>
             </div>
           )}
         </div>
@@ -445,7 +446,7 @@ export function ProofEditor({
             )}
             {evaluationError && (
               <div class="evaluation-error">
-                <p><strong>Error:</strong> {evaluationError}</p>
+                <p><strong>Error:</strong> {decodeQuoteEntities(evaluationError)}</p>
                 <p>Please check your API key in Settings and try again.</p>
               </div>
             )}
@@ -459,13 +460,13 @@ export function ProofEditor({
                   <span class="result-score">Score: {evaluationResult.score}/100</span>
                 </div>
                 <div class="result-feedback">
-                  <p>{evaluationResult.feedback}</p>
+                  <p>{decodeQuoteEntities(evaluationResult.feedback)}</p>
                 </div>
                 {evaluationResult.strengths.length > 0 && (
                   <div class="result-section strengths">
                     <h4>Strengths</h4>
                     <ul>
-                      {evaluationResult.strengths.map((s, i) => <li key={i}>{s}</li>)}
+                      {evaluationResult.strengths.map((s, i) => <li key={i}>{decodeQuoteEntities(s)}</li>)}
                     </ul>
                   </div>
                 )}
@@ -473,7 +474,7 @@ export function ProofEditor({
                   <div class="result-section improvements">
                     <h4>Suggestions for Improvement</h4>
                     <ul>
-                      {evaluationResult.improvements.map((imp, i) => <li key={i}>{imp}</li>)}
+                      {evaluationResult.improvements.map((imp, i) => <li key={i}>{decodeQuoteEntities(imp)}</li>)}
                     </ul>
                   </div>
                 )}

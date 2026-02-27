@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { useMemo } from 'preact/hooks';
 import type { Reading, ReadingType } from '@/core/types';
 import { Icons } from '@/components/icons';
+import { decodeQuoteEntities } from '@/utils/html';
 
 interface ReadingListProps {
   readings: Reading[];
@@ -28,9 +29,10 @@ const typeIcons: Record<ReadingType, string> = {
 
 function formatAuthors(authors: string[] | undefined): string {
   if (!authors || authors.length === 0) return '';
-  if (authors.length === 1) return authors[0];
-  if (authors.length === 2) return authors.join(' & ');
-  return `${authors[0]} et al.`;
+  const decoded = authors.map(author => decodeQuoteEntities(author));
+  if (decoded.length === 1) return decoded[0];
+  if (decoded.length === 2) return decoded.join(' & ');
+  return `${decoded[0]} et al.`;
 }
 
 function formatEstimatedTime(minutes: number | undefined): string {
@@ -62,7 +64,7 @@ export function ReadingList({ readings, topicTitle }: ReadingListProps) {
       <span class="reading-icon" dangerouslySetInnerHTML={{ __html: typeIcons[reading.type] }} />
       <div class="reading-content">
         <div class="reading-header">
-          <span class="reading-title">{reading.title}</span>
+          <span class="reading-title">{decodeQuoteEntities(reading.title)}</span>
           <span class="reading-external" dangerouslySetInnerHTML={{ __html: Icons.ExternalLink }} />
         </div>
         <div class="reading-meta">
@@ -81,7 +83,7 @@ export function ReadingList({ readings, topicTitle }: ReadingListProps) {
           )}
         </div>
         {reading.description && (
-          <p class="reading-description">{reading.description}</p>
+          <p class="reading-description">{decodeQuoteEntities(reading.description)}</p>
         )}
       </div>
     </a>
@@ -92,7 +94,7 @@ export function ReadingList({ readings, topicTitle }: ReadingListProps) {
       <div class="reading-list-header">
         <span class="reading-list-icon" dangerouslySetInnerHTML={{ __html: Icons.BookOpen }} />
         <h2 id="readings-heading">Readings</h2>
-        {topicTitle && <span class="reading-list-context">for {topicTitle}</span>}
+        {topicTitle && <span class="reading-list-context">for {decodeQuoteEntities(topicTitle)}</span>}
       </div>
 
       {required.length > 0 && (

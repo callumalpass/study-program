@@ -14,6 +14,7 @@ import {
 import { renderMarkdown, renderMermaidDiagrams, renderFunctionPlots } from '@/components/markdown';
 import { ReadingList } from './ReadingList';
 import { progressStorage } from '@/core/storage';
+import { decodeQuoteEntities } from '@/utils/html';
 
 interface ContentNavigatorProps {
   subject: Subject;
@@ -304,7 +305,7 @@ export function ContentNavigator({
           />
           {/* Show readings for the current topic */}
           {currentTopic.readings && currentTopic.readings.length > 0 && (
-            <ReadingList readings={currentTopic.readings} topicTitle={currentTopic.title} />
+            <ReadingList readings={currentTopic.readings} topicTitle={decodeQuoteEntities(currentTopic.title)} />
           )}
           <nav class="content-pagination">
             <div class="pagination-left">
@@ -316,7 +317,7 @@ export function ContentNavigator({
                   <span class="pagination-icon" dangerouslySetInnerHTML={{ __html: Icons.ChevronLeft }} />
                   <span class="pagination-text">
                     <span class="pagination-label">Previous</span>
-                    <span class="pagination-title">{prevSubtopic.title}</span>
+                    <span class="pagination-title">{decodeQuoteEntities(prevSubtopic.title)}</span>
                   </span>
                 </a>
               )}
@@ -332,7 +333,7 @@ export function ContentNavigator({
                 >
                   <span class="pagination-text">
                     <span class="pagination-label">Next</span>
-                    <span class="pagination-title">{nextSubtopic.title}</span>
+                    <span class="pagination-title">{decodeQuoteEntities(nextSubtopic.title)}</span>
                   </span>
                   <span class="pagination-icon" dangerouslySetInnerHTML={{ __html: Icons.ChevronRight }} />
                 </a>
@@ -353,7 +354,7 @@ export function ContentNavigator({
           />
           {/* Show readings for the current topic */}
           {currentTopic.readings && currentTopic.readings.length > 0 && (
-            <ReadingList readings={currentTopic.readings} topicTitle={currentTopic.title} />
+            <ReadingList readings={currentTopic.readings} topicTitle={decodeQuoteEntities(currentTopic.title)} />
           )}
         </div>
       );
@@ -364,7 +365,7 @@ export function ContentNavigator({
       <div class="content-main content-overview">
         <div class="overview-section">
           <h2>About This Subject</h2>
-          <p class="overview-description">{subject.description}</p>
+          <p class="overview-description">{decodeQuoteEntities(subject.description)}</p>
           <div class="overview-meta">
             <span class="meta-item">
               <span class="meta-icon" dangerouslySetInnerHTML={{ __html: Icons.Clock }} />
@@ -393,7 +394,7 @@ export function ContentNavigator({
           <h2>Learning Objectives</h2>
           <ul class="objectives-list">
             {subject.learningObjectives.map((objective, i) => (
-              <li key={i}>{objective}</li>
+              <li key={i}>{decodeQuoteEntities(objective)}</li>
             ))}
           </ul>
         </div>
@@ -407,7 +408,7 @@ export function ContentNavigator({
                 class="btn btn-primary"
                 onClick={handleContinueReadingClick}
               >
-                Continue Reading: {lastViewedSubtopicInfo.subtopic.title}
+                Continue Reading: {decodeQuoteEntities(lastViewedSubtopicInfo.subtopic.title)}
                 <span dangerouslySetInnerHTML={{ __html: Icons.ArrowRight }} />
               </button>
             )}
@@ -416,7 +417,7 @@ export function ContentNavigator({
                 class={`btn ${lastViewedSubtopicInfo ? 'btn-secondary' : 'btn-primary'}`}
                 onClick={(e) => handleTopicClick(e, subject.topics[0].id)}
               >
-                Start with {subject.topics[0].title}
+                Start with {decodeQuoteEntities(subject.topics[0].title)}
                 <span dangerouslySetInnerHTML={{ __html: Icons.ArrowRight }} />
               </button>
             )}
@@ -444,7 +445,7 @@ export function ContentNavigator({
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-expanded={isMobileMenuOpen}
         >
-          <span class="toggle-label">{currentTopic ? currentTopic.title : 'Menu'}</span>
+          <span class="toggle-label">{currentTopic ? decodeQuoteEntities(currentTopic.title) : 'Menu'}</span>
           <span class="toggle-icon" dangerouslySetInnerHTML={{ __html: isMobileMenuOpen ? Icons.ChevronUp : Icons.ChevronDown }} />
         </button>
 
@@ -490,7 +491,7 @@ export function ContentNavigator({
                       class={`topic-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
                       onClick={(e) => handleTopicClick(e, topic.id)}
                     >
-                      <span class="topic-title">{topic.title}</span>
+                      <span class="topic-title">{decodeQuoteEntities(topic.title)}</span>
                       {topicProgress.total > 0 && !isCompleted && (
                         <span class="topic-progress">{topicProgress.completed}/{topicProgress.total}</span>
                       )}
@@ -516,7 +517,7 @@ export function ContentNavigator({
                                   <span class="indicator-dot" />
                                 )}
                               </span>
-                              <span class="subtopic-title">{subtopic.title}</span>
+                              <span class="subtopic-title">{decodeQuoteEntities(subtopic.title)}</span>
                             </button>
                           );
                         })}
@@ -621,7 +622,7 @@ export function ContentNavigator({
                       class={`practice-item exam-item ${attempted ? 'completed' : ''} ${isActive ? 'active' : ''}`}
                       onClick={(e) => handleExamClick(e, exam.id)}
                     >
-                      <span class="practice-title">{exam.title}</span>
+                      <span class="practice-title">{decodeQuoteEntities(exam.title)}</span>
                       {attempted && (
                         <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
                       )}
@@ -645,7 +646,7 @@ export function ContentNavigator({
                       class={`practice-item project-item ${submitted ? 'completed' : ''}`}
                       onClick={(e) => handleProjectClick(e, project.id)}
                     >
-                      <span class="practice-title">{project.title}</span>
+                      <span class="practice-title">{decodeQuoteEntities(project.title)}</span>
                       {submitted && (
                         <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
                       )}
@@ -675,16 +676,16 @@ export function ContentNavigator({
                   <span class="separator" dangerouslySetInnerHTML={{ __html: Icons.ChevronRight }} />
                   {currentSubtopic ? (
                     <>
-                      <a href={`#/subject/${subject.id}/topic/${currentTopic.id}`}>{currentTopic.title}</a>
+                      <a href={`#/subject/${subject.id}/topic/${currentTopic.id}`}>{decodeQuoteEntities(currentTopic.title)}</a>
                       <span class="separator" dangerouslySetInnerHTML={{ __html: Icons.ChevronRight }} />
-                      <span class="current">{currentSubtopic.title}</span>
+                      <span class="current">{decodeQuoteEntities(currentSubtopic.title)}</span>
                     </>
                   ) : (
-                    <span class="current">{currentTopic.title}</span>
+                    <span class="current">{decodeQuoteEntities(currentTopic.title)}</span>
                   )}
                 </>
               ) : (
-                <span class="current">{subject.title}</span>
+                <span class="current">{decodeQuoteEntities(subject.title)}</span>
               )}
             </nav>
 
@@ -693,7 +694,7 @@ export function ContentNavigator({
               <div class="content-title-row">
                 <div>
                   <span class="subject-code">{subject.code}</span>
-                  <h1>{currentTopic ? currentTopic.title : subject.title}</h1>
+                  <h1>{decodeQuoteEntities(currentTopic ? currentTopic.title : subject.title)}</h1>
                 </div>
                 {currentTopic ? (
                   currentSubtopic && subtopicIndex >= 0 ? (
@@ -717,7 +718,7 @@ export function ContentNavigator({
                   {prerequisiteSubjects.map(prereq => (
                     <li key={prereq.id}>
                       <a href={`#/subject/${prereq.id}`} class="prereq-link">
-                        {prereq.title} ({prereq.code})
+                        {decodeQuoteEntities(prereq.title)} ({prereq.code})
                       </a>
                     </li>
                   ))}

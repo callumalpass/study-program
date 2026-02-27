@@ -9,7 +9,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { escapeHtml } from '../src/utils/html';
+import { decodeQuoteEntities, escapeHtml } from '../src/utils/html';
 
 describe('escapeHtml', () => {
   describe('null and undefined handling', () => {
@@ -305,5 +305,32 @@ describe('escapeHtml', () => {
     it('handles backspace character', () => {
       expect(escapeHtml('test\btest')).toBe('test\btest');
     });
+  });
+});
+
+describe('decodeQuoteEntities', () => {
+  it('returns empty string for null and undefined', () => {
+    expect(decodeQuoteEntities(null)).toBe('');
+    expect(decodeQuoteEntities(undefined)).toBe('');
+  });
+
+  it('decodes named quote entities', () => {
+    expect(decodeQuoteEntities('&quot;hello&apos;')).toBe("\"hello'");
+  });
+
+  it('decodes numeric quote entities', () => {
+    expect(decodeQuoteEntities('&#34;hello&#39;')).toBe("\"hello'");
+  });
+
+  it('decodes hex quote entities case-insensitively', () => {
+    expect(decodeQuoteEntities('&#x22;hello&#X27;')).toBe("\"hello'");
+  });
+
+  it('does not decode non-quote entities', () => {
+    expect(decodeQuoteEntities('&lt;script&gt;')).toBe('&lt;script&gt;');
+  });
+
+  it('does not decode double-escaped quote entities', () => {
+    expect(decodeQuoteEntities('&amp;quot;')).toBe('&amp;quot;');
   });
 });

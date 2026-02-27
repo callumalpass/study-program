@@ -3,7 +3,7 @@ import { initVimMode, VimMode } from 'monaco-vim';
 import { runPython, runTests, type TestResult } from './code-runner';
 import type { TestCase } from '@/core/types';
 import { Icons } from './icons';
-import { escapeHtml } from '@/utils/html';
+import { decodeQuoteEntities, escapeHtml } from '@/utils/html';
 
 export interface EditorConfig {
   language?: string;
@@ -338,9 +338,10 @@ export function createCodeEditor(
     function renderHints() {
       hintsContent.innerHTML = '';
       for (let i = 0; i < hintsRevealed; i++) {
+        const displayHint = decodeQuoteEntities(hints[i]);
         const hintEl = document.createElement('div');
         hintEl.className = 'hint-item';
-        hintEl.innerHTML = `<span class="hint-number">Hint ${i + 1}:</span> ${hints[i]}`;
+        hintEl.innerHTML = `<span class="hint-number">Hint ${i + 1}:</span> ${escapeHtml(displayHint)}`;
         hintsContent.appendChild(hintEl);
       }
       if (hintsRevealed >= hints.length) {
@@ -374,7 +375,7 @@ export function createCodeEditor(
 
     const solutionPre = document.createElement('pre');
     solutionPre.className = 'solution-code';
-    solutionPre.textContent = config.solution;
+    solutionPre.textContent = decodeQuoteEntities(config.solution);
     solutionContent.appendChild(solutionPre);
 
     showSolutionButton.onclick = () => {
@@ -600,11 +601,15 @@ export function createCodeEditor(
       `;
 
       if (!isHidden || !result.passed) {
+        const displayInput = decodeQuoteEntities(testCase.input || '(none)');
+        const displayExpected = decodeQuoteEntities(result.expectedOutput);
+        const displayActual = decodeQuoteEntities(result.actualOutput || result.error || '(no output)');
+
         content += `
           <div class="test-details">
-            ${!isHidden ? `<div class="test-input"><strong>Input:</strong> <code>${escapeHtml(testCase.input || '(none)')}</code></div>` : ''}
-            ${!isHidden ? `<div class="test-expected"><strong>Expected:</strong> <code>${escapeHtml(result.expectedOutput)}</code></div>` : ''}
-            ${!result.passed ? `<div class="test-actual"><strong>Got:</strong> <code>${escapeHtml(result.actualOutput || result.error || '(no output)')}</code></div>` : ''}
+            ${!isHidden ? `<div class="test-input"><strong>Input:</strong> <code>${escapeHtml(displayInput)}</code></div>` : ''}
+            ${!isHidden ? `<div class="test-expected"><strong>Expected:</strong> <code>${escapeHtml(displayExpected)}</code></div>` : ''}
+            ${!result.passed ? `<div class="test-actual"><strong>Got:</strong> <code>${escapeHtml(displayActual)}</code></div>` : ''}
           </div>
         `;
       }

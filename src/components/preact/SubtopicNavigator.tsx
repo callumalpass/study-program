@@ -4,6 +4,7 @@ import type { Topic, Subtopic, SubjectProgress, Quiz, Exercise } from '@/core/ty
 import { Icons } from '@/components/icons';
 import { navigateToSubtopic, navigateToQuiz, navigateToExercise } from '@/core/router';
 import { renderMarkdown, renderMermaidDiagrams } from '@/components/markdown';
+import { decodeQuoteEntities } from '@/utils/html';
 
 interface SubtopicNavigatorProps {
   subjectId: string;
@@ -118,7 +119,7 @@ export function SubtopicNavigator({
                       <span class="tab-number">{subtopic.order}</span>
                     )}
                   </span>
-                  <span class="tab-title">{subtopic.title}</span>
+                  <span class="tab-title">{decodeQuoteEntities(subtopic.title)}</span>
                 </button>
               );
             })}
@@ -203,7 +204,7 @@ export function SubtopicNavigator({
                 <span class="pagination-icon" dangerouslySetInnerHTML={{ __html: Icons.ChevronLeft }} />
                 <span class="pagination-text">
                   <span class="pagination-label">Previous</span>
-                  <span class="pagination-title">{prevSubtopic.title}</span>
+                  <span class="pagination-title">{decodeQuoteEntities(prevSubtopic.title)}</span>
                 </span>
               </a>
             )}
@@ -221,7 +222,7 @@ export function SubtopicNavigator({
               >
                 <span class="pagination-text">
                   <span class="pagination-label">Next</span>
-                  <span class="pagination-title">{nextSubtopic.title}</span>
+                  <span class="pagination-title">{decodeQuoteEntities(nextSubtopic.title)}</span>
                 </span>
                 <span class="pagination-icon" dangerouslySetInnerHTML={{ __html: Icons.ChevronRight }} />
               </a>

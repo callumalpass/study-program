@@ -5,7 +5,7 @@ import { initVimMode, VimMode } from 'monaco-vim';
 import { runPython, runTests, runC, runCTests, type TestResult } from '@/components/code-runner';
 import type { TestCase, ProgrammingLanguage } from '@/core/types';
 import { Icons } from '@/components/icons';
-import { escapeHtml } from '@/utils/html';
+import { decodeQuoteEntities } from '@/utils/html';
 import { progressStorage } from '@/core/storage';
 import { evaluateCodeExercise, type EvaluationResult } from '@/utils/gemini-eval';
 
@@ -637,16 +637,16 @@ export function CodeEditor({
                       {!result.testCase.isHidden && (
                         <>
                           <div class="test-input">
-                            <strong>Input:</strong> <code>{escapeHtml(result.testCase.input || '(none)')}</code>
+                            <strong>Input:</strong> <code>{decodeQuoteEntities(result.testCase.input || '(none)')}</code>
                           </div>
                           <div class="test-expected">
-                            <strong>Expected:</strong> <code>{escapeHtml(result.expectedOutput)}</code>
+                            <strong>Expected:</strong> <code>{decodeQuoteEntities(result.expectedOutput)}</code>
                           </div>
                         </>
                       )}
                       {!result.passed && (
                         <div class="test-actual">
-                          <strong>Got:</strong> <code>{escapeHtml(result.actualOutput || result.error || '(no output)')}</code>
+                          <strong>Got:</strong> <code>{decodeQuoteEntities(result.actualOutput || result.error || '(no output)')}</code>
                         </div>
                       )}
                     </div>
@@ -674,13 +674,13 @@ export function CodeEditor({
               <span class="result-score">Score: {aiEvaluation.score}/100</span>
             </div>
             <div class="result-feedback">
-              <p>{aiEvaluation.feedback}</p>
+              <p>{decodeQuoteEntities(aiEvaluation.feedback)}</p>
             </div>
             {aiEvaluation.strengths.length > 0 && (
               <div class="result-section strengths">
                 <strong>Strengths:</strong>
                 <ul>
-                  {aiEvaluation.strengths.map((s, i) => <li key={i}>{s}</li>)}
+                  {aiEvaluation.strengths.map((s, i) => <li key={i}>{decodeQuoteEntities(s)}</li>)}
                 </ul>
               </div>
             )}
@@ -688,7 +688,7 @@ export function CodeEditor({
               <div class="result-section improvements">
                 <strong>Suggestions for improvement:</strong>
                 <ul>
-                  {aiEvaluation.improvements.map((s, i) => <li key={i}>{s}</li>)}
+                  {aiEvaluation.improvements.map((s, i) => <li key={i}>{decodeQuoteEntities(s)}</li>)}
                 </ul>
               </div>
             )}
@@ -716,7 +716,7 @@ export function CodeEditor({
             <div class="hints-content">
               {hints.slice(0, hintsRevealed).map((hint, i) => (
                 <div key={i} class="hint-item">
-                  <span class="hint-number">Hint {i + 1}:</span> {hint}
+                  <span class="hint-number">Hint {i + 1}:</span> {decodeQuoteEntities(hint)}
                 </div>
               ))}
             </div>
@@ -738,7 +738,7 @@ export function CodeEditor({
           </div>
           {showSolution && (
             <div class="solution-content">
-              <pre class="solution-code">{solution}</pre>
+              <pre class="solution-code">{decodeQuoteEntities(solution)}</pre>
             </div>
           )}
         </div>

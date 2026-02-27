@@ -10,6 +10,7 @@ import { ProofEditor } from './ProofEditor';
 import type { TestResult } from '@/components/code-runner';
 import type { EvaluationResult } from '@/utils/gemini-eval';
 import { formatLanguage } from '@/pages/assessment-utils';
+import { decodeQuoteEntities } from '@/utils/html';
 
 // Type guard for CodingExercise
 function isCodingExercise(exercise: Exercise): exercise is CodingExercise {
@@ -196,15 +197,15 @@ function CodingExercisePage({
       <nav class="breadcrumb">
         <a href="#/curriculum">Curriculum</a>
         <span class="separator">/</span>
-        <a href={`#/subject/${subjectId}`}>{subject.title}</a>
+        <a href={`#/subject/${subjectId}`}>{decodeQuoteEntities(subject.title)}</a>
         <span class="separator">/</span>
         <a href={`#/subject/${subjectId}/topic/${exercise.topicId}`}>Topic</a>
         <span class="separator">/</span>
-        <span class="current">{exercise.title}</span>
+        <span class="current">{decodeQuoteEntities(exercise.title)}</span>
       </nav>
 
       <header class="exercise-header">
-        <h1>{exercise.title}</h1>
+        <h1>{decodeQuoteEntities(exercise.title)}</h1>
         <div class="exercise-meta-row">
           <span class="exercise-counter">Exercise {currentIndex + 1} of {totalExercises}</span>
           <span class="meta-separator" />
@@ -360,15 +361,15 @@ function WrittenExercisePage({
       <nav class="breadcrumb">
         <a href="#/curriculum">Curriculum</a>
         <span class="separator">/</span>
-        <a href={`#/subject/${subjectId}`}>{subject.title}</a>
+        <a href={`#/subject/${subjectId}`}>{decodeQuoteEntities(subject.title)}</a>
         <span class="separator">/</span>
         <a href={`#/subject/${subjectId}/topic/${exercise.topicId}`}>Topic</a>
         <span class="separator">/</span>
-        <span class="current">{exercise.title}</span>
+        <span class="current">{decodeQuoteEntities(exercise.title)}</span>
       </nav>
 
       <header class="exercise-header">
-        <h1>{exercise.title}</h1>
+        <h1>{decodeQuoteEntities(exercise.title)}</h1>
         <div class="exercise-meta-row">
           <span class="exercise-counter">Exercise {currentIndex + 1} of {totalExercises}</span>
           <span class="meta-separator" />

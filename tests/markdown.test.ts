@@ -172,6 +172,13 @@ describe('markdown component', () => {
         expect(result).toContain('console.log()');
       });
 
+      it('decodes quote entities in inline code before escaping', () => {
+        const result = renderMarkdown('Use `&quot;quoted&quot;` syntax');
+        expect(result).toContain('inline-code');
+        expect(result).toContain('&quot;quoted&quot;');
+        expect(result).not.toContain('&amp;quot;');
+      });
+
       it('escapes HTML in code blocks', () => {
         const result = renderMarkdown('```html\n<div class="test">Content</div>\n```');
         // Prism syntax highlighting wraps tokens in spans
@@ -208,6 +215,13 @@ describe('markdown component', () => {
       it('handles unknown languages as plaintext', () => {
         const result = renderMarkdown('```unknownlang\nsome code\n```');
         expect(result).toContain('language-plaintext');
+      });
+
+      it('decodes quote entities in plaintext code blocks before escaping', () => {
+        const result = renderMarkdown('```\n&quot;quoted&quot;\n```');
+        expect(result).toContain('language-plaintext');
+        expect(result).toContain('&quot;quoted&quot;');
+        expect(result).not.toContain('&amp;quot;');
       });
     });
 
