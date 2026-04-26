@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { useEffect, useRef, useState, useCallback } from 'preact/hooks';
 import type { QuizQuestion, QuizAnswer, CodingAnswer } from '@/core/types';
 import { renderMarkdown } from '@/components/markdown';
-import { decodeQuoteEntities, escapeHtml } from '@/utils/html';
+import { decodeQuoteEntities } from '@/utils/html';
 import { Icons } from '@/components/icons';
 import { CompactCodeEditor } from './CodeEditor';
 import type { TestResult } from '@/components/code-runner';
@@ -267,7 +267,7 @@ export function Question({
       {question.codeSnippet && (
         <pre class="code-snippet">
           <code ref={codeRef} class={`language-${question.language || 'python'}`}>
-            {escapeHtml(decodeQuoteEntities(question.codeSnippet))}
+            {decodeQuoteEntities(question.codeSnippet)}
           </code>
         </pre>
       )}

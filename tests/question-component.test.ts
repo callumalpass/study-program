@@ -8,9 +8,20 @@
  * - Various question type rendering
  */
 
-import { describe, it, expect } from 'vitest';
+import { h, render } from 'preact';
+import { afterEach, describe, it, expect, vi } from 'vitest';
 import type { QuizQuestion, QuizAnswer, CodingAnswer, ProgrammingLanguage } from '@/core/types';
 import { normalizeAnswer, getCorrectOptionIndex } from '@/utils/quiz-utils';
+
+vi.mock('@/components/preact/CodeEditor', () => ({
+  CompactCodeEditor: () => h('div', { class: 'mock-code-editor' }),
+}));
+
+import { Question } from '@/components/preact/Question';
+
+afterEach(() => {
+  document.body.innerHTML = '';
+});
 
 /**
  * Get the Prism language class for a code snippet.
@@ -131,6 +142,35 @@ describe('Question Component - Language Highlighting', () => {
       };
       expect(getLanguageClass(question.language)).toBe('language-python');
     });
+  });
+});
+
+describe('Question Component - Code Snippet Rendering', () => {
+  it('renders quote entities in code snippets as quote characters', () => {
+    const question: QuizQuestion = {
+      id: 'q-code-quotes',
+      type: 'code_output',
+      prompt: 'What is the output?',
+      codeSnippet: 'for i in range(1, 4):\n    print(i, end=&quot; &quot;)',
+      language: 'python',
+      correctAnswer: '1 2 3',
+      explanation: 'The loop prints each value on one line separated by spaces.',
+    };
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    render(h(Question, {
+      question,
+      index: 0,
+      answer: undefined,
+      showFeedback: false,
+      isExam: false,
+      onAnswerChange: vi.fn(),
+    }), container);
+
+    const code = container.querySelector('.code-snippet code');
+    expect(code?.textContent).toContain('print(i, end=" ")');
+    expect(code?.textContent).not.toContain('&quot;');
   });
 });
 
