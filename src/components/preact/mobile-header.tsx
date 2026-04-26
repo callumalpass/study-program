@@ -6,7 +6,7 @@ import { getMascotForPath } from './mascotMood';
 export function renderMobileHeaderMascot(
   container: HTMLElement,
   currentPath: string,
-  exercises: Exercise[]
+  exercises: Exercise[] = []
 ): void {
   const mood = getMascotForPath(currentPath, exercises);
 

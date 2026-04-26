@@ -1,14 +1,12 @@
 import { h } from 'preact';
 import { useState, useMemo, useCallback } from 'preact/hooks';
-import type { Subject, SubjectProgress, Quiz, Exercise } from '@/core/types';
+import type { Subject, SubjectProgress } from '@/core/types';
 import { SubjectItem } from './SubjectItem';
 
 interface SubjectListProps {
   subjects: Subject[];
   userProgress: Record<string, SubjectProgress>;
   currentPath: string;
-  quizzes: Quiz[];
-  exercises: Exercise[];
 }
 
 interface GroupedSubjects {
@@ -19,8 +17,6 @@ export function SubjectList({
   subjects,
   userProgress,
   currentPath,
-  quizzes,
-  exercises,
 }: SubjectListProps) {
   const [collapsedYears, setCollapsedYears] = useState<Set<string>>(new Set());
 
@@ -86,8 +82,6 @@ export function SubjectList({
                         subject={subject}
                         progress={userProgress[subject.id]}
                         isActive={isSubjectActive(subject.id)}
-                        quizzes={quizzes}
-                        exercises={exercises}
                       />
                     ))}
                 </div>

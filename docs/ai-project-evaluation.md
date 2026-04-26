@@ -1,6 +1,6 @@
 # AI-Based Project Evaluation
 
-Implementation plan for automated project evaluation using Gemini 3.
+Implementation plan for automated project evaluation using Gemini 3 Flash.
 
 ## Overview
 
@@ -23,18 +23,18 @@ Allow students to submit GitHub repository URLs for their projects and receive a
 
 ## API Details
 
-### Gemini 3 Pro
+### Gemini 3 Flash
 
-- **Model ID**: `gemini-3-pro-preview`
+- **Model ID**: `gemini-3-flash-preview`
 - **Context window**: 1M tokens input / 64k output
-- **Pricing**: $2/1M input tokens, $12/1M output tokens
-- **Endpoint**: `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent`
+- **Pricing**: $0.50/1M input tokens, $3/1M output tokens
+- **Endpoint**: `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent`
 
 ### Request Format
 
 ```typescript
 const response = await fetch(
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent',
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent',
   {
     method: 'POST',
     headers: {

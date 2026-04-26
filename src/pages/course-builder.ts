@@ -2,7 +2,6 @@
 import type { Subject, SubjectCategory } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { courseTemplates, getTemplateById } from '@/data/templates';
-import { curriculum } from '@/data/curriculum';
 import { navigate } from '@/core/router';
 import { Mascots } from '@/components/mascots';
 import { escapeHtml } from '@/utils/html';
@@ -18,18 +17,20 @@ let currentFilters: CourseBuilderFilters = {
   year: null,
   search: '',
 };
+let currentSubjects: Subject[] = [];
 
 /**
  * Render the course builder page
  */
-export function renderCourseBuilderPage(container: HTMLElement): void {
+export function renderCourseBuilderPage(container: HTMLElement, subjects: Subject[]): void {
+  currentSubjects = subjects;
   const selectedIds = progressStorage.getSelectedSubjects();
   const selectedCount = selectedIds.length;
-  const totalHours = curriculum
+  const totalHours = currentSubjects
     .filter(s => selectedIds.includes(s.id))
     .reduce((sum, s) => sum + s.estimatedHours, 0);
 
-  const filteredSubjects = filterSubjects(curriculum, currentFilters);
+  const filteredSubjects = filterSubjects(currentSubjects, currentFilters);
 
   container.innerHTML = `
     <div class="page-container course-builder-page">
@@ -116,7 +117,7 @@ export function renderCourseBuilderPage(container: HTMLElement): void {
               </div>
             ` : filteredSubjects.map(subject => {
               const isSelected = selectedIds.includes(subject.id);
-              const missingPrereqs = getMissingPrerequisites(subject.id, selectedIds, curriculum);
+              const missingPrereqs = getMissingPrerequisites(subject.id, selectedIds, currentSubjects);
               const hasMissingPrereqs = missingPrereqs.length > 0 && !isSelected;
 
               return `
@@ -146,7 +147,7 @@ export function renderCourseBuilderPage(container: HTMLElement): void {
                     ${hasMissingPrereqs ? `
                       <div class="prereq-warning">
                         Missing prerequisites: ${missingPrereqs.map(id => {
-                          const prereq = curriculum.find(s => s.id === id);
+                          const prereq = currentSubjects.find(s => s.id === id);
                           return prereq?.code || id;
                         }).join(', ')}
                       </div>
@@ -220,7 +221,7 @@ function attachEventHandlers(container: HTMLElement): void {
   if (searchInput) {
     searchInput.addEventListener('input', () => {
       currentFilters.search = searchInput.value;
-      renderCourseBuilderPage(container);
+      renderCourseBuilderPage(container, currentSubjects);
     });
   }
 
@@ -229,7 +230,7 @@ function attachEventHandlers(container: HTMLElement): void {
   if (categoryFilter) {
     categoryFilter.addEventListener('change', () => {
       currentFilters.category = categoryFilter.value as SubjectCategory | 'all';
-      renderCourseBuilderPage(container);
+      renderCourseBuilderPage(container, currentSubjects);
     });
   }
 
@@ -238,7 +239,7 @@ function attachEventHandlers(container: HTMLElement): void {
   if (yearFilter) {
     yearFilter.addEventListener('change', () => {
       currentFilters.year = yearFilter.value ? parseInt(yearFilter.value, 10) : null;
-      renderCourseBuilderPage(container);
+      renderCourseBuilderPage(container, currentSubjects);
     });
   }
 
@@ -246,23 +247,23 @@ function attachEventHandlers(container: HTMLElement): void {
   const selectAllBtn = container.querySelector('#select-all-btn');
   if (selectAllBtn) {
     selectAllBtn.addEventListener('click', () => {
-      const filteredSubjects = filterSubjects(curriculum, currentFilters);
+      const filteredSubjects = filterSubjects(currentSubjects, currentFilters);
       const selectedIds = progressStorage.getSelectedSubjects();
       const newIds = [...new Set([...selectedIds, ...filteredSubjects.map(s => s.id)])];
       progressStorage.setSelectedSubjects(newIds);
-      renderCourseBuilderPage(container);
+      renderCourseBuilderPage(container, currentSubjects);
     });
   }
 
   const deselectAllBtn = container.querySelector('#deselect-all-btn');
   if (deselectAllBtn) {
     deselectAllBtn.addEventListener('click', () => {
-      const filteredSubjects = filterSubjects(curriculum, currentFilters);
+      const filteredSubjects = filterSubjects(currentSubjects, currentFilters);
       const filteredIds = new Set(filteredSubjects.map(s => s.id));
       const selectedIds = progressStorage.getSelectedSubjects();
       const newIds = selectedIds.filter(id => !filteredIds.has(id));
       progressStorage.setSelectedSubjects(newIds);
-      renderCourseBuilderPage(container);
+      renderCourseBuilderPage(container, currentSubjects);
     });
   }
 
@@ -271,7 +272,7 @@ function attachEventHandlers(container: HTMLElement): void {
     clearSelectionBtn.addEventListener('click', () => {
       if (confirm('Clear all selected subjects? This cannot be undone.')) {
         progressStorage.setSelectedSubjects([]);
-        renderCourseBuilderPage(container);
+        renderCourseBuilderPage(container, currentSubjects);
       }
     });
   }
@@ -302,7 +303,7 @@ function applyTemplate(templateId: string, container: HTMLElement): void {
   }
 
   progressStorage.setSelectedSubjects([...template.subjectIds]);
-  renderCourseBuilderPage(container);
+  renderCourseBuilderPage(container, currentSubjects);
 }
 
 /**
@@ -314,11 +315,11 @@ function toggleSubject(subjectId: string, container: HTMLElement): void {
 
   if (isSelected) {
     // Check for dependent subjects before removing
-    const dependents = getDependentSubjects(subjectId, selectedIds, curriculum);
+    const dependents = getDependentSubjects(subjectId, selectedIds, currentSubjects);
     if (dependents.length > 0) {
       const dependentCodes = dependents.map(s => s.code).join(', ');
       const confirmed = confirm(
-        `Removing ${curriculum.find(s => s.id === subjectId)?.code} will leave these subjects without prerequisites: ${dependentCodes}. Continue?`
+        `Removing ${currentSubjects.find(s => s.id === subjectId)?.code} will leave these subjects without prerequisites: ${dependentCodes}. Continue?`
       );
       if (!confirmed) return;
     }
@@ -327,5 +328,5 @@ function toggleSubject(subjectId: string, container: HTMLElement): void {
     progressStorage.addToSelection(subjectId);
   }
 
-  renderCourseBuilderPage(container);
+  renderCourseBuilderPage(container, currentSubjects);
 }

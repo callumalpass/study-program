@@ -1,6 +1,7 @@
 // Home/Dashboard page
 import type {
   Subject,
+  SubjectProgress,
   ReviewItem,
   UserProgress,
   QuizAttempt,
@@ -17,6 +18,7 @@ import {
 } from '@/core/progress';
 import { navigateToSubject, navigateToCurriculum } from '@/core/router';
 import { Icons } from '../components/icons';
+import { escapeHtml } from '@/utils/html';
 
 /**
  * Format a review item ID into a human-readable title
@@ -40,6 +42,16 @@ const QUIZ_LEVEL_PATTERN = /quiz-(\d+)([a-c])?(?:-([a-c]))?/i; // Matches "quiz-
 const QUIZ_SUBQUIZ_PATTERN = /quiz-(\d+)-(\d+)/i; // Matches "quiz-{topic}-{subquiz}" format
 const SHORT_QUIZ_PATTERN = /-q(\d+)(?:-([a-c]))?-(\d+)/i; // Matches short "-q{N}-{M}" or "-q{N}-{level}-{M}" format
 const EXERCISE_NUMBER_PATTERN = /ex(\d+)/i; // Matches "ex{number}" for exercise number (e.g., "ex01")
+
+interface DashboardAction {
+  icon: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  meta: string;
+  href: string;
+  cta: string;
+}
 
 export function formatReviewItemTitle(item: ReviewItem): string {
   const id = item.itemId;
@@ -147,6 +159,185 @@ function renderDailyReviewSection(): string {
   `;
 }
 
+function getSelectedDueReviewItems(limit: number): ReviewItem[] {
+  const selectedIds = progressStorage.getSelectedSubjects();
+  const allDueItems = progressStorage.getDueReviewItems(100);
+  const filteredItems = selectedIds.length > 0
+    ? allDueItems.filter(item => selectedIds.includes(item.subjectId))
+    : allDueItems;
+
+  return filteredItems.slice(0, limit);
+}
+
+function getAssessmentTitle(itemType: ReviewItem['itemType'], subjectId: string, itemId: string): string {
+  return formatReviewItemTitle({
+    itemType,
+    subjectId,
+    itemId,
+    nextReviewAt: '',
+    interval: 0,
+    streak: 0,
+  });
+}
+
+function isQuizPassed(progress: SubjectProgress | undefined, quizId: string): boolean {
+  return Boolean(
+    progress?.quizAttempts?.[quizId]?.some(attempt => attempt.score >= QUIZ_PASSING_SCORE)
+  );
+}
+
+function isExamPassed(progress: SubjectProgress | undefined, examId: string): boolean {
+  return Boolean(
+    progress?.examAttempts?.[examId]?.some(attempt => attempt.score >= QUIZ_PASSING_SCORE)
+  );
+}
+
+function isExercisePassed(progress: SubjectProgress | undefined, exerciseId: string): boolean {
+  return Boolean(progress?.exerciseCompletions?.[exerciseId]?.passed);
+}
+
+function hasProjectSubmission(progress: SubjectProgress | undefined, projectId: string): boolean {
+  return Boolean(progress?.projectSubmissions?.[projectId]?.length);
+}
+
+function getNextReadingAction(subject: Subject, progress: SubjectProgress | undefined): DashboardAction | null {
+  const flatSubtopics = subject.topics.flatMap(topic =>
+    (topic.subtopics || []).map(subtopic => ({ topic, subtopic }))
+  );
+
+  if (flatSubtopics.length === 0) {
+    return null;
+  }
+
+  const views = progress?.subtopicViews || {};
+  const nextUnread = flatSubtopics.find(({ subtopic }) => !views[subtopic.id]);
+
+  if (!nextUnread) {
+    return null;
+  }
+
+  return {
+    icon: Icons.BookOpen || Icons.Curriculum,
+    eyebrow: 'Read Next',
+    title: nextUnread.subtopic.title,
+    description: `${subject.code} · ${nextUnread.topic.title}`,
+    meta: `${Object.keys(views).length}/${flatSubtopics.length} sections viewed`,
+    href: `#/subject/${subject.id}/topic/${nextUnread.topic.id}/subtopic/${nextUnread.subtopic.slug}`,
+    cta: 'Open Section',
+  };
+}
+
+function getNextPracticeAction(subject: Subject, progress: SubjectProgress | undefined): DashboardAction | null {
+  for (const topic of subject.topics) {
+    const nextQuizId = topic.quizIds.find(quizId => !isQuizPassed(progress, quizId));
+    if (nextQuizId) {
+      return {
+        icon: Icons.StatQuiz,
+        eyebrow: 'Practice Next',
+        title: getAssessmentTitle('quiz', subject.id, nextQuizId),
+        description: `${subject.code} · ${topic.title}`,
+        meta: 'Passing score: 70%',
+        href: `#/subject/${subject.id}/quiz/${nextQuizId}`,
+        cta: 'Start Quiz',
+      };
+    }
+
+    const nextExerciseId = topic.exerciseIds.find(exerciseId => !isExercisePassed(progress, exerciseId));
+    if (nextExerciseId) {
+      return {
+        icon: Icons.StatCode,
+        eyebrow: 'Solve Next',
+        title: getAssessmentTitle('exercise', subject.id, nextExerciseId),
+        description: `${subject.code} · ${topic.title}`,
+        meta: 'Exercise not completed',
+        href: `#/subject/${subject.id}/exercise/${nextExerciseId}`,
+        cta: 'Open Exercise',
+      };
+    }
+  }
+
+  const nextExamId = subject.examIds?.find(examId => !isExamPassed(progress, examId));
+  if (nextExamId) {
+    return {
+      icon: Icons.Beaker,
+      eyebrow: 'Assessment Next',
+      title: nextExamId.includes('final') ? `${subject.code} Final Exam` : `${subject.code} Exam`,
+      description: subject.title,
+      meta: 'Ready when quizzes and exercises are complete',
+      href: `#/subject/${subject.id}/exam/${nextExamId}`,
+      cta: 'Open Exam',
+    };
+  }
+
+  const nextProjectId = subject.projectIds?.find(projectId => !hasProjectSubmission(progress, projectId));
+  if (nextProjectId) {
+    return {
+      icon: Icons.StatProject,
+      eyebrow: 'Project Next',
+      title: `${subject.code} Project`,
+      description: subject.title,
+      meta: 'No submission recorded',
+      href: `#/subject/${subject.id}/project/${nextProjectId}`,
+      cta: 'Open Project',
+    };
+  }
+
+  return null;
+}
+
+function getDashboardAction(
+  subjects: Subject[],
+  userProgress: UserProgress,
+  nextRecommended: Subject | null
+): DashboardAction | null {
+  const dueReview = getSelectedDueReviewItems(1)[0];
+  if (dueReview) {
+    return {
+      icon: dueReview.itemType === 'quiz' ? Icons.StatQuiz : Icons.StatCode,
+      eyebrow: 'Review Due',
+      title: formatReviewItemTitle(dueReview),
+      description: 'Reinforce an item that is due based on your previous attempts.',
+      meta: `Streak ${dueReview.streak} · ${dueReview.interval} day interval`,
+      href: getReviewItemUrl(dueReview),
+      cta: 'Review Now',
+    };
+  }
+
+  const candidateSubjects = nextRecommended
+    ? [nextRecommended, ...subjects.filter(subject => subject.id !== nextRecommended.id)]
+    : subjects;
+
+  for (const subject of candidateSubjects) {
+    const progress = userProgress.subjects[subject.id];
+    if (progress?.status === 'completed') continue;
+
+    const readingAction = getNextReadingAction(subject, progress);
+    if (readingAction) return readingAction;
+
+    const practiceAction = getNextPracticeAction(subject, progress);
+    if (practiceAction) return practiceAction;
+  }
+
+  return null;
+}
+
+function renderDashboardAction(action: DashboardAction): string {
+  return `
+    <section class="dashboard-next-action">
+      <div class="next-action-card">
+        <div class="next-action-icon">${action.icon}</div>
+        <div class="next-action-content">
+          <span class="next-action-eyebrow">${escapeHtml(action.eyebrow)}</span>
+          <h2>${escapeHtml(action.title)}</h2>
+          <p>${escapeHtml(action.description)}</p>
+          <span class="next-action-meta">${escapeHtml(action.meta)}</span>
+        </div>
+        <a class="btn btn-primary next-action-cta" href="${escapeHtml(action.href)}">${escapeHtml(action.cta)}</a>
+      </div>
+    </section>
+  `;
+}
+
 /**
  * Render the home/dashboard page
  */
@@ -162,6 +353,7 @@ export function renderHomePage(container: HTMLElement, subjects: Subject[]): voi
   const overallProgress = calculateOverallProgress(filteredSubjects, userProgress);
   const inProgressSubjects = getInProgressSubjects(filteredSubjects, userProgress);
   const nextRecommended = getNextRecommendedSubject(filteredSubjects, userProgress);
+  const dashboardAction = getDashboardAction(filteredSubjects, userProgress, nextRecommended);
 
   // Calculate stats
   const stats = calculateStats(filteredSubjects, userProgress);
@@ -203,6 +395,8 @@ export function renderHomePage(container: HTMLElement, subjects: Subject[]): voi
             </div>
           </div>
         </section>
+
+        ${dashboardAction ? renderDashboardAction(dashboardAction) : ''}
 
         ${nextRecommended ? `
           <section class="current-subject">

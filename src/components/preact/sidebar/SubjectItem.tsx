@@ -1,14 +1,12 @@
 import { h } from 'preact';
 import { useCallback } from 'preact/hooks';
-import type { Subject, SubjectProgress, SubjectStatus, Quiz, Exercise } from '@/core/types';
+import type { Subject, SubjectProgress, SubjectStatus } from '@/core/types';
 import { navigateToSubject } from '@/core/router';
 
 interface SubjectItemProps {
   subject: Subject;
   progress?: SubjectProgress;
   isActive: boolean;
-  quizzes: Quiz[];
-  exercises: Exercise[];
 }
 
 function getStatusColor(status: SubjectStatus): string {
@@ -25,9 +23,7 @@ function getStatusColor(status: SubjectStatus): string {
 
 function calculateSubjectProgress(
   subject: Subject,
-  progress: SubjectProgress | undefined,
-  subjectQuizzes: Quiz[],
-  subjectExercises: Exercise[]
+  progress: SubjectProgress | undefined
 ): number {
   if (!progress || progress.status === 'not_started') {
     return 0;
@@ -36,23 +32,21 @@ function calculateSubjectProgress(
     return 100;
   }
 
-  const totalQuizzes = subjectQuizzes.length;
-  const totalExercises = subjectExercises.length;
+  const totalQuizzes = subject.topics.reduce((count, topic) => count + topic.quizIds.length, 0);
+  const totalExercises = subject.topics.reduce((count, topic) => count + topic.exerciseIds.length, 0);
   const totalItems = totalQuizzes + totalExercises;
 
   if (totalItems === 0) {
     return 0;
   }
 
-  // Count completed quizzes that belong to this subject
-  const completedQuizzes = subjectQuizzes.filter(
-    (q) => progress.quizAttempts?.[q.id]?.length > 0
-  ).length;
+  const completedQuizzes = subject.topics.reduce((count, topic) => (
+    count + topic.quizIds.filter((quizId) => progress.quizAttempts?.[quizId]?.length > 0).length
+  ), 0);
 
-  // Count completed exercises that belong to this subject
-  const completedExercises = subjectExercises.filter(
-    (e) => progress.exerciseCompletions?.[e.id]?.passed
-  ).length;
+  const completedExercises = subject.topics.reduce((count, topic) => (
+    count + topic.exerciseIds.filter((exerciseId) => progress.exerciseCompletions?.[exerciseId]?.passed).length
+  ), 0);
 
   return Math.round(((completedQuizzes + completedExercises) / totalItems) * 100);
 }
@@ -61,16 +55,10 @@ export function SubjectItem({
   subject,
   progress,
   isActive,
-  quizzes,
-  exercises,
 }: SubjectItemProps) {
   const status = progress?.status || 'not_started';
 
-  // Filter quizzes and exercises for this subject
-  const subjectQuizzes = quizzes.filter((q) => q.subjectId === subject.id);
-  const subjectExercises = exercises.filter((e) => e.subjectId === subject.id);
-
-  const progressPercent = calculateSubjectProgress(subject, progress, subjectQuizzes, subjectExercises);
+  const progressPercent = calculateSubjectProgress(subject, progress);
   const statusColor = getStatusColor(status);
 
   const handleHeaderClick = useCallback((e: Event) => {

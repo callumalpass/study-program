@@ -2,7 +2,7 @@ import type { Exercise } from '@/core/types';
 import type { MascotMood } from './InteractiveMascot';
 
 // Determine which mascot to show based on current route.
-export function getMascotForPath(path: string, exercises: Exercise[]): MascotMood {
+export function getMascotForPath(path: string, exercises: Exercise[] = []): MascotMood {
   // Reading content (subtopic pages)
   if (path.match(/\/subject\/[^/]+\/topic\/[^/]+\/.+/)) {
     return 'Reading';

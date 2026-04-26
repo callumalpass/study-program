@@ -7,10 +7,14 @@ import 'katex/dist/katex.min.css';
 import { decodeQuoteEntities, escapeHtml } from '@/utils/html';
 import { parseFrontmatter } from '@/subjects/loader';
 
-// Initialize mermaid with default config
+const initialMermaidTheme = document.documentElement.getAttribute('data-theme') === 'dark'
+  ? 'dark'
+  : 'default';
+
+// Initialize mermaid with the current app theme when the markdown chunk loads.
 mermaid.initialize({
   startOnLoad: false,
-  theme: 'dark',
+  theme: initialMermaidTheme,
   securityLevel: 'loose',
 });
 

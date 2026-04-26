@@ -6,7 +6,7 @@ export { TopicList } from './TopicList';
 export { ProgressRing } from './ProgressRing';
 
 import { h, render } from 'preact';
-import type { Subject, SubjectProgress, Quiz, Exercise, Exam, Project } from '@/core/types';
+import type { Subject, SubjectProgress } from '@/core/types';
 import { Sidebar } from './Sidebar';
 
 /**
@@ -17,21 +17,13 @@ export function renderSidebar(
   container: HTMLElement,
   currentPath: string,
   subjects: Subject[],
-  userProgress: Record<string, SubjectProgress>,
-  quizzes: Quiz[],
-  exercises: Exercise[],
-  exams: Exam[],
-  projects: Project[]
+  userProgress: Record<string, SubjectProgress>
 ): void {
   render(
     h(Sidebar, {
       currentPath,
       subjects,
       userProgress,
-      quizzes,
-      exercises,
-      exams,
-      projects,
     }),
     container
   );

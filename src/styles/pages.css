@@ -149,6 +149,80 @@
   margin-bottom: var(--space-2xl);
 }
 
+.dashboard-next-action {
+  margin-bottom: var(--space-2xl);
+}
+
+.next-action-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-lg);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.next-action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: var(--color-accent-primary);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+}
+
+.next-action-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.next-action-content {
+  min-width: 0;
+}
+
+.next-action-eyebrow {
+  display: block;
+  margin-bottom: var(--space-2xs);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.next-action-content h2 {
+  margin: 0 0 var(--space-xs) 0;
+  font-size: var(--font-size-xl);
+}
+
+.next-action-content p {
+  margin: 0 0 var(--space-sm) 0;
+  color: var(--color-text-secondary);
+}
+
+.next-action-meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.next-action-cta {
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .next-action-card {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .next-action-cta {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+  }
+}
+
 .subject-card.featured {
   background: var(--color-bg-surface);
   border: 2px solid var(--color-accent-primary);
@@ -2380,6 +2454,21 @@ textarea.code-editor::placeholder {
 
 .practice-error a {
   color: var(--color-accent-primary);
+}
+
+.loading-page {
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  color: var(--color-text-muted);
 }
 
 /* Loading Spinner */

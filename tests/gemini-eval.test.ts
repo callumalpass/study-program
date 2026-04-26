@@ -5,6 +5,7 @@ import {
   validateGeminiApiKey,
   generatePracticeQuestion,
   evaluateProject,
+  GEMINI_MODEL_ID,
   type EvaluationResult,
   type ProjectFile,
 } from '../src/utils/gemini-eval';
@@ -44,7 +45,7 @@ function createErrorResponse(status: number, message: string): Response {
 }
 
 describe('Gemini API URL configuration', () => {
-  it('uses the correct Gemini model (gemini-1.5-pro)', async () => {
+  it('uses Gemini 3 Flash for evaluation calls', async () => {
     mockFetch.mockResolvedValueOnce(
       createGeminiResponse({
         passed: true,
@@ -58,9 +59,26 @@ describe('Gemini API URL configuration', () => {
     await evaluateWrittenExercise('test-key', 'problem', 'solution', 'answer');
 
     expect(mockFetch).toHaveBeenCalledWith(
-      expect.stringContaining('gemini-1.5-pro'),
+      expect.stringContaining(GEMINI_MODEL_ID),
       expect.any(Object)
     );
+  });
+
+  it('sends Gemini 3 thinking level config by default', async () => {
+    mockFetch.mockResolvedValueOnce(
+      createGeminiResponse({
+        passed: true,
+        score: 80,
+        feedback: 'Good',
+        strengths: [],
+        improvements: [],
+      })
+    );
+
+    await evaluateWrittenExercise('test-key', 'problem', 'solution', 'answer');
+
+    const requestBody = JSON.parse(mockFetch.mock.calls[0][1].body);
+    expect(requestBody.generationConfig.thinkingConfig.thinkingLevel).toBe('high');
   });
 });
 

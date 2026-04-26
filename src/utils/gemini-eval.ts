@@ -10,7 +10,8 @@ export interface EvaluationResult {
   improvements: string[];
 }
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
+export const GEMINI_MODEL_ID = 'gemini-3-flash-preview';
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL_ID}:generateContent`;
 
 /** Response structure from Gemini API */
 interface GeminiResponse {
@@ -23,7 +24,7 @@ interface GeminiResponse {
 
 /** Configuration options for Gemini API calls */
 interface GeminiCallOptions {
-  thinkingLevel?: 'high' | 'medium' | 'low';
+  thinkingLevel?: 'minimal' | 'low' | 'medium' | 'high';
   maxOutputTokens?: number;
 }
 

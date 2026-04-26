@@ -7,23 +7,13 @@ import './styles/animations.css';
 
 import { onRouteChange } from './core/router';
 import { progressStorage } from './core/storage';
-import { curriculum } from './data/curriculum';
-import type { Theme } from './core/types';
+import type { Route, Subject, Theme } from './core/types';
 import { showToast } from './components/toast';
 import { renderSidebar } from './components/preact/sidebar';
 import { renderMobileHeaderMascot } from './components/preact/mobile-header';
-import { renderHomePage } from './pages/home';
-import { renderCurriculumPage } from './pages/curriculum';
-import { renderSubjectPage } from './pages/subject';
-import { renderProgressPage } from './pages/progress';
-import { renderSettingsPage } from './pages/settings';
-import { renderQuizPage, renderExercisePage, renderProjectPage, renderExamPage } from './pages/assessment';
-import { renderExportPage } from './pages/export';
-import { renderTimelinePage } from './pages/timeline';
-import { renderCourseBuilderPage } from './pages/course-builder';
-import { updateMermaidTheme } from './components/markdown';
 import { escapeHtml } from './utils/html';
 import { registerPwa } from './pwa';
+import { loadAllAssessments, loadSubjectAssessments } from './subjects/registry';
 
 /** Delay before closing mobile menu after navigation click (ms) */
 const MENU_CLOSE_DELAY_MS = 100;
@@ -34,8 +24,15 @@ const RESIZE_DEBOUNCE_MS = 100;
 /** Breakpoint width below which mobile navigation is used (px) */
 const MOBILE_BREAKPOINT_PX = 768;
 
-// Import all subject content from central registry
-import { allQuizzes, allExercises, allProjects, allExams } from './subjects';
+let curriculumPromise: Promise<Subject[]> | null = null;
+let routeRenderToken = 0;
+
+function loadCurriculum(): Promise<Subject[]> {
+  if (!curriculumPromise) {
+    curriculumPromise = import('./data/curriculum').then((module) => module.curriculum);
+  }
+  return curriculumPromise;
+}
 
 /**
  * Apply the theme to the document
@@ -51,8 +48,6 @@ function applyTheme(theme: Theme): void {
     isDark = theme === 'dark';
     root.setAttribute('data-theme', theme);
   }
-
-  updateMermaidTheme(isDark);
 }
 
 /**
@@ -113,6 +108,136 @@ function safeRender(
       path
     );
   }
+}
+
+/**
+ * Safely render a page with async lazy-loaded modules.
+ */
+async function safeRenderAsync(
+  container: HTMLElement,
+  path: string,
+  renderFn: () => Promise<void>
+): Promise<void> {
+  try {
+    await renderFn();
+  } catch (error) {
+    renderErrorPage(
+      container,
+      error instanceof Error ? error : new Error(String(error)),
+      path
+    );
+  }
+}
+
+function renderLoadingPage(container: HTMLElement): void {
+  container.innerHTML = `
+    <div class="page-container loading-page">
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Loading...</p>
+      </div>
+    </div>
+  `;
+}
+
+async function renderRoute(
+  route: Route,
+  sidebarEl: HTMLElement,
+  mainEl: HTMLElement,
+  mobileMascotEl: HTMLElement | null,
+  renderToken: number
+): Promise<void> {
+  const { path, params } = route;
+
+  renderLoadingPage(mainEl);
+
+  await safeRenderAsync(mainEl, path, async () => {
+    const curriculum = await loadCurriculum();
+    if (renderToken !== routeRenderToken) return;
+
+    const userProgress = progressStorage.getProgress();
+
+    safeRender(sidebarEl, path, () => {
+      renderSidebar(sidebarEl, path, curriculum, userProgress.subjects);
+    });
+
+    if (mobileMascotEl) {
+      renderMobileHeaderMascot(mobileMascotEl, path);
+    }
+
+    if (path === '/' || path === '') {
+      const { renderHomePage } = await import('./pages/home');
+      if (renderToken !== routeRenderToken) return;
+      renderHomePage(mainEl, curriculum);
+    } else if (path === '/curriculum') {
+      const { renderCurriculumPage } = await import('./pages/curriculum');
+      if (renderToken !== routeRenderToken) return;
+      renderCurriculumPage(mainEl, curriculum);
+    } else if (path === '/progress') {
+      const { renderProgressPage } = await import('./pages/progress');
+      if (renderToken !== routeRenderToken) return;
+      renderProgressPage(mainEl, curriculum);
+    } else if (path === '/settings') {
+      const { renderSettingsPage } = await import('./pages/settings');
+      if (renderToken !== routeRenderToken) return;
+      renderSettingsPage(mainEl);
+    } else if (path === '/export') {
+      const [{ renderExportPage }, assessments] = await Promise.all([
+        import('./pages/export'),
+        loadAllAssessments(),
+      ]);
+      if (renderToken !== routeRenderToken) return;
+      renderExportPage(mainEl, curriculum, assessments.quizzes, assessments.exercises, assessments.projects);
+    } else if (path === '/timeline') {
+      const { renderTimelinePage } = await import('./pages/timeline');
+      if (renderToken !== routeRenderToken) return;
+      renderTimelinePage(mainEl, curriculum);
+    } else if (path === '/course-builder') {
+      const { renderCourseBuilderPage } = await import('./pages/course-builder');
+      if (renderToken !== routeRenderToken) return;
+      renderCourseBuilderPage(mainEl, curriculum);
+    } else if (path.startsWith('/subject/')) {
+      const subjectId = params.id;
+      const assessments = await loadSubjectAssessments(subjectId);
+      if (renderToken !== routeRenderToken) return;
+
+      if (mobileMascotEl) {
+        renderMobileHeaderMascot(mobileMascotEl, path, assessments.exercises);
+      }
+
+      if (params.quizId) {
+        const { renderQuizPage } = await import('./pages/quiz-page.tsx');
+        if (renderToken !== routeRenderToken) return;
+        renderQuizPage(mainEl, curriculum, assessments.quizzes, subjectId, params.quizId, assessments.exercises, assessments.exams, assessments.projects);
+      } else if (params.examId) {
+        const { renderExamPage } = await import('./pages/exam-page.tsx');
+        if (renderToken !== routeRenderToken) return;
+        renderExamPage(mainEl, curriculum, assessments.exams, subjectId, params.examId, assessments.quizzes, assessments.exercises, assessments.projects);
+      } else if (params.exId) {
+        const { renderExercisePage } = await import('./pages/exercise-page.tsx');
+        if (renderToken !== routeRenderToken) return;
+        renderExercisePage(mainEl, curriculum, assessments.exercises, subjectId, params.exId, assessments.quizzes, assessments.exams, assessments.projects);
+      } else if (params.projId) {
+        const { renderProjectPage } = await import('./pages/project-page');
+        if (renderToken !== routeRenderToken) return;
+        renderProjectPage(mainEl, curriculum, assessments.projects, subjectId, params.projId);
+      } else {
+        const { renderSubjectPage } = await import('./pages/subject');
+        if (renderToken !== routeRenderToken) return;
+        renderSubjectPage(
+          mainEl,
+          curriculum,
+          subjectId,
+          params.topicId,
+          assessments.projects,
+          assessments.exams,
+          params.subtopicSlug,
+          assessments.quizzes,
+          assessments.exercises
+        );
+      }
+    }
+  });
 }
 
 /**
@@ -244,58 +369,8 @@ async function initApp(): Promise<void> {
 
   // Set up route change handler
   onRouteChange((route) => {
-    const { path, params } = route;
-
-    // Get fresh progress for each route change
-    const userProgress = progressStorage.getProgress();
-
-    // Render sidebar (wrapped in error boundary)
-    safeRender(sidebarEl, path, () => {
-      renderSidebar(sidebarEl, path, curriculum, userProgress.subjects, allQuizzes, allExercises, allExams, allProjects);
-    });
-
-    if (mobileMascotEl) {
-      renderMobileHeaderMascot(mobileMascotEl, path, allExercises);
-    }
-
-    // Route to appropriate page (wrapped in error boundary)
-    safeRender(mainEl, path, () => {
-      if (path === '/' || path === '') {
-        renderHomePage(mainEl, curriculum);
-      } else if (path === '/curriculum') {
-        renderCurriculumPage(mainEl, curriculum);
-      } else if (path === '/progress') {
-        renderProgressPage(mainEl, curriculum);
-      } else if (path === '/settings') {
-        renderSettingsPage(mainEl);
-      } else if (path === '/export') {
-        renderExportPage(mainEl, curriculum, allQuizzes, allExercises, allProjects);
-      } else if (path === '/timeline') {
-        renderTimelinePage(mainEl, curriculum);
-      } else if (path === '/course-builder') {
-        renderCourseBuilderPage(mainEl);
-      } else if (path.startsWith('/subject/')) {
-        const subjectId = params.id;
-
-        if (params.subtopicSlug) {
-          // Subtopic view
-          renderSubjectPage(mainEl, curriculum, subjectId, params.topicId, allProjects, allExams, params.subtopicSlug, allQuizzes, allExercises);
-        } else if (params.topicId) {
-          // Topic view (may redirect to subtopic if topic has subtopics)
-          renderSubjectPage(mainEl, curriculum, subjectId, params.topicId, allProjects, allExams, undefined, allQuizzes, allExercises);
-        } else if (params.quizId) {
-          renderQuizPage(mainEl, curriculum, allQuizzes, subjectId, params.quizId, allExercises, allExams, allProjects);
-        } else if (params.examId) {
-          renderExamPage(mainEl, curriculum, allExams, subjectId, params.examId, allQuizzes, allExercises, allProjects);
-        } else if (params.exId) {
-          renderExercisePage(mainEl, curriculum, allExercises, subjectId, params.exId, allQuizzes, allExams, allProjects);
-        } else if (params.projId) {
-          renderProjectPage(mainEl, curriculum, allProjects, subjectId, params.projId);
-        } else {
-          renderSubjectPage(mainEl, curriculum, subjectId, undefined, allProjects, allExams, undefined, allQuizzes, allExercises);
-        }
-      }
-    });
+    routeRenderToken++;
+    void renderRoute(route, sidebarEl, mainEl, mobileMascotEl, routeRenderToken);
   });
 
   // Router initializes itself via constructor - no need to call init()

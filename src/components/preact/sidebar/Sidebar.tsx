@@ -1,6 +1,5 @@
 import { h } from 'preact';
-import type { Subject, SubjectProgress, Quiz, Exercise, Exam, Project } from '@/core/types';
-import { Icons } from '@/components/icons';
+import type { Subject, SubjectProgress } from '@/core/types';
 import { Nav } from './Nav';
 import { SubjectList } from './SubjectList';
 import { InteractiveMascot } from '../InteractiveMascot';
@@ -10,26 +9,14 @@ interface SidebarProps {
   currentPath: string;
   subjects: Subject[];
   userProgress: Record<string, SubjectProgress>;
-  quizzes: Quiz[];
-  exercises: Exercise[];
-  exams: Exam[];
-  projects: Project[];
 }
 
 export function Sidebar({
   currentPath,
   subjects,
   userProgress,
-  quizzes,
-  exercises,
-  exams,
-  projects,
 }: SidebarProps) {
-  // Keep unused props for now (exams/projects) to avoid churn in call sites.
-  void exams;
-  void projects;
-
-  const currentMascot = getMascotForPath(currentPath, exercises);
+  const currentMascot = getMascotForPath(currentPath);
 
   return (
     <div class="sidebar-content">
@@ -53,8 +40,6 @@ export function Sidebar({
           subjects={subjects}
           userProgress={userProgress}
           currentPath={currentPath}
-          quizzes={quizzes}
-          exercises={exercises}
         />
       </div>
     </div>
