@@ -186,18 +186,8 @@ function isQuizPassed(progress: SubjectProgress | undefined, quizId: string): bo
   );
 }
 
-function isExamPassed(progress: SubjectProgress | undefined, examId: string): boolean {
-  return Boolean(
-    progress?.examAttempts?.[examId]?.some(attempt => attempt.score >= QUIZ_PASSING_SCORE)
-  );
-}
-
 function isExercisePassed(progress: SubjectProgress | undefined, exerciseId: string): boolean {
   return Boolean(progress?.exerciseCompletions?.[exerciseId]?.passed);
-}
-
-function hasProjectSubmission(progress: SubjectProgress | undefined, projectId: string): boolean {
-  return Boolean(progress?.projectSubmissions?.[projectId]?.length);
 }
 
 function getNextReadingAction(subject: Subject, progress: SubjectProgress | undefined): DashboardAction | null {
@@ -254,32 +244,6 @@ function getNextPracticeAction(subject: Subject, progress: SubjectProgress | und
         cta: 'Open Exercise',
       };
     }
-  }
-
-  const nextExamId = subject.examIds?.find(examId => !isExamPassed(progress, examId));
-  if (nextExamId) {
-    return {
-      icon: Icons.Beaker,
-      eyebrow: 'Assessment Next',
-      title: nextExamId.includes('final') ? `${subject.code} Final Exam` : `${subject.code} Exam`,
-      description: subject.title,
-      meta: 'Ready when quizzes and exercises are complete',
-      href: `#/subject/${subject.id}/exam/${nextExamId}`,
-      cta: 'Open Exam',
-    };
-  }
-
-  const nextProjectId = subject.projectIds?.find(projectId => !hasProjectSubmission(progress, projectId));
-  if (nextProjectId) {
-    return {
-      icon: Icons.StatProject,
-      eyebrow: 'Project Next',
-      title: `${subject.code} Project`,
-      description: subject.title,
-      meta: 'No submission recorded',
-      href: `#/subject/${subject.id}/project/${nextProjectId}`,
-      cta: 'Open Project',
-    };
   }
 
   return null;
