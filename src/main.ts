@@ -23,6 +23,7 @@ import { renderTimelinePage } from './pages/timeline';
 import { renderCourseBuilderPage } from './pages/course-builder';
 import { updateMermaidTheme } from './components/markdown';
 import { escapeHtml } from './utils/html';
+import { registerPwa } from './pwa';
 
 /** Delay before closing mobile menu after navigation click (ms) */
 const MENU_CLOSE_DELAY_MS = 100;
@@ -214,6 +215,8 @@ function initMobileNav(): void {
 
 // Initialize the application
 async function initApp(): Promise<void> {
+  registerPwa();
+
   // Initialize theme first to prevent flash of wrong theme
   initTheme();
 

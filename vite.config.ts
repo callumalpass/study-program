@@ -2,8 +2,10 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import { VitePWA } from 'vite-plugin-pwa';
 
+const base = process.env.GITHUB_ACTIONS ? '/study-program/' : '/';
+
 export default defineConfig({
-  base: process.env.GITHUB_ACTIONS ? '/study-program/' : '/',
+  base,
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
@@ -16,9 +18,13 @@ export default defineConfig({
         name: 'stu.p',
         short_name: 'stu.p',
         description: 'A comprehensive computer science degree learning platform',
+        id: base,
+        start_url: base,
+        scope: base,
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
+        categories: ['education', 'productivity'],
         icons: [
           {
             src: 'pwa-192x192.png',
