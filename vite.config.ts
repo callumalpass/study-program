@@ -9,6 +9,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       devOptions: { enabled: true },
       includeAssets: ['favicon.svg'],
+      workbox: {
+        maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
+      },
       manifest: {
         name: 'stu.p',
         short_name: 'stu.p',
