@@ -223,6 +223,14 @@ describe('markdown component', () => {
         expect(result).toContain('&quot;quoted&quot;');
         expect(result).not.toContain('&amp;quot;');
       });
+
+      it('renders quote entities as quote characters in lesson DOM text', () => {
+        const container = document.createElement('div');
+        container.innerHTML = renderMarkdown('Use `print(i, end=&quot; &quot;)` in this explanation.');
+
+        expect(container.textContent).toContain('print(i, end=" ")');
+        expect(container.textContent).not.toContain('&quot;');
+      });
     });
 
     describe('blockquotes', () => {

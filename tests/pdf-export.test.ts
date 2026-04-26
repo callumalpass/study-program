@@ -229,6 +229,12 @@ describe('stripMarkdown', () => {
       expect(stripMarkdown('Use the `console.log` function')).toBe('Use the console.log function');
     });
 
+    it('decodes quote entities in stripped course material text', () => {
+      expect(stripMarkdown('Use `print(i, end=&quot; &quot;)` in explanations')).toBe(
+        'Use print(i, end=" ") in explanations'
+      );
+    });
+
     it('strips combined formatting', () => {
       const input = 'This has **bold**, *italic*, and `code`';
       expect(stripMarkdown(input)).toBe('This has bold, italic, and code');

@@ -3,6 +3,7 @@ import { useState, useCallback, useRef } from 'preact/hooks';
 import type { Subject, Exam, QuizQuestion, QuizAnswer, CodingAnswer } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { Icons } from '@/components/icons';
+import { renderMarkdown } from '@/components/markdown';
 import { Question } from './Question';
 import { generatePracticeQuestion, evaluateWrittenExercise } from '@/utils/gemini-eval';
 import { runTests } from '@/components/code-runner';
@@ -281,14 +282,16 @@ export function PracticeMode({ subject, exam, onExit }: PracticeModeProps) {
             {' '}{state.feedback.message}
           </div>
           {state.feedback.details && (
-            <div class="feedback-details">
-              <p>{state.feedback.details}</p>
-            </div>
+            <div
+              class="feedback-details"
+              dangerouslySetInnerHTML={{ __html: renderMarkdown(state.feedback.details) }}
+            />
           )}
           {state.currentQuestion?.explanation && (
-            <div class="feedback-explanation">
-              <p>{state.currentQuestion.explanation}</p>
-            </div>
+            <div
+              class="feedback-explanation"
+              dangerouslySetInnerHTML={{ __html: renderMarkdown(state.currentQuestion.explanation) }}
+            />
           )}
         </div>
       )}

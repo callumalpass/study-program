@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf';
 import type { Subject, Quiz, Exercise, Project, CodingExercise, WrittenExercise } from '../core/types';
+import { decodeQuoteEntities } from '../utils/html';
 
 // RGB color tuples for PDF styling
 type RgbColor = [number, number, number];
@@ -40,7 +41,7 @@ export function getDifficultyLabel(difficulty?: number): string {
 
 // Strip markdown formatting for plain text
 export function stripMarkdown(text: string): string {
-  return text
+  const stripped = text
     .replace(/#{1,6}\s+/g, '') // headers
     .replace(/\*\*(.+?)\*\*/g, '$1') // bold
     .replace(/\*(.+?)\*/g, '$1') // italic
@@ -49,6 +50,8 @@ export function stripMarkdown(text: string): string {
     .replace(/^\s*[-*+]\s+/gm, '• ') // list items
     .replace(/^\s*\d+\.\s+/gm, '') // numbered lists
     .trim();
+
+  return decodeQuoteEntities(stripped);
 }
 
 // Wrap text to fit within page width
