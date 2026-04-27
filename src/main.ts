@@ -270,17 +270,34 @@ function initMobileNav(): void {
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('mobile-overlay');
   const closeBtn = document.getElementById('sidebar-close-btn');
+  const bottomNav = document.getElementById('mobile-bottom-nav');
 
   if (!hamburgerBtn || !sidebar || !overlay) {
     return;
   }
 
+  const focusableSelector = [
+    'a[href]',
+    'button:not([disabled])',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])',
+  ].join(',');
+
+  let lastFocusedElement: HTMLElement | null = null;
+
   const openMenu = () => {
+    lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     sidebar.classList.add('open');
     overlay.classList.add('active');
     hamburgerBtn.classList.add('active');
     hamburgerBtn.setAttribute('aria-expanded', 'true');
+    sidebar.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+
+    const firstFocusable = sidebar.querySelector<HTMLElement>(focusableSelector);
+    firstFocusable?.focus();
   };
 
   const closeMenu = () => {
@@ -288,8 +305,31 @@ function initMobileNav(): void {
     overlay.classList.remove('active');
     hamburgerBtn.classList.remove('active');
     hamburgerBtn.setAttribute('aria-expanded', 'false');
+    sidebar.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    lastFocusedElement?.focus();
+    lastFocusedElement = null;
   };
+
+  const updateBottomNav = () => {
+    if (!bottomNav) return;
+    const currentPath = window.location.hash.replace(/^#/, '') || '/';
+    bottomNav.querySelectorAll<HTMLElement>('.mobile-bottom-nav-link').forEach((link) => {
+      const route = link.dataset.route || '/';
+      const isActive = route === '/'
+        ? currentPath === '/' || currentPath === ''
+        : currentPath === route || currentPath.startsWith(`${route}/`);
+      link.classList.toggle('active', isActive);
+      if (isActive) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  };
+
+  sidebar.setAttribute('aria-hidden', 'true');
+  updateBottomNav();
 
   hamburgerBtn.addEventListener('click', () => {
     const isOpen = sidebar.classList.contains('open');
@@ -310,6 +350,23 @@ function initMobileNav(): void {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && sidebar.classList.contains('open')) {
       closeMenu();
+      return;
+    }
+
+    if (e.key === 'Tab' && sidebar.classList.contains('open')) {
+      const focusable = Array.from(sidebar.querySelectorAll<HTMLElement>(focusableSelector))
+        .filter((el) => !el.hasAttribute('disabled') && el.offsetParent !== null);
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   });
 
@@ -323,6 +380,13 @@ function initMobileNav(): void {
     ) {
       // Small delay to allow navigation to start
       setTimeout(closeMenu, MENU_CLOSE_DELAY_MS);
+    }
+  });
+
+  window.addEventListener('hashchange', () => {
+    updateBottomNav();
+    if (sidebar.classList.contains('open')) {
+      closeMenu();
     }
   });
 

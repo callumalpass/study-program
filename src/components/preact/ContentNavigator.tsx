@@ -444,12 +444,13 @@ export function ContentNavigator({
           class="mobile-menu-toggle"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-expanded={isMobileMenuOpen}
+          aria-controls="subject-mobile-nav-panel"
         >
-          <span class="toggle-label">{currentTopic ? decodeQuoteEntities(currentTopic.title) : 'Menu'}</span>
+          <span class="toggle-label">{currentTopic ? decodeQuoteEntities(currentTopic.title) : 'Subject menu'}</span>
           <span class="toggle-icon" dangerouslySetInnerHTML={{ __html: isMobileMenuOpen ? Icons.ChevronUp : Icons.ChevronDown }} />
         </button>
 
-        <div class={`sidebar-content-wrapper ${isMobileMenuOpen ? 'open' : ''}`}>
+        <div id="subject-mobile-nav-panel" class={`sidebar-content-wrapper ${isMobileMenuOpen ? 'open' : ''}`}>
           {/* Mobile panel tabs (shown via CSS on small screens) */}
           <div class="content-sidebar-tabs" role="tablist" aria-label="Subject panels">
             <button

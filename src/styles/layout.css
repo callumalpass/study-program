@@ -930,6 +930,11 @@
   opacity: 1;
 }
 
+/* Bottom navigation for primary mobile routes */
+.mobile-bottom-nav {
+  display: none;
+}
+
 /* Close button for mobile sidebar */
 .sidebar-close-btn {
   display: none;
@@ -1021,9 +1026,61 @@
   .main-content {
     margin-left: 0;
     margin-top: var(--mobile-header-height);
-    padding: var(--space-lg) var(--space-md);
+    padding: var(--space-lg) var(--space-md) calc(var(--space-3xl, 4rem) + 72px);
     min-height: calc(100vh - var(--mobile-header-height));
     min-height: calc(100dvh - var(--mobile-header-height));
+  }
+
+  .mobile-bottom-nav {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--z-fixed);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    min-height: 64px;
+    padding: 6px max(var(--space-sm), env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(var(--space-sm), env(safe-area-inset-left));
+    background: color-mix(in srgb, var(--color-bg-surface) 96%, transparent);
+    border-top: 1px solid var(--color-border-default);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(12px);
+  }
+
+  .mobile-bottom-nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    min-height: 52px;
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    line-height: 1.1;
+    text-decoration: none;
+    transition: background var(--transition-fast), color var(--transition-fast);
+  }
+
+  .mobile-bottom-nav-link:hover,
+  .mobile-bottom-nav-link:focus-visible,
+  .mobile-bottom-nav-link.active {
+    background: var(--color-bg-elevated);
+    color: var(--color-accent-primary);
+    text-decoration: none;
+  }
+
+  .mobile-bottom-nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-bottom-nav-icon svg {
+    width: 20px;
+    height: 20px;
   }
 
   .grid-2,
@@ -1042,6 +1099,11 @@
     min-height: 44px;
   }
 
+  .subject-hover-menu,
+  .subject-submenu {
+    display: none;
+  }
+
   /* Flex utilities stacking */
   .flex {
     flex-wrap: wrap;
@@ -1051,7 +1113,7 @@
 /* Small phones */
 @media (max-width: 480px) {
   .main-content {
-    padding: var(--space-md);
+    padding: var(--space-md) var(--space-md) calc(var(--space-3xl, 4rem) + 72px);
   }
 
   /* Even smaller sidebar on very small screens */

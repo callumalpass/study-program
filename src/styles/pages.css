@@ -3692,6 +3692,22 @@ input:checked + .toggle-slider:before {
     font-size: var(--font-size-2xl);
   }
 
+  .page-header,
+  .home-header,
+  .progress-header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .section,
+  .recent-subjects,
+  .quick-stats,
+  .quick-actions,
+  .progress-summary,
+  .current-subject,
+  .dashboard-next-action {
+    margin-bottom: var(--space-xl);
+  }
+
   h2 {
     font-size: var(--font-size-xl);
   }
@@ -3711,8 +3727,23 @@ input:checked + .toggle-slider:before {
   }
 
   /* Progress stats grid */
+  .progress-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
   .progress-stats-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .subjects-grid,
+  .stats-grid,
+  .actions-grid,
+  .achievements-grid,
+  .data-actions,
+  .year-cards {
+    grid-template-columns: 1fr;
     gap: var(--space-md);
   }
 
@@ -3736,6 +3767,10 @@ input:checked + .toggle-slider:before {
   }
 
   /* Subject card mobile */
+  .progress-card,
+  .daily-review,
+  .stat-card,
+  .action-card,
   .subject-card {
     padding: var(--space-md);
   }
@@ -3758,6 +3793,11 @@ input:checked + .toggle-slider:before {
   .projects-list .project-item .btn,
   .exams-list .exam-item .btn {
     width: 100%;
+  }
+
+  .btn {
+    min-height: 44px;
+    white-space: normal;
   }
 
   /* Topic number smaller */
@@ -3860,6 +3900,25 @@ input:checked + .toggle-slider:before {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-sm);
+  }
+
+  .theme-selector,
+  .font-size-control {
+    width: 100%;
+  }
+
+  .theme-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .theme-option {
+    justify-content: center;
+  }
+
+  .font-size-slider {
+    flex: 1;
+    width: auto;
   }
 }
 
@@ -3980,6 +4039,31 @@ pre {
 img {
   max-width: 100%;
   height: auto;
+}
+
+.markdown-content,
+.content-body,
+.question-content,
+.exercise-content,
+.exam-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.markdown-content table,
+.content-body table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dependency-graph-container,
+.subject-dependency-graph,
+.curriculum-graph-container {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ==========================================================================
