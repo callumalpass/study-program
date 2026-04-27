@@ -2849,6 +2849,7 @@
     top: calc(var(--mobile-header-height, 56px) + var(--space-sm));
     z-index: 20;
     max-height: none;
+    overflow: visible;
     padding-right: 0;
     padding-bottom: 0;
     margin-bottom: var(--space-md);
@@ -2871,6 +2872,7 @@
     top: calc(100% + var(--space-xs));
     right: 0;
     left: 0;
+    z-index: 30;
     max-height: min(70dvh, 520px);
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -2917,6 +2919,7 @@
   .content-navigator .subtopic-item,
   .content-navigator .practice-item {
     min-height: 44px;
+    min-width: 0;
     white-space: normal;
   }
 
@@ -2935,6 +2938,25 @@
 
   .content-navigator .content-area {
     padding-bottom: var(--space-lg);
+  }
+
+  .content-navigator .overview-actions .btn,
+  .content-navigator .content-pagination .pagination-link,
+  .content-navigator .mobile-menu-toggle,
+  .content-navigator .content-sidebar-tab {
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .content-navigator .overview-actions .btn > span:not([class*="icon"]),
+  .content-navigator .content-pagination .pagination-title,
+  .content-navigator .content-pagination .pagination-label,
+  .content-navigator .mobile-menu-toggle .toggle-label,
+  .content-navigator .content-sidebar-tab .tab-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 }
 

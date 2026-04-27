@@ -3796,8 +3796,27 @@ input:checked + .toggle-slider:before {
   }
 
   .btn {
+    max-width: 100%;
     min-height: 44px;
+    min-width: 0;
     white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: var(--line-height-normal);
+    text-align: center;
+  }
+
+  .btn > span:not([class*="icon"]),
+  .btn .btn-label,
+  .btn .action-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .btn svg,
+  .btn-icon,
+  .action-icon,
+  .meta-icon {
+    flex-shrink: 0;
   }
 
   /* Topic number smaller */
@@ -3826,6 +3845,8 @@ input:checked + .toggle-slider:before {
   .exercise-navigation .btn {
     width: 100%;
     max-width: none;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   /* Practice quick nav mobile */

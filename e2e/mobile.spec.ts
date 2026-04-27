@@ -73,6 +73,70 @@ test.describe('mobile layout', () => {
         await expect(page.locator('#sidebar')).not.toHaveClass(/open/);
         await expect(menuButton).toHaveAttribute('aria-expanded', 'false');
       });
+
+      test('subject menu expands over content', async ({ page }) => {
+        await page.goto('/#/subject/cs304/topic/cs304-topic-1/subtopic/introduction-compilers');
+        await waitForApp(page);
+
+        const subjectMenu = page.locator('.content-navigator .mobile-menu-toggle');
+        await subjectMenu.click();
+
+        const panel = page.locator('#subject-mobile-nav-panel');
+        await expect(subjectMenu).toHaveAttribute('aria-expanded', 'true');
+        await expect(panel).toBeVisible();
+        await expect(panel.getByRole('tab', { name: /topics/i })).toBeVisible();
+        await expect(panel.getByRole('tab', { name: /practice/i })).toBeVisible();
+
+        const panelBox = await panel.boundingBox();
+        const viewport = page.viewportSize();
+        expect(panelBox).not.toBeNull();
+        expect(viewport).not.toBeNull();
+        expect(panelBox!.width).toBeGreaterThan(250);
+        expect(panelBox!.x).toBeGreaterThanOrEqual(0);
+        expect(panelBox!.x + panelBox!.width).toBeLessThanOrEqual(viewport!.width + 1);
+      });
+
+      test('visible button text stays inside button bounds', async ({ page }) => {
+        const routesToScan = [
+          '/',
+          '/#/subject/cs304',
+          '/#/subject/cs304/topic/cs304-topic-1/subtopic/introduction-compilers',
+          '/#/subject/cs304/exercise/cs304-t1-ex01',
+          '/#/settings',
+        ];
+
+        for (const route of routesToScan) {
+          await page.goto(route);
+          await waitForApp(page);
+          await page.waitForTimeout(300);
+
+          const overflowing = await page.evaluate(() => {
+            const candidates = Array.from(document.querySelectorAll<HTMLElement>('button, .btn, a.btn, .pagination-link, .mobile-bottom-nav-link'));
+            return candidates
+              .filter((el) => {
+                const style = window.getComputedStyle(el);
+                const rect = el.getBoundingClientRect();
+                return rect.width > 0
+                  && rect.height > 0
+                  && style.display !== 'none'
+                  && style.visibility !== 'hidden'
+                  && el.offsetParent !== null;
+              })
+              .map((el) => {
+                const rect = el.getBoundingClientRect();
+                return {
+                  text: (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80),
+                  className: el.className,
+                  deltaX: el.scrollWidth - Math.ceil(rect.width),
+                  deltaY: el.scrollHeight - Math.ceil(rect.height),
+                };
+              })
+              .filter((item) => item.deltaX > 1 || item.deltaY > 2);
+          });
+
+          expect(overflowing, `${route} has overflowing controls`).toEqual([]);
+        }
+      });
     });
   }
 });
