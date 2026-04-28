@@ -84,8 +84,8 @@ test.describe('mobile layout', () => {
         const panel = page.locator('#subject-mobile-nav-panel');
         await expect(subjectMenu).toHaveAttribute('aria-expanded', 'true');
         await expect(panel).toBeVisible();
-        await expect(panel.getByRole('tab', { name: /topics/i })).toBeVisible();
-        await expect(panel.getByRole('tab', { name: /practice/i })).toBeVisible();
+        await expect(panel.getByRole('button', { name: /topics/i })).toBeVisible();
+        await expect(panel.getByRole('button', { name: /practice/i })).toBeVisible();
 
         const panelBox = await panel.boundingBox();
         const viewport = page.viewportSize();
@@ -94,6 +94,34 @@ test.describe('mobile layout', () => {
         expect(panelBox!.width).toBeGreaterThan(250);
         expect(panelBox!.x).toBeGreaterThanOrEqual(0);
         expect(panelBox!.x + panelBox!.width).toBeLessThanOrEqual(viewport!.width + 1);
+      });
+
+      test('mobile chrome hides on scroll down and returns on scroll up', async ({ page }) => {
+        await page.goto('/#/subject/cs304/topic/cs304-topic-1/subtopic/introduction-compilers');
+        await waitForApp(page);
+
+        const header = page.locator('#mobile-header');
+        const bottomNav = page.locator('#mobile-bottom-nav');
+        const subjectMenu = page.locator('.content-navigator .content-sidebar');
+
+        await expect(header).toBeVisible();
+        await expect(bottomNav).toBeVisible();
+        await expect(subjectMenu).toBeVisible();
+
+        await page.evaluate(() => window.scrollTo(0, 600));
+        await expect(page.locator('body')).toHaveClass(/mobile-chrome-hidden/);
+
+        await expect.poll(async () => page.evaluate(() => {
+          const viewportHeight = window.innerHeight;
+          const selectors = ['#mobile-header', '#mobile-bottom-nav', '.content-navigator .content-sidebar'];
+          return selectors.every((selector) => {
+            const rect = document.querySelector<HTMLElement>(selector)?.getBoundingClientRect();
+            return rect && (rect.bottom < 1 || rect.top > viewportHeight - 1);
+          });
+        })).toBe(true);
+
+        await page.evaluate(() => window.scrollTo(0, 120));
+        await expect(page.locator('body')).not.toHaveClass(/mobile-chrome-hidden/);
       });
 
       test('visible button text stays inside button bounds', async ({ page }) => {

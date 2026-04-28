@@ -24,6 +24,12 @@ const RESIZE_DEBOUNCE_MS = 100;
 /** Breakpoint width below which mobile navigation is used (px) */
 const MOBILE_BREAKPOINT_PX = 768;
 
+/** Minimum vertical scroll delta before hiding or showing mobile chrome (px) */
+const MOBILE_CHROME_SCROLL_DELTA_PX = 10;
+
+/** Keep mobile chrome visible near the top of the page (px) */
+const MOBILE_CHROME_TOP_THRESHOLD_PX = 24;
+
 let curriculumPromise: Promise<Subject[]> | null = null;
 let routeRenderToken = 0;
 
@@ -402,12 +408,63 @@ function initMobileNav(): void {
   });
 }
 
+/**
+ * Hide mobile navigation chrome while scrolling down so reading content has more room.
+ */
+function initMobileScrollChrome(): void {
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+
+  const showChrome = () => {
+    document.body.classList.remove('mobile-chrome-hidden');
+  };
+
+  const updateChrome = () => {
+    ticking = false;
+
+    if (window.innerWidth > MOBILE_BREAKPOINT_PX) {
+      showChrome();
+      lastScrollY = window.scrollY;
+      return;
+    }
+
+    const currentScrollY = Math.max(0, window.scrollY);
+    const delta = currentScrollY - lastScrollY;
+    const sidebarOpen = document.getElementById('sidebar')?.classList.contains('open') ?? false;
+    const subjectMenuOpen = document.getElementById('subject-mobile-nav-panel')?.classList.contains('open') ?? false;
+
+    if (sidebarOpen || subjectMenuOpen || currentScrollY <= MOBILE_CHROME_TOP_THRESHOLD_PX) {
+      showChrome();
+    } else if (delta > MOBILE_CHROME_SCROLL_DELTA_PX) {
+      document.body.classList.add('mobile-chrome-hidden');
+    } else if (delta < -MOBILE_CHROME_SCROLL_DELTA_PX) {
+      showChrome();
+    }
+
+    lastScrollY = currentScrollY;
+  };
+
+  const requestChromeUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(updateChrome);
+  };
+
+  window.addEventListener('scroll', requestChromeUpdate, { passive: true });
+  window.addEventListener('resize', requestChromeUpdate);
+  window.addEventListener('hashchange', () => {
+    showChrome();
+    lastScrollY = window.scrollY;
+  });
+}
+
 // Initialize the application
 async function initApp(): Promise<void> {
   registerPwa();
 
   // Initialize theme first to prevent flash of wrong theme
   initTheme();
+  initMobileScrollChrome();
 
   // Sync progress from GitHub Gist on startup (non-blocking for UI)
   progressStorage.syncFromGist().then((result) => {

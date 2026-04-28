@@ -2854,6 +2854,18 @@
     padding-bottom: 0;
     margin-bottom: var(--space-md);
     border-bottom: none;
+    transition: top var(--transition-base), transform var(--transition-base), opacity var(--transition-base);
+  }
+
+  body.mobile-chrome-hidden .content-navigator .content-sidebar {
+    top: var(--space-sm);
+    transform: translateY(calc(-100% - var(--space-md)));
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  body.mobile-chrome-hidden .content-navigator .sidebar-content-wrapper.open {
+    display: none;
   }
 
   .mobile-menu-toggle {
