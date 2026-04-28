@@ -103,17 +103,24 @@ test.describe('mobile layout', () => {
         const header = page.locator('#mobile-header');
         const bottomNav = page.locator('#mobile-bottom-nav');
         const subjectMenu = page.locator('.content-navigator .content-sidebar');
+        const pagination = page.locator('.content-navigator .content-pagination');
 
         await expect(header).toBeVisible();
         await expect(bottomNav).toBeVisible();
         await expect(subjectMenu).toBeVisible();
+        await expect(pagination).toBeVisible();
 
         await page.evaluate(() => window.scrollTo(0, 600));
         await expect(page.locator('body')).toHaveClass(/mobile-chrome-hidden/);
 
         await expect.poll(async () => page.evaluate(() => {
           const viewportHeight = window.innerHeight;
-          const selectors = ['#mobile-header', '#mobile-bottom-nav', '.content-navigator .content-sidebar'];
+          const selectors = [
+            '#mobile-header',
+            '#mobile-bottom-nav',
+            '.content-navigator .content-sidebar',
+            '.content-navigator .content-pagination',
+          ];
           return selectors.every((selector) => {
             const rect = document.querySelector<HTMLElement>(selector)?.getBoundingClientRect();
             return rect && (rect.bottom < 1 || rect.top > viewportHeight - 1);
