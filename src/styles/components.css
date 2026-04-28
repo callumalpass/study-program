@@ -1765,17 +1765,54 @@
   }
 
   /* Test results compact layout */
+  .test-results-content {
+    padding: var(--space-sm);
+  }
+
   .test-result {
     padding: var(--space-sm);
   }
 
+  /* Header: badge + name on one row, status below indented under name */
   .test-result-header {
     flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-xs);
   }
 
   .test-name {
+    flex: 1 1 0;
+    min-width: 0;
+    word-break: break-word;
+    font-size: var(--font-size-sm);
+  }
+
+  .test-status {
     flex: 1 1 100%;
-    margin-bottom: var(--space-xs);
+    margin-left: 32px; /* indent under the 24px badge + gap */
+    text-align: left;
+  }
+
+  /* Test details: stack the label above a full-width code block so long
+     inputs/outputs wrap cleanly instead of overflowing inline. */
+  .test-details > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: var(--space-sm);
+  }
+
+  .test-details > div:last-child {
+    margin-bottom: 0;
+  }
+
+  .test-details code {
+    display: block;
+    padding: var(--space-sm);
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
   }
 
   /* Form elements touch-friendly */
@@ -1826,9 +1863,20 @@
     height: 80px;
   }
 
+  /* Quiz container is redundant chrome on mobile - each question is
+     already its own card. Strip padding/border/bg so questions sit
+     closer to the viewport edges. */
+  .quiz-container {
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+  }
+
   /* Quiz question compact */
   .quiz-question {
     padding: var(--space-md);
+    margin-bottom: var(--space-md);
   }
 
   .quiz-question-header {
