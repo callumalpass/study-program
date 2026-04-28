@@ -120,6 +120,41 @@ interface CodingExercisePageProps {
   onNavigateNext: () => void;
 }
 
+type MobileExerciseTab = 'description' | 'workspace';
+
+function MobileExerciseTabs({
+  activeTab,
+  onChange,
+  workspaceLabel,
+}: {
+  activeTab: MobileExerciseTab;
+  onChange: (tab: MobileExerciseTab) => void;
+  workspaceLabel: string;
+}) {
+  return (
+    <div class="mobile-exercise-tabs" role="tablist">
+      <button
+        type="button"
+        role="tab"
+        class={`mobile-exercise-tab${activeTab === 'description' ? ' active' : ''}`}
+        aria-selected={activeTab === 'description'}
+        onClick={() => onChange('description')}
+      >
+        Description
+      </button>
+      <button
+        type="button"
+        role="tab"
+        class={`mobile-exercise-tab${activeTab === 'workspace' ? ' active' : ''}`}
+        aria-selected={activeTab === 'workspace'}
+        onClick={() => onChange('workspace')}
+      >
+        {workspaceLabel}
+      </button>
+    </div>
+  );
+}
+
 function CodingExercisePage({
   subject,
   exercise,
@@ -135,6 +170,7 @@ function CodingExercisePage({
 }: CodingExercisePageProps) {
   const subjectId = subject.id;
   const exerciseId = exercise.id;
+  const [mobileTab, setMobileTab] = useState<MobileExerciseTab>('description');
   const isPassed = completion?.passed ?? false;
   const isAiEvaluationMode = exercise.testCases.length === 0 && !!exercise.solution;
   const aiHistory = completion?.aiEvaluations ?? [];
@@ -193,7 +229,7 @@ function CodingExercisePage({
 
   // Check if this exercise uses AI evaluation (no test cases)
   return (
-    <div class="exercise-page">
+    <div class="exercise-page" data-mobile-tab={mobileTab}>
       <nav class="breadcrumb">
         <a href="#/curriculum">Curriculum</a>
         <span class="separator">/</span>
@@ -244,6 +280,12 @@ function CodingExercisePage({
           )}
         </div>
       </header>
+
+      <MobileExerciseTabs
+        activeTab={mobileTab}
+        onChange={setMobileTab}
+        workspaceLabel="Code"
+      />
 
       <section class="exercise-description">
         <h2>Description</h2>
@@ -312,6 +354,7 @@ function WrittenExercisePage({
 }: WrittenExercisePageProps) {
   const subjectId = subject.id;
   const exerciseId = exercise.id;
+  const [mobileTab, setMobileTab] = useState<MobileExerciseTab>('description');
   const hasSavedResponse = completion?.type === 'written' && (completion.code?.trim().length ?? 0) > 0;
   const aiHistory = completion?.aiEvaluations ?? [];
   const latestAi = aiHistory[aiHistory.length - 1];
@@ -357,7 +400,7 @@ function WrittenExercisePage({
   }, [subjectId, exerciseId, setCompletion]);
 
   return (
-    <div class="exercise-page">
+    <div class="exercise-page" data-mobile-tab={mobileTab}>
       <nav class="breadcrumb">
         <a href="#/curriculum">Curriculum</a>
         <span class="separator">/</span>
@@ -394,6 +437,12 @@ function WrittenExercisePage({
           )}
         </div>
       </header>
+
+      <MobileExerciseTabs
+        activeTab={mobileTab}
+        onChange={setMobileTab}
+        workspaceLabel="Response"
+      />
 
       <section class="exercise-description">
         <h2>Problem</h2>

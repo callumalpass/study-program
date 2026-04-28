@@ -1654,6 +1654,40 @@ textarea.code-editor::placeholder {
   padding: 0;
 }
 
+/* Mobile-only tab switcher between Description and Code/Response.
+   Hidden on desktop; both sections render normally there. */
+.mobile-exercise-tabs {
+  display: none;
+}
+
+.mobile-exercise-tab {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  min-height: 44px;
+  border: 1px solid var(--color-border-default);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.mobile-exercise-tab:first-child {
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  border-right: none;
+}
+
+.mobile-exercise-tab:last-child {
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.mobile-exercise-tab.active {
+  background: var(--color-accent-primary);
+  color: var(--color-bg-deep);
+  border-color: var(--color-accent-primary);
+}
+
 /* Topic Title Section */
 .topic-title-section {
   display: flex;
@@ -3824,6 +3858,26 @@ input:checked + .toggle-slider:before {
     width: 32px;
     height: 32px;
     font-size: var(--font-size-sm);
+  }
+
+  /* Tighter exercise description padding on mobile, matching quiz-question
+     so the full-bleed code block negative margin lines up cleanly. */
+  .exercise-page .exercise-description {
+    padding: var(--space-md);
+  }
+
+  /* Show mobile tabs and toggle which section is visible */
+  .mobile-exercise-tabs {
+    display: flex;
+    margin-bottom: var(--space-md);
+  }
+
+  .exercise-page[data-mobile-tab="description"] .exercise-workspace {
+    display: none;
+  }
+
+  .exercise-page[data-mobile-tab="workspace"] .exercise-description {
+    display: none;
   }
 
   /* Topic navigation stacking */

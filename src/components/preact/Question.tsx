@@ -196,7 +196,7 @@ export function Question({
                 class="text-input written-textarea"
                 placeholder="Enter your answer..."
                 value={writtenAnswer}
-                rows={6}
+                rows={4}
                 onInput={(e) => handleTextInput((e.target as HTMLTextAreaElement).value)}
               />
             )}
@@ -226,7 +226,15 @@ export function Question({
                   <pre class="code-display"><code>{currentCode}</code></pre>
                 </div>
                 {question.solution && (
-                  <details class="solution-details">
+                  <details
+                    class="solution-details"
+                    onToggle={(e) => {
+                      const el = e.currentTarget as HTMLDetailsElement;
+                      if (el.open) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                      }
+                    }}
+                  >
                     <summary>View Solution</summary>
                     <pre class="solution-code"><code>{question.solution}</code></pre>
                   </details>

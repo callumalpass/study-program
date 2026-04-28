@@ -491,6 +491,30 @@
   margin-bottom: var(--space-md);
 }
 
+.submitted-code,
+.coding-feedback .submitted-code {
+  margin-top: var(--space-md);
+}
+
+.code-header {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.code-display {
+  background: var(--code-bg);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  overflow-x: auto;
+}
+
 .answer-container {
   display: flex;
   flex-direction: column;
@@ -536,6 +560,12 @@
   border-radius: var(--radius-md);
   background: var(--color-bg-elevated);
   color: var(--color-text-primary);
+}
+
+.written-textarea {
+  min-height: 140px;
+  resize: vertical;
+  font-family: inherit;
 }
 
 .text-input.correct {
@@ -1804,6 +1834,41 @@
   .quiz-question-header {
     flex-direction: column;
     gap: var(--space-xs);
+  }
+
+  /* Full-bleed code blocks: break out of card padding so code has more
+     horizontal room without wrapping. Tightens internal padding too. */
+  .quiz-question .code-snippet,
+  .quiz-question .code-display,
+  .quiz-question .solution-code,
+  .quiz-question .solution-details > pre,
+  .exercise-page .exercise-description .description-content pre {
+    margin-inline: calc(var(--space-md) * -1);
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    padding-inline: var(--space-md);
+  }
+
+  /* Larger radio/checkbox indicator on quiz options */
+  .option-label input {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Shorter written textarea on mobile so submit stays in view */
+  .written-textarea {
+    min-height: 96px;
+    resize: vertical;
+  }
+
+  /* Sticky submit button on mobile keeps it above the keyboard / bottom nav */
+  .quiz-container .submit-button {
+    position: sticky;
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    width: 100%;
+    z-index: 5;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   }
 
   /* Alert compact */
