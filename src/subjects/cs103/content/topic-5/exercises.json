@@ -3,31 +3,31 @@
     "id": "cs103-ex-5",
     "subjectId": "cs103",
     "topicId": "cs103-5",
-    "title": "Singleton Config",
+    "title": "Refactor Singleton Config",
     "difficulty": 3,
-    "description": "Implement a `Config` class using the Singleton pattern: every call to `Config()` should return the same instance. Store a `settings` dict on the instance.",
-    "starterCode": "class Config:\n    _instance = None\n\n    def __new__(cls):\n        # TODO\n        pass\n\n    def __init__(self):\n        # TODO: initialize settings once\n        pass\n",
-    "solution": "class Config:\n    _instance = None\n\n    def __new__(cls):\n        if cls._instance is None:\n            cls._instance = super().__new__(cls)\n            cls._instance._initialized = False\n        return cls._instance\n\n    def __init__(self):\n        if getattr(self, \"_initialized\", False):\n            return\n        self.settings = {}\n        self._initialized = True\n",
+    "description": "Avoid a Singleton for configuration. Create `Config(settings)` that copies the provided dict and a `Service` that receives a config object through its constructor. `Service.get(name, default=None)` should delegate to the config.",
+    "starterCode": "class Config:\n    def __init__(self, settings):\n        pass\n\n    def get(self, name, default=None):\n        pass\n\nclass Service:\n    def __init__(self, config):\n        pass\n\n    def get(self, name, default=None):\n        pass\n",
+    "solution": "class Config:\n    def __init__(self, settings):\n        self._settings = dict(settings)\n\n    def get(self, name, default=None):\n        return self._settings.get(name, default)\n\nclass Service:\n    def __init__(self, config):\n        self._config = config\n\n    def get(self, name, default=None):\n        return self._config.get(name, default)\n",
     "testCases": [
       {
-        "input": "a = Config(); b = Config(); print(a is b)",
+        "input": "cfg = Config({\"mode\": \"test\"}); print(Service(cfg).get(\"mode\"))",
         "isHidden": false,
-        "description": "Same instance"
+        "description": "Service uses injected config"
       },
       {
-        "input": "a = Config(); a.settings[\"x\"] = 1; b = Config(); print(b.settings[\"x\"])",
+        "input": "settings = {\"x\": 1}; cfg = Config(settings); settings[\"x\"] = 2; print(cfg.get(\"x\"))",
         "isHidden": false,
-        "description": "Shared state"
+        "description": "Config protects copied settings"
       },
       {
-        "input": "a = Config(); print(isinstance(a.settings, dict))",
+        "input": "cfg = Config({}); print(Service(cfg).get(\"missing\", \"fallback\"))",
         "isHidden": true,
-        "description": "settings is dict"
+        "description": "Default value"
       }
     ],
     "hints": [
-      "Override `__new__` to control instance creation",
-      "Initialize settings only once"
+      "Copy the dict so callers cannot mutate internal state after construction",
+      "Pass dependencies in; do not create a global Config inside Service"
     ],
     "language": "python"
   },
@@ -227,10 +227,10 @@
     "id": "cs103-t5-ex08",
     "subjectId": "cs103",
     "topicId": "cs103-5",
-    "title": "Command Pattern: Light Switch",
+    "title": "Refactor Type Checks to Commands",
     "difficulty": 4,
-    "description": "Create `Light` with `on()` and `off()`. Create commands `OnCommand` and `OffCommand` with `execute()`. Create `Remote` that runs a command.",
-    "starterCode": "class Light:\n    def __init__(self):\n        pass\n    def on(self):\n        pass\n    def off(self):\n        pass\n\nclass OnCommand:\n    def __init__(self, light):\n        pass\n    def execute(self):\n        pass\n\nclass OffCommand:\n    def __init__(self, light):\n        pass\n    def execute(self):\n        pass\n\nclass Remote:\n    def run(self, command):\n        pass\n",
+    "description": "Create `Light` with `on()` and `off()`. Create `OnCommand` and `OffCommand`, each with `execute()`. `Remote.run(command)` should execute the command without checking command type.",
+    "starterCode": "class Light:\n    def __init__(self):\n        pass\n    def on(self):\n        pass\n    def off(self):\n        pass\n\nclass OnCommand:\n    def __init__(self, light):\n        pass\n    def execute(self):\n        pass\n\nclass OffCommand:\n    def __init__(self, light):\n        pass\n    def execute(self):\n        pass\n\nclass Remote:\n    def run(self, command):\n        # Do not use isinstance or command names here.\n        pass\n",
     "solution": "class Light:\n    def __init__(self):\n        self.is_on = False\n    def on(self):\n        self.is_on = True\n    def off(self):\n        self.is_on = False\n\nclass OnCommand:\n    def __init__(self, light):\n        self.light = light\n    def execute(self):\n        self.light.on()\n\nclass OffCommand:\n    def __init__(self, light):\n        self.light = light\n    def execute(self):\n        self.light.off()\n\nclass Remote:\n    def run(self, command):\n        command.execute()\n",
     "testCases": [
       {
@@ -251,7 +251,7 @@
     ],
     "hints": [
       "Commands wrap an action as an object",
-      "Remote calls execute()"
+      "Remote should depend only on the execute() contract"
     ],
     "language": "python"
   },
@@ -355,31 +355,31 @@
     "id": "cs103-t5-ex12",
     "subjectId": "cs103",
     "topicId": "cs103-5",
-    "title": "Builder: Simple HTML Tag",
+    "title": "Keep It Simple: HTML Function",
     "difficulty": 4,
-    "description": "Create an `HtmlBuilder` that builds a `<tag>content</tag>` string. It should support `set_tag(tag)`, `set_content(content)`, and `build()`.",
-    "starterCode": "class HtmlBuilder:\n    def __init__(self):\n        pass\n    def set_tag(self, tag):\n        pass\n    def set_content(self, content):\n        pass\n    def build(self):\n        pass\n",
-    "solution": "class HtmlBuilder:\n    def __init__(self):\n        self._tag = \"div\"\n        self._content = \"\"\n    def set_tag(self, tag):\n        self._tag = tag\n        return self\n    def set_content(self, content):\n        self._content = content\n        return self\n    def build(self):\n        return f\"<{self._tag}>{self._content}</{self._tag}>\"\n",
+    "description": "Do not create a Builder when a simple function is clearer. Implement `make_tag(tag=\"div\", content=\"\")` returning `<tag>content</tag>`.",
+    "starterCode": "def make_tag(tag=\"div\", content=\"\"):\n    pass\n",
+    "solution": "def make_tag(tag=\"div\", content=\"\"):\n    return f\"<{tag}>{content}</{tag}>\"\n",
     "testCases": [
       {
-        "input": "b = HtmlBuilder().set_tag(\"p\").set_content(\"hi\")\nprint(b.build())",
+        "input": "print(make_tag(\"p\", \"hi\"))",
         "isHidden": false,
         "description": "Build tag"
       },
       {
-        "input": "b = HtmlBuilder().set_content(\"x\")\nprint(b.build())",
+        "input": "print(make_tag(content=\"x\"))",
         "isHidden": true,
         "description": "Default tag"
       },
       {
-        "input": "b = HtmlBuilder().set_tag(\"span\").set_content(\"\")\nprint(b.build())",
+        "input": "print(make_tag(\"span\", \"\"))",
         "isHidden": true,
         "description": "Empty content ok"
       }
     ],
     "hints": [
-      "Builder collects values then builds final string",
-      "Optional: return self for chaining"
+      "A pattern is not better just because it has a name",
+      "Use a class only when you need state or behavior that belongs together"
     ],
     "language": "python"
   },
@@ -419,31 +419,31 @@
     "id": "cs103-t5-ex14",
     "subjectId": "cs103",
     "topicId": "cs103-5",
-    "title": "Simple Dependency Injection Container",
+    "title": "Explicit Dependency Injection",
     "difficulty": 5,
-    "description": "Create a `Container` class with `register(name, value)` and `resolve(name)` returning the registered value or raising KeyError.",
-    "starterCode": "class Container:\n    def __init__(self):\n        pass\n    def register(self, name, value):\n        pass\n    def resolve(self, name):\n        pass\n",
-    "solution": "class Container:\n    def __init__(self):\n        self._services = {}\n    def register(self, name, value):\n        self._services[name] = value\n    def resolve(self, name):\n        return self._services[name]\n",
+    "description": "Avoid a service locator for a tiny program. Create `AuditService(logger)` with `record(message)` that delegates to the injected logger and returns the logger result.",
+    "starterCode": "class AuditService:\n    def __init__(self, logger):\n        pass\n    def record(self, message):\n        pass\n",
+    "solution": "class AuditService:\n    def __init__(self, logger):\n        self._logger = logger\n    def record(self, message):\n        return self._logger.log(message)\n",
     "testCases": [
       {
-        "input": "c = Container(); c.register(\"x\", 1); print(c.resolve(\"x\"))",
+        "input": "class Logger:\n    def log(self, msg): return \"log:\" + msg\nprint(AuditService(Logger()).record(\"x\"))",
         "isHidden": false,
-        "description": "Resolve returns value"
+        "description": "Delegates to injected logger"
       },
       {
-        "input": "c = Container();\ntry:\n    c.resolve(\"missing\")\n    print(\"no\")\nexcept KeyError:\n    print(\"yes\")",
+        "input": "class Spy:\n    def __init__(self): self.calls=[]\n    def log(self, msg): self.calls.append(msg); return \"ok\"\nspy = Spy(); svc = AuditService(spy); print(svc.record(\"a\"), spy.calls)",
         "isHidden": false,
-        "description": "Missing raises KeyError"
+        "description": "Spy captures call"
       },
       {
-        "input": "c = Container(); c.register(\"a\", \"b\"); c.register(\"a\", \"c\"); print(c.resolve(\"a\"))",
+        "input": "class Logger:\n    def log(self, msg): return len(msg)\nprint(AuditService(Logger()).record(\"abc\"))",
         "isHidden": true,
-        "description": "Re-register overwrites"
+        "description": "Returns collaborator result"
       }
     ],
     "hints": [
-      "Use a dict internally",
-      "Raise KeyError for missing"
+      "Pass the dependency directly to the constructor",
+      "The service should not know which concrete logger it received"
     ],
     "language": "python"
   },

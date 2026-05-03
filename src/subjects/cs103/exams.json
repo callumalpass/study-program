@@ -443,16 +443,11 @@
       },
       {
         "id": "final-q13",
-        "type": "multiple_choice",
-        "prompt": "Which pattern translates one interface into another expected by clients?",
-        "options": [
-          "Singleton",
-          "Observer",
-          "Adapter",
-          "Strategy"
-        ],
-        "correctAnswer": 2,
-        "explanation": "Adapter wraps an object to present a compatible interface."
+        "type": "written",
+        "prompt": "A report generator directly creates `EmailSender()` inside `send_report()`, making tests send real email. Explain the design problem and a better OOP design.",
+        "correctAnswer": "dependency injection",
+        "explanation": "The method hides a concrete dependency. Injecting a sender object makes the dependency explicit and replaceable in tests.",
+        "modelAnswer": "The report generator is tightly coupled to a concrete email sender and hides an external side effect inside the method. A better design is to pass a sender dependency into the report generator, either through the constructor or method parameter. Production code can pass a real sender, while tests can pass a fake or spy sender. The report generator then depends on the sender interface, not on a specific concrete class."
       },
       {
         "id": "final-q14",

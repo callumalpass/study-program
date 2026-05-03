@@ -35,7 +35,8 @@ curriculum:
     - Polymorphism and dynamic dispatch
     - Abstraction with interfaces/abstract base classes
     - Composition over inheritance
-    - Core design patterns (Singleton, Factory, Observer, Strategy, Decorator)
+    - Core design patterns as design tradeoffs (Factory, Observer, Strategy, Decorator, Adapter)
+    - Singleton as a cautionary example of global mutable state
     - Design principles (SOLID) and unit testing
 
   out_of_scope:
@@ -76,7 +77,7 @@ content:
     - Show both a naive design and an improved OOP design when possible
     - Provide examples of testing object behavior, not just implementation
     - Highlight tradeoffs between inheritance and composition
-    - Tie every design pattern to a concrete use case
+    - Tie every design pattern to a concrete use case and a rejected simpler alternative
 
   conventions:
     - Python 3.10+ syntax
@@ -105,6 +106,7 @@ assessment:
     - Trivia about language internals unrelated to design decisions
     - Exercises that force inheritance where composition is better
     - Overly large coding problems that obscure design intent
+    - Rewarding students for using many named patterns instead of choosing one simple design
 
 # ==============================================================================
 # GRADING THRESHOLDS
@@ -225,6 +227,7 @@ projects:
     - Use composition and interfaces to keep designs flexible
     - Demonstrate testing of object behavior
     - Apply at least one pattern where it improves maintainability
+    - Explain at least one pattern or abstraction that was deliberately not used
 
   estimated_hours: "10-14"
 
@@ -236,6 +239,7 @@ red_flags:
   - Exercises that require multiple inheritance without a strong rationale
   - Designs that rely on public mutable fields instead of methods
   - Pattern usage without explaining the problem it solves
+  - Singleton used where dependency injection or explicit configuration would be simpler
   - Examples that violate substitutability or encapsulation
   - Tests that assert on private implementation details
 

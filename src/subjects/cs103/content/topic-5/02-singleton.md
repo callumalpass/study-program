@@ -4,11 +4,13 @@ title: "Singleton Pattern"
 order: 2
 ---
 
-## The Singleton Pattern
+## Singleton: Pattern or Warning Sign?
 
-**Problem:** You need exactly one instance of a class, accessible globally. Common examples: database connections, configuration managers, logging systems.
+**Problem:** You think you need exactly one instance of a class, accessible globally. Common examples people reach for are configuration managers, logging systems, and database connections.
 
-**Solution:** Control instantiation so only one instance ever exists.
+**Classic solution:** Control instantiation so only one instance ever exists.
+
+**Design warning:** In Python, Singleton is often a smell. It can hide dependencies, introduce global mutable state, and make tests affect each other. Learn how it works so you can recognize it, but prefer explicit dependency injection or module-level objects unless there is a strong reason to enforce one instance.
 
 ---
 
@@ -174,19 +176,18 @@ print(c2.debug)        # True (shared state!)
 
 ---
 
-## When to Use Singleton
+## When to Consider Singleton
 
-**Good use cases:**
-- Database connection pools
-- Configuration managers
-- Logging systems
-- Caching layers
-- Hardware interface managers
+**Possible use cases:**
+- A true process-wide hardware resource
+- A framework-managed registry where the lifecycle is already global
+- A module-level object that is immutable after startup
 
 **Avoid when:**
 - You're just avoiding passing objects around
 - Testing is important (singletons are hard to mock)
 - You might need multiple instances later
+- The object holds mutable user/session/request state
 
 ---
 
@@ -269,8 +270,8 @@ debug_mode = config.get('debug', False)
 ## Key Takeaways
 
 - Singleton ensures exactly one instance of a class
-- Python modules are natural singletons—use them when possible
+- Python modules can provide a simpler single shared object
 - Classic singleton uses `__new__` to control instantiation
 - Thread-safe singleton requires locking
 - Singletons make testing difficult—consider alternatives
-- Use singletons for truly global resources (connections, config)
+- Prefer explicit dependencies for most application services

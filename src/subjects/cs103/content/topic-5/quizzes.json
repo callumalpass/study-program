@@ -48,15 +48,15 @@
       {
         "id": "cs103-q5a-5",
         "type": "multiple_choice",
-        "prompt": "What does a Singleton pattern guarantee?",
+        "prompt": "Why is Singleton often a poor default choice in application code?",
         "options": [
-          "Exactly one instance with a global access point",
-          "No instances can be created",
-          "Many instances created efficiently",
-          "Instances are immutable"
+          "It can hide dependencies and introduce global mutable state",
+          "It prevents classes from having methods",
+          "It makes Python unable to import modules",
+          "It only works with immutable objects"
         ],
         "correctAnswer": 0,
-        "explanation": "Singleton restricts instantiation and provides a single shared instance."
+        "explanation": "Singletons often behave like hidden globals, which makes tests and reasoning harder."
       }
     ]
   },
@@ -124,16 +124,11 @@
     "questions": [
       {
         "id": "cs103-q5c-1",
-        "type": "multiple_choice",
-        "prompt": "What is the primary design goal of the Adapter pattern?",
-        "options": [
-          "Create objects based on type",
-          "Broadcast messages to many listeners",
-          "Translate one interface into another expected by clients",
-          "Guarantee a single instance"
-        ],
-        "correctAnswer": 2,
-        "explanation": "Adapters wrap an object to present a compatible interface."
+        "type": "written",
+        "prompt": "A student proposes adding Singleton, Factory, Observer, and Command to a 40-line script with one configuration dictionary and one report function. Briefly explain what design feedback you would give.",
+        "correctAnswer": "avoid over-engineering",
+        "explanation": "Good design uses patterns to solve real design pressure; a small script probably needs explicit parameters or simple functions first.",
+        "modelAnswer": "I would ask what problem each pattern solves. For a 40-line script, Singleton likely hides a normal configuration dependency, and the other patterns may add ceremony without reducing coupling. Start with a function that receives the config explicitly. Add a Factory, Observer, or Command only after there are multiple implementations, event subscribers, or actions that need to be represented as objects."
       },
       {
         "id": "cs103-q5c-2",
