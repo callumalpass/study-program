@@ -1,6 +1,31 @@
 import { registerSW } from 'virtual:pwa-register';
 
 export function registerPwa(): void {
+  if (import.meta.env.DEV) {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations()
+        .then((registrations) => Promise.all(registrations.map((registration) => registration.unregister())))
+        .then((results) => {
+          if (results.some(Boolean) && navigator.serviceWorker.controller) {
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          console.warn('Failed to unregister development service worker:', error);
+        });
+    }
+
+    if ('caches' in window) {
+      window.caches.keys()
+        .then((keys) => Promise.all(keys.map((key) => window.caches.delete(key))))
+        .catch((error) => {
+          console.warn('Failed to clear development caches:', error);
+        });
+    }
+
+    return;
+  }
+
   registerSW({
     immediate: true,
     onRegisteredSW(swUrl, registration) {
