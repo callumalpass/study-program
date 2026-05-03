@@ -66,6 +66,11 @@ export class Router {
       paramNames: [],
       template: '/progress',
     },
+    studySession: {
+      pattern: /^#?\/study-session$/,
+      paramNames: [],
+      template: '/study-session',
+    },
     settings: {
       pattern: /^#?\/settings$/,
       paramNames: [],
@@ -250,6 +255,7 @@ export const navigateToExercise = (subjectId: string, exId: string) =>
 export const navigateToProject = (subjectId: string, projId: string) =>
   navigate(`/subject/${encodePathSegment(subjectId)}/project/${encodePathSegment(projId)}`);
 export const navigateToProgress = () => navigate('/progress');
+export const navigateToStudySession = () => navigate('/study-session');
 export const navigateToSettings = () => navigate('/settings');
 export const navigateToExport = () => navigate('/export');
 export const navigateToTimeline = () => navigate('/timeline');

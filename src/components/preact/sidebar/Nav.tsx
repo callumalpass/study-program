@@ -13,6 +13,7 @@ interface NavLink {
 
 const navLinks: NavLink[] = [
   { route: '/dashboard', icon: Icons.Dashboard, label: 'Dashboard' },
+  { route: '/study-session', icon: Icons.Progress, label: 'Study Session' },
   { route: '/course-builder', icon: Icons.CourseBuilder, label: 'Course Builder' },
   { route: '/curriculum', icon: Icons.Curriculum, label: 'Curriculum' },
   { route: '/progress', icon: Icons.Progress, label: 'Progress' },

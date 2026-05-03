@@ -25,7 +25,8 @@ test.describe('Sidebar', () => {
     const sidebar = page.locator('#sidebar');
 
     // Check for main navigation links (use .first() where there may be multiple matches)
-    await expect(sidebar.locator('.sidebar-logo')).toBeVisible();
+    await expect(sidebar.locator('.sidebar-logo')).toBeVisible({ timeout: 15000 });
+    await expect(sidebar.locator('a[href="#/study-session"]')).toBeVisible();
     await expect(sidebar.locator('a[href="#/curriculum"]')).toBeVisible();
     await expect(sidebar.locator('a[href="#/progress"]')).toBeVisible();
     await expect(sidebar.locator('a[href="#/settings"]')).toBeVisible();

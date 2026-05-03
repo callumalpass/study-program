@@ -206,12 +206,17 @@ export interface UserProgress {
   settings: UserSettings;
   reviewQueue?: ReviewItem[]; // Spaced repetition review queue
   selectedSubjectIds?: string[]; // Subjects in user's course plan (undefined = legacy user, migrate to all)
+  studySessionHistory?: StudySessionHistoryEntry[]; // Completed guided study sessions
 }
 
 export interface SubtopicView {
   firstViewedAt: string;   // ISO date string
   lastViewedAt: string;    // ISO date string
   viewCount: number;
+}
+
+export interface SubtopicCompletion {
+  completedAt: string;     // ISO date string
 }
 
 export interface SubjectProgress {
@@ -223,6 +228,7 @@ export interface SubjectProgress {
   exerciseCompletions: Record<string, ExerciseCompletion>; // Single best/latest attempt per exercise
   projectSubmissions: Record<string, ProjectSubmission[]>;
   subtopicViews?: Record<string, SubtopicView>; // Track subtopic views
+  subtopicCompletions?: Record<string, SubtopicCompletion>; // Track explicit reading completions
 }
 
 export interface AiGrade {
@@ -283,6 +289,51 @@ export interface ProjectSubmission {
   selfAssessment: Record<string, number>; // Criterion name -> score
   notes: string;
   aiEvaluation?: ProjectAiEvaluation;
+}
+
+export interface StudySessionHistorySummary {
+  sectionsCompleted: number;
+  quizzesAttempted: number;
+  quizzesPassed: number;
+  exercisesPassed: number;
+  reviewItemsCompleted: number;
+}
+
+export interface StudySessionHistoryEntry {
+  sessionId: string;
+  subjectId: string;
+  subjectCode: string;
+  startedAt: string;
+  completedAt: string;
+  durationSeconds: number;
+  itemCount: number;
+  completedItemIds: string[];
+  summary: StudySessionHistorySummary;
+}
+
+export type ActivityEventType =
+  | 'study_session_completed'
+  | 'reading_completed'
+  | 'quiz_attempted'
+  | 'exercise_completed'
+  | 'exam_attempted'
+  | 'project_submitted';
+
+export interface ActivityEvent {
+  id: string;
+  type: ActivityEventType;
+  timestamp: string;
+  subjectId?: string;
+  subjectCode?: string;
+  topicId?: string;
+  itemId?: string;
+  sessionId?: string;
+  title: string;
+  detail?: string;
+  score?: number;
+  passed?: boolean;
+  durationSeconds?: number;
+  count?: number;
 }
 
 // Study Plan Types

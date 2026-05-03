@@ -11,12 +11,15 @@ import type {
   AiGrade,
   SubtopicView,
   ReviewItem,
+  SubtopicCompletion,
+  StudySessionHistoryEntry,
 } from './types';
 import { QUIZ_PASSING_SCORE } from './types';
 import { githubService } from '../services/github';
 
 const STORAGE_KEY = 'study_program_progress';
 const CURRENT_VERSION = 4;
+export const PROGRESS_UPDATED_EVENT = 'study-program-progress-updated';
 
 // All subject IDs for migration (existing users get all subjects selected)
 const ALL_SUBJECT_IDS = [
@@ -86,6 +89,7 @@ export class ProgressStorage {
         return this.migrate(parsed);
       }
 
+      this.ensureProgressCollections(parsed);
       return parsed;
     } catch (error) {
       console.error('Failed to load progress from localStorage:', error);
@@ -101,9 +105,15 @@ export class ProgressStorage {
       this.progress.lastUpdated = new Date().toISOString();
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.progress));
       this.triggerSync();
+      this.notifyProgressUpdated();
     } catch (error) {
       console.error('Failed to save progress to localStorage:', error);
     }
+  }
+
+  private notifyProgressUpdated(): void {
+    if (typeof window === 'undefined') return;
+    window.dispatchEvent(new CustomEvent(PROGRESS_UPDATED_EVENT));
   }
 
   /**
@@ -218,6 +228,7 @@ export class ProgressStorage {
         this.progress = remoteProgress.version !== CURRENT_VERSION
           ? this.migrate(remoteProgress)
           : remoteProgress;
+        this.ensureProgressCollections(this.progress);
 
         // Merge settings: use remote non-sensitive settings, preserve local sensitive ones
         this.progress.settings = {
@@ -230,6 +241,7 @@ export class ProgressStorage {
 
         // Save to localStorage without triggering sync back to Gist
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.progress));
+        this.notifyProgressUpdated();
         console.log('Progress updated from GitHub Gist');
         return { synced: true, updated: true };
       }
@@ -250,12 +262,42 @@ export class ProgressStorage {
       version: CURRENT_VERSION,
       startedAt: new Date().toISOString(),
       subjects: {},
+      studySessionHistory: [],
       settings: {
         theme: 'auto',
         codeEditorFontSize: 14,
         showCompletedItems: true,
       },
     };
+  }
+
+  /**
+   * Ensure optional collections introduced across versions exist on loaded data.
+   * This also normalizes current-version progress that predates optional fields.
+   */
+  private ensureProgressCollections(progress: UserProgress): void {
+    if (!progress.reviewQueue) {
+      progress.reviewQueue = [];
+    }
+
+    if (!progress.studySessionHistory) {
+      progress.studySessionHistory = [];
+    }
+
+    if (!progress.subjects) {
+      progress.subjects = {};
+      return;
+    }
+
+    Object.keys(progress.subjects).forEach(subjectId => {
+      const subjectProgress = progress.subjects[subjectId] as SubjectProgress;
+      subjectProgress.quizAttempts = subjectProgress.quizAttempts || {};
+      subjectProgress.examAttempts = subjectProgress.examAttempts || {};
+      subjectProgress.exerciseCompletions = subjectProgress.exerciseCompletions || {};
+      subjectProgress.projectSubmissions = subjectProgress.projectSubmissions || {};
+      subjectProgress.subtopicViews = subjectProgress.subtopicViews || {};
+      subjectProgress.subtopicCompletions = subjectProgress.subtopicCompletions || {};
+    });
   }
 
   /**
@@ -296,17 +338,11 @@ export class ProgressStorage {
       migrated.selectedSubjectIds = [...ALL_SUBJECT_IDS];
     }
 
-    // Ensure subject containers include new structures
-    if (migrated.subjects) {
-      Object.keys(migrated.subjects).forEach(subjectId => {
-        const subjectProgress = migrated.subjects[subjectId] as SubjectProgress;
-        subjectProgress.quizAttempts = subjectProgress.quizAttempts || {};
-        subjectProgress.examAttempts = subjectProgress.examAttempts || {};
-        subjectProgress.exerciseCompletions = subjectProgress.exerciseCompletions || {};
-        subjectProgress.projectSubmissions = subjectProgress.projectSubmissions || {};
-        subjectProgress.subtopicViews = subjectProgress.subtopicViews || {};
-      });
+    if (!migrated.studySessionHistory) {
+      migrated.studySessionHistory = [];
     }
+
+    this.ensureProgressCollections(migrated);
 
     return migrated;
   }
@@ -337,6 +373,7 @@ export class ProgressStorage {
         exerciseCompletions: {},
         projectSubmissions: {},
         subtopicViews: {},
+        subtopicCompletions: {},
       };
     }
 
@@ -357,6 +394,12 @@ export class ProgressStorage {
     }
     if (!this.progress.subjects[subjectId].projectSubmissions) {
       this.progress.subjects[subjectId].projectSubmissions = {};
+    }
+    if (!this.progress.subjects[subjectId].subtopicViews) {
+      this.progress.subjects[subjectId].subtopicViews = {};
+    }
+    if (!this.progress.subjects[subjectId].subtopicCompletions) {
+      this.progress.subjects[subjectId].subtopicCompletions = {};
     }
 
     this.save();
@@ -573,6 +616,46 @@ export class ProgressStorage {
   }
 
   /**
+   * Record an explicit subtopic completion.
+   * This is intentionally separate from views so opening a section is not enough
+   * to count as reading completion.
+   */
+  recordSubtopicCompletion(subjectId: string, subtopicId: string): void {
+    if (!this.progress.subjects[subjectId]) {
+      this.updateSubjectProgress(subjectId, { status: 'in_progress' });
+    }
+
+    const subjectProgress = this.progress.subjects[subjectId];
+    if (!subjectProgress.subtopicCompletions) {
+      subjectProgress.subtopicCompletions = {};
+    }
+
+    if (!subjectProgress.subtopicCompletions[subtopicId]) {
+      subjectProgress.subtopicCompletions[subtopicId] = {
+        completedAt: new Date().toISOString(),
+      };
+    }
+
+    this.save();
+  }
+
+  /**
+   * Get explicit subtopic completion data.
+   */
+  getSubtopicCompletion(subjectId: string, subtopicId: string): SubtopicCompletion | undefined {
+    return this.progress.subjects[subjectId]?.subtopicCompletions?.[subtopicId];
+  }
+
+  /**
+   * Check if all subtopics in a topic have explicit completions.
+   */
+  areAllSubtopicsCompleted(subjectId: string, subtopicIds: string[]): boolean {
+    const completions = this.progress.subjects[subjectId]?.subtopicCompletions;
+    if (!completions) return false;
+    return subtopicIds.every(id => completions[id] !== undefined);
+  }
+
+  /**
    * Get subtopic view data
    */
   getSubtopicView(subjectId: string, subtopicId: string): SubtopicView | undefined {
@@ -710,6 +793,41 @@ export class ProgressStorage {
 
   // ==================== End Course Selection Methods ====================
 
+  // ==================== Study Session History Methods ====================
+
+  /**
+   * Store a completed study session once. The active session itself lives in a
+   * separate localStorage key, while this historical record syncs with progress.
+   */
+  recordStudySessionCompletion(entry: StudySessionHistoryEntry): void {
+    if (!this.progress.studySessionHistory) {
+      this.progress.studySessionHistory = [];
+    }
+
+    const existingIndex = this.progress.studySessionHistory.findIndex(
+      existing => existing.sessionId === entry.sessionId
+    );
+
+    if (existingIndex >= 0) {
+      this.progress.studySessionHistory[existingIndex] = entry;
+    } else {
+      this.progress.studySessionHistory.push(entry);
+    }
+
+    this.progress.studySessionHistory.sort(
+      (a, b) => new Date(a.completedAt).getTime() - new Date(b.completedAt).getTime()
+    );
+    this.save();
+  }
+
+  getStudySessionHistory(): StudySessionHistoryEntry[] {
+    return [...(this.progress.studySessionHistory || [])].sort(
+      (a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime()
+    );
+  }
+
+  // ==================== End Study Session History Methods ====================
+
   /**
    * Export progress as JSON string
    */
@@ -733,6 +851,7 @@ export class ProgressStorage {
       this.progress = imported.version !== CURRENT_VERSION
         ? this.migrate(imported)
         : imported;
+      this.ensureProgressCollections(this.progress);
 
       this.save();
       return true;

@@ -3,6 +3,7 @@ import type { Subject } from '../src/core/types';
 import { QUIZ_PASSING_SCORE } from '../src/core/types';
 import { progressStorage } from '../src/core/storage';
 import { renderHomePage } from '../src/pages/home';
+import { startStudySession } from '../src/core/study-session';
 
 const subject: Subject = {
   id: 'cs101',
@@ -53,20 +54,108 @@ function renderDashboard(): HTMLElement {
 describe('dashboard next action', () => {
   beforeEach(() => {
     progressStorage.resetProgress();
+    sessionStorage.clear();
   });
 
   it('suggests the next unread reading before practice work', () => {
     const container = renderDashboard();
 
     const action = container.querySelector('.dashboard-next-action');
-    expect(action?.textContent).toContain('Read Next');
+    expect(action?.textContent).toContain('Next Up');
+    expect(action?.textContent).toContain('Read: Introduction');
     expect(action?.textContent).toContain('Introduction');
     expect(action?.querySelector('a')?.getAttribute('href')).toBe(
       '#/subject/cs101/topic/topic-1/subtopic/intro'
     );
   });
 
-  it('suggests quizzes after all readings are viewed', () => {
+  it('suggests quizzes after all readings are explicitly completed', () => {
+    progressStorage.updateSubjectProgress('cs101', {
+      status: 'in_progress',
+      subtopicViews: {
+        'cs101-t1-intro': {
+          firstViewedAt: '2026-01-01T00:00:00.000Z',
+          lastViewedAt: '2026-01-01T00:00:00.000Z',
+          viewCount: 1,
+        },
+        'cs101-t1-logic': {
+          firstViewedAt: '2026-01-01T00:00:00.000Z',
+          lastViewedAt: '2026-01-01T00:00:00.000Z',
+          viewCount: 1,
+        },
+      },
+      subtopicCompletions: {
+        'cs101-t1-intro': {
+          completedAt: '2026-01-01T00:00:00.000Z',
+        },
+        'cs101-t1-logic': {
+          completedAt: '2026-01-01T00:00:00.000Z',
+        },
+      },
+    });
+
+    const container = renderDashboard();
+
+    const action = container.querySelector('.dashboard-next-action');
+    expect(action?.textContent).toContain('Next Up');
+    expect(action?.textContent).toContain('Quiz: CS101 Quiz 1');
+    expect(action?.querySelector('a')?.getAttribute('href')).toBe(
+      '#/subject/cs101/quiz/cs101-quiz-1'
+    );
+  });
+
+  it('keeps focus on the completed topic practice before moving to a new topic', () => {
+    const multiTopicSubject: Subject = {
+      ...subject,
+      topics: [
+        ...subject.topics,
+        {
+          id: 'topic-2',
+          title: 'Next Topic',
+          content: '',
+          quizIds: ['cs101-quiz-2'],
+          exerciseIds: [],
+          subtopics: [
+            {
+              id: 'cs101-t2-arrays',
+              slug: 'arrays',
+              title: 'Arrays',
+              content: '',
+              order: 1,
+            },
+          ],
+        },
+      ],
+    };
+
+    progressStorage.updateSubjectProgress('cs101', {
+      status: 'in_progress',
+      subtopicViews: {
+        'cs101-t1-logic': {
+          firstViewedAt: '2026-01-01T00:00:00.000Z',
+          lastViewedAt: '2026-01-02T00:00:00.000Z',
+          viewCount: 1,
+        },
+      },
+      subtopicCompletions: {
+        'cs101-t1-intro': {
+          completedAt: '2026-01-01T00:00:00.000Z',
+        },
+        'cs101-t1-logic': {
+          completedAt: '2026-01-02T00:00:00.000Z',
+        },
+      },
+    });
+
+    const container = document.createElement('div');
+    renderHomePage(container, [multiTopicSubject]);
+
+    const action = container.querySelector('.dashboard-next-action');
+    expect(action?.textContent).toContain('Quiz: CS101 Quiz 1');
+    expect(action?.textContent).not.toContain('Read: Arrays');
+  });
+
+  it('does not suggest practice when readings have only been viewed', () => {
     progressStorage.updateSubjectProgress('cs101', {
       status: 'in_progress',
       subtopicViews: {
@@ -86,11 +175,8 @@ describe('dashboard next action', () => {
     const container = renderDashboard();
 
     const action = container.querySelector('.dashboard-next-action');
-    expect(action?.textContent).toContain('Practice Next');
-    expect(action?.textContent).toContain('CS101 Quiz 1');
-    expect(action?.querySelector('a')?.getAttribute('href')).toBe(
-      '#/subject/cs101/quiz/cs101-quiz-1'
-    );
+    expect(action?.textContent).toContain('Read: Introduction');
+    expect(action?.textContent).not.toContain('Quiz: CS101 Quiz 1');
   });
 
   it('does not suggest exams or projects after readings and practice are complete', () => {
@@ -106,6 +192,14 @@ describe('dashboard next action', () => {
           firstViewedAt: '2026-01-01T00:00:00.000Z',
           lastViewedAt: '2026-01-01T00:00:00.000Z',
           viewCount: 1,
+        },
+      },
+      subtopicCompletions: {
+        'cs101-t1-intro': {
+          completedAt: '2026-01-01T00:00:00.000Z',
+        },
+        'cs101-t1-logic': {
+          completedAt: '2026-01-01T00:00:00.000Z',
         },
       },
       quizAttempts: {
@@ -133,5 +227,25 @@ describe('dashboard next action', () => {
     expect(container.querySelector('.dashboard-next-action')).toBeNull();
     expect(container.textContent).not.toContain('Assessment Next');
     expect(container.textContent).not.toContain('Project Next');
+  });
+
+  it('prioritizes an active study session item over due review', () => {
+    progressStorage.updateSubjectProgress('cs101', {
+      status: 'in_progress',
+    });
+    startStudySession([subject], progressStorage.getProgress());
+    progressStorage.addToReviewQueue({
+      itemType: 'quiz',
+      itemId: 'cs101-quiz-1',
+      subjectId: 'cs101',
+    });
+    progressStorage.save();
+
+    const container = renderDashboard();
+
+    const action = container.querySelector('.dashboard-next-action');
+    expect(action?.textContent).toContain('Study session');
+    expect(action?.textContent).toContain('Read: Introduction');
+    expect(action?.textContent).not.toContain('Review: CS101 Quiz 1');
   });
 });

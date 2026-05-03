@@ -1,7 +1,7 @@
 // Quiz page rendering with ContentNavigator wrapper
 import { h } from 'preact';
 import { useState, useCallback } from 'preact/hooks';
-import type { Subject, Quiz, QuizAttempt, Exercise, Exam, Project } from '@/core/types';
+import type { Subject, Quiz, QuizAttempt, Exercise, Exam, Project, QuizQuestion } from '@/core/types';
 import { QUIZ_PASSING_SCORE } from '@/core/types';
 import { progressStorage } from '@/core/storage';
 import { navigateToSubject } from '@/core/router';
@@ -9,10 +9,64 @@ import { Icons } from '@/components/icons';
 import { renderNotFound, formatDate } from './assessment-utils';
 import { render } from 'preact';
 import { Quiz as QuizComponent, ContentNavigator } from '@/components/preact';
+import { checkAnswer } from '@/utils/quiz-utils';
+import { renderMarkdown } from '@/components/markdown';
 
 interface QuizPageContentProps {
   subject: Subject;
   quiz: Quiz;
+}
+
+function getTopicReadingHref(subject: Subject, quiz: Quiz): string {
+  const topic = subject.topics.find(t => t.id === quiz.topicId);
+  const firstSubtopic = topic?.subtopics?.[0];
+
+  if (topic && firstSubtopic) {
+    return `#/subject/${subject.id}/topic/${topic.id}/subtopic/${firstSubtopic.slug}`;
+  }
+
+  return topic
+    ? `#/subject/${subject.id}/topic/${topic.id}`
+    : `#/subject/${subject.id}`;
+}
+
+function MissedQuestionReview({
+  questions,
+  attempt,
+}: {
+  questions: QuizQuestion[];
+  attempt: QuizAttempt;
+}) {
+  const missed = questions.filter(question => !checkAnswer(question, attempt.answers[question.id]));
+
+  if (missed.length === 0) {
+    return (
+      <div class="missed-question-list empty">
+        <p>No missed questions on this attempt.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div class="missed-question-list">
+      {missed.map((question, index) => (
+        <article class="missed-question-card" key={question.id}>
+          <span class="missed-question-number">Missed question {index + 1}</span>
+          <div
+            class="missed-question-prompt markdown-content"
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(question.prompt) }}
+          />
+          <div class="missed-question-explanation">
+            <h3>Explanation</h3>
+            <div
+              class="markdown-content"
+              dangerouslySetInnerHTML={{ __html: renderMarkdown(question.explanation) }}
+            />
+          </div>
+        </article>
+      ))}
+    </div>
+  );
 }
 
 function QuizPageContent({ subject, quiz }: QuizPageContentProps) {
@@ -27,6 +81,11 @@ function QuizPageContent({ subject, quiz }: QuizPageContentProps) {
   const bestAttempt = attempts.length > 0
     ? attempts.reduce((best, current) => current.score > best.score ? current : best)
     : null;
+  const latestAttempt = attempts.length > 0 ? attempts[attempts.length - 1] : null;
+  const latestMissedCount = latestAttempt
+    ? quiz.questions.filter(question => !checkAnswer(question, latestAttempt.answers[question.id])).length
+    : 0;
+  const topicReadingHref = getTopicReadingHref(subject, quiz);
 
   const handleStartQuiz = useCallback(() => {
     setQuizMode('active');
@@ -48,7 +107,7 @@ function QuizPageContent({ subject, quiz }: QuizPageContentProps) {
   }, [subjectId]);
 
   return (
-    <div class="quiz-page">
+    <div class="quiz-page" data-quiz-mode={quizMode}>
       <nav class="breadcrumb">
         <a href="#/curriculum">Curriculum</a>
         <span class="separator">/</span>
@@ -118,19 +177,43 @@ function QuizPageContent({ subject, quiz }: QuizPageContentProps) {
             <QuizComponent quiz={quiz} onComplete={handleQuizComplete} />
           )}
           {quizMode === 'completed' && (
-            <div class="quiz-start">
-              <h2>Quiz Completed!</h2>
-              <p>Your score has been recorded. You can review your attempts above or try again.</p>
-              <button class="btn btn-primary btn-large" onClick={handleRetry}>
-                Try Again
-              </button>
-            </div>
+            latestAttempt && (
+              <div class="quiz-recovery-block">
+                <div class="quiz-recovery-header">
+                  <span class="quiz-recovery-icon" dangerouslySetInnerHTML={{ __html: latestAttempt.score >= QUIZ_PASSING_SCORE ? Icons.Check : Icons.Review }} />
+                  <div>
+                    <span class="quiz-recovery-kicker">Review Before Retrying</span>
+                    <h2>
+                      {latestMissedCount > 0
+                        ? `You missed ${latestMissedCount} question${latestMissedCount === 1 ? '' : 's'} from this topic.`
+                        : 'You answered every question correctly.'}
+                    </h2>
+                    <p>
+                      {latestAttempt.score >= QUIZ_PASSING_SCORE
+                        ? 'Your score has been recorded. Review the explanations or continue practicing.'
+                        : 'Your score is below passing, so this quiz remains in your review loop.'}
+                    </p>
+                  </div>
+                </div>
+
+                <MissedQuestionReview questions={quiz.questions} attempt={latestAttempt} />
+
+                <div class="quiz-recovery-actions">
+                  <a class="btn btn-secondary" href={topicReadingHref}>
+                    <span dangerouslySetInnerHTML={{ __html: Icons.BookOpen }} /> Review Topic
+                  </a>
+                  <button class="btn btn-primary" onClick={handleRetry}>
+                    <span dangerouslySetInnerHTML={{ __html: Icons.Refresh }} /> Retry Quiz
+                  </button>
+                </div>
+              </div>
+            )
           )}
         </div>
       </section>
 
       <div class="quiz-actions">
-        {attempts.length > 0 && quizMode !== 'active' && (
+        {attempts.length > 0 && quizMode === 'start' && (
           <button class="btn btn-secondary" onClick={handleRetry}>
             <span dangerouslySetInnerHTML={{ __html: Icons.Refresh }} /> Retry Quiz
           </button>

@@ -1,7 +1,8 @@
 // Progress/Statistics page
-import type { Subject, UserProgress, SubjectProgress, QuizAttempt, ExerciseCompletion } from '@/core/types';
+import type { ActivityEvent, Subject, UserProgress, SubjectProgress, QuizAttempt, ExerciseCompletion } from '@/core/types';
 import { QUIZ_PASSING_SCORE } from '@/core/types';
 import { progressStorage, exportProgress, importProgress } from '@/core/storage';
+import { getActivityEvents } from '@/core/activity';
 import {
   calculateOverallProgress,
   getSubjectsByYearAndSemester,
@@ -9,12 +10,14 @@ import {
 } from '@/core/progress';
 import { navigateToSubject } from '@/core/router';
 import { Icons } from '@/components/icons';
+import { escapeHtml } from '@/utils/html';
 
 // Progress ring SVG constants
 const PROGRESS_RING_SIZE = 200;
 const PROGRESS_RING_RADIUS = 80;
 const PROGRESS_RING_CENTER = PROGRESS_RING_SIZE / 2;
 const PROGRESS_RING_CIRCUMFERENCE = 2 * Math.PI * PROGRESS_RING_RADIUS;
+const ACTIVITY_WINDOW_DAYS = 91;
 
 interface ExpandedYears {
   [key: number]: boolean;
@@ -47,6 +50,7 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
 
   // Calculate achievements
   const achievements = calculateAchievements(filteredSubjects, userProgress);
+  const activityEvents = getActivityEvents(userProgress, filteredSubjects);
 
   container.innerHTML = `
     <div class="page-container progress-page">
@@ -109,6 +113,8 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
             </div>
           </div>
         </section>
+
+        ${renderActivitySection(activityEvents)}
 
         <section class="year-breakdown">
           <h2>Progress by Year</h2>
@@ -192,6 +198,177 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
   `;
 
   attachEventListeners(container, subjects);
+}
+
+function getActivityDayKey(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function getActivityLevel(count: number, maxCount: number): number {
+  if (count <= 0) return 0;
+  if (maxCount <= 4) return Math.min(4, count);
+  return Math.max(1, Math.ceil((count / maxCount) * 4));
+}
+
+function formatDuration(seconds: number | undefined): string {
+  if (!seconds || seconds <= 0) return '';
+  const minutes = Math.max(1, Math.round(seconds / 60));
+  if (minutes < 60) return `${minutes}m`;
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  return remainingMinutes > 0 ? `${hours}h ${remainingMinutes}m` : `${hours}h`;
+}
+
+function formatActivityDate(isoString: string): string {
+  const date = new Date(isoString);
+  return date.toLocaleDateString(undefined, {
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
+function getActivityIcon(event: ActivityEvent): string {
+  switch (event.type) {
+    case 'study_session_completed':
+      return Icons.Progress;
+    case 'reading_completed':
+      return Icons.BookOpen || Icons.Book;
+    case 'quiz_attempted':
+    case 'exam_attempted':
+      return Icons.StatQuiz;
+    case 'exercise_completed':
+      return Icons.StatCode;
+    case 'project_submitted':
+      return Icons.StatProject;
+    default:
+      return Icons.Check;
+  }
+}
+
+function getActivityStatusLabel(event: ActivityEvent): string {
+  if (event.passed === true) return 'Passed';
+  if (event.passed === false) return 'Needs review';
+  if (event.type === 'study_session_completed') return 'Complete';
+  return 'Logged';
+}
+
+function renderRecentActivityItem(event: ActivityEvent): string {
+  const metaParts = [
+    event.detail,
+    event.score !== undefined ? `${Math.round(event.score)}%` : undefined,
+    formatDuration(event.durationSeconds),
+    formatActivityDate(event.timestamp),
+  ].filter(Boolean);
+  const statusClass = event.passed === false ? 'needs-review' : event.passed === true ? 'passed' : 'logged';
+
+  return `
+    <li class="activity-feed-item">
+      <span class="activity-feed-icon" aria-hidden="true">${getActivityIcon(event)}</span>
+      <span class="activity-feed-copy">
+        <span class="activity-feed-title">${escapeHtml(event.title)}</span>
+        <span class="activity-feed-meta">${escapeHtml(metaParts.join(' - '))}</span>
+      </span>
+      <span class="activity-feed-status ${statusClass}">${escapeHtml(getActivityStatusLabel(event))}</span>
+    </li>
+  `;
+}
+
+function renderActivitySection(events: ActivityEvent[]): string {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const start = new Date(today);
+  start.setDate(today.getDate() - (ACTIVITY_WINDOW_DAYS - 1));
+
+  const countsByDay = new Map<string, number>();
+  const windowStart = start.getTime();
+  const windowEnd = today.getTime() + 24 * 60 * 60 * 1000;
+
+  events.forEach(event => {
+    const eventDate = new Date(event.timestamp);
+    const eventTime = eventDate.getTime();
+    if (Number.isNaN(eventTime) || eventTime < windowStart || eventTime >= windowEnd) return;
+
+    eventDate.setHours(0, 0, 0, 0);
+    const key = getActivityDayKey(eventDate);
+    countsByDay.set(key, (countsByDay.get(key) || 0) + 1);
+  });
+
+  const cells = Array.from({ length: ACTIVITY_WINDOW_DAYS }, (_, index) => {
+    const date = new Date(start);
+    date.setDate(start.getDate() + index);
+    const key = getActivityDayKey(date);
+    const count = countsByDay.get(key) || 0;
+    return { key, date, count };
+  });
+
+  const maxCount = Math.max(1, ...cells.map(cell => cell.count));
+  const totalEvents = cells.reduce((sum, cell) => sum + cell.count, 0);
+  const activeDays = cells.filter(cell => cell.count > 0).length;
+  const completedSessions = events.filter(event => event.type === 'study_session_completed').length;
+  const recentEvents = events.slice(0, 8);
+
+  return `
+    <section class="activity-overview" aria-labelledby="activity-overview-heading">
+      <div class="section-header-inline">
+        <div>
+          <h2 id="activity-overview-heading">Activity</h2>
+          <p>${totalEvents} logged item${totalEvents === 1 ? '' : 's'} in the last 13 weeks</p>
+        </div>
+        <div class="activity-stats">
+          <div class="activity-stat">
+            <span class="activity-stat-value">${activeDays}</span>
+            <span class="activity-stat-label">active days</span>
+          </div>
+          <div class="activity-stat">
+            <span class="activity-stat-value">${completedSessions}</span>
+            <span class="activity-stat-label">sessions</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-panel">
+        <div class="activity-calendar-wrap" aria-label="Activity calendar">
+          <div class="activity-calendar">
+            ${cells.map(cell => {
+              const level = getActivityLevel(cell.count, maxCount);
+              const label = `${cell.count} item${cell.count === 1 ? '' : 's'} on ${cell.date.toLocaleDateString()}`;
+              return `
+                <span
+                  class="activity-day level-${level}"
+                  title="${escapeHtml(label)}"
+                  aria-label="${escapeHtml(label)}"
+                ></span>
+              `;
+            }).join('')}
+          </div>
+          <div class="activity-legend" aria-hidden="true">
+            <span>Less</span>
+            <span class="activity-day level-0"></span>
+            <span class="activity-day level-1"></span>
+            <span class="activity-day level-2"></span>
+            <span class="activity-day level-3"></span>
+            <span class="activity-day level-4"></span>
+            <span>More</span>
+          </div>
+        </div>
+
+        <div class="activity-feed">
+          <h3>Recent activity</h3>
+          ${recentEvents.length > 0 ? `
+            <ol>
+              ${recentEvents.map(renderRecentActivityItem).join('')}
+            </ol>
+          ` : `
+            <p class="activity-empty">No activity recorded yet.</p>
+          `}
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 /**

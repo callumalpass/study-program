@@ -6,7 +6,7 @@
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ProgressStorage } from '../src/core/storage';
+import { PROGRESS_UPDATED_EVENT, ProgressStorage } from '../src/core/storage';
 import type { QuizAttempt, ExamAttempt, ExerciseCompletion, ProjectSubmission } from '../src/core/types';
 
 const now = new Date('2024-01-01T12:00:00.000Z');
@@ -161,7 +161,7 @@ describe('ProgressStorage migration', () => {
       subjects: {
         cs101: {
           status: 'in_progress',
-          // Missing: quizAttempts, examAttempts, exerciseCompletions, projectSubmissions, subtopicViews
+          // Missing: quizAttempts, examAttempts, exerciseCompletions, projectSubmissions, subtopicViews, subtopicCompletions
         },
       },
       settings: {
@@ -181,6 +181,7 @@ describe('ProgressStorage migration', () => {
     expect(subjectProgress!.exerciseCompletions).toEqual({});
     expect(subjectProgress!.projectSubmissions).toEqual({});
     expect(subjectProgress!.subtopicViews).toEqual({});
+    expect(subjectProgress!.subtopicCompletions).toEqual({});
   });
 });
 
@@ -705,7 +706,53 @@ describe('ProgressStorage subtopic views', () => {
   });
 });
 
+describe('ProgressStorage subtopic completions', () => {
+  it('records explicit subtopic completion separately from views', () => {
+    const storage = makeStorage();
+
+    storage.recordSubtopicView('cs101', 'topic1-sub1');
+    storage.recordSubtopicCompletion('cs101', 'topic1-sub1');
+
+    const view = storage.getSubtopicView('cs101', 'topic1-sub1');
+    const completion = storage.getSubtopicCompletion('cs101', 'topic1-sub1');
+
+    expect(view).toBeDefined();
+    expect(completion).toEqual({ completedAt: now.toISOString() });
+  });
+
+  it('does not count viewed subtopics as completed', () => {
+    const storage = makeStorage();
+
+    storage.recordSubtopicView('cs101', 'sub1');
+    storage.recordSubtopicView('cs101', 'sub2');
+
+    expect(storage.getSubtopicCompletion('cs101', 'sub1')).toBeUndefined();
+    expect(storage.areAllSubtopicsCompleted('cs101', ['sub1', 'sub2'])).toBe(false);
+  });
+
+  it('checks if all subtopics are explicitly completed', () => {
+    const storage = makeStorage();
+
+    storage.recordSubtopicCompletion('cs101', 'sub1');
+    storage.recordSubtopicCompletion('cs101', 'sub2');
+
+    expect(storage.areAllSubtopicsCompleted('cs101', ['sub1', 'sub2'])).toBe(true);
+    expect(storage.areAllSubtopicsCompleted('cs101', ['sub1', 'sub2', 'sub3'])).toBe(false);
+  });
+});
+
 describe('ProgressStorage settings', () => {
+  it('dispatches a progress update event when progress is saved', () => {
+    const storage = makeStorage();
+    const listener = vi.fn();
+    window.addEventListener(PROGRESS_UPDATED_EVENT, listener);
+
+    storage.updateSettings({ theme: 'dark' });
+
+    expect(listener).toHaveBeenCalledTimes(1);
+    window.removeEventListener(PROGRESS_UPDATED_EVENT, listener);
+  });
+
   it('updates individual settings', () => {
     const storage = makeStorage();
 

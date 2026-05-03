@@ -6,11 +6,12 @@ import './styles/pages.css';
 import './styles/animations.css';
 
 import { onRouteChange } from './core/router';
-import { progressStorage } from './core/storage';
+import { PROGRESS_UPDATED_EVENT, progressStorage } from './core/storage';
 import type { Route, Subject, Theme } from './core/types';
 import { showToast } from './components/toast';
 import { renderSidebar } from './components/preact/sidebar';
 import { renderMobileHeaderMascot } from './components/preact/mobile-header';
+import { renderStudySessionAccess } from './components/study-session-access';
 import { escapeHtml } from './utils/html';
 import { registerPwa } from './pwa';
 import { loadAllAssessments, loadSubjectAssessments } from './subjects/registry';
@@ -32,6 +33,7 @@ const MOBILE_CHROME_TOP_THRESHOLD_PX = 24;
 
 let curriculumPromise: Promise<Subject[]> | null = null;
 let routeRenderToken = 0;
+let studySessionAccessRefreshScheduled = false;
 
 function loadCurriculum(): Promise<Subject[]> {
   if (!curriculumPromise) {
@@ -146,11 +148,40 @@ function renderLoadingPage(container: HTMLElement): void {
   `;
 }
 
+function getCurrentHashPath(): string {
+  return window.location.hash.replace(/^#/, '') || '/';
+}
+
+function refreshStudySessionAccess(studySessionAccessEl: HTMLElement | null): void {
+  if (!studySessionAccessEl || studySessionAccessRefreshScheduled) return;
+
+  studySessionAccessRefreshScheduled = true;
+  window.requestAnimationFrame(() => {
+    studySessionAccessRefreshScheduled = false;
+    const path = getCurrentHashPath();
+
+    loadCurriculum()
+      .then((curriculum) => {
+        safeRender(studySessionAccessEl, path, () => {
+          renderStudySessionAccess(studySessionAccessEl, path, curriculum);
+        });
+      })
+      .catch((error) => {
+        renderErrorPage(
+          studySessionAccessEl,
+          error instanceof Error ? error : new Error(String(error)),
+          path
+        );
+      });
+  });
+}
+
 async function renderRoute(
   route: Route,
   sidebarEl: HTMLElement,
   mainEl: HTMLElement,
   mobileMascotEl: HTMLElement | null,
+  studySessionAccessEl: HTMLElement | null,
   renderToken: number
 ): Promise<void> {
   const { path, params } = route;
@@ -171,6 +202,12 @@ async function renderRoute(
       renderMobileHeaderMascot(mobileMascotEl, path);
     }
 
+    if (studySessionAccessEl) {
+      safeRender(studySessionAccessEl, path, () => {
+        renderStudySessionAccess(studySessionAccessEl, path, curriculum);
+      });
+    }
+
     if (path === '/' || path === '') {
       const { renderHomePage } = await import('./pages/home');
       if (renderToken !== routeRenderToken) return;
@@ -183,6 +220,10 @@ async function renderRoute(
       const { renderProgressPage } = await import('./pages/progress');
       if (renderToken !== routeRenderToken) return;
       renderProgressPage(mainEl, curriculum);
+    } else if (path === '/study-session') {
+      const { renderStudySessionPage } = await import('./pages/study-session');
+      if (renderToken !== routeRenderToken) return;
+      renderStudySessionPage(mainEl, curriculum);
     } else if (path === '/settings') {
       const { renderSettingsPage } = await import('./pages/settings');
       if (renderToken !== routeRenderToken) return;
@@ -482,6 +523,7 @@ async function initApp(): Promise<void> {
   const sidebarEl = document.getElementById('sidebar');
   const mainEl = document.getElementById('main-content');
   const mobileMascotEl = document.getElementById('mobile-mascot');
+  const studySessionAccessEl = document.getElementById('study-session-access');
 
   if (!sidebarEl || !mainEl) {
     console.error('Required DOM elements not found');
@@ -491,7 +533,11 @@ async function initApp(): Promise<void> {
   // Set up route change handler
   onRouteChange((route) => {
     routeRenderToken++;
-    void renderRoute(route, sidebarEl, mainEl, mobileMascotEl, routeRenderToken);
+    void renderRoute(route, sidebarEl, mainEl, mobileMascotEl, studySessionAccessEl, routeRenderToken);
+  });
+
+  window.addEventListener(PROGRESS_UPDATED_EVENT, () => {
+    refreshStudySessionAccess(studySessionAccessEl);
   });
 
   // Router initializes itself via constructor - no need to call init()

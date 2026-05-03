@@ -1,6 +1,6 @@
 import { h, Fragment, ComponentChildren } from 'preact';
 import { useState, useCallback, useMemo, useEffect, useRef } from 'preact/hooks';
-import type { Subject, Topic, SubjectProgress, Quiz, Exercise, Exam, Project } from '@/core/types';
+import type { Subject, Topic, SubjectProgress, Quiz, Exercise, Exam, Project, SubtopicCompletion } from '@/core/types';
 import { QUIZ_PASSING_SCORE } from '@/core/types';
 import { Icons } from '@/components/icons';
 import {
@@ -41,6 +41,8 @@ interface ContentNavigatorProps {
 
 const INITIAL_EXERCISE_COUNT = 5;
 const INITIAL_QUIZ_COUNT = 5;
+const MOBILE_NAV_REOPEN_KEY = 'stod.subjectNav.reopen';
+const MOBILE_NAV_PANEL_KEY = 'stod.subjectNav.panel';
 
 function formatStatus(status: string): string {
   return status.split('_').map(word =>
@@ -67,9 +69,42 @@ export function ContentNavigator({
 }: ContentNavigatorProps) {
   const [showAllExercises, setShowAllExercises] = useState(false);
   const [showAllQuizzes, setShowAllQuizzes] = useState(false);
-  const [mobilePanel, setMobilePanel] = useState<'topics' | 'practice'>('topics');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [subtopicCompletions, setSubtopicCompletions] = useState<Record<string, SubtopicCompletion>>(
+    () => progress?.subtopicCompletions || {}
+  );
+  const [mobilePanel, setMobilePanel] = useState<'topics' | 'practice'>(() => {
+    if (typeof window === 'undefined') return 'topics';
+    return window.sessionStorage.getItem(MOBILE_NAV_PANEL_KEY) === 'practice' ? 'practice' : 'topics';
+  });
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.sessionStorage.getItem(MOBILE_NAV_REOPEN_KEY) === 'true';
+  });
   const graphContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setSubtopicCompletions(progress?.subtopicCompletions || {});
+  }, [progress?.subtopicCompletions]);
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.removeItem(MOBILE_NAV_REOPEN_KEY);
+    }
+  }, []);
+
+  const preserveMobileMenuAfterNavigation = useCallback(() => {
+    if (!isMobileMenuOpen || typeof window === 'undefined') return;
+    window.sessionStorage.setItem(MOBILE_NAV_REOPEN_KEY, 'true');
+    window.sessionStorage.setItem(MOBILE_NAV_PANEL_KEY, mobilePanel);
+  }, [isMobileMenuOpen, mobilePanel]);
+
+  const handleMobilePanelChange = useCallback((panel: 'topics' | 'practice') => {
+    setMobilePanel(panel);
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.setItem(MOBILE_NAV_PANEL_KEY, panel);
+    }
+  }, []);
 
   // Filter content for this subject
   const subjectQuizzes = useMemo(() => quizzes.filter(q => q.subjectId === subject.id), [quizzes, subject.id]);
@@ -174,9 +209,30 @@ export function ContentNavigator({
     renderFunctionPlots();
   }, [currentSubtopic?.id, currentTopic?.id]);
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeMobileMenu();
+      }
+    };
+
+    window.sessionStorage.removeItem(MOBILE_NAV_REOPEN_KEY);
+    document.body.classList.add('subject-nav-open');
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.classList.remove('subject-nav-open');
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closeMobileMenu, isMobileMenuOpen]);
+
   // Progress helpers
   const isTopicCompleted = useCallback((topic: Topic): boolean => {
     if (!progress) return false;
+    const readingComplete = !topic.subtopics?.length
+      || topic.subtopics.every(subtopic => subtopicCompletions[subtopic.id]);
     const quizzesComplete = topic.quizIds.every(qid => {
       const attempts = progress.quizAttempts?.[qid];
       // Check if any attempt has a passing score
@@ -186,10 +242,10 @@ export function ContentNavigator({
       const completion = progress.exerciseCompletions?.[eid];
       return completion?.passed;
     });
-    return quizzesComplete && exercisesComplete;
-  }, [progress]);
+    return readingComplete && quizzesComplete && exercisesComplete;
+  }, [progress, subtopicCompletions]);
 
-  const getTopicProgress = useCallback((topic: Topic): { completed: number; total: number } => {
+  const getTopicPracticeProgress = useCallback((topic: Topic): { completed: number; total: number } => {
     if (!progress) return { completed: 0, total: topic.quizIds.length + topic.exerciseIds.length };
 
     const quizzesCompleted = topic.quizIds.filter(qid => {
@@ -209,9 +265,21 @@ export function ContentNavigator({
     };
   }, [progress]);
 
+  const getTopicReadingProgress = useCallback((topic: Topic): { completed: number; total: number } => {
+    const subtopics = topic.subtopics || [];
+    return {
+      completed: subtopics.filter(subtopic => subtopicCompletions[subtopic.id]).length,
+      total: subtopics.length,
+    };
+  }, [subtopicCompletions]);
+
   const isSubtopicViewed = useCallback((subtopicId: string): boolean => {
     return progress?.subtopicViews?.[subtopicId] !== undefined;
   }, [progress]);
+
+  const isSubtopicCompleted = useCallback((subtopicId: string): boolean => {
+    return subtopicCompletions[subtopicId] !== undefined;
+  }, [subtopicCompletions]);
 
   const isQuizAttempted = useCallback((quizId: string): boolean => {
     const attempts = progress?.quizAttempts?.[quizId];
@@ -238,55 +306,118 @@ export function ContentNavigator({
     return Boolean(submissions && submissions.length > 0);
   }, [progress]);
 
+  const allSubtopics = subject.topics.flatMap(topic => topic.subtopics ?? []);
+  const completedTopicCount = subject.topics.filter(topic => isTopicCompleted(topic)).length;
+  const completedSubtopicCount = allSubtopics.filter(subtopic => isSubtopicCompleted(subtopic.id)).length;
+  const scopedPracticeCount = practiceQuizzes.length + practiceExercises.length + subjectExams.length + subjectProjects.length;
+  const completedPracticeCount = practiceQuizzes.filter(quiz => isQuizPassed(quiz.id)).length
+    + practiceExercises.filter(exercise => isExerciseComplete(exercise.id)).length
+    + subjectExams.filter(exam => isExamAttempted(exam.id)).length
+    + subjectProjects.filter(project => hasProjectSubmission(project.id)).length;
+  const sectionProgressValue = allSubtopics.length > 0
+    ? `${completedSubtopicCount}/${allSubtopics.length}`
+    : '0';
+  const practiceProgressValue = scopedPracticeCount > 0
+    ? `${completedPracticeCount}/${scopedPracticeCount}`
+    : '0';
+  const mobileContextTitle = decodeQuoteEntities(
+    currentSubtopic?.title || currentTopic?.title || subject.title
+  );
+  const mobileContextMeta = currentSubtopic && subtopicIndex >= 0
+    ? `Section ${subtopicIndex + 1}/${subtopicCount}`
+    : currentTopic && topicIndex >= 0
+      ? `Topic ${topicIndex + 1}/${subject.topics.length}`
+      : `${completedTopicCount}/${subject.topics.length} topics done`;
+  const practiceContextLabel = currentTopic
+    ? decodeQuoteEntities(currentTopic.title)
+    : 'Whole subject';
+
   // Navigation handlers
   const handleTopicClick = useCallback((e: Event, topicId: string) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false);
+    preserveMobileMenuAfterNavigation();
     const topic = subject.topics.find(t => t.id === topicId);
     if (topic?.subtopics?.length) {
       navigateToSubtopic(subject.id, topicId, topic.subtopics[0].slug);
     } else {
       navigateToTopic(subject.id, topicId);
     }
-  }, [subject]);
+  }, [preserveMobileMenuAfterNavigation, subject]);
 
   const handleSubtopicClick = useCallback((e: Event, topicId: string, slug: string) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false);
+    closeMobileMenu();
     navigateToSubtopic(subject.id, topicId, slug);
-  }, [subject.id]);
+  }, [closeMobileMenu, subject.id]);
 
   const handleQuizClick = useCallback((e: Event, quizId: string) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false);
+    closeMobileMenu();
     navigateToQuiz(subject.id, quizId);
-  }, [subject.id]);
+  }, [closeMobileMenu, subject.id]);
 
   const handleExerciseClick = useCallback((e: Event, exerciseId: string) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false);
+    closeMobileMenu();
     navigateToExercise(subject.id, exerciseId);
-  }, [subject.id]);
+  }, [closeMobileMenu, subject.id]);
 
   const handleExamClick = useCallback((e: Event, examId: string) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false);
+    closeMobileMenu();
     navigateToExam(subject.id, examId);
-  }, [subject.id]);
+  }, [closeMobileMenu, subject.id]);
 
   const handleProjectClick = useCallback((e: Event, projectId: string) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false);
+    closeMobileMenu();
     navigateToProject(subject.id, projectId);
-  }, [subject.id]);
+  }, [closeMobileMenu, subject.id]);
 
   const handleContinueReadingClick = useCallback((e: Event) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false);
+    closeMobileMenu();
     if (lastViewedSubtopicInfo) {
       navigateToSubtopic(subject.id, lastViewedSubtopicInfo.topic.id, lastViewedSubtopicInfo.subtopic.slug);
     }
-  }, [subject.id, lastViewedSubtopicInfo]);
+  }, [closeMobileMenu, subject.id, lastViewedSubtopicInfo]);
+
+  const handleCompleteSection = useCallback(() => {
+    if (!currentSubtopic) return;
+
+    progressStorage.recordSubtopicCompletion(subject.id, currentSubtopic.id);
+    const completion = progressStorage.getSubtopicCompletion(subject.id, currentSubtopic.id);
+    if (completion) {
+      setSubtopicCompletions(prev => ({
+        ...prev,
+        [currentSubtopic.id]: completion,
+      }));
+    }
+  }, [currentSubtopic, subject.id]);
+
+  const getNextPracticeForTopic = useCallback((topic: Topic): { label: string; title: string; href: string } | null => {
+    const nextQuizId = topic.quizIds.find(quizId => !isQuizPassed(quizId));
+    if (nextQuizId) {
+      const quiz = subjectQuizzes.find(q => q.id === nextQuizId);
+      return {
+        label: 'Take Topic Quiz',
+        title: quiz ? decodeQuoteEntities(quiz.title) : 'Topic quiz',
+        href: `#/subject/${subject.id}/quiz/${nextQuizId}`,
+      };
+    }
+
+    const nextExerciseId = topic.exerciseIds.find(exerciseId => !isExerciseComplete(exerciseId));
+    if (nextExerciseId) {
+      const exercise = subjectExercises.find(e => e.id === nextExerciseId);
+      return {
+        label: 'Start Exercise',
+        title: exercise ? decodeQuoteEntities(exercise.title) : 'Topic exercise',
+        href: `#/subject/${subject.id}/exercise/${nextExerciseId}`,
+      };
+    }
+
+    return null;
+  }, [isExerciseComplete, isQuizPassed, subject.id, subjectExercises, subjectQuizzes]);
 
   // Render content based on current state
   const renderContent = () => {
@@ -296,6 +427,11 @@ export function ContentNavigator({
       const currentIndex = subtopics.findIndex(st => st.id === currentSubtopic.id);
       const prevSubtopic = currentIndex > 0 ? subtopics[currentIndex - 1] : null;
       const nextSubtopic = currentIndex < subtopics.length - 1 ? subtopics[currentIndex + 1] : null;
+      const currentSectionCompleted = isSubtopicCompleted(currentSubtopic.id);
+      const topicReadingProgress = getTopicReadingProgress(currentTopic);
+      const topicReadingComplete = topicReadingProgress.total > 0
+        && topicReadingProgress.completed === topicReadingProgress.total;
+      const nextPractice = getNextPracticeForTopic(currentTopic);
 
       return (
         <div class="content-main">
@@ -306,6 +442,62 @@ export function ContentNavigator({
           {/* Show readings for the current topic */}
           {currentTopic.readings && currentTopic.readings.length > 0 && (
             <ReadingList readings={currentTopic.readings} topicTitle={decodeQuoteEntities(currentTopic.title)} />
+          )}
+          <section class={`section-completion-panel ${currentSectionCompleted ? 'completed' : ''}`}>
+            <div class="section-completion-copy">
+              <span class="section-completion-kicker">
+                {topicReadingProgress.completed}/{topicReadingProgress.total} sections complete
+              </span>
+              <h2>{currentSectionCompleted ? 'Section completed' : 'Complete this section'}</h2>
+              <p>
+                {currentSectionCompleted
+                  ? 'This section is counted toward topic reading progress.'
+                  : 'Mark this section complete when you are ready to move on.'}
+              </p>
+            </div>
+            <div class="section-completion-actions">
+              <button
+                type="button"
+                class="btn btn-primary"
+                disabled={currentSectionCompleted}
+                onClick={handleCompleteSection}
+              >
+                <span dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                {currentSectionCompleted ? 'Completed' : 'Complete Section'}
+              </button>
+              {currentSectionCompleted && nextSubtopic && (
+                <a
+                  class="btn btn-secondary"
+                  href={`#/subject/${subject.id}/topic/${currentTopic.id}/subtopic/${nextSubtopic.slug}`}
+                >
+                  Next Section
+                  <span dangerouslySetInnerHTML={{ __html: Icons.ArrowRight }} />
+                </a>
+              )}
+            </div>
+          </section>
+          {currentSectionCompleted && !nextSubtopic && topicReadingComplete && (
+            <section class="topic-transition-panel">
+              <div>
+                <span class="section-completion-kicker">Topic reading complete</span>
+                <h2>Topic reading complete</h2>
+                <p>
+                  {nextPractice
+                    ? `Next: ${nextPractice.title}.`
+                    : 'Next: review your completed topic or choose another practice item.'}
+                </p>
+              </div>
+              {nextPractice ? (
+                <a class="btn btn-primary" href={nextPractice.href}>
+                  {nextPractice.label}
+                  <span dangerouslySetInnerHTML={{ __html: Icons.ArrowRight }} />
+                </a>
+              ) : (
+                <button class="btn btn-secondary" onClick={(e) => handleTopicClick(e, currentTopic.id)}>
+                  Review Topic
+                </button>
+              )}
+            </section>
           )}
           <nav class="content-pagination">
             <div class="pagination-left">
@@ -442,49 +634,102 @@ export function ContentNavigator({
         <button
           type="button"
           class="mobile-menu-toggle"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={() => isMobileMenuOpen ? closeMobileMenu() : setIsMobileMenuOpen(true)}
           aria-expanded={isMobileMenuOpen}
           aria-controls="subject-mobile-nav-panel"
         >
-          <span class="toggle-label">{currentTopic ? decodeQuoteEntities(currentTopic.title) : 'Subject menu'}</span>
-          <span class="toggle-icon" dangerouslySetInnerHTML={{ __html: isMobileMenuOpen ? Icons.ChevronUp : Icons.ChevronDown }} />
+          <span class="toggle-leading-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Curriculum }} />
+          <span class="toggle-copy">
+            <span class="toggle-kicker">{subject.code} navigation</span>
+            <span class="toggle-label">{mobileContextTitle}</span>
+            <span class="toggle-meta">{mobileContextMeta}</span>
+          </span>
+          <span class="toggle-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: isMobileMenuOpen ? Icons.ChevronUp : Icons.ChevronDown }} />
         </button>
 
+        {isMobileMenuOpen && (
+          <button
+            type="button"
+            class="mobile-nav-scrim"
+            aria-label="Close subject navigation"
+            onClick={closeMobileMenu}
+          />
+        )}
+
         <div id="subject-mobile-nav-panel" class={`sidebar-content-wrapper ${isMobileMenuOpen ? 'open' : ''}`}>
+          <div class="mobile-panel-header">
+            <span class="mobile-panel-grabber" aria-hidden="true" />
+            <div class="mobile-panel-title-group">
+              <span class="mobile-panel-kicker">{subject.code}</span>
+              <span class="mobile-panel-title">{decodeQuoteEntities(subject.title)}</span>
+              <span class="mobile-panel-context">{practiceContextLabel}</span>
+            </div>
+            <button
+              type="button"
+              class="mobile-panel-close"
+              aria-label="Close subject navigation"
+              onClick={closeMobileMenu}
+            >
+              <span aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Cross }} />
+            </button>
+            <div class="mobile-panel-stats" aria-label="Subject progress">
+              <span class="mobile-panel-stat">
+                <span class="stat-value">{completedTopicCount}/{subject.topics.length}</span>
+                <span class="stat-label">topics</span>
+              </span>
+              <span class="mobile-panel-stat">
+                <span class="stat-value">{sectionProgressValue}</span>
+                <span class="stat-label">sections</span>
+              </span>
+              <span class="mobile-panel-stat">
+                <span class="stat-value">{practiceProgressValue}</span>
+                <span class="stat-label">practice</span>
+              </span>
+            </div>
+          </div>
+
           {/* Mobile panel tabs (shown via CSS on small screens) */}
           <div class="content-sidebar-tabs" role="tablist" aria-label="Subject panels">
             <button
               type="button"
+              role="tab"
               class={`content-sidebar-tab ${mobilePanel === 'topics' ? 'active' : ''}`}
               aria-selected={mobilePanel === 'topics'}
-              onClick={() => setMobilePanel('topics')}
+              aria-controls="subject-topics-panel"
+              onClick={() => handleMobilePanelChange('topics')}
             >
-              <span class="tab-icon" dangerouslySetInnerHTML={{ __html: Icons.Curriculum }} />
+              <span class="tab-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Curriculum }} />
               <span class="tab-label">Topics</span>
+              <span class="tab-count">{completedTopicCount}/{subject.topics.length}</span>
             </button>
             <button
               type="button"
+              role="tab"
               class={`content-sidebar-tab ${mobilePanel === 'practice' ? 'active' : ''}`}
               aria-selected={mobilePanel === 'practice'}
-              onClick={() => setMobilePanel('practice')}
+              aria-controls="subject-practice-panel"
+              onClick={() => handleMobilePanelChange('practice')}
             >
-              <span class="tab-icon" dangerouslySetInnerHTML={{ __html: Icons.Progress }} />
+              <span class="tab-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Progress }} />
               <span class="tab-label">Practice</span>
+              <span class="tab-count">{practiceProgressValue}</span>
             </button>
           </div>
 
           {/* Topics section */}
-          <div class="sidebar-section topics-section">
+          <div id="subject-topics-panel" class="sidebar-section topics-section" role="tabpanel">
             <div class="sidebar-section-header">
-              <span class="section-icon" dangerouslySetInnerHTML={{ __html: Icons.Curriculum }} />
+              <span class="section-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Curriculum }} />
               <span>Topics</span>
+              <span class="section-count">{completedTopicCount}/{subject.topics.length}</span>
             </div>
             <div class="topic-list">
               {subject.topics.map((topic, index) => {
                 const isActive = currentTopicId === topic.id;
                 const isCompleted = isTopicCompleted(topic);
                 const hasSubtopics = topic.subtopics && topic.subtopics.length > 0;
-                const topicProgress = getTopicProgress(topic);
+                const readingProgress = getTopicReadingProgress(topic);
+                const practiceProgress = getTopicPracticeProgress(topic);
 
                 return (
                   <div key={topic.id} class={`topic-group ${isActive ? 'active' : ''}`}>
@@ -492,9 +737,21 @@ export function ContentNavigator({
                       class={`topic-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
                       onClick={(e) => handleTopicClick(e, topic.id)}
                     >
-                      <span class="topic-title">{decodeQuoteEntities(topic.title)}</span>
-                      {topicProgress.total > 0 && !isCompleted && (
-                        <span class="topic-progress">{topicProgress.completed}/{topicProgress.total}</span>
+                      <span class="topic-indicator" aria-hidden="true">
+                        {isCompleted ? (
+                          <span class="indicator-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                        ) : (
+                          index + 1
+                        )}
+                      </span>
+                      <span class="topic-copy">
+                        <span class="topic-title">{decodeQuoteEntities(topic.title)}</span>
+                        {hasSubtopics && (
+                          <span class="topic-meta">{readingProgress.completed}/{readingProgress.total} sections</span>
+                        )}
+                      </span>
+                      {practiceProgress.total > 0 && (
+                        <span class="topic-progress">{practiceProgress.completed}/{practiceProgress.total} practice</span>
                       )}
                     </button>
 
@@ -504,18 +761,21 @@ export function ContentNavigator({
                         {topic.subtopics.map((subtopic) => {
                           const isSubtopicActive = currentSubtopicSlug === subtopic.slug;
                           const isViewed = isSubtopicViewed(subtopic.id);
+                          const isCompleted = isSubtopicCompleted(subtopic.id);
 
                           return (
                             <button
                               key={subtopic.id}
-                              class={`subtopic-item ${isSubtopicActive ? 'active' : ''} ${isViewed ? 'viewed' : ''}`}
+                              class={`subtopic-item ${isSubtopicActive ? 'active' : ''} ${isViewed ? 'viewed' : ''} ${isCompleted ? 'completed' : ''}`}
                               onClick={(e) => handleSubtopicClick(e, topic.id, subtopic.slug)}
                             >
                               <span class="subtopic-indicator">
-                                {isViewed ? (
-                                  <span class="indicator-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                                {isCompleted ? (
+                                  <span class="indicator-check" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                                ) : isViewed ? (
+                                  <span class="indicator-viewed" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.StatusInProgress }} />
                                 ) : (
-                                  <span class="indicator-dot" />
+                                  <span class="indicator-dot" aria-hidden="true" />
                                 )}
                               </span>
                               <span class="subtopic-title">{decodeQuoteEntities(subtopic.title)}</span>
@@ -531,10 +791,13 @@ export function ContentNavigator({
           </div>
 
           {/* Practice section */}
-          <div class="sidebar-section practice-section">
+          <div id="subject-practice-panel" class="sidebar-section practice-section" role="tabpanel">
             <div class="sidebar-section-header">
-              <span class="section-icon" dangerouslySetInnerHTML={{ __html: Icons.Progress }} />
+              <span class="section-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Progress }} />
               <span>Practice</span>
+              {scopedPracticeCount > 0 && (
+                <span class="section-count">{completedPracticeCount}/{scopedPracticeCount}</span>
+              )}
             </div>
 
             {!hasPracticeItems && (
@@ -560,9 +823,13 @@ export function ContentNavigator({
                       class={`practice-item ${passed ? 'completed' : attempted ? 'attempted' : ''} ${isActive ? 'active' : ''}`}
                       onClick={(e) => handleQuizClick(e, quiz.id)}
                     >
-                      <span class="practice-title">Quiz {index + 1}</span>
+                      <span class="practice-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Quiz }} />
+                      <span class="practice-copy">
+                        <span class="practice-title">Quiz {index + 1}</span>
+                        <span class="practice-meta">{decodeQuoteEntities(quiz.title)}</span>
+                      </span>
                       {passed && (
-                        <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                        <span class="practice-check" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
                       )}
                     </button>
                   );
@@ -593,9 +860,13 @@ export function ContentNavigator({
                       class={`practice-item ${completed ? 'completed' : ''} ${isActive ? 'active' : ''}`}
                       onClick={(e) => handleExerciseClick(e, exercise.id)}
                     >
-                      <span class="practice-title">Exercise {index + 1}</span>
+                      <span class="practice-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Code }} />
+                      <span class="practice-copy">
+                        <span class="practice-title">Exercise {index + 1}</span>
+                        <span class="practice-meta">{decodeQuoteEntities(exercise.title)}</span>
+                      </span>
                       {completed && (
-                        <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                        <span class="practice-check" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
                       )}
                     </button>
                   );
@@ -623,9 +894,13 @@ export function ContentNavigator({
                       class={`practice-item exam-item ${attempted ? 'completed' : ''} ${isActive ? 'active' : ''}`}
                       onClick={(e) => handleExamClick(e, exam.id)}
                     >
-                      <span class="practice-title">{decodeQuoteEntities(exam.title)}</span>
+                      <span class="practice-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.StatQuiz }} />
+                      <span class="practice-copy">
+                        <span class="practice-title">{decodeQuoteEntities(exam.title)}</span>
+                        <span class="practice-meta">Exam</span>
+                      </span>
                       {attempted && (
-                        <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                        <span class="practice-check" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
                       )}
                     </button>
                   );
@@ -647,9 +922,13 @@ export function ContentNavigator({
                       class={`practice-item project-item ${submitted ? 'completed' : ''}`}
                       onClick={(e) => handleProjectClick(e, project.id)}
                     >
-                      <span class="practice-title">{decodeQuoteEntities(project.title)}</span>
+                      <span class="practice-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.StatProject }} />
+                      <span class="practice-copy">
+                        <span class="practice-title">{decodeQuoteEntities(project.title)}</span>
+                        <span class="practice-meta">Project</span>
+                      </span>
                       {submitted && (
-                        <span class="practice-check" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
+                        <span class="practice-check" aria-hidden="true" dangerouslySetInnerHTML={{ __html: Icons.Check }} />
                       )}
                     </button>
                   );

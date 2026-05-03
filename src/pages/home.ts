@@ -17,6 +17,14 @@ import {
   getNextRecommendedSubject,
 } from '@/core/progress';
 import { navigateToSubject, navigateToCurriculum } from '@/core/router';
+import {
+  advanceStudySession,
+  getActiveStudySession,
+  getCurrentStudySessionItem,
+  getSubjectLastActivityAt,
+  startStudySession,
+  type StudySessionItemKind,
+} from '@/core/study-session';
 import { Icons } from '../components/icons';
 import { escapeHtml } from '@/utils/html';
 
@@ -190,63 +198,188 @@ function isExercisePassed(progress: SubjectProgress | undefined, exerciseId: str
   return Boolean(progress?.exerciseCompletions?.[exerciseId]?.passed);
 }
 
-function getNextReadingAction(subject: Subject, progress: SubjectProgress | undefined): DashboardAction | null {
-  const flatSubtopics = subject.topics.flatMap(topic =>
-    (topic.subtopics || []).map(subtopic => ({ topic, subtopic }))
-  );
-
-  if (flatSubtopics.length === 0) {
-    return null;
-  }
-
-  const views = progress?.subtopicViews || {};
-  const nextUnread = flatSubtopics.find(({ subtopic }) => !views[subtopic.id]);
-
-  if (!nextUnread) {
-    return null;
-  }
-
+function getTopicReadingProgress(topic: Subject['topics'][number], progress: SubjectProgress | undefined): { completed: number; total: number } {
+  const subtopics = topic.subtopics || [];
+  const completions = progress?.subtopicCompletions || {};
   return {
-    icon: Icons.BookOpen || Icons.Curriculum,
-    eyebrow: 'Read Next',
-    title: nextUnread.subtopic.title,
-    description: `${subject.code} · ${nextUnread.topic.title}`,
-    meta: `${Object.keys(views).length}/${flatSubtopics.length} sections viewed`,
-    href: `#/subject/${subject.id}/topic/${nextUnread.topic.id}/subtopic/${nextUnread.subtopic.slug}`,
-    cta: 'Open Section',
+    completed: subtopics.filter(subtopic => completions[subtopic.id]).length,
+    total: subtopics.length,
   };
 }
 
-function getNextPracticeAction(subject: Subject, progress: SubjectProgress | undefined): DashboardAction | null {
-  for (const topic of subject.topics) {
-    const nextQuizId = topic.quizIds.find(quizId => !isQuizPassed(progress, quizId));
-    if (nextQuizId) {
-      return {
-        icon: Icons.StatQuiz,
-        eyebrow: 'Practice Next',
-        title: getAssessmentTitle('quiz', subject.id, nextQuizId),
-        description: `${subject.code} · ${topic.title}`,
-        meta: 'Passing score: 70%',
-        href: `#/subject/${subject.id}/quiz/${nextQuizId}`,
-        cta: 'Start Quiz',
-      };
-    }
+function getReadingActionForTopic(
+  subject: Subject,
+  progress: SubjectProgress | undefined,
+  topic: Subject['topics'][number]
+): DashboardAction | null {
+  const subtopics = topic.subtopics || [];
+  if (subtopics.length === 0) return null;
 
-    const nextExerciseId = topic.exerciseIds.find(exerciseId => !isExercisePassed(progress, exerciseId));
-    if (nextExerciseId) {
-      return {
-        icon: Icons.StatCode,
-        eyebrow: 'Solve Next',
-        title: getAssessmentTitle('exercise', subject.id, nextExerciseId),
-        description: `${subject.code} · ${topic.title}`,
-        meta: 'Exercise not completed',
-        href: `#/subject/${subject.id}/exercise/${nextExerciseId}`,
-        cta: 'Open Exercise',
-      };
-    }
+  const readingProgress = getTopicReadingProgress(topic, progress);
+  const nextIncomplete = subtopics.find(subtopic => !progress?.subtopicCompletions?.[subtopic.id]);
+
+  if (!nextIncomplete) return null;
+
+  return {
+    icon: Icons.BookOpen || Icons.Curriculum,
+    eyebrow: 'Next Up',
+    title: `Read: ${nextIncomplete.title}`,
+    description: `${subject.code} · ${topic.title}`,
+    meta: `You completed ${readingProgress.completed} of ${readingProgress.total} sections in this topic.`,
+    href: `#/subject/${subject.id}/topic/${topic.id}/subtopic/${nextIncomplete.slug}`,
+    cta: 'Continue',
+  };
+}
+
+function getNextReadingAction(
+  subject: Subject,
+  progress: SubjectProgress | undefined,
+  focusTopicId?: string
+): DashboardAction | null {
+  const topics = focusTopicId
+    ? [
+        ...subject.topics.filter(topic => topic.id === focusTopicId),
+        ...subject.topics.filter(topic => topic.id !== focusTopicId),
+      ]
+    : subject.topics;
+
+  for (const topic of topics) {
+    const action = getReadingActionForTopic(subject, progress, topic);
+    if (action) return action;
   }
 
   return null;
+}
+
+function getPracticeActionForTopic(
+  subject: Subject,
+  progress: SubjectProgress | undefined,
+  topic: Subject['topics'][number]
+): DashboardAction | null {
+  const nextQuizId = topic.quizIds.find(quizId => !isQuizPassed(progress, quizId));
+  if (nextQuizId) {
+    return {
+      icon: Icons.StatQuiz,
+      eyebrow: 'Next Up',
+      title: `Quiz: ${getAssessmentTitle('quiz', subject.id, nextQuizId)}`,
+      description: `${subject.code} · ${topic.title}`,
+      meta: 'Next unpassed quiz for this topic.',
+      href: `#/subject/${subject.id}/quiz/${nextQuizId}`,
+      cta: 'Continue',
+    };
+  }
+
+  const nextExerciseId = topic.exerciseIds.find(exerciseId => !isExercisePassed(progress, exerciseId));
+  if (nextExerciseId) {
+    return {
+      icon: Icons.StatCode,
+      eyebrow: 'Next Up',
+      title: `Exercise: ${getAssessmentTitle('exercise', subject.id, nextExerciseId)}`,
+      description: `${subject.code} · ${topic.title}`,
+      meta: 'Next unsolved exercise for this topic.',
+      href: `#/subject/${subject.id}/exercise/${nextExerciseId}`,
+      cta: 'Continue',
+    };
+  }
+
+  return null;
+}
+
+function getNextPracticeAction(
+  subject: Subject,
+  progress: SubjectProgress | undefined,
+  focusTopicId?: string
+): DashboardAction | null {
+  const topics = focusTopicId
+    ? [
+        ...subject.topics.filter(topic => topic.id === focusTopicId),
+        ...subject.topics.filter(topic => topic.id !== focusTopicId),
+      ]
+    : subject.topics;
+
+  for (const topic of topics) {
+    const action = getPracticeActionForTopic(subject, progress, topic);
+    if (action) return action;
+  }
+
+  return null;
+}
+
+function getSessionItemIcon(itemType: StudySessionItemKind): string {
+  switch (itemType) {
+    case 'read':
+      return Icons.BookOpen || Icons.Curriculum;
+    case 'quiz':
+    case 'review':
+    case 'exam':
+      return Icons.StatQuiz;
+    case 'exercise':
+      return Icons.StatCode;
+    case 'project':
+      return Icons.StatProject;
+    default:
+      return Icons.Progress;
+  }
+}
+
+function getStudySessionAction(userProgress: UserProgress): DashboardAction | null {
+  const session = getActiveStudySession();
+  if (!session) return null;
+
+  const advancedSession = advanceStudySession(session, userProgress);
+  const item = getCurrentStudySessionItem(advancedSession);
+  if (!item) return null;
+
+  return {
+    icon: getSessionItemIcon(item.itemType),
+    eyebrow: 'Next Up',
+    title: item.title,
+    description: item.context,
+    meta: `Study session · ${item.rationale}`,
+    href: item.href,
+    cta: 'Continue',
+  };
+}
+
+function getLastActiveSubjectContext(
+  subjects: Subject[],
+  userProgress: UserProgress
+): { subject: Subject; topicId?: string } | null {
+  let bestSubject: Subject | null = null;
+  let bestTopicId: string | undefined;
+  let bestTimestamp = 0;
+
+  subjects.forEach(subject => {
+    const timestamp = getSubjectLastActivityAt(userProgress, subject.id);
+    if (!timestamp) return;
+
+    const progress = userProgress.subjects[subject.id];
+    let topicId: string | undefined;
+    let topicTimestamp = 0;
+
+    subject.topics.forEach(topic => {
+      (topic.subtopics || []).forEach(subtopic => {
+        const viewTime = new Date(progress?.subtopicViews?.[subtopic.id]?.lastViewedAt || '').getTime();
+        const completedTime = new Date(progress?.subtopicCompletions?.[subtopic.id]?.completedAt || '').getTime();
+        const latestSubtopicTime = Math.max(
+          Number.isNaN(viewTime) ? 0 : viewTime,
+          Number.isNaN(completedTime) ? 0 : completedTime
+        );
+        if (latestSubtopicTime > topicTimestamp) {
+          topicTimestamp = latestSubtopicTime;
+          topicId = topic.id;
+        }
+      });
+    });
+
+    if (timestamp > bestTimestamp) {
+      bestSubject = subject;
+      bestTopicId = topicId;
+      bestTimestamp = timestamp;
+    }
+  });
+
+  return bestSubject ? { subject: bestSubject, topicId: bestTopicId } : null;
 }
 
 function getDashboardAction(
@@ -254,32 +387,71 @@ function getDashboardAction(
   userProgress: UserProgress,
   nextRecommended: Subject | null
 ): DashboardAction | null {
+  const studySessionAction = getStudySessionAction(userProgress);
+  if (studySessionAction) return studySessionAction;
+
   const dueReview = getSelectedDueReviewItems(1)[0];
   if (dueReview) {
     return {
       icon: dueReview.itemType === 'quiz' ? Icons.StatQuiz : Icons.StatCode,
-      eyebrow: 'Review Due',
-      title: formatReviewItemTitle(dueReview),
+      eyebrow: 'Next Up',
+      title: `Review: ${formatReviewItemTitle(dueReview)}`,
       description: 'Reinforce an item that is due based on your previous attempts.',
       meta: `Streak ${dueReview.streak} · ${dueReview.interval} day interval`,
       href: getReviewItemUrl(dueReview),
-      cta: 'Review Now',
+      cta: 'Continue',
     };
   }
 
-  const candidateSubjects = nextRecommended
-    ? [nextRecommended, ...subjects.filter(subject => subject.id !== nextRecommended.id)]
-    : subjects;
+  const lastActiveContext = getLastActiveSubjectContext(subjects, userProgress);
+  if (lastActiveContext?.topicId) {
+    const activeProgress = userProgress.subjects[lastActiveContext.subject.id];
+    const activeTopic = lastActiveContext.subject.topics.find(topic => topic.id === lastActiveContext.topicId);
+
+    if (activeTopic && activeProgress?.status !== 'completed') {
+      const focusedReadingAction = getReadingActionForTopic(lastActiveContext.subject, activeProgress, activeTopic);
+      if (focusedReadingAction) return focusedReadingAction;
+
+      const focusedPracticeAction = getPracticeActionForTopic(lastActiveContext.subject, activeProgress, activeTopic);
+      if (focusedPracticeAction) return focusedPracticeAction;
+    }
+  }
+
+  const candidateSubjects = [
+    ...(lastActiveContext ? [lastActiveContext.subject] : []),
+    ...(nextRecommended ? [nextRecommended] : []),
+    ...subjects,
+  ].filter((subject, index, all) => all.findIndex(candidate => candidate.id === subject.id) === index);
 
   for (const subject of candidateSubjects) {
     const progress = userProgress.subjects[subject.id];
     if (progress?.status === 'completed') continue;
 
-    const readingAction = getNextReadingAction(subject, progress);
+    const readingAction = getNextReadingAction(
+      subject,
+      progress,
+      subject.id === lastActiveContext?.subject.id ? lastActiveContext.topicId : undefined
+    );
     if (readingAction) return readingAction;
 
-    const practiceAction = getNextPracticeAction(subject, progress);
+    const practiceAction = getNextPracticeAction(
+      subject,
+      progress,
+      subject.id === lastActiveContext?.subject.id ? lastActiveContext.topicId : undefined
+    );
     if (practiceAction) return practiceAction;
+  }
+
+  if (nextRecommended && !userProgress.subjects[nextRecommended.id]) {
+    return {
+      icon: Icons.Curriculum,
+      eyebrow: 'Next Up',
+      title: `Start: ${nextRecommended.title}`,
+      description: nextRecommended.code,
+      meta: 'Next recommended subject in your course plan.',
+      href: `#/subject/${nextRecommended.id}`,
+      cta: 'Start',
+    };
   }
 
   return null;
@@ -460,6 +632,10 @@ export function renderHomePage(container: HTMLElement, subjects: Subject[]): voi
         <section class="quick-actions">
           <h2>Quick Actions</h2>
           <div class="actions-grid">
+            <button class="action-card" id="start-study-session-action">
+              <span class="action-icon">${Icons.Progress}</span>
+              <span class="action-label">Start Study Session</span>
+            </button>
             <button class="action-card" id="view-curriculum-action">
               <span class="action-icon">${Icons.Curriculum}</span>
               <span class="action-label">View Curriculum</span>
@@ -575,6 +751,26 @@ function attachEventListeners(container: HTMLElement): void {
   }
 
   // Quick action buttons
+  const startStudySessionAction = container.querySelector('#start-study-session-action');
+  if (startStudySessionAction) {
+    startStudySessionAction.addEventListener('click', () => {
+      const userProgress = progressStorage.getProgress();
+      const selectedIds = progressStorage.getSelectedSubjects();
+      const subjects = Array.from(container.querySelectorAll<HTMLElement>('.subject-card[data-subject-id]'))
+        .map(card => card.dataset.subjectId)
+        .filter((id): id is string => Boolean(id));
+      const selectedSubjectSet = new Set(selectedIds.length > 0 ? selectedIds : subjects);
+
+      import('@/data/curriculum').then(({ curriculum }) => {
+        const scopedSubjects = selectedSubjectSet.size > 0
+          ? curriculum.filter(subject => selectedSubjectSet.has(subject.id))
+          : curriculum;
+        startStudySession(scopedSubjects, userProgress);
+        window.location.hash = '#/study-session';
+      });
+    });
+  }
+
   const curriculumAction = container.querySelector('#view-curriculum-action');
   if (curriculumAction) {
     curriculumAction.addEventListener('click', () => navigateToCurriculum());

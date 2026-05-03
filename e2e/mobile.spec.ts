@@ -8,6 +8,7 @@ const MOBILE_VIEWPORTS = [
 const ROUTES = [
   { name: 'home', path: '/' },
   { name: 'curriculum', path: '/#/curriculum' },
+  { name: 'study session', path: '/#/study-session' },
   { name: 'subject', path: '/#/subject/cs304' },
   { name: 'reading', path: '/#/subject/cs304/topic/cs304-topic-1/subtopic/introduction-compilers' },
   { name: 'quiz', path: '/#/subject/cs304/quiz/cs304-t1-quiz-1' },
@@ -53,6 +54,7 @@ test.describe('mobile layout', () => {
         await expect(nav).toBeVisible();
         await expect(nav.getByRole('link', { name: /home/i })).toBeVisible();
         await expect(nav.getByRole('link', { name: /learn/i })).toBeVisible();
+        await expect(nav.getByRole('link', { name: /study/i })).toBeVisible();
         await expect(nav.getByRole('link', { name: /progress/i })).toHaveAttribute('aria-current', 'page');
         await expect(nav.getByRole('link', { name: /settings/i })).toBeVisible();
       });
@@ -84,8 +86,8 @@ test.describe('mobile layout', () => {
         const panel = page.locator('#subject-mobile-nav-panel');
         await expect(subjectMenu).toHaveAttribute('aria-expanded', 'true');
         await expect(panel).toBeVisible();
-        await expect(panel.getByRole('button', { name: /topics/i })).toBeVisible();
-        await expect(panel.getByRole('button', { name: /practice/i })).toBeVisible();
+        await expect(panel.getByRole('tab', { name: /topics/i })).toBeVisible();
+        await expect(panel.getByRole('tab', { name: /practice/i })).toBeVisible();
 
         const panelBox = await panel.boundingBox();
         const viewport = page.viewportSize();
@@ -94,6 +96,25 @@ test.describe('mobile layout', () => {
         expect(panelBox!.width).toBeGreaterThan(250);
         expect(panelBox!.x).toBeGreaterThanOrEqual(0);
         expect(panelBox!.x + panelBox!.width).toBeLessThanOrEqual(viewport!.width + 1);
+      });
+
+      test('subject menu stays open after choosing a topic', async ({ page }) => {
+        await page.goto('/#/subject/cs304/topic/cs304-topic-1/subtopic/introduction-compilers');
+        await waitForApp(page);
+
+        const subjectMenu = page.locator('.content-navigator .mobile-menu-toggle');
+        await subjectMenu.click();
+
+        const panel = page.locator('#subject-mobile-nav-panel');
+        await expect(panel).toBeVisible();
+
+        await panel.getByRole('button', { name: /parsing/i }).click();
+
+        await expect(subjectMenu).toHaveAttribute('aria-expanded', 'true');
+        await expect(panel).toBeVisible();
+        await expect(panel.getByRole('tab', { name: /topics/i })).toBeVisible();
+        await expect(panel.getByRole('tab', { name: /practice/i })).toBeVisible();
+        await expect(panel).toContainText('Parsing');
       });
 
       test('mobile chrome hides on scroll down and returns on scroll up', async ({ page }) => {
