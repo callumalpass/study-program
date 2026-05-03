@@ -17,7 +17,9 @@ const PROGRESS_RING_SIZE = 200;
 const PROGRESS_RING_RADIUS = 80;
 const PROGRESS_RING_CENTER = PROGRESS_RING_SIZE / 2;
 const PROGRESS_RING_CIRCUMFERENCE = 2 * Math.PI * PROGRESS_RING_RADIUS;
-const ACTIVITY_WINDOW_DAYS = 91;
+const DEFAULT_ACTIVITY_DAYS = 91;
+const ACTIVITY_WEEK_START = 0; // Sunday, matching GitHub-style columns.
+const RECENT_ACTIVITY_LIMIT = 50;
 
 interface ExpandedYears {
   [key: number]: boolean;
@@ -207,6 +209,25 @@ function getActivityDayKey(date: Date): string {
   return `${year}-${month}-${day}`;
 }
 
+function startOfLocalDay(date: Date): Date {
+  const copy = new Date(date);
+  copy.setHours(0, 0, 0, 0);
+  return copy;
+}
+
+function alignToActivityWeek(date: Date): Date {
+  const aligned = startOfLocalDay(date);
+  const offset = (aligned.getDay() - ACTIVITY_WEEK_START + 7) % 7;
+  aligned.setDate(aligned.getDate() - offset);
+  return aligned;
+}
+
+function getValidActivityDates(events: ActivityEvent[]): Date[] {
+  return events
+    .map(event => new Date(event.timestamp))
+    .filter(date => !Number.isNaN(date.getTime()));
+}
+
 function getActivityLevel(count: number, maxCount: number): number {
   if (count <= 0) return 0;
   if (maxCount <= 4) return Math.min(4, count);
@@ -227,6 +248,14 @@ function formatActivityDate(isoString: string): string {
   return date.toLocaleDateString(undefined, {
     month: 'short',
     day: 'numeric',
+  });
+}
+
+function formatActivityRangeDate(date: Date): string {
+  return date.toLocaleDateString(undefined, {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
   });
 }
 
@@ -277,11 +306,14 @@ function renderRecentActivityItem(event: ActivityEvent): string {
 }
 
 function renderActivitySection(events: ActivityEvent[]): string {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const start = new Date(today);
-  start.setDate(today.getDate() - (ACTIVITY_WINDOW_DAYS - 1));
+  const today = startOfLocalDay(new Date());
+  const validDates = getValidActivityDates(events);
+  const firstActivityDate = validDates.length > 0
+    ? new Date(Math.min(...validDates.map(date => date.getTime())))
+    : null;
+  const fallbackStart = new Date(today);
+  fallbackStart.setDate(today.getDate() - (DEFAULT_ACTIVITY_DAYS - 1));
+  const start = alignToActivityWeek(firstActivityDate || fallbackStart);
 
   const countsByDay = new Map<string, number>();
   const windowStart = start.getTime();
@@ -297,7 +329,8 @@ function renderActivitySection(events: ActivityEvent[]): string {
     countsByDay.set(key, (countsByDay.get(key) || 0) + 1);
   });
 
-  const cells = Array.from({ length: ACTIVITY_WINDOW_DAYS }, (_, index) => {
+  const activityDays = Math.max(7, Math.ceil((windowEnd - windowStart) / (24 * 60 * 60 * 1000)));
+  const cells = Array.from({ length: activityDays }, (_, index) => {
     const date = new Date(start);
     date.setDate(start.getDate() + index);
     const key = getActivityDayKey(date);
@@ -309,14 +342,17 @@ function renderActivitySection(events: ActivityEvent[]): string {
   const totalEvents = cells.reduce((sum, cell) => sum + cell.count, 0);
   const activeDays = cells.filter(cell => cell.count > 0).length;
   const completedSessions = events.filter(event => event.type === 'study_session_completed').length;
-  const recentEvents = events.slice(0, 8);
+  const recentEvents = events.slice(0, RECENT_ACTIVITY_LIMIT);
+  const activityRangeLabel = firstActivityDate
+    ? `since ${formatActivityRangeDate(firstActivityDate)}`
+    : 'in the last 13 weeks';
 
   return `
     <section class="activity-overview" aria-labelledby="activity-overview-heading">
       <div class="section-header-inline">
         <div>
           <h2 id="activity-overview-heading">Activity</h2>
-          <p>${totalEvents} logged item${totalEvents === 1 ? '' : 's'} in the last 13 weeks</p>
+          <p>${totalEvents} logged item${totalEvents === 1 ? '' : 's'} ${activityRangeLabel}</p>
         </div>
         <div class="activity-stats">
           <div class="activity-stat">

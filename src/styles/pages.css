@@ -3261,7 +3261,8 @@ textarea.code-editor::placeholder {
 
 .activity-panel {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  grid-template-columns: minmax(340px, 1fr) minmax(320px, 380px);
+  align-items: start;
   gap: var(--space-lg);
   padding: var(--space-lg);
   border: 1px solid var(--color-border-default);
@@ -3271,6 +3272,7 @@ textarea.code-editor::placeholder {
 
 .activity-calendar-wrap {
   min-width: 0;
+  overflow: hidden;
 }
 
 .activity-calendar {
@@ -3280,7 +3282,27 @@ textarea.code-editor::placeholder {
   grid-auto-columns: 12px;
   gap: 4px;
   overflow-x: auto;
+  max-width: 100%;
   padding-bottom: var(--space-sm);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-emphasis) transparent;
+}
+
+.activity-calendar::-webkit-scrollbar,
+.activity-feed ol::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.activity-calendar::-webkit-scrollbar-track,
+.activity-feed ol::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.activity-calendar::-webkit-scrollbar-thumb,
+.activity-feed ol::-webkit-scrollbar-thumb {
+  background: var(--color-border-emphasis);
+  border-radius: 999px;
 }
 
 .activity-day {
@@ -3323,10 +3345,15 @@ textarea.code-editor::placeholder {
 }
 
 .activity-feed {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
+  max-height: 360px;
+  min-height: 0;
 }
 
 .activity-feed h3 {
+  flex: 0 0 auto;
   margin-bottom: var(--space-md);
   font-size: var(--font-size-md);
 }
@@ -3336,8 +3363,13 @@ textarea.code-editor::placeholder {
   flex-direction: column;
   gap: var(--space-sm);
   margin: 0;
-  padding: 0;
+  padding: 0 var(--space-xs) 0 0;
+  overflow-y: auto;
   list-style: none;
+  flex: 1 1 auto;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-emphasis) transparent;
 }
 
 .activity-feed-item {
