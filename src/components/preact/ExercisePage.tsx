@@ -11,6 +11,7 @@ import type { TestResult } from '@/components/code-runner';
 import type { EvaluationResult } from '@/utils/gemini-eval';
 import { formatLanguage } from '@/pages/assessment-utils';
 import { decodeQuoteEntities } from '@/utils/html';
+import { recordLearnerEvent } from '@/content-core/api-client';
 
 // Type guard for CodingExercise
 function isCodingExercise(exercise: Exercise): exercise is CodingExercise {
@@ -52,6 +53,11 @@ export function ExercisePage({
   useEffect(() => {
     setCompletion(progressStorage.getExerciseCompletion(subjectId, exerciseId) ?? null);
     startTimeRef.current = Date.now();
+    recordLearnerEvent({
+      type: 'activity_started',
+      activityId: exerciseId,
+      subjectId,
+    });
     window.dispatchEvent(new CustomEvent('mascot:exercise-reset'));
   }, [subjectId, exerciseId]);
 

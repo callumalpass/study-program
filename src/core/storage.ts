@@ -16,6 +16,7 @@ import type {
 } from './types';
 import { QUIZ_PASSING_SCORE } from './types';
 import { githubService } from '../services/github';
+import { recordLearnerEvent } from '../content-core/api-client';
 
 const STORAGE_KEY = 'study_program_progress';
 const CURRENT_VERSION = 4;
@@ -419,6 +420,14 @@ export class ProgressStorage {
     }
 
     subjectProgress.quizAttempts[quizId].push(attempt);
+    recordLearnerEvent({
+      type: 'activity_completed',
+      activityId: quizId,
+      subjectId,
+      score: attempt.score,
+      passed: attempt.score >= QUIZ_PASSING_SCORE,
+      at: attempt.timestamp,
+    });
 
     // Auto-add to review queue if score below passing threshold
     if (attempt.score < QUIZ_PASSING_SCORE) {
@@ -458,6 +467,14 @@ export class ProgressStorage {
     }
 
     subjectProgress.examAttempts[examId].push(attempt);
+    recordLearnerEvent({
+      type: 'activity_completed',
+      activityId: examId,
+      subjectId,
+      score: attempt.score,
+      passed: attempt.score >= QUIZ_PASSING_SCORE,
+      at: attempt.timestamp,
+    });
     this.save();
   }
 
@@ -552,6 +569,13 @@ export class ProgressStorage {
         aiEvaluations: mergedAiEvaluations,
       };
     }
+    recordLearnerEvent({
+      type: 'activity_completed',
+      activityId: exerciseId,
+      subjectId,
+      passed: completion.passed,
+      at: completion.timestamp,
+    });
 
     // Auto-add to review queue if failed
     if (!completion.passed) {
@@ -611,6 +635,12 @@ export class ProgressStorage {
         viewCount: 1,
       };
     }
+    recordLearnerEvent({
+      type: 'activity_started',
+      activityId: subtopicId,
+      subjectId,
+      at: now,
+    });
 
     this.save();
   }
@@ -635,6 +665,13 @@ export class ProgressStorage {
         completedAt: new Date().toISOString(),
       };
     }
+    recordLearnerEvent({
+      type: 'activity_completed',
+      activityId: subtopicId,
+      subjectId,
+      passed: true,
+      at: subjectProgress.subtopicCompletions[subtopicId].completedAt,
+    });
 
     this.save();
   }
@@ -707,6 +744,13 @@ export class ProgressStorage {
     }
 
     subjectProgress.projectSubmissions[projectId].push(submission);
+    recordLearnerEvent({
+      type: 'activity_completed',
+      activityId: projectId,
+      subjectId,
+      passed: true,
+      at: submission.timestamp,
+    });
     this.save();
   }
 

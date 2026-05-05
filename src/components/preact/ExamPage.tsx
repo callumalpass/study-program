@@ -7,6 +7,8 @@ import { navigateToSubject } from '@/core/router';
 import { Icons } from '@/components/icons';
 import { Quiz } from './Quiz';
 import { PracticeMode } from './PracticeMode';
+import { recordLearnerEvent } from '@/content-core/api-client';
+import { checkAnswer } from '@/utils/quiz-utils';
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -38,17 +40,34 @@ export function ExamPage({ subject, exam }: ExamPageProps) {
   const hasApiKey = !!progressStorage.getSettings().geminiApiKey;
 
   const handleStartExam = useCallback(() => {
+    recordLearnerEvent({
+      type: 'activity_started',
+      activityId: exam.id,
+      subjectId: subject.id,
+    });
     setMode('exam');
-  }, []);
+  }, [exam.id, subject.id]);
 
   const handleStartPractice = useCallback(() => {
     setMode('practice');
   }, []);
 
   const handleExamComplete = useCallback((attempt: ExamAttempt) => {
+    for (const question of exam.questions) {
+      recordLearnerEvent({
+        type: 'answer_submitted',
+        activityId: exam.id,
+        questionId: question.id,
+        subjectId: subject.id,
+        correct: checkAnswer(question, attempt.answers[question.id]),
+        answer: attempt.answers[question.id],
+        conceptTags: (question as QuizQuestion & { conceptTags?: string[] }).conceptTags || [],
+        at: attempt.timestamp,
+      });
+    }
     progressStorage.addExamAttempt(subject.id, exam.id, attempt);
     setAttempts(progressStorage.getExamAttempts(subject.id, exam.id));
-  }, [subject.id, exam.id]);
+  }, [subject.id, exam.id, exam.questions]);
 
   const handleExitPractice = useCallback(() => {
     setMode('start');

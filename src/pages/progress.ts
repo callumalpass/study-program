@@ -11,6 +11,7 @@ import {
 import { navigateToSubject } from '@/core/router';
 import { Icons } from '@/components/icons';
 import { escapeHtml } from '@/utils/html';
+import { loadApiActivePlan, loadApiLearnerProfile } from '@/content-core/api-client';
 
 // Progress ring SVG constants
 const PROGRESS_RING_SIZE = 200;
@@ -116,6 +117,8 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
 
         ${renderActivitySection(activityEvents)}
 
+        <section class="local-runtime-panel" id="local-runtime-panel" hidden></section>
+
         <section class="year-breakdown">
           <h2>Progress by Year</h2>
           <div class="year-cards">
@@ -198,6 +201,62 @@ export function renderProgressPage(container: HTMLElement, subjects: Subject[]):
   `;
 
   attachEventListeners(container, subjects);
+  hydrateLocalRuntimeSection(container);
+}
+
+function hydrateLocalRuntimeSection(container: HTMLElement): void {
+  const panel = container.querySelector<HTMLElement>('#local-runtime-panel');
+  if (!panel) return;
+
+  Promise.all([loadApiActivePlan(), loadApiLearnerProfile()])
+    .then(([planResult, profile]) => {
+      if (!planResult && !profile) return;
+
+      const plan = planResult?.plan;
+      const validation = planResult?.validation;
+      const masteryEntries = Object.entries(profile?.conceptMastery || {})
+        .sort((a, b) => a[1] - b[1])
+        .slice(0, 5);
+
+      panel.hidden = false;
+      panel.innerHTML = `
+        <h2>Local Runtime</h2>
+        <div class="local-runtime-grid">
+          <article class="local-runtime-card">
+            <h3>Active Plan</h3>
+            ${plan ? `
+              <p><strong>${escapeHtml(plan.title)}</strong></p>
+              <p>Extends: ${escapeHtml((plan.extends || []).join(', ') || 'none')}</p>
+              <p>Enabled packs: ${escapeHtml((plan.enabledPacks || []).join(', ') || 'none')}</p>
+              ${plan.insertions?.length ? `
+                <ul>
+                  ${plan.insertions.map(insertion => `
+                    <li>${escapeHtml(insertion.subject || 'content')} before ${escapeHtml(insertion.before || 'next step')}: ${escapeHtml(insertion.reason || 'No reason recorded')}</li>
+                  `).join('')}
+                </ul>
+              ` : '<p>No proposed insertions.</p>'}
+              <p class="${validation?.ok ? 'status-success' : 'status-warning'}">Validation: ${validation?.ok ? 'pass' : 'needs review'}</p>
+            ` : '<p>No active server plan found.</p>'}
+          </article>
+          <article class="local-runtime-card">
+            <h3>Concept Mastery</h3>
+            ${masteryEntries.length ? `
+              <ul>
+                ${masteryEntries.map(([conceptId, mastery]) => `
+                  <li><span>${escapeHtml(conceptId)}</span><strong>${Math.round(mastery * 100)}%</strong></li>
+                `).join('')}
+              </ul>
+            ` : '<p>No learner events have produced concept mastery yet.</p>'}
+            ${profile?.recommendedActions?.length ? `
+              <p>${profile.recommendedActions.length} recommendation${profile.recommendedActions.length === 1 ? '' : 's'} available.</p>
+            ` : ''}
+          </article>
+        </div>
+      `;
+    })
+    .catch(() => {
+      panel.hidden = true;
+    });
 }
 
 function getActivityDayKey(date: Date): string {

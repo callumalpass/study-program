@@ -21,6 +21,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout cs-degree content pack
+        uses: actions/checkout@v4
+        with:
+          repository: callumalpass/cs-degree
+          ref: main
+          path: content/bundled-packs/cs-degree
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -29,6 +36,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Run unit tests
+        run: npm run test
+
+      - name: Validate checked-out content pack
+        run: npm run content:validate
 
       - name: Build
         run: npm run build

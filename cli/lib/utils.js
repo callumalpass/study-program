@@ -34,15 +34,37 @@ export function parseCliArgs(argv) {
     const key = token.slice(2);
     const next = argv[i + 1];
     if (!next || next.startsWith('--')) {
-      options[key] = true;
+      if (options[key] === undefined) {
+        options[key] = true;
+      } else if (Array.isArray(options[key])) {
+        options[key].push(true);
+      } else {
+        options[key] = [options[key], true];
+      }
       continue;
     }
 
-    options[key] = next;
+    if (options[key] === undefined) {
+      options[key] = next;
+    } else if (Array.isArray(options[key])) {
+      options[key].push(next);
+    } else {
+      options[key] = [options[key], next];
+    }
     i += 1;
   }
 
   return { positional, options };
+}
+
+export function optionValues(options, key) {
+  const value = options[key];
+  if (value === undefined || value === false) return [];
+  return Array.isArray(value) ? value.map(String) : [String(value)];
+}
+
+export function firstOptionValue(options, key) {
+  return optionValues(options, key)[0];
 }
 
 export function fail(message, code = 1) {

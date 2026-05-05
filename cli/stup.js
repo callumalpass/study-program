@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
 import {
   createExerciseAttempt,
@@ -23,6 +24,12 @@ import {
   loadSubjects,
   subjectSourceDir,
 } from './lib/content-loader.js';
+import {
+  defaultBundledPackDir,
+  loadPackManifest,
+  loadResolvedContentGraph,
+  validateContentPack,
+} from './lib/content-pack.js';
 import { QUIZ_PASSING_SCORE } from './lib/constants.js';
 import {
   copyDir,
@@ -55,19 +62,71 @@ import { getNextStudyItems } from './lib/next.js';
 import { runTestSuite } from './lib/runtime.js';
 import { calculateScore, isCorrectNonCoding } from './lib/scoring.js';
 import {
+  resolveRuntimeConfig,
+  summarizeRuntimeConfig,
+  writeUserConfig,
+} from './lib/runtime-config.js';
+import {
+  appendLearnerEvent,
+  appendLearnerEvents,
+  deriveAndSaveLearnerProfile,
+  deriveLearnerProfile,
+  ensureLearnerHome,
+  legacyProgressToEvents,
+  loadLearnerProfile,
+  readLearnerEvents,
+} from './lib/learner-core.js';
+import {
+  loadActivePlan,
+  saveActivePlan,
+  setActivePlanFromTrack,
+  validatePlan,
+} from './lib/plans.js';
+import { startStupServer } from './lib/server.js';
+import {
+  createAuthoringPack,
+  createRemediation,
+  createSubject,
+} from './lib/authoring.js';
+import {
+  asNumber,
   ensureOption,
   fail,
+  firstOptionValue,
   openInEditor,
+  optionValues,
   parseCliArgs,
   relativeFromCwd,
 } from './lib/utils.js';
+
+const CLI_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const HELP_TEXT = `stup CLI
 
 Usage:
   stup init
+  stup serve [--content-pack <path>] [--content-home <path>] [--learner-home <path>] [--authoring-pack <pack-id>] [--host 127.0.0.1] [--port 1234]
+  stup config show [--json]
+  stup pack list [--json]
+  stup pack add <path>
+  stup pack enable <pack-id>
+  stup pack disable <pack-id>
+  stup pack validate <pack-id>
   stup subject list
   stup content pull [--subject <id>|--all]
+  stup content validate [--content-pack <path>] [--json]
+  stup content index [--json]
+  stup track list [--json]
+  stup plan show [--json]
+  stup plan set <track-id>
+  stup plan validate [--json]
+  stup learner events export [--json]
+  stup learner profile [--json]
+  stup learner derive [--check] [--json]
+  stup learner migrate-progress [--json]
+  stup author new-pack <id> [--dir <path>] [--extends <pack-id>]
+  stup author new-subject <id> [--content-pack <path>]
+  stup author new-remediation <concept-id> [--content-pack <path>]
   stup quiz start --id <quiz-id> [--open]
   stup quiz check --id <quiz-id> [--attempt <attempt-id>] [--json]
   stup quiz submit --id <quiz-id> [--attempt <attempt-id>]
@@ -83,6 +142,7 @@ Usage:
 
 Notes:
   - All local state lives under .stup/
+  - Local-server learner state lives under the configured learner home
   - Gist sync uses study-program-progress.json (same backend contract as web app)
 `;
 
@@ -109,6 +169,38 @@ function loadContext() {
 
 function printJson(value) {
   process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
+}
+
+function resolveRootOrCliRoot() {
+  try {
+    return resolveWorkspaceRoot(process.cwd());
+  } catch {
+    return CLI_ROOT;
+  }
+}
+
+function loadRuntimeGraph(parsed) {
+  const rootDir = resolveRootOrCliRoot();
+  const config = resolveRuntimeConfig({ rootDir, options: parsed.options });
+  return {
+    rootDir,
+    config,
+    graph: loadResolvedContentGraph(config.contentPackDirs),
+  };
+}
+
+function humanPackLine(pack) {
+  return `${pack.id.padEnd(18)} ${String(pack.version || '').padEnd(8)} ${pack.title || '(untitled)'}`;
+}
+
+function recordCliLearnerEvent(rootDir, options, event) {
+  const config = resolveRuntimeConfig({ rootDir, options });
+  const graph = loadResolvedContentGraph(config.contentPackDirs);
+  appendLearnerEvent(config.learnerHome, {
+    packId: graph.packs[0]?.id || 'cs-degree',
+    contentVersion: graph.packs[0]?.version || '1.0.0',
+    ...event,
+  });
 }
 
 function getAttemptSeconds(attempt) {
@@ -370,6 +462,119 @@ async function run() {
       return;
     }
 
+    case 'serve:': {
+      const rootDir = resolveRootOrCliRoot();
+      const config = resolveRuntimeConfig({ rootDir, options: parsed.options });
+      if (config.contentPackDirs.length === 0) {
+        fail('no content packs configured. Use --content-pack <path> or configure a content home.');
+      }
+
+      const host = firstOptionValue(parsed.options, 'host') || '127.0.0.1';
+      const port = asNumber(firstOptionValue(parsed.options, 'port'), 1234);
+      const server = await startStupServer(config, { rootDir, host, port });
+      console.log(`stu.p serving at ${server.url}`);
+      console.log(`Content packs: ${config.contentPackDirs.map((packDir) => relativeFromCwd(packDir)).join(', ')}`);
+      console.log(`Learner home: ${relativeFromCwd(config.learnerHome)}`);
+      return;
+    }
+
+    case 'config:show': {
+      const rootDir = resolveRootOrCliRoot();
+      const config = resolveRuntimeConfig({ rootDir, options: parsed.options });
+      const summary = summarizeRuntimeConfig(config);
+      if (parsed.options.json) {
+        printJson(summary);
+      } else {
+        console.log(`Config file: ${summary.configPath}`);
+        console.log(`Content homes: ${summary.contentHomes.join(', ')}`);
+        console.log(`Content packs: ${summary.contentPackDirs.join(', ') || '(none)'}`);
+        console.log(`Enabled packs: ${summary.enabledPacks.join(', ') || '(all discovered)'}`);
+        console.log(`Authoring pack: ${summary.authoringPack || '(none)'}`);
+        console.log(`Learner home: ${summary.learnerHome}`);
+        console.log(`Cache home: ${summary.cacheHome}`);
+      }
+      return;
+    }
+
+    case 'pack:list': {
+      const { config, graph } = loadRuntimeGraph(parsed);
+      const payload = graph.packs.map((pack) => ({
+        id: pack.id,
+        title: pack.title,
+        version: pack.version,
+        packDir: pack.packDir,
+        enabled: config.enabledPacks.length === 0 || config.enabledPacks.includes(pack.id),
+      }));
+      if (parsed.options.json) {
+        printJson(payload);
+      } else if (payload.length === 0) {
+        console.log('No content packs found.');
+      } else {
+        payload.forEach((pack) => console.log(`${humanPackLine(pack)} ${pack.packDir}`));
+      }
+      return;
+    }
+
+    case 'pack:add': {
+      const packDir = parsed.positional[2] ? path.resolve(String(parsed.positional[2])) : null;
+      if (!packDir) fail('pack add requires <path>');
+      if (!fs.existsSync(path.join(packDir, 'pack.yaml'))) {
+        fail(`pack.yaml not found under ${packDir}`);
+      }
+      const manifest = loadPackManifest(packDir);
+      const rootDir = resolveRootOrCliRoot();
+      const config = resolveRuntimeConfig({ rootDir, options: parsed.options });
+      const userConfig = { ...config.userConfig };
+      const contentHome = path.dirname(packDir);
+      userConfig.contentHomes = Array.from(new Set([...(userConfig.contentHomes || []), contentHome]));
+      userConfig.enabledPacks = Array.from(new Set([...(userConfig.enabledPacks || []), manifest.id]));
+      writeUserConfig(userConfig, config.configPath);
+      console.log(`Added pack ${manifest.id} from ${packDir}`);
+      console.log(`Config: ${config.configPath}`);
+      return;
+    }
+
+    case 'pack:enable': {
+      const packId = parsed.positional[2];
+      if (!packId) fail('pack enable requires <pack-id>');
+      const rootDir = resolveRootOrCliRoot();
+      const config = resolveRuntimeConfig({ rootDir, options: parsed.options });
+      const userConfig = { ...config.userConfig };
+      userConfig.enabledPacks = Array.from(new Set([...(userConfig.enabledPacks || []), packId]));
+      writeUserConfig(userConfig, config.configPath);
+      console.log(`Enabled pack ${packId}`);
+      return;
+    }
+
+    case 'pack:disable': {
+      const packId = parsed.positional[2];
+      if (!packId) fail('pack disable requires <pack-id>');
+      const rootDir = resolveRootOrCliRoot();
+      const config = resolveRuntimeConfig({ rootDir, options: parsed.options });
+      const userConfig = { ...config.userConfig };
+      userConfig.enabledPacks = (userConfig.enabledPacks || []).filter((id) => id !== packId);
+      writeUserConfig(userConfig, config.configPath);
+      console.log(`Disabled pack ${packId}`);
+      return;
+    }
+
+    case 'pack:validate': {
+      const packId = parsed.positional[2];
+      if (!packId) fail('pack validate requires <pack-id>');
+      const { graph } = loadRuntimeGraph(parsed);
+      const pack = graph.packs.find((item) => item.id === packId);
+      if (!pack) fail(`pack not found: ${packId}`);
+      const result = validateContentPack(pack.packDir);
+      if (parsed.options.json) printJson(result);
+      else {
+        console.log(`Pack validation: ${result.ok ? 'PASS' : 'FAIL'}`);
+        console.log(`Pack: ${pack.packDir}`);
+        for (const issue of result.issues) console.log(`${issue.severity.toUpperCase()} ${issue.code}: ${issue.message}`);
+      }
+      if (!result.ok) process.exit(1);
+      return;
+    }
+
     case 'subject:list': {
       const ctx = loadContext();
       for (const subject of ctx.subjects) {
@@ -401,11 +606,242 @@ async function run() {
       return;
     }
 
+    case 'content:validate': {
+      const rootDir = resolveRootOrCliRoot();
+      const explicitPack = firstOptionValue(parsed.options, 'content-pack');
+      const packDir = explicitPack
+        ? path.resolve(String(explicitPack))
+        : defaultBundledPackDir(rootDir);
+      const result = validateContentPack(packDir);
+
+      if (parsed.options.json) {
+        printJson({
+          packDir,
+          ...result,
+        });
+      } else {
+        const status = result.ok ? 'PASS' : 'FAIL';
+        console.log(`Content validation: ${status}`);
+        console.log(`Pack: ${relativeFromCwd(packDir)}`);
+        console.log(
+          `Subjects: ${result.stats.subjects}, topics: ${result.stats.topics}, quizzes: ${result.stats.quizzes}, exercises: ${result.stats.exercises}, exams: ${result.stats.exams}, projects: ${result.stats.projects}, tracks: ${result.stats.tracks}`,
+        );
+        for (const validationIssue of result.issues) {
+          const label = validationIssue.severity.toUpperCase();
+          console.log(`${label} ${validationIssue.code}: ${validationIssue.message}`);
+        }
+      }
+
+      if (!result.ok) {
+        process.exit(1);
+      }
+      return;
+    }
+
+    case 'content:index': {
+      const { config, graph } = loadRuntimeGraph(parsed);
+      fs.mkdirSync(config.cacheHome, { recursive: true });
+      const cachePath = path.join(config.cacheHome, 'content-index.json');
+      const payload = {
+        generatedAt: graph.generatedAt,
+        packs: graph.packs.map((pack) => ({ id: pack.id, version: pack.version, packDir: pack.packDir })),
+        stats: {
+          subjects: graph.subjects.length,
+          topics: graph.topics.length,
+          activities: graph.activities.length,
+          tracks: graph.tracks.length,
+          concepts: Object.keys(graph.concepts).length,
+        },
+        validation: graph.validation,
+      };
+      fs.writeFileSync(cachePath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+      if (parsed.options.json) {
+        printJson({ cachePath, ...payload });
+      } else {
+        console.log(`Indexed ${payload.stats.subjects} subjects, ${payload.stats.topics} topics, ${payload.stats.activities} activities`);
+        console.log(`Cache: ${cachePath}`);
+      }
+      return;
+    }
+
+    case 'track:list': {
+      const { graph } = loadRuntimeGraph(parsed);
+      if (parsed.options.json) {
+        printJson(graph.tracks);
+      } else {
+        graph.tracks.forEach((track) => console.log(`${track.id.padEnd(20)} ${track.title}`));
+      }
+      return;
+    }
+
+    case 'plan:show': {
+      const { config, graph } = loadRuntimeGraph(parsed);
+      const plan = loadActivePlan(config.learnerHome, graph, { writeDefault: true });
+      const validation = validatePlan(plan, graph);
+      if (parsed.options.json) {
+        printJson({ plan, validation });
+      } else {
+        console.log(`${plan.title} (${plan.id})`);
+        console.log(`Extends: ${(plan.extends || []).join(', ') || '(none)'}`);
+        console.log(`Enabled packs: ${(plan.enabledPacks || []).join(', ') || '(none)'}`);
+        console.log(`Validation: ${validation.ok ? 'PASS' : 'FAIL'}`);
+      }
+      return;
+    }
+
+    case 'plan:set': {
+      const trackOrPlanId = parsed.positional[2];
+      if (!trackOrPlanId) fail('plan set requires <track-or-plan-id>');
+      const { config, graph } = loadRuntimeGraph(parsed);
+      const plan = setActivePlanFromTrack(config.learnerHome, graph, trackOrPlanId);
+      const validation = validatePlan(plan, graph);
+      if (parsed.options.json) printJson({ plan, validation });
+      else console.log(`Active plan set to ${plan.id}`);
+      if (!validation.ok) process.exit(1);
+      return;
+    }
+
+    case 'plan:validate': {
+      const { config, graph } = loadRuntimeGraph(parsed);
+      const plan = loadActivePlan(config.learnerHome, graph, { writeDefault: true });
+      const validation = validatePlan(plan, graph);
+      if (parsed.options.json) {
+        printJson(validation);
+      } else {
+        console.log(`Plan validation: ${validation.ok ? 'PASS' : 'FAIL'}`);
+        validation.issues.forEach((issue) => console.log(`${issue.severity.toUpperCase()} ${issue.code}: ${issue.message}`));
+      }
+      if (!validation.ok) process.exit(1);
+      return;
+    }
+
+    case 'learner:events': {
+      if (parsed.positional[2] !== 'export') break;
+      const { config } = loadRuntimeGraph(parsed);
+      const events = readLearnerEvents(config.learnerHome);
+      if (parsed.options.json) {
+        printJson(events);
+      } else {
+        events.forEach((event) => console.log(JSON.stringify(event)));
+      }
+      return;
+    }
+
+    case 'learner:profile': {
+      const { config, graph } = loadRuntimeGraph(parsed);
+      const profile = deriveAndSaveLearnerProfile(config.learnerHome, graph);
+      if (parsed.options.json) printJson(profile);
+      else {
+        console.log(`Profile generated: ${profile.generatedAt}`);
+        console.log(`Events: ${profile.eventCount}`);
+        console.log(`Concepts: ${Object.keys(profile.conceptMastery).length}`);
+        console.log(`Recommendations: ${profile.recommendedActions.length}`);
+      }
+      return;
+    }
+
+    case 'learner:derive': {
+      const { config, graph } = loadRuntimeGraph(parsed);
+      ensureLearnerHome(config.learnerHome);
+      const events = readLearnerEvents(config.learnerHome);
+      const existing = loadLearnerProfile(config.learnerHome);
+      const profile = parsed.options.check
+        ? deriveLearnerProfile(events, graph)
+        : deriveAndSaveLearnerProfile(config.learnerHome, graph);
+      const stale = Boolean(parsed.options.check && existing?.sourceEventsHash !== profile.sourceEventsHash);
+      const result = {
+        ok: !stale,
+        check: Boolean(parsed.options.check),
+        learnerHome: config.learnerHome,
+        eventCount: events.length,
+        profile,
+      };
+      if (parsed.options.json) printJson(result);
+      else {
+        console.log(`Learner profile: ${profile.sourceEventsHash}`);
+        console.log(`Events: ${events.length}`);
+        if (parsed.options.check) console.log(`Check: ${stale ? 'STALE' : 'PASS'}`);
+      }
+      if (stale) process.exit(1);
+      return;
+    }
+
+    case 'learner:migrate-progress': {
+      const ctx = loadContext();
+      const { config, graph } = loadRuntimeGraph(parsed);
+      const progress = loadProgress(ctx.rootDir);
+      const events = legacyProgressToEvents(progress, graph.packs[0]?.id || 'cs-degree', graph.packs[0]?.version || '1.0.0');
+      appendLearnerEvents(config.learnerHome, events);
+      const profile = deriveAndSaveLearnerProfile(config.learnerHome, graph);
+      if (parsed.options.json) {
+        printJson({ migratedEvents: events.length, profile });
+      } else {
+        console.log(`Migrated ${events.length} legacy progress events to ${config.learnerHome}`);
+      }
+      return;
+    }
+
+    case 'author:new-pack': {
+      const packId = parsed.positional[2];
+      if (!packId) fail('author new-pack requires <id>');
+      const targetDir = firstOptionValue(parsed.options, 'dir')
+        ? path.resolve(firstOptionValue(parsed.options, 'dir'))
+        : path.resolve(packId);
+      const pack = createAuthoringPack(targetDir, packId, {
+        extends: firstOptionValue(parsed.options, 'extends'),
+        title: firstOptionValue(parsed.options, 'title'),
+      });
+      console.log(`Created authoring pack ${pack.id}`);
+      console.log(`Path: ${targetDir}`);
+      return;
+    }
+
+    case 'author:new-subject': {
+      const subjectId = parsed.positional[2];
+      if (!subjectId) fail('author new-subject requires <id>');
+      const { config, graph } = loadRuntimeGraph(parsed);
+      const explicitPackDir = firstOptionValue(parsed.options, 'content-pack');
+      const authoringPackId = firstOptionValue(parsed.options, 'authoring-pack') || config.authoringPack;
+      const packDir = explicitPackDir
+        ? path.resolve(explicitPackDir)
+        : graph.packs.find((pack) => pack.id === authoringPackId)?.packDir;
+      if (!packDir) fail('authoring pack not found. Use --content-pack <path> or configure authoringPack.');
+      const created = createSubject(packDir, subjectId, {
+        title: firstOptionValue(parsed.options, 'title'),
+        code: firstOptionValue(parsed.options, 'code'),
+        concept: firstOptionValue(parsed.options, 'concept'),
+      });
+      console.log(`Created subject ${created.subject.id}`);
+      console.log(`Path: ${path.join(packDir, 'subjects', subjectId)}`);
+      return;
+    }
+
+    case 'author:new-remediation': {
+      const conceptId = parsed.positional[2];
+      if (!conceptId) fail('author new-remediation requires <concept-id>');
+      const { config, graph } = loadRuntimeGraph(parsed);
+      const explicitPackDir = firstOptionValue(parsed.options, 'content-pack');
+      const authoringPackId = firstOptionValue(parsed.options, 'authoring-pack') || config.authoringPack;
+      const packDir = explicitPackDir
+        ? path.resolve(explicitPackDir)
+        : graph.packs.find((pack) => pack.id === authoringPackId)?.packDir;
+      if (!packDir) fail('authoring pack not found. Use --content-pack <path> or configure authoringPack.');
+      const created = createRemediation(packDir, conceptId);
+      console.log(`Created remediation subject ${created.subject.id}`);
+      console.log(`Path: ${path.join(packDir, 'subjects', created.subject.id)}`);
+      return;
+    }
+
     case 'quiz:start': {
       const ctx = loadContext();
       const quizId = ensureOption(parsed.options, 'id', 'quiz start requires --id <quiz-id>');
       const quiz = assertQuiz(ctx.maps, quizId);
       const created = createQuizAttempt(ctx.rootDir, quiz);
+      recordCliLearnerEvent(ctx.rootDir, parsed.options, {
+        type: 'activity_started',
+        activityId: quiz.id,
+        subjectId: quiz.subjectId,
+      });
       console.log(`Created quiz attempt ${created.attemptId}`);
       console.log(`Attempt file: ${relativeFromCwd(created.attemptPath)}`);
       if (parsed.options.open) {
@@ -440,6 +876,13 @@ async function run() {
         timeSpentSeconds: checkResult.timeSpentSeconds,
       });
       saveProgress(ctx.rootDir, progress);
+      recordCliLearnerEvent(ctx.rootDir, parsed.options, {
+        type: 'activity_completed',
+        activityId: quiz.id,
+        subjectId: quiz.subjectId,
+        score: checkResult.score,
+        passed: checkResult.passed,
+      });
 
       const { attemptPath, attempt } = loadQuizAttempt(attemptDir);
       updateAttemptStatus(attemptPath, attempt, 'submitted');
@@ -453,6 +896,11 @@ async function run() {
       const exerciseId = ensureOption(parsed.options, 'id', 'exercise start requires --id <exercise-id>');
       const exercise = assertExercise(ctx.maps, exerciseId);
       const created = createExerciseAttempt(ctx.rootDir, exercise);
+      recordCliLearnerEvent(ctx.rootDir, parsed.options, {
+        type: 'activity_started',
+        activityId: exercise.id,
+        subjectId: exercise.subjectId,
+      });
       console.log(`Created exercise attempt ${created.attemptId}`);
       console.log(`Attempt file: ${relativeFromCwd(created.attemptPath)}`);
       if (parsed.options.open) {
@@ -492,6 +940,12 @@ async function run() {
         type: checkResult.exerciseType,
       });
       saveProgress(ctx.rootDir, progress);
+      recordCliLearnerEvent(ctx.rootDir, parsed.options, {
+        type: 'activity_completed',
+        activityId: exercise.id,
+        subjectId: exercise.subjectId,
+        passed: checkResult.passed,
+      });
 
       const { attemptPath, attempt } = loadExerciseAttempt(attemptDir);
       updateAttemptStatus(attemptPath, attempt, 'submitted');
