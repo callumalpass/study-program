@@ -112,6 +112,7 @@ The timeline displays as a Gantt chart showing scheduled, in-progress, and compl
 
 ```bash
 npm install
+npm run content:checkout
 npm run dev
 ```
 
@@ -156,19 +157,23 @@ Coding checks use local runtimes (`python3`, `node`, and `gcc/clang`/`g++`/`clan
 ## Building
 
 ```bash
+npm run content:checkout
 npm run build
 ```
 
-Output goes to `dist/`. The project deploys to GitHub Pages via `.github/workflows/deploy.yml`.
+Output goes to `dist/`. The project deploys to GitHub Pages via
+`.github/workflows/deploy.yml`; the workflow checks out
+`https://github.com/callumalpass/cs-degree` into
+`content/bundled-packs/cs-degree` before tests, content validation, and build.
 
 ## Project Structure
 
 ```
 src/
 ├── components/     # UI components (sidebar, code editor, quiz renderer)
-├── content/        # Markdown lesson files organized by subject
+├── content-core/   # Static pack loading and content validation helpers
 ├── core/           # Types, router, storage, progress calculations
-├── data/           # Subject definitions (topics, quizzes, exercises, exams)
+├── data/           # Pack-backed curriculum/template adapters
 ├── pages/          # Page renderers
 ├── services/       # GitHub sync, PDF export
 └── utils/          # Gemini AI evaluation, helpers

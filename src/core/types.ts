@@ -17,6 +17,7 @@ export interface Subject {
   code: string;
   title: string;
   category: SubjectCategory;
+  level?: string;
   year: number;
   semester: number;
   prerequisites: string[]; // Array of subject IDs
@@ -24,6 +25,10 @@ export interface Subject {
   learningObjectives: string[];
   topics: Topic[];
   estimatedHours: number;
+  version?: number;
+  packId?: string;
+  packVersion?: string;
+  conceptTags?: string[];
   examIds?: string[];
   projectIds?: string[];
   tags?: string[]; // e.g., ['ml', 'theory', 'systems', 'foundational']
@@ -56,6 +61,11 @@ export interface Topic {
   id: string;
   title: string;
   content: string;
+  number?: number;
+  version?: number;
+  conceptTags?: string[];
+  learningObjectives?: string[];
+  estimatedHours?: number;
   subtopics?: Subtopic[];  // Optional array of subtopics
   readings?: Reading[];    // Optional academic readings for the topic
   quizIds: string[];

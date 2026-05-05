@@ -15,6 +15,7 @@ import { renderStudySessionAccess } from './components/study-session-access';
 import { escapeHtml } from './utils/html';
 import { registerPwa } from './pwa';
 import { loadAllAssessments, loadSubjectAssessments } from './subjects/registry';
+import { loadApiCurriculum } from './content-core/api-client';
 
 /** Delay before closing mobile menu after navigation click (ms) */
 const MENU_CLOSE_DELAY_MS = 100;
@@ -37,7 +38,11 @@ let studySessionAccessRefreshScheduled = false;
 
 function loadCurriculum(): Promise<Subject[]> {
   if (!curriculumPromise) {
-    curriculumPromise = import('./data/curriculum').then((module) => module.curriculum);
+    curriculumPromise = loadApiCurriculum().then(async (apiCurriculum) => {
+      if (apiCurriculum) return apiCurriculum;
+      const module = await import('./data/curriculum');
+      return module.curriculum;
+    });
   }
   return curriculumPromise;
 }

@@ -25,7 +25,7 @@ interface Node extends Subject {
   y: number;
   width: number;
   height: number;
-  level: number;
+  layoutLevel: number;
   status: 'not-started' | 'in-progress' | 'completed';
 }
 
@@ -181,7 +181,7 @@ export class CurriculumGraph {
           y,
           width: this.NODE_WIDTH,
           height: this.NODE_HEIGHT,
-          level,
+          layoutLevel: level,
           status
         });
       });

@@ -11,6 +11,7 @@ import { render } from 'preact';
 import { Quiz as QuizComponent, ContentNavigator } from '@/components/preact';
 import { checkAnswer } from '@/utils/quiz-utils';
 import { renderMarkdown } from '@/components/markdown';
+import { recordLearnerEvent } from '@/content-core/api-client';
 
 interface QuizPageContentProps {
   subject: Subject;
@@ -88,15 +89,32 @@ function QuizPageContent({ subject, quiz }: QuizPageContentProps) {
   const topicReadingHref = getTopicReadingHref(subject, quiz);
 
   const handleStartQuiz = useCallback(() => {
+    recordLearnerEvent({
+      type: 'activity_started',
+      activityId: quizId,
+      subjectId,
+    });
     setQuizMode('active');
-  }, []);
+  }, [quizId, subjectId]);
 
   const handleQuizComplete = useCallback((attempt: QuizAttempt) => {
+    for (const question of quiz.questions) {
+      recordLearnerEvent({
+        type: 'answer_submitted',
+        activityId: quizId,
+        questionId: question.id,
+        subjectId,
+        correct: checkAnswer(question, attempt.answers[question.id]),
+        answer: attempt.answers[question.id],
+        conceptTags: (question as QuizQuestion & { conceptTags?: string[] }).conceptTags || [],
+        at: attempt.timestamp,
+      });
+    }
     progressStorage.addQuizAttempt(subjectId, quizId, attempt);
     const updatedAttempts = progressStorage.getQuizAttempts(subjectId, quizId);
     setAttempts(updatedAttempts);
     setQuizMode('completed');
-  }, [subjectId, quizId]);
+  }, [subjectId, quizId, quiz.questions]);
 
   const handleRetry = useCallback(() => {
     setQuizMode('start');
