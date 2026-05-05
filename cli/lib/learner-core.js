@@ -68,7 +68,7 @@ function activityConceptTags(graph) {
   for (const subject of graph?.subjects || []) {
     for (const topic of subject.topics || []) {
       for (const activityId of [...(topic.quizIds || []), ...(topic.exerciseIds || [])]) {
-        if (!tags.has(activityId)) {
+        if (!tags.has(activityId) || tags.get(activityId).length === 0) {
           tags.set(activityId, topic.conceptTags || subject.conceptTags || []);
         }
       }

@@ -90,6 +90,7 @@ export function migrateProgress(progress, rootDir) {
       exerciseCompletions: base.exerciseCompletions || {},
       projectSubmissions: base.projectSubmissions || {},
       subtopicViews: base.subtopicViews || {},
+      subtopicCompletions: base.subtopicCompletions || {},
     };
   }
 
