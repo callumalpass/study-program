@@ -53,7 +53,12 @@ test.describe('Navigation', () => {
     await page.click('#start-study-session-action');
 
     await expect(page).toHaveURL(/#\/study-session$/);
+    await expect(page.locator('#study-session-subject')).toBeVisible();
+    await page.selectOption('#study-session-subject', 'math101');
+    await page.click('#start-study-session');
+
     await expect(page.locator('#main-content')).toContainText('Study Session');
+    await expect(page.locator('#main-content')).toContainText('MATH101');
     await expect(page.locator('#main-content')).toContainText('Queue');
     await expect(page.locator('#main-content').getByRole('link', { name: /continue/i })).toBeVisible();
 
@@ -77,12 +82,18 @@ test.describe('Navigation', () => {
 
     await expect(page).toHaveURL(/#\/study-session$/);
     await expect(page.locator('#study-session-access')).toBeEmpty();
+    await expect(page.locator('#study-session-subject')).toBeVisible();
+    await page.click('#start-study-session');
+
     await expect(page.locator('#main-content')).toContainText('Study Session');
+    await expect(page.locator('#main-content')).toContainText('Queue');
   });
 
   test('updates the shared study session dock after completing the current item', async ({ page }) => {
     await page.goto('/');
     await page.click('#start-study-session-action');
+    await expect(page.locator('#study-session-subject')).toBeVisible();
+    await page.click('#start-study-session');
 
     const currentItemLink = page.locator('.study-session-current-cta');
     await expect(currentItemLink).toBeVisible({ timeout: 15000 });

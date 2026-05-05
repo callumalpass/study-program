@@ -4,6 +4,7 @@ import {
   advanceStudySession,
   clearStudySession,
   createStudySessionHistoryEntry,
+  getDefaultStudySessionSubject,
   getActiveStudySession,
   getCurrentStudySessionItem,
   getStudySessionSummary,
@@ -90,7 +91,21 @@ function renderQueueItem(
   `;
 }
 
+function renderSubjectOptions(subjects: Subject[], progress: UserProgress): string {
+  const defaultSubject = getDefaultStudySessionSubject(subjects, progress) || subjects[0];
+
+  return subjects.map(subject => `
+    <option value="${escapeHtml(subject.id)}" ${subject.id === defaultSubject?.id ? 'selected' : ''}>
+      ${escapeHtml(`${subject.code} - ${subject.title}`)}
+    </option>
+  `).join('');
+}
+
 function renderStartState(container: HTMLElement, subjects: Subject[]): void {
+  const scopedSubjects = getScopedSubjects(subjects);
+  const progress = progressStorage.getProgress();
+  const hasSubjects = scopedSubjects.length > 0;
+
   container.innerHTML = `
     <div class="page-container study-session-page">
       <header class="page-header">
@@ -104,15 +119,55 @@ function renderStartState(container: HTMLElement, subjects: Subject[]): void {
           <div class="study-session-empty-icon">${Icons.Progress}</div>
           <h2>No active session</h2>
           <p>Start a session to combine due reviews, reading, and practice into one queue.</p>
-          <button class="btn btn-primary" id="start-study-session">Start Study Session</button>
-          <a class="btn btn-secondary" href="#/">Back to Dashboard</a>
+          <form class="study-session-start-form" id="study-session-start-form">
+            <div class="form-group">
+              <label class="form-label" for="study-session-subject">Subject</label>
+              <select class="form-select" id="study-session-subject" ${hasSubjects ? '' : 'disabled'}>
+                ${hasSubjects
+                  ? renderSubjectOptions(scopedSubjects, progress)
+                  : '<option value="">No subjects available</option>'}
+              </select>
+              <span class="form-error" id="study-session-start-error" hidden></span>
+            </div>
+            <div class="study-session-start-actions">
+              <button class="btn btn-primary" id="start-study-session" type="submit" ${hasSubjects ? '' : 'disabled'}>Start Study Session</button>
+              <a class="btn btn-secondary" href="#/">Back to Dashboard</a>
+            </div>
+          </form>
         </section>
       </div>
     </div>
   `;
 
-  container.querySelector('#start-study-session')?.addEventListener('click', () => {
-    startStudySession(getScopedSubjects(subjects), progressStorage.getProgress());
+  const form = container.querySelector<HTMLFormElement>('#study-session-start-form');
+  const subjectSelect = container.querySelector<HTMLSelectElement>('#study-session-subject');
+  const error = container.querySelector<HTMLElement>('#study-session-start-error');
+
+  subjectSelect?.addEventListener('change', () => {
+    if (!error) return;
+    error.hidden = true;
+    error.textContent = '';
+  });
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const subjectId = subjectSelect?.value;
+    if (!subjectId) return;
+
+    const session = startStudySession(
+      getScopedSubjects(subjects),
+      progressStorage.getProgress(),
+      { subjectId }
+    );
+
+    if (!session) {
+      if (error) {
+        error.textContent = 'No queued study items for this subject right now.';
+        error.hidden = false;
+      }
+      return;
+    }
+
     renderStudySessionPage(container, subjects);
   });
 }
@@ -165,8 +220,7 @@ function renderEndState(container: HTMLElement, subjects: Subject[], session: St
 
   container.querySelector('#start-new-study-session')?.addEventListener('click', () => {
     clearStudySession();
-    startStudySession(getScopedSubjects(subjects), progressStorage.getProgress());
-    renderStudySessionPage(container, subjects);
+    renderStartState(container, subjects);
   });
 }
 

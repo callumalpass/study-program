@@ -6,17 +6,9 @@ import {
   createStudySessionHistoryEntry,
   getActiveStudySession,
   getCurrentStudySessionItem,
-  startStudySession,
   type StudySessionItem,
 } from '@/core/study-session';
 import { escapeHtml } from '@/utils/html';
-
-function getScopedSubjects(subjects: Subject[]): Subject[] {
-  const selectedIds = progressStorage.getSelectedSubjects();
-  return selectedIds.length > 0
-    ? subjects.filter(subject => selectedIds.includes(subject.id))
-    : subjects;
-}
 
 function getItemIcon(item: StudySessionItem): string {
   switch (item.itemType) {
@@ -89,7 +81,7 @@ function renderActiveSessionAccess(
   });
 }
 
-function renderStartSessionAccess(container: HTMLElement, subjects: Subject[]): void {
+function renderStartSessionAccess(container: HTMLElement): void {
   container.innerHTML = `
     <aside class="study-session-access idle" aria-label="Study session access">
       <button class="study-session-access-card" type="button" id="global-start-study-session">
@@ -107,7 +99,6 @@ function renderStartSessionAccess(container: HTMLElement, subjects: Subject[]): 
   `;
 
   container.querySelector('#global-start-study-session')?.addEventListener('click', () => {
-    startStudySession(getScopedSubjects(subjects), progressStorage.getProgress());
     window.location.hash = '#/study-session';
   });
 }
@@ -146,5 +137,5 @@ export function renderStudySessionAccess(container: HTMLElement, path: string, s
     progressStorage.recordStudySessionCompletion(createStudySessionHistoryEntry(advancedSession, progress));
   }
 
-  renderStartSessionAccess(container, subjects);
+  renderStartSessionAccess(container);
 }

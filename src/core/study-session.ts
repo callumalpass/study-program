@@ -50,6 +50,10 @@ export interface StudySessionSummary {
   reviewItemsCompleted: number;
 }
 
+export interface StartStudySessionOptions {
+  subjectId?: string;
+}
+
 function getSessionStorage(): Storage | null {
   if (typeof window === 'undefined') return null;
   return window.localStorage;
@@ -122,6 +126,14 @@ function chooseSessionSubject(subjects: Subject[], progress: UserProgress): Subj
 
   return sortSubjectsByCourseOrder(subjects)
     .find(subject => progress.subjects[subject.id]?.status !== 'completed') || null;
+}
+
+function getStudySessionSubjectScope(
+  subjects: Subject[],
+  options: StartStudySessionOptions = {}
+): Subject[] {
+  if (!options.subjectId) return subjects;
+  return subjects.filter(subject => subject.id === options.subjectId);
 }
 
 function formatAssessmentTitle(subject: Subject, itemType: 'quiz' | 'exercise' | 'exam' | 'project', itemId: string): string {
@@ -342,16 +354,21 @@ function addUnique(queue: StudySessionItem[], item: StudySessionItem | null): vo
   queue.push(item);
 }
 
-export function buildStudySessionQueue(subjects: Subject[], progress: UserProgress): StudySessionItem[] {
+export function buildStudySessionQueue(
+  subjects: Subject[],
+  progress: UserProgress,
+  options: StartStudySessionOptions = {}
+): StudySessionItem[] {
+  const scopedSubjects = getStudySessionSubjectScope(subjects, options);
   const queue: StudySessionItem[] = [];
-  const subjectById = new Map(subjects.map(subject => [subject.id, subject] as const));
+  const subjectById = new Map(scopedSubjects.map(subject => [subject.id, subject] as const));
 
-  getDueReviewItems(progress, subjects).slice(0, MAX_REVIEW_ITEMS).forEach(reviewItem => {
+  getDueReviewItems(progress, scopedSubjects).slice(0, MAX_REVIEW_ITEMS).forEach(reviewItem => {
     const subject = subjectById.get(reviewItem.subjectId);
     if (subject) addUnique(queue, makeReviewSessionItem(reviewItem, subject));
   });
 
-  const subject = chooseSessionSubject(subjects, progress);
+  const subject = chooseSessionSubject(scopedSubjects, progress);
   if (!subject) return queue;
 
   const subjectProgress = progress.subjects[subject.id];
@@ -383,6 +400,15 @@ export function buildStudySessionQueue(subjects: Subject[], progress: UserProgre
   return queue.slice(0, 6);
 }
 
+export function getDefaultStudySessionSubject(subjects: Subject[], progress: UserProgress): Subject | null {
+  const queue = buildStudySessionQueue(subjects, progress);
+  if (queue[0]) {
+    return subjects.find(subject => subject.id === queue[0].subjectId) || null;
+  }
+
+  return chooseSessionSubject(subjects, progress);
+}
+
 export function getActiveStudySession(): StudySession | null {
   const storage = getSessionStorage();
   if (!storage) return null;
@@ -412,11 +438,21 @@ export function clearStudySession(): void {
   storage.removeItem(STUDY_SESSION_KEY);
 }
 
-export function startStudySession(subjects: Subject[], progress: UserProgress): StudySession | null {
-  const queue = buildStudySessionQueue(subjects, progress);
+export function startStudySession(
+  subjects: Subject[],
+  progress: UserProgress,
+  options: StartStudySessionOptions = {}
+): StudySession | null {
+  const scopedSubjects = getStudySessionSubjectScope(subjects, options);
+  const queue = buildStudySessionQueue(scopedSubjects, progress);
   if (queue.length === 0) return null;
 
-  const primarySubject = subjects.find(subject => subject.id === queue[0].subjectId) || subjects[0];
+  const selectedSubject = options.subjectId
+    ? scopedSubjects.find(subject => subject.id === options.subjectId)
+    : null;
+  const primarySubject = selectedSubject
+    || scopedSubjects.find(subject => subject.id === queue[0].subjectId)
+    || scopedSubjects[0];
   const session: StudySession = {
     id: `study-session-${Date.now()}`,
     subjectId: primarySubject?.id || queue[0].subjectId,

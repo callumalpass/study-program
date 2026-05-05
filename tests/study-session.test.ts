@@ -6,6 +6,7 @@ import {
   buildStudySessionQueue,
   createStudySessionHistoryEntry,
   getCurrentStudySessionItem,
+  getDefaultStudySessionSubject,
   startStudySession,
 } from '../src/core/study-session';
 
@@ -32,6 +33,33 @@ const subject: Subject = {
       subtopics: [
         { id: 'cs101-t1-intro', slug: 'intro', title: 'Introduction', content: '', order: 1 },
         { id: 'cs101-t1-logic', slug: 'logic', title: 'Logic', content: '', order: 2 },
+      ],
+    },
+  ],
+};
+
+const mathSubject: Subject = {
+  id: 'math101',
+  code: 'MATH101',
+  title: 'Discrete Mathematics',
+  category: 'math',
+  year: 1,
+  semester: 1,
+  prerequisites: [],
+  description: 'Mathematical foundations.',
+  learningObjectives: [],
+  estimatedHours: 120,
+  examIds: ['math101-final'],
+  projectIds: [],
+  topics: [
+    {
+      id: 'math-topic-1',
+      title: 'Logic',
+      content: '',
+      quizIds: ['math101-quiz-1'],
+      exerciseIds: ['math101-t1-ex01'],
+      subtopics: [
+        { id: 'math101-t1-intro', slug: 'intro', title: 'Mathematical Logic', content: '', order: 1 },
       ],
     },
   ],
@@ -80,6 +108,35 @@ describe('study session queue', () => {
     expect(queue[0].itemType).toBe('review');
     expect(queue[0].title).toBe('Review: CS101 Quiz 1');
     expect(queue[1].itemType).toBe('read');
+  });
+
+  it('can start from a selected subject instead of the automatic default', () => {
+    const session = startStudySession(
+      [subject, mathSubject],
+      progressStorage.getProgress(),
+      { subjectId: 'math101' }
+    );
+
+    expect(session).not.toBeNull();
+    expect(session!.subjectId).toBe('math101');
+    expect(getCurrentStudySessionItem(session!)?.subjectId).toBe('math101');
+    expect(getCurrentStudySessionItem(session!)?.title).toBe('Read: Mathematical Logic');
+  });
+
+  it('reports the same default subject as the generated queue', () => {
+    progressStorage.addToReviewQueue({
+      itemType: 'quiz',
+      itemId: 'math101-quiz-1',
+      subjectId: 'math101',
+    });
+    progressStorage.save();
+
+    const defaultSubject = getDefaultStudySessionSubject(
+      [subject, mathSubject],
+      progressStorage.getProgress()
+    );
+
+    expect(defaultSubject?.id).toBe('math101');
   });
 
   it('advances when the current reading item is explicitly completed', () => {

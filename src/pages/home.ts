@@ -22,7 +22,6 @@ import {
   getActiveStudySession,
   getCurrentStudySessionItem,
   getSubjectLastActivityAt,
-  startStudySession,
   type StudySessionItemKind,
 } from '@/core/study-session';
 import { Icons } from '../components/icons';
@@ -754,20 +753,7 @@ function attachEventListeners(container: HTMLElement): void {
   const startStudySessionAction = container.querySelector('#start-study-session-action');
   if (startStudySessionAction) {
     startStudySessionAction.addEventListener('click', () => {
-      const userProgress = progressStorage.getProgress();
-      const selectedIds = progressStorage.getSelectedSubjects();
-      const subjects = Array.from(container.querySelectorAll<HTMLElement>('.subject-card[data-subject-id]'))
-        .map(card => card.dataset.subjectId)
-        .filter((id): id is string => Boolean(id));
-      const selectedSubjectSet = new Set(selectedIds.length > 0 ? selectedIds : subjects);
-
-      import('@/data/curriculum').then(({ curriculum }) => {
-        const scopedSubjects = selectedSubjectSet.size > 0
-          ? curriculum.filter(subject => selectedSubjectSet.has(subject.id))
-          : curriculum;
-        startStudySession(scopedSubjects, userProgress);
-        window.location.hash = '#/study-session';
-      });
+      window.location.hash = '#/study-session';
     });
   }
 

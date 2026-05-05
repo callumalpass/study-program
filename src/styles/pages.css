@@ -267,6 +267,25 @@
   color: var(--color-text-secondary);
 }
 
+.study-session-start-form {
+  display: grid;
+  gap: var(--space-md);
+  max-width: 420px;
+  margin: var(--space-lg) auto 0;
+  text-align: left;
+}
+
+.study-session-start-form .form-group {
+  margin-bottom: 0;
+}
+
+.study-session-start-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+
 .study-session-current {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
@@ -499,6 +518,11 @@
   .study-session-skip {
     width: 100%;
     justify-content: center;
+  }
+
+  .study-session-start-actions {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .study-session-summary-grid {
